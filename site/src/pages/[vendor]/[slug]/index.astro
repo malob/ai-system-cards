@@ -1,0 +1,229 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { listCards, siteMarkdown } from '../../../lib/cards.js';
+import { renderCard } from '../../../lib/markdown.js';
+
+export function getStaticPaths() {
+  return listCards().map((c) => ({ params: { vendor: c.vendor, slug: c.slug }, props: c }));
+}
+
+const { vendor, slug, meta } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
+const assetBase = `${base}cards/${vendor}/${slug}`;
+const figuresDir = `${process.cwd()}/public/cards/${vendor}/${slug}/figures`;
+const { html, toc } = await renderCard(siteMarkdown(vendor, slug, assetBase), { figuresDir });
+
+const fmt = (d) =>
+  new Date(d + 'T00:00:00').toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+// group depth-3 entries under their depth-2 parent for progressive disclosure
+let currentParent = null;
+const rail = toc
+  .filter((t) => t.depth <= 3)
+  .map((t) => {
+    if (t.depth === 2) currentParent = t.id;
+    return { ...t, parent: t.depth === 3 ? currentParent : null };
+  });
+---
+
+<Base title={`${meta.title} — AI System Cards`} description={meta.description}>
+  <div class="progress" id="progress"></div>
+  <header class="masthead">
+    <a class="brand" href={base}>AI System Cards<span class="amp"> §</span></a>
+    <span class="doc-title" id="doc-title">{meta.title}</span>
+    <div class="controls">
+      <button class="iconbtn" id="toc-btn" aria-label="Table of contents">Contents</button>
+      <button class="iconbtn" id="search-btn" aria-label="Search">
+        Search <kbd>⌘K</kbd>
+      </button>
+      <button class="iconbtn" id="theme-btn" aria-label="Toggle color theme">◐</button>
+    </div>
+  </header>
+
+  <div class="reader">
+    <nav class="rail" id="rail" aria-label="Table of contents">
+      <p class="rail-label">Contents</p>
+      <ol>
+        {
+          rail.map((t) => (
+            <li data-depth={t.depth} data-parent={t.parent}>
+              <a href={`#${t.id}`} data-target={t.id}>
+                {t.number && <span class="num">{t.number}</span>}
+                <span>{t.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <main class="doc">
+      <header class="cardhead" id="cardhead">
+        <p class="eyebrow">{meta.vendor} · System Card</p>
+        <h1>{meta.title}</h1>
+        <div class="meta-row">
+          <span>{fmt(String(meta.release_date))}</span>
+          <span class="sep">/</span>
+          <a href={meta.source_url} target="_blank" rel="noopener">Original PDF ({meta.source_pages} pp.)</a>
+          <span class="sep">/</span>
+          <a href={`${base}${vendor}/${slug}/card.md`}>card.md</a>
+          <span class="sep">/</span>
+          <a href={`${base}llms.txt`}>llms.txt</a>
+        </div>
+      </header>
+
+      <article class="article" data-pagefind-body set:html={html} />
+    </main>
+  </div>
+
+  <dialog class="lightbox" id="lightbox">
+    <img src="" alt="" id="lightbox-img" />
+  </dialog>
+
+  <dialog class="searchbox" id="searchbox">
+    <div id="pagefind-mount"></div>
+    <p class="search-hint" id="search-hint">esc to close</p>
+  </dialog>
+</Base>
+
+<script>
+  const base = document.documentElement.dataset.base;
+
+  // --- theme toggle ---
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+
+  // --- reading progress + masthead title ---
+  const progress = document.getElementById('progress');
+  const docTitle = document.getElementById('doc-title');
+  const cardhead = document.getElementById('cardhead');
+  let ticking = false;
+  addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const h = document.documentElement;
+        progress.style.width = `${(h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100}%`;
+        docTitle.classList.toggle('visible', h.scrollTop > cardhead.offsetTop + cardhead.offsetHeight);
+        ticking = false;
+      });
+    },
+    { passive: true },
+  );
+
+  // --- mobile TOC drawer ---
+  const rail = document.getElementById('rail');
+  document.getElementById('toc-btn').addEventListener('click', () => rail.classList.toggle('open'));
+  rail.addEventListener('click', (e) => {
+    if (e.target.closest('a')) rail.classList.remove('open');
+  });
+
+  // --- scrollspy ---
+  const links = new Map();
+  rail.querySelectorAll('a[data-target]').forEach((a) => links.set(a.dataset.target, a));
+  const headings = [...document.querySelectorAll('.article h2[id], .article h3[id]')].filter((h) =>
+    links.has(h.id),
+  );
+  let active = null;
+  const setActive = (id) => {
+    if (id === active) return;
+    active = id;
+    rail.querySelectorAll('a.active').forEach((a) => a.classList.remove('active'));
+    rail.querySelectorAll('li.shown').forEach((li) => li.classList.remove('shown'));
+    const link = links.get(id);
+    if (!link) return;
+    link.classList.add('active');
+    const li = link.closest('li');
+    const parent = li.dataset.depth === '3' ? li.dataset.parent : id;
+    rail
+      .querySelectorAll(`li[data-parent="${parent}"]`)
+      .forEach((el) => el.classList.add('shown'));
+    link.scrollIntoView({ block: 'nearest' });
+  };
+  const spy = () => {
+    let current = headings[0]?.id;
+    for (const h of headings) {
+      if (h.getBoundingClientRect().top <= 96) current = h.id;
+      else break;
+    }
+    if (current) setActive(current);
+  };
+  addEventListener('scroll', spy, { passive: true });
+  spy();
+
+  // --- sidenotes (wide screens): clone footnotes next to their references ---
+  document.querySelectorAll('[data-footnote-ref]').forEach((ref) => {
+    const id = ref.getAttribute('href')?.slice(1);
+    const note = id && document.getElementById(id);
+    if (!note) return;
+    const sn = document.createElement('span');
+    sn.className = 'sidenote';
+    const num = document.createElement('span');
+    num.className = 'sn-num';
+    num.textContent = ref.textContent;
+    sn.appendChild(num);
+    const clone = note.cloneNode(true);
+    clone.querySelectorAll('[data-footnote-backref]').forEach((b) => b.remove());
+    sn.insertAdjacentHTML('beforeend', clone.innerHTML);
+    ref.closest('sup')?.insertAdjacentElement('afterend', sn);
+  });
+
+  // --- figure lightbox ---
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.figure-zoom').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      lightboxImg.src = a.getAttribute('href');
+      lightbox.showModal();
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.close());
+
+  // --- search ---
+  const searchbox = document.getElementById('searchbox');
+  let pagefindLoaded = false;
+  async function openSearch() {
+    searchbox.showModal();
+    if (pagefindLoaded) return;
+    pagefindLoaded = true;
+    try {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = `${base}pagefind/pagefind-ui.css`;
+      document.head.appendChild(css);
+      await import(/* @vite-ignore */ `${base}pagefind/pagefind-ui.js`);
+      new window.PagefindUI({
+        element: '#pagefind-mount',
+        bundlePath: `${base}pagefind/`,
+        showSubResults: true,
+        showImages: false,
+      });
+      searchbox.querySelector('input')?.focus();
+    } catch {
+      document.getElementById('search-hint').textContent =
+        'Search index not available in dev — run a production build.';
+    }
+  }
+  document.getElementById('search-btn').addEventListener('click', openSearch);
+  addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      searchbox.open ? searchbox.close() : openSearch();
+    }
+  });
+  searchbox.addEventListener('click', (e) => {
+    if (e.target === searchbox) searchbox.close();
+  });
+</script>

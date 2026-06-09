@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import { listCards } from '../lib/cards.js';
+
+const cards = listCards();
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
+
+const fmt = (d) =>
+  new Date(d + 'T00:00:00').toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+---
+
+<Base
+  title="AI System Cards"
+  description="A readable archive of AI model system cards, faithfully converted from the original PDFs."
+>
+  <main class="home">
+    <p class="eyebrow">A readable archive</p>
+    <h1>AI System<br />Cards</h1>
+    <p class="lede">
+      When AI labs release a new model, the system card arrives as a long PDF. This archive
+      re-typesets each one as a faithful, responsive web page — every sentence, table, figure,
+      and footnote, with deep links back to the source — plus clean markdown for both humans
+      and machines (<a href={`${base}llms.txt`}>llms.txt</a>).
+    </p>
+    <ul class="cardlist">
+      {
+        cards.map(({ vendor, slug, meta }) => (
+          <li>
+            <a class="entry" href={`${base}${vendor}/${slug}/`}>
+              <div class="meta">
+                <span class="vendor">{meta.vendor}</span>
+                <span>{fmt(String(meta.release_date))}</span>
+                <span>{meta.source_pages} pages</span>
+              </div>
+              <h2>{meta.title}</h2>
+              <p class="desc">{meta.description}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Base>

@@ -1,0 +1,14 @@
+title: "Claude Fable 5 & Claude Mythos 5"
+slug: claude-fable-5
+vendor: Anthropic
+models:
+  - Claude Fable 5
+  - Claude Mythos 5
+release_date: 2026-06-09
+source_url: https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf
+source_pages: 319
+description: >-
+  System card for Claude Mythos 5 and Claude Fable 5, two configurations of a
+  new large language model from Anthropic. Covers RSP evaluations, cyber
+  capabilities, safeguards and harmlessness, agentic safety, alignment
+  assessment, model welfare, and capabilities.

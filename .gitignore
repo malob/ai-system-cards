@@ -1,0 +1,4 @@
+# regenerable per-page renders (89MB+); re-create with pdftoppm if needed
+cards/*/*/extracted/pages/
+
+.DS_Store
