@@ -74,10 +74,11 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-1. **Close mutation-exposed verifier gaps** (experiment 05): FN1 v2 = per-number
-   footnote body-text comparison; S2 per-page chip counts; then re-run the
-   mutation suite (recall regressions are bugs). L2 dest resolution still
-   unimplemented.
+1. **Verifier polish**: harden oracle stacked-footnote boundary detection, then
+   promote FN1 body-text from advisory to gate (2 HEAD advisories are
+   oracle-gluing artifacts, md verified correct); L2 dest resolution; full
+   mutation-suite re-run for the record (per-class numbers post-fix:
+   experiment 05).
 2. **Design + build the generation loop**: typed document model schema (informed
    by what the oracle emits), semantic-proposal prompts, repair loop against
    gates, N-version arbitration, **cross-page table stitching stage** (two

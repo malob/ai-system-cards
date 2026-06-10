@@ -128,7 +128,10 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
             sec.links.append((_strip_sentinels(lm.group(1)), lm.group(2), pg(m)))
         for lm in RE_AUTOLINK.finditer(body):
             sec.links.append((lm.group(1), lm.group(1), pg(m)))
-        sec.fn_defs[int(m.group(1))] = RE_LINK.sub(lambda l: l.group(1), body)
+        body_text = RE_LINK.sub(lambda l: l.group(1), body)
+        body_text = RE_AUTOLINK.sub(r"\1", body_text)
+        body_text = re.sub(r"(?m)^\s*[-*+][ \t]+", " ", body_text)  # list markers in defs
+        sec.fn_defs[int(m.group(1))] = _strip_sentinels(body_text)
         return " "
     seg = RE_FNDEF.sub(fndef, seg)
 

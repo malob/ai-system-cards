@@ -82,26 +82,33 @@ def extract_page(page) -> dict:
     for s in spans:
         lines.setdefault(s["line"], []).append(s)
     fn_mode = False
+    cur_n = None
+    footnotes: dict[int, str] = {}
     for _, line_spans in sorted(lines.items()):
         body_spans = [s for s in line_spans if s["zone"] == "body"]
         if not body_spans:
             continue
         first = body_spans[0]
         small = first["size"] <= BODY_SIZE - 0.8
-        if not fn_mode:
-            # a real footnote body line leads with the marker digit in tiny
-            # type (~6.6pt vs 11pt body) — the only reliable signature
-            if (
-                first["size"] <= 7.5
-                and re.fullmatch(r"\d{1,2}", first["text"].strip())
-                and first["bbox"][1] > H * 0.6
-            ):
-                fn_mode = True
-        elif not small:
-            fn_mode = False
+        is_marker = (
+            first["size"] <= 7.5
+            and re.fullmatch(r"\d{1,2}", first["text"].strip())
+            and first["bbox"][1] > H * 0.6
+        )
+        if is_marker:
+            # a footnote body line leads with the marker digit in tiny type
+            # (~6.6pt vs 11pt body) — the only reliable signature
+            fn_mode = True
+            cur_n = int(first["text"].strip())
+            footnotes.setdefault(cur_n, "")
+        elif fn_mode and not small:
+            fn_mode, cur_n = False, None
         if fn_mode:
             for s in body_spans:
                 s["zone"] = "fnbody"
+            if cur_n is not None:
+                body = "".join(s["text"] for s in body_spans if not (is_marker and s is first))
+                footnotes[cur_n] += " " + body
 
     links = {"uri": [], "goto": []}
     seen_uris = {}
@@ -139,6 +146,7 @@ def extract_page(page) -> dict:
         "spans": spans,
         "links": links,
         "pills": pills,
+        "footnotes": footnotes,
         "n_raster_images": len(set(map(tuple, [tuple(r) for r in image_rects]))),
     }
 

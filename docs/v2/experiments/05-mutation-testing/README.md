@@ -35,17 +35,25 @@ instance of a repeated link passed — now count-based over the whole document;
 the oracle now merges same-URI annotations per page (this had silently
 inflated counts). Re-run: 7/8.
 
-## Gaps exposed (the point of the exercise)
+## Gaps exposed (the point of the exercise) — and closed same-session
 
-1. ~~L1 set-vs-count~~ — **fixed** (above).
-2. **Footnote-def body text is invisible to T1** (excluded from the main
-   stream on both sides) and FN1 is count-only — so edits *inside* a footnote
-   body go uncaught. Fix direction: FN1 v2 compares per-number body text
-   (oracle fnbody zone keyed by leading marker digit vs md def text).
-3. **S1's table blind spot** is by design (cell bolds belong to TB1), but that
-   means TB1 must carry styling inside tables when it lands.
-4. **S2 window weakness**: a flattened chip whose label also appears as a chip
-   on an adjacent page is missed; per-page count comparison would close it.
+1. ~~L1 set-vs-count~~ — **fixed**: count-based URIs + wrapped-annotation
+   merge → drop-link 3/8 → 7/8.
+2. ~~Footnote bodies invisible~~ — **fixed**: FN1 now compares per-number body
+   text (oracle marker-digit-keyed bodies vs md defs) → delete-sentence and
+   swap-words **6/6** on re-run. The body-text check runs ADVISORY (minor)
+   until the oracle's stacked-footnote boundary detection is hardened (it can
+   glue adjacent bodies — confirmed md is correct at the 2 HEAD advisories,
+   p.16 / p.113-114 region).
+3. **S1's table blind spot stands by design** (cell bolds belong to TB1): TB1
+   must carry styling inside tables when it lands. drop-bold stays 5/8 with
+   that declared boundary.
+4. ~~S2 window masking~~ — **fixed**: strict same-page counts with a
+   windowed-deficit fallback for marker slop → flatten-chip **6/6**, HEAD
+   still clean.
+
+**Post-fix recall: 8 of 9 classes at 88–100%; the one at 62% (drop-bold) is a
+written, owned boundary, not a mystery.**
 
 ## Conclusion
 

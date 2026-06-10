@@ -231,24 +231,48 @@ def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozen
 def s2_chips(md_chips, oracle_pages, page_range, chip_colors, registry) -> list[dict]:
     """Chip coverage (S2): every pill whose fill is a manifest chip color has a
     matching :chip[label] nearby. S3: every markdown chip label ∈ registry."""
-    md_by_page: dict[int, list[str]] = {}
+    from collections import Counter
+
+    md_by_page: dict[int, Counter] = {}
     for label, pg in md_chips:
-        md_by_page.setdefault(pg, []).append(norm.normalize(label, True))
+        md_by_page.setdefault(pg, Counter())[norm.squash(label)] += 1
 
     flags = []
     for pno in page_range:
         if pno > len(oracle_pages):
             continue
+        # count-based per page (mutation gap 4): a same-label chip on an
+        # adjacent page must not satisfy this page's pill
+        want_counts = Counter()
         for pill in oracle_pages[pno - 1].get("pills", []):
-            if pill["color"] not in chip_colors:
-                continue
-            want = norm.normalize(pill["text"], True).strip()
-            hay = " | ".join(t for p in (pno - 1, pno, pno + 1) for t in md_by_page.get(p, []))
-            if want not in hay:
+            if pill["color"] in chip_colors:
+                want_counts[norm.squash(pill["text"])] += 1
+        if not want_counts:
+            continue
+        # strict same-page counts: ±1 windows sum so much on chip-dense pages
+        # that single drops are masked (mutation finding). Marker slop is
+        # tolerated via max() against the window AVERAGE only when strict
+        # fails — i.e. flag iff strict fails AND the window also shows deficit.
+        have = md_by_page.get(pno, Counter())
+        window = Counter()
+        for p in (pno - 1, pno, pno + 1):
+            window.update(md_by_page.get(p, Counter()))
+        for label, n in want_counts.items():
+            if have.get(label, 0) < n and window.get(label, 0) < sum(
+                c.get(label, 0)
+                for c in (
+                    Counter(
+                        norm.squash(pill["text"])
+                        for pill in oracle_pages[p - 1].get("pills", [])
+                        if pill["color"] in chip_colors
+                    )
+                    for p in (pno - 1, pno, pno + 1)
+                    if 0 < p <= len(oracle_pages)
+                )
+            ):
                 flags.append(_flag("S2", pno, "major",
-                                   {"kind": "chip-missing", "text": want[:60],
-                                    "color": pill["color"],
-                                    "registry_label": chip_colors[pill["color"]]}))
+                                   {"kind": "chip-missing", "text": label[:60],
+                                    "have": have.get(label, 0), "want": n}))
     for label, pg in md_chips:
         if label not in registry:
             flags.append(_flag("S3", pg, "major", {"kind": "label-not-in-registry", "label": label[:60]}))
@@ -276,4 +300,34 @@ def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
         for n, pg in sec.fn_refs:
             if n not in defs:
                 flags.append(_flag("FN1", pg, "major", {"kind": "ref-without-def", "n": n, "section": sec.name}))
+
+    # body-text equality per footnote number (mutation-testing gap 2):
+    # footnote bodies are excluded from T1's main stream, so edits inside them
+    # are invisible without this check
+    oracle_fns: dict[int, str] = {}
+    fn_page: dict[int, int] = {}
+    for pno in page_range:
+        if pno in toc_pages or pno > len(oracle_pages):
+            continue
+        for n, t in (oracle_pages[pno - 1].get("footnotes") or {}).items():
+            n = int(n)
+            oracle_fns[n] = oracle_fns.get(n, "") + " " + t
+            fn_page.setdefault(n, pno)
+    md_defs: dict[int, str] = {}
+    collisions = set()
+    for sec in sections:
+        for n, t in sec.fn_defs.items():
+            collisions.add(n) if n in md_defs else md_defs.setdefault(n, t)
+    for n, t in oracle_fns.items():
+        if n in collisions:
+            continue
+        if n not in md_defs:
+            flags.append(_flag("FN1", fn_page[n], "major", {"kind": "body-without-def", "n": n}))
+        elif norm.squash(md_defs[n]) != norm.squash(t):
+            # ADVISORY (minor) until the oracle's footnote-boundary detection
+            # is hardened: stacked footnotes can glue (n=16/17 on p.114 — md
+            # verified correct there). Promote to major once boundaries hold.
+            flags.append(_flag("FN1", fn_page[n], "minor",
+                               {"kind": "body-text-mismatch", "n": n,
+                                "oracle": t.strip()[:80], "md": md_defs[n][:80]}))
     return flags

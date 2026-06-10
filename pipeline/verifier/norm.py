@@ -36,6 +36,12 @@ def normalize(text: str, calibration: bool = False) -> str:
 BULLET_GLYPHS = "●•◦▪‣○"
 
 
+def squash(text: str, calibration: bool = True) -> str:
+    """Space-free token-normalized key — immune to span-join glue, wrapping,
+    and bullet glyphs. The comparison form for S1/FN1-style text matching."""
+    return "".join(tokens(text, calibration))
+
+
 def tokens(text: str, calibration: bool = False) -> list[str]:
     """Whitespace-insensitive token stream (A2). Bullet glyphs are layout
     artifacts (list structure is checked at the schema level), dropped (A5) —
