@@ -129,7 +129,10 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             text, _ = block_text_and_marks(blk, page, chips)
             out.append("#" * blk["level"] + " " + text.strip() + "\n")
         elif t == "paragraph":
-            out.append(q + _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker) + "\n")
+            body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
+            if not body.strip():  # invisible-only lines: never emit a bare '> '
+                continue
+            out.append(q + body + "\n")
         elif t == "item":
             body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
             # 2-space nesting inside quotes (4 spaces would read as code there)
@@ -150,11 +153,17 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             if blk["caption_lines"]:  # legacy in-figure captions (rare)
                 cap_blk = {"lines": blk["caption_lines"], "page": pno}
                 text, marks = block_text_and_marks(cap_blk, page, chips)
-                out.append(":::caption\n" + _hyphen_join(_apply_marks(text, marks)).strip() + "\n:::\n")
+                cap = re.sub(r"\](?=[A-Za-z0-9])", "] ",
+                             _hyphen_join(_apply_marks(text, marks)).strip())
+                out.append(":::caption\n" + cap + "\n:::\n")
         elif t == "caption":
             # first-class caption block (D23): marks applied (bold leads,
             # sub-labels), rendered uniformly by the :::caption directive
             body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
+            # bracket-lead glue: '[Figure 6.5.4.3.A]Stealth' — the lead span
+            # abuts the title span; ']' before a letter/digit takes a space
+            # ('](' stays: link syntax)
+            body = re.sub(r"\](?=[A-Za-z0-9])", "] ", body)
             out.append(":::caption\n" + body + "\n:::\n")
         elif t == "turn":
             # multi-paragraph turns: gap-recorded breaks UNION short-line
