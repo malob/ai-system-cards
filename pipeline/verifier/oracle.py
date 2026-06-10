@@ -51,7 +51,7 @@ def extract_page(page) -> dict:
     image_rects = _image_rects(page)
     spans = []
     line_id = 0
-    for blk in page.get_text("dict")["blocks"]:
+    for blk_id, blk in enumerate(page.get_text("dict")["blocks"]):
         if blk["type"] != 0:
             continue
         for line in blk["lines"]:
@@ -67,9 +67,11 @@ def extract_page(page) -> dict:
                         "italic": bool(s["flags"] & ITALIC) or "Italic" in s["font"],
                         "super": bool(s["flags"] & SUPER),
                         "color": _hex(s["color"]),
+                        "font": s["font"],
                         "bbox": [round(v, 1) for v in s["bbox"]],
                         "flags": s["flags"],
                         "line": line_id,
+                        "block": blk_id,
                     }
                 )
     for s in spans:
@@ -117,36 +119,46 @@ def extract_page(page) -> dict:
         if l["kind"] == fitz.LINK_URI:
             # a line-wrapped URL yields multiple annotations for ONE logical
             # link — merge same-URI annotations on a page
+            rect = [round(v, 1) for v in fitz.Rect(l["from"])]
             if l["uri"] in seen_uris:
                 seen_uris[l["uri"]]["anchor"] += anchor
+                seen_uris[l["uri"]]["rects"].append(rect)
             else:
-                entry = {"anchor": anchor, "uri": l["uri"]}
+                entry = {"anchor": anchor, "uri": l["uri"], "rects": [rect]}
                 seen_uris[l["uri"]] = entry
                 links["uri"].append(entry)
         elif l["kind"] in (fitz.LINK_GOTO, fitz.LINK_NAMED):
             dest_page = (l.get("page") if l.get("page") is not None else -1) + 1
-            entry = {"anchor": anchor, "dest_page": dest_page}
+            entry = {"anchor": anchor, "dest_page": dest_page,
+                     "rects": [[round(v, 1) for v in fitz.Rect(l["from"])]]}
             if dest_page == 0:  # named dest that doesn't resolve in the PDF's name tree
                 entry["unresolvable"] = True
                 entry["name"] = l.get("nameddest") or l.get("name") or ""
             links["goto"].append(entry)
 
-    pills = []
+    pills, boxes = [], []
     for d in page.get_drawings():
         if d.get("fill") is None:
             continue
         r = d["rect"]
-        if 6 < r.height < 30 and 20 < r.width < 420:
-            col = "#" + "".join(f"{int(round(v * 255)):02x}" for v in d["fill"])
+        col = "#" + "".join(f"{int(round(v * 255)):02x}" for v in d["fill"])
+        is_box = (r.height >= 30 and r.width >= 100) or (r.height >= 12 and r.width >= 250)
+        if is_box:
+            # wide rect = container/bubble/panel (incl. single-line turn bubbles)
+            boxes.append({"color": col, "bbox": [round(v, 1) for v in r]})
+        elif 6 < r.height < 30 and 20 < r.width < 250:
+            # narrow rect = inline pill (chip / placeholder / code span)
             t = page.get_text(clip=r).strip().replace("\n", " ")
             if t:
-                pills.append({"color": col, "text": t})
+                pills.append({"color": col, "text": t, "bbox": [round(v, 1) for v in r]})
 
     return {
         "spans": spans,
         "links": links,
         "pills": pills,
+        "boxes": boxes,
         "footnotes": footnotes,
+        "image_rects": [[round(v, 1) for v in r] for r in image_rects],
         "n_raster_images": len(set(map(tuple, [tuple(r) for r in image_rects]))),
     }
 

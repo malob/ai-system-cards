@@ -26,7 +26,7 @@ TOC_PAGES = set(range(4, 11))
 EXPECTED_PAGES = [p for p in range(2, 320) if p not in TOC_PAGES]  # 1 = cover
 
 
-def _flags_for(sections, pages, figures_map, limited: bool) -> list[dict]:
+def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> list[dict]:
     # global streams — sections share boundary pages, so compare the whole doc.
     # Title pages 1-2 are declared exclusions (cover art + title typography;
     # trivially eyeballable, no body text).
@@ -38,6 +38,12 @@ def _flags_for(sections, pages, figures_map, limited: bool) -> list[dict]:
         page_range = range(max(3, sections[0].page_start), sections[-1].page_end + 1)
     else:
         page_range = range(3, 320)
+    if only_pages is not None:
+        # wave/partial mode: restrict the oracle range AND the md streams to the
+        # generated pages, so ungenerated pages don't read as omissions
+        page_range = [p for p in page_range if p in only_pages]
+        md_tokens = [tp for tp in md_tokens if tp[1] in only_pages]
+        md_links = [l for l in md_links if l[2] in only_pages]
 
     # chip vocabulary from the style manifest (label -> fill hex)
     import re as _re
@@ -58,9 +64,11 @@ def _flags_for(sections, pages, figures_map, limited: bool) -> list[dict]:
     flags += invariants.fn1_footnotes(sections, pages, page_range, TOC_PAGES)
     flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages)
     flags += invariants.s2_chips(md_chips, pages, page_range, chip_colors, registry)
-    if not limited:
+    if not limited and only_pages is None:
         flags += invariants.p1_markers(sections, EXPECTED_PAGES)
         flags += invariants.f1_figures(sections, figures_map)
+    elif only_pages is not None:
+        flags += [f for f in invariants.f1_figures(sections, figures_map) if f["page"] in only_pages]
     return invariants.pair_displacements(flags)
 
 
@@ -84,6 +92,8 @@ def main():
     ap.add_argument("--sections", nargs="*", help="prefixes to limit to (e.g. 02a)")
     ap.add_argument("--json", type=Path)
     ap.add_argument("--samples", type=int, default=10)
+    ap.add_argument("--only-pages", nargs="*", type=int,
+                    help="restrict all checks to these source pages (for wave/partial runs)")
     args = ap.parse_args()
 
     pages = oracle.extract(CARD / "source.pdf", cache=REPO / "pipeline/.cache/oracle.json")
@@ -95,7 +105,8 @@ def main():
             continue
         sections.append(mdproj.project(name, text))
 
-    flags = _flags_for(sections, pages, figures_map, bool(args.sections))
+    flags = _flags_for(sections, pages, figures_map, bool(args.sections),
+                       only_pages=set(args.only_pages) if args.only_pages else None)
 
     by_inv = Counter((f["invariant"], f["severity"]) for f in flags)
     print(f"\n=== verifier v0 @ {args.ref} — {len(sections)} sections ===")

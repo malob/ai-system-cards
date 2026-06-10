@@ -3,3 +3,6 @@ cards/*/*/extracted/pages/
 
 .DS_Store
 pipeline/.cache/
+
+# v2 generation output (regenerated artifact, reviewed via gates + render)
+cards/anthropic/claude-fable-5/sections-v2/
