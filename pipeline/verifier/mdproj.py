@@ -120,6 +120,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         sec.fig_skips.setdefault(int(m.group(2)), []).append((m.group(1), m.group(3)))
         return " "
     seg = RE_FIGSKIP.sub(figskip, seg)
+    seg = re.sub(r"</?u>", "", seg)   # prose underline (caption legend words)
     seg = RE_COMMENT.sub(" ", seg)
 
     def piperule(m):

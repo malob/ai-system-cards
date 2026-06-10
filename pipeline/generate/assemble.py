@@ -432,10 +432,48 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                 marks.append(("bold", m_start, m_end, None))
             if s["italic"]:
                 marks.append(("italic", m_start, m_end, None))
-            # NOTE: prose-underline marks were tried here (caption 'underlined'
-            # word) and reverted — rule-matching over-fired outside tables and
-            # corrupted the stream (T1 6->33). Needs rule-color/context
-            # filtering; queued. Table-cell underlines (FL-09) live in tables.py.
+            # prose underline: CAPTION blocks only (the legend's literal
+            # 'underlined' word). The unrestricted version over-fired on
+            # chart-axis/table-border rules under ordinary prose (T1 6->33);
+            # in this card prose underline occurs only in captions. The rule
+            # must hug the baseline and span most of the word, nothing more.
+            if block.get("type") == "caption" and s["zone"] == "body":
+                sb = s["bbox"]
+                scy = (sb[1] + sb[3]) / 2
+                # linked text is underlined by LINK styling — never mark it
+                # (a <u> straddling '[text](url)' also breaks the syntax)
+                in_link = any(
+                    lr[1] <= scy <= lr[3]
+                    and min(sb[2], lr[2]) - max(sb[0], lr[0]) > 0.5 * (sb[2] - sb[0])
+                    for lk in page["links"]["uri"] + page["links"]["goto"]
+                    for lr in (lk.get("rects") or [lk.get("rect")]) if lr)
+                if not in_link and len(t.strip()) > 1:
+                    for ru in page.get("rules", []):
+                        rb = ru["bbox"]
+                        if not (sb[3] - 2.5 <= rb[1] <= sb[3] + 5.0):
+                            continue
+                        ov0, ov1 = max(sb[0], rb[0]), min(sb[2], rb[2])
+                        if ov1 - ov0 <= 2:
+                            continue
+                        # the rule usually covers a few WORDS of a longer
+                        # span ('underlined' inside the legend sentence):
+                        # map its x-range to chars proportionally, snap to
+                        # word boundaries, drop trailing punctuation
+                        # a word is underlined iff its estimated CENTER sits
+                        # under the rule — robust to proportional-width drift
+                        # (end-mapping pulled in the next word: 'underlined (but')
+                        cw = (sb[2] - sb[0]) / max(1, len(t))
+                        words = [(w.start(), w.end())
+                                 for w in re.finditer(r"\S+", t)]
+                        hit = [(ws, we) for ws, we in words
+                               if ov0 - 1 <= sb[0] + cw * (ws + we) / 2 <= ov1 + 1]
+                        if not hit:
+                            continue
+                        a2, b2 = start + hit[0][0], start + hit[-1][1]
+                        while b2 > a2 and t[b2 - start - 1] in ".,;:":
+                            b2 -= 1
+                        if b2 > a2:
+                            marks.append(("underline", a2, b2, None))
             for pi, pill in enumerate(pills):
                 if "bbox" in pill and _rect_contains(pill["bbox"], s["bbox"], slack=2.5):
                     if pill["color"] in manifest_chips:

@@ -29,19 +29,54 @@ def _apply_marks(text: str, marks: list) -> str:
       so the close lands left of the open ("]:chip[" not ":chip[]");
     - among opens, inner (shorter) first so outer ends up leftmost;
     - among closes, outer (earlier start) first so inner ends up leftmost."""
-    ops = []  # (pos, phase, tiebreak, edit)
+    # emphasis straddling a link boundary nests illegally
+    # ('[**text](#u)**' renders literal asterisks): clip each emphasis mark
+    # against every link range, splitting at the boundary
+    links = [(a, b) for kind, a, b, _ in marks if kind == "link"]
+    fixed = []
+    for kind, a, b, data in marks:
+        if kind in ("bold", "italic", "underline"):
+            pieces = [(a, b)]
+            for la, lb in links:
+                nxt = []
+                for pa, pb in pieces:
+                    if pa < la < pb or pa < lb < pb:
+                        cuts = sorted({pa, max(pa, min(pb, la)),
+                                       max(pa, min(pb, lb)), pb})
+                        nxt.extend((c1, c2) for c1, c2 in zip(cuts, cuts[1:])
+                                   if c2 > c1)
+                    else:
+                        nxt.append((pa, pb))
+                pieces = nxt
+            # re-trim each piece to non-space (a split at the link edge can
+            # leave '…on ' — a space-flanked '**' is not a valid delimiter)
+            for pa, pb in pieces:
+                while pb > pa and text[pb - 1].isspace():
+                    pb -= 1
+                while pa < pb and text[pa].isspace():
+                    pa += 1
+                if pb > pa:
+                    fixed.append((kind, pa, pb, data))
+        else:
+            fixed.append((kind, a, b, data))
+    marks = fixed
+    ops = []  # (pos, phase, tiebreak, rank, edit)
+    # rank breaks FULL ties (same pos+phase+range): emphasis nests INSIDE the
+    # link ('[**text**](url)') — link-open lands leftmost (applied last, rank
+    # 1) and link-close rightmost (applied first, rank 0); unbroken ties
+    # interleaved the two ('[**text](url)**', literal asterisks)
     for kind, a, b, data in marks:
         if kind == "fnref":
-            ops.append((a, 0, 0, lambda t, a=a, b=b, d=data: t[:a] + f"[^{d}]" + t[b:]))
+            ops.append((a, 0, 0, 0, lambda t, a=a, b=b, d=data: t[:a] + f"[^{d}]" + t[b:]))
         elif kind == "link":
-            ops.append((a, 1, b, lambda t, a=a: t[:a] + "[" + t[a:]))
-            ops.append((b, 2, a, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
+            ops.append((a, 1, b, 1, lambda t, a=a: t[:a] + "[" + t[a:]))
+            ops.append((b, 2, a, 0, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
         elif kind in SYNTAX:
             o, c = SYNTAX[kind]
-            ops.append((a, 1, b, lambda t, a=a, o=o: t[:a] + o + t[a:]))
-            ops.append((b, 2, a, lambda t, b=b, c=c: t[:b] + c + t[b:]))
+            ops.append((a, 1, b, 0, lambda t, a=a, o=o: t[:a] + o + t[a:]))
+            ops.append((b, 2, a, 1, lambda t, b=b, c=c: t[:b] + c + t[b:]))
     out = text
-    for _, _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1], x[2])):
+    for _, _, _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1], x[2], x[3])):
         out = edit(out)
     return out
 
