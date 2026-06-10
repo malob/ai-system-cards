@@ -1,0 +1,48 @@
+"""Shared normalization for text comparison (verification contract §Normalization).
+
+Two allowlists:
+- PRODUCTION: what v2 output is allowed to differ from the source by (A1-A4).
+- CALIBRATION adds v1's known, accepted divergences (quote folding) so that
+  calibrating against v1 markdown doesn't drown in them. v2 generation must NOT
+  rely on the calibration extras.
+"""
+
+import re
+import unicodedata
+
+LIGATURES = {"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl", "ﬅ": "ft", "ﬆ": "st"}
+INVISIBLES = re.compile("[­​‌‍⁠﻿]")  # soft hyphen, zero-widths
+
+# v1 stored straight quotes (renderer smart-quoted them); fold for calibration only.
+CALIBRATION_FOLDS = {
+    "“": '"', "”": '"',          # curly double quotes
+    "‘": "'", "’": "'",          # curly single quotes
+    "‑": "-",                          # non-breaking hyphen
+    " ": " ",                          # nbsp
+}
+
+
+def normalize(text: str, calibration: bool = False) -> str:
+    text = unicodedata.normalize("NFC", text)
+    for k, v in LIGATURES.items():
+        text = text.replace(k, v)
+    text = INVISIBLES.sub("", text)
+    if calibration:
+        for k, v in CALIBRATION_FOLDS.items():
+            text = text.replace(k, v)
+    return text
+
+
+BULLET_GLYPHS = "●•◦▪‣○"
+
+
+def tokens(text: str, calibration: bool = False) -> list[str]:
+    """Whitespace-insensitive token stream (A2). Bullet glyphs are layout
+    artifacts (list structure is checked at the schema level), dropped (A5) —
+    including when glued to the following word."""
+    out = []
+    for t in normalize(text, calibration).split():
+        t = t.lstrip(BULLET_GLYPHS)
+        if t:
+            out.append(t)
+    return out

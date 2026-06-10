@@ -2,3 +2,4 @@
 cards/*/*/extracted/pages/
 
 .DS_Store
+pipeline/.cache/

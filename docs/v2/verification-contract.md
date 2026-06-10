@@ -38,9 +38,10 @@ that's noted, and the bake-off (experiment 02) is what firms it up.
 
 - **T1 — Bidirectional token-stream equality.** The model's text projection equals
   the source text layer: no omissions (source→output) and no additions
-  (output→source; CA-01 — v1 only ever checked the first direction). Typed fields
-  that are legitimately not source text (figure alt text, slugs/ids) are excluded
-  *by type*, not by pattern.
+  (output→source — v1 only ever checked the first direction; additions are a
+  real failure mode even though the one cataloged instance, CA-01, was later
+  retracted). Typed fields that are legitimately not source text (figure alt
+  text, slugs/ids) are excluded *by type*, not by pattern.
 - **T2 — Order.** T1 is sequence-sensitive (alignment diff, not set membership):
   reading order must match the oracle's. Where the extractor's reading order is
   unreliable on a page, the page is flagged to N1 rather than silently trusted.
@@ -163,7 +164,7 @@ fail T1.
 | PM-01…05        | P1 (by construction + check) | FL-04     | S1             |
 | PM-06           | L2, P1            | FL-05     | T1 (no-normalize rule) |
 | PM-07           | SC1               | FL-06     | SC1            |
-| FL-01           | L1, L2            | CA-01     | T1 (output→source direction) |
+| FL-01           | L1, L2            | CA-01     | retracted (exp 04); T1 stays bidirectional |
 | FL-02           | S2, S3            | CA-02     | T1             |
 | FL-03           | N1, V1            | RN-01/02  | SC2, V1        |
 | PR-01…03        | process: D2/D4/D7 (in-loop, staged, spec) |  |                |
@@ -174,15 +175,20 @@ Every invariant carries a status; this section is updated as experiments land.
 Target: each gate **mutation-tested** with per-class recall (D6) and, where
 applicable, **calibrated** against the v1 corpus (experiment 01 refs).
 
-As of 2026-06-09 (experiment 02 part 1, PyMuPDF probe on 11 pages):
+As of 2026-06-10 (experiment 04 — verifier v0 calibrated against v1 git history):
 
-- **Signal-feasible:** L1/L2 (URI+GoTo exact on probe pages: 23/23, 26/26, 1/1),
-  S1 (bold/italic flags incl. caption leads), S2 (chip fills — signal amended),
-  FN1 (superscript flag), F1 (image counts exact), P1 (page-anchored by
-  construction).
-- **TB1 signal-feasible via docling** (2026-06-10, experiment 02 part 2): merged
-  cells structurally exact, zero false-positive tables on probe pages. Extraction
-  stack settled as D14 (PyMuPDF oracle + docling tables + LLM semantics).
-- **T2:** block order corroborated by docling; prose segmentation stays anchored
-  to the PyMuPDF span stream (docling's paragraph merging is too mushy to gate on).
-- **No invariant is yet implemented, calibrated, or mutation-tested.**
+- **Implemented + calibrated (v0, `pipeline/verifier/`):** T1 (bidirectional,
+  order-sensitive), L1 (URI+GoTo coverage), P1 (markers), F1 (figure counts),
+  FN1 (footnote counts). Calibration: at pre-fix `f60899a` the suite
+  rediscovers FL-01 (134 L1 majors vs 2 at HEAD) and PM-06 (the exact 5
+  duplicate pages); at HEAD it found **new latent defects** (2 missing
+  named-destination links on p.100; figure-count anomalies p.139/150/151).
+  CA-01 was retracted in the process. Full table: experiment 04 README.
+- **Signal-feasible, not yet implemented:** S1 (bold/italic flags incl. caption
+  leads), S2/S3 (chip pill fills + manifest), TB1 (docling — merged cells exact,
+  zero false positives in probes; stack = D14), L2 (dest resolution).
+- **T2:** order-sensitivity is in T1's diff; docling corroborates block order
+  (its paragraph segmentation too mushy to gate on).
+- **Not yet:** mutation testing (D6) — recall demonstrated on history, not yet
+  quantified per class. N1/V1 machinery. Structural splits (PM-02/03/04) await
+  the typed model; v0 catches their token-level side effects only.

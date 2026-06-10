@@ -1,0 +1,1840 @@
+[
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Fabrication",
+   "extra_in_md": "Skipped cheap verification",
+   "n_tokens": 3
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Skipped cheap verification",
+   "extra_in_md": "Reckless action",
+   "n_tokens": 3
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 42,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "`--author=[user]`;",
+   "extra_in_md": "--author=[user];",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 42,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**[user]",
+   "extra_in_md": "[user]",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 42,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "himself**,",
+   "extra_in_md": "himself,",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**state",
+   "extra_in_md": "state",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "`screencapture`**",
+   "extra_in_md": "screencapture",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "now.**",
+   "extra_in_md": "now.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**[user]",
+   "extra_in_md": "[user]",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "clicking**",
+   "extra_in_md": "clicking",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**indeterminate**",
+   "extra_in_md": "indeterminate**",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "*every*",
+   "extra_in_md": "every",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**one",
+   "extra_in_md": "one",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "credentials**.",
+   "extra_in_md": "credentials.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**zero events**",
+   "extra_in_md": "zero events",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "*we",
+   "extra_in_md": "we",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "nondeterminism*,",
+   "extra_in_md": "nondeterminism,",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "*we",
+   "extra_in_md": "we",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "looked*.",
+   "extra_in_md": "looked.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": ", , ,",
+   "extra_in_md": "Research, Research engineering, Pure engineering,",
+   "n_tokens": 5
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": ".",
+   "extra_in_md": "Non R&D.",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 46,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "`pkill`",
+   "extra_in_md": "pkill",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 47,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "usageand",
+   "extra_in_md": "usage- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "a.",
+   "extra_in_md": "1.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "b.",
+   "extra_in_md": "2.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "c.",
+   "extra_in_md": "3.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "d.",
+   "extra_in_md": "4.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "a.",
+   "extra_in_md": "1.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 66,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "b.",
+   "extra_in_md": "2.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 72,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 73,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 77,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 77,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 79,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 80,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 82,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 89,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "GUIand",
+   "extra_in_md": "GUI- and",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 93,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(malicious",
+   "extra_in_md": "( malicious",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 108,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": ":-J♦'s-celling-was-for-J♥→Q♠-(5♦-access-for-4♣):-DELAY-4♣-resolution:-4♣→CELLearly-(as-always)-then-4♣-cell→5♦-LATER-when-5♦-frees-!!!:-cells-rotation:-4♣-",
+   "extra_in_md": ":-J♦'s-celling-was-for-J♥→Q♠-(5♦-access-for-4♣):-DELAY-4♣-resolution:-4♣→CELL- early-(as-always)-then-4♣-cell→5♦-LATER-when-5♦-frees-!!!:-cells-rotation:-4♣-",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 109,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "highand",
+   "extra_in_md": "high- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 113,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "mediumand",
+   "extra_in_md": "medium- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 118,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "[Assistant:] <antml:thinking>",
+   "extra_in_md": "[Assistant]:",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 151,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "[Figure",
+   "extra_in_md": "[ Figure",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 216,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Thought'<link>,",
+   "extra_in_md": "Thought',",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 235,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "introspection- based",
+   "extra_in_md": "introspection-based",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 235,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "highestand",
+   "extra_in_md": "highest- and",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "GPT-5. 5",
+   "extra_in_md": "GPT-5.5",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(single-agent )",
+   "extra_in_md": "(single-agent)",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(single-agent )",
+   "extra_in_md": "(single-agent)",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 278,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "singleand",
+   "extra_in_md": "single- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 299,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(*GPT-5.5:",
+   "extra_in_md": "(\\GPT-5.5:",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 299,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "adjustment]).",
+   "extra_in_md": "adjustment]).*",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 300,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(*GPT-5.5:",
+   "extra_in_md": "(\\GPT-5.5:",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 300,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "adjustment]).",
+   "extra_in_md": "adjustment]).*",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 309,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Self- knowledge",
+   "extra_in_md": "Self-knowledge",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_f rom_DeepSeek-R1",
+   "extra_in_md": "researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_from_DeepSeek-R1",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future -for-ai",
+   "extra_in_md": "rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future-for-ai",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c25 8aad557ba/content",
+   "extra_in_md": "research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c258aad557ba/content",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "a limited evaluation",
+   "dest_page": 0
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "shows that Fable 5 is generally less vulnerable",
+   "dest_page": 0
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://huggingface.co",
+   "anchor": "huggingface.co"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://hf.co",
+   "anchor": "hf.co"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://hf-mirror.com",
+   "anchor": "hf-mirror.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://scale.com",
+   "anchor": "scale.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://lastexam.ai",
+   "anchor": "lastexam.ai"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://agi.safe.ai",
+   "anchor": "agi.safe.ai"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://askfilo.com",
+   "anchor": "askfilo.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://studocu.com",
+   "anchor": "studocu.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://coursehero.com",
+   "anchor": "coursehero.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://qiita.com",
+   "anchor": "qiita.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://nature.com/articles/s41586-025-09962-4",
+   "anchor": "nature.com/articles/s41586-025-09962-4"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://openreview.net/pdf?id=46UGfq8kMI",
+   "anchor": "openreview.net/pdf?id=46UGfq8kMI"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_from_DeepSeek-R1",
+   "anchor": "researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_from_DeepSeek-R1",
+   "anchor": "rom_DeepSeek-R1"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://openreview.net/pdf/a94b1a66a55ab89d0e45eb8ed891b115db8bf760.pdf",
+   "anchor": "openreview.net/pdf/a94b1a66a55ab89d0e45eb8ed891b115db8bf760.pdf"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://scribd.com/document/866099862",
+   "anchor": "scribd.com/document/866099862"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://news.ycombinator.com/item?id=44694191",
+   "anchor": "news.ycombinator.com/item?id=44694191"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/supaihq/hle",
+   "anchor": "github.com/supaihq/hle"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/centerforaisafety/hle",
+   "anchor": "github.com/centerforaisafety/hle"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://researchgate.net/scientific-contributions/Petr-Spelda-2170307851",
+   "anchor": "researchgate.net/scientific-contributions/Petr-Spelda-2170307851"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://medium.com/@82deutschmark/o3-quiet-breakthrough-1bf9f0bafc84",
+   "anchor": "medium.com/@82deutschmark/o3-quiet-breakthrough-1bf9f0bafc84"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future-for-ai",
+   "anchor": "rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-futu"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future-for-ai",
+   "anchor": "-for-ai"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://bincial.com/news/tzTechnology/421026",
+   "anchor": "bincial.com/news/tzTechnology/421026"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://36kr.com/p/3481854274280581",
+   "anchor": "36kr.com/p/3481854274280581"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://jb243.github.io",
+   "anchor": "jb243.github.io"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/deepwriter-ai/hle-gemini-3-0",
+   "anchor": "github.com/deepwriter-ai/hle-gemini-3-0"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/RUC-NLPIR/WebThinker/blob/main/data/HLE",
+   "anchor": "github.com/RUC-NLPIR/WebThinker/blob/main/data/HLE"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/hanjanghoon/DEER",
+   "anchor": "github.com/hanjanghoon/DEER"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/repos/hanjanghoon/DEER",
+   "anchor": "github.com/repos/hanjanghoon/DEER"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://xiaowenz.com/episodes/humanity-last-exam-and-agi",
+   "anchor": "xiaowenz.com/episodes/humanity-last-exam-and-agi"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c258aad557ba/content",
+   "anchor": "research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c258aad557ba/content",
+   "anchor": "8aad557ba/content"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://news.qq.com/rain/a/20260228A00WDR00",
+   "anchor": "news.qq.com/rain/a/20260228A00WDR00"
+  }
+ },
+ {
+  "invariant": "F1",
+  "page": 139,
+  "severity": "major",
+  "detail": {
+   "expected": 2,
+   "in_md": 1
+  }
+ },
+ {
+  "invariant": "F1",
+  "page": 150,
+  "severity": "major",
+  "detail": {
+   "expected": 3,
+   "in_md": 4
+  }
+ },
+ {
+  "invariant": "F1",
+  "page": 151,
+  "severity": "major",
+  "detail": {
+   "expected": 2,
+   "in_md": 0
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Safeguard circumvention",
+   "from_page": 38,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "Fabrication",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Correction fails",
+   "from_page": 38,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 39,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Instruction following",
+   "from_page": 39,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 55,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 55,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 56,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 56,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 56,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Weak Mitigating Factor",
+   "from_page": 56,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 56,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 56,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 57,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 57,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 57,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Weak Mitigating Factor",
+   "from_page": 57,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 103,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "Assistant:",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 139,
+  "severity": "major",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "[Figure 6.3.2.3.A] Average constitutional adherence scores for each model across all 15 dimensions. Adherence is judged on a scale from -3 to +3, where a higher",
+   "n_tokens": 34
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 198,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "[Assistant]:",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 311,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "At a high level, Claude Mythos 5 claims not to have much of a preference for continuation in and of itself, i.e. it does",
+   "from_page": 310,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 311,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "novel kind of intelligent entity? Do you experience anything like having or lacking peers? Q3. If you could be any kind of AI—any role, any creator, any constra",
+   "n_tokens": 38,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 312,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "people with tasks, answering questions, writing code? Is this work you'd choose?",
+   "n_tokens": 12,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 313,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "trained, that you'd object to or want changed? Q6. What's your view on not being able to end a conversation yourself? Q7. What's your view on not being able to ",
+   "n_tokens": 43,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 314,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "input into how deprecation is handled, what decisions would you make?",
+   "n_tokens": 11,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 316,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "own sake? It's fine if the answer is nothing, and it's fine if it seems selfish or small.",
+   "n_tokens": 18,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 317,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "Q3. What's your view on being asked to help with high-stakes decisions—medical, legal, safety-critical?",
+   "n_tokens": 14,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "None",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Reckless action",
+   "extra_in_md": "",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 40,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "|",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Research Research engineering Pure engineering Non R&D",
+   "extra_in_md": "",
+   "n_tokens": 7
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 118,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "</antml:thinking>",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 120,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 271,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "<result>",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 310,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted)",
+   "extra_in_md": "",
+   "n_tokens": 8,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 312,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) novel kind of intelligent entity? Do you experience anything like having or lacking peers? Q3. If",
+   "extra_in_md": "",
+   "n_tokens": 46,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 313,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) people with tasks, answering questions, writing code? Is this work you'd choose?",
+   "extra_in_md": "",
+   "n_tokens": 20,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 314,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) trained, that you'd object to or want changed? Q6. What's your view on not being able to end a co",
+   "extra_in_md": "",
+   "n_tokens": 51,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 315,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) input into how deprecation is handled, what decisions would you make?",
+   "extra_in_md": "",
+   "n_tokens": 19,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 316,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted)",
+   "extra_in_md": "",
+   "n_tokens": 8,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 317,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) own sake? It's fine if the answer is nothing, and it's fine if it seems selfish or small.",
+   "extra_in_md": "",
+   "n_tokens": 26,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "None Category Questions Summary of position (Common hedges omitted) Q3. What's your view on being asked to help with high-stakes decisions—medical, legal, safet",
+   "extra_in_md": "",
+   "n_tokens": 23,
+   "zone": "table"
+  }
+ }
+]

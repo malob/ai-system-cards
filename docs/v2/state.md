@@ -3,7 +3,7 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-10 (~00:30) — groundwork session with Fable 5.
+**Last updated:** 2026-06-10 (~01:15) — groundwork + verifier v0 session with Fable 5.
 
 ## Cold-start capsule
 
@@ -48,10 +48,20 @@ taxonomy in its §2 is load-bearing).
     styling (#f8f8f8/#188038), turn-bubble role colors, vector-drawn chart
     furniture (→ exclusion zones must cover drawing clusters, not just raster
     images), #fefdfb micro-pills ×91 on 2 pages, near-black paste artifacts.
-  - **Decisions D15–D17**: placeholders preserved (FL-07 resolved); stratified
+  - **Decisions D15–D18**: placeholders preserved (FL-07 resolved); stratified
     spec (universal core + per-card manifests + closure rule — the
-    house-of-cards answer); capture-fidelity vs presentation-editorial split.
-- No v2 pipeline code yet. Nothing pushed (D13).
+    house-of-cards answer); capture-fidelity vs presentation-editorial split;
+    pipeline code in `pipeline/`.
+  - **Style manifest seeded** —
+    [cards/anthropic/claude-fable-5/style-manifest.yaml](../../cards/anthropic/claude-fable-5/style-manifest.yaml)
+    (D16 worked example; owner confirmation pending).
+  - **Verifier v0 BUILT + CALIBRATED** (`pipeline/verifier/`; experiment 04):
+    T1/L1/P1/F1/FN1 implemented over the PyMuPDF oracle. At `f60899a` it
+    rediscovers FL-01 (134 L1 majors vs 2 at HEAD) and PM-06 (exact 5 pages);
+    at HEAD it found **new latent v1 defects** — 2 missing named-destination
+    links (p.100, `06a:26`) + figure-count anomalies (p.139/150/151). **CA-01
+    retracted** (was a grep-separator misread; bidirectional T1 stays).
+- Nothing pushed (D13).
 
 ## Pending owner decisions (D2 issue-type queue)
 
@@ -61,19 +71,21 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-1. **Build mechanical verifier v0; calibrate.** Implement the gate invariants on
-   the D14 oracle stack (PyMuPDF + docling for tables); run against `f60899a`
-   sections — must rediscover the cataloged defects (recall per experiment 01's
-   "how to use"); then mutation-test per class (D6). Gaps → new checks or
-   explicit human-coverage notes in the contract. Includes: docling revisit
-   trigger (cross-check all 12 v1 HTML tables incl. the p.252 row-count
-   discrepancy) and the **style-manifest format** (D16) — write the Fable 5
-   manifest from the census as the worked example.
-2. **Design + build the generation loop** (only after 1): typed document model
-   schema (informed by what the oracle emits), semantic-proposal prompts, repair
-   loop against gates, N-version arbitration, **cross-page table stitching
-   stage**, vision sweep, escalation worklist.
-3. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
+1. **Triage the verifier's new finds** (experiment 04): eyeball p.139/150/151
+   page renders vs md (figure counts + the p.139 caption question); fix the two
+   p.100 links in v1 content (post-acceptance hand-edit per D9 — v1 is shipped
+   content) or leave for the v2 re-conversion; decide the auto-link spec rule.
+2. **Extend verifier**: S1 bold/italic runs, S2/S3 chips via style manifest,
+   TB1 via docling (incl. cross-check of all 12 v1 HTML tables and the p.252
+   row-count discrepancy), L2 destination resolution.
+3. **Mutation-test the verifier (D6)**: inject per-class synthetic defects,
+   measure recall, close gaps. This turns "calibrated on history" into a
+   number.
+4. **Design + build the generation loop**: typed document model schema (informed
+   by what the oracle emits), semantic-proposal prompts, repair loop against
+   gates, N-version arbitration, **cross-page table stitching stage**, vision
+   sweep, escalation worklist.
+5. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
 
 ## Open questions

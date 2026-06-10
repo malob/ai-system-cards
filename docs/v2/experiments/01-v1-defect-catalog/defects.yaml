@@ -192,16 +192,17 @@ defects:
   # ── Content artifacts — found in diff mining; NOT in the brief's taxonomy ──
   - id: CA-01
     class: content-artifact
-    title: Stray lone "-" lines injected
+    title: "RETRACTED — stray lone '-' lines (phantom)"
     description: >-
-      Raw conversion scattered solitary "-" lines (artifact bullets) between
-      paragraphs, e.g. before "**Cluster:**" lines in §2.3.3 — text present in the
-      output that does not exist in the source.
-    evidence: {commits: [fb483fb]}
-    detection: >-
-      Token-stream equality in the OUTPUT→SOURCE direction (extra-token check).
-      v1's coverage sweep only checked source→output presence, so additions were
-      invisible. GATE, both directions.
+      RETRACTED 2026-06-10 (experiment 04): the "lone - lines" were grep -B/-A
+      GROUP SEPARATORS in the diff inspection, not diff content; the pre-fix
+      files contain zero such lines. Kept as a cautionary entry: derive catalog
+      evidence from git show output directly, never grep context windows. The
+      bidirectional T1 check this motivated remains (independently justified;
+      additions are a real possible failure mode, quantified by mutation
+      testing D6).
+    evidence: {experiment: "04 (retraction)"}
+    detection: n/a (retracted); bidirectional T1 stays in the contract.
 
   - id: CA-02
     class: content-artifact

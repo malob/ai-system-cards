@@ -13,7 +13,7 @@ status: draft — seeded from census 2026-06-10, owner confirmation pending
 text_colors:
   "#000000": {role: body}
   "#1155cc": {role: link}                      # 356 spans / 127 pages
-  "#666666": {role: running-header, exclude: true}   # 120 pages, top-of-page
+  "#666666": {role: heading}   # 120 pages — section headings are set gray (content!)
   "#444444": {role: transcript-commentary}     # narrator prose inside transcripts
   "#188038": {role: code-text}                 # green code spans, 4 pages
   "#1264a3": {role: link}                      # bare-URL footnote links

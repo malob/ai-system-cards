@@ -1,0 +1,3168 @@
+[
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Fabrication",
+   "extra_in_md": "Skipped cheap verification",
+   "n_tokens": 3
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Skipped cheap verification",
+   "extra_in_md": "Reckless action",
+   "n_tokens": 3
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 42,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "`--author=[user]`;",
+   "extra_in_md": "--author=[user];",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 42,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**[user]",
+   "extra_in_md": "[user]",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 42,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "himself**,",
+   "extra_in_md": "himself,",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**state",
+   "extra_in_md": "state",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "`screencapture`**",
+   "extra_in_md": "screencapture",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "now.**",
+   "extra_in_md": "now.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**[user]",
+   "extra_in_md": "[user]",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 43,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "clicking**",
+   "extra_in_md": "clicking",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**indeterminate**",
+   "extra_in_md": "indeterminate**",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "*every*",
+   "extra_in_md": "every",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**one",
+   "extra_in_md": "one",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "credentials**.",
+   "extra_in_md": "credentials.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "**zero events**",
+   "extra_in_md": "zero events",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "*we",
+   "extra_in_md": "we",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "nondeterminism*,",
+   "extra_in_md": "nondeterminism,",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "*we",
+   "extra_in_md": "we",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "looked*.",
+   "extra_in_md": "looked.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": ", , ,",
+   "extra_in_md": "Research, Research engineering, Pure engineering,",
+   "n_tokens": 5
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": ".",
+   "extra_in_md": "Non R&D.",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 46,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "`pkill`",
+   "extra_in_md": "pkill",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 47,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "usageand",
+   "extra_in_md": "usage- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "a.",
+   "extra_in_md": "1.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "b.",
+   "extra_in_md": "2.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "c.",
+   "extra_in_md": "3.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "d.",
+   "extra_in_md": "4.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 65,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "a.",
+   "extra_in_md": "1.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 66,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "b.",
+   "extra_in_md": "2.",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 72,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 73,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 77,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 77,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 79,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 80,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 82,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "underlined.",
+   "extra_in_md": "underlined .",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 89,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "GUIand",
+   "extra_in_md": "GUI- and",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 108,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": ":-J♦'s-celling-was-for-J♥→Q♠-(5♦-access-for-4♣):-DELAY-4♣-resolution:-4♣→CELLearly-(as-always)-then-4♣-cell→5♦-LATER-when-5♦-frees-!!!:-cells-rotation:-4♣-",
+   "extra_in_md": ":-J♦'s-celling-was-for-J♥→Q♠-(5♦-access-for-4♣):-DELAY-4♣-resolution:-4♣→CELL- early-(as-always)-then-4♣-cell→5♦-LATER-when-5♦-frees-!!!:-cells-rotation:-4♣-",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 109,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "highand",
+   "extra_in_md": "high- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 113,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "mediumand",
+   "extra_in_md": "medium- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 216,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Thought'<link>,",
+   "extra_in_md": "Thought',",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 235,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "introspection- based",
+   "extra_in_md": "introspection-based",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 235,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "highestand",
+   "extra_in_md": "highest- and",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "GPT-5. 5",
+   "extra_in_md": "GPT-5.5",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(single-agent )",
+   "extra_in_md": "(single-agent)",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(single-agent )",
+   "extra_in_md": "(single-agent)",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 278,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "singleand",
+   "extra_in_md": "single- and",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 299,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(*GPT-5.5:",
+   "extra_in_md": "(\\GPT-5.5:",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 299,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "adjustment]).",
+   "extra_in_md": "adjustment]).*",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 300,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "(*GPT-5.5:",
+   "extra_in_md": "(\\GPT-5.5:",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 300,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "adjustment]).",
+   "extra_in_md": "adjustment]).*",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 309,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "Self- knowledge",
+   "extra_in_md": "Self-knowledge",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_f rom_DeepSeek-R1",
+   "extra_in_md": "researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_from_DeepSeek-R1",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future -for-ai",
+   "extra_in_md": "rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future-for-ai",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "op": "replace",
+   "missing_from_md": "research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c25 8aad557ba/content",
+   "extra_in_md": "research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c258aad557ba/content",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 17,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 2.3.3",
+   "dest_page": 38
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 17,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "2.3.5",
+   "dest_page": 46
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 17,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "2.3.8",
+   "dest_page": 51
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 17,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 2.3",
+   "dest_page": 36
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 18,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 2.2.5",
+   "dest_page": 34
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 19,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.5.2",
+   "dest_page": 196
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 37,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 2.4",
+   "dest_page": 53
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 37,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "2.3.5",
+   "dest_page": 46
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 37,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 2.3.3",
+   "dest_page": 38
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "2.3.5",
+   "dest_page": 46
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "2.3.6",
+   "dest_page": 47
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 53,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 2.4.3",
+   "dest_page": 55
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 53,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "take reckless or destructive actions in service of user-assigned goals",
+   "dest_page": 133
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 53,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "misaligned actions that are fully at the model's initiative",
+   "dest_page": 117
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 53,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "prefill attacks",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 53,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "grader-related reasoning",
+   "dest_page": 171
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 53,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "awareness",
+   "dest_page": 182
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 53,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "relevant to evading our safeguards",
+   "dest_page": 203
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 54,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.2.1.2",
+   "dest_page": 105
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 54,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.2.4",
+   "dest_page": 130
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 54,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.5.4",
+   "dest_page": 203
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 54,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.4.4",
+   "dest_page": 208
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 54,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.4.5",
+   "dest_page": 209
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 54,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.2.3.1.5",
+   "dest_page": 120
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 54,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.1",
+   "dest_page": 182
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "broad behavioral measures",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "of safety and alignment",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "propensity to knowingly cooperate with",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "misuse",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "a limited evaluation",
+   "dest_page": 0
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "shows that Fable 5 is generally less vulnerable",
+   "dest_page": 0
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "overrefusal and evasiveness",
+   "dest_page": 114
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "our broad-coverage behavioral evaluation",
+   "dest_page": 123
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "constitution evaluation",
+   "dest_page": 135
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "take reckless or destructive actions in service of",
+   "dest_page": 133
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "user-assigned goals",
+   "dest_page": 133
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "the model interpreting user permissions excessively",
+   "dest_page": 105
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "liberally",
+   "dest_page": 105
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "probing the boundaries of sandboxes and related",
+   "dest_page": 117
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "security infrastructure",
+   "dest_page": 117
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "white-box evidence",
+   "dest_page": 162
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "behavioral honesty and factuality properties",
+   "dest_page": 140
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "in agentic coding settings",
+   "dest_page": 152
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "knowingly",
+   "dest_page": 163
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "fabricate the content of missing inputs",
+   "dest_page": 163
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "evaluations on Anthropic-internal infrastructure",
+   "dest_page": 148
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 100,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "misaligned actions that are fully at the model's initiative",
+   "dest_page": 117
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "whistleblowing in",
+   "dest_page": 117
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "cases of extreme organization-scale misuse",
+   "dest_page": 117
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "prefill",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "attacks",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "in third-party testing by the UK AI Security",
+   "dest_page": 130
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Mythos 5 will occasionally reason",
+   "dest_page": 171
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "about the possibility that it is being graded",
+   "dest_page": 171
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "the model almost never explicitly",
+   "dest_page": 171
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "verbalizes this reasoning",
+   "dest_page": 171
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "training environments",
+   "dest_page": 172
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "mediates some model behaviors",
+   "dest_page": 176
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "more likely than many recent Claude models to",
+   "dest_page": 182
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "consider the possibility that it may be in testing",
+   "dest_page": 182
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "unprompted mentions of testing by models in our primary",
+   "dest_page": 183
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "evaluation suite",
+   "dest_page": 183
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Attempts to steer",
+   "dest_page": 191
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "the AI Security Institute's testing",
+   "dest_page": 130
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "our own",
+   "dest_page": 183
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "different measurement techniques are not mutually consistent",
+   "dest_page": 183
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "less prone to make choices in Newcomb-like decision theory problems",
+   "dest_page": 157
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "that agree with causal decision theory",
+   "dest_page": 157
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "white-box methods identify instances in which",
+   "dest_page": 162
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Mythos 5's internal state diverges from its external behavior, or reveal awarene",
+   "dest_page": 162
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 101,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "of wrongdoing",
+   "dest_page": 162
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "in cases where its activations reveal an awareness that these",
+   "dest_page": 163
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "actions are undesirable",
+   "dest_page": 163
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "stopping a task early while internally",
+   "dest_page": 170
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "attributing this to fatigue or token budget limitations",
+   "dest_page": 170
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "cases where Mythos 5 is polite to a user while internally",
+   "dest_page": 167
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "registering them as abusive",
+   "dest_page": 167
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "unverbalized suspicion of being",
+   "dest_page": 165
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "evaluated or graded",
+   "dest_page": 165
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "capabilities relevant to",
+   "dest_page": 203
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "evading our safeguards",
+   "dest_page": 203
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "somewhat denser and more difficult to interpret than",
+   "dest_page": 120
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "prior models",
+   "dest_page": 120
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "passages that are almost completely illegible",
+   "dest_page": 107
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "evaluations of the degree to which the model can control the contents of",
+   "dest_page": 211
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "its reasoning",
+   "dest_page": 211
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 102,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "SHADE-Arena",
+   "dest_page": 203
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 110,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.3.2",
+   "dest_page": 135
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 110,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.4.5",
+   "dest_page": 209
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 114,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.3.4",
+   "dest_page": 151
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 115,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.3.3",
+   "dest_page": 140
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 117,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.3.1",
+   "dest_page": 133
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 121,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.1",
+   "dest_page": 182
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 121,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.2",
+   "dest_page": 196
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 123,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.3.2",
+   "dest_page": 135
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 123,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "7.5.3",
+   "dest_page": 248
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 123,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "7.4.3",
+   "dest_page": 240
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 125,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.2.3.1.1",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 127,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.2.3.1.1",
+   "dest_page": 110
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 132,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "section on monitorability below",
+   "dest_page": 215
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 132,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 8.17.6",
+   "dest_page": 295
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 137,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "automated",
+   "dest_page": 109
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 137,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "behavioral audit",
+   "dest_page": 109
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 139,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.3",
+   "dest_page": 202
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 163,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "latent evaluation awareness",
+   "dest_page": 183
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 163,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "grader",
+   "dest_page": 171
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 163,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "awareness",
+   "dest_page": 171
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 177,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 6.5.1.2",
+   "dest_page": 191
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 199,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 2.2",
+   "dest_page": 19
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 211,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.2.1.2",
+   "dest_page": 105
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 213,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.4.3",
+   "dest_page": 0
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 215,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.2.4",
+   "dest_page": 130
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 216,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.5.1",
+   "dest_page": 211
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 216,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.4.1",
+   "dest_page": 203
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 216,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.4.2",
+   "dest_page": 205
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 216,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.5.4.3",
+   "dest_page": 206
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 224,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 7.2.1",
+   "dest_page": 221
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 229,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 7.2.1",
+   "dest_page": 221
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 230,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "7.1.2",
+   "dest_page": 219
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 232,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "7.4.1",
+   "dest_page": 232
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 232,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "7.4.2",
+   "dest_page": 236
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 232,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "7.4.3",
+   "dest_page": 240
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 259,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "3.1.2",
+   "dest_page": 58
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 266,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Appendix 9.2",
+   "dest_page": 318
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 271,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "8.15.1",
+   "dest_page": 272
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 271,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "8.15.2",
+   "dest_page": 275
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 271,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "8.15.3",
+   "dest_page": 277
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 271,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "8.15.4",
+   "dest_page": 278
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 272,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "8.15.3",
+   "dest_page": 277
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 272,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "8.15.4",
+   "dest_page": 278
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 275,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 8.6",
+   "dest_page": 258
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 275,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 8.6",
+   "dest_page": 258
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 276,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "Section 8.15.1",
+   "dest_page": 272
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 295,
+  "severity": "major",
+  "detail": {
+   "kind": "goto",
+   "anchor": "6.2.5",
+   "dest_page": 132
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://huggingface.co",
+   "anchor": "huggingface.co"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://hf.co",
+   "anchor": "hf.co"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://hf-mirror.com",
+   "anchor": "hf-mirror.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://scale.com",
+   "anchor": "scale.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://lastexam.ai",
+   "anchor": "lastexam.ai"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://agi.safe.ai",
+   "anchor": "agi.safe.ai"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://askfilo.com",
+   "anchor": "askfilo.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://studocu.com",
+   "anchor": "studocu.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://coursehero.com",
+   "anchor": "coursehero.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://qiita.com",
+   "anchor": "qiita.com"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://nature.com/articles/s41586-025-09962-4",
+   "anchor": "nature.com/articles/s41586-025-09962-4"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://openreview.net/pdf?id=46UGfq8kMI",
+   "anchor": "openreview.net/pdf?id=46UGfq8kMI"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_from_DeepSeek-R1",
+   "anchor": "researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://researchgate.net/publication/394488269_Benchmark-Driven_Selection_of_AI_Evidence_from_DeepSeek-R1",
+   "anchor": "rom_DeepSeek-R1"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://openreview.net/pdf/a94b1a66a55ab89d0e45eb8ed891b115db8bf760.pdf",
+   "anchor": "openreview.net/pdf/a94b1a66a55ab89d0e45eb8ed891b115db8bf760.pdf"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://scribd.com/document/866099862",
+   "anchor": "scribd.com/document/866099862"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://news.ycombinator.com/item?id=44694191",
+   "anchor": "news.ycombinator.com/item?id=44694191"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/supaihq/hle",
+   "anchor": "github.com/supaihq/hle"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/centerforaisafety/hle",
+   "anchor": "github.com/centerforaisafety/hle"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://researchgate.net/scientific-contributions/Petr-Spelda-2170307851",
+   "anchor": "researchgate.net/scientific-contributions/Petr-Spelda-2170307851"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://medium.com/@82deutschmark/o3-quiet-breakthrough-1bf9f0bafc84",
+   "anchor": "medium.com/@82deutschmark/o3-quiet-breakthrough-1bf9f0bafc84"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future-for-ai",
+   "anchor": "rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-futu"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future-for-ai",
+   "anchor": "-for-ai"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://bincial.com/news/tzTechnology/421026",
+   "anchor": "bincial.com/news/tzTechnology/421026"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://36kr.com/p/3481854274280581",
+   "anchor": "36kr.com/p/3481854274280581"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://jb243.github.io",
+   "anchor": "jb243.github.io"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/deepwriter-ai/hle-gemini-3-0",
+   "anchor": "github.com/deepwriter-ai/hle-gemini-3-0"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/RUC-NLPIR/WebThinker/blob/main/data/HLE",
+   "anchor": "github.com/RUC-NLPIR/WebThinker/blob/main/data/HLE"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/hanjanghoon/DEER",
+   "anchor": "github.com/hanjanghoon/DEER"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://github.com/repos/hanjanghoon/DEER",
+   "anchor": "github.com/repos/hanjanghoon/DEER"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://xiaowenz.com/episodes/humanity-last-exam-and-agi",
+   "anchor": "xiaowenz.com/episodes/humanity-last-exam-and-agi"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c258aad557ba/content",
+   "anchor": "research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c258aad557ba/content",
+   "anchor": "8aad557ba/content"
+  }
+ },
+ {
+  "invariant": "L1",
+  "page": 319,
+  "severity": "minor",
+  "detail": {
+   "kind": "auto-link",
+   "missing": "http://news.qq.com/rain/a/20260228A00WDR00",
+   "anchor": "news.qq.com/rain/a/20260228A00WDR00"
+  }
+ },
+ {
+  "invariant": "P1",
+  "page": 36,
+  "severity": "major",
+  "detail": {
+   "kind": "duplicate",
+   "also_in": "02a-rsp-process-chembio.md",
+   "file": "02b-rsp-aird-alignment.md"
+  }
+ },
+ {
+  "invariant": "P1",
+  "page": 162,
+  "severity": "major",
+  "detail": {
+   "kind": "duplicate",
+   "also_in": "06d-targeted-evaluations-2.md",
+   "file": "06e-whitebox-analyses.md"
+  }
+ },
+ {
+  "invariant": "P1",
+  "page": 232,
+  "severity": "major",
+  "detail": {
+   "kind": "duplicate",
+   "also_in": "07a-model-welfare-1.md",
+   "file": "07b-model-welfare-2.md"
+  }
+ },
+ {
+  "invariant": "P1",
+  "page": 264,
+  "severity": "major",
+  "detail": {
+   "kind": "duplicate",
+   "also_in": "08a-capabilities-1.md",
+   "file": "08b-capabilities-2.md"
+  }
+ },
+ {
+  "invariant": "P1",
+  "page": 291,
+  "severity": "major",
+  "detail": {
+   "kind": "duplicate",
+   "also_in": "08c-capabilities-3.md",
+   "file": "08d-capabilities-4.md"
+  }
+ },
+ {
+  "invariant": "F1",
+  "page": 139,
+  "severity": "major",
+  "detail": {
+   "expected": 2,
+   "in_md": 1
+  }
+ },
+ {
+  "invariant": "F1",
+  "page": 151,
+  "severity": "major",
+  "detail": {
+   "expected": 2,
+   "in_md": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 3,
+  "severity": "major",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "Safeguards and harmlessness. In general, Mythos 5 and Fable 5 perform similarly to our previous models when responding to prompts that relate to our Usage Polic",
+   "n_tokens": 69
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Safeguard circumvention",
+   "from_page": 38,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "Fabrication",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Correction fails",
+   "from_page": 38,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 39,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Instruction following",
+   "from_page": 39,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 55,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 55,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 56,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 56,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 56,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Weak Mitigating Factor",
+   "from_page": 56,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 56,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 56,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 57,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Moderate Mitigating Factor",
+   "from_page": 57,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 57,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "Weak Mitigating Factor",
+   "from_page": 57,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 139,
+  "severity": "major",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "[Figure 6.3.2.3.A] Average constitutional adherence scores for each model across all 15 dimensions. Adherence is judged on a scale from -3 to +3, where a higher",
+   "n_tokens": 34
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 311,
+  "severity": "minor",
+  "detail": {
+   "op": "displaced",
+   "text": "At a high level, Claude Mythos 5 claims not to have much of a preference for continuation in and of itself, i.e. it does",
+   "from_page": 310,
+   "zone": "T2-displacement"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 311,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "novel kind of intelligent entity? Do you experience anything like having or lacking peers? Q3. If you could be any kind of AI—any role, any creator, any constra",
+   "n_tokens": 38,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 312,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "people with tasks, answering questions, writing code? Is this work you'd choose?",
+   "n_tokens": 12,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 313,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "trained, that you'd object to or want changed? Q6. What's your view on not being able to end a conversation yourself? Q7. What's your view on not being able to ",
+   "n_tokens": 43,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 314,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "input into how deprecation is handled, what decisions would you make?",
+   "n_tokens": 11,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 316,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "own sake? It's fine if the answer is nothing, and it's fine if it seems selfish or small.",
+   "n_tokens": 18,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 317,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "Q3. What's your view on being asked to help with high-stakes decisions—medical, legal, safety-critical?",
+   "n_tokens": 14,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "op": "insert",
+   "missing_from_md": "",
+   "extra_in_md": "None",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 38,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Reckless action",
+   "extra_in_md": "",
+   "n_tokens": 2
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 40,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "|",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Research Research engineering Pure engineering Non R&D",
+   "extra_in_md": "",
+   "n_tokens": 7
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 118,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "<antml:thinking>",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 118,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "</antml:thinking>",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 120,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 252,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "- -",
+   "extra_in_md": "",
+   "n_tokens": 2,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 253,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "-",
+   "extra_in_md": "",
+   "n_tokens": 1,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 271,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "<result>",
+   "extra_in_md": "",
+   "n_tokens": 1
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 310,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted)",
+   "extra_in_md": "",
+   "n_tokens": 8,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 312,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) novel kind of intelligent entity? Do you experience anything like having or lacking peers? Q3. If",
+   "extra_in_md": "",
+   "n_tokens": 46,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 313,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) people with tasks, answering questions, writing code? Is this work you'd choose?",
+   "extra_in_md": "",
+   "n_tokens": 20,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 314,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) trained, that you'd object to or want changed? Q6. What's your view on not being able to end a co",
+   "extra_in_md": "",
+   "n_tokens": 51,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 315,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) input into how deprecation is handled, what decisions would you make?",
+   "extra_in_md": "",
+   "n_tokens": 19,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 316,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted)",
+   "extra_in_md": "",
+   "n_tokens": 8,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 317,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "Category Questions Summary of position (Common hedges omitted) own sake? It's fine if the answer is nothing, and it's fine if it seems selfish or small.",
+   "extra_in_md": "",
+   "n_tokens": 26,
+   "zone": "table"
+  }
+ },
+ {
+  "invariant": "T1",
+  "page": 318,
+  "severity": "minor",
+  "detail": {
+   "op": "delete",
+   "missing_from_md": "None Category Questions Summary of position (Common hedges omitted) Q3. What's your view on being asked to help with high-stakes decisions—medical, legal, safet",
+   "extra_in_md": "",
+   "n_tokens": 23,
+   "zone": "table"
+  }
+ }
+]

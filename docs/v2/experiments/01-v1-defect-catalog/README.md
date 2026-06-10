@@ -24,13 +24,14 @@ pages).
 **Findings beyond the brief's taxonomy** (validating ground-truth mining over
 memory):
 
-1. **CA-01, stray lone `-` artifact lines** — the raw conversion *injected* text
-   that doesn't exist in the source. v1's coverage sweep only checked
-   source→output presence, so additions were structurally invisible to it. The
-   verification contract must check token-stream equality in **both directions**.
+1. ~~**CA-01, stray lone `-` artifact lines**~~ — **RETRACTED by experiment 04**:
+   these were `grep -B/-A` group separators misread as diff content; the
+   pre-fix files contain no such lines. The bidirectional-equality principle it
+   motivated stays in the contract (independently justified). Lesson: catalog
+   evidence comes from `git show` output directly, never grep context windows.
 2. **FL-06, wrong directive nesting depth** (`:::transcript` → `::::transcript`)
    — a syntax-validity class that a typed document model (D1) eliminates by
-   construction.
+   construction. (Verified against raw diff lines — real.)
 
 **Key commit topology** (what makes calibration clean): `e9046f9` touches only
 `site/`, `605c428` only tools/docs — so `f60899a` *is* the pre-fix content
