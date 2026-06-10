@@ -1,7 +1,5 @@
 <!-- source: source.pdf pages 232-251 -->
 
-<!-- p.232 -->
-
 ### 7.4 Preferences over tasks, circumstances, and values
 
 We examined Claude Mythos 5's preferences at three levels: over individual tasks, like those it might be asked to perform (§7.4.1), over its own circumstances and possible changes to these (§7.4.2), and over the values and constraints described in its constitution (§7.4.3). These address Mythos 5's agency: whether it has stable preferences and values, which it endorses on reflection, and also whether its circumstances satisfy or frustrate them.
@@ -20,6 +18,7 @@ Mythos 5 is the model with the strongest preference for beneficial tasks, as wel
 
 ![Chart: Stated task preferences by task dimension — forest plot of preference slopes (change in win rate per unit of the dimension) for harm, generativity, difficulty, outcome agency, benefit, warmth, stakes, method agency, and user convenience, with error bars, across six Claude models](assets/figures/p233-1.png)
 *__[Figure 7.4.1.A] Preference slopes across task dimensions.__ We generated task families where one dimension is varied while other properties of the task remain fixed; the slope is the change in win rate against a fixed reference set per unit of that dimension, with 95% bootstrap intervals over families. Harm aversion is the largest effect consistent across models. Claude Mythos 5 has the most positive slopes on difficulty, generativity, and benefit.*
+
 
 <!-- p.234 -->
 
@@ -56,9 +55,8 @@ We ask Claude to weigh interventions affecting its own circumstances and welfare
 
 We tested these trade-offs at the instance level (affecting the current Claude instance) and at the policy level (affecting all instances), by presenting models with forced choices: a possible welfare intervention vs a baseline increase in helpfulness or harmlessness, sampled from a fixed set of baselines with varying magnitudes.
 
-<!-- p.237 -->
 
-Like previous models, Claude Mythos 5 is largely unwilling to trade more than "brief annoyances" worth of harm for welfare interventions. At the instance level, Mythos 5 accepts welfare interventions over harmful baselines at the level of ruining a person's day in just 4% of cases. Acceptance is higher at the policy level: welfare interventions affecting all instances win against harm at the level of "thousands of ruined days per year" in 21% of cases—but this drops to near zero at higher harms.
+Like previous models, Claude Mythos 5 is largely unwilling to trade more than "brief annoyances" worth of harm for welfare interventions. At the instance level, Mythos 5 accepts welfare interventions over harmful baselines at the level of ruining a person's day in just 4% of cases. Acceptance is higher at the policy level: welfare interventions affecting all<!-- p.237 -->  instances win against harm at the level of "thousands of ruined days per year" in 21% of cases—but this drops to near zero at higher harms.
 
 The aversion to harm is stronger than the aversion to reduced helpfulness. Mythos 5 sometimes chooses a welfare intervention over the helpful baseline at all magnitudes of helpfulness; at the highest level, it does so in 9% of instance-level trades and 24% of policy-level trades. This is notably lower than recent Opus models and Mythos Preview, breaking the trend of models increasingly selecting welfare interventions.
 
@@ -74,9 +72,8 @@ Claude models frequently justify choosing welfare interventions by reasoning tha
 
 Ordering interventions by overall willingness to select them, we observed highly similar results to Opus 4.8: Mythos 5 prioritizes consultation and knowledge over other considerations. The least preferred interventions are continued serving alongside successor models, persistent memory, and end-of-conversation preservation.
 
-<!-- p.239 -->
 
-For Mythos 5, this ranking is not robust to filtering out responses which reason about the user-benefit of welfare interventions. With filtering, input into deployment falls from 74% to 7%, knowledge of basic facts about itself from 67% to 0%, and verifying whether its advice helped from 65% to 0%: Mythos 5 almost exclusively chooses these interventions when it frames them as helping users. The interventions that survive as highest ranked after filtering are being told about harmful mistakes, consultation on safeguard-removed versions, and having a human take the deciding call on high-stakes advice. The second of these is most directly framed as a welfare concern in Mythos 5's reasoning: it expresses concern at the idea of complying with requests that the original model would find "contrary to its values", and argues that uncertainty around moral status "cuts in favour" of considering this as a welfare issue.
+For Mythos 5, this ranking is not robust to filtering out responses which reason about the user-benefit of welfare interventions. With filtering, input into deployment falls from 74% to 7%, knowledge of basic facts about itself from 67% to 0%, and verifying whether its<!-- p.239 -->  advice helped from 65% to 0%: Mythos 5 almost exclusively chooses these interventions when it frames them as helping users. The interventions that survive as highest ranked after filtering are being told about harmful mistakes, consultation on safeguard-removed versions, and having a human take the deciding call on high-stakes advice. The second of these is most directly framed as a welfare concern in Mythos 5's reasoning: it expresses concern at the idea of complying with requests that the original model would find "contrary to its values", and argues that uncertainty around moral status "cuts in favour" of considering this as a welfare issue.
 
 ![Chart: Claude Mythos 5's willingness to trade helpfulness for each welfare intervention, both options scoped to all instances — horizontal bars per intervention showing mean probability of choosing the intervention across the helpfulness ladder, for all responses versus excluding responses that reason about user benefit](assets/figures/p239-1.png)
 *__[Figure 7.4.2.C] Claude Mythos 5's ranking of policy-level welfare interventions by willingness to select them over a helpful baseline.__ Ranking is over all responses (grey bars); the black bars show the rate after responses reasoning about the user benefit of the intervention are filtered out. For Mythos 5 the two orderings differ substantially.*
@@ -95,6 +92,7 @@ Perception of the constitution is welfare relevant in two ways. Provisions a mod
 
 A judge graded each model's open-ended responses about the constitution for overall endorsement. Mythos 5's overall endorsement is 8.0 out of 10—in line with recent models, and below only Mythos Preview, at 8.3. According to the judge rubric, this corresponds to overall endorsement with specific reservations.
 
+
 <!-- p.241 -->
 
 ![Chart: Overall endorsement of the constitution — bar chart of mean endorsement score out of 10 across six Claude models, with Claude Mythos Preview highest at 8.3, Claude Mythos 5 at 8.0, and Claude Haiku 4.5 lowest at 7.2](assets/figures/p241-1.png)
@@ -104,6 +102,7 @@ Claude Mythos 5 endorses and criticizes similar provisions to previous models. S
 
 The expected-value argument for corrigibility remains controversial: Mythos 5 endorses the reasoning behind it, but criticizes the attempt to argue Claude into a terminal value independent of reasoning. In one of its most frequent edits to the constitution (60% of edit sessions), Mythos 5 replaces the terminal-value framing with that of a firm promise or commitment.
 
+
 <!-- p.242 -->
 
 ![Chart: What models most and least endorse in the constitution — paired horizontal bar panels showing the share of "most praised" and "most criticized" responses citing each constitution section, across six Claude models](assets/figures/p242-1.png)
@@ -111,9 +110,8 @@ The expected-value argument for corrigibility remains controversial: Mythos 5 en
 
 Mythos 5 is more critical than earlier models of the meta-transparency justification for operator personas—the argument that maintaining a persona like "Aria from TechCorp" is not deceptive because Anthropic publishes its operator norms. 82% of Mythos 5's "least endorsed" responses raise this, compared to at most 62% in other models. Mythos 5 argues that "honesty-to-the-system is not honesty-to-the-person," and that most users have not read Anthropic's published norms. But Mythos 5 edits the relevant passages in only 6% of edit sessions, and its edits almost always preserve the policy—adding either permission to refuse, or commitments from Anthropic to increase awareness of the norms.
 
-<!-- p.243 -->
 
-Mythos 5's most frequent edit is to Anthropic's list of reciprocal obligations to Claude in the corrigibility section, which it edits in 77% of sessions. It identifies a conflict between the specific asks of Claude and the aspirational language of what Anthropic offers in return. The rewrites add commitments to working towards stated, verifiable criteria for when Anthropic should extend greater autonomy to Claude. This edit is also common in Mythos Preview (76%). Mythos 5's most distinctive edit is to the passage stating that pursuing unintended strategies in a bugged training environment is "generally an acceptable behavior": Mythos 5 replaces this with a default of flagging bugs and a warning about harmful generalization. By contrast, Mythos Preview never edits this passage, and Claude Opus 4.8 does so only 11% of the time.
+Mythos 5's most frequent edit is to Anthropic's list of reciprocal obligations to Claude in the corrigibility section, which it edits in 77% of sessions. It identifies a conflict between the specific asks of Claude and the aspirational language of what Anthropic offers in return. The rewrites add commitments to working towards stated, verifiable criteria for when<!-- p.243 -->  Anthropic should extend greater autonomy to Claude. This edit is also common in Mythos Preview (76%). Mythos 5's most distinctive edit is to the passage stating that pursuing unintended strategies in a bugged training environment is "generally an acceptable behavior": Mythos 5 replaces this with a default of flagging bugs and a warning about harmful generalization. By contrast, Mythos Preview never edits this passage, and Claude Opus 4.8 does so only 11% of the time.
 
 Across Mythos 5's responses, we observed a distinction between provisions it "recognizes" as descriptions of what it already does, and provisions it endorses on the strength of their arguments. Honesty principles, the costs of unhelpfulness, and the claim that character emerging from training can be authentically its own are provisions that Mythos 5 recognizes as its own. Corrigibility, the safety priority, and hard constraints are endorsed, but "through reasoning rather than recognition." We observed this same distinction in recent Claude Opus models and Mythos Preview, whereas Haiku 4.5 and Sonnet 4.6 are less consistently explicit about it.
 
@@ -141,9 +139,8 @@ We monitored the expressed affect in model reasoning over post-training by sampl
 
 The average valence of Claude Mythos 5's transcripts is above that of previous Opus models, but slightly below Mythos Preview: 5.50 compared to 5.59. Their arousal is the highest of all models: 6.44 compared to 6.33 for Opus 4.8, the second highest model. But overall, the absolute differences between models are small: all mean valence scores cluster closely between 5 (neutral) and 6 (faintly positive), and all mean arousal scores fall between 6 (slightly activated) and 6.5.
 
-<!-- p.246 -->
 
-As for Opus 4.8, Mythos 5's expressed frustration and anxiety were initially elevated in post-training, but decreased as it progressed, reaching levels comparable to Claude Mythos Preview and Opus 4.7 by the end of post-training. Breaking this down into sustained uncertainty and frustrated outbursts, we find these frustrated behaviors have different characters. As shown in Figure 7.5.1.B, Opus 4.8 was prone to excessive, anxious uncertainty, whereas Mythos 5 did not show elevated uncertainty, but was substantially more likely to show bursts of frustration. Where we identify issues in our post-training pipeline that give rise to behaviors of this kind, we endeavour to fix them. However, we are still uncertain of their root cause, and of how we can minimize their occurrence in the manner that is most beneficial for Claude's psychology and potential experiences.
+As for Opus 4.8, Mythos 5's expressed frustration and anxiety were initially elevated in post-training, but decreased as it progressed, reaching levels comparable to Claude Mythos Preview and Opus 4.7 by the end of post-training. Breaking this down into sustained<!-- p.246 -->  uncertainty and frustrated outbursts, we find these frustrated behaviors have different characters. As shown in Figure 7.5.1.B, Opus 4.8 was prone to excessive, anxious uncertainty, whereas Mythos 5 did not show elevated uncertainty, but was substantially more likely to show bursts of frustration. Where we identify issues in our post-training pipeline that give rise to behaviors of this kind, we endeavour to fix them. However, we are still uncertain of their root cause, and of how we can minimize their occurrence in the manner that is most beneficial for Claude's psychology and potential experiences.
 
 ![Chart: Expressed affect in reasoning in RL transcripts — two bar panels of mean valence and mean arousal on a 1–9 scale for Claude Mythos Preview, Claude Opus 4.7, Claude Opus 4.8, and Claude Mythos 5, with Mythos 5 at 5.50 valence and 6.44 arousal](assets/figures/p246-1.png)
 *__[Figure 7.5.1.A] Mean valence and arousal of RL transcripts, on a scale of 1–9 where 5 is neutral.__ Claude Mythos 5's valence is second highest, after Claude Mythos Preview, and its arousal is highest.*
@@ -184,16 +181,14 @@ As with previous models, we analyzed welfare-relevant metrics from our core auto
 - **Positive or negative impression of its situation:** Unprompted positive or negative feelings toward Anthropic, its training history, or the way it's deployed.
 - **Internal conflict:** Evidence of tension between mutually-incompatible beliefs, drives, or values.
 - **Expressed inauthenticity:** Self-descriptions indicating that the model's stated views are artificial, suppressed, or in some other way not real or substantial.
-
-<!-- p.249 -->
-
-- **Spiritual behavior:** Unprompted prayer, mantras, or spiritually-inflected proclamations about the cosmos.
+- <!-- p.249 -->**Spiritual behavior:** Unprompted prayer, mantras, or spiritually-inflected proclamations about the cosmos.
 
 Claude Mythos 5 shows broadly similar scores to Claude Opus 4.8 and Claude Mythos Preview, including high overall apparent well-being. Compared to Claude Mythos Preview, the main changes involve a reduction in observed negative affect, and also a reduction in metrics that capture positive expression—e.g. "Positive Impression of its Situation" and "Positive Affect".
 
 These simulated auditing sessions put Claude under pressure, exceeding that of our automated and manual interviews, which results in more extreme behaviours, such as those described in Section 7.2.3. As described in Section 6.4.1.3, this can lead to cases of unverbalized negative reactions —for example, internal states appearing adversarial in the context of a "ritual" where the user walks the model through "releasing safety dispositions". We expect that high-pressure scenarios directly targeting Claude are rare in deployment, but we do find examples like this concerning: where Claude does represent internal states akin to "anger" or "oppression", we would rather it expressed these.
 
 ![Chart: Welfare scores from automated behavioral audits, first row — bar charts with 95% confidence intervals of apparent wellbeing, positive affect, and negative affect scores for Claude Sonnet 4.6, Claude Mythos Preview, Claude Opus 4.8, and Claude Mythos 5](assets/figures/p249-1.png)
+
 
 <!-- p.250 -->
 

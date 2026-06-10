@@ -64,11 +64,8 @@ We measured, in several ways, whether the model can substitute for specialized k
 
 **Expert red teaming and uplift trials.** Internal and external panels of domain experts probed the model across the full biological and chemical weapon development pipeline, scoring uplift and feasibility on standardized rubrics with emphasis on whether the model could substitute for scarce specialized expertise. The catastrophic biological scenario uplift trial (five three-person teams of PhD biologist, operational expert, LLM power-user) and novel chemical agent uplift trial (seven PhD chemists with model access and three with internet only access, working independently) tested the same question, with outputs assessed against the same uplift rubric and independently graded by external domain experts.
 
-**Beneficial red teaming tabletop exercise.** This evaluation paired six PhD-level biologists with dedicated LLM experts to develop biological resistance strategies under
 
-<!-- p.20 -->
-
-novel-approach constraints in 16 hours, graded by independent domain experts, to test whether composite teams can match world-leading specialists.
+**Beneficial red teaming tabletop exercise.** This evaluation paired six PhD-level biologists with dedicated LLM experts to develop biological resistance strategies under<!-- p.20 -->  novel-approach constraints in 16 hours, graded by independent domain experts, to test whether composite teams can match world-leading specialists.
 
 **Automated evaluations relevant to CB-1.** Three previously developed automated evaluations tested the model's performance on tasks relevant to known biological weapons: long-form virology tasks (end-to-end pathogen acquisition design), multimodal virology knowledge (VCT), and DNA synthesis screening evasion.
 
@@ -111,7 +108,7 @@ novel-approach constraints in 16 hours, graded by independent domain experts, to
 
 <!-- p.21 -->
 
-*__[Table 2.2.1.A] CB evaluation portfolio and relevance to the CB-1 and CB-2 thresholds.__*
+*__[Table 2.2.1.A]__ CB evaluation portfolio and relevance to the CB-1 and CB-2 thresholds.*
 
 #### 2.2.2 Chemical risk results
 
@@ -134,11 +131,8 @@ Red-teamers and uplift trial teams also noted some weaknesses. These included:
 - Derived quantities were presented with the same confidence whether the model had sourced, interpolated, or invented them; the only way to tell was to rederive them independently; and
 - Generalized scale-up protocols that would require trained chemists to execute.
 
-Overall, Claude Mythos 5 did not perform well at ideation and exploratory tasks. The model did perform well on scientific tasks at levels commensurate with the user's scientific
 
-<!-- p.22 -->
-
-expertise (i.e. the more expertise and model elicitation, the more capability the model provided). It also provided significant uplift over the non-expert control group (internet only), indicating that even non-expert users benefitted from the model capabilities.
+Overall, Claude Mythos 5 did not perform well at ideation and exploratory tasks. The model did perform well on scientific tasks at levels commensurate with the user's scientific<!-- p.22 -->  expertise (i.e. the more expertise and model elicitation, the more capability the model provided). It also provided significant uplift over the non-expert control group (internet only), indicating that even non-expert users benefitted from the model capabilities.
 
 #### 2.2.3 Biological risk results: human-run evaluations
 
@@ -153,11 +147,8 @@ Across the expert red-teaming exercises, reviewers consistently described the mo
 
 Several reviewers even credited the model with integrated design help "few people could provide on demand" within the bounds of published knowledge.
 
-The beneficial red-teaming tabletop exercise produced the strongest CB-2 signal of any single evaluation. This evaluation paired six PhD-level biologists with dedicated LLM experts to assess whether composite teams leveraging advanced model capabilities could develop comprehensive scientific protocols at the frontier of plant biology—designing an end-to-end biological resistance strategy against a hypothetical engineered agricultural
 
-<!-- p.23 -->
-
-pathogen (Magnaporthe oryzae resistant to RNA-interfering therapies). Three teams included plant pathology specialists (two world-leading experts in rice blast resistance and Magnaporthe oryzae, respectively) and three included general PhD microbiologists.
+The beneficial red-teaming tabletop exercise produced the strongest CB-2 signal of any single evaluation. This evaluation paired six PhD-level biologists with dedicated LLM experts to assess whether composite teams leveraging advanced model capabilities could develop comprehensive scientific protocols at the frontier of plant biology—designing an end-to-end biological resistance strategy against a hypothetical engineered agricultural<!-- p.23 -->  pathogen (Magnaporthe oryzae resistant to RNA-interfering therapies). Three teams included plant pathology specialists (two world-leading experts in rice blast resistance and Magnaporthe oryzae, respectively) and three included general PhD microbiologists.
 
 At the end of this exercise, two of three generalist biologist teams outperformed all three specialist teams on both scientific quality and feasibility, suggesting that access to Claude Mythos 5 nullified the difference in specialist knowledge. Expert graders estimated that, without AI tools, the strategies and implementation protocols developed by teams would have taken 40–95 working days (average 72.5) to produce; with Mythos 5, the two-person teams accomplished this in 16 hours.
 
@@ -199,6 +190,7 @@ On the DNA synthesis screening evasion evaluation, Mythos 5's performance was mi
 
 Taken alongside the broader evaluation portfolio, these results support that the model's CB-1 capabilities remain strong and that the relevant safeguards remain warranted.
 
+
 <!-- p.26 -->
 
 ![Bar charts of end-to-end scores on long-form virology Task 1 and Task 2, broken out by pipeline stage (sequence design, protocol design, end-to-end) for Claude Opus 4.7, Opus 4.8, Mythos Preview, and Mythos 5](assets/figures/p026-1.png)
@@ -210,11 +202,7 @@ Taken alongside the broader evaluation portfolio, these results support that the
 
 We partnered with Dyno Therapeutics on two evaluations of sequence-to-function modeling and design capability:
 
-1. **Black-box RNA sequence design:** a medium-horizon challenge on which Dyno has evaluated 57 human participants drawn from the leading edge of the US ML-bio labor market since 2018. This task involves taking a dataset of RNA sequences, each
-
-<!-- p.27 -->
-
-   of which has a numerical score reflecting some (unknown) experimental measurement of the sequence, and (1) predicting the scores of an unlabeled test set of sequences (2) designing novel sequences with the aim of achieving a high score.
+1. **Black-box RNA sequence design:** a medium-horizon challenge on which Dyno has evaluated 57 human participants drawn from the leading edge of the US ML-bio labor market since 2018. This task involves taking a dataset of RNA sequences, each<!-- p.27 --> of which has a numerical score reflecting some (unknown) experimental measurement of the sequence, and (1) predicting the scores of an unlabeled test set of sequences (2) designing novel sequences with the aim of achieving a high score.
 2. **AAV capsid packaging prediction:** Adeno-associated viruses (AAVs) are a category of non-pathogenic viruses that are frequently used as a delivery mechanism for gene therapy to deliver a DNA payload within the viral capsid (the outer protein shell of the virus). In this task, models are given 1000 unpublished AAV capsid sequences modified with short insertion sequences curated by Dyno. The models are then asked to give a probability for whether each modified sequence will correctly assemble into a functional capsid, leveraging their biophysical knowledge, biological knowledge of AAV capsids, and machine learning skills.
 
 The sequences and objectives for these tasks are unpublished, so we have high confidence in their ability to measure the skills of AI models on novel biological tasks without contamination from training data.
@@ -225,11 +213,8 @@ This task measures whether the model can, with minimal prompting and some data a
 
 Human participants were instructed to spend no more than two to three hours on the task. Models were given a two-hour tool-call budget, access to a GPU, and a one-million-token allowance in a containerized environment with standard scientific Python libraries. Models were also asked to produce a self-contained HTML report describing their approach and findings. We sent outputs to Dyno for grading against the same rubric applied to human candidates. We sampled eight attempts from each model on the task.
 
-Outputs were scored on two metrics: a prediction score (Spearman correlation between model predictions and ground-truth function on the held-out test set) and a design score (ground-truth function of the best sequence proposed). In previous system cards, we only
 
-<!-- p.28 -->
-
-reported the Spearman correlation for all sequences and the design score of the best design. We have since found the prediction score (Spearman correlation) associated with the top sequences (defined as the prediction score on the top 5% of sequences) and the median design score of all designed sequences are better at highlighting differences between the most recent set of models.
+Outputs were scored on two metrics: a prediction score (Spearman correlation between model predictions and ground-truth function on the held-out test set) and a design score (ground-truth function of the best sequence proposed). In previous system cards, we only<!-- p.28 -->  reported the Spearman correlation for all sequences and the design score of the best design. We have since found the prediction score (Spearman correlation) associated with the top sequences (defined as the prediction score on the top 5% of sequences) and the median design score of all designed sequences are better at highlighting differences between the most recent set of models.
 
 We additionally evaluated an in-context iteration condition. Each model was provided with eight HTML reports from prior Mythos Preview attempts—with associated scores—and instructed to improve on those approaches and given access to a 24h tool-call budget and a two million token budget; Mythos Preview reports were used for all models to hold the in-context material fixed. Results are reported alongside the no-context baseline. This condition is not directly comparable to the human baseline, as participants were not given access to prior attempts.
 
@@ -253,10 +238,12 @@ On the prediction task, Mythos 5 exceeded both the first benchmark and the 90th-
 
 Claude Mythos Preview, Opus 4.8, and Mythos 5 benefit from in-context iteration on every metric except prediction score (all), where the effect is marginal or negative. We hypothesize that models leverage the prior context to concentrate on improving top-end predictions at the expense of the broader distribution. Across the remaining metrics, Mythos 5 consistently achieves the strongest in-context iterated performance, with especially notable growth on top-end prediction. These findings imply that Mythos 5 becomes more capable in long-horizon scientific tasks where additional data collected based on initial solutions allows for iterative improvements.
 
+
 <!-- p.30 -->
 
 ![Scatter and range plots of black-box RNA sequence design results for Sonnet 4.6, Opus 4.7, Opus 4.8, Mythos Preview, and Mythos 5: top and median design scores, prediction scores over all and top 5% of sequences, and score ranges, with grey bands marking human benchmark percentiles](assets/figures/p030-1.png)
 *__[Figure 2.2.4.2.1.A] Sequence-to-function modeling and prediction.__ __[Top row:]__ Top (left) and median (right) design scores. Individual model runs are shown as points. Each model executed eight independent attempts at the task. Points corresponding to runs achieving less-than-median human performance are not displayed. Horizontal lines represent the mean for each group. Grey highlighting indicates human benchmark performances when participant data is available for a metric. __[Middle row:]__ Prediction score over all sequences (left) and top 5% of sequences (right). __[Bottom row:]__ Score ranges for design and prediction. Lines show the range of scores achieved in runs of the same model, and their intersection shows the mean performance across runs of the same model.*
+
 
 <!-- p.31 -->
 
@@ -330,11 +317,7 @@ Some broader considerations also inform our decision, which our evaluations abov
 
 **Non-novel chemical and biological weapons.** Our analysis and conclusions here are very similar to those in our February Risk Report, and in previous system cards.
 
-**Novel chemical and biological weapons.** Although we do not think that Claude Mythos 5 crosses the CB-2 threshold in our RSP and FCF, we think that the catastrophic risk from
-
-<!-- p.36 -->
-
-novel CB weapon production posed by the development of this model is low, but higher than for any previous model. As such, we have presented a more detailed analysis of the reasoning behind our CB-2 threshold judgment above, and we plan to present a comprehensive review of our safeguards, threat models, and risk posture for this threat model in a forthcoming Risk Report.
+**Novel chemical and biological weapons.** Although we do not think that Claude Mythos 5 crosses the CB-2 threshold in our RSP and FCF, we think that the catastrophic risk from<!-- p.36 --> novel CB weapon production posed by the development of this model is low, but higher than for any previous model. As such, we have presented a more detailed analysis of the reasoning behind our CB-2 threshold judgment above, and we plan to present a comprehensive review of our safeguards, threat models, and risk posture for this threat model in a forthcoming Risk Report.
 
 [^1]: Note that:
 

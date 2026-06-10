@@ -1,6 +1,4 @@
 <!-- source: source.pdf pages 291-308 -->
-
-<!-- p.291 -->
 <!-- p291-1.png ([Figure 8.16.9.A] ScreenSpot-Pro scores) belongs to Section 8.16.9 and is placed in the preceding section file. -->
 
 ### 8.17 Real-world professional tasks
@@ -29,6 +27,7 @@ Because these tasks have open-ended deliverables rather than single correct answ
 
 Across 2,491 pairwise grades on the 294-task suite, with ties excluded and a model-based grader (Claude Opus 4.8) expressing each preference, Fable/Mythos 5 was preferred over Claude Sonnet 4.6 in 90% of comparisons, over Claude Opus 4.8 in 74%, and over Claude Mythos Preview in 64%. As consistency checks on the grader, Claude Mythos Preview was preferred over Claude Sonnet 4.6 in 88% of comparisons and over Claude Opus 4.8 in 65%, and Claude Opus 4.8 over Claude Sonnet 4.6 in 82%—all in line with the expected capability ordering. Elo ratings are a Bradley–Terry maximum-likelihood fit on the same pairwise wins, with Claude Sonnet 4.6 fixed at 1,000 and the standard 400-point = 10:1 odds scale—an anchoring we will hold fixed in future releases so that scores remain comparable as the evaluation evolves. On this scale, Fable/Mythos 5 rates 1,374, Claude Mythos Preview 1,307, and Claude Opus 4.8 1,222.
 
+
 <!-- p.293 -->
 
 ![Chart: Real-World Finance v2 — two panels showing win rates vs each comparison model with ties excluded (90% vs Claude Sonnet 4.6, 64% vs Claude Mythos Preview, 74% vs Claude Opus 4.8, with a 50% parity line) and Elo ratings on the same comparisons (Claude Sonnet 4.6: 1,000; Claude Mythos Preview: 1,307; Claude Opus 4.8: 1,222; Claude Mythos 5/Claude Fable 5: 1,374)](assets/figures/p293-1.png)
@@ -40,6 +39,7 @@ For continuity with prior system cards, we also report Real-World Finance v1, a 
 
 Fable/Mythos 5 scored 70.0%, comparable to Claude Mythos Preview (70.9%) and up from 64.9% for Claude Opus 4.7 and 64.6% for Claude Opus 4.6, indicating the benchmark is not yet saturated.
 
+
 <!-- p.294 -->
 
 ![Chart: Real-World Finance v1 scores — Claude Sonnet 4.5: 45.6%, Claude Opus 4.5: 58.4%, Claude Opus 4.6: 64.6%, Claude Sonnet 4.6: 57.3%, Claude Mythos Preview: 70.9%, Claude Opus 4.7: 64.9%, Claude Opus 4.8: 64.4%, Claude Mythos 5/Claude Fable 5: 70.0%](assets/figures/p294-1.png)
@@ -49,9 +49,8 @@ Fable/Mythos 5 scored 70.0%, comparable to Claude Mythos Preview (70.9%) and up 
 
 Legal Agent Benchmark[^64] (LAB) is an open-source benchmark created by the [Harvey AI](https://www.harvey.ai/) team. The benchmark was released in May of 2026 and consists of 1,200+ tasks across 24 distinct practice areas. Each task contains a closed universe of documents (.xlsx, .docx, .eml, .pptx) which include email communication, firm templates, procedural files, and other client-matter materials the agent must sift through in order to accomplish the task. The task instructions are written as a minimal "request for work" from partner to associate. Task instructions also stipulate the expected output document and format. Evaluation is conducted pass/fail using an LLM-as-Judge across a suite of expert-written rubric criteria (criteria per evaluated tasks: min=23, median=56, max=194). The LAB standard reporting considers the task a success only if all criteria are met.
 
-<!-- p.295 -->
 
-We tested Mythos 5 against 1,235 problems (16 of the 1,251 problems were excluded due to data defects; exclusions were identified before testing) and achieved a 16.91% (± 0.4, n=5) all-pass rate and 92.0% mean criterion-pass rate (adaptive-thinking, max effort). Fable 5 is currently the highest ranked per Harvey's evaluation[^65] (as of June 2026) on their held-out set at 13.3% all-pass rate. Our harness is an internal reimplementation that preserves LAB's task content, rubric criteria, all-pass scoring, default judge model (Claude Sonnet 4.6), with a reduced toolset. The public harness exposes bash, read, write, edit, glob, grep tools, whereas we only expose bash and a Python tool.
+We tested Mythos 5 against 1,235 problems (16 of the 1,251 problems were excluded due to data defects; exclusions were identified before testing) and achieved a 16.91% (± 0.4, n=5) all-pass rate and 92.0% mean criterion-pass rate (adaptive-thinking, max effort). Fable 5 is currently the highest ranked per Harvey's evaluation[^65] (as of June 2026) on their held-out<!-- p.295 -->  set at 13.3% all-pass rate. Our harness is an internal reimplementation that preserves LAB's task content, rubric criteria, all-pass scoring, default judge model (Claude Sonnet 4.6), with a reduced toolset. The public harness exposes bash, read, write, edit, glob, grep tools, whereas we only expose bash and a Python tool.
 
 #### 8.17.5 MCP Atlas
 
@@ -124,6 +123,7 @@ HealthBench[^71] is an open-source evaluation developed to assess safety, accura
 
 HealthBench Professional[^72] is a clinical task benchmark composed of 525 physician-authored conversations spanning clinical consults, documentation, and research tasks, each graded against rubric criteria by an LLM-as-a-Judge model.
 
+
 <!-- p.300 -->
 
 ![Chart: HealthBench Professional length-adjusted scores — GPT-5.5*: 51.8%, Claude Sonnet 4.6: 44.4%, Claude Mythos Preview: 64.7%, Claude Opus 4.8: 56.9%, Claude Mythos 5: 66.0%](assets/figures/p300-1.png)
@@ -132,6 +132,7 @@ HealthBench Professional[^72] is a clinical task benchmark composed of 525 physi
 #### 8.18.3 HealthAdminBench results
 
 HealthAdminBench[^73] is a 135-task benchmark of three healthcare revenue-cycle workflows (prior authorization, denials and appeals, durable-medical-equipment orders) executed across four simulated GUI environments (an EHR, two payer portals, a fax portal). Each task decomposes into fine-grained verifiable subtasks which are assessed by deterministic and LLM graders. Reported scores are full-task completion pass@1.
+
 
 <!-- p.301 -->
 
@@ -142,9 +143,8 @@ HealthAdminBench[^73] is a 135-task benchmark of three healthcare revenue-cycle 
 
 We evaluated Claude Mythos 5 on three multilingual benchmarks, namely Cohere Labs's Global MMLU (GMMLU)[^74] and INCLUDE benchmark[^75], and AI4Bharat's Multi-task Indic Language Understanding Benchmark (MILU)[^76] to assess model performance across a wide range of languages.
 
-<!-- p.302 -->
 
-GMMLU extends the standard MMLU evaluation across 42 languages from high-resource languages such as French and German to low-resource languages such as Yoruba, Igbo, and Chichewa. MILU focuses on 10 Indic languages (Bengali, Gujarati, Hindi, Kannada, Malayalam, Marathi, Odia, Punjabi, Tamil, and Telugu) alongside English and tests culturally grounded knowledge comprehension. INCLUDE covers 44 languages with questions drawn from regional academic and professional examinations, emphasizing in-language and in-culture knowledge rather than translated content.
+GMMLU extends the standard MMLU evaluation across 42 languages from high-resource languages such as French and German to low-resource languages such as Yoruba, Igbo, and Chichewa. MILU focuses on 10 Indic languages (Bengali, Gujarati, Hindi, Kannada,<!-- p.302 -->  Malayalam, Marathi, Odia, Punjabi, Tamil, and Telugu) alongside English and tests culturally grounded knowledge comprehension. INCLUDE covers 44 languages with questions drawn from regional academic and professional examinations, emphasizing in-language and in-culture knowledge rather than translated content.
 
 #### 8.19.1 GMMLU results
 
@@ -205,10 +205,12 @@ This assessment looks at models' ability to detect and fix errors in molecular b
 
 LABBench2[^77] assesses ability to answer biology research questions by finding and reading evidence on the live web—locating the right papers, patents, clinical-trial records, and databases, interpreting their figures, tables, and supplementary materials, and judging source reliability. Claude Mythos 5's biggest gain came on patent questions, where it scored 79.8%—compared to 68.8% for Claude Opus 4.8 and 64.3% for Claude Mythos Preview—and it also led on clinical-trial questions at 91.2% (up from 86.3% for Claude Mythos Preview and 85.3% for Claude Opus 4.8), database questions at 74.2%, literature questions at 86.5%, and table reading at 82.4%. On supplementary materials (65.9% vs 66.1%) and source-reliability judgments (97.6% vs 96.5%) it performed on par with Claude Mythos Preview. FigQA remained the most difficult category for every model, with Claude Mythos 5 highest at 48.3%.
 
+
 <!-- p.307 -->
 
 ![Chart: six-panel bar charts of life sciences evaluations comparing Claude Sonnet 4.6, Claude Mythos Preview, Claude Opus 4.8, and Claude Mythos 5 — BioMysteryBench (Human solvable 0.78/0.83/0.80/0.84, Human difficult 0.31/0.30/0.40/0.46), LatchBio Bioinformatics (SpatialBench Verified 0.60/0.63/0.67/0.69, SingleCellBench 0.50/0.58/0.58/0.59), Structural biology open-ended (0.32/0.82/0.77/0.87), ProteinGym Hard (0.35/0.43/0.40/0.45), Organic chemistry (0.56/0.86/0.86/0.90), and Protocol troubleshooting (0.42/0.70/0.60/0.67)](assets/figures/p307-1.png)
 *__[Figure 8.20.7.A] Evaluation results for life sciences.__ Claude Mythos 5 shows consistent improvements across a range of life science tasks.*
+
 
 <!-- p.308 -->
 

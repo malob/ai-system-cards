@@ -43,10 +43,9 @@ In addition to our standard set of safeguards—like our ASL-3 blocking classifi
 When Fable's fallback classifiers trigger, the resulting behavior depends on the surface:
 
 - In client applications (the web interface and the desktop and mobile apps), the request automatically falls back to the most recent Claude Opus model (at the time of release, Claude Opus 4.8), and the user is notified which model their query was routed through;
-- In the Messages API, there is no automatic fallback by default. The request is blocked, and the response returns a reason for the refusal with a structured category. Developers can implement retry or fallback logic client-side, or can opt in to automatic server-side fallback, in which the request is re-served by a designated fallback model (for example, the most recent Claude Opus model) and the fallback is reflected in the response object;
+- In the Messages API, there is no automatic fallback by default. The request is blocked, and the response returns a reason for the refusal with a structured category. Developers can implement retry or fallback logic client-side, or can opt in<!-- p.13 -->  to automatic server-side fallback, in which the request is re-served by a designated fallback model (for example, the most recent Claude Opus model) and the fallback is reflected in the response object;
 - In some Claude interfaces, automatic fallback to the most recent Claude Opus model is the default and is not configurable. A session event is emitted whenever fallback occurs.
 
-<!-- p.13 -->
 
 We have also added safeguards related to frontier LLM development. As discussed in Section 6.1 of our [February 2026 Risk Report](https://anthropic.com/feb-2026-risk-report), we are concerned about the risks of accelerating the overall pace of AI development, though we remain uncertain about the severity of these risks. In particular, our concern is with—as we wrote then—"accelerating other AI developers in building powerful AI systems that pose similar risks to the ones ours pose - without necessarily having commensurate safeguards."
 
@@ -56,8 +55,7 @@ Unlike our interventions for cybersecurity, biology and chemistry, and distillat
 
 ### 1.6 External testing
 
-<!-- p.14 -->
 
-The majority of evaluations of our model were run in-house at Anthropic. However, as part of our Frontier Compliance Framework ("FCF"), we engage external evaluators to test different iterations of our model (e.g., without harmlessness training, with harmlessness training, or both versions). Their inputs contribute to our risk determinations for our systemic risk areas and our launch decision-making processes. For more information on how we solicit input from external experts in our FCF, please refer to Section 5 of our [compliance framework](https://trust.anthropic.com/resources?).
+The majority of evaluations of our model were run in-house at Anthropic. However, as part of our Frontier Compliance Framework ("FCF"), we engage external evaluators to test different iterations of our model (e.g., without harmlessness training, with harmlessness training, or both versions). Their inputs contribute to our risk determinations for our systemic risk areas and our launch decision-making processes. For more information on<!-- p.14 -->  how we solicit input from external experts in our FCF, please refer to Section 5 of our [compliance framework](https://trust.anthropic.com/resources?).
 
 We are grateful to all of our external testers for running assessments of the model and sharing their results with us. Their specific contributions are described in what follows.

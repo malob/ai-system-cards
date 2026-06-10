@@ -16,6 +16,7 @@ Surge ran Claude Fable 5 on GDP.pdf using their standard harness. Responses are 
 
 On GDP.pdf, Claude Fable 5 achieved a strict pass rate of 29.8%, improving over Claude Opus 4.8, which achieved a strict pass rate of 22.5%. Claude Fable 5 is state-of-the-art over GPT-5.5 and Gemini 3.1 Pro, which scored 24.9% and 16.7% respectively.
 
+
 <!-- p.280 -->
 
 ![Bar chart titled "GDP.pdf" showing strict pass rates for GPT-5.5, Gemini 3.1 Pro, Claude Opus 4.7, Claude Opus 4.8, and Claude Fable 5, with Claude Fable 5 highest at 29.8%](assets/figures/p280-1.png)
@@ -24,6 +25,7 @@ On GDP.pdf, Claude Fable 5 achieved a strict pass rate of 29.8%, improving over 
 We evaluated GDP.pdf on an internal harness, both with and without tools. When evaluated without tools, the model is provided with base64-encoded PDFs to match Surge's input prompts. However, unlike Surge, we truncate (rather than drop) any PDFs that do not fit our API's 32MB request size limit. When evaluated with tools, the model is provided with a container—with the PDF file and standard Python libraries installed—and an image cropping tool. We report mean criteria pass rate, the fraction of rubric conditions satisfied, rather than strict pass rate. We evaluate the model on the full 100 prompts and average scores over five runs.
 
 On GDP.pdf, Claude Mythos 5 achieved a mean criteria pass rate of 72.7% without tools and a score of 87.6% with tools. Claude Mythos Preview scored 70.3% and 85.4%, respectively. We note that we were not able to reproduce Surge's reported numbers and that both mean criteria pass rates and strict pass rates trail below those from Surge's runs. Nonetheless, we view these scores to be directionally representative of differences in performance between Claude models.
+
 
 <!-- p.281 -->
 
@@ -38,6 +40,7 @@ Andon Labs ran Claude Fable 5 on Blueprint-Bench 2 using their standard format a
 
 Claude Fable 5 achieved a score of 38.6% on Blueprint-Bench 2. Claude Fable 5 is state-of-the-art over GPT-5.5 and Gemini 3.5 Flash, which achieved scores of 36.2% and 33.6%, respectively. All models scored well below the human baseline score of 58.6%.
 
+
 <!-- p.282 -->
 
 ![Bar chart titled "Blueprint-Bench 2" showing normalized scores for GPT-5.5, Gemini 3.5 Flash, Claude Sonnet 4.6, Claude Opus 4.7, Claude Opus 4.8, and Claude Fable 5, with Claude Fable 5 highest at 38.6% and a dashed human baseline line at 58.6%](assets/figures/p282-1.png)
@@ -51,6 +54,7 @@ We changed how we run the OSWorld-Verified evaluation to better reflect real-wor
 
 Claude Mythos 5 achieved an OSWorld score of 85.0% (first-attempt success rate, averaged over five runs).
 
+
 <!-- p.283 -->
 
 ![Bar chart titled "OSWorld-Verified (max effort)" showing scores for Claude Mythos Preview, Claude Opus 4.8, and Claude Mythos 5, with Claude Mythos 5 highest at 85.0%](assets/figures/p283-1.png)
@@ -60,9 +64,8 @@ Claude Mythos 5 achieved an OSWorld score of 85.0% (first-attempt success rate, 
 
 BenchCAD[^55] is a benchmark for programmatic CAD reasoning built from 17,900 execution-verified CadQuery programs spanning 106 industrial part families, roughly half of which are anchored to real ISO, DIN, EN, ASME, and IEC specification tables. The benchmark decomposes CAD capability into four matched tasks and we report results on the Vision2Code task which requires models to generate CadQuery code from multi-view renders.
 
-<!-- p.284 -->
 
-Our internal implementation of BenchCAD matches the reference implementation[^56], except for three minor modifications. First, we corrected a typo in the reference system prompt which swapped all four camera positions in the rendered views provided to the model. Second, we updated the grading to accept raw shapes in addition to Workplanes. On models like GPT-5.5, we noticed raw shapes would error out due to this stylistic difference in output, but otherwise equivalent geometry. Third, we omit 26 records whose CadQuery code failed to produce a STEP file. We proposed the system prompt and grading changes to the reference repository in GitHub.
+Our internal implementation of BenchCAD matches the reference implementation[^56], except for three minor modifications. First, we corrected a typo in the reference system prompt which swapped all four camera positions in the rendered views provided to the model.<!-- p.284 -->  Second, we updated the grading to accept raw shapes in addition to Workplanes. On models like GPT-5.5, we noticed raw shapes would error out due to this stylistic difference in output, but otherwise equivalent geometry. Third, we omit 26 records whose CadQuery code failed to produce a STEP file. We proposed the system prompt and grading changes to the reference repository in GitHub.
 
 The model is configured with adaptive thinking and max effort enabled in all runs, without tools. We evaluate the model on 17,874 of the published 17,900 Vision2Code files (accounting for the 26 omitted records) and report voxel IoU scores averaged over five runs.
 
@@ -84,9 +87,8 @@ On the 1000-file subset of BenchCAD Vision2Code, Claude Mythos 5 achieved a voxe
 
 ChartQAPro[^57] is a chart question answering benchmark built from 1,341 charts drawn from 157 diverse real-world sources, spanning chart types including infographics and dashboards, with 1,948 questions covering multiple-choice, conversational, hypothetical, and unanswerable formats. The benchmark tests messier, more varied chart reasoning tasks—for example, questions that pair charts with accompanying text or have no answer in the chart at all—rather than the simpler formats of earlier chart reasoning benchmarks.
 
-<!-- p.286 -->
 
-Our internal implementation of ChartQAPro matches the "Chain-of-Thought" prompting and rule-based grading reference implementation in VLMEvalKit[^58]. The model is configured with adaptive thinking and max effort enabled in all runs, both with and without Python tools. When evaluated with Python tools, the model is provided with a container—with the image file and standard Python libraries installed—and an image cropping tool. We evaluate the model on the full test set and average scores over five runs.
+Our internal implementation of ChartQAPro matches the "Chain-of-Thought" prompting and rule-based grading reference implementation in VLMEvalKit[^58]. The model is configured with adaptive thinking and max effort enabled in all runs, both with and without Python<!-- p.286 -->  tools. When evaluated with Python tools, the model is provided with a container—with the image file and standard Python libraries installed—and an image cropping tool. We evaluate the model on the full test set and average scores over five runs.
 
 On ChartQAPro, Claude Mythos 5 achieved a score of 71.6% without tools and a score of 72.9% with tools. Claude Mythos Preview scored 71.2% and 73.6%, respectively.
 
@@ -108,9 +110,8 @@ On ChartMuseum, Claude Mythos 5 achieved a score of 85.9% without tools and a sc
 
 #### 8.16.7 LAB-Bench FigQA
 
-<!-- p.288 -->
 
-LAB-Bench FigQA is a visual reasoning benchmark that tests whether models can correctly interpret and analyze information from complex scientific figures found in biology research papers. The benchmark is part of Language Agent Biology Benchmark (LAB-Bench)[^61] developed by FutureHouse, which evaluates AI capabilities for practical scientific research tasks.
+LAB-Bench FigQA is a visual reasoning benchmark that tests whether models can correctly interpret and analyze information from complex scientific figures found in biology research papers. The benchmark is part of Language Agent Biology Benchmark (LAB-Bench)[^61]<!-- p.288 -->  developed by FutureHouse, which evaluates AI capabilities for practical scientific research tasks.
 
 We evaluate the model on 181 questions from the public set and average scores over five runs. The model is configured with adaptive thinking and max effort enabled in all runs, both with and without Python tools. When evaluated with Python tools, the model is provided with a container—with the image file and standard Python libraries installed—and an image cropping tool.
 
@@ -121,9 +122,8 @@ On LAB-Bench FigQA, Claude Mythos 5 achieved a score of 88.9% without tools and 
 
 #### 8.16.8 CharXiv Reasoning
 
-<!-- p.289 -->
 
-CharXiv Reasoning is a comprehensive chart understanding evaluation suite built from 2,323 real-world charts sourced from arXiv papers spanning eight major scientific disciplines. The benchmark tests whether models can synthesize visual information across complex scientific charts to answer questions requiring multi-step reasoning.
+CharXiv Reasoning is a comprehensive chart understanding evaluation suite built from 2,323 real-world charts sourced from arXiv papers spanning eight major scientific<!-- p.289 -->  disciplines. The benchmark tests whether models can synthesize visual information across complex scientific charts to answer questions requiring multi-step reasoning.
 
 The model is configured with adaptive thinking and max effort enabled in all runs, both with and without Python tools. When evaluated with Python tools, the model is provided with a container—with the image file and standard Python libraries installed—and an image cropping tool. The model is graded using the same prompts as in the reference implementation[^62]. However, instead of GPT-4o, we use Claude Sonnet 4.6 as the grader model. We evaluate the model on 1,000 questions from the validation split and average scores over five runs.
 
@@ -145,6 +145,7 @@ Previously, we would include input image dimensions in the prompt, with bottom-r
 The model is configured with adaptive thinking and max effort enabled in all runs, both with and without Python tools. When evaluated with Python tools, the model is provided with a container—with the image file and standard Python libraries installed—and an image cropping tool. We evaluate the model on the full 1,581 instructions and average scores over five runs.
 
 On ScreenSpot-Pro, Claude Mythos 5 achieved a score of 87.3% without tools and a score of 90.7% with tools. Claude Mythos Preview scored 79.3% and 93.0%, respectively.
+
 
 <!-- p.291 -->
 

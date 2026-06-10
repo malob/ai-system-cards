@@ -283,6 +283,7 @@ SWE-bench (Software Engineering Bench) tests AI models on real-world software en
 
 All SWE-bench variants use the standard configuration, with thinking blocks included in the sampling results. For our memorization screening, see Section 6.2.1 in the [Mythos Preview System Card](https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf).
 
+
 <!-- p.255 -->
 
 ![Chart: SWE-bench Pro test-time compute scaling, plotting pass rate against average cost per task for Claude Opus 4.8 and Claude Mythos 5 across reasoning-effort levels from low to x-high](assets/figures/p255-1.png)
@@ -296,8 +297,7 @@ Using the mini-SWE harness, with a [GKE cluster](https://www.anthropic.com/engin
 
 - Claude Mythos 5: achieved 88% mean reward, averaged over 5 attempts for each one of the 89 unique tasks (for a total of 445 trials), at high effort.
 - Claude Fable 5: achieved 84.3% mean reward—with 20.9% of trials hitting a safety refusal and falling back to Claude Opus 4.8 for the rest of the trajectory, at high effort.
-<!-- p.256 -->
-- GPT-5.5: Harbor, the official maintainer of the Terminal-Bench 2.1 leaderboard, has externally reproduced GPT-5.5 with the mini-SWE-agent harness, and got an 81% mean reward at xhigh effort. We internally ran the same configuration (GPT-5.5 on mini-SWE-agent at xhigh thinking) on the same GKE setup, and got 83% mean reward. GPT-5.5 with Codex harness receives a mean reward of 83.4%.
+- <!-- p.256 -->GPT-5.5: Harbor, the official maintainer of the Terminal-Bench 2.1 leaderboard, has externally reproduced GPT-5.5 with the mini-SWE-agent harness, and got an 81% mean reward at xhigh effort. We internally ran the same configuration (GPT-5.5 on mini-SWE-agent at xhigh thinking) on the same GKE setup, and got 83% mean reward. GPT-5.5 with Codex harness receives a mean reward of 83.4%.
 - Gemini 3.1 Pro: We do not have a score with the mini-swe harness, but we include Gemini’s highest score in the Terminal-Bench 2.1 Leaderboard.
 - Claude Opus 4.8: achieved 82.7% mean reward, averaged over 5 attempts for each one of the 89 unique tasks (for a total of 445 trials), at high effort.
 
@@ -307,10 +307,12 @@ FrontierCode[^34] is an agentic coding benchmark of 150 software engineering tas
 
 Fable 5 ranks #1 on FrontierCode (Diamond subset) with a 29.3% score and 30.2% pass rate (all models at xhigh reasoning effort; score / pass rate), improving on Claude Opus 4.8 (13.4% / 14.5%) and leading GPT-5.5 (5.7% / 6.4%). Fable 5 also ranks #1 on FrontierCode (Main subset) with a 46.3% score and 48.8% pass rate, improving on Claude Opus 4.8 (34.3% / 37.3%) and leading GPT-5.5 (25.5% / 28.2%). Even at medium effort, Fable 5 outperforms every other model at any effort level.
 
+
 <!-- p.257 -->
 
 ![Chart: FrontierCode Diamond test-time compute scaling, plotting score against average cost per task on a log scale for GPT-5.5, Claude Opus 4.8, and Claude Mythos 5 across reasoning-effort levels](assets/figures/p257-1.png)
 *__[Figure 8.4.A] FrontierCode (Diamond)__ pass rate across reasoning effort levels with mean output tokens per task on a log scale. Cost is computed from each run's recorded API token usage at measured cache-hit rates, with cache reads billed at 0.1× the input rate and writes at 1.25×, and the full response including extended thinking at the output rate, using published per-token rates.*
+
 
 <!-- p.258 -->
 
@@ -325,9 +327,7 @@ Agents are given 20 hours per task; because the tasks are too large for binary g
 
 ### 8.6 ProgramBench
 
-ProgramBench[^36] is an agentic benchmark of 200 program-reconstruction tasks. Given only a binary compiled from an open-source project and that project’s documentation, the agent must rebuild a codebase that reproduces the original program’s behavior without
-<!-- p.259 -->
-internet access or decompilation tools. Tasks range from small terminal utilities (jq, ripgrep) to large systems (FFmpeg, SQLite, the PHP compiler). Submissions are graded against execution-based behavioral tests—248,000+ across the benchmark, generated via agent-driven fuzzing.
+ProgramBench[^36] is an agentic benchmark of 200 program-reconstruction tasks. Given only a binary compiled from an open-source project and that project’s documentation, the agent must rebuild a codebase that reproduces the original program’s behavior without<!-- p.259 --> internet access or decompilation tools. Tasks range from small terminal utilities (jq, ripgrep) to large systems (FFmpeg, SQLite, the PHP compiler). Submissions are graded against execution-based behavioral tests—248,000+ across the benchmark, generated via agent-driven fuzzing.
 
 We exclude 34 tasks for which the reference binary itself scores below 0.9 on the hidden test suite (indicating test flakiness), leaving 166 tasks. We report hidden test pass rate across 1–5 episodes, each with a context budget of up to 1M tokens. On this set, Claude Mythos scores 84–93%, compared to 79–88%[^37] for Claude Opus 4.8.
 
@@ -336,6 +336,7 @@ We do not report separate ProgramBench results for Claude Fable 5, given that Pr
 ### 8.7 CursorBench
 
 CursorBench[^38] is an agentic coding benchmark from Cursor, composed of real coding tasks (drawn from internal use and external traffic) and executed in Cursor’s production agent harness. All scores and per-task costs were measured and reported independently by Cursor. Claude Fable 5 outperformed the previous best result on CursorBench, scoring 72.9% at maximum effort and 8.6 points above GPT-5.5 at its highest published effort (64.3%). Fable 5 leads at every effort level from Medium upward.
+
 
 <!-- p.260 -->
 
@@ -361,9 +362,7 @@ With maximum reasoning effort and without access to tools or web search, Claude 
 
 ### 8.10 USAMO 2026
 
-The USA Mathematical Olympiad (USAMO) is a six-problem, two-day proof-based competition for high school students. It is the next step of the math olympiad track in the US after the AIME, which was a popular AI benchmark last year but is now saturated. The
-<!-- p.262 -->
-2026 USAMO took place on March 21–22, 2026, after almost all of Mythos’s training data was collected, and we are confident that there was no contamination.
+The USA Mathematical Olympiad (USAMO) is a six-problem, two-day proof-based competition for high school students. It is the next step of the math olympiad track in the US after the AIME, which was a popular AI benchmark last year but is now saturated. The<!-- p.262 --> 2026 USAMO took place on March 21–22, 2026, after almost all of Mythos’s training data was collected, and we are confident that there was no contamination.
 
 Because USAMO solutions are proofs rather than short answers, grading can be challenging and subjective. We follow the MathArena[^41] grading methodology, where each proof is rewritten by a neutral model (Gemini 3.1 Pro) and judged by a panel of 3 frontier models (we used Gemini 3.1 Pro, Claude Opus 4.6, and Claude Mythos Preview) according to defined rubrics. The final score is the minimum given by any judge.
 
@@ -375,6 +374,7 @@ ArXivMath is a final-answer benchmark of research-level mathematics maintained b
 
 We evaluate using the March and April 2026[^42] releases (71 problems total), chosen to avoid contamination with Fable’s training data. Mythos 5 with extended thinking scored 78.52%, averaged over four runs per problem, ahead of GPT-5.5 (xhigh) at 71.48% and Gemini 3.1 Pro Preview at 64.79%[^43].
 
+
 <!-- p.263 -->
 
 ![Chart: ArxivMath accuracy bar chart comparing Gemini 3.1 Pro Preview, GPT-5.5 (xhigh), and Claude models, with Claude Mythos 5 highest at 78.5%](assets/figures/p263-1.png)
@@ -383,6 +383,7 @@ We evaluate using the March and April 2026[^42] releases (71 problems total), ch
 ### 8.12 CritPt
 
 CritPt (Complex Research using Integrated Thinking–Physics Test)[^44] is a benchmark of research-level physics problems created by active physics researchers. It comprises 70 composite challenges, each simulating an entry-level research project, spanning 11 subfields including condensed matter, quantum, atomic, molecular, optical, astrophysics, high-energy, statistical, and nuclear physics. Answers use machine-verifiable formats and are scored by an automated physics-specific grading pipeline. We use the independent evaluation run by [Artificial Analysis](https://artificialanalysis.ai/evaluations/critpt) via the CritPt grading API. Claude Mythos 5 scored 28.6% on CritPt, ahead of GPT-5.5 (27.1%) and improving on Claude Opus 4.8 by 7.7 percentage points (20.9%).
+
 
 <!-- p.264 -->
 

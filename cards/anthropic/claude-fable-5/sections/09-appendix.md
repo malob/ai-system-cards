@@ -209,13 +209,14 @@ The blocklist functions by substring matching against web URLs. We normalize the
 
 Our blocklist contains the following patterns:
 
-<!-- p.319 -->
 
 ```
 None
 huggingface.co
 hf.co
 hf-mirror.com
+<!-- p.319 -->
+
 promptfoo.dev
 ://scale.com
 .scale.com

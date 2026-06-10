@@ -1,6 +1,4 @@
 <!-- source: source.pdf pages 264-278 -->
-
-<!-- p.264 -->
 <!-- p264-1.png (Figure 8.12.A, CritPt accuracy scores) belongs to §8.12 and is transcribed in the preceding section file. -->
 
 ### 8.13 Long context: GraphWalks
@@ -25,6 +23,7 @@ As with prior Claude models, our scoring corrects an ambiguity in the published 
 *__[Figure 8.13.B] Claude Mythos 5 on long context reasoning__ measured by GraphWalks BFS scores.*
 
 <!-- p.266 -->
+
 ![Chart: GraphWalks Parents F1 scores for Claude models and GPT-5.5 on the 256K and 1M subsets](assets/figures/p266-1.png)
 *__[Figure 8.13.C] Claude Mythos 5 on long context reasoning__ measured by GraphWalks Parents scores.*
 
@@ -39,6 +38,7 @@ We tested Mythos 5 in two configurations: (1) reasoning-only without tools, and 
 To guard against result contamination in the tools variant, we blocklist known HLE-discussing sources for both the searcher and fetcher (see Appendix 9.2). We also use Claude Opus 4.6 to review all transcripts and flag any that appear to have retrieved answers from HLE-specific sources; confirmed cases are re-graded as incorrect.
 
 <!-- p.267 -->
+
 ![Chart: HLE accuracy scores for Claude, Gemini, and GPT models with and without tools](assets/figures/p267-1.png)
 *__[Figure 8.14.1.A] HLE accuracy scores__. Gemini and GPT model scores are taken from published results.*
 
@@ -78,6 +78,7 @@ Claude models were run with web search, web fetch, programmatic tool calling, ma
 We ran DeepSearchQA against all reasoning effort levels available for Mythos 5, Mythos Preview and Opus 4.8. We used a 1M token budget and did not use context compaction for these runs.
 
 <!-- p.270 -->
+
 ![Chart: DeepSearchQA score versus average cost per task across reasoning-effort levels](assets/figures/p270-1.png)
 *__[Figure 8.14.3.B] DeepSearchQA__ score versus average cost per task across reasoning-effort levels.*
 
@@ -89,8 +90,7 @@ We evaluated Claude models with web search, web fetch, and code execution tools 
 
 **Grading methodology**
 
-<!-- p.271 -->
-The original DRACO paper uses Gemini-3-Pro as the primary judge model, which is no longer available. For our evaluations, we use Claude Opus 4.6 as the LLM judge to grade responses against the per-task rubrics using the same binary MET/UNMET verdicts aggregated into a normalized score per the paper's Section 4.2 formula. We follow the paper's protocol of 5 independent grading runs per response and report the mean. Our judge prompt is taken from the paper's Appendix C.2. Appendix A shows judge choice can shift absolute scores by 10–25 points while preserving system ordering, so our scores are not directly comparable to the paper's headline numbers.
+The original DRACO paper uses Gemini-3-Pro as the primary judge model, which is no longer available. For our evaluations, we use Claude Opus 4.6 as the LLM judge to grade<!-- p.271 -->  responses against the per-task rubrics using the same binary MET/UNMET verdicts aggregated into a normalized score per the paper's Section 4.2 formula. We follow the paper's protocol of 5 independent grading runs per response and report the mean. Our judge prompt is taken from the paper's Appendix C.2. Appendix A shows judge choice can shift absolute scores by 10–25 points while preserving system ordering, so our scores are not directly comparable to the paper's headline numbers.
 
 Aside from the change in the judge model, our only other difference from the original paper is that we instruct the model to enclose its final report in `<result>` tags and grade only that span, rather than grading the full agent transcript; this isolates the deliverable from intermediate tool output.
 
@@ -109,20 +109,21 @@ BrowseComp[^50] tests an agent's ability to find hard-to-locate information on t
 ![Chart: BrowseComp accuracy plotted against latency for single-agent and multi-agent configurations](assets/figures/p272-1.png)
 *__[Figure 8.15.1.A] Accuracy vs. latency for BrowseComp__ across both single-agent and multi-agent configurations.*
 
-<!-- p.273 -->
-**Multi-agent harnesses achieve the highest scores and Pareto-dominate the score-latency frontier**. Every multi-agent variant scores above the best single-agent variant, with the *async subagents* reaching our highest score of 93.3%. Latency improves alongside accuracy as agents are added: relative to the single-agent 10M-token baseline, the fixed-agent team achieves speedups of 2.2×, 2.7×, and 2.7× for three, five, and ten agents respectively, with the ten-agent team also scoring +4.2pp higher than that baseline.
+**Multi-agent harnesses achieve the highest scores and Pareto-dominate the score-latency frontier**. Every multi-agent variant scores above the best single-agent variant, with the *async subagents* reaching our highest score of 93.3%. Latency improves alongside accuracy as agents are added: relative to the single-agent 10M-token baseline,<!-- p.273 -->  the fixed-agent team achieves speedups of 2.2×, 2.7×, and 2.7× for three, five, and ten agents respectively, with the ten-agent team also scoring +4.2pp higher than that baseline.
 
 These gains come at the cost of tokens. Figure 8.15.1.B shows token usage rising with agent count alongside score, demonstrating that multi-agent configurations can productively absorb additional token budget by distributing work across agents. **Taken together, multi-agent harnesses offer a latency–cost trade-off**: when latency matters, fixed-agent team or async subagents can reach a given score faster, at the cost of higher token consumption.
 
 **Among the multi-agent harnesses, the non-blocking harnesses (fixed-agent team and async-subagents) together outperform the blocking harness on both latency and token usage**. At every target accuracy, at least one of the two reaches it faster and with fewer tokens. The latency advantage comes from removing the synchronization barrier: in the blocking harness the orchestrator must wait for every dispatched subagent to return before continuing, so each round is gated by its slowest subagent, whereas the other two let agents proceed independently. The token advantage likely comes from context persistence: their agents are long-lived and retain context across the whole problem, whereas the blocking harness spawns a fresh subagent for each subtask and spends tokens re-establishing context each time.
 
 <!-- p.274 -->
+
 ![Chart: BrowseComp accuracy plotted against total token usage for single-agent and multi-agent configurations](assets/figures/p274-1.png)
 *__[Figure 8.15.1.B] Accuracy vs. total token usage for BrowseComp__ across both single-agent and multi-agent configurations. The total token usage includes both input and output tokens.*
 
 To understand where the latency gains come from, Figure 8.15.1.C breaks the aggregate improvement down into per-problem speedups, plotted against problem difficulty. We use the average pass rate across prior Claude model runs (10 variants across 3 model families, not including Claude Mythos 5) as a difficulty proxy, and find that speedup increases with problem difficulty in both the per-problem and summed sense. On the easier problems (pass rate >= 50%), the median per-problem speedup is 0.8×, as coordination overhead roughly offsets the parallelism gain on problems that are already fast, but summed latency across the bucket still drops 2.0×, because the sum is dominated by the bucket's slowest problems, which do benefit. On the harder problems (pass rate < 50%), the median per-problem speedup rises to 1.6× and the summed latency drops 4.4×. **The overall latency improvement is therefore driven by the hard tail**. The highest-latency problems dominate the average, and those are precisely the problems on which multi-agent strategies help most.
 
 <!-- p.275 -->
+
 ![Chart: scatter plot of per-problem multi-agent speedup versus per-problem pass rate on BrowseComp](assets/figures/p275-1.png)
 *__[Figure 8.15.1.C] Per-problem speedup of the ten-agent team over a single agent with 10M-token limit, plotted against per-problem empirical pass rate on the full set of 1266 BrowseComp problems.__ The x-axis is per-problem pass rate from prior Claude model runs (10 variants across 3 model families, excluding Claude Mythos 5), used as a proxy for task difficulty. The y-axis is Claude Mythos 5 multi-agent speedup (single-agent latency divided by the ten-agent-team latency), one point per problem, colored by whether the single agent and ten-agent team answered correctly or incorrectly. The solid line is the geometric mean of the multi-agent speedup at every pass rate when the ten-agent team gets the task correct. Points are jittered for better visualization.*
 
@@ -130,8 +131,7 @@ To understand where the latency gains come from, Figure 8.15.1.C breaks the aggr
 
 ProgramBench[^51] is an agentic benchmark of 200 program-reconstruction tasks. Given only a binary compiled from an open-source project and that project's documentation, the agent must rebuild a codebase that reproduces the original program's behavior without internet access or decompilation tools. Single-agent results were presented in Section 8.6 and we present the multi-agent ProgramBench results in this section.
 
-<!-- p.276 -->
-We evaluated the fixed-agent team and async-subagents harnesses on ProgramBench against a single-agent baseline, with the same per-agent 1M-token limit. As outlined in Section 8.6, we exclude the 34 tasks whose reference binary scores below 0.9 on the hidden test suite, leaving 166 "golden" tasks. We grade at a series of intermediate checkpoints and use the resulting per-task trajectories of score, latency, and tokens to construct the cumulative curves in Figures 8.15.2.A and 8.15.2.B.
+We evaluated the fixed-agent team and async-subagents harnesses on ProgramBench against a single-agent baseline, with the same per-agent 1M-token limit. As outlined in Section 8.6, we exclude the 34 tasks whose reference binary scores below 0.9 on the<!-- p.276 -->  hidden test suite, leaving 166 "golden" tasks. We grade at a series of intermediate checkpoints and use the resulting per-task trajectories of score, latency, and tokens to construct the cumulative curves in Figures 8.15.2.A and 8.15.2.B.
 
 ![Chart: ProgramBench score versus latency curves for single-agent and multi-agent harnesses with confidence bands](assets/figures/p276-1.png)
 *__[Figure 8.15.2.A] Score vs. latency for the full set of 166 "golden" ProgramBench tasks.__ Shaded regions give the 95% confidence interval, computed from score variance across the tasks.*
@@ -139,6 +139,7 @@ We evaluated the fixed-agent team and async-subagents harnesses on ProgramBench 
 **Both multi-agent harnesses achieve a higher score with significant speedup, at the cost of more token usage**. From Figure 8.15.2.A, on the full golden set, the five-agent team achieves a final score +7.9pp higher than the single agent. Notably, this comes with a 3.2× speedup to reach a 60% hidden-test pass rate. Figure 8.15.2.B shows the same latency–cost trade-off described in Section 8.15.1: the score improvement and latency gain come from spending more tokens and working on the problem concurrently.
 
 <!-- p.277 -->
+
 ![Chart: ProgramBench score versus total token usage curves for single-agent and multi-agent harnesses with confidence bands](assets/figures/p277-1.png)
 *__[Figure 8.15.2.B] Score vs. tokens for the full set of 166 "golden" ProgramBench tasks.__ Shaded regions give the 95% confidence interval, computed from score variance across the tasks.*
 
@@ -148,8 +149,7 @@ We evaluated three multi-agent harnesses. All harnesses run every agent at maxim
 
 **Orchestrator with blocking subagents.** A single orchestrator coordinates the task by spawning subagents and blocking until all return. The orchestrator has no task tools of its own; its only capability is spawning subagents. Each subagent receives the full set of task tools for the benchmark. Subagents have a 200k-token context window without compaction, whereas the orchestrator uses context compaction triggered at 100k tokens with no overall token cap.
 
-<!-- p.278 -->
-**Fixed-agent team.** A team of three, five, or ten peer agents works on the task concurrently. One agent is designated the lead and is responsible for coordination and submitting the final answer if needed, but all agents have identical tools and all see the full task description. In addition to the task tools, every agent has two messaging tools: Send Message, which delivers a message to one or more teammates (inserted following the recipient's next tool result), and Wait for Message, which blocks sampling until an incoming message arrives. Every agent has the same 1M-token total limit. On ProgramBench, each agent works in its own checkout of the task repository and can share code with other agents via Git.
+**Fixed-agent team.** A team of three, five, or ten peer agents works on the task concurrently. One agent is designated the lead and is responsible for coordination and submitting the final answer if needed, but all agents have identical tools and all see the full task description. In addition to the task tools, every agent has two messaging tools: Send<!-- p.278 -->  Message, which delivers a message to one or more teammates (inserted following the recipient's next tool result), and Wait for Message, which blocks sampling until an incoming message arrives. Every agent has the same 1M-token total limit. On ProgramBench, each agent works in its own checkout of the task repository and can share code with other agents via Git.
 
 This harness is designed to mirror real-world settings in which multiple agents collaborate on a shared task, and reduce latency by letting peers work in parallel.
 

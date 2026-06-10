@@ -12,3 +12,18 @@ description: >-
   new large language model from Anthropic. Covers RSP evaluations, cyber
   capabilities, safeguards and harmlessness, agentic safety, alignment
   assessment, model welfare, and capabilities.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+chips:
+  Safeguard circumvention: amber
+  Fabrication: red
+  Skipped cheap verification: yellow
+  Reckless action: orange
+  Correction fails: peach
+  Instruction following: sienna
+  Research: green
+  Research engineering: blue
+  Pure engineering: purple
+  Non R&D: gray
+  Moderate Mitigating Factor: green
+  Weak Mitigating Factor: blue
