@@ -115,7 +115,7 @@ def main():
         blocks = []
         for pno in sel:
             blocks += assemble.assemble_page(pno, pages[pno - 1], figures_map.get(str(pno), []),
-                                             chips, tables.get_tables(pno))
+                                             chips, tables.get_tables(pno, pages[pno - 1]))
         blocks = stitch(blocks)
         md, _ = serialize.serialize_blocks(blocks, page_of_prev_block=-1, oracle_pages=pages, chips=chips)
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")

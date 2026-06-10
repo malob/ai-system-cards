@@ -21,9 +21,60 @@ def _load() -> dict:
     return json.loads(CACHE.read_text()) if CACHE.exists() else {}
 
 
-def get_tables(page_no: int) -> list[dict]:
-    """[{bbox:[x0,y0,x1,y1] top-left, html}] for a page (cached). Empty if uncached."""
-    return _load().get(str(page_no), [])
+def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
+    """[{bbox:[x0,y0,x1,y1] top-left, html}] for a page (cached). Empty if
+    uncached. Post-processing on load:
+    - strip docling-absorbed <caption> (D23: captions are our block, never in
+      the table box — also they duplicated);
+    - repair column rotation against oracle span geometry (docling TableFormer
+      cyclically mis-assigns columns on wide numeric tables, e.g. 4.4.2.A)."""
+    out = []
+    for t in _load().get(str(page_no), []):
+        html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
+        if oracle_page is not None:
+            html = _repair_rotation(html, t["bbox"], oracle_page)
+        out.append({**t, "html": html})
+    return out
+
+
+def _squash(s: str) -> str:
+    return re.sub(r"\s+", "", s)
+
+
+def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
+    """Verify each body cell's column against its span x-position; if rows
+    share a consistent non-identity column permutation, invert it."""
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    if len(rows) < 3:
+        return html
+    # oracle spans inside the table bbox, keyed by squashed text -> x-centers
+    spans_x: dict[str, list[float]] = {}
+    for s in oracle_page["spans"]:
+        sb = s["bbox"]
+        if (bbox[0] - 3 <= sb[0] and sb[2] <= bbox[2] + 3
+                and bbox[1] - 3 <= sb[1] and sb[3] <= bbox[3] + 3):
+            spans_x.setdefault(_squash(s["text"]), []).append((sb[0] + sb[2]) / 2)
+
+    # per-row repair: each row is reordered by ITS OWN measured x-permutation
+    # (docling rotated only data rows on 4.4.2.A — the header was correct, so a
+    # majority-global permutation would corrupt it)
+    out = html
+    for r in rows:
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        if len(tags) < 2 or any("colspan" in a or "rowspan" in a for _, a, _ in tags):
+            continue
+        plain = [_squash(re.sub(r"<[^>]+>", "", c)) for _, _, c in tags]
+        xs = [spans_x.get(p, [None])[0] for p in plain]
+        if any(x is None for x in xs) or len(set(xs)) != len(xs):
+            continue
+        perm = tuple(sorted(range(len(xs)), key=lambda i: xs[i]))
+        if perm == tuple(range(len(xs))):
+            continue
+        inner = [tags[i][2] for i in perm]
+        rebuilt = "<tr>" + "".join(
+            f"<{t}{a}>{c}</{t}>" for (t, a, _), c in zip(tags, inner)) + "</tr>"
+        out = out.replace(r, rebuilt, 1)
+    return out
 
 
 def _clean_html(html: str) -> str:

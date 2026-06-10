@@ -98,6 +98,13 @@ findings / 69 majors in 40 classes — experiment 07 + worklist.md** (sweep
 snapshot PREDATES some same-night fixes; re-sweep after next regen is the
 clean baseline). Commits from ~04:30 unsigned (1Password locked).
 
+**MORNING TOUR OUTCOMES (2026-06-10 ~10:40, D23):** caption = first-class
+block (`:::caption`, uniform render, never inside table boxes); AISI quotes =
+standard blockquotes; underline capture required (FL-09, with bold-in-cells
+restyle). Diagnostic: caption-row-in-grid is the suspected cause of table
+column rotation (clean tall tables vs rotated wide ones). Table stitching:
+third multi-page table confirmed (p.19–21).
+
 **NEXT (priority order, sweep-driven):**
 1. table-scrambled ×11 (§4 tables pp.51–91): diagnose ONE root cause
    (docling grid traversal vs y-slot insertion); add TB2 cell-order check.
