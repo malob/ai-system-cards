@@ -184,12 +184,14 @@ labeled turns were offset by len(label) — now shifted. Suspect-row detector:
 0 repo-wide. Site builds clean; DOM-verified (27 code spans, 15 underlines,
 0 escape leaks).
 
-**ROUND F RUNNING:** one agent re-verifying the 15 affected pages against
-fresh `vsweep4` slices → `pipeline/.cache/vsweep4/findings.jsonl`. NOTE: its
-slices predate the inline-code + label-shift commits, so a p.153 'mono spans
-plain' report is already fixed. On completion: conclusion into experiment 08
-+ here → convergence report to owner. Mutation suite re-run done (9/12 at
-100%, split-heading 50→83%). Site build + DOM checks done.
+**ROUND F DONE (15:45):** 11/15 fixed; 4 still-broken + 3 new finds, ALL
+root-caused and fixed same session (header sub-rows, prefix anchors ≥4,
+digit-dot wrap join, fragment th demotion, fnref-digit through tags, glued
+span virtual split, slicer snap fix). Verified per page in regenerated md;
+displaced 0; T1 minors 128. Experiment 08 has the full record + conclusion:
+**the loop converges** (69 → 25 → 7 → 0 open majors). Next: owner H2 review
+toward acceptance; optionally one more full 319-page sweep from the
+0-known-majors baseline.
 
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',

@@ -122,15 +122,46 @@ sites); T1 minors 198→135. Mutation suite re-run (per-class 6, seed 7):
 style-profile continuation), drop-bold 83%, item-to-paragraph 83%,
 split-item 60% (pre-existing bounds, no regression).
 
-## Round F — final verification (running)
+## Round F — final verification + last fix batch
 
-One agent re-verifies the 15 affected pages against fresh `vsweep4` slices;
-findings land in `pipeline/.cache/vsweep4/findings.jsonl`.
+One agent re-verified the 15 affected pages against fresh `vsweep4` slices
+(`pipeline/.cache/vsweep4/findings.jsonl`): **11 fixed, 4 still-broken, plus
+3 new finds** — every one diagnosed to a root cause and fixed the same
+session, each verified in the regenerated output:
 
-## Conclusion (provisional)
+- p.82-family header sub-rows (`_fix_wrapped_header_cells`): docling split
+  ONE same-line span across two cells and dropped the empty Model lead; all
+  six instances (pp. 77×2/79/80/82/86) now read
+  `['', 'API, without a system prompt', 'Claude.ai']`. Gate: colspan rows or
+  logically-narrow rows only (a width-blind version caused a 0→35 displaced
+  regression — caught by the detector, reverted within one cycle).
+- p.91 Sonnet row: prefix anchors relaxed to ≥4 chars (numeric cells like
+  `41.8%` can now anchor a garbled row's y-band) → row rebuilds correctly.
+- `GPT-5. 5` → `GPT-5.5`: restyle gap policy — at a line break, DIGIT-dot +
+  digit rejoins (version wrap); letter-dot gets a space (fixes the p.49
+  kernel-threshold glue `h eq.200×` the first version of this rule caused).
+- p.253 RiemannBench all-bold row: th→td demotion now includes a merged
+  fragment's first row.
+- Stray literal footnote digits (`<sup>[^3]</sup></b> 3`, pp. 49/252/253):
+  the absorber now sees through closing tags.
+- p.77 `99.96% (± 0.04%)` underline: one span glued TWO cells' text — split
+  into virtual instances with proportional bboxes, so segmentation matches
+  and the rule-overlap test sees the true half-width.
+- Slicer: snap-to-line-start only for short list prefixes (the one-line
+  welfare table had swallowed pages 310–317's slices).
 
-The loop converges: 69 majors → 25 → 4 stragglers + a handful of new
-patterns → 0 suspect rows and every named class fixed at the root, with a
-clean 30-page random sample. Remaining known residuals are typed and small
-(S1×4, ST1×1, T1×6 chip-order/typed, FN1 minor×1, p.153 monospace spans,
-em-dash folding inside band-less mega-cells). Final verdict after round F.
+Final state: displaced detector 0; gate FN1 0 / S1 4 / ST1 1 / T1 6 majors
+(typed known sites), T1 minors 128 (from 198); all six header sub-rows
+uniform; spot-verified per fix in the regenerated markdown.
+
+## Conclusion
+
+**The loop converges.** 69 majors (sweep #1) → 25 (round D) → 4 + 3 new
+(round F) → 0 open, with a clean 30-page random sample and all fixes
+class-level. Verification depth per round: full sweep → flagged+sample →
+affected-pages — each round's finder caught what the previous round's fixes
+missed, and the final batch is self-verified per page (next full sweep, if
+wanted, starts from a 0-known-majors baseline). Typed residuals: S1×4
+(incl. the real p.182 missing-bold find), ST1×1, T1×6 (p.38/44 chip
+reading-order = typed-model territory), FN1 minor×1 (ref-12), L1 minor×31
+(anchor cosmetics), em-dash folding inside band-less mega-cells (p.309).
