@@ -226,6 +226,22 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 blocks.append({"type": "figure", "file": f, "page": pno,
                                "alt": "", "caption_lines": []})
             fig_done = True
+        if kind == "prose" and cur and cur["type"] == "heading":
+            # wrapped heading continuation: the second line of a wrapped
+            # heading has no leading number so it classifies as paragraph
+            # (p.177 'patterns in coding environments'). Title-wrap pitch is
+            # ~2-4pt vs >=8pt heading->body spacing; require identical style
+            # (colors + uniform boldness) so adjacent body text never merges
+            prev = cur["lines"][-1]
+            def _prof(l):
+                segs = [s for _, _, s in l["segs"] if s["zone"] == "body"]
+                return (frozenset(s["color"] for s in segs),
+                        all(s["bold"] for s in segs) if segs else False)
+            if (line["bbox"][1] - prev["bbox"][3] < 6
+                    and abs(line["size"] - prev["size"]) < 0.6
+                    and _prof(line) == _prof(prev)):
+                cur["lines"].append(line)
+                continue
         if kind == "heading":
             # multi-line headings (wrapped titles) merge into one block — a
             # split heading produced the duplicate-TOC-entry bug

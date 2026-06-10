@@ -388,6 +388,13 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
         groups, cur = [], None
         for l in lines:
             is_head = l["size"] >= 12.6 or (l["colors"] == {"#666666"} and HEAD_NUM_ST.match(l["text"]))
+            # wrapped continuation: an unnumbered gray line hugging the
+            # heading above it (title-wrap pitch < 6pt; body sits >= 8pt
+            # below) is the heading's second line — same rule as assemble
+            if (not is_head and cur and l["colors"] == {"#666666"}
+                    and (l["y0"] - cur["y1"]) < 6
+                    and abs(l["size"] - cur["size"]) < 0.6):
+                is_head = True
             if is_head:
                 if cur and (l["y0"] - cur["y1"]) < 10 and abs(l["size"] - cur["size"]) < 0.6:
                     cur["text"] += " " + l["text"]
