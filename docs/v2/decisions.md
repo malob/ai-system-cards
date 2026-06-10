@@ -165,3 +165,9 @@ roles (palette, dark mode, pill styling) is a design-system decision the owner
 makes at render review — it is recorded but not fidelity-gated. Consequently the
 V1 vision judge compares structure and semantics ("same content, same emphasis,
 same grouping"), never exact pixels or hex values.
+
+## D18 — v2 pipeline code lives in `pipeline/` (2026-06-10)
+
+Not `v2/`: the directory will outlive the version label. Structure grows as
+needed; first resident is `pipeline/verifier/`. v1 leftovers (`tools/`,
+`extracted/` scripts) stay untouched as calibration data (D5).

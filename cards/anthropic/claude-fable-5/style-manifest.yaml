@@ -1,0 +1,72 @@
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded mechanically from the signal census
+# (docs/v2/experiments/03-signal-census/), to be confirmed by the owner.
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+
+card: anthropic/claude-fable-5
+status: draft — seeded from census 2026-06-10, owner confirmation pending
+
+text_colors:
+  "#000000": {role: body}
+  "#1155cc": {role: link}                      # 356 spans / 127 pages
+  "#666666": {role: running-header, exclude: true}   # 120 pages, top-of-page
+  "#444444": {role: transcript-commentary}     # narrator prose inside transcripts
+  "#188038": {role: code-text}                 # green code spans, 4 pages
+  "#1264a3": {role: link}                      # bare-URL footnote links
+  # near-black paste artifacts in the source doc — render as body, keep note
+  "#1d1c1d": {role: body, note: paste-artifact}
+  "#1f1f1e": {role: body, note: paste-artifact}
+  "#242424": {role: body, note: paste-artifact}
+  "#467886": {role: link, note: verify at conversion}   # 'cyber ranges' etc.
+  "#ffffff": {role: table-header-text}         # light text on dark header fills
+  "#faf9f5": {role: table-header-text}
+  "#747775": {role: table-empty-cell}          # 'None' placeholder, 1 page
+  # chip label text colors are contrast pairs of the pill fills; mapped via chips
+  "#473821": {role: chip-text}
+  "#ffcfc9": {role: chip-text}
+  "#e5e5e5": {role: chip-text}
+  "#0a53a8": {role: chip-text}
+  "#5a3286": {role: chip-text}
+  "#215a6c": {role: chip-text}
+  "#753800": {role: chip-text}
+  "#11734b": {role: chip-text}
+
+fills:
+  "#d9ead3": {role: placeholder, forms: [inline-pill, block]}   # D15: [Error 1], […]
+  "#f3f3f3": {role: transcript-container}
+  "#ebc9b7": {role: turn-assistant}            # 'Assistant, turn 146: …'
+  "#e2decf": {role: turn-user}                 # 'User, turn 425: …'
+  "#faf9f5": {role: turn-user, note: also generic panel — disambiguate by context}
+  "#f8f8f8": {role: inline-code-bg}            # 'huggingface.co' pills
+  "#f0eee6": {role: example-box}               # appendix reasoning examples
+  "#f1f3f4": {role: code-block-bg, note: verify at conversion}
+  "#dedcd1": {role: figure-furniture, exclude: true}   # chart panels (vector)
+  "#141413": {role: figure-furniture, exclude: true}   # dark chart panels
+  "#4d4c48": {role: figure-legend, exclude: true}      # legend key pills, 9 pages
+  "#fefdfb": {role: UNRESOLVED, note: micro-pills ×91 on 2 pages (scenario tags?) — closure flag at conversion}
+  "#000000": {role: table-rule}                # borders/rules, header fills
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# Chip vocabulary: label ↔ pill fill hex (registry color names live in meta.yaml
+# `chips:`; this maps them to the source hexes found by census/probe).
+chips:
+  Safeguard circumvention:      "#f0ac54"
+  Fabrication:                  "#b10202"
+  Skipped cheap verification:   "#ffe5a0"
+  Reckless action:              "#ec7513"
+  Correction fails:             "#ffc8aa"
+  Instruction following:        "#7b2b15"
+  Research:                     "#d4edbc"
+  Research engineering:         "#bfe1f6"
+  Pure engineering:             "#e6cff2"
+  Non R&D:                      "#e8eaed"
+  Moderate Mitigating Factor:   "#d4edbc"   # shares green family with Research
+  Weak Mitigating Factor:       "#c6dbe1"
+
+document:
+  toc_pages: [4, 5, 6, 7, 8, 9, 10]     # site generates its own TOC; excluded
+  page_number_footer: bottom-center bare integer, excluded
