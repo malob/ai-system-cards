@@ -89,6 +89,7 @@ def main():
     ap.add_argument("--per-class", type=int, default=10)
     ap.add_argument("--seed", type=int, default=5)
     ap.add_argument("--json", type=Path, default=Path("docs/v2/experiments/05-mutation-testing/results.json"))
+    ap.add_argument("--classes", nargs="*", help="limit to these mutation kinds")
     args = ap.parse_args()
     rng = random.Random(args.seed)
 
@@ -98,6 +99,8 @@ def main():
 
     results = {}
     for kind, inv in CLASSES.items():
+        if args.classes and kind not in args.classes:
+            continue
         caught = tried = 0
         details = []
         for i in range(args.per_class):

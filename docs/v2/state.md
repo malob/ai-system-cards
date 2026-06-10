@@ -74,18 +74,21 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-1. **Extend verifier**: S1 bold/italic runs, S2/S3 chips via style manifest,
-   TB1 via docling (incl. cross-check of all 12 v1 HTML tables and the p.252
-   row-count discrepancy), L2 destination resolution.
-2. **Mutation-test the verifier (D6)**: inject per-class synthetic defects,
-   measure recall, close gaps. This turns "calibrated on history" into a
-   number.
-3. **Design + build the generation loop**: typed document model schema (informed
+1. **Close mutation-exposed verifier gaps** (experiment 05): FN1 v2 = per-number
+   footnote body-text comparison; S2 per-page chip counts; then re-run the
+   mutation suite (recall regressions are bugs). L2 dest resolution still
+   unimplemented.
+2. **Design + build the generation loop**: typed document model schema (informed
    by what the oracle emits), semantic-proposal prompts, repair loop against
-   gates, N-version arbitration, **cross-page table stitching stage**, vision
-   sweep, escalation worklist.
-4. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
+   gates, N-version arbitration, **cross-page table stitching stage** (two
+   confirmed multi-page tables: p.252–253, p.309–318), vision sweep, escalation
+   worklist.
+3. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
+4. Backlog: v1-card fixes the verifier surfaced, applicable any time as
+   post-acceptance edits (D9): 19 caption bold-leads past §6.5 + caption
+   convention unification; chip-order check on p.38/44. (Or simply inherit them
+   via the v2 re-conversion.)
 
 Living spec started: [spec-rules.md](spec-rules.md) — R1 auto-links (decided,
 D19), R2 unresolvable dests (proposed default in effect; sic-note presentation

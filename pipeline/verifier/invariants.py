@@ -85,24 +85,37 @@ AUTO_LINK = re.compile(r"^https?://[\w.-]+/?$")
 def l1_links(md_links, oracle_pages, page_range, toc_pages, table_pages=frozenset()) -> list[dict]:
     """Link-set coverage: every PDF link must exist in the markdown (L1).
     Checked against the global markdown link set (boundary pages span files)."""
+    from collections import Counter
+
     md_link_text = " | ".join(norm.normalize(t, True) for t, _, _ in md_links)
-    md_uris = {target.rstrip("/") for _, target, _ in md_links}
+    md_uri_counts = Counter(target.rstrip("/") for _, target, _ in md_links)
+
+    # URI links: count-based, whole-document — a global SET misses dropped
+    # duplicate instances (mutation-testing finding), while page windows
+    # false-positive on footnote citations whose md def sits pages away.
+    oracle_uri_occurrences: dict[str, list[dict]] = {}
+    for pno in page_range:
+        if pno in toc_pages or pno > len(oracle_pages):
+            continue
+        for l in oracle_pages[pno - 1]["links"]["uri"]:
+            oracle_uri_occurrences.setdefault(l["uri"].rstrip("/"), []).append({**l, "page": pno})
 
     flags = []
+    for uri, occs in oracle_uri_occurrences.items():
+        deficit = len(occs) - md_uri_counts.get(uri, 0)
+        for l in occs[:max(0, deficit)]:
+            # PDF auto-links: scheme-less anchor text auto-promoted to an
+            # http:// URL by Google Docs (appendix blocklist tables) — v1
+            # renders them as code, not links (spec rule R1).
+            anchor = l["anchor"].strip().rstrip("/")
+            auto = uri.startswith("http://") and (anchor in uri or not anchor)
+            flags.append(_flag("L1", l["page"], "minor" if auto else "major",
+                               {"kind": "auto-link" if auto else "uri", "missing": uri, "anchor": l["anchor"][:80]}))
+
     for pno in page_range:
         if pno in toc_pages or pno > len(oracle_pages):
             continue
         links = oracle_pages[pno - 1]["links"]
-        for l in links["uri"]:
-            if l["uri"].rstrip("/") not in md_uris:
-                # PDF auto-links: scheme-less anchor text auto-promoted to an
-                # http:// URL by Google Docs (appendix blocklist tables) — v1
-                # renders them as code, not links. Minor class pending a spec
-                # rule; real authored links are https with prose anchors.
-                anchor = l["anchor"].strip().rstrip("/")
-                auto = l["uri"].startswith("http://") and (anchor in l["uri"] or not anchor)
-                flags.append(_flag("L1", pno, "minor" if auto else "major",
-                                   {"kind": "auto-link" if auto else "uri", "missing": l["uri"], "anchor": l["anchor"][:80]}))
         for l in links["goto"]:
             # PDF link rects over/under-shoot; trim edge punctuation/whitespace
             anchor = norm.normalize(l["anchor"], True).strip().strip("'\"().,;:§[] ")

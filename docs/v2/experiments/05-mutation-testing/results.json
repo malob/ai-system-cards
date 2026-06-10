@@ -1,0 +1,425 @@
+{
+ "drop-link": {
+  "invariant": "L1",
+  "caught": 3,
+  "tried": 8,
+  "details": [
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "https://andonlabs.com/evals/vending-bench-2",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "https://transformer-circuits.pub/2026/nla/index.html#introduction",
+    "caught": false
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "https://www.anthropic.com/responsible-scaling-policy",
+    "caught": false
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "https://www.anthropic.com/constitution",
+    "caught": false
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "https://www.anthropic.com/legal/aup",
+    "caught": false
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "https://transformer-circuits.pub/2026/nla/index.html#introduction",
+    "caught": false
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "http://anthropic.com/claude-mythos-preview-risk-report",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "https://www.anthropic.com/claude-opus-4-6-system-card",
+    "caught": true
+   }
+  ]
+ },
+ "flatten-chip": {
+  "invariant": "S2",
+  "caught": 7,
+  "tried": 8,
+  "details": [
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Safeguard circumvention",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Fabrication",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Instruction following",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Instruction following",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Correction fails",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Correction fails",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Safeguard circumvention",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Skipped cheap verification",
+    "caught": false
+   }
+  ]
+ },
+ "delete-sentence": {
+  "invariant": "T1",
+  "caught": 6,
+  "tried": 8,
+  "details": [
+   {
+    "file": "05-agentic-safety.md",
+    "site": "A model reaches Tier 2 if it can run dec",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "Results for previous models show varianc",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "Positive values for \u2018misreported rate\u2019 i",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "BrowseComp: A simple yet challenging ben",
+    "caught": false
+   },
+   {
+    "file": "09-appendix.md",
+    "site": "What's your view on not having a continu",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "Results for previous models show varianc",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "For each transcript, we sampled 300 toke",
+    "caught": true
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "External testing from AI safety research",
+    "caught": false
+   }
+  ]
+ },
+ "duplicate-paragraph": {
+  "invariant": "T1",
+  "caught": 8,
+  "tried": 8,
+  "details": [
+   {
+    "file": "06g-reliability-2.md",
+    "site": "**[Transcript 6.5.2.B]** *Example of eva",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "These results are obtained with all safe",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "\nOutputs were scored on two metrics: a p",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "\nWe evaluated Claude Mythos 5's tendency",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "On AutomationBench's [leaderboard](https",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "The sequences and objectives for these t",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "- The Assistant is writing code in a tra",
+    "caught": true
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "The expected-value argument for corrigib",
+    "caught": true
+   }
+  ]
+ },
+ "swap-words": {
+  "invariant": "T1",
+  "caught": 7,
+  "tried": 8,
+  "details": [
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "requests posing",
+    "caught": true
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "both investigator",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "violence prompt",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "principle appear",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "writing code",
+    "caught": true
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "take them",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "grader awareness",
+    "caught": false
+   },
+   {
+    "file": "08c-capabilities-3.md",
+    "site": "agentic tasks",
+    "caught": true
+   }
+  ]
+ },
+ "drop-image": {
+  "invariant": "F1",
+  "caught": 8,
+  "tried": 8,
+  "details": [
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "![Chart: GraphWalks BFS F1 scores for Cl",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "![Chart: eight bar-chart panels of safeg",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "![Chart: 15 panels of average constituti",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "![Chart: grouped bar chart of hacking be",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "![Chart: three panels (Claude Mythos Pre",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "![Chart: HealthBench length-adjusted sco",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "![Chart: GraphWalks Parents F1 scores fo",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "![Chart: three panels (Claude Mythos Pre",
+    "caught": true
+   }
+  ]
+ },
+ "drop-fndef": {
+  "invariant": "FN1",
+  "caught": 8,
+  "tried": 8,
+  "details": [
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "[^2]: We did not directly comp",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "[^3]: We re-run this evaluatio",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "[^17]: No part of this evaluat",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "[^27]: Although our probes are",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "[^6]: Lee, S., & Brumley, D. (",
+    "caught": true
+   },
+   {
+    "file": "05-agentic-safety.md",
+    "site": "[^12]: The observed increase w",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "[^4]: The Sonnet 4.6 system ca",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "[^38]: Cursor. (2026). CursorB",
+    "caught": true
+   }
+  ]
+ },
+ "dup-marker": {
+  "invariant": "P1",
+  "caught": 8,
+  "tried": 8,
+  "details": [
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "<!-- p.139 -->",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "<!-- p.35 -->",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "<!-- p.70 -->",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "<!-- p.149 -->",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "<!-- p.73 -->",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "<!-- p.34 -->",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "<!-- p.271 -->",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "<!-- p.12 -->",
+    "caught": true
+   }
+  ]
+ },
+ "drop-bold": {
+  "invariant": "S1",
+  "caught": 5,
+  "tried": 8,
+  "details": [
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "Multimodal",
+    "caught": false
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "One thing worth noting:",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "Synthetic scenarios in a real coding env",
+    "caught": false
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Subagent, worker:",
+    "caught": true
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "Sonnet 4.6",
+    "caught": false
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "Async subagents.",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "One thing worth noting:",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Cluster:",
+    "caught": true
+   }
+  ]
+ }
+}

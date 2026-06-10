@@ -1,0 +1,49 @@
+{
+ "drop-link": {
+  "invariant": "L1",
+  "caught": 7,
+  "tried": 8,
+  "details": [
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "https://andonlabs.com/evals/vending-bench-2",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "https://transformer-circuits.pub/2026/nla/index.html#introduction",
+    "caught": true
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "https://www.anthropic.com/responsible-scaling-policy",
+    "caught": false
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "https://www.anthropic.com/constitution",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "https://www.anthropic.com/legal/aup",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "https://transformer-circuits.pub/2026/nla/index.html#introduction",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "http://anthropic.com/claude-mythos-preview-risk-report",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "https://www.anthropic.com/claude-opus-4-6-system-card",
+    "caught": true
+   }
+  ]
+ }
+}

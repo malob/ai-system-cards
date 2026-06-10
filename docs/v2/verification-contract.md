@@ -189,6 +189,11 @@ As of 2026-06-10 (experiment 04 — verifier v0 calibrated against v1 git histor
   zero false positives in probes; stack = D14), L2 (dest resolution).
 - **T2:** order-sensitivity is in T1's diff; docling corroborates block order
   (its paragraph segmentation too mushy to gate on).
-- **Not yet:** mutation testing (D6) — recall demonstrated on history, not yet
-  quantified per class. N1/V1 machinery. Structural splits (PM-02/03/04) await
-  the typed model; v0 catches their token-level side effects only.
+- **Mutation-tested (experiment 05):** P1/F1/FN1-count/T1-duplication 8/8;
+  swap/delete-T1 7–6/8 (misses = footnote-body blind spot, named); S2 7/8;
+  L1 7/8 after two fixes the suite itself forced (count-based URIs,
+  wrapped-annotation merge); S1 5/8 (table interior = TB1's layer). Known
+  boundaries written in the experiment README; re-run after every extension.
+- **Not yet:** N1/V1 machinery; TB1/L2 implementation; FN1 body-text equality.
+  Structural splits (PM-02/03/04) await the typed model; v0 catches their
+  token-level side effects only.

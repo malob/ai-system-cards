@@ -104,10 +104,18 @@ def extract_page(page) -> dict:
                 s["zone"] = "fnbody"
 
     links = {"uri": [], "goto": []}
+    seen_uris = {}
     for l in page.get_links():
         anchor = page.get_text(clip=fitz.Rect(l["from"])).strip().replace("\n", " ")
         if l["kind"] == fitz.LINK_URI:
-            links["uri"].append({"anchor": anchor, "uri": l["uri"]})
+            # a line-wrapped URL yields multiple annotations for ONE logical
+            # link — merge same-URI annotations on a page
+            if l["uri"] in seen_uris:
+                seen_uris[l["uri"]]["anchor"] += anchor
+            else:
+                entry = {"anchor": anchor, "uri": l["uri"]}
+                seen_uris[l["uri"]] = entry
+                links["uri"].append(entry)
         elif l["kind"] in (fitz.LINK_GOTO, fitz.LINK_NAMED):
             dest_page = (l.get("page") if l.get("page") is not None else -1) + 1
             entry = {"anchor": anchor, "dest_page": dest_page}
