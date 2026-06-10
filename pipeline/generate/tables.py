@@ -37,6 +37,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _split_glued_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
+            html = _inject_fnrefs(html, t["bbox"], oracle_page)
         out.append({**t, "html": html})
     return out
 
@@ -87,6 +88,30 @@ def _split_glued_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 f"<{tg2}{at2}>{c2}</{tg2}>" for (tg2, at2, _), c2 in zip(tags, cells)) + "</tr>"
             out = out.replace(r, rebuilt, 1)
             break
+    return out
+
+
+def _inject_fnrefs(html: str, bbox: list, oracle_page: dict) -> str:
+    """Footnote refs inside tables: docling drops superscripts, so re-attach
+    `<sup>[^N]</sup>` after the nearest-left text of each in-table ref span
+    (the FN1 major: refs 11/12/28/29 in the safeguards/capabilities tables)."""
+    spans = list(_table_spans(oracle_page, bbox))
+    out = html
+    for ref in spans:
+        if ref.get("zone") != "fnref":
+            continue
+        n = ref["text"].strip()
+        rb = ref["bbox"]
+        left = [s for s in spans
+                if s.get("zone") == "body" and s["bbox"][2] <= rb[0] + 2
+                and min(s["bbox"][3], rb[3]) - max(s["bbox"][1], rb[1]) > 0]
+        if not left:
+            continue
+        anchor = max(left, key=lambda s: s["bbox"][2])["text"].strip()
+        if not anchor:
+            continue
+        pat = re.compile("(" + re.escape(anchor) + r")(?![^<]*</sup>)")
+        out, k = pat.subn(lambda m: m.group(1) + f"<sup>[^{n}]</sup>", out, count=1)
     return out
 
 

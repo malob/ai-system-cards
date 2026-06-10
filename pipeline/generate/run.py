@@ -206,6 +206,12 @@ def main():
     firsts = first_headings()
     shared = {a for _, a, _ in ranges} & {b for _, _, b in ranges}
 
+    heading_anchors = []  # (page, slug) in document order
+
+    def slugify(text):
+        s = re.sub(r"[^\w\s-]", "", text.lower()).strip()
+        return re.sub(r"[\s]+", "-", s)
+
     written = []
     for si, (name, a, b) in enumerate(ranges):
         sel = [p for p in range(a, b + 1) if p in want and p not in TOC and owner.get(p) == name]
@@ -235,6 +241,9 @@ def main():
         # footnote blocks live at page ends and would break cross-page
         # stitching adjacency (the p.19-20 split); they serialize at section
         # end regardless, so lift them out before stitching
+        for bl in blocks:
+            if bl["type"] == "heading":
+                heading_anchors.append((bl["page"], slugify(" ".join(l["text"] for l in bl["lines"]).strip())))
         fn_blocks = [bl for bl in blocks if bl["type"] == "footnote"]
         blocks = stitch([bl for bl in blocks if bl["type"] != "footnote"]) + fn_blocks
         # a mid-page start suppresses the leading page marker (the previous
@@ -245,6 +254,21 @@ def main():
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")
         written.append((name, sel))
         print(f"{name}: pages {sel[0]}..{sel[-1]} ({len(sel)} pages, {len(blocks)} blocks)")
+    # L2: resolve DEST:N placeholders to the first heading anchor on page N,
+    # else the nearest heading before it (v1's apply_internal_links logic)
+    def anchor_for(n):
+        on_page = [s for pg, s in heading_anchors if pg == n]
+        if on_page:
+            return on_page[0]
+        before = [s for pg, s in heading_anchors if pg <= n]
+        return before[-1] if before else ""
+    for name, _ in written:
+        f = OUT / name
+        md = f.read_text()
+        md = re.sub(r"\(DEST:(\d+)\)", lambda m: f"(#{anchor_for(int(m.group(1)))})", md)
+        md = md.replace("(DEST:0)", "(#)")
+        f.write_text(md)
+
     all_pages = sorted({p for _, sel in written for p in sel})
     (REPO / "pipeline/.cache/genpages.json").write_text(json.dumps(all_pages))
     print(f"\nwrote {len(written)} files to {OUT}")
