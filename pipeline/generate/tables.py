@@ -167,21 +167,16 @@ def merge_continuation_rows(html: str) -> str:
                     continue
                 cur = cc.strip()
                 prev_c = pc.rstrip()
-                joined = None
                 cur_plain = re.sub(r"<[^>]+>", "", cur).strip()
                 seam_flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_plain))
-                if seam_flows and prev_c.endswith("</p>") and cur.startswith("<p>"):
-                    joined = prev_c[:-4] + " " + cur[3:]
-                elif seam_flows and not prev_c.endswith("</p>") and cur.startswith("<p>"):
-                    # flat prev (no internal paragraphs on its page) merges
-                    # INTO the continuation's first <p> — bare text followed
-                    # by a block <p> renders as a spurious line break
-                    joined = "<p>" + prev_c + " " + cur[3:]
-                elif seam_flows and not prev_c.endswith("</p>"):
-                    joined = prev_c + " " + cur
+                # normalize BOTH sides to <p>-wrapped form first (a flat side
+                # mixed with a block side renders spurious line breaks), then
+                # a flowing seam merges prev's last <p> with cur's first
+                a2 = prev_c if prev_c.endswith("</p>") else f"<p>{prev_c}</p>"
+                b2 = cur if cur.startswith("<p>") else f"<p>{cur}</p>"
+                if seam_flows:
+                    joined = a2[:-4] + " " + b2[3:]
                 else:
-                    a2 = prev_c if prev_c.endswith("</p>") else f"<p>{prev_c}</p>"
-                    b2 = cur if cur.startswith("<p>") else f"<p>{cur}</p>"
                     joined = a2 + b2
                 cells.append((pg, pa, joined))
             out_parts[last_row_idx] = "<tr>" + "".join(
@@ -651,6 +646,10 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     # header sub-row: PDF has [_, span(2-3), Claude.ai])
     if len(cells2) == len(tags) - 1 and cells2 and cells2[0][0] - bbox[0] > 60:
         cells2.insert(0, [bbox[0], bbox[0], []])
+    if modal and len(cells2) > max(modal, len(tags)):
+        # more clusters than the table has columns: the x-clustering broke a
+        # cell apart (excluded fnref gap) — never emit a too-wide row
+        return None
     # re-segmentation can only UN-glue: never fewer cells than docling
     # emitted (x-overlapping true columns fuse and are correctly rejected
     # here, e.g. the wide sentence-cell welfare tables)
@@ -867,6 +866,22 @@ def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
                 out = out.replace(r, rb, 1)
             continue
         from collections import Counter
+        fn_digits = [_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
+                     if s.get("zone") == "fnref"
+                     and band[0] <= (s["bbox"][1] + s["bbox"][3]) / 2 <= band[1]]
+        keymap = {}
+        for t2 in set(plain):
+            if t2 in spans_xy:
+                keymap[t2] = t2
+                continue
+            # 'LLMtraining3(avgspeedup)': the 3 is a baked-in fnref digit —
+            # match the digit-stripped variant instead of rebuilding
+            for d in fn_digits:
+                v = t2.replace(d, "", 1)
+                if v in spans_xy:
+                    keymap[t2] = v
+                    break
+        plain = [keymap.get(p2, p2) for p2 in plain]
         need = Counter(plain)
         pool = {t2: sorted(x for x, y in spans_xy.get(t2, []) if band[0] <= y <= band[1])
                 for t2 in need}
