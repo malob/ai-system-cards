@@ -83,7 +83,15 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-**TOP PRIORITY (owner feedback 2026-06-10 ~02:25, the wrapped-bullet incident):**
+**OVERNIGHT RUN #2 (D22, in progress ~03:00):** ST structural invariant +
+mutation tests → S1 token-coverage refinement + revalidation → L2 dest
+resolution → mechanical fixes (table-cell fnrefs, multi-line headings,
+cross-page table stitching, nested lists, footnote boundaries) → full regen →
+**full 319-page V1 visual sweep** (authorized) → triage/fix → final regen +
+full mutation suite + site build → morning report + worklist. v1 card FROZEN
+(D22). If this run dies mid-way, resume from the first unchecked item above.
+
+**Earlier context (owner feedback ~02:25, the wrapped-bullet incident):**
 the current gates are token/marks/count-based and CANNOT see token-preserving
 structural damage (split list items, split headings — the most human-visible
 class). Two mechanisms, in order:

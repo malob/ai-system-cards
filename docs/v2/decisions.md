@@ -198,5 +198,13 @@ LLM alt-text pass. Alt text may be derived mechanically from the caption lead
 the conversion pipeline is now **fully mechanical** end to end; LLM involvement
 reduces to adjudication of flagged ambiguities only (N1).
 
-<!-- APPEND NEW DECISIONS BELOW THIS LINE (D22 next) — newest at the bottom. -->
+## D22 — Overnight run #2 scope (2026-06-10, ~02:55)
+
+Owner, heading to bed: (1) **full 319-page V1 visual sweep authorized** (vision
+agents, rendered page vs PDF render, ~3–6M tokens), findings triaged into fixes
+overnight; (2) **v1 shipped card FROZEN** — no post-acceptance patches; all
+improvements flow through the v2 re-conversion he reviews. D20's
+provisional-rule protocol remains in force.
+
+<!-- APPEND NEW DECISIONS BELOW THIS LINE (D23 next) — newest at the bottom. -->
 <!-- (Three same-session attempts to insert above the tail prove the need.) -->
