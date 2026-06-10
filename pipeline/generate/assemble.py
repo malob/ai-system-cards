@@ -287,10 +287,16 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 line_h = prev["bbox"][3] - prev["bbox"][1]
                 # vertical gap is the paragraph signal (Google Docs exports
                 # whole columns as one PDF block, and chip pills fragment block
-                # ids mid-paragraph — block identity is unreliable both ways);
-                # bold-lead starts after terminal punctuation still break
+                # ids mid-paragraph — block identity is unreliable both ways).
+                # A bold-lead start breaks ONLY when the previous line also
+                # ended short of the column edge — run-in bold leads
+                # ('**Results** On the long-form…') continue the paragraph
+                # when the prior line is full-width (ST2-found class)
+                col_right = max([l["bbox"][2] for l in cur["lines"]] + [line["bbox"][2]])
+                prev_short = prev["bbox"][2] < col_right - 40
                 starts_bold_lead = (line["segs"] and line["segs"][0][2]["bold"]
-                                    and prev["text"].rstrip().endswith((".", "!", "?", ":", "”", '"')))
+                                    and prev["text"].rstrip().endswith((".", "!", "?", ":", "”", '"'))
+                                    and prev_short)
                 chip_boundary = (_chip_only(line, page, manifest_chips)
                                  or _chip_only(prev, page, manifest_chips))
                 same_para = (gap < max(4.0, 0.55 * line_h)

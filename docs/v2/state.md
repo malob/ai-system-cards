@@ -129,6 +129,24 @@ adjudicate, cross-page TABLE stitching (quotes now stitch; tables still
 don't: p.20-21/252-253/309-318), :::caption block + renderer, L2, FN1
 table-cell refs, S1×10 + ST2×12 triage, then FULL RE-SWEEP for convergence.
 
+**CONVERGENCE LOOP ROUND A (~13:00) done:** ST2 12→0 (full-line mutual-prefix
+matching; the Results/Rationale flags were verifier truncation artifacts —
+page render confirmed those are standalone bold lead-lines, currently run-in
+in md, defensible). S1 10→4 (turn-label bracket fidelity restored; bold-lead
+paragraph break now requires prev-short-line — run-in '**Results** On…' leads
+no longer split; example boxes now apply marks). Remaining S1 ×4, each
+characterized: p.45 'Category:' (count/attribution puzzle — md HAS the bold),
+p.153 '[Assistant]' (label recorded, still flagged — attribution?), p.182
+REAL FIND (bold sentence 'This is a classic agentic safety test.' absent from
+md; only its quoted paraphrase present — check example-box content on p.182),
+p.222 '[Bottom left:]' (caption sublabel, lands with D23 caption rebuild).
+
+**LOOP ROUNDS REMAINING:** B = cross-page table stitching (p.20-21/252-253/
+309-318) + :::caption block + renderer directive + caption-underline word
+(rule context filtering). C = L2 dest resolution + FN1 table-cell refs +
+S1 residuals above + the +1 bold in 4.4.2.A. D = full re-sweep (16 agents,
+fresh slices) → convergence report vs 69-major baseline. THEN owner review.
+
 **NEXT (priority order, sweep-driven):**
 1. table-scrambled ×11 (§4 tables pp.51–91): diagnose ONE root cause
    (docling grid traversal vs y-slot insertion); add TB2 cell-order check.

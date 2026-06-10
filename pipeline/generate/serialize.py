@@ -181,7 +181,8 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                           else "user" if (low.startswith("user") or "human" in low)
                           else None)
             role = label_role or blk.get("role") or "assistant"
-            label = label.strip("[]").rstrip(":")  # '[Assistant:]' -> 'Assistant'
+            # label keeps its source form (brackets and all): fidelity outranks
+            # cosmetics, and stripping made the bold label vanish from S1's view
             body = _hyphen_join(_apply_marks(text, marks)).strip()
             for tt, mm in seg_bodies[1:]:
                 body += "\n\n" + _hyphen_join(_apply_marks(tt, mm)).strip()
@@ -195,7 +196,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         elif t in ("example", "code"):
             text, marks = block_text_and_marks(blk, page, chips)
             if t == "example":
-                out.append(":::example\n" + _hyphen_join(text).strip() + "\n:::\n")
+                out.append(":::example\n" + _hyphen_join(_apply_marks(text, marks)).strip() + "\n:::\n")
             else:
                 raw = "\n".join(l["text"] for l in blk["lines"])
                 out.append("```\n" + raw + "\n```\n")

@@ -368,13 +368,17 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
         # --- ST2: every md block must start where an oracle LINE starts.
         # A block whose first chars appear only mid-line in the source is a
         # split (wrapped item/paragraph broken at an arbitrary point).
-        line_starts = [norm.squash(l["text"])[:32] for l in lines]
+        # Matching is mutual-prefix with FULL line squashes: a complete short
+        # line ('Results', a chip row) is a legitimate block start even though
+        # it is shorter than the key (truncated line-starts false-flagged).
+        line_starts_full = [norm.squash(l["text"]) for l in lines]
         page_blob = norm.squash(" ".join(l["text"] for l in lines))
         for b in md_blocks_by_page.get(pno, []):
             key = b[:24]
             if len(key) < 14:
                 continue
-            if any(ls.startswith(key) for ls in line_starts):
+            if any(ls and (ls.startswith(key) or (len(ls) >= 6 and key.startswith(ls)))
+                   for ls in line_starts_full):
                 continue
             if key in page_blob:  # present, but only mid-line → split
                 flags.append(_flag("ST2", pno, "major",
