@@ -39,6 +39,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _split_glued_cells(html, t["bbox"], oracle_page)
             html = _resplit_misjoined_cells(html, t["bbox"], oracle_page)
             html = _extend_truncated_cells(html, t["bbox"], oracle_page)
+            html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
@@ -60,7 +61,7 @@ def _demote_data_th(html: str) -> str:
     numeric is data: th -> td."""
     rows = re.findall(r"<tr>.*?</tr>", html, re.S)
     out = html
-    for r in rows[1:]:
+    for r in rows:   # incl. row 0: a merged fragment can OPEN with a data row
         cells = re.findall(r"<th([^>]*)>(.*?)</th>", r, re.S)
         if not cells or "<td" in r:
             continue
@@ -217,6 +218,9 @@ def _inject_fnrefs(html: str, bbox: list, oracle_page: dict) -> str:
         # ('GDPval-AA 29' -> 'GDPval-AA<sup>[^29]</sup>')
         pat = re.compile("(" + re.escape(anchor) + r")(\s*" + re.escape(n) + r"\b)?(?![^<]*</sup>)")
         out, k = pat.subn(lambda m: m.group(1) + f"<sup>[^{n}]</sup>", out, count=1)
+    # a stray literal digit can survive BEHIND a closing tag the absorb
+    # above can't see ('<b>X<sup>[^3]</sup></b> 3'): drop it
+    out = re.sub(r"(<sup>\[\^(\d+)\]</sup>)((?:</\w+>)*)\s*\2\b", r"\1\3", out)
     return out
 
 
@@ -275,6 +279,31 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
         for s in sorted(chosen, key=lambda s: (s["bbox"][0], s["bbox"][1])):
             pool.setdefault(_squash(s["text"]), []).append(s)
         used: dict[str, int] = {}
+        # one span can GLUE two cells' text across columns ('99.96% (± 0.04%)
+        # 0.51% (± 0.25%)', p.77 4.2.A): split it at the cell boundary into
+        # virtual instances with proportional bboxes so segmentation matches
+        # and the underline rule sees the correct half-width
+        for p2 in plain:
+            if not p2 or p2 in pool:
+                continue
+            for key in list(pool):
+                if key.startswith(p2) and len(key) > len(p2) and pool[key]:
+                    inst = pool[key].pop(0)
+                    if not pool[key]:
+                        del pool[key]
+                    raw = inst["text"]
+                    ridx = [j for j, ch in enumerate(raw) if not ch.isspace()]
+                    cut_r = ridx[len(p2) - 1] + 1
+                    sb = inst["bbox"]
+                    cut_x = sb[0] + (sb[2] - sb[0]) * cut_r / max(1, len(raw))
+                    left = {**inst, "text": raw[:cut_r],
+                            "bbox": [sb[0], sb[1], cut_x, sb[3]]}
+                    right = {**inst, "text": raw[cut_r:],
+                             "bbox": [cut_x, sb[1], sb[2], sb[3]]}
+                    pool.setdefault(p2, []).append(left)
+                    if _squash(raw[cut_r:]):
+                        pool.setdefault(_squash(raw[cut_r:]), []).append(right)
+                    break
         # fnref digits docling baked into cell text ('LLM training3') are
         # consumable but unstyled; _inject_fnrefs converts them to <sup> later
         fn_keys = {_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
@@ -314,6 +343,7 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             c_dec = _h.unescape(c)
             raw_idx = [j for j, ch in enumerate(c_dec) if not ch.isspace()]
             pieces, cur, sq_pos = [], 0, 0
+            prev_inst = None
             for k in segs:
                 if k not in pool:   # baked-in fnref digit: pass through
                     st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
@@ -336,7 +366,21 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 seg_text = _h.escape(inst["text"].strip(), quote=False)
                 for o, cl in wraps:
                     seg_text = o + seg_text + cl
-                pieces.append(c_dec[cur:st] + seg_text)
+                gap = c_dec[cur:st]
+                if pieces and prev_inst is not None:
+                    # at a LINE BREAK between segments: a wrapped version
+                    # number rejoins without a space ('GPT-5.' / '5'); any
+                    # other glued break gets one ('...1 h eq.200x...')
+                    line_break = inst["bbox"][1] > prev_inst["bbox"][3] - 2
+                    if line_break:
+                        # version wrap = DIGIT-dot then digit ('GPT-5.'/'5');
+                        # letter-dot is a sentence stack ('h eq.'/'200x...')
+                        tail = re.sub(r"<[^>]+>", "", pieces[-1])
+                        head = re.sub(r"<[^>]+>", "", seg_text)[:1]
+                        wrap_join = bool(re.search(r"(\d\.|-)$", tail)) and head.isdigit()
+                        gap = "" if wrap_join else (gap or " ")
+                pieces.append(gap + seg_text)
+                prev_inst = inst
                 cur = en
             pieces.append(c_dec[cur:])
             rebuilt_cell = "".join(pieces)
@@ -412,7 +456,7 @@ def _row_band(plain, cand, tol=7.0):
             if not p:
                 continue
             hits = [v for k, v in cand.items()
-                    if len(k) >= 8 and p.startswith(k) and len(v) == 1]
+                    if len(k) >= 4 and p.startswith(k) and len(v) == 1]
             if len(hits) == 1:
                 ys.append(hits[0][0][1])
     if not ys:
@@ -495,6 +539,11 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
             cells2[-1][2].append(s)
         else:
             cells2.append([sb[0], sb[2], [s]])
+    # a row whose spans start far right of the table edge has an EMPTY
+    # leading cell docling dropped (p.82 'API, without a system prompt'
+    # header sub-row: PDF has [_, span(2-3), Claude.ai])
+    if len(cells2) == len(tags) - 1 and cells2 and cells2[0][0] - bbox[0] > 60:
+        cells2.insert(0, [bbox[0], bbox[0], []])
     # re-segmentation can only UN-glue: never fewer cells than docling
     # emitted (x-overlapping true columns fuse and are correctly rejected
     # here, e.g. the wide sentence-cell welfare tables)
@@ -503,7 +552,8 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     texts = []
     for _, _, members in cells2:
         members.sort(key=lambda s: (round(s["bbox"][1]), s["bbox"][0]))
-        texts.append(inviz.sub("", _join_wrapped(s["text"] for s in members)).strip())
+        texts.append(inviz.sub("", _join_wrapped(s["text"] for s in members)).strip()
+                     if members else "")
     have = sorted(inviz.sub("", "".join(plain)))
     want = sorted(_squash("".join(texts)))
     if have != want:
@@ -610,6 +660,63 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
     return out
 
 
+def _fix_wrapped_header_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """Colspan header sub-rows damaged by docling (p.82 family):
+    (1) one span's text split across two adjacent cells ('API,' +
+        'without a system prompt') -> merge to the span's true text;
+    (2) the leading EMPTY cell dropped (the span starts well inside the
+        table) -> restore it."""
+    spans_xy = _row_spans_xy(oracle_page, bbox)
+    sq2text = {}
+    for s in _table_spans(oracle_page, bbox):
+        if s["text"].strip():
+            sq2text.setdefault(_squash(s["text"]), s["text"].strip())
+
+    def logical_cols(row_tags):
+        n = 0
+        for _, a, _ in row_tags:
+            m = re.search(r'colspan="(\d+)"', a)
+            n += int(m.group(1)) if m else 1
+        return n
+
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    if not rows:
+        return html
+    full = logical_cols(re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", rows[0], re.S))
+    out = html
+    for r in rows:
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        # colspan rows are header-ish and always eligible; colspan-free
+        # rows only when logically NARROWER than the table — full-width
+        # data rows must never gain a spurious lead cell (the 0->35
+        # displaced regression)
+        has_colspan = any("colspan" in a for _, a, _ in tags)
+        if len(tags) < 2 or (not has_colspan and logical_cols(tags) >= full):
+            continue
+        plain = [_cell_sq(c) for _, _, c in tags]
+        changed = False
+        # (1) merge a same-span split across cells 0/1
+        if plain[0] and plain[1]:
+            key = plain[0] + plain[1]
+            if key in spans_xy and len(spans_xy[key]) == 1:
+                tg, attr1 = tags[1][0], tags[1][1]
+                import html as _h
+                tags = ([(tg, attr1, _h.escape(sq2text[key], quote=False))]
+                        + tags[2:])
+                plain = [key] + plain[2:]
+                changed = True
+        # (2) restore the dropped empty lead cell
+        hit = spans_xy.get(plain[0])
+        if plain[0] and hit and len(hit) == 1 and hit[0][0] - bbox[0] > 60:
+            tags = [(tags[0][0], "", "")] + tags
+            changed = True
+        if changed:
+            rebuilt = "<tr>" + "".join(
+                f"<{g}{a}>{c}</{g}>" for g, a, c in tags) + "</tr>"
+            out = out.replace(r, rebuilt, 1)
+    return out
+
+
 def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
     """Docling TableFormer cyclically mis-assigns columns on wide numeric
     tables. Repair per row from geometry: anchor the row's y-band via its
@@ -640,6 +747,14 @@ def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
         if any(not p for p in plain):
             # an empty cell defeats pool matching but not the geometric
             # rebuild (p.82 row with '' + glued 'N/A N/A')
+            rb = _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal)
+            if rb:
+                out = out.replace(r, rb, 1)
+            continue
+        if modal and len(tags) != modal:
+            # cell count differs from the table's column count: shape damage
+            # (a wrapped header cell split in two + dropped empty, p.82) —
+            # geometric rebuild, never per-cell reorder
             rb = _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal)
             if rb:
                 out = out.replace(r, rb, 1)

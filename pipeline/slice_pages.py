@@ -32,7 +32,11 @@ def slices() -> dict[int, list[str]]:
             # snap to line start: an inline marker mid-item ('- <!-- p.N -->x')
             # otherwise strands the '- ' prefix in the previous page's slice
             ls = text.rfind("\n", 0, mk.start()) + 1
-            cut = ls if text[ls:mk.start()].strip() else mk.start()
+            pre = text[ls:mk.start()]
+            # snap only when the pre-marker prefix is a short list marker;
+            # a marker inside a long single-line table must split mid-line
+            # or pages 310-317 of the one-line welfare table get no slice
+            cut = ls if (pre.strip() and len(pre) <= 8) else mk.start()
             chunk = text[pos:cut]
             if chunk.strip():
                 out.setdefault(cur, []).append(chunk)
