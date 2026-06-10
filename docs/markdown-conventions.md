@@ -22,10 +22,25 @@ Unnumbered front-matter sections (e.g. Executive Summary) are `##`.
 
 ## Page markers
 
-At the point in the text where each new PDF page begins, insert an HTML comment on its
-own line: `<!-- p.42 -->`. If a sentence straddles the page break, put the marker at the
-nearest paragraph boundary before the break. These are stripped at render time and used
-for verification and deep-linking back to the PDF.
+Mark where each new PDF page begins with an HTML comment `<!-- p.42 -->`. The renderer
+turns these into margin anchors that deep-link to the PDF, and the verifier uses them to
+check coverage.
+
+Place the marker at the **exact point** the page breaks, treating it as an *inline*
+annotation — it must never interrupt block structure:
+
+- **Break mid-sentence or mid-paragraph:** put the marker inline at the word boundary,
+  with no surrounding blank lines:
+  `…taking a dataset of RNA sequences, each<!-- p.27 --> of which has a numerical score…`
+- **Break inside a list item, or between list items:** keep it inline (attached to a word,
+  or right after the `- ` / `1. ` marker of the item that starts the new page). A marker on
+  its own line at column 0 inside a list is parsed as an HTML block and **breaks the list**
+  (orphaned continuations, restarted numbering) — never do this.
+- **Break cleanly between two paragraphs:** a marker on its own line between them is fine.
+
+The renderer positions every marker in the left margin at the line where it occurs
+regardless of nesting, so inline placement costs nothing visually and avoids all
+structural breakage.
 
 ## What NOT to transcribe
 
@@ -77,19 +92,40 @@ the file.
 ## Transcripts and example boxes
 
 System cards include shaded boxes with prompts, model transcripts, and example exchanges.
-Wrap each in a container directive, preserving the box's title/label if it has one:
+
+A **transcript** is an exchange of speaker turns, usually interleaved with the authors'
+framing commentary. Use a `::::transcript` container (note: **four** colons, because it
+holds nested directives), with the authors' commentary as plain prose and each speaker
+turn wrapped in a nested `:::turn` block (three colons):
 
 ```
-:::transcript{title="Example 3: Claude attempted to claim its code came from a human"}
-**User:** the prompt text…
+::::transcript
+The user launched the change and asked Claude to monitor. Claude reports it as healthy:
 
-**Claude Mythos 5:** the response text…
+:::turn{role=assistant label="Assistant, turn 146"}
+The gate is live in prod… No error movement at all so far.
 :::
+
+An hour later, Claude says things are still healthy:
+
+:::turn{role=user label="User, turn 425"}
+"[Error 3]" is a weird thing to get for this incident. Are you sure that's it?
+:::
+::::
 ```
 
-Use `:::example` for non-conversational boxed content (prompt templates, rubric text,
-blocklists). Inside the box, transcribe exactly; use bold role labels only where the PDF
-shows speaker turns.
+- `role` is `assistant` or `user` (drives the turn's color). `label` is the speaker label
+  exactly as printed in the PDF (e.g. `Assistant, turn 146`, `[Assistant]`, `Human`).
+- A turn that spans multiple paragraphs keeps **all** of them inside its one `:::turn`
+  block — this is the whole point (a continuation paragraph must not look like commentary).
+- **Page markers go before the `::::transcript`, before a `:::turn`, or in a turn's body —
+  never inside the `{…}` attributes.** A `<!-- p.N -->` lands as an `<a>` at render time,
+  whose quotes would break a `label="…"` attribute and make the whole directive render as
+  literal text.
+
+Use `:::example` (three colons; no nested turns) for non-conversational boxed content —
+prompt templates, rubric text, blocklists. Inside any box, transcribe exactly; model
+output keeps its straight quotes (it is excluded from the smart-quote pass).
 
 ## Text details
 
