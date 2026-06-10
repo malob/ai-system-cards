@@ -170,6 +170,11 @@ def extract_page(page) -> dict:
             dest_page = (l.get("page") if l.get("page") is not None else -1) + 1
             entry = {"anchor": anchor, "dest_page": dest_page,
                      "rects": [[round(v, 1) for v in fitz.Rect(l["from"])]]}
+            if l.get("to") is not None:   # dest y disambiguates multi-heading pages
+                try:
+                    entry["dest_y"] = round(l["to"].y, 1)
+                except Exception:
+                    pass
             if dest_page == 0:  # named dest that doesn't resolve in the PDF's name tree
                 entry["unresolvable"] = True
                 entry["name"] = l.get("nameddest") or l.get("name") or ""

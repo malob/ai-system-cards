@@ -162,6 +162,8 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         q = "> " if blk.get("quote") else ""
         if t == "heading":
             text, _ = block_text_and_marks(blk, page, chips)
+            # invisibles poison the renderer's anchor slugs (p.146 class)
+            text = re.sub("[​‌‍﻿­]", "", text)
             out.append("#" * blk["level"] + " " + text.strip() + "\n")
         elif t == "paragraph":
             body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)

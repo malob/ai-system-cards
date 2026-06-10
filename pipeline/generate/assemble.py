@@ -492,7 +492,8 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                 if any(r[1] - 1 <= scy <= r[3] + 1
                        and (min(sx1, r[2]) - max(sx0, r[0])) / sw > 0.5
                        for r in l.get("rects", [])):
-                    target = l.get("uri") or f"DEST:{l.get('dest_page', 0)}"
+                    target = l.get("uri") or "DEST:{}:{}".format(
+                        l.get("dest_page", 0), int(l.get("dest_y", -1)))
                     marks.append(("link", m_start, m_end, target))
                     break
     text = "".join(text_parts)

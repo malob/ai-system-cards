@@ -259,16 +259,18 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
 
         cells = [c for _, _, c in tags]
         changed = False
+        import html as _h
         for i, (c, p2) in enumerate(zip(cells, plain)):
             if not p2 or "<" in c:
                 continue
             segs = segment(p2)
             if not segs:
                 continue
-            # map each segment's squash range back to the raw cell text
-            raw_idx = [j for j, ch in enumerate(c) if not ch.isspace()]
+            # positions live in DECODED text: mapping over the escaped cell
+            # shifted every boundary 4 chars per '&amp;' ('<b>amp; contin</b>')
+            c_dec = _h.unescape(c)
+            raw_idx = [j for j, ch in enumerate(c_dec) if not ch.isspace()]
             pieces, cur, sq_pos = [], 0, 0
-            styled_any = False
             for k in segs:
                 inst = pool[k][min(used.get(k, 0), len(pool[k]) - 1)]
                 used[k] = used.get(k, 0) + 1
@@ -279,16 +281,20 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                     wraps.append(("<u>", "</u>"))
                 st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
                 sq_pos += len(k)
-                if wraps:
-                    seg_text = c[st:en]
-                    for o, cl in wraps:
-                        seg_text = o + seg_text + cl
-                    pieces.append(c[cur:st] + seg_text)
-                    cur = en
-                    styled_any = True
-            pieces.append(c[cur:])
-            if styled_any:
-                cells[i] = "".join(pieces)
+                # emit the SPAN's text, not docling's: restores characters
+                # docling folds (em-dashes, curly quotes) wherever the cell
+                # is fully matchable
+                seg_text = _h.escape(inst["text"].strip(), quote=False)
+                for o, cl in wraps:
+                    seg_text = o + seg_text + cl
+                pieces.append(c_dec[cur:st] + seg_text)
+                cur = en
+            pieces.append(c_dec[cur:])
+            rebuilt_cell = "".join(pieces)
+            # hyphen-wrap join artifact ('Self- knowledge')
+            rebuilt_cell = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", rebuilt_cell)
+            if rebuilt_cell != c:
+                cells[i] = rebuilt_cell
                 changed = True
         if changed:
             rebuilt = "<tr>" + "".join(

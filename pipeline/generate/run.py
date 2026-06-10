@@ -206,7 +206,8 @@ def main():
     firsts = first_headings()
     shared = {a for _, a, _ in ranges} & {b for _, _, b in ranges}
 
-    heading_anchors = []  # (page, slug) in document order
+    heading_anchors = []  # (page, y, slug) in document order
+    num2slug: dict[str, str] = {}  # '8.17.6' -> its heading slug
 
     def slugify(text):
         s = re.sub(r"[^\w\s-]", "", text.lower()).strip()
@@ -243,7 +244,13 @@ def main():
         # end regardless, so lift them out before stitching
         for bl in blocks:
             if bl["type"] == "heading":
-                heading_anchors.append((bl["page"], slugify(" ".join(l["text"] for l in bl["lines"]).strip())))
+                htext = " ".join(l["text"] for l in bl["lines"]).strip()
+                heading_anchors.append((bl["page"],
+                                        bl["lines"][0]["bbox"][1],
+                                        slugify(htext)))
+                mnum = re.match(r"(\d+(?:\.\d+)*)[.\s]", htext + " ")
+                if mnum:
+                    num2slug.setdefault(mnum.group(1), slugify(htext))
         fn_blocks = [bl for bl in blocks if bl["type"] == "footnote"]
         blocks = stitch([bl for bl in blocks if bl["type"] != "footnote"]) + fn_blocks
         # a mid-page start suppresses the leading page marker (the previous
@@ -256,17 +263,35 @@ def main():
         print(f"{name}: pages {sel[0]}..{sel[-1]} ({len(sel)} pages, {len(blocks)} blocks)")
     # L2: resolve DEST:N placeholders to the first heading anchor on page N,
     # else the nearest heading before it (v1's apply_internal_links logic)
-    def anchor_for(n):
-        on_page = [s for pg, s in heading_anchors if pg == n]
+    def anchor_for(n, y=-1):
+        on_page = [(hy, s) for pg, hy, s in heading_anchors if pg == n]
         if on_page:
-            return on_page[0]
-        before = [s for pg, s in heading_anchors if pg <= n]
+            if y >= 0:
+                # the dest y lands AT the target heading or anywhere inside
+                # its section (sloppy PDF dests point mid-section): the
+                # OWNING heading is the last one at-or-above y(+8); a dest
+                # above every heading takes the first one below
+                own = [s for hy, s in on_page if hy <= y + 8]
+                if own:
+                    return own[-1]
+                return on_page[0][1]
+            return on_page[0][1]
+        before = [s for pg, hy, s in heading_anchors if pg <= n]
         return before[-1] if before else ""
+    def resolve_link(m):
+        text, pg, y = m.group(1), int(m.group(2)), int(m.group(3))
+        # anchors that NAME their target ('Section 8.17.6') resolve exactly
+        # by heading number — the PDF's dest coordinates are sloppy in both
+        # directions (13/28 landed on a neighboring section by geometry)
+        mnum = re.search(r"(?:Section|§)\s*(\d+(?:\.\d+)*)", text)
+        if mnum and mnum.group(1).rstrip(".") in num2slug:
+            return f"[{text}](#{num2slug[mnum.group(1).rstrip('.')]})"
+        return f"[{text}](#{anchor_for(pg, y)})"
     for name, _ in written:
         f = OUT / name
         md = f.read_text()
-        md = re.sub(r"\(DEST:(\d+)\)", lambda m: f"(#{anchor_for(int(m.group(1)))})", md)
-        md = md.replace("(DEST:0)", "(#)")
+        md = re.sub(r"\[([^\]]*)\]\(DEST:(\d+):(-?\d+)\)", resolve_link, md)
+        md = re.sub(r"\(DEST:0(?::-?\d+)?\)", "(#)", md)
         f.write_text(md)
 
     all_pages = sorted({p for _, sel in written for p in sel})
