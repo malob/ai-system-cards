@@ -172,6 +172,11 @@ def merge_continuation_rows(html: str) -> str:
                 seam_flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_plain))
                 if seam_flows and prev_c.endswith("</p>") and cur.startswith("<p>"):
                     joined = prev_c[:-4] + " " + cur[3:]
+                elif seam_flows and not prev_c.endswith("</p>") and cur.startswith("<p>"):
+                    # flat prev (no internal paragraphs on its page) merges
+                    # INTO the continuation's first <p> — bare text followed
+                    # by a block <p> renders as a spurious line break
+                    joined = "<p>" + prev_c + " " + cur[3:]
                 elif seam_flows and not prev_c.endswith("</p>"):
                     joined = prev_c + " " + cur
                 else:
