@@ -85,8 +85,12 @@ def extract_page(page) -> dict:
         lines.setdefault(s["line"], []).append(s)
     fn_mode = False
     cur_n = None
-    footnotes: dict[int, str] = {}
-    for _, line_spans in sorted(lines.items()):
+    footnotes: dict = {}
+    # iterate by VISUAL position: PyMuPDF block order can put a marker line
+    # before unmarked lines that sit ABOVE it (the p.114 fn15/16 graft)
+    infos = []
+    for _, line_spans in sorted(lines.items(),
+                                key=lambda kv: min(s["bbox"][1] for s in kv[1])):
         body_spans = [s for s in line_spans if s["zone"] == "body"]
         if not body_spans:
             continue
@@ -97,6 +101,38 @@ def extract_page(page) -> dict:
             and re.fullmatch(r"\d{1,2}", first["text"].strip())
             and first["bbox"][1] > H * 0.6
         )
+        infos.append({"body_spans": body_spans, "first": first, "small": small,
+                      "is_marker": bool(is_marker),
+                      "top": min(s["bbox"][1] for s in body_spans),
+                      "bottom": max(s["bbox"][3] for s in body_spans)})
+    # cross-page continuation: unmarked small bottom-region lines chained
+    # immediately ABOVE the page's first marker line are the tail of the
+    # PREVIOUS page's last footnote -> keyed "cont"
+    cont_idx = set()
+    mi = next((i for i, inf in enumerate(infos) if inf["is_marker"]), None)
+    if mi is not None:
+        edge = infos[mi]["top"]
+        j = mi - 1
+        while j >= 0:
+            inf = infos[j]
+            if (not inf["small"] or inf["is_marker"]
+                    or inf["top"] <= H * 0.6 or edge - inf["bottom"] > 14):
+                break
+            cont_idx.add(j)
+            edge = inf["top"]
+            j -= 1
+    for idx in sorted(cont_idx):
+        bs = infos[idx]["body_spans"]
+        for s in bs:
+            s["zone"] = "fnbody"
+            s["fn"] = "cont"
+        footnotes.setdefault("cont", "")
+        footnotes["cont"] += " " + "".join(s["text"] for s in bs)
+    for idx, inf in enumerate(infos):
+        if idx in cont_idx:
+            continue
+        body_spans, first = inf["body_spans"], inf["first"]
+        small, is_marker = inf["small"], inf["is_marker"]
         if is_marker:
             # a footnote body line leads with the marker digit in tiny type
             # (~6.6pt vs 11pt body) — the only reliable signature

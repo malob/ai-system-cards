@@ -367,7 +367,9 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         segs = [(a, b, s) for a, b, s in line["segs"] if not s.get("fn_marker")]
         if segs:
             fn_lines_by_n.setdefault(n, []).append({**line, "segs": segs})
-    for n in sorted(fn_lines_by_n):
+    # "cont" (cross-page continuation of the previous page's last footnote)
+    # precedes this page's own numbered footnotes in document order
+    for n in sorted(fn_lines_by_n, key=lambda n: -1 if n == "cont" else n):
         blocks.append({"type": "footnote", "n": n, "lines": fn_lines_by_n[n], "page": pno})
     return blocks
 

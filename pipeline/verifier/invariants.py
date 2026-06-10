@@ -445,7 +445,14 @@ def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
     for pno in page_range:
         if pno in toc_pages or pno > len(oracle_pages):
             continue
-        for n, t in (oracle_pages[pno - 1].get("footnotes") or {}).items():
+        items = list((oracle_pages[pno - 1].get("footnotes") or {}).items())
+        # "cont" = cross-page tail of the previous page's last footnote;
+        # numbers ascend through the document, so that's the current max
+        for n, t in sorted(items, key=lambda kv: str(kv[0]) != "cont"):
+            if str(n) == "cont":
+                if oracle_fns:
+                    oracle_fns[max(oracle_fns)] += " " + t
+                continue
             n = int(n)
             oracle_fns[n] = oracle_fns.get(n, "") + " " + t
             fn_page.setdefault(n, pno)

@@ -220,12 +220,29 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         out.append("\n")
 
     close_transcript()
-    for fb in sorted(footnotes, key=lambda b: b["n"]):
+
+    def _fn_body(fb):
         page = oracle_pages[fb["page"] - 1]
         if fb.get("lines"):
             text, marks = block_text_and_marks(fb, page, chips)
-            body = _hyphen_join(_apply_marks(text, marks)).strip()
+            return _hyphen_join(_apply_marks(text, marks)).strip()
+        return _hyphen_join(fb.get("text", "")).strip()
+
+    # document order: (page, cont-first, n); a "cont" block is the tail of the
+    # PREVIOUS page's last footnote — merge it into that body (rendered with
+    # its own page's facts so links/chips resolve)
+    ordered = sorted(footnotes, key=lambda b: (
+        b["page"], 0 if b["n"] == "cont" else 1,
+        b["n"] if isinstance(b["n"], int) else 0))
+    merged = []
+    for fb in ordered:
+        if fb["n"] == "cont" and merged:
+            merged[-1] = (merged[-1][0], merged[-1][1] + " " + _fn_body(fb))
+        elif fb["n"] == "cont":
+            sys.stderr.write(f"WARN: orphan footnote continuation on p.{fb['page']}\n")
+            out.append("<!-- UNHANDLED-FOOTNOTE-CONT -->\n" + _fn_body(fb) + "\n\n")
         else:
-            body = _hyphen_join(fb.get("text", "")).strip()
-        out.append(f"[^{fb['n']}]: {body}\n\n")
+            merged.append((fb["n"], _fn_body(fb)))
+    for n, body in merged:
+        out.append(f"[^{n}]: {body}\n\n")
     return "".join(out), cur_page
