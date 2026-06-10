@@ -165,6 +165,83 @@ def f1_figures(sections, figures_map) -> list[dict]:
     return flags
 
 
+def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozenset(),
+            body_color="#000000") -> list[dict]:
+    """Bold-run coverage (S1): every bold body-text run in the source appears as
+    markdown emphasis (or a heading / turn label, which consume bold runs as
+    typed conversions). Table pages skipped — cell bolds belong to TB1's layer.
+    One direction for v0.5: source→output (the FL-04 'dropped lead' class)."""
+    def key(s: str) -> str:
+        # space-free token-normalized form: immune to PDF span-join artifacts
+        # ("isoverall"), glued bullets, and md bold-run segmentation
+        return "".join(norm.tokens(s, True))
+
+    md_by_page: dict[int, list[str]] = {}
+    for text, pg in md_emphasis:
+        md_by_page.setdefault(pg, []).append(key(text))
+
+    flags = []
+    for pno in page_range:
+        if pno in toc_pages or pno in table_pages or pno > len(oracle_pages):
+            continue
+        # merge consecutive bold spans on the same line into runs
+        runs, cur = [], None
+        for s in oracle_pages[pno - 1]["spans"]:
+            ok = (s["zone"] == "body" and s["bold"] and s["color"] == body_color
+                  and s["size"] < 12.5)
+            if ok:
+                if cur and cur["line"] == s["line"]:
+                    cur["text"] += s["text"]
+                else:
+                    if cur:
+                        runs.append(cur)
+                    cur = {"line": s["line"], "text": s["text"]}
+            elif cur:
+                runs.append(cur)
+                cur = None
+        if cur:
+            runs.append(cur)
+
+        # md bolds joined in document order: a glued oracle run spanning two
+        # adjacent md bolds still matches as a substring
+        hay = key(" ".join(t for p in (pno - 1, pno, pno + 1) for t in md_by_page.get(p, [])))
+        for run in runs:
+            t = key(run["text"].strip(".,;: "))
+            if len(t) < 6:
+                continue
+            if t not in hay:
+                flags.append(_flag("S1", pno, "major",
+                                   {"kind": "bold-run-missing", "text": run["text"][:80]}))
+    return flags
+
+
+def s2_chips(md_chips, oracle_pages, page_range, chip_colors, registry) -> list[dict]:
+    """Chip coverage (S2): every pill whose fill is a manifest chip color has a
+    matching :chip[label] nearby. S3: every markdown chip label ∈ registry."""
+    md_by_page: dict[int, list[str]] = {}
+    for label, pg in md_chips:
+        md_by_page.setdefault(pg, []).append(norm.normalize(label, True))
+
+    flags = []
+    for pno in page_range:
+        if pno > len(oracle_pages):
+            continue
+        for pill in oracle_pages[pno - 1].get("pills", []):
+            if pill["color"] not in chip_colors:
+                continue
+            want = norm.normalize(pill["text"], True).strip()
+            hay = " | ".join(t for p in (pno - 1, pno, pno + 1) for t in md_by_page.get(p, []))
+            if want not in hay:
+                flags.append(_flag("S2", pno, "major",
+                                   {"kind": "chip-missing", "text": want[:60],
+                                    "color": pill["color"],
+                                    "registry_label": chip_colors[pill["color"]]}))
+    for label, pg in md_chips:
+        if label not in registry:
+            flags.append(_flag("S3", pg, "major", {"kind": "label-not-in-registry", "label": label[:60]}))
+    return flags
+
+
 def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
     """Footnote refs and bodies present (FN1), global — sections share boundary
     pages, so per-section ranges double-count. Count-level for v0."""

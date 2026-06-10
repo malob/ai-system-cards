@@ -35,3 +35,7 @@ the shipped v1 site and layout.
   states) — they're the verifier calibration corpus (decision D5).
 - **Fresh-session test:** these docs must let a cold session continue correctly.
   If they didn't orient you, fixing them is part of your task.
+- **Look at the page when data is ambiguous** (owner-encouraged): per-page
+  renders live at `cards/*/*/extracted/pages/p-NNN.png` — Read them to resolve
+  anything the structured extraction leaves unclear, and `open` them for the
+  owner when discussing a page.

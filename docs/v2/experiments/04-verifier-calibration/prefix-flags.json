@@ -2302,6 +2302,512 @@
   }
  },
  {
+  "invariant": "S1",
+  "page": 43,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "Assistant, turn 119:"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 43,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "Assistant, turn 121:"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "Assistant, turn 139:"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 47,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 2.3.5.A] The Epoch Capabilities Index"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 198,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Transcript 6.5.2.A] Examples of refusal consideration by a helpful-only version"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 198,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Transcript 6.5.2.B] Example of evaluation awareness by a helpful-only version o"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 202,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.2.1.A]Scores from a variant automated behavioral audit"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 203,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.3.A] Self-preference bias by model and prompting condition. "
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 204,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.4.1.A]Stealth success rate:"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 207,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.4.3.A]Stealth success rate of Mythos 5 on SHADE-Arena. "
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 208,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.4.4.A]Rates with which models take a rare action when instructed to "
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 208,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "different randomness settings."
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 210,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.4.5.A] Secret-keeping robustness over multi-turn secret extraction a"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 211,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.4.5.B] Secret leak rate by turn type over multi-turn secret extracti"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 212,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.5.1.A]Claude Mythos 5 has high chain-of-thought controllability comp"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 212,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "models. "
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 213,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.5.1.B]Claude Mythos 5 CoT controllability is highly sensitive to the"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 214,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "[Figure 6.5.5.2.A]On process evaluations, Claude Mythos 5’s extended thinking is"
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 214,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "that of recent Claude models. "
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 216,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "Overall, our results suggest that [Claude Mythos 5] will be harder to "
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 216,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "monitor, with reasoning and action-based monitoring approaches, than "
+  }
+ },
+ {
+  "invariant": "S1",
+  "page": 216,
+  "severity": "major",
+  "detail": {
+   "kind": "bold-run-missing",
+   "text": "other Anthropic models."
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Safeguard circumvention",
+   "color": "#f0ac54",
+   "registry_label": "Safeguard circumvention"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Fabrication",
+   "color": "#b10202",
+   "registry_label": "Fabrication"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Skipped cheap verification",
+   "color": "#ffe5a0",
+   "registry_label": "Skipped cheap verification"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Reckless action",
+   "color": "#ec7513",
+   "registry_label": "Reckless action"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 38,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Correction fails",
+   "color": "#ffc8aa",
+   "registry_label": "Correction fails"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 39,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Instruction following",
+   "color": "#7b2b15",
+   "registry_label": "Instruction following"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 39,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Skipped cheap verification",
+   "color": "#ffe5a0",
+   "registry_label": "Skipped cheap verification"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 39,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Fabrication",
+   "color": "#b10202",
+   "registry_label": "Fabrication"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 40,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Skipped cheap verification",
+   "color": "#ffe5a0",
+   "registry_label": "Skipped cheap verification"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 41,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Safeguard circumvention",
+   "color": "#f0ac54",
+   "registry_label": "Safeguard circumvention"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 41,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Reckless action",
+   "color": "#ec7513",
+   "registry_label": "Reckless action"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 42,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Instruction following",
+   "color": "#7b2b15",
+   "registry_label": "Instruction following"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 42,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Reckless action",
+   "color": "#ec7513",
+   "registry_label": "Reckless action"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 43,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Fabrication",
+   "color": "#b10202",
+   "registry_label": "Fabrication"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Research",
+   "color": "#d4edbc",
+   "registry_label": "Moderate Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Research engineering",
+   "color": "#bfe1f6",
+   "registry_label": "Research engineering"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Pure engineering",
+   "color": "#e6cff2",
+   "registry_label": "Pure engineering"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Non R&D",
+   "color": "#e8eaed",
+   "registry_label": "Non R&D"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 44,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Research",
+   "color": "#d4edbc",
+   "registry_label": "Moderate Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 45,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Research engineering",
+   "color": "#bfe1f6",
+   "registry_label": "Research engineering"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 45,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Pure engineering",
+   "color": "#e6cff2",
+   "registry_label": "Pure engineering"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 46,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Research",
+   "color": "#d4edbc",
+   "registry_label": "Moderate Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 55,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Moderate Mitigating Factor",
+   "color": "#d4edbc",
+   "registry_label": "Moderate Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 56,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Moderate Mitigating Factor",
+   "color": "#d4edbc",
+   "registry_label": "Moderate Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 56,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Weak Mitigating Factor",
+   "color": "#c6dbe1",
+   "registry_label": "Weak Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 56,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Moderate Mitigating Factor",
+   "color": "#d4edbc",
+   "registry_label": "Moderate Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 57,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Moderate Mitigating Factor",
+   "color": "#d4edbc",
+   "registry_label": "Moderate Mitigating Factor"
+  }
+ },
+ {
+  "invariant": "S2",
+  "page": 57,
+  "severity": "major",
+  "detail": {
+   "kind": "chip-missing",
+   "text": "Weak Mitigating Factor",
+   "color": "#c6dbe1",
+   "registry_label": "Weak Mitigating Factor"
+  }
+ },
+ {
   "invariant": "P1",
   "page": 36,
   "severity": "major",

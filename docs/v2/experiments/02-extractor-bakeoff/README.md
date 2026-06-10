@@ -116,3 +116,18 @@ uv run --with marker-pdf --with pymupdf python docs/v2/experiments/02-extractor-
   looked fine; nothing else it answers that part 1 didn't.)
 - **MinerU / pymupdf_layout: still unprobed**, same revisit trigger as D14 —
   nothing left open for them to answer after docling held on the hard set.
+
+## Part 4 — full-card docling cross-check (2026-06-10) ✅ — revisit trigger does NOT fire
+
+Docling over **all 34 pages containing v1 tables** (12 HTML + 16 pipe tables):
+**37 tables found, full coverage, zero misses, merged cells correct
+throughout** (e.g. the repeating safeguards tables p.77–86 with their
+two-level `API/Claude.ai` headers).
+
+The p.252 "discrepancy" (v1 28 `<tr>` vs docling 15×8) adjudicated **by page
+render**: Table 8.1.A **spans p.252–253** — v1's 28 rows are the full logical
+table, docling's 15×8 is the correct p.252 fragment, both right. Second
+confirmed multi-page table (besides p.309–318); the **stitching stage** is a
+hard requirement of the generation pipeline. Side find: v1 has no `p.253`
+marker inside that table (markers can't live inside HTML tables — a known
+class the typed model removes).

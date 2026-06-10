@@ -79,6 +79,22 @@ windows.
   rule) + the 2 source-defect dests.
 - F1 minor ×2: off-by-one page attribution at figure-led page boundaries.
 
+## Addendum (later the same night): S1/S2/S3 implemented and calibrated
+
+- **S2 chips: 28 majors at `f60899a`, 0 at HEAD** — FL-02 (flattened chips)
+  fully rediscovered via manifest pill-fill matching.
+- **S1 bold runs: 22 majors pre-fix, 19 at HEAD.** The pre-fix set includes
+  the FL-04 caption leads that were found+fixed in the reviewed range (gone at
+  HEAD ✓) and undirectived transcript turn labels (FL-03-adjacent ✓). The 19
+  persisting at HEAD are **real unfixed FL-04 instances past the §6.5 review
+  line** — confirmed by inspection: those sections use a different caption
+  convention (`**[Figure 6.5.3.A]** *lead…*`, bracket-only bold) than §8's
+  (`*__[Figure 8.2.A] lead__ rest*`), while the PDF bolds the whole lead
+  phrase. One flag set, two defects: dropped emphasis **and** a cross-chunk
+  convention inconsistency (the brief's PR-02), each instance localized.
+- S1 matching uses space-free token-normalized keys (immune to PDF span-join
+  glue and bullet glyphs); table pages excluded (cell bolds belong to TB1).
+
 ## Conclusions
 
 - **The verifier-first bet pays**: every mechanically-checkable catalog class

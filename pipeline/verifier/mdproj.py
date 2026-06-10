@@ -51,12 +51,18 @@ class Section:
     fn_refs: list = field(default_factory=list)       # [(n, page)]
     table_pages: set = field(default_factory=set)     # pages containing tables
     fig_skips: dict = field(default_factory=dict)     # page -> [(file, reason)]
+    chips: list = field(default_factory=list)         # [(label, page)]
+    headings: list = field(default_factory=list)      # [(text, page)]
+    turn_labels: list = field(default_factory=list)   # [(label, page)]
 
 
 def sections_at_ref(repo: Path, ref: str) -> list[tuple[str, str]]:
-    """[(filename, content)] for all section files at a git ref (or 'WORKTREE')."""
+    """[(filename, content)] for all section files at a git ref, 'WORKTREE',
+    or an absolute directory path (used by the mutation tester)."""
     if ref == "WORKTREE":
         return [(p.name, p.read_text()) for p in sorted((repo / SECTIONS_DIR).glob("*.md"))]
+    if Path(ref).is_absolute() and Path(ref).is_dir():
+        return [(p.name, p.read_text()) for p in sorted(Path(ref).glob("*.md"))]
     names = subprocess.run(
         ["git", "ls-tree", "-r", "--name-only", ref, SECTIONS_DIR],
         cwd=repo, capture_output=True, text=True, check=True,
@@ -134,10 +140,16 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
 
     def directive(m):
         label = RE_TURN_LABEL.search(m.group(2) or "")
-        return f"{label.group(1)}:" if label else " "
+        if label:
+            sec.turn_labels.append((_strip_sentinels(label.group(1)), pg(m)))
+            return f"{label.group(1)}:"
+        return " "
     seg = RE_DIRECTIVE.sub(directive, seg)
 
-    seg = RE_CHIP.sub(r"\1", seg)
+    def chip(m):
+        sec.chips.append((_strip_sentinels(m.group(1)), pg(m)))
+        return m.group(1)
+    seg = RE_CHIP.sub(chip, seg)
 
     def link(m):
         sec.links.append((_strip_sentinels(m.group(1)), m.group(2), pg(m)))
@@ -162,7 +174,11 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
 
     seg = RE_SUP.sub(" ", seg)
     seg = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"\1", seg)   # italics
-    seg = re.sub(r"^#{1,6}\s+", "", seg, flags=re.M)          # headings
+
+    def heading(m):
+        sec.headings.append((_strip_sentinels(m.group(1)), pg(m)))
+        return m.group(1)
+    seg = re.sub(r"^#{1,6}\s+(.*)$", heading, seg, flags=re.M)
     seg = re.sub(r"^>\s?", "", seg, flags=re.M)               # blockquotes
     # unordered bullets: require same-line whitespace so a LONE "-" line (the
     # CA-01 artifact class!) is NOT consumed — it must surface as an extra token

@@ -26,6 +26,58 @@ TOC_PAGES = set(range(4, 11))
 EXPECTED_PAGES = [p for p in range(2, 320) if p not in TOC_PAGES]  # 1 = cover
 
 
+def _flags_for(sections, pages, figures_map, limited: bool) -> list[dict]:
+    # global streams — sections share boundary pages, so compare the whole doc.
+    # Title pages 1-2 are declared exclusions (cover art + title typography;
+    # trivially eyeballable, no body text).
+    md_tokens = [tp for sec in sections for tp in sec.tokens if tp[1] > 2]
+    md_links = [l for sec in sections for l in sec.links]
+    table_pages = set().union(*(sec.table_pages for sec in sections))
+    table_pages |= {p + 1 for p in table_pages} | {p - 1 for p in table_pages}  # spill
+    if limited:
+        page_range = range(max(3, sections[0].page_start), sections[-1].page_end + 1)
+    else:
+        page_range = range(3, 320)
+
+    # chip vocabulary from the style manifest (label -> fill hex)
+    import re as _re
+    mtext = (CARD / "style-manifest.yaml").read_text()
+    chips_block = _re.search(r"^chips:\n((?:  .+\n)+)", mtext, _re.M)
+    chip_colors, registry = {}, set()
+    if chips_block:
+        for m in _re.finditer(r"^  (.+?):\s+\"(#[0-9a-f]{6})\"", chips_block.group(1), _re.M):
+            chip_colors[m.group(2)] = m.group(1).strip()
+            registry.add(m.group(1).strip())
+
+    md_emphasis = [e for sec in sections for e in (sec.bolds + sec.headings + sec.turn_labels)]
+    md_chips = [c for sec in sections for c in sec.chips]
+
+    flags = []
+    flags += invariants.t1_text(md_tokens, pages, page_range, TOC_PAGES, table_pages)
+    flags += invariants.l1_links(md_links, pages, page_range, TOC_PAGES, table_pages)
+    flags += invariants.fn1_footnotes(sections, pages, page_range, TOC_PAGES)
+    flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages)
+    flags += invariants.s2_chips(md_chips, pages, page_range, chip_colors, registry)
+    if not limited:
+        flags += invariants.p1_markers(sections, EXPECTED_PAGES)
+        flags += invariants.f1_figures(sections, figures_map)
+    return invariants.pair_displacements(flags)
+
+
+def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
+    """Run all implemented invariants over the markdown at `ref` (git ref,
+    WORKTREE, or an absolute dir). Returns the flag list."""
+    pages = oracle.extract(CARD / "source.pdf", cache=REPO / "pipeline/.cache/oracle.json")
+    figures_map = json.loads((CARD / "extracted/figures-map.json").read_text())
+
+    sections = []
+    for name, text in mdproj.sections_at_ref(REPO, ref):
+        if section_prefixes and not any(name.startswith(p) for p in section_prefixes):
+            continue
+        sections.append(mdproj.project(name, text))
+    return _flags_for(sections, pages, figures_map, bool(section_prefixes))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("ref", help="git ref for the markdown side, or WORKTREE")
@@ -43,33 +95,14 @@ def main():
             continue
         sections.append(mdproj.project(name, text))
 
-    # global streams — sections share boundary pages, so compare the whole doc.
-    # Title pages 1-2 are declared exclusions (cover art + title typography;
-    # trivially eyeballable, no body text).
-    md_tokens = [tp for sec in sections for tp in sec.tokens if tp[1] > 2]
-    md_links = [l for sec in sections for l in sec.links]
-    table_pages = set().union(*(sec.table_pages for sec in sections))
-    table_pages |= {p + 1 for p in table_pages} | {p - 1 for p in table_pages}  # spill
-    if args.sections:
-        page_range = range(max(3, sections[0].page_start), sections[-1].page_end + 1)
-    else:
-        page_range = range(3, 320)
-
-    flags = []
-    flags += invariants.t1_text(md_tokens, pages, page_range, TOC_PAGES, table_pages)
-    flags += invariants.l1_links(md_links, pages, page_range, TOC_PAGES, table_pages)
-    flags += invariants.fn1_footnotes(sections, pages, page_range, TOC_PAGES)
-    if not args.sections:
-        flags += invariants.p1_markers(sections, EXPECTED_PAGES)
-        flags += invariants.f1_figures(sections, figures_map)
-    flags = invariants.pair_displacements(flags)
+    flags = _flags_for(sections, pages, figures_map, bool(args.sections))
 
     by_inv = Counter((f["invariant"], f["severity"]) for f in flags)
     print(f"\n=== verifier v0 @ {args.ref} — {len(sections)} sections ===")
     for (inv, sev), n in sorted(by_inv.items()):
         print(f"{inv:>4} {sev:<6} {n}")
 
-    for inv in ("T1", "L1", "P1", "F1", "FN1"):
+    for inv in ("T1", "L1", "S1", "S2", "S3", "P1", "F1", "FN1"):
         sample = [f for f in flags if f["invariant"] == inv and f["severity"] == "major"][: args.samples]
         if sample:
             print(f"\n--- {inv} major samples ---")

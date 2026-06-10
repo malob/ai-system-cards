@@ -116,9 +116,21 @@ def extract_page(page) -> dict:
                 entry["name"] = l.get("nameddest") or l.get("name") or ""
             links["goto"].append(entry)
 
+    pills = []
+    for d in page.get_drawings():
+        if d.get("fill") is None:
+            continue
+        r = d["rect"]
+        if 6 < r.height < 30 and 20 < r.width < 420:
+            col = "#" + "".join(f"{int(round(v * 255)):02x}" for v in d["fill"])
+            t = page.get_text(clip=r).strip().replace("\n", " ")
+            if t:
+                pills.append({"color": col, "text": t})
+
     return {
         "spans": spans,
         "links": links,
+        "pills": pills,
         "n_raster_images": len(set(map(tuple, [tuple(r) for r in image_rects]))),
     }
 
