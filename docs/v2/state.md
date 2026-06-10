@@ -147,6 +147,17 @@ p.222 '[Bottom left:]' (caption sublabel, lands with D23 caption rebuild).
 S1 residuals above + the +1 bold in 4.4.2.A. D = full re-sweep (16 agents,
 fresh slices) → convergence report vs 69-major baseline. THEN owner review.
 
+**ROUNDS B+C done (~13:30):** cross-page table stitching (all 3 spanners
+whole; p.252-253 = 28 rows matching v1 exactly); :::caption first-class block
+end to end (assembler→serializer→remark directive→CSS; 169 captions,
+DOM-verified uniform style incl. transcript captions); L2 resolution
+(DEST:N→heading slugs, 427 internal links 0 broken in DOM); table footnote
+refs re-injected (FN1 76/77, ref-12 site logged). Gate: T1=6/S1=4/FN1=1/ST1=1
+— all characterized. Round D (re-sweep, 4 agents, fresh vsweep2 slices)
+RUNNING → convergence report vs 69-major baseline. Residuals for after:
+p.38 chip-order T1 (×2, reading-order, typed-model territory), p.182 S1 real
+find, ref-12 fnref, caption-underline word, prose-underline context filter.
+
 **NEXT (priority order, sweep-driven):**
 1. table-scrambled ×11 (§4 tables pp.51–91): diagnose ONE root cause
    (docling grid traversal vs y-slot insertion); add TB2 cell-order check.
