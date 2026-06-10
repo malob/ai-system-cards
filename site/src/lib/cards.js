@@ -21,9 +21,13 @@ export function listCards() {
   return cards;
 }
 
+// Sections dir is env-overridable so v2 pipeline output can be previewed
+// without touching the shipped content (e.g. SECTIONS_DIR=sections-v2).
+const SECTIONS_DIR = process.env.SECTIONS_DIR || 'sections';
+
 // Raw stitched markdown, exactly as transcribed (page markers and all).
 export function stitchedMarkdown(vendor, slug) {
-  const dir = join(CARDS_ROOT, vendor, slug, 'sections');
+  const dir = join(CARDS_ROOT, vendor, slug, SECTIONS_DIR);
   return readdirSync(dir)
     .filter((f) => f.endsWith('.md'))
     .sort()

@@ -287,16 +287,21 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
 
 
 def _merge_marks(marks):
-    """Coalesce adjacent same-kind marks (spans fragment runs), then drop bold/
-    italic fully inside a chip range (chips render as pills, not emphasis — keeps
-    leaked '**' out of the chip label)."""
+    """Drop bold/italic inside chip ranges FIRST (chips render as pills, not
+    emphasis), then coalesce adjacent same-kind marks. Order matters: filtering
+    after merging lets a bold bridge across a chip boundary and re-leak '**'
+    into the label."""
+    chips = [m for m in marks if m[0] == "chip"]
+    marks = [m for m in marks
+             if not (m[0] in ("bold", "italic")
+                     and any(c[1] <= m[1] and m[2] <= c[2] for c in chips))]
     out = []
     for kind, a, b, data in sorted(marks, key=lambda m: (m[0], m[1])):
-        if out and out[-1][0] == kind and out[-1][3] == data and a <= out[-1][2] + 1:
+        # tolerance 2: span trailing-space trim + the line-join space leave a
+        # 2-char gap at line wraps; without this, wrapped links/bolds fragment
+        # ("Project|Glasswing" double anchors; "**…** **…**" split bolds)
+        if out and out[-1][0] == kind and out[-1][3] == data and a <= out[-1][2] + 2:
             out[-1][2] = max(out[-1][2], b)
         else:
             out.append([kind, a, b, data])
-    chips = [m for m in out if m[0] == "chip"]
-    return [m for m in out
-            if not (m[0] in ("bold", "italic")
-                    and any(c[1] <= m[1] and m[2] <= c[2] for c in chips))]
+    return out

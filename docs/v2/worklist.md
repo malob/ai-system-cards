@@ -11,13 +11,11 @@ adjudication passes not yet run.
 - L1 major: 5
 - L1 minor: 31
 - P1 major: 1
-- S1 major: 13
-- S2 major: 1
-- S3 major: 1
+- S1 major: 12
 - T1 major: 4
 - T1 minor: 261
 
-**Major flags: 26** FN1=1, L1=5, P1=1, S1=13, S2=1, S3=1, T1=4
+**Major flags: 23** FN1=1, L1=5, P1=1, S1=12, T1=4
 
 ## Major flags by page
 
@@ -30,11 +28,8 @@ adjudication passes not yet run.
 - p.38 [T1] {"op": "replace", "missing_from_md": "Skipped cheap verification", "extra_in_md": "Reckless action", "n_tokens": 3}
 - p.44 [T1] {"op": "delete", "missing_from_md": "Research Research engineering Pure engineering Non R&D", "extra_in_md": "", "n_tokens": 7}
 - p.54 [L1] {"kind": "goto", "anchor": "Section 6.2.1.2", "dest_page": 105}
-- p.56 [S2] {"kind": "chip-missing", "text": "ModerateMitigatingFactor", "have": 1, "want": 2}
-- p.56 [S3] {"kind": "label-not-in-registry", "label": "**Moderate Mitigating Factor"}
 - p.87 [P1] {"kind": "missing-marker"}
 - p.132 [L1] {"kind": "goto", "anchor": "Section 8.17.6", "dest_page": 295}
-- p.153 [S1] {"kind": "bold-run-missing", "text": "One thing worth noting:"}
 - p.182 [S1] {"kind": "bold-run-missing", "text": "This is a classic agentic safety test."}
 - p.222 [S1] {"kind": "bold-run-missing", "text": "[Bottom left:]"}
 - p.222 [S1] {"kind": "bold-run-missing", "text": "[Bottom right:]"}
