@@ -247,12 +247,13 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 prev = cur["lines"][-1]
                 gap = line["bbox"][1] - prev["bbox"][3]
                 line_h = prev["bbox"][3] - prev["bbox"][1]
-                # Google Docs exports whole columns as one PDF block: split
-                # paragraphs on vertical gaps and on bold-lead starts
+                # vertical gap is the paragraph signal (Google Docs exports
+                # whole columns as one PDF block, and chip pills fragment block
+                # ids mid-paragraph — block identity is unreliable both ways);
+                # bold-lead starts after terminal punctuation still break
                 starts_bold_lead = (line["segs"] and line["segs"][0][2]["bold"]
                                     and prev["text"].rstrip().endswith((".", "!", "?", ":", "”", '"')))
-                same_para = (line["block"] == prev["block"]
-                             and gap < max(4.0, 0.55 * line_h)
+                same_para = (gap < max(4.0, 0.55 * line_h)
                              and not starts_bold_lead)
             if same_para:
                 cur["lines"].append(line)
