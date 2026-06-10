@@ -39,6 +39,13 @@ function remarkBoxes() {
         });
         return;
       }
+      // A caption block: uniform small/muted styling attached to the
+      // preceding figure/table/transcript (D23 — captions are a first-class
+      // construct, not styling accidents).
+      if (node.name === 'caption') {
+        node.data = { hName: 'div', hProperties: { className: ['caption'] } };
+        return;
+      }
       if (node.name !== 'transcript' && node.name !== 'example') return;
       const title = node.attributes?.title;
       node.data = {

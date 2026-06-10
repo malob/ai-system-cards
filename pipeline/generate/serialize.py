@@ -142,16 +142,15 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 out.append(f"{q}{indent}- " + inline_marker + body + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
-            if blk["caption_lines"]:
+            if blk["caption_lines"]:  # legacy in-figure captions (rare)
                 cap_blk = {"lines": blk["caption_lines"], "page": pno}
                 text, marks = block_text_and_marks(cap_blk, page, chips)
-                bolds = [m for m in marks if m[0] == "bold"]
-                text = _hyphen_join(text).strip()
-                if bolds and bolds[0][1] <= 1:
-                    lead_end = bolds[0][2]
-                    out.append(f"*__{text[:lead_end].strip()}__{text[lead_end:]}*\n")
-                else:
-                    out.append(f"*{text}*\n")
+                out.append(":::caption\n" + _hyphen_join(_apply_marks(text, marks)).strip() + "\n:::\n")
+        elif t == "caption":
+            # first-class caption block (D23): marks applied (bold leads,
+            # sub-labels), rendered uniformly by the :::caption directive
+            body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
+            out.append(":::caption\n" + body + "\n:::\n")
         elif t == "turn":
             # multi-paragraph turns: gap-recorded breaks UNION short-line
             # breaks (PDF intra-turn paragraphs are plain hard returns with no

@@ -513,6 +513,19 @@ p.pagemark-row { margin: 0; height: 0; }
 }
 .article figcaption strong { color: var(--ink); }
 
+/* :::caption blocks — the uniform caption construct (D23): figures, tables,
+   and transcripts all attach the same way */
+.article .caption {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 42rem;
+  margin: -1.2em 0 2em;
+  padding: 0 0.4em;
+}
+.article .caption strong { color: var(--ink); }
+.article .caption p { margin: 0.35em 0; font-size: inherit; }
+
 /* standalone table captions, styled to match figure captions */
 .article p.tablecap {
   font-size: 0.82rem;

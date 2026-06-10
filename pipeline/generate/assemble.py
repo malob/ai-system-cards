@@ -110,6 +110,7 @@ def _box_role(line, page):
 
 
 HEAD_NUM = re.compile(r"^(\d+(?:\.\d+)*)\s+\S")
+CAPTION_LEAD = re.compile(r"^\[(Figure|Table|Transcript)\b")
 # Google Docs exports mark list markers with a zero-width space after the
 # glyph/number: "●​Text", "1.​Text" — a mechanical signature that
 # also distinguishes ordered-list markers from prose lines starting with digits
@@ -139,7 +140,10 @@ def _classify(line, page, in_figure):
         # inside the container but not in a bubble: gray = narrator commentary,
         # black = an untinted turn (rare; treated as its own turn block)
         return "commentary" if COMMENTARY_GRAY in body_colors else "turn"
-    if in_figure and line["size"] <= 9.5:
+    # captions are a first-class construct (D23): size-9 text with the
+    # bracket-lead signature ([Figure|Table|Transcript N…]) anywhere, or any
+    # small text inside a figure region
+    if line["size"] <= 9.5 and (in_figure or CAPTION_LEAD.match(line["text"].lstrip())):
         return "caption"
     if LIST_MARKER.match(line["text"].lstrip()) or line["text"].lstrip()[:1] in BULLETS:
         return "item"
@@ -236,10 +240,11 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             cur = {"type": "heading", "level": min(level, 6),
                    "lines": [line], "page": pno}
         elif kind == "caption":
-            if blocks and blocks[-1]["type"] == "figure":
-                blocks[-1]["caption_lines"].append(line)
+            if cur and cur["type"] == "caption":
+                cur["lines"].append(line)
             else:
-                cur = _extend(cur, "paragraph", line, pno, flush_cb=flush)
+                flush()
+                cur = {"type": "caption", "lines": [line], "page": pno}
         elif kind == "item":
             flush()
             cur = {"type": "item", "lines": [line], "page": pno,
@@ -266,6 +271,11 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 if kind == "turn":
                     cur["role"] = role
         else:  # prose
+            # caption continuation: small text directly under an open caption
+            if (cur and cur["type"] == "caption" and line["size"] <= 9.5
+                    and line["bbox"][1] - cur["lines"][-1]["bbox"][3] < 8):
+                cur["lines"].append(line)
+                continue
             # continuation of a wrapped list item — two layouts in this card:
             # hanging indent (text ~18pt right of marker, p.12) and flush-left
             # (chip-definition lists, p.38: continuation at the marker x0, only
