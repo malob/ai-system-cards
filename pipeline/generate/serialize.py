@@ -168,6 +168,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                           else "user" if (low.startswith("user") or "human" in low)
                           else None)
             role = label_role or blk.get("role") or "assistant"
+            label = label.strip("[]").rstrip(":")  # '[Assistant:]' -> 'Assistant'
             body = _hyphen_join(text).strip()
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 raw = "\n".join(l["text"] for l in blk["code_lines"])

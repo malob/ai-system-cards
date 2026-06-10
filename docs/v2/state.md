@@ -105,6 +105,20 @@ restyle). Diagnostic: caption-row-in-grid is the suspected cause of table
 column rotation (clean tall tables vs rotated wide ones). Table stitching:
 third multi-page table confirmed (p.19–21).
 
+**MIDDAY STRETCH (2026-06-10 ~11:30) landed:** table class COMPLETE (rotation
+per-row repair, glued-cell split-before-rotation, caption strip, bold+underline
+cell restyle from span flags + stroked thin rules — FL-09); blockquotes
+(x0≥112 outside boxes, quote-aware nesting, stitch-compatible); turn-code
+merging (label-only turn + code box = one turn with fenced body; fences fixed
+<thinking>-tag eating); label-derived turn roles (p.153 flip); boundary-page
+ownership split at incoming heading (p.35-36 dup/orphan); footnote-adjacency
+stitch fix; bold body-size deep headings (h5/h6 anchors); gap-only paragraph
+continuation (chip-row splits). **TRIAGE FIRST NEXT SESSION: S1 5→11 after the
+quote/restyle batch** (suspect: bold leads inside AISI quote items). Then:
+`:::caption` block + renderer directive (D23), cross-page table stitching
+(p.19-21/252-253/309-318), L2 dest resolution, FN1 table-cell refs, ST2×10
+triage, full re-sweep (expect way under 69 majors), mutation re-run.
+
 **NEXT (priority order, sweep-driven):**
 1. table-scrambled ×11 (§4 tables pp.51–91): diagnose ONE root cause
    (docling grid traversal vs y-slot insertion); add TB2 cell-order check.
