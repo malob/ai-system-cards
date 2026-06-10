@@ -95,6 +95,12 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
     table cells from oracle facts: bold span flags; thin rules under spans."""
     spans = list(_table_spans(oracle_page, bbox))
     rules = oracle_page.get("rules", [])
+    # bold only signifies when it DEVIATES from the table's dominant weight:
+    # some tables (2.2.1.A) are set entirely in Lora-Bold, where the visual
+    # weight reads regular and 'bold' carries no information (owner-flagged)
+    boldish = [s for s in spans if s["text"].strip()]
+    bold_share = sum(1 for s in boldish if s.get("bold")) / max(1, len(boldish))
+    bold_signifies = bold_share <= 0.5
 
     def underlined(s):
         sb = s["bbox"]
@@ -111,7 +117,7 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
         if not text or len(text) < 2:
             continue
         wraps = []
-        if s.get("bold"):
+        if s.get("bold") and bold_signifies:
             wraps.append(("<b>", "</b>"))
         if underlined(s):
             wraps.append(("<u>", "</u>"))

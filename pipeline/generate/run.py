@@ -92,6 +92,21 @@ def manifest_chips() -> dict:
 UNTERMINATED = tuple(".!?:”\"’")
 
 
+def join_quote_blocks(md: str) -> str:
+    """Adjacent quote blocks separated by a blank line render as SEPARATE
+    blockquotes in markdown (owner-flagged on the METR quote, §2.3.8); a bare
+    '>' on the separator keeps them one quote."""
+    lines = md.split("\n")
+    out = []
+    for i, l in enumerate(lines):
+        if (l == "" and out and out[-1].startswith(">")
+                and i + 1 < len(lines) and lines[i + 1].startswith(">")):
+            out.append(">")
+        else:
+            out.append(l)
+    return "\n".join(out)
+
+
 def stitch(blocks: list[dict]) -> list[dict]:
     """Merge blocks split across a page break (v1's PM-02/03 lessons):
     - paragraph + paragraph: previous unterminated, next starts lowercase;
@@ -187,6 +202,7 @@ def main():
         # section already carries it — v1's shared-page convention, P1-checked)
         md, _ = serialize.serialize_blocks(blocks, page_of_prev_block=(a if start_midpage else -1),
                                            oracle_pages=pages, chips=chips)
+        md = join_quote_blocks(md)
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")
         written.append((name, sel))
         print(f"{name}: pages {sel[0]}..{sel[-1]} ({len(sel)} pages, {len(blocks)} blocks)")

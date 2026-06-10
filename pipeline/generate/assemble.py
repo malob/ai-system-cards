@@ -146,6 +146,26 @@ def _classify(line, page, in_figure):
     return "prose"
 
 
+def _chip_only(line, page, manifest_chips) -> bool:
+    """A line consisting only of chip pills (+punctuation): its own block —
+    the PDF renders chip rows on their own line (owner-flagged at 2.3.3)."""
+    pills = [p for p in page.get("pills", []) if p.get("color") in manifest_chips]
+    if not pills:
+        return False
+    found = False
+    for _, _, s in line["segs"]:
+        if s["zone"] != "body":
+            continue
+        t = s["text"].strip()
+        if not t or not re.search(r"\w", t):
+            continue
+        if any(_rect_contains(p["bbox"], s["bbox"], slack=2.5) for p in pills):
+            found = True
+        else:
+            return False
+    return found
+
+
 QUOTE_X0 = 112  # blockquote indent (body=72, item-continuation=108, quote=118+)
 
 
@@ -233,6 +253,12 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                         and (cur.get("role") != role
                              or (line["segs"] and line["segs"][0][2]["bold"])))
             if cur and cur["type"] == kind and not new_turn:
+                # paragraph breaks INSIDE turns/boxes (PDF turn 229 has two
+                # paragraphs): record split indices for the serializer
+                prev_l = cur["lines"][-1]
+                gap = line["bbox"][1] - prev_l["bbox"][3]
+                if gap > max(4.0, 0.55 * (prev_l["bbox"][3] - prev_l["bbox"][1])):
+                    cur.setdefault("breaks", []).append(len(cur["lines"]))
                 cur["lines"].append(line)
             else:
                 flush()
@@ -265,8 +291,11 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 # bold-lead starts after terminal punctuation still break
                 starts_bold_lead = (line["segs"] and line["segs"][0][2]["bold"]
                                     and prev["text"].rstrip().endswith((".", "!", "?", ":", "”", '"')))
+                chip_boundary = (_chip_only(line, page, manifest_chips)
+                                 or _chip_only(prev, page, manifest_chips))
                 same_para = (gap < max(4.0, 0.55 * line_h)
                              and not starts_bold_lead
+                             and not chip_boundary
                              and cur.get("quote", False) == _is_quote(line, page))
             if same_para:
                 cur["lines"].append(line)
@@ -397,6 +426,11 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
     marks = [m for m in marks
              if not (m[0] in ("bold", "italic", "chip")
                      and not text[m[1]:m[2]].translate(_INVIS))]
+    # emphasis over punctuation-only text ('**;**' after chips) is meaningless
+    import re as _re
+    marks = [m for m in marks
+             if not (m[0] in ("bold", "italic")
+                     and not _re.search(r"\w", text[m[1]:m[2]]))]
     return text, _merge_marks(marks)
 
 

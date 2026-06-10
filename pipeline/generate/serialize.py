@@ -137,7 +137,8 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             if m:  # ordered item: keep the number, real space after it
                 out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
-                out.append(f"{q}{indent}- " + inline_marker + body.lstrip("●•◦▪‣○​ ") + "\n")
+                body = re.sub(r"^(\**)[●•◦▪‣○​‌ ]+", r"\1", body.lstrip("●•◦▪‣○​‌ "))
+                out.append(f"{q}{indent}- " + inline_marker + body + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
             if blk["caption_lines"]:
@@ -151,7 +152,18 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 else:
                     out.append(f"*{text}*\n")
         elif t == "turn":
-            text, marks = block_text_and_marks(blk, page, chips)
+            # multi-paragraph turns: gap-recorded breaks UNION short-line
+            # breaks (PDF intra-turn paragraphs are plain hard returns with no
+            # extra spacing — the signal is a line ending short of the right edge)
+            maxx = max(l["bbox"][2] for l in blk["lines"])
+            geo = [i + 1 for i, l in enumerate(blk["lines"][:-1]) if l["bbox"][2] < maxx - 50]
+            brks = sorted(set(blk.get("breaks", [])) | set(geo))
+            idxs = [0] + brks + [len(blk["lines"])]
+            seg_bodies = []
+            for i0, i1 in zip(idxs, idxs[1:]):
+                tt, mm = block_text_and_marks({**blk, "lines": blk["lines"][i0:i1]}, page, chips)
+                seg_bodies.append((tt, mm))
+            text, marks = seg_bodies[0]
             label = ""
             bolds = [m for m in marks if m[0] == "bold"]
             if bolds and bolds[0][1] == 0:
@@ -169,7 +181,9 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                           else None)
             role = label_role or blk.get("role") or "assistant"
             label = label.strip("[]").rstrip(":")  # '[Assistant:]' -> 'Assistant'
-            body = _hyphen_join(text).strip()
+            body = _hyphen_join(_apply_marks(text, marks)).strip()
+            for tt, mm in seg_bodies[1:]:
+                body += "\n\n" + _hyphen_join(_apply_marks(tt, mm)).strip()
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 raw = "\n".join(l["text"] for l in blk["code_lines"])
                 body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
