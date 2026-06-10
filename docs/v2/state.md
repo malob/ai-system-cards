@@ -193,6 +193,19 @@ displaced 0; T1 minors 128. Experiment 08 has the full record + conclusion:
 toward acceptance; optionally one more full 319-page sweep from the
 0-known-majors baseline.
 
+**OWNER H2 REVIEW IN PROGRESS (16:50):** verdicts so far: p.182 bold-in-code
+FIX (build styled <pre>); p.38/44 chips ACCEPT+whitelist; em-dash item ABSORBED
+by the mega-table rebuild. Owner caught a MISSED CLASS: multi-paragraph cells
++ cross-page row continuations in the welfare table (now fixed: cell paragraph
+reconstruction, marker-preserving continuation-row merge, normalized seam
+join; `pipeline/audit_table_seams.py` is the committed mechanical checker, 0
+flags). Owner directive: systematic image-vs-DOM audit of ALL tables —
+running as background agent → `pipeline/.cache/vsweep5/findings.jsonl`.
+STILL OPEN: label cosmetics verdicts (p.153/222/45), adjudication blessings
+(p.43 literal markup, bracket labels), `:::ph` green placeholder highlights
+(owner-requested build, FL-07/D17), p.182 styled-<pre> build, S1/T1
+whitelist entries for accepted residuals.
+
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
 p.153 '[Assistant]' label, p.182 missing-bold sentence (REAL find, example-box
