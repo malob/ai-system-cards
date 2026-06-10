@@ -5,11 +5,15 @@ system-card conversion pipeline to be reliable enough that handing over a new PD
 yields a faithful site with only light spot-checking.
 
 **Status:** v1 shipped one card (Claude Fable 5 & Mythos 5, 319 pp) at
-`malob.github.io/ai-system-cards`. It is faithful *now*, but only after a long
-tail of manual review and ~7 post-hoc repair scripts. This brief is the lived
-record of what broke and why, and an opinionated proposal for v2. Treat the
-proposal as a strong prior, not gospel — the bake-off (§6) is the load-bearing
-unknown.
+`malob.github.io/ai-system-cards`. It is **much more faithful than the raw
+conversion, but not fully faithful** — manual review reached only ~section 6 of 9
+before the owner called it, and even within that range some noticed defects were
+left unfixed. So there are **known-unfixed defects past ~section 6, and certainly
+unnoticed ones throughout**. The §2 taxonomy below lists the defects we *found and
+fixed*; it is a lower bound on what v1 gets wrong, not a complete accounting. This
+brief is the lived record of what broke and why, and an opinionated proposal for
+v2. Treat the proposal as a strong prior, not gospel — the bake-off (§6) is the
+load-bearing unknown.
 
 ---
 
@@ -278,10 +282,13 @@ living spec with staged conversion.* Still genuinely open:
 1. Bake-off (§6) — settle the extraction stack on real pages before designing further.
 2. From the bake-off, a fresh planning pass turns this brief into a concrete v2
    plan (data model, validation contract, agent prompt, triage flow).
-3. Re-convert the Fable 5 card with v2 and diff against the (now hand-verified) v1
-   output — it's the perfect regression oracle: v2 should reproduce v1's content
-   with far less manual intervention, and any divergence is a v2 bug or a v1 fix
-   we should preserve.
+3. Re-convert the Fable 5 card with v2 and diff against v1's output — a useful but
+   **partial** regression oracle. v1 is hand-verified only through ~section 6 (and
+   incompletely even there), so a divergence is one of: a v2 bug, a v1 fix to
+   preserve, **or a latent v1 defect that v2 got right**. Treat the verified range
+   as the trustworthy oracle; treat divergence past it as a prompt to check the
+   *PDF*, not to assume v1 was correct. Better still, v2's own structural oracle
+   (§4.3) should catch most of these without needing v1 at all.
 
 The existing v1 repair tools (`tools/*.py`) shouldn't be carried forward as-is,
 but they encode hard-won detail (e.g. how to map a destination page to the nearest
