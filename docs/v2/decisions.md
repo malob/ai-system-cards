@@ -206,5 +206,22 @@ overnight; (2) **v1 shipped card FROZEN** — no post-acceptance patches; all
 improvements flow through the v2 re-conversion he reviews. D20's
 provisional-rule protocol remains in force.
 
-<!-- APPEND NEW DECISIONS BELOW THIS LINE (D23 next) — newest at the bottom. -->
+## D23 — Morning-tour decisions: caption block, blockquotes, underlines (2026-06-10, ~10:40, owner)
+
+(1) **Captions are a first-class block construct.** Figures, tables, AND
+transcripts carry `[Figure|Table|Transcript N.N.N] lead. rest` captions, but
+they rendered as three unrelated accidents (italic-sibling CSS,
+docling-absorbed rows, plain bold paragraphs). One `:::caption` block in the
+dialect / caption node in the model, attached to the preceding
+figure/table/transcript; mechanical detection by the size-9 bracket-lead
+signature; renderer styles captions uniformly once. Subsumes the owner's
+caption-dedup rule (never inside the table box) and gives the sweep's
+caption-split/misplaced/duplicated classes one checkable invariant.
+(2) **Indented quote regions are standard blockquotes** — no special AISI
+type. (3) **Underline capture required** (owner-found class FL-09): tables
+whose captions promise underlined second-best scores must carry underlines;
+detect via thin rule-fills under spans; restyle table cells from oracle spans
+(same pass recovers bold best-scores, the sweep's emphasis-lost class).
+
+<!-- APPEND NEW DECISIONS BELOW THIS LINE (D24 next) — newest at the bottom. -->
 <!-- (Three same-session attempts to insert above the tail prove the need.) -->
