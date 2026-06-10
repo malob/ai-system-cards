@@ -114,7 +114,7 @@ CAPTION_LEAD = re.compile(r"^\[(Figure|Table|Transcript)\b")
 # Google Docs exports mark list markers with a zero-width space after the
 # glyph/number: "●​Text", "1.​Text" — a mechanical signature that
 # also distinguishes ordered-list markers from prose lines starting with digits
-LIST_MARKER = re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)])​")
+LIST_MARKER = re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists
 
 
 def _classify(line, page, in_figure):

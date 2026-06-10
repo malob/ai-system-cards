@@ -39,7 +39,7 @@ BULLET_GLYPHS = "●•◦▪‣○"
 # glyph/number ("●​Text", "1.​Text") — the shared mechanical signature used by
 # both the generator (assemble) and the ST structural invariant.
 import re as _re
-LIST_MARKER = _re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)])​")
+LIST_MARKER = _re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists (a. b. c.)
 
 
 def squash(text: str, calibration: bool = True) -> str:
