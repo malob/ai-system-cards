@@ -109,7 +109,14 @@ def l1_links(md_links, oracle_pages, page_range, toc_pages, table_pages=frozense
             if len(anchor) < 3:
                 continue
             if anchor not in md_link_text:
-                flags.append(_flag("L1", pno, "major", {"kind": "goto", "anchor": anchor[:80], "dest_page": l["dest_page"]}))
+                if l.get("unresolvable"):
+                    # the SOURCE PDF's named destination doesn't resolve — a
+                    # source-document defect; md cannot link to nowhere
+                    flags.append(_flag("L1", pno, "minor",
+                                       {"kind": "source-defect-unresolvable-dest",
+                                        "anchor": anchor[:80], "name": l.get("name", "")}))
+                else:
+                    flags.append(_flag("L1", pno, "major", {"kind": "goto", "anchor": anchor[:80], "dest_page": l["dest_page"]}))
     return flags
 
 
@@ -130,11 +137,15 @@ def p1_markers(sections, expected_pages) -> list[dict]:
 
 
 def f1_figures(sections, figures_map) -> list[dict]:
-    """Per-page figure-image count vs the extracted figures map (F1)."""
+    """Per-page figure-image count vs the extracted figures map (F1). Figures
+    deliberately omitted via v1's `<!-- figure ... skipped: reason -->` comments
+    count as declared exclusions (contract operating rule 4)."""
     md_counts = {}
     for sec in sections:
         for pg, n in sec.images.items():
             md_counts[pg] = md_counts.get(pg, 0) + n
+        for pg, skips in sec.fig_skips.items():
+            md_counts[pg] = md_counts.get(pg, 0) + len(skips)
     flags = []
     expected = {int(p): len(files) for p, files in figures_map.items()}
     expected.pop(1, None)  # cover art: declared exclusion (title rendered by site)

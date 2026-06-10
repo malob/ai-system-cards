@@ -914,21 +914,21 @@
  {
   "invariant": "L1",
   "page": 100,
-  "severity": "major",
+  "severity": "minor",
   "detail": {
-   "kind": "goto",
+   "kind": "source-defect-unresolvable-dest",
    "anchor": "a limited evaluation",
-   "dest_page": 0
+   "name": "h.6c8a0mx55isl"
   }
  },
  {
   "invariant": "L1",
   "page": 100,
-  "severity": "major",
+  "severity": "minor",
   "detail": {
-   "kind": "goto",
+   "kind": "source-defect-unresolvable-dest",
    "anchor": "shows that Fable 5 is generally less vulnerable",
-   "dest_page": 0
+   "name": "h.6c8a0mx55isl"
   }
  },
  {
@@ -1724,11 +1724,11 @@
  {
   "invariant": "L1",
   "page": 213,
-  "severity": "major",
+  "severity": "minor",
   "detail": {
-   "kind": "goto",
+   "kind": "source-defect-unresolvable-dest",
    "anchor": "6.5.4.3",
-   "dest_page": 0
+   "name": "h.h4cb0bzi8tc"
   }
  },
  {
@@ -2352,24 +2352,6 @@
   }
  },
  {
-  "invariant": "F1",
-  "page": 139,
-  "severity": "major",
-  "detail": {
-   "expected": 2,
-   "in_md": 1
-  }
- },
- {
-  "invariant": "F1",
-  "page": 151,
-  "severity": "major",
-  "detail": {
-   "expected": 2,
-   "in_md": 1
-  }
- },
- {
   "invariant": "T1",
   "page": 3,
   "severity": "major",
@@ -2488,17 +2470,6 @@
    "text": "Weak Mitigating Factor",
    "from_page": 57,
    "zone": "T2-displacement"
-  }
- },
- {
-  "invariant": "T1",
-  "page": 139,
-  "severity": "major",
-  "detail": {
-   "op": "insert",
-   "missing_from_md": "",
-   "extra_in_md": "[Figure 6.3.2.3.A] Average constitutional adherence scores for each model across all 15 dimensions. Adherence is judged on a scale from -3 to +3, where a higher",
-   "n_tokens": 34
   }
  },
  {

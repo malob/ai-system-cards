@@ -55,12 +55,15 @@ taxonomy in its §2 is load-bearing).
   - **Style manifest seeded** —
     [cards/anthropic/claude-fable-5/style-manifest.yaml](../../cards/anthropic/claude-fable-5/style-manifest.yaml)
     (D16 worked example; owner confirmation pending).
-  - **Verifier v0 BUILT + CALIBRATED** (`pipeline/verifier/`; experiment 04):
-    T1/L1/P1/F1/FN1 implemented over the PyMuPDF oracle. At `f60899a` it
-    rediscovers FL-01 (134 L1 majors vs 2 at HEAD) and PM-06 (exact 5 pages);
-    at HEAD it found **new latent v1 defects** — 2 missing named-destination
-    links (p.100, `06a:26`) + figure-count anomalies (p.139/150/151). **CA-01
-    retracted** (was a grep-separator misread; bidirectional T1 stays).
+  - **Verifier v0 BUILT + CALIBRATED + finds TRIAGED** (`pipeline/verifier/`;
+    experiment 04): T1/L1/P1/F1/FN1 over the PyMuPDF oracle. **141 major flags
+    at pre-fix `f60899a` vs 4 understood ones at HEAD** (chip-cluster order).
+    Rediscovers FL-01 and PM-06 exactly. Triage outcomes: p.100 "missing
+    links" = **source-PDF defect** (unresolvable Google-Docs named dests; new
+    flag class); figure-count anomalies = v1's documented skip comments, now
+    honored as declared exclusions; p.139 caption = verifier bug, fixed
+    (image-rect text exclusion removed). **CA-01 retracted** (grep-separator
+    misread; bidirectional T1 stays).
 - Nothing pushed (D13).
 
 ## Pending owner decisions (D2 issue-type queue)
@@ -71,22 +74,22 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-1. **Triage the verifier's new finds** (experiment 04): eyeball p.139/150/151
-   page renders vs md (figure counts + the p.139 caption question); fix the two
-   p.100 links in v1 content (post-acceptance hand-edit per D9 — v1 is shipped
-   content) or leave for the v2 re-conversion; decide the auto-link spec rule.
-2. **Extend verifier**: S1 bold/italic runs, S2/S3 chips via style manifest,
+1. **Extend verifier**: S1 bold/italic runs, S2/S3 chips via style manifest,
    TB1 via docling (incl. cross-check of all 12 v1 HTML tables and the p.252
    row-count discrepancy), L2 destination resolution.
-3. **Mutation-test the verifier (D6)**: inject per-class synthetic defects,
+2. **Mutation-test the verifier (D6)**: inject per-class synthetic defects,
    measure recall, close gaps. This turns "calibrated on history" into a
    number.
-4. **Design + build the generation loop**: typed document model schema (informed
+3. **Design + build the generation loop**: typed document model schema (informed
    by what the oracle emits), semantic-proposal prompts, repair loop against
    gates, N-version arbitration, **cross-page table stitching stage**, vision
    sweep, escalation worklist.
-5. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
+4. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
+
+Small open spec items for the living spec (judge-able defaults proposed):
+auto-links render as code/text, not links (matches v1); source-defect dests
+stay plain text with a sic-note option (D17 territory).
 
 ## Open questions
 

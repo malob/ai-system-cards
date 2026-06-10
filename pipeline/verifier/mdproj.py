@@ -19,6 +19,7 @@ SECTIONS_DIR = "cards/anthropic/claude-fable-5/sections"
 
 RE_HEADER = re.compile(r"<!--\s*source: source\.pdf pages (\d+)-(\d+)\s*-->")
 RE_MARKER = re.compile(r"<!--\s*p\.(\d+)\s*-->")
+RE_FIGSKIP = re.compile(r"<!--\s*figure (p(\d+)-\d+\.png) skipped: ([^>]*?)\s*-->")
 RE_COMMENT = re.compile(r"<!--.*?-->", re.S)
 RE_FNDEF = re.compile(
     r"^\[\^(\d+)\]:[ \t]*(.*(?:\n(?:[ ]{4}.*|[ \t]*(?=\n[ ]{4})))*)", re.M
@@ -49,6 +50,7 @@ class Section:
     fn_defs: dict = field(default_factory=dict)       # n -> text
     fn_refs: list = field(default_factory=list)       # [(n, page)]
     table_pages: set = field(default_factory=set)     # pages containing tables
+    fig_skips: dict = field(default_factory=dict)     # page -> [(file, reason)]
 
 
 def sections_at_ref(repo: Path, ref: str) -> list[tuple[str, str]]:
@@ -100,6 +102,12 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
             sec.table_pages.add(int(sm.group(1)))
         return _table_to_text(m, sec, pg(m))
     seg = RE_TABLE.sub(table, seg)
+
+    def figskip(m):
+        # v1's declared-exclusion convention for deliberately omitted figures
+        sec.fig_skips.setdefault(int(m.group(2)), []).append((m.group(1), m.group(3)))
+        return " "
+    seg = RE_FIGSKIP.sub(figskip, seg)
     seg = RE_COMMENT.sub(" ", seg)
 
     def piperule(m):

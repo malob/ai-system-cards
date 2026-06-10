@@ -33,17 +33,16 @@ def _image_rects(page) -> list[fitz.Rect]:
 
 
 def _zone(span, page_height, image_rects):
+    # NOTE: no exclusion for text "inside" raster image rects — raster-internal
+    # text is pixels, not text-layer spans; any text-layer span overlapping an
+    # image rect is real overlay text (typically a caption under an oversized
+    # chart bbox — see p.139). Vector-chart furniture text is a separate, still
+    # open exclusion (drawing-cluster zones; experiment 03).
     text = span["text"].strip()
-    r = fitz.Rect(span["bbox"])
-    if r.y1 > page_height - 45 and re.fullmatch(r"\d+", text):
+    if fitz.Rect(span["bbox"]).y1 > page_height - 45 and re.fullmatch(r"\d+", text):
         return "pagenum"
     if span["flags"] & SUPER and re.fullmatch(r"\d+", text):
         return "fnref"
-    italic = bool(span["flags"] & ITALIC)
-    if not italic:  # captions (italic) may overlay chart image rects — spare them
-        for ir in image_rects:
-            if ir.contains(r) or (ir.intersects(r) and abs(ir & r) > 0.6 * abs(r)):
-                return "figure"
     return "body"
 
 
@@ -110,7 +109,12 @@ def extract_page(page) -> dict:
         if l["kind"] == fitz.LINK_URI:
             links["uri"].append({"anchor": anchor, "uri": l["uri"]})
         elif l["kind"] in (fitz.LINK_GOTO, fitz.LINK_NAMED):
-            links["goto"].append({"anchor": anchor, "dest_page": l.get("page", -1) + 1})
+            dest_page = (l.get("page") if l.get("page") is not None else -1) + 1
+            entry = {"anchor": anchor, "dest_page": dest_page}
+            if dest_page == 0:  # named dest that doesn't resolve in the PDF's name tree
+                entry["unresolvable"] = True
+                entry["name"] = l.get("nameddest") or l.get("name") or ""
+            links["goto"].append(entry)
 
     return {
         "spans": spans,
