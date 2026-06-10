@@ -3,8 +3,9 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-10 (~05:00) — overnight run #2 complete: ST invariant,
-vision sweep (319pp), verifier hardening, sweep-driven fixes; with Fable 5.
+**Last updated:** 2026-06-10 (~afternoon) — convergence rounds D+E: re-sweep
+found 25 majors (vs 69 baseline), ALL 24 actionable fixed at class level;
+verification sweep (flagged 30pp + random 30pp) launched; with Fable 5.
 
 ## Cold-start capsule
 
@@ -21,14 +22,26 @@ taxonomy in its §2 is load-bearing).
 
 ## Status
 
-- **Phase:** 2 (generation) — first full mechanical re-conversion done; refining.
-- **Headline:** the v2 loop converted all 319 pages mechanically (zero LLM calls)
-  to **26 major gate flags total, T1=4 / P1=1** — text & structure essentially
-  clean document-wide. Site builds + renders against the output (28 chips, 88
-  turns, 38 tables, 153 figures, 51 citation links). NOT accept-ready: a
-  mechanical pre-LLM draft with a triaged worklist ([worklist.md](worklist.md),
-  experiment [06](experiments/06-full-reconversion/)). Output in `sections-v2/`
-  (gitignored); v1 still shipped (D9); nothing pushed (D13).
+- **Phase:** 2 (generation) — convergence loop, round E (verification) running.
+- **Headline:** loop is converging. Sweep #1: 69 majors → fixes → re-sweep
+  (round D, 4 agents, all 319pp): **25 majors** → fix wave (this session):
+  **all 24 actionable closed at class level** (1 adjudicated source-faithful,
+  p.43). Gate: **FN1 major 0** (was 1), S1 4 / ST1 1 / T1 6 — all known typed
+  sites; T1 minors 198→143. Model-name displacement across all tables: 13→0.
+  Round E (verify 30 flagged + 30 random pages, fresh `vsweep3` slices via the
+  now-committed `pipeline/slice_pages.py`) running in background; results land
+  in `pipeline/.cache/vsweep3/findings-*.jsonl`. Experiment
+  [08](experiments/08-convergence/) is the record. NOT accept-ready until
+  round E verdicts + final mutation re-run + owner H2 review.
+- **Round-D fix inventory (all in `pipeline/generate/tables.py` unless noted):**
+  fragment-row merge; glue-split x-guard + fnref exclusion; misjoin re-split;
+  truncated-cell extension (column-run prefix); y-band rotation pools +
+  char-multiset row rebuild; geometric per-segment bold/underline restyle
+  (suppression ≥0.9); entity/quote folding (compare-only); stray fnref-digit
+  absorb. Elsewhere: cross-page footnote continuation (oracle `cont` key →
+  serialize merge; FN1 mirror), wrapped-heading continuation (assemble + ST3
+  mirror), lettered list markers + space, empty-block guard, caption
+  bracket-lead spacing.
 
 ### Earlier groundwork (phase 1, complete)
 - Done:
