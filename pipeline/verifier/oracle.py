@@ -139,9 +139,14 @@ def extract_page(page) -> dict:
                 entry["name"] = l.get("nameddest") or l.get("name") or ""
             links["goto"].append(entry)
 
-    pills, boxes = [], []
+    pills, boxes, rules = [], [], []
     for d in page.get_drawings():
         if d.get("fill") is None:
+            # stroke-only paths: thin horizontal strokes are underline rules
+            r = d["rect"]
+            if d.get("color") is not None and r.height <= 2.5 and 8 <= r.width <= 250:
+                col = "#" + "".join(f"{int(round(v * 255)):02x}" for v in d["color"])
+                rules.append({"color": col, "bbox": [round(v, 1) for v in r]})
             continue
         r = d["rect"]
         col = "#" + "".join(f"{int(round(v * 255)):02x}" for v in d["fill"])
@@ -154,12 +159,16 @@ def extract_page(page) -> dict:
             t = page.get_text(clip=r).strip().replace("\n", " ")
             if t:
                 pills.append({"color": col, "text": t, "bbox": [round(v, 1) for v in r]})
+        elif r.height <= 2.5 and 8 <= r.width <= 250:
+            # thin rule = underline candidate (FL-09: legend-bearing underlines)
+            rules.append({"color": col, "bbox": [round(v, 1) for v in r]})
 
     return {
         "spans": spans,
         "links": links,
         "pills": pills,
         "boxes": boxes,
+        "rules": rules,
         "footnotes": footnotes,
         "image_rects": [[round(v, 1) for v in r] for r in image_rects],
         "n_raster_images": len(set(map(tuple, [tuple(r) for r in image_rects]))),

@@ -32,8 +32,97 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
     for t in _load().get(str(page_no), []):
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
         if oracle_page is not None:
+            # split BEFORE rotation repair: a glued cell defeats x-matching,
+            # leaving its row rotated; once split, the row becomes repairable
+            html = _split_glued_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
+            html = _restyle_cells(html, t["bbox"], oracle_page)
         out.append({**t, "html": html})
+    return out
+
+
+def _table_spans(oracle_page, bbox):
+    for s in oracle_page["spans"]:
+        sb = s["bbox"]
+        if (bbox[0] - 3 <= sb[0] and sb[2] <= bbox[2] + 3
+                and bbox[1] - 3 <= sb[1] and sb[3] <= bbox[3] + 3):
+            yield s
+
+
+def _split_glued_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling sometimes glues two cells' values into one cell, leaving an
+    empty cell in the row ('88.1 97.5' | '' — p.85 Sonnet row). When a glued
+    cell's text equals the concatenation of exactly two oracle spans and the
+    row has exactly one empty cell, split by span x-order."""
+    spans = list(_table_spans(oracle_page, bbox))
+    sq = {_squash(s["text"]): s for s in spans}
+    out = html
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        empties = [i for i, (_, _, c) in enumerate(tags) if not _squash(re.sub(r"<[^>]+>", "", c))]
+        if len(empties) != 1:
+            continue
+        for i, (tg, attr, c) in enumerate(tags):
+            plain = _squash(re.sub(r"<[^>]+>", "", c))
+            if not plain or i == empties[0]:
+                continue
+            parts = plain.split()  # squash removed spaces; split won't work —
+            # find a 2-span partition instead
+            hit = None
+            for k1, s1 in sq.items():
+                if plain.startswith(k1) and plain[len(k1):] in sq:
+                    hit = (s1, sq[plain[len(k1):]])
+                    break
+            if not hit:
+                continue
+            a, b2 = sorted(hit, key=lambda s: s["bbox"][0])
+            cells = [c2 for _, _, c2 in tags]
+            # place by x-order: glued cell gets the piece nearer its column,
+            # empty cell gets the other — empty left of glued => takes the
+            # left span
+            left_first = empties[0] < i
+            cells[i] = b2["text"].strip() if left_first else a["text"].strip()
+            cells[empties[0]] = a["text"].strip() if left_first else b2["text"].strip()
+            rebuilt = "<tr>" + "".join(
+                f"<{tg2}{at2}>{c2}</{tg2}>" for (tg2, at2, _), c2 in zip(tags, cells)) + "</tr>"
+            out = out.replace(r, rebuilt, 1)
+            break
+    return out
+
+
+def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """Recover bold (best-score) and underline (second-best, FL-09) styling in
+    table cells from oracle facts: bold span flags; thin rules under spans."""
+    spans = list(_table_spans(oracle_page, bbox))
+    rules = oracle_page.get("rules", [])
+
+    def underlined(s):
+        sb = s["bbox"]
+        for ru in rules:
+            rb = ru["bbox"]
+            if (sb[3] - 1.5 <= rb[1] <= sb[3] + 3.5
+                    and min(sb[2], rb[2]) - max(sb[0], rb[0]) > 0.6 * (sb[2] - sb[0])):
+                return True
+        return False
+
+    out = html
+    for s in spans:
+        text = s["text"].strip()
+        if not text or len(text) < 2:
+            continue
+        wraps = []
+        if s.get("bold"):
+            wraps.append(("<b>", "</b>"))
+        if underlined(s):
+            wraps.append(("<u>", "</u>"))
+        if not wraps:
+            continue
+        styled = text
+        for o, c in wraps:
+            styled = f"{o}{styled}{c}"
+        # wrap the first un-styled occurrence of this exact cell text
+        pat = re.compile(r"(<t[hd][^>]*>)" + re.escape(text) + r"(</t[hd]>)")
+        out, n = pat.subn(lambda m: m.group(1) + styled + m.group(2), out, count=1)
     return out
 
 

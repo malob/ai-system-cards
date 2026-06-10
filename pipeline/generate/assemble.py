@@ -146,6 +146,17 @@ def _classify(line, page, in_figure):
     return "prose"
 
 
+QUOTE_X0 = 112  # blockquote indent (body=72, item-continuation=108, quote=118+)
+
+
+def _is_quote(line, page) -> bool:
+    """Indented quote region (p.130 UK AISI): x0 >= ~118 outside any box,
+    distinct from item hanging-indent (108) and body (72)."""
+    if line["bbox"][0] < QUOTE_X0:
+        return False
+    return _box_role(line, page)[0] is None
+
+
 def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict,
                   page_tables: list[dict] | None = None) -> list[dict]:
     """One page → ordered block dicts. Cross-page joining happens in stitch.
@@ -212,7 +223,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         elif kind == "item":
             flush()
             cur = {"type": "item", "lines": [line], "page": pno,
-                   "marker_x0": line["bbox"][0]}
+                   "marker_x0": line["bbox"][0],
+                   "quote": _is_quote(line, page)}
             marker_x0s.add(round(line["bbox"][0]))
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
@@ -254,26 +266,43 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 starts_bold_lead = (line["segs"] and line["segs"][0][2]["bold"]
                                     and prev["text"].rstrip().endswith((".", "!", "?", ":", "”", '"')))
                 same_para = (gap < max(4.0, 0.55 * line_h)
-                             and not starts_bold_lead)
+                             and not starts_bold_lead
+                             and cur.get("quote", False) == _is_quote(line, page))
             if same_para:
                 cur["lines"].append(line)
             else:
                 flush()
-                cur = {"type": "paragraph", "lines": [line], "page": pno}
+                cur = {"type": "paragraph", "lines": [line], "page": pno,
+                       "quote": _is_quote(line, page)}
     flush()
     for tb in pending_tables:  # tables below all prose
         blocks.append(tb)
 
-    # nested-list levels from marker-x0 tiers (level 0 = leftmost markers)
-    tiers = sorted(marker_x0s)
-    merged_tiers = []
-    for x in tiers:
-        if not merged_tiers or x - merged_tiers[-1] > 4:
-            merged_tiers.append(x)
+    # nested-list levels from marker-x0 tiers (level 0 = leftmost markers),
+    # computed separately inside and outside quotes (quote bullets start ~127
+    # but are level 0 within their quote)
+    for in_quote in (False, True):
+        xs = sorted({round(b["marker_x0"]) for b in blocks
+                     if b["type"] == "item" and b.get("quote", False) == in_quote})
+        merged_tiers = []
+        for x in xs:
+            if not merged_tiers or x - merged_tiers[-1] > 4:
+                merged_tiers.append(x)
+        for blk in blocks:
+            if blk["type"] == "item" and blk.get("quote", False) == in_quote:
+                x = round(blk["marker_x0"])
+                blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
+
+    # a label-only turn followed by a code/example box is ONE construct: the
+    # turn's content is the boxed code (p.118 displaced-thinking class)
+    merged = []
     for blk in blocks:
-        if blk["type"] == "item":
-            x = round(blk["marker_x0"])
-            blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
+        if (merged and merged[-1]["type"] == "turn" and blk["type"] in ("code", "example")
+                and _turn_is_label_only(merged[-1])):
+            merged[-1]["code_lines"] = blk["lines"]
+            continue
+        merged.append(blk)
+    blocks = merged
 
     if not fig_done and figures:
         for f in figures:
@@ -296,6 +325,12 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     for n in sorted(fn_lines_by_n):
         blocks.append({"type": "footnote", "n": n, "lines": fn_lines_by_n[n], "page": pno})
     return blocks
+
+
+def _turn_is_label_only(blk) -> bool:
+    """A turn whose entire text is a bracketed label like '[Assistant:]'."""
+    text = " ".join(l["text"] for l in blk["lines"]).strip()
+    return bool(re.fullmatch(r"\[[^\]]{1,30}\]:?\s*", text))
 
 
 def _extend(cur, kind, line, pno, flush_cb):

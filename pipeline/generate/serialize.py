@@ -123,19 +123,21 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             marker_if_new(pno)
             inline_marker = emit_marker(inline_into_item=(t == "item" and last_type == "item"))
 
+        q = "> " if blk.get("quote") else ""
         if t == "heading":
             text, _ = block_text_and_marks(blk, page, chips)
             out.append("#" * blk["level"] + " " + text.strip() + "\n")
         elif t == "paragraph":
-            out.append(_render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker) + "\n")
+            out.append(q + _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker) + "\n")
         elif t == "item":
             body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
-            indent = "    " * blk.get("level", 0)
+            # 2-space nesting inside quotes (4 spaces would read as code there)
+            indent = ("  " if q else "    ") * blk.get("level", 0)
             m = re.match(r"^[‌ ]*(\d{1,2})[.)]​?\s*", body)
             if m:  # ordered item: keep the number, real space after it
-                out.append(f"{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
+                out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
-                out.append(f"{indent}- " + inline_marker + body.lstrip("●•◦▪‣○​ ") + "\n")
+                out.append(f"{q}{indent}- " + inline_marker + body.lstrip("●•◦▪‣○​ ") + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
             if blk["caption_lines"]:
@@ -156,8 +158,21 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 label = text[: bolds[0][2]].strip().rstrip(":")
                 text = text[bolds[0][2]:].lstrip(" :")
                 marks = [m for m in marks if m[0] != "bold" or m[1] != 0]
-            role = blk.get("role", "assistant")
-            out.append(f':::turn{{role={role} label="{label}"}}\n{_hyphen_join(text).strip()}\n:::\n')
+            elif re.fullmatch(r"\[[^\]]{1,30}\]:?\s*", text.strip()):
+                label = text.strip().rstrip(":").strip("[]").rstrip(":")
+                text = ""
+            # the label text outranks the bubble fill for role (p.153: assistant
+            # turns in #faf9f5 bubbles were mis-roled user by fill alone)
+            low = label.lower()
+            label_role = ("assistant" if ("assistant" in low or "claude" in low)
+                          else "user" if (low.startswith("user") or "human" in low)
+                          else None)
+            role = label_role or blk.get("role") or "assistant"
+            body = _hyphen_join(text).strip()
+            if blk.get("code_lines"):  # displaced code box merged into this turn
+                raw = "\n".join(l["text"] for l in blk["code_lines"])
+                body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
+            out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
         elif t == "commentary":
             text, marks = block_text_and_marks(blk, page, chips)
             out.append(_hyphen_join(_apply_marks(text, marks)).strip() + "\n")
