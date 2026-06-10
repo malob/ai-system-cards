@@ -43,11 +43,11 @@ fills:
   "#faf9f5": {role: turn-user, note: also generic panel — disambiguate by context}
   "#f8f8f8": {role: inline-code-bg}            # 'huggingface.co' pills
   "#f0eee6": {role: example-box}               # appendix reasoning examples
-  "#f1f3f4": {role: code-block-bg, note: verify at conversion}
+  "#f1f3f4": {role: code-block-bg}   # confirmed: §9.2 blocklist code boxes, p.318-319
   "#dedcd1": {role: figure-furniture, exclude: true}   # chart panels (vector)
   "#141413": {role: figure-furniture, exclude: true}   # dark chart panels
   "#4d4c48": {role: figure-legend, exclude: true}      # legend key pills, 9 pages
-  "#fefdfb": {role: UNRESOLVED, note: micro-pills ×91 on 2 pages (scenario tags?) — closure flag at conversion}
+  "#fefdfb": {role: table-cell-bg, exclude: true}   # confirmed: bullet-cell striping in Table 7.4.1.A, p.235-236 (non-semantic; bullets themselves are text-layer content)
   "#000000": {role: table-rule}                # borders/rules, header fills
   "#ffffff": {role: page-furniture, exclude: true}
 
