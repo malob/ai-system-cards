@@ -172,13 +172,24 @@ fix wave closed all 24 actionable (see Status above + experiment 08); gate
 now FN1 0 / S1 4 / ST1 1 / T1 6 majors, all typed. Detector sweep:
 model-name displacement 13→0 across every table.
 
-**ROUND E RUNNING:** two background agents verifying (a) all 30 previously
-flagged pages (verdict per prior finding), (b) 30 random pages (regression
-sample); fresh slices in `pipeline/.cache/vsweep3/md/` from
-`pipeline/slice_pages.py`. Findings → `pipeline/.cache/vsweep3/
-findings-{flagged,sample}.jsonl`. On completion: write convergence verdict
-into experiment 08 + here, then full mutation re-run + site build + report
-to owner.
+**ROUND E DONE + fix batch:** sample 30pp: 0 majors (22 clean / 8 minor);
+flagged 30pp: 20 fixed / 4 still-broken / 5 known-residual / 1 by-design.
+ALL round-E findings fixed at class level same session (see experiment 08):
+prefix-anchored bands + empty-cell rebuild (the 4 stragglers), fnref-tolerant
+restyle, GPT-5.5 wrap join, th demotion, transcript literal-markup escaping,
+sentence-bounded turn splits, caption underline, straddle-split + nesting
+rank, semantic section links (28/28), entity-safe restyle, paragraph
+separators, inline-code marks (RobotoMono), and a LATENT bug: marks in
+labeled turns were offset by len(label) — now shifted. Suspect-row detector:
+0 repo-wide. Site builds clean; DOM-verified (27 code spans, 15 underlines,
+0 escape leaks).
+
+**ROUND F RUNNING:** one agent re-verifying the 15 affected pages against
+fresh `vsweep4` slices → `pipeline/.cache/vsweep4/findings.jsonl`. NOTE: its
+slices predate the inline-code + label-shift commits, so a p.153 'mono spans
+plain' report is already fixed. On completion: conclusion into experiment 08
++ here → convergence report to owner. Mutation suite re-run done (9/12 at
+100%, split-heading 50→83%). Site build + DOM checks done.
 
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
