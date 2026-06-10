@@ -171,3 +171,11 @@ same grouping"), never exact pixels or hex values.
 Not `v2/`: the directory will outlive the version label. Structure grows as
 needed; first resident is `pipeline/verifier/`. v1 leftovers (`tools/`,
 `extracted/` scripts) stay untouched as calibration data (D5).
+
+## D19 — First spec rule decided; Fable 5 manifest roles confirmed (2026-06-10)
+
+Owner decided the auto-link issue-type (blocklist URLs are not links) — now
+rule R1 in docs/v2/spec-rules.md, the living spec's first entry, exercising the
+D2 flow end to end. Owner also confirmed the Fable 5 style-manifest role names
+("all these names look about right… things we want to be tracking"); manifest
+status flips to owner-confirmed, with `#467886` still verify-at-conversion.

@@ -8,7 +8,9 @@
 # (declared exclusion, verification contract §Exclusions).
 
 card: anthropic/claude-fable-5
-status: draft — seeded from census 2026-06-10, owner confirmation pending
+status: >-
+  role names owner-confirmed 2026-06-10 (D19); residual verify-at-conversion
+  notes inline (#467886); closure rule applies to anything not listed
 
 text_colors:
   "#000000": {role: body}

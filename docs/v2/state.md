@@ -87,9 +87,9 @@ taxonomy in its §2 is load-bearing).
 4. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
 
-Small open spec items for the living spec (judge-able defaults proposed):
-auto-links render as code/text, not links (matches v1); source-defect dests
-stay plain text with a sic-note option (D17 territory).
+Living spec started: [spec-rules.md](spec-rules.md) — R1 auto-links (decided,
+D19), R2 unresolvable dests (proposed default in effect; sic-note presentation
+question open, non-blocking). Fable 5 manifest roles owner-confirmed (D19).
 
 ## Open questions
 
