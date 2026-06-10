@@ -36,6 +36,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             # leaving its row rotated; once split, the row becomes repairable
             html = _split_glued_cells(html, t["bbox"], oracle_page)
             html = _resplit_misjoined_cells(html, t["bbox"], oracle_page)
+            html = _extend_truncated_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
@@ -296,6 +297,57 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
         return None
     tg = tags[0][0]
     return "<tr>" + "".join(f"<{tg}>{c}</{tg}>" for c in texts) + "</tr>"
+
+
+def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling sometimes keeps only the FIRST line of a wrapped cell
+    ('Claude Mythos' sans 'Preview', p.72). When a cell's text equals the top
+    span of a stacked run whose continuation is claimed by no cell anywhere
+    in the table, extend the cell to the run's full text."""
+    spans = [s for s in _table_spans(oracle_page, bbox) if s["text"].strip()]
+    spans_xy = _row_spans_xy(oracle_page, bbox)
+    # stacked runs keyed by top-span squash
+    by_x: dict[float, list] = {}
+    for s in spans:
+        key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
+        by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    runs: dict[str, list] = {}
+    for col in by_x.values():
+        col.sort(key=lambda s: s["bbox"][1])
+        for i in range(len(col) - 1):
+            run = [col[i]]
+            for j in range(i + 1, min(i + 3, len(col))):
+                if col[j]["bbox"][1] - col[j - 1]["bbox"][3] >= 9:
+                    break
+                run.append(col[j])
+            if len(run) > 1:
+                runs.setdefault(_squash(run[0]["text"]), []).append(run)
+    if not runs:
+        return html
+    all_cells = {_squash(re.sub(r"<[^>]+>", "", c))
+                 for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", html, re.S)}
+    out = html
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        plain = [_squash(re.sub(r"<[^>]+>", "", c)) for _, _, c in tags]
+        band = _row_band(plain, spans_xy)
+        if band is None:
+            continue
+        cells = [c for _, _, c in tags]
+        changed = False
+        for i, p2 in enumerate(plain):
+            cand = [run for run in runs.get(p2, [])
+                    if band[0] <= (run[0]["bbox"][1] + run[0]["bbox"][3]) / 2 <= band[1]
+                    and all(_squash(s["text"]) not in all_cells for s in run[1:])]
+            if len(cand) != 1:
+                continue
+            cells[i] = " ".join(s["text"].strip() for s in cand[0])
+            changed = True
+        if changed:
+            rebuilt = "<tr>" + "".join(
+                f"<{tg}{a}>{c}</{tg}>" for (tg, a, _), c in zip(tags, cells)) + "</tr>"
+            out = out.replace(r, rebuilt, 1)
+    return out
 
 
 def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:

@@ -139,6 +139,11 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
                 body = re.sub(r"^(\**)[●•◦▪‣○​‌ ]+", r"\1", body.lstrip("●•◦▪‣○​‌ "))
+                # lettered sub-list marker ('a.​On' — ZWSP eaten by the join):
+                # restore the space, gated on the RAW line's marker signature
+                raw0 = blk["lines"][0]["text"] if blk.get("lines") else ""
+                if re.match(r"^\s*[a-z][.)]\u200b", raw0):
+                    body = re.sub(r"^(\**[a-z][.)])(?=\S)", r"\1 ", body)
                 out.append(f"{q}{indent}- " + inline_marker + body + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
