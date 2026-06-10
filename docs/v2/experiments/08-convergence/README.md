@@ -85,10 +85,52 @@ committed tool):
   prior finding + anything new.
 - **random sample**: 30 untouched pages (seed 42) — no-regression estimate.
 
-**Result:** see `findings-*.jsonl` in `pipeline/.cache/vsweep3/` and the
-convergence report in `docs/v2/state.md`.
+**Result (findings in `pipeline/.cache/vsweep3/findings-*.jsonl`):**
 
-## Conclusion
+- **Random sample (30 pages): 0 majors.** 22 clean, 8 minor-only — and every
+  minor became a class fix the same session (below).
+- **Flagged set (30 pages): 20 fixed, 5 known-residuals confirmed, 1
+  by-design (p.43), 4 still-broken** — all four the same pattern: garbled
+  rows whose only matchable span is a PREFIX of a glued cell, which the
+  y-band anchor couldn't see.
 
-Filled in after round E lands: the loop converges if the flagged set verifies
-fixed and the sample finds no new major classes.
+## Round-E fix batch (sample minors + flagged stragglers, all class-level)
+
+- Prefix-anchored y-bands + empty-cell rows routed to the geometric rebuild —
+  the four still-broken rows (pp. 77/82/91/269) now rebuild correctly; the
+  repo-wide suspect-row detector returns 0.
+- Restyle segmentation consumes baked-in footnote digits ('LLM training3') —
+  p.49 row-label bolds restored.
+- `_join_wrapped`: version numbers wrapping after '.' rejoin without a space
+  ('GPT-5.5'); all-`<th>` majority-numeric data rows demote to `<td>`
+  (p.253 RiemannBench all-bold row).
+- Literal `*`/`` ` `` in transcript bodies are backslash-escaped (raw model
+  output must render literally, p.43/44); mdproj folds the escapes.
+- Turn paragraph splits now require a sentence boundary, not just a short
+  line (mid-sentence splits on pp. 44/153).
+- Sample-minor classes: caption-legend underline (geometric word-center,
+  link-excluded, 15 sites + 1 demonstrated value); emphasis/link straddle
+  split + deterministic nesting rank ('[**text](#a)**' class); semantic
+  section-number link resolution (28/28 exact; geometry was wrong on 13);
+  ZWSP-stripped heading anchors; HTML-entity-safe cell restyle emitting
+  span-true text; invisible-line paragraph separators (p.87 glue);
+  slicer line-start snapping (p.219 was a slice artifact).
+
+Gate at round-E end: FN1 0 / S1 4 / ST1 1 / T1 6 majors (all typed known
+sites); T1 minors 198→135. Mutation suite re-run (per-class 6, seed 7):
+9/12 classes 100%, split-heading 50→83% (ST3 deep-heading candidates +
+style-profile continuation), drop-bold 83%, item-to-paragraph 83%,
+split-item 60% (pre-existing bounds, no regression).
+
+## Round F — final verification (running)
+
+One agent re-verifies the 15 affected pages against fresh `vsweep4` slices;
+findings land in `pipeline/.cache/vsweep4/findings.jsonl`.
+
+## Conclusion (provisional)
+
+The loop converges: 69 majors → 25 → 4 stragglers + a handful of new
+patterns → 0 suspect rows and every named class fixed at the root, with a
+clean 30-page random sample. Remaining known residuals are typed and small
+(S1×4, ST1×1, T1×6 chip-order/typed, FN1 minor×1, p.153 monospace spans,
+em-dash folding inside band-less mega-cells). Final verdict after round F.
