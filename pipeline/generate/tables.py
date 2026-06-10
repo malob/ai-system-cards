@@ -42,6 +42,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
+            html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
         out.append({**t, "html": html})
     return out
@@ -85,6 +86,106 @@ def _join_wrapped(parts):
             out += " "
         out += part
     return out
+
+
+def _split_cell_paragraphs(html: str, bbox: list, oracle_page: dict) -> str:
+    """Tall interview-style cells hold MULTIPLE PARAGRAPHS (Q1/Q2/Q3 with
+    ~18pt gaps vs 2pt line pitch — exactly where column chains break).
+    Docling flattens them; rebuild any long unstyled cell whose text equals a
+    consecutive chain run as <p>-separated, span-true paragraphs."""
+    import html as _h
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s["text"].strip() and s.get("zone") != "fnref"]
+    by_x: dict[float, list] = {}
+    for s in spans:
+        key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 3), None)
+        by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    cols = []
+    for col in by_x.values():
+        col.sort(key=lambda s: s["bbox"][1])
+        cols.append(col)
+    out = html
+    for m in re.finditer(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", html, re.S):
+        c = m.group(3)
+        p2 = _cell_sq(c)
+        if len(p2) < 120 or "<" in c:
+            continue
+        best = None
+        for col in cols:
+            for st in range(len(col)):
+                acc, paras = "", [[col[st]]]
+                for j in range(st, len(col)):
+                    if j > st:
+                        if col[j]["bbox"][1] - col[j - 1]["bbox"][3] >= 9:
+                            paras.append([])
+                        paras[-1].append(col[j])
+                    acc += _squash(col[j]["text"])
+                    if len(acc) >= len(p2):
+                        break
+                if acc == p2 and len(paras) > 1:
+                    best = paras
+                    break
+            if best:
+                break
+        if not best:
+            continue
+        body = "".join(
+            "<p>" + _h.escape(_join_wrapped(s["text"] for s in para), quote=False) + "</p>"
+            for para in best if para)
+        out = out.replace(m.group(0), f"<{m.group(1)}{m.group(2)}>{body}</{m.group(1)}>", 1)
+    return out
+
+
+def merge_continuation_rows(html: str) -> str:
+    """After cross-page table stitching: a row whose FIRST cell is empty and
+    whose content continues the previous row mid-sentence is the same logical
+    row split by the page break — merge cell-wise. The seam paragraph joins
+    when the continuation starts lowercase/'('; otherwise it stays its own
+    <p>. (v1's hand-built 9-page welfare table is the shape target.)"""
+    parts = re.split(r"(<tr>.*?</tr>)", html, flags=re.S)
+    out_parts = []
+    last_row_idx = None
+    rows_merged = 0
+    for part in parts:
+        if not part.startswith("<tr>"):
+            out_parts.append(part)   # inter-row content (page markers) kept
+            continue
+        r = part
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        plain = [_cell_sq(c) for _, _, c in tags]
+        prev_tags = (re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", out_parts[last_row_idx], re.S)
+                     if last_row_idx is not None else None)
+        starts_lower = any(re.match(r"[a-z(\u2018\u2019]", re.sub(r"<[^>]+>", "", c).strip())
+                           for _, _, c in tags[1:] if _cell_sq(c))
+        if (prev_tags and len(tags) == len(prev_tags) and tags and not plain[0]
+                and any(plain[1:]) and starts_lower
+                and not any("colspan" in a for _, a, _ in tags)):
+            cells = []
+            for (pg, pa, pc), (_, _, cc) in zip(prev_tags, tags):
+                if not _cell_sq(cc):
+                    cells.append((pg, pa, pc))
+                    continue
+                cur = cc.strip()
+                prev_c = pc.rstrip()
+                joined = None
+                cur_plain = re.sub(r"<[^>]+>", "", cur).strip()
+                seam_flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_plain))
+                if seam_flows and prev_c.endswith("</p>") and cur.startswith("<p>"):
+                    joined = prev_c[:-4] + " " + cur[3:]
+                elif seam_flows and not prev_c.endswith("</p>"):
+                    joined = prev_c + " " + cur
+                else:
+                    a2 = prev_c if prev_c.endswith("</p>") else f"<p>{prev_c}</p>"
+                    b2 = cur if cur.startswith("<p>") else f"<p>{cur}</p>"
+                    joined = a2 + b2
+                cells.append((pg, pa, joined))
+            out_parts[last_row_idx] = "<tr>" + "".join(
+                f"<{g}{a}>{c}</{g}>" for g, a, c in cells) + "</tr>"
+            rows_merged += 1
+            continue
+        out_parts.append(r)
+        last_row_idx = len(out_parts) - 1
+    return "".join(out_parts) if rows_merged else html
 
 
 def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:
@@ -396,7 +497,8 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
     return out
 
 
-_QUOTE_FOLD = {0x2019: 0x27, 0x2018: 0x27, 0x201C: 0x22, 0x201D: 0x22}
+_QUOTE_FOLD = {0x2019: 0x27, 0x2018: 0x27, 0x201C: 0x22, 0x201D: 0x22,
+               0x2014: 0x2D, 0x2013: 0x2D}  # em/en dash (docling folds them)
 
 
 def _squash(s: str) -> str:

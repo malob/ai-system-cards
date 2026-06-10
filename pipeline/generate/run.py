@@ -152,7 +152,7 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 and blk["page"] == out[-1].get("last_page", out[-1]["page"]) + 1):
             merged = _merge_tables(out[-1]["html"], blk["html"], blk["page"])
             if merged is not None:
-                out[-1]["html"] = merged
+                out[-1]["html"] = tables.merge_continuation_rows(merged)
                 out[-1]["last_page"] = blk["page"]  # chain across many pages
                 continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
