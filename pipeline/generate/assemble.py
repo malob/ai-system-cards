@@ -184,11 +184,18 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                                "alt": "", "caption_lines": []})
             fig_done = True
         if kind == "heading":
+            # multi-line headings (wrapped titles) merge into one block — a
+            # split heading produced the duplicate-TOC-entry bug
+            if (cur and cur["type"] == "heading"
+                    and line["bbox"][1] - cur["lines"][-1]["bbox"][3] < 10
+                    and abs(line["size"] - cur["lines"][-1]["size"]) < 0.6):
+                cur["lines"].append(line)
+                continue
             flush()
             m = HEAD_NUM.match(line["text"])
             level = (m.group(1).count(".") + 2) if m else 2
-            blocks.append({"type": "heading", "level": min(level, 6),
-                           "lines": [line], "page": pno})
+            cur = {"type": "heading", "level": min(level, 6),
+                   "lines": [line], "page": pno}
         elif kind == "caption":
             if blocks and blocks[-1]["type"] == "figure":
                 blocks[-1]["caption_lines"].append(line)
@@ -339,7 +346,17 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                     target = l.get("uri") or f"DEST:{l.get('dest_page', 0)}"
                     marks.append(("link", m_start, m_end, target))
                     break
-    return "".join(text_parts), _merge_marks(marks)
+    text = "".join(text_parts)
+    # drop emphasis over invisible-only text: a ZWSP-only bold serializes to
+    # '**​**' → '****' after invisible-stripping, and a literal '****'
+    # re-pairs every later '**' in the document during verification
+    marks = [m for m in marks
+             if not (m[0] in ("bold", "italic", "chip")
+                     and not text[m[1]:m[2]].translate(_INVIS))]
+    return text, _merge_marks(marks)
+
+
+_INVIS = str.maketrans("", "", "​‌‍﻿­ \t")
 
 
 def _merge_marks(marks):

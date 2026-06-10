@@ -1,0 +1,39 @@
+{
+ "drop-bold": {
+  "invariant": "S1",
+  "caught": 4,
+  "tried": 6,
+  "details": [
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "Mythos 5's opinions are most similar to ",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "Multilingual",
+    "caught": false
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "Async subagents.",
+    "caught": true
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "Alignment assessment.",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "Grading methodology",
+    "caught": false
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "Positive affect (45.4% of conversations)",
+    "caught": true
+   }
+  ]
+ }
+}

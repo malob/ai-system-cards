@@ -22,8 +22,11 @@ RE_MARKER = re.compile(r"<!--\s*p\.(\d+)\s*-->")
 RE_FIGSKIP = re.compile(r"<!--\s*figure (p(\d+)-\d+\.png) skipped: ([^>]*?)\s*-->")
 RE_COMMENT = re.compile(r"<!--.*?-->", re.S)
 RE_FNDEF = re.compile(
-    r"^\[\^(\d+)\]:[ \t]*(.*(?:\n(?:[ ]{4}.*|[ \t]*(?=\n[ ]{4})))*)", re.M
-)  # incl. indented continuations, allowing blank lines between them
+    r"^\[\^(\d+)\]:[ \t]*(.*(?:\n[ ]{4}.*)*)", re.M
+)  # indented continuations WITHOUT blank-line tolerance: a blank-line-tolerant
+# version chained across nested 4-space list items and silently swallowed whole
+# regions of the projection (vanishing bolds; drop-bold recall collapse). The
+# one v1 def-with-blank-line-list (p.16) now leaks ~2 known T1 flags instead.
 RE_AUTOLINK = re.compile(r"<(https?://[^>\s]+)>")
 RE_FNREF = re.compile(r"\[\^(\d+)\]")
 RE_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]+\)")
@@ -31,7 +34,8 @@ RE_DIRECTIVE = re.compile(r"^:{3,}(\w*)(\{[^}]*\})?\s*$", re.M)
 RE_TURN_LABEL = re.compile(r'label="([^"]*)"')
 RE_CHIP = re.compile(r":chip\[([^\]]+)\]")
 RE_LINK = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
-RE_BOLD = re.compile(r"\*\*([^*]+)\*\*|__([^_]+(?:_[^_]+)*?)__")
+RE_BOLD = re.compile(r"\*\*([^*\n]+)\*\*|__([^_\n]+(?:_[^_\n]+)*?)__")  # never cross lines:
+# [^*]+ once crossed newlines, so one stray '****' re-paired every later bold
 RE_SUP = re.compile(r"<sup>(.*?)</sup>", re.S)
 RE_TABLE = re.compile(r"<table.*?</table>", re.S)
 RE_TAG = re.compile(r"</?[a-zA-Z][^>]*>")

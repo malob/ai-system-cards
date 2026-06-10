@@ -184,14 +184,23 @@ def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozen
     markdown emphasis (or a heading / turn label, which consume bold runs as
     typed conversions). Table pages skipped — cell bolds belong to TB1's layer.
     One direction for v0.5: source→output (the FL-04 'dropped lead' class)."""
+    # HYBRID matching: exact squash-substring first (precise); when that fails,
+    # SUPPRESS the flag if the run's tokens are fully covered by the emphasis
+    # token set (handles run SEGMENTATION differences — '**…a** **b…**' vs one
+    # PDF run). A genuinely-unbolded run fails both and flags. Pure token-set
+    # matching was tried and rejected: it loses run identity (drop-bold recall
+    # collapsed to 1/6 because common words elsewhere covered dropped runs).
+    from collections import Counter
+
     def key(s: str) -> str:
-        # space-free token-normalized form: immune to PDF span-join artifacts
-        # ("isoverall"), glued bullets, and md bold-run segmentation
         return "".join(norm.tokens(s, True))
 
     md_by_page: dict[int, list[str]] = {}
+    md_keys_by_page: dict[int, Counter] = {}
     for text, pg in md_emphasis:
-        md_by_page.setdefault(pg, []).append(key(text))
+        k = key(text)
+        md_by_page.setdefault(pg, []).append(k)
+        md_keys_by_page.setdefault(pg, Counter())[k] += 1
 
     flags = []
     for pno in page_range:
@@ -215,16 +224,33 @@ def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozen
         if cur:
             runs.append(cur)
 
-        # md bolds joined in document order: a glued oracle run spanning two
-        # adjacent md bolds still matches as a substring
         hay = key(" ".join(t for p in (pno - 1, pno, pno + 1) for t in md_by_page.get(p, [])))
+        # duplicate-key accounting (mutation finding: dropping one of two
+        # identical '**Sonnet 4.6**' bolds was covered by its twin): exact-key
+        # runs are counted per page with a windowed-deficit fallback, like S2
+        want = Counter()
+        exacts = {}
         for run in runs:
             t = key(run["text"].strip(".,;: "))
-            if len(t) < 6:
+            if len(t) >= 6:
+                want[t] += 1
+                exacts.setdefault(t, run)
+        have_page = md_keys_by_page.get(pno, Counter())
+        have_window = Counter()
+        for p in (pno - 1, pno, pno + 1):
+            have_window.update(md_keys_by_page.get(p, Counter()))
+        for t, n in want.items():
+            run = exacts[t]
+            if have_page.get(t, 0) >= n or have_window.get(t, 0) >= n:
                 continue
-            if t not in hay:
-                flags.append(_flag("S1", pno, "major",
-                                   {"kind": "bold-run-missing", "text": run["text"][:80]}))
+            if t in hay and n == 1:
+                continue  # glued/segmented but present once
+            # NOTE: a token-coverage suppression was tried here and removed —
+            # it ate real drops (recall collapsed: common words elsewhere
+            # covered dropped runs). Residual segmentation noise is accepted
+            # and triaged by name instead.
+            flags.append(_flag("S1", pno, "major",
+                               {"kind": "bold-run-missing", "text": run["text"][:80]}))
     return flags
 
 
@@ -339,25 +365,20 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
                                    {"kind": "items-missing", "oracle": len(o_marks), "md": n_md,
                                     "sample": o_marks[0]["text"][:60]}))
 
-        # --- ST2: continuation lines must not start md blocks
-        cont_texts = []
-        in_item, marker_x0 = False, 0.0
-        prev = None
-        for l in lines:
-            if norm.LIST_MARKER.match(l["text"].lstrip()):
-                in_item, marker_x0 = True, l["x0"]
-            elif in_item and prev is not None and l["x0"] > marker_x0 + 6 \
-                    and (l["y0"] - prev["y1"]) < 8:
-                cont_texts.append(norm.squash(l["text"])[:40])
-            else:
-                in_item = False
-            prev = l
-        if cont_texts:
-            blocks = [b for p in (pno - 1, pno, pno + 1) for b in md_blocks_by_page.get(p, [])]
-            for ct in cont_texts:
-                if len(ct) >= 12 and any(b.startswith(ct[:24]) for b in blocks):
-                    flags.append(_flag("ST2", pno, "major",
-                                       {"kind": "item-split-at-continuation", "text": ct[:60]}))
+        # --- ST2: every md block must start where an oracle LINE starts.
+        # A block whose first chars appear only mid-line in the source is a
+        # split (wrapped item/paragraph broken at an arbitrary point).
+        line_starts = [norm.squash(l["text"])[:32] for l in lines]
+        page_blob = norm.squash(" ".join(l["text"] for l in lines))
+        for b in md_blocks_by_page.get(pno, []):
+            key = b[:24]
+            if len(key) < 14:
+                continue
+            if any(ls.startswith(key) for ls in line_starts):
+                continue
+            if key in page_blob:  # present, but only mid-line → split
+                flags.append(_flag("ST2", pno, "major",
+                                   {"kind": "block-starts-mid-line", "text": b[:60]}))
 
         # --- ST3: heading groups render as one heading
         groups, cur = [], None
@@ -382,7 +403,9 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
             gsq = norm.squash(g["text"])
             if len(gsq) < 4:
                 continue
-            if not any(h == gsq or h.startswith(gsq) or gsq.startswith(h) and len(h) > 8 for h in heads):
+            # exact match only: prefix tolerance let split headings pass
+            # (mutation testing, split-heading 0/6)
+            if gsq not in heads:
                 flags.append(_flag("ST3", pno, "major",
                                    {"kind": "heading-split-or-missing", "text": g["text"][:70]}))
     return flags

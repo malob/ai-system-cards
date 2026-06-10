@@ -36,6 +36,28 @@ def mutations(kind: str, text: str, rng: random.Random):
     def pick(matches):
         return rng.choice(matches) if matches else None
 
+    if kind == "split-item":
+        # break a long list item at a word boundary mid-way: continuation
+        # becomes a separate paragraph (the wrapped-bullet defect class)
+        cands = [m for m in re.finditer(r"^- .{120,300}$", text, re.M)]
+        m = pick(cands)
+        if not m:
+            return None
+        s = m.group(0)
+        cut = s.rfind(" ", 80, 160)
+        return (text[: m.start()] + s[:cut] + "\n\n" + s[cut + 1:] + text[m.end():], s[:40]) if cut > 0 else None
+    if kind == "item-to-paragraph":
+        m = pick(list(re.finditer(r"^- (.{40,})$", text, re.M)))
+        return (text[: m.start()] + m.group(1) + text[m.end():], m.group(1)[:40]) if m else None
+    if kind == "split-heading":
+        m = pick([h for h in re.finditer(r"^(#{2,5}) (.{30,90})$", text, re.M)])
+        if not m:
+            return None
+        s = m.group(2)
+        cut = s.rfind(" ", 15, 45)
+        if cut <= 0:
+            return None
+        return (text[: m.start()] + f"{m.group(1)} {s[:cut]}\n\n{s[cut+1:]}" + text[m.end():], s[:40])
     if kind == "drop-link":
         m = pick(list(RE_LINK.finditer(text)))
         return (text[: m.start()] + m.group(1) + text[m.end():], m.group(2)) if m else None
@@ -62,12 +84,25 @@ def mutations(kind: str, text: str, rng: random.Random):
         m = pick(list(RE_MARKER.finditer(text)))
         return (text + f"\n\n{m.group(0)}\n", m.group(0)) if m else None
     if kind == "drop-bold":
-        m = pick(list(RE_BOLDLEAD.finditer(text)))
+        # realistic sites only: body bolds. S1 deliberately excludes footnote
+        # defs, table interiors (TB1's layer), and turn labels — picking those
+        # measures the exclusions, not the gate.
+        cands = []
+        for m in RE_BOLDLEAD.finditer(text):
+            ls = text.rfind("\n", 0, m.start()) + 1
+            line = text[ls:ls + 12]
+            in_table = text.rfind("<table", 0, m.start()) > text.rfind("</table>", 0, m.start())
+            if not line.startswith(("[^", ":::", "|")) and not in_table:
+                cands.append(m)
+        m = pick(cands)
         return (text[: m.start()] + m.group(1) + text[m.end():], m.group(1)[:40]) if m else None
     return None
 
 
 CLASSES = {
+    "split-item": "ST2",
+    "item-to-paragraph": "ST1",
+    "split-heading": "ST3",
     "drop-link": "L1",
     "flatten-chip": "S2",
     "delete-sentence": "T1",

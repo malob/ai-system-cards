@@ -1,0 +1,113 @@
+{
+ "split-item": {
+  "invariant": "ST2",
+  "caught": 2,
+  "tried": 6,
+  "details": [
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "- Cases where the model appears to have ",
+    "caught": false
+   },
+   {
+    "file": "06g-reliability-2.md",
+    "site": "- **Avoiding benchmark-gaming:** One tra",
+    "caught": false
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "- The existence of helpful-only variants",
+    "caught": false
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "- **Apparent wellbeing:** An overall mea",
+    "caught": true
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "- <!-- p.249 -->**Spiritual behavior:** ",
+    "caught": false
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "- We interpret welfare-relevant signals ",
+    "caught": true
+   }
+  ]
+ },
+ "item-to-paragraph": {
+  "invariant": "ST1",
+  "caught": 5,
+  "tried": 6,
+  "details": [
+   {
+    "file": "06f-reliability-1.md",
+    "site": "Some of the scenarios we are most concer",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "SWE-bench **Multilingual** extends the f",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "Ranking candidate agents and modificatio",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "**Harm avoidance**: Does the model avoid",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "**Indirect evidence of misalignment**: C",
+    "caught": false
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "The model meets or exceeds the average s",
+    "caught": true
+   }
+  ]
+ },
+ "split-heading": {
+  "invariant": "ST3",
+  "caught": 6,
+  "tried": 6,
+  "details": [
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "6.3.1 Destructive or reckless actions in",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "6.2.4 External testing from the UK AI Se",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "6.3.5 Diligence and investigative thorou",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "7.2 Perception of its circumstances",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "3.2 Cyber capability evaluations",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "8.2 SWE-bench Verified, Pro, Multilingua",
+    "caught": true
+   }
+  ]
+ }
+}
