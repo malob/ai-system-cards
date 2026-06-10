@@ -13,7 +13,7 @@ adjudication passes not yet run.
 - P1 major: 1
 - S1 major: 12
 - T1 major: 4
-- T1 minor: 261
+- T1 minor: 243
 
 **Major flags: 23** FN1=1, L1=5, P1=1, S1=12, T1=4
 

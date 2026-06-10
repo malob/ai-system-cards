@@ -83,6 +83,23 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
+**TOP PRIORITY (owner feedback 2026-06-10 ~02:25, the wrapped-bullet incident):**
+the current gates are token/marks/count-based and CANNOT see token-preserving
+structural damage (split list items, split headings — the most human-visible
+class). Two mechanisms, in order:
+- **ST structural invariant**: derive layout block boundaries (marker-ZWSP
+  signature, hanging indents, gaps) from oracle geometry as an independent
+  check against output block structure; mutation-test it (split-a-bullet,
+  split-a-heading, merge-two-paragraphs must all flag).
+- **V1 visual sweep** (the unbuilt advisor): vision compare of rendered page
+  regions vs PDF page renders over a sample; becomes a mandatory pre-review
+  step before any "look at it" handoff. Process rule: no preview handoff
+  without it.
+Same class to audit for: paragraph merge/split from the gap heuristic,
+multi-line heading splits (TOC "circumstances" bug), nested list levels
+(currently flattened), caption-figure association, blockquote structure
+(unimplemented). D21: alt-text pass dropped (captions suffice, owner call).
+
 Close the 26 worklist majors (all triaged in experiment 06), biggest first:
 1. **S1 token-coverage refinement** (S1 ×13): the emphasis is PRESENT in v2 but
    run-segmented differently than the oracle, defeating S1's substring match

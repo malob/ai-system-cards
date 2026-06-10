@@ -190,5 +190,13 @@ authorized** — if the seed wave passes the gates, run all 319 pages overnight,
 ending in verifier runs, a rendered site build, and a triage worklist. All
 local; nothing publishes (D13).
 
-<!-- APPEND NEW DECISIONS BELOW THIS LINE (D21 next) — newest at the bottom. -->
+## D21 — No LLM alt-text pass; captions suffice (2026-06-10, ~02:25)
+
+Owner's call: figure/table captions are good enough; drop the planned per-figure
+LLM alt-text pass. Alt text may be derived mechanically from the caption lead
+(or left empty) — an accessibility-presentation detail under D17. Consequence:
+the conversion pipeline is now **fully mechanical** end to end; LLM involvement
+reduces to adjudication of flagged ambiguities only (N1).
+
+<!-- APPEND NEW DECISIONS BELOW THIS LINE (D22 next) — newest at the bottom. -->
 <!-- (Three same-session attempts to insert above the tail prove the need.) -->

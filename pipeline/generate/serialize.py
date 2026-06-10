@@ -88,8 +88,12 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             out.append(_hyphen_join(_apply_marks(text, marks)).strip() + "\n")
         elif t == "item":
             text, marks = block_text_and_marks(blk, page, chips)
-            body = _hyphen_join(_apply_marks(text, marks)).strip().lstrip("●•◦▪‣○ ")
-            out.append("- " + body + "\n")
+            body = _apply_marks(text, marks).strip()
+            m = re.match(r"^(\d{1,2})[.)]​\s*", body)
+            if m:  # ordered item: keep the number, real space after it
+                out.append(f"{m.group(1)}. " + _hyphen_join(body[m.end():]) + "\n")
+            else:
+                out.append("- " + _hyphen_join(body.lstrip("●•◦▪‣○​ ")) + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
             if blk["caption_lines"]:

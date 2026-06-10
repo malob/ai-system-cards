@@ -86,6 +86,10 @@ def _box_role(line, page):
 
 
 HEAD_NUM = re.compile(r"^(\d+(?:\.\d+)*)\s+\S")
+# Google Docs exports mark list markers with a zero-width space after the
+# glyph/number: "●​Text", "1.​Text" — a mechanical signature that
+# also distinguishes ordered-list markers from prose lines starting with digits
+LIST_MARKER = re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)])​")
 
 
 def _classify(line, page, in_figure):
@@ -105,7 +109,7 @@ def _classify(line, page, in_figure):
         return "commentary" if COMMENTARY_GRAY in body_colors else "turn"
     if in_figure and line["size"] <= 9.5:
         return "caption"
-    if line["text"].lstrip()[:1] in BULLETS:
+    if LIST_MARKER.match(line["text"].lstrip()) or line["text"].lstrip()[:1] in BULLETS:
         return "item"
     return "prose"
 
@@ -167,7 +171,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 cur = _extend(cur, "paragraph", line, pno, flush_cb=flush)
         elif kind == "item":
             flush()
-            blocks.append({"type": "item", "lines": [line], "page": pno})
+            cur = {"type": "item", "lines": [line], "page": pno,
+                   "marker_x0": line["bbox"][0]}
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
             # a new turn starts when the role changes or a bold label leads
@@ -182,6 +187,14 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 if kind == "turn":
                     cur["role"] = role
         else:  # prose
+            # hanging-indent continuation of a wrapped list item: continuation
+            # lines sit ~18pt right of the marker (p.12: bullet x0=90, text 108)
+            if cur and cur["type"] == "item":
+                prev = cur["lines"][-1]
+                gap = line["bbox"][1] - prev["bbox"][3]
+                if line["bbox"][0] > cur["marker_x0"] + 6 and gap < 8:
+                    cur["lines"].append(line)
+                    continue
             same_para = False
             if cur and cur["type"] == "paragraph":
                 prev = cur["lines"][-1]
