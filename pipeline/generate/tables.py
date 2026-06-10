@@ -595,7 +595,9 @@ def _resplit_misjoined_cells(html: str, bbox: list, oracle_page: dict) -> str:
             joined = plain[i] + plain[i + 1]
             for k1 in banded:
                 if joined.startswith(k1) and joined[len(k1):] in banded:
-                    cells[i], cells[i + 1] = sq2text[k1], sq2text[joined[len(k1):]]
+                    import html as _h
+                    cells[i] = _h.escape(sq2text[k1], quote=False)
+                    cells[i + 1] = _h.escape(sq2text[joined[len(k1):]], quote=False)
                     changed = True
                     break
             if changed:
@@ -658,8 +660,9 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     texts = []
     for _, _, members in cells2:
         members.sort(key=lambda s: (round(s["bbox"][1]), s["bbox"][0]))
-        texts.append(inviz.sub("", _join_wrapped(s["text"] for s in members)).strip()
-                     if members else "")
+        import html as _h
+        texts.append(_h.escape(inviz.sub("", _join_wrapped(s["text"] for s in members)).strip(),
+                               quote=False) if members else "")
     have = sorted(inviz.sub("", "".join(plain)))
     want = sorted(_squash("".join(texts)))
     if have != want:
