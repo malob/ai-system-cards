@@ -1,0 +1,232 @@
+# v1 defect catalog — machine-usable label set for verifier calibration (D5).
+#
+# Each entry: a defect CLASS observed in v1's conversion of the Fable 5 card,
+# with evidence (commits, brief section, repair tool), a representative example,
+# the signal a v2 verifier needs to catch it, and instance counts where known.
+# Full per-instance ground truth is the git history itself — diff the refs below.
+
+meta:
+  card: anthropic/claude-fable-5
+  refs:
+    raw_conversion: f60899a   # pre-fix baseline for all content defects
+                              # (e9046f9 touches site/ only; 605c428 tools/docs only)
+    pre_link_recovery: fb483fb # pre-fix baseline for internal links specifically
+    best_v1: 975460f           # most-fixed v1 content state
+  enumerate_instances:
+    content: "git diff f60899a 975460f -- 'cards/anthropic/claude-fable-5/sections/'"
+    links: "git diff fb483fb 975460f -- 'cards/anthropic/claude-fable-5/sections/'"
+  censorship_caveat: >-
+    Human review reached only ~§6 of 9 and was incomplete even there (brief,
+    status note). This catalog is a LOWER BOUND on v1's defects. A verifier run
+    against raw_conversion that flags items NOT in this catalog is not thereby
+    wrong — past §6 such flags are candidate true positives to triage.
+
+defects:
+  # ── Page markers (brief §2a) — v1 made agents place block-level HTML comments ──
+  - id: PM-01
+    class: page-marker
+    title: Imprecise marker placement
+    description: >-
+      Marker snapped to a nearby block boundary instead of the exact word where
+      the page breaks; block-level placement also split prose into two paragraphs.
+    evidence: {brief: "2a", commits: [fb483fb], tool: tools/snap_page_markers.py}
+    example:
+      file: sections/00-executive-summary.md
+      pre: |
+        ...and room for
+
+        <!-- p.3 -->
+
+        improvement in some areas of child safety...   # (as two paragraphs)
+      post: |
+        ...and room for<!-- p.3 --> improvement in some areas of child safety...
+    detection: >-
+      Obsolete by construction in v2 (D1: page numbers are per-node provenance).
+      Verifier: page-offset map continuity + offset-vs-extraction equality.
+    count: ~100 marker lines reworked in fb483fb
+
+  - id: PM-02
+    class: page-marker
+    title: Paragraph split across page break
+    description: Continuation after a mid-paragraph page break rendered as a separate paragraph.
+    evidence: {brief: "2a", commits: [fb483fb], tool: tools/join_page_break_paragraphs.py}
+    detection: >-
+      Token-stream equality with paragraph-boundary awareness; v2 document model
+      makes the paragraph one node with a page-break provenance span.
+
+  - id: PM-03
+    class: page-marker
+    title: List split by column-0 marker
+    description: >-
+      A marker between list items parses as an HTML block, breaking the list and
+      restarting ordered-list numbering. (An earlier re-indent hack was rejected.)
+    evidence: {brief: "2a", commits: [fb483fb], tool: tools/inline_list_markers.py}
+    detection: List node-shape diff (item count, ordered-list numbering) vs extraction.
+
+  - id: PM-04
+    class: page-marker
+    title: Blockquote split by marker
+    description: Marker between two `>` chunks splits one blockquote into two.
+    evidence: {brief: "2a", commits: [fb483fb]}
+    detection: Block node-shape diff vs extraction.
+
+  - id: PM-05
+    class: page-marker
+    title: Figure-led page marker stranded in caption
+    description: >-
+      When a page opens with a figure, the marker landed in the caption text below
+      the charts instead of at the figure that opens the page.
+    evidence: {brief: "2a", commits: [fb483fb], tool: tools/anchor_figure_markers.py}
+    detection: Page-provenance on figure nodes; figure-bbox vs page-start comparison.
+
+  - id: PM-06
+    class: page-marker
+    title: Duplicate markers at section-file boundaries
+    description: Same page marked in two adjacent section files → duplicate HTML ids.
+    evidence: {brief: "2a", commits: [fb483fb]}
+    detection: Global uniqueness check over page-provenance map (mechanical, trivial).
+    count: 5 pages
+
+  - id: PM-07
+    class: page-marker
+    title: Marker absorbed into directive attribute
+    description: >-
+      'label="[<!-- p.198 -->…]"' — marker swallowed during transcript conversion,
+      breaking the directive into literal text.
+    evidence: {brief: "2a", commits: [fb483fb]}
+    detection: Schema validation of typed model (impossible by construction in v2).
+
+  # ── Formatting / faithfulness losses (brief §2b) — invisible in the text layer ──
+  - id: FL-01
+    class: formatting-loss
+    title: Internal cross-reference links dropped document-wide
+    description: >-
+      v1 extracted only /URI annotations; the PDF's internal links are /GoTo
+      annotations and were never extracted, so every internal section/phrase link
+      was silently omitted.
+    evidence:
+      brief: "2b"
+      commits: [975460f]
+      tools: [extracted/extract_internal_links.py, tools/apply_internal_links.py]
+    example:
+      file: sections/02a-rsp-process-chembio.md
+      pre: "…Section 2.3.3 documents concrete shortcomings…"
+      post: "…[Section 2.3.3](#233-example-shortcomings-of-mythos-5-relative-to-human-researchers) documents concrete shortcomings…"
+    detection: >-
+      Link-set equality (URI + GoTo) by anchor text + destination, per page.
+      GATE. The single largest silent loss in v1: 111 links.
+    count: 111 links added in 975460f
+
+  - id: FL-02
+    class: formatting-loss
+    title: Smart chips flattened to bold
+    description: >-
+      Google-Docs colored "smart chip" labels (failure-pattern tags, transcript
+      categories, mitigating-factor strengths) carry meaning in their color; agents
+      saw only text and emitted **bold**.
+    evidence: {brief: "2b", commits: [fb483fb], tool: tools/chipify_from_registry.py}
+    example:
+      file: sections/02b-rsp-aird-alignment.md
+      pre: "**Skipped cheap verification** **Fabrication**"
+      post: ":chip[Skipped cheap verification] :chip[Fabrication]"
+    detection: >-
+      Span-color extraction → colored-span vs chip-node diff; controlled vocabulary
+      registry (meta.yaml chips). GATE on color-span coverage.
+    count: 22 chip-bearing lines converted in fb483fb
+
+  - id: FL-03
+    class: formatting-loss
+    title: Transcript turns vs narrator commentary undifferentiated
+    description: >-
+      Whole transcripts rendered as one box with bold-prefix turns; multi-paragraph
+      turns indistinguishable from the authors' framing prose.
+    evidence: {brief: "2b", commits: [fb483fb]}
+    detection: >-
+      No exact mechanical oracle — turn boundaries are semantic. N-version
+      agreement (D7) + vision advisor (D8); box geometry/background color from
+      extraction may give a partial mechanical signal (open question, brief §7).
+    count: 37 :::turn directives across 17 ::::transcript blocks in fb483fb
+
+  - id: FL-04
+    class: formatting-loss
+    title: Caption bold-leads dropped or over-applied
+    description: >-
+      Bold lead-ins on figure/table captions aren't in the text layer; agents
+      guessed inconsistently (4 dropped, 1 over-bolded).
+    evidence: {brief: "2b", commits: [fb483fb]}
+    detection: Bold/italic span-run equality from extraction style flags. GATE.
+    count: 5 captions
+
+  - id: FL-05
+    class: formatting-loss
+    title: Straight vs curly quotes
+    description: Source uses typographic quotes; output had straight ones (patched at render).
+    evidence: {brief: "2b"}
+    detection: Token-stream equality under an EXPLICIT normalization allowlist —
+      the allowlist, not ad-hoc render passes, decides what's equivalent.
+
+  - id: FL-06
+    class: formatting-loss
+    title: Wrong directive nesting depth
+    description: >-
+      ':::transcript' (3 colons) could not legally contain ':::turn'; fixed to
+      '::::transcript'. Found in diff mining; NOT in the brief's taxonomy.
+    evidence: {commits: [fb483fb]}
+    detection: Impossible by construction in v2 (typed nodes, not directive text);
+      schema validation otherwise.
+
+  # ── Content artifacts — found in diff mining; NOT in the brief's taxonomy ──
+  - id: CA-01
+    class: content-artifact
+    title: Stray lone "-" lines injected
+    description: >-
+      Raw conversion scattered solitary "-" lines (artifact bullets) between
+      paragraphs, e.g. before "**Cluster:**" lines in §2.3.3 — text present in the
+      output that does not exist in the source.
+    evidence: {commits: [fb483fb]}
+    detection: >-
+      Token-stream equality in the OUTPUT→SOURCE direction (extra-token check).
+      v1's coverage sweep only checked source→output presence, so additions were
+      invisible. GATE, both directions.
+
+  - id: CA-02
+    class: content-artifact
+    title: Glyph mojibake
+    description: A '⌐' prefix char mangled by the encoding/build chain.
+    evidence: {brief: "2a", commits: [fb483fb]}
+    detection: Token-stream equality (character-level mismatch). GATE.
+
+  # ── Renderer (brief §2c) — projection bugs, kept for completeness ──
+  - id: RN-01
+    class: renderer
+    title: CSS :only-child collapse zeroed real paragraphs
+    description: >-
+      Rule meant to flatten empty marker-only paragraphs also matched prose
+      paragraphs whose single ELEMENT child was an inline marker (text nodes don't
+      count for :only-child), so following content overprinted them.
+    evidence: {brief: "2a/2c", commits: [e9046f9, fb483fb]}
+    detection: >-
+      Lesson (charter): derive structural facts in the renderer, never via brittle
+      CSS selectors. Vision page-diff advisor catches the symptom class.
+  - id: RN-02
+    class: renderer
+    title: Assorted projection bugs
+    description: >-
+      Loose-list spacing inconsistency; row-hover on rowspan tables; duplicate ids;
+      marker baseline shifted by `font:` shorthand resetting line-height.
+    evidence: {brief: "2c"}
+    detection: Renderer unit tests on the model→HTML projection + vision advisor.
+
+  # ── Process failures (brief §2d) — design inputs, not verifier targets ──
+  - id: PR-01
+    class: process
+    title: Errors surfaced in one big manual pass at the end
+    addressed_by: [D2, D4]   # in-loop validation, staged waves
+  - id: PR-02
+    class: process
+    title: Agents made silent, inconsistent choices instead of flagging ambiguity
+    addressed_by: [D2, D7]   # uncertainty log + escalation; N-version diff
+  - id: PR-03
+    class: process
+    title: Conventions discovered post-hoc, never fed back into a shared spec
+    addressed_by: [D2]       # living spec, decide each issue-type once

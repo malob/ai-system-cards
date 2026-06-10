@@ -3,7 +3,7 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-09 (late evening) — meta scaffolding session with Fable 5.
+**Last updated:** 2026-06-09 (late evening) — meta scaffolding + experiment 01, with Fable 5.
 
 ## Cold-start capsule
 
@@ -20,32 +20,34 @@ taxonomy in its §2 is load-bearing).
 
 ## Status
 
-- **Phase:** 0 (meta scaffolding) — complete.
-- Charter, decision log (D1–D11), this file, and root CLAUDE.md created. No v2
-  code exists yet. No experiments run yet.
+- **Phase:** 1 (groundwork) — in progress.
+- Done: meta scaffolding (charter, decisions D1–D12, this file, root CLAUDE.md);
+  **experiment 01, the v1 defect catalog**
+  ([experiments/01-v1-defect-catalog/](experiments/01-v1-defect-catalog/)) — 18
+  defect classes with detection signals, counts, and calibration refs
+  (`f60899a` = pre-fix content baseline, `fb483fb` = pre-link baseline). Two
+  classes found beyond the brief's taxonomy (CA-01 injected artifact lines —
+  hence bidirectional text equality; FL-06 directive nesting). No v2 code yet.
 
 ## Next actions (in order)
 
-1. **Catalog v1 defects into a structured eval set** — `docs/v2/experiments/01-v1-defect-catalog/`.
-   Mine the brief's §2 taxonomy + commits `fb483fb`, `975460f`, `e9046f9` (diff
-   pre-fix → post-fix states) into a machine-usable list: defect id, class, page,
-   pre-fix content, post-fix content. This grounds the verification contract and is
-   the calibration corpus for step 4 (decision D5).
-2. **Draft the verification contract** — `docs/v2/verification-contract.md`.
-   Every defect class (from the catalog + imagination) mapped to its catcher:
-   mechanical invariant / N-version diff / vision judge / human escalation, each
-   marked gate or advisor (D8). This is the spine of v2.
-3. **Extractor bake-off** — `docs/v2/experiments/02-extractor-bakeoff/`.
+1. **Draft the verification contract** — `docs/v2/verification-contract.md`.
+   Every defect class (start from the catalog's `detection:` fields + imagination)
+   mapped to its catcher: mechanical invariant / N-version diff / vision judge /
+   human escalation, each marked gate or advisor (D8). Must include
+   **bidirectional** text equality (see CA-01). This is the spine of v2.
+2. **Extractor bake-off** — `docs/v2/experiments/02-extractor-bakeoff/`.
    Candidates and test pages per brief §6 (PyMuPDF, marker, docling, MinerU,
    vision-LLM baseline). Score primarily on *which contract invariants each tool
    makes enforceable*, not output prettiness.
-4. **Build mechanical verifier v0; calibrate.** Run against v1 pre-fix states —
-   must rediscover the human-found defects; then mutation-test recall per class
-   (D6). Gaps → new checks or explicit human-coverage notes in the contract.
-5. **Design + build the generation loop** (only after 1–4): typed document model
+3. **Build mechanical verifier v0; calibrate.** Run against `f60899a` sections —
+   must rediscover the cataloged defects (recall scored per experiment 01's
+   "how to use" section); then mutation-test recall per class (D6). Gaps → new
+   checks or explicit human-coverage notes in the contract.
+4. **Design + build the generation loop** (only after 1–3): typed document model
    schema, semantic-proposal prompts, repair loop against gates, N-version
    arbitration, vision sweep, escalation worklist.
-6. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
+5. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
 
 ## Open questions
