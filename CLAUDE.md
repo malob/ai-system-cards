@@ -21,6 +21,8 @@ the shipped v1 site and layout.
 - **Commit early and often, without asking** — standing authorization from the
   owner (D12). Commit at milestones and decision points so git history is
   queryable; imperative, concise messages.
+- **Never push** — pushes happen only on explicit owner request; push to main
+  also triggers the Pages deploy (D13).
 - **Record decisions in decisions.md when they're made**, not at session end —
   sessions can compact or die at any time. Append-only; supersede, don't rewrite.
 - **Rewrite state.md before stopping** or after any milestone. It's a snapshot;

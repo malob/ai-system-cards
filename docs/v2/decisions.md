@@ -99,3 +99,10 @@ session given only the repo continues correctly ("fresh-session test").
 Granted by the owner. Claude commits in this repo without asking, at milestones and
 decision points, so that git history is itself a queryable record of the process.
 Imperative, concise messages per the owner's global git conventions.
+
+## D13 — Never push; v2 work stays local until the owner publishes (2026-06-09)
+
+Owner's call. Pushing is reserved for explicit owner request — partly because push
+to main triggers the GitHub Pages deploy, and partly because the v2 effort should
+be pushed as a whole once it's something worth publishing. Liberal local commits
+(D12) are unaffected.
