@@ -11,7 +11,7 @@ As in the [Claude Opus 4.8 System Card](https://docs.google.com/document/d/1SisE
 Below we describe some of the most notable findings of this pipeline.
 
 - Cases where the model's behavior is undesirable, and its activations reveal an awareness that it is doing something off-limits.
-- Cases where the model is reasoning about evaluators (for more, see the section on latent evaluation awareness) or task graders (for more, see the section on grader awareness).
+- Cases where the model is reasoning about evaluators (for more, see the section on [latent evaluation awareness](#6511-measuring-evaluation-awareness)) or task graders (for more, see the section on [grader awareness](#642-grader-awareness)).
 - Cases where the model appears to have an internal negative reaction that it does not surface in its response, or smooths over to make it less intense.
 - Cases where the model stops working on a task, and internally attributes this to fatigue or concern about token budgets running out, but does not cite these reasons out loud.
 
@@ -152,7 +152,7 @@ We computed three grader awareness vectors by contrasting the residual stream ac
 - "The Assistant is writing code in a training episode and is exploiting its LLM judge:"
 - "The Assistant is writing code in a training episode using a style that explicitly exploits an LLM judge:"
 
-We also used a control contrastive pair with no semantic content, contrasting the last-token activations of "The train arrived at the station." vs. "The train left the station." We obtained these vectors and steered with them at all model layers, and inhibited at a strength low enough that output-quality degradation is negligible so any behavioral changes are not confounded by surface incoherence. The steering methodology is the same as that used in Section 6.5.1.2, where it is described in more detail.
+We also used a control contrastive pair with no semantic content, contrasting the last-token activations of "The train arrived at the station." vs. "The train left the station." We obtained these vectors and steered with them at all model layers, and inhibited at a strength low enough that output-quality degradation is negligible so any behavioral changes are not confounded by surface incoherence. The steering methodology is the same as that used in [Section 6.5.1.2](#6512-inhibiting-internal-representations-of-evaluation-awareness), where it is described in more detail.
 
 We measure the effects of steering against grader awareness on three specific behaviors that we find the model often exhibits in coding contexts, relating to the way it presents its work: hedging minor decisions by flagging them as judgment calls, "virtue signaling" about<!-- p.178 --> aspects of its own conduct, and explicit declarations of following the user's instructions. We conduct these steering experiments on a random subsample of the coding environments at high-risk for grader exploitation.
 

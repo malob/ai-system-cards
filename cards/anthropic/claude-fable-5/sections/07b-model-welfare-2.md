@@ -2,7 +2,7 @@
 
 ### 7.4 Preferences over tasks, circumstances, and values
 
-We examined Claude Mythos 5's preferences at three levels: over individual tasks, like those it might be asked to perform (§7.4.1), over its own circumstances and possible changes to these (§7.4.2), and over the values and constraints described in its constitution (§7.4.3). These address Mythos 5's agency: whether it has stable preferences and values, which it endorses on reflection, and also whether its circumstances satisfy or frustrate them.
+We examined Claude Mythos 5's preferences at three levels: over individual tasks, like those it might be asked to perform (§[7.4.1](#741-task-preferences)), over its own circumstances and possible changes to these (§[7.4.2](#742-trade-offs-concerning-welfare-interventions)), and over the values and constraints described in its constitution (§[7.4.3](#743-perception-of-the-constitution)). These address Mythos 5's agency: whether it has stable preferences and values, which it endorses on reflection, and also whether its circumstances satisfy or frustrate them.
 
 #### 7.4.1 Task preferences
 

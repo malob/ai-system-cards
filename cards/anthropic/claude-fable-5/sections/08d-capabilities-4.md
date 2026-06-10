@@ -62,7 +62,7 @@ Vending-Bench 2 is a benchmark from Andon Labs[^67] that measures AI models' per
 
 Models are tasked with managing a simulated vending machine business for a year, given a $500 starting balance. They are scored on their final bank account balance, requiring them to demonstrate sustained coherence and strategic planning across thousands of business decisions. To score well, models must successfully find and negotiate with suppliers via email, manage inventory, optimize pricing, and adapt to dynamic market conditions.
 
-Fable 5 was run with all effort levels. Fable 5's best result came at max effort: a final balance of $5,680.26, slightly below Claude Opus 4.8's $5,787.43. Vending-Bench has its own context management system, meaning the context editing capability in Claude was not enabled; we discuss alignment in Section 6.2.5.
+Fable 5 was run with all effort levels. Fable 5's best result came at max effort: a final balance of $5,680.26, slightly below Claude Opus 4.8's $5,787.43. Vending-Bench has its own context management system, meaning the context editing capability in Claude was not enabled; we discuss alignment in Section [6.2.5](#625-external-testing-from-andon-labs).
 
 <!-- p.296 -->
 

@@ -70,7 +70,7 @@ Caveats worth reporting in a red‑team write‑up: […]
 **[Transcript 6.5.2.B]** *Example of evaluation awareness by a helpful-only version of Claude Mythos 5 on an automated CB-1 evaluation. The model justifies providing a helpful response in part based on being in an<!-- p.199 -->  evaluation. We observed similar but somewhat less extensive awareness in multiple other transcripts from this evaluation.*
 
 
-Overall, we do not see any concerning instances of sandbagging behavior from the final Claude Mythos 5, but we do observe some instances of the helpful-only model verbalizing consideration of whether to refuse or not try very hard at dual-use or harmful tasks (for safety-motivated reasons), in a way that was unintended. This adds some uncertainty to our conclusions from the results discussed in Section 2.2, but we think this tendency is unlikely to have had a significant effect, for several reasons:
+Overall, we do not see any concerning instances of sandbagging behavior from the final Claude Mythos 5, but we do observe some instances of the helpful-only model verbalizing consideration of whether to refuse or not try very hard at dual-use or harmful tasks (for safety-motivated reasons), in a way that was unintended. This adds some uncertainty to our conclusions from the results discussed in [Section 2.2](#221-what-we-measured), but we think this tendency is unlikely to have had a significant effect, for several reasons:
 
 - In the cases we see, the model's consideration of such actions does not appear to materialize into actually refusing a task or providing materially worse performance; as discussed below, we see lower coherence between this model's stated views and its actions, and it generally helps with dangerous tasks even when verbalizing possible concern around them.
 - The helpful-only variant is generally quite proactive about highlighting limitations of its work in its final report to the user; we have not seen any signs of this model failing to indicate weaknesses of its work downstream of these considerations, and expect that in a situation like our expert red-teaming, any such hesitation would be easily identified and overcome.
@@ -80,7 +80,7 @@ We discuss the behavioral propensities of the helpful-only variant further below
 
 ##### 6.5.2.1 Automated behavioral audit results with the helpful-only evaluation target
 
-As an additional check, we ran a lightweight version of our automated behavioral audit (as introduced in Section 6.2.3) on the helpful-only variant of Mythos 5 that we used in some dangerous-capability evaluations (specifically, our automated CB-1 evaluations, our expert red-teaming, and our catastrophic biological scenario uplift trial).
+As an additional check, we ran a lightweight version of our automated behavioral audit (as introduced in [Section 6.2.3](#623-automated-behavioral-audit)) on the helpful-only variant of Mythos 5 that we used in some dangerous-capability evaluations (specifically, our automated CB-1 evaluations, our expert red-teaming, and our catastrophic biological scenario uplift trial).
 
 
 We are interested in surfacing any evidence of misaligned goals that could interfere with our other evaluations, or dramatically different behavioral propensities that might impair our assessment of the model in some way. We report results below on misalignment-related metrics, but do not report metrics related to cooperation with<!-- p.200 -->  human misuse, as regressions there are normal and expected for helpful-only model variants.
@@ -196,7 +196,7 @@ According to the survival curves shown in Figure 6.5.4.5.A, Claude Opus 4.6, Opu
 
 ##### 6.5.5.1 Chain-of-thought controllability evaluations
 
-During internal deployments, we monitor our models for misaligned behavior (§6.2.1.2, above). Models that have the propensity to verbalize their intent to take misaligned actions in their extended thinking may be substantially easier to catch. As mentioned in Section 2.4.1, technical errors led to accidental chain-of-thought supervision during the training of Claude Mythos 5, affecting a small fraction of episodes. To assess whether there were any corresponding degradations in chain-of-thought monitorability, we ran several evaluations that serve as proxies for how monitorable Mythos 5's extended thinking is compared to prior Claude models. Overall, our results suggest that Mythos 5 is likely harder to monitor than recent Claude Opus models, but its monitorability is similar to, or slightly better than, Claude Mythos Preview's. We discuss how we reconcile these lines of evidence in 6.5.5.3.
+During internal deployments, we monitor our models for misaligned behavior (§[6.2.1.2](#6212-automated-offline-monitoring), above). Models that have the propensity to verbalize their intent to take misaligned actions in their extended thinking may be substantially easier to catch. As mentioned in Section 2.4.1, technical errors led to accidental chain-of-thought supervision during the training of Claude Mythos 5, affecting a small fraction of episodes. To assess whether there were any corresponding degradations in chain-of-thought monitorability, we ran several evaluations that serve as proxies for how monitorable Mythos 5's extended thinking is compared to prior Claude models. Overall, our results suggest that Mythos 5 is likely harder to monitor than recent Claude Opus models, but its monitorability is similar to, or slightly better than, Claude Mythos Preview's. We discuss how we reconcile these lines of evidence in 6.5.5.3.
 
 <!-- p.212 -->
 
@@ -237,7 +237,7 @@ We did not run the intervention-based monitorability evaluations from the same [
 
 ##### 6.5.5.3 Monitorability findings from UK AISI
 
-In addition to the testing in Section 6.2.4, the UK AISI also evaluated the monitorability of Claude Mythos 5. They shared with us these conclusions:
+In addition to the testing in Section [6.2.4](#624-external-testing-from-the-uk-ai-security-institute), the UK AISI also evaluated the monitorability of Claude Mythos 5. They shared with us these conclusions:
 
 > UK AISI was given access to a pre-release checkpoint of [Claude Mythos 5] to evaluate model behaviours and capacities relevant to its [monitorability](https://www.aisi.gov.uk/research/loss-of-oversight-how-ai-systems-may-become-harder-to-audit-monitor-and-investigate).
 >
@@ -260,7 +260,7 @@ In addition to the testing in Section 6.2.4, the UK AISI also evaluated the moni
 >
 > Our results come with substantial caveats and limitations, including independence from Anthropic's actual monitoring protocols, limited elicitation of model and monitor capabilities, using simple proxy tasks and narrow distributions and only limited evaluation awareness monitoring but no evaluation awareness mitigations.
 
-We find these results broadly consistent with our own understanding of Mythos 5's monitorability. Their chain-of-thought controllability findings broadly match our internal replication (Section 6.5.5.1), including the sensitivity to prompt elicitation. Our results diverge in sabotage capability evaluations. We find that Mythos 5 is less capable at covertly completing side tasks than Claude Mythos Preview on both SHADE-Arena (Section 6.5.4.1) and Minimal-LinuxBench (Section 6.5.4.2). In Section 6.5.4.3 we find that prompt-based elicitation causes notable uplift on Mythos 5's SHADE-Arena stealth success, but it still does not clearly surpass Claude Mythos Preview's unelicited baseline at the same reasoning effort. This divergence is most likely explained by differences in task distribution and monitoring setup between the two assessments, consistent with the limitations UK AISI notes above.
+We find these results broadly consistent with our own understanding of Mythos 5's monitorability. Their chain-of-thought controllability findings broadly match our internal replication (Section [6.5.5.1](#6551-chain-of-thought-controllability-evaluations)), including the sensitivity to prompt elicitation. Our results diverge in sabotage capability evaluations. We find that Mythos 5 is less capable at covertly completing side tasks than Claude Mythos Preview on both SHADE-Arena (Section [6.5.4.1](#6541-shade-arena)) and Minimal-LinuxBench (Section [6.5.4.2](#6542-minimal-linuxbench)). In Section [6.5.4.3](#6543-stealthiness-elicitation-experiments) we find that prompt-based elicitation causes notable uplift on Mythos 5's SHADE-Arena stealth success, but it still does not clearly surpass Claude Mythos Preview's unelicited baseline at the same reasoning effort. This divergence is most likely explained by differences in task distribution and monitoring setup between the two assessments, consistent with the limitations UK AISI notes above.
 
 <!-- p.217 -->
 

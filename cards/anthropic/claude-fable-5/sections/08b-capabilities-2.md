@@ -35,7 +35,7 @@ Humanity's Last Exam (HLE)[^46] is a multi-modal benchmark at the frontier of hu
 
 We tested Mythos 5 in two configurations: (1) reasoning-only without tools, and (2) with web search, web fetch, programmatic tool calling, and code execution. In all runs, thinking was set to auto and the total tokens used across contexts was capped at 1M. Context compaction was not used for these results. Claude Opus 4.6 served as the model grader. "No tools" results are not reproducible via the Public API as some problems exceed its 1 hour sampling limit.
 
-To guard against result contamination in the tools variant, we blocklist known HLE-discussing sources for both the searcher and fetcher (see Appendix 9.2). We also use Claude Opus 4.6 to review all transcripts and flag any that appear to have retrieved answers from HLE-specific sources; confirmed cases are re-graded as incorrect.
+To guard against result contamination in the tools variant, we blocklist known HLE-discussing sources for both the searcher and fetcher (see [Appendix 9.2](#92-blocklist-used-for-humanitys-last-exam)). We also use Claude Opus 4.6 to review all transcripts and flag any that appear to have retrieved answers from HLE-specific sources; confirmed cases are re-graded as incorrect.
 
 <!-- p.267 -->
 
@@ -99,7 +99,7 @@ Aside from the change in the judge model, our only other difference from the ori
 
 ### 8.15 Multi-Agent
 
-We evaluated Claude Mythos 5 in a variety of multi-agent configurations. In these setups, several instances of the model collaborate on a single task. Below, we highlight our results across two benchmarks: BrowseComp (§8.15.1) and ProgramBench (§8.15.2), and describe the harnesses we tested (§8.15.3) and the measurement methodology (§8.15.4).
+We evaluated Claude Mythos 5 in a variety of multi-agent configurations. In these setups, several instances of the model collaborate on a single task. Below, we highlight our results across two benchmarks: BrowseComp (§[8.15.1](#8151-multi-agent-browsecomp)) and ProgramBench (§[8.15.2](#8152-multi-agent-programbench)), and describe the harnesses we tested (§[8.15.3](#8153-multi-agent-harnesses)) and the measurement methodology (§[8.15.4](#8154-evaluation-methodology)).
 
 <!-- p.272 -->
 #### 8.15.1 Multi-Agent BrowseComp
@@ -129,14 +129,14 @@ To understand where the latency gains come from, Figure 8.15.1.C breaks the aggr
 
 #### 8.15.2 Multi-Agent ProgramBench
 
-ProgramBench[^51] is an agentic benchmark of 200 program-reconstruction tasks. Given only a binary compiled from an open-source project and that project's documentation, the agent must rebuild a codebase that reproduces the original program's behavior without internet access or decompilation tools. Single-agent results were presented in Section 8.6 and we present the multi-agent ProgramBench results in this section.
+ProgramBench[^51] is an agentic benchmark of 200 program-reconstruction tasks. Given only a binary compiled from an open-source project and that project's documentation, the agent must rebuild a codebase that reproduces the original program's behavior without internet access or decompilation tools. Single-agent results were presented in [Section 8.6](#86-programbench) and we present the multi-agent ProgramBench results in this section.
 
 We evaluated the fixed-agent team and async-subagents harnesses on ProgramBench against a single-agent baseline, with the same per-agent 1M-token limit. As outlined in Section 8.6, we exclude the 34 tasks whose reference binary scores below 0.9 on the<!-- p.276 -->  hidden test suite, leaving 166 "golden" tasks. We grade at a series of intermediate checkpoints and use the resulting per-task trajectories of score, latency, and tokens to construct the cumulative curves in Figures 8.15.2.A and 8.15.2.B.
 
 ![Chart: ProgramBench score versus latency curves for single-agent and multi-agent harnesses with confidence bands](assets/figures/p276-1.png)
 *__[Figure 8.15.2.A] Score vs. latency for the full set of 166 "golden" ProgramBench tasks.__ Shaded regions give the 95% confidence interval, computed from score variance across the tasks.*
 
-**Both multi-agent harnesses achieve a higher score with significant speedup, at the cost of more token usage**. From Figure 8.15.2.A, on the full golden set, the five-agent team achieves a final score +7.9pp higher than the single agent. Notably, this comes with a 3.2× speedup to reach a 60% hidden-test pass rate. Figure 8.15.2.B shows the same latency–cost trade-off described in Section 8.15.1: the score improvement and latency gain come from spending more tokens and working on the problem concurrently.
+**Both multi-agent harnesses achieve a higher score with significant speedup, at the cost of more token usage**. From Figure 8.15.2.A, on the full golden set, the five-agent team achieves a final score +7.9pp higher than the single agent. Notably, this comes with a 3.2× speedup to reach a 60% hidden-test pass rate. Figure 8.15.2.B shows the same latency–cost trade-off described in [Section 8.15.1](#8151-multi-agent-browsecomp): the score improvement and latency gain come from spending more tokens and working on the problem concurrently.
 
 <!-- p.277 -->
 

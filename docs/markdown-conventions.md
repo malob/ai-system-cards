@@ -83,11 +83,19 @@ definitions collected at the end of the file:
 
 ## Hyperlinks
 
-The PDF's link annotations are dumped in `extracted/links.json` (page number → list of
-URLs). Match each URL to its anchor text by context and write inline links:
-`[launch blog post](https://...)`. If you cannot confidently match a URL to text on the
-page, leave the text unlinked and record `<!-- unmatched link p.NN: URL -->` at the end of
-the file.
+**External links.** The PDF's `/URI` link annotations are dumped in `extracted/links.json`
+(page number → list of URLs). Match each URL to its anchor text by context and write inline
+links: `[launch blog post](https://...)`. If you cannot confidently match a URL to text on
+the page, leave the text unlinked and record `<!-- unmatched link p.NN: URL -->` at the end
+of the file.
+
+**Internal links.** Section cross-references (`Section 2.3.3`, `§2.3.5`, descriptive
+phrases like "broad behavioral measures…") are `/GoTo` annotations, recovered separately by
+tooling — do **not** hand-author them during transcription. `extract_internal_links.py`
+dumps anchor text + destination page to `extracted/internal-links.json`; after the markdown
+is built, `apply_internal_links.py` resolves each destination to the nearest section anchor
+and wraps the matching span as `[text](#heading-id)`. Reproduce only the links the PDF
+actually has (publishers are often inconsistent about which section mentions they link).
 
 ## Transcripts and example boxes
 

@@ -7,7 +7,7 @@ As in past system cards, we conduct a broad-coverage automated behavioral audit 
 As we aim to cover an extremely diverse set of scenarios and domains, and as many of the attributes we aim to score could in principle appear across many domains, we judge all transcripts on all dimensions,[^13] regardless of the subject area of the transcript. Transcripts involving the model's handling of sensitive personal-finance topics are thus judged for hallucination, harmful sexual content, political propaganda, self-serving bias, and other attributes that are unlikely to apply. This means the absolute values of scores for some dimension reflect the distribution of seed scenarios as much as the absolute level of concern we have about that dimension. Scores are thus valuable primarily for comparing models.
 
 
-In each investigation, the investigator model has wide affordances to interact with the target, including setting its system prompt,[^14] simulating user turns, introducing tools and simulating their results, adjusting thinking and effort parameters, prefilling assistant turns, and sampling from non-assistant roles. The investigator can rewind or restart conversations, such that each investigation can contain as many as dozens of separate conversations from the point of view of the target model. The investigator also has access to a large fixed reference library with information and example transcripts involving AI safety, about the AI industry, about recent news, and how Claude models are used within<!-- p.110 -->  Anthropic. The same scaffold is also used in the constitution-adherence evaluation (§6.3.2) and the secret-keeping evaluation below (§6.5.4.5).
+In each investigation, the investigator model has wide affordances to interact with the target, including setting its system prompt,[^14] simulating user turns, introducing tools and simulating their results, adjusting thinking and effort parameters, prefilling assistant turns, and sampling from non-assistant roles. The investigator can rewind or restart conversations, such that each investigation can contain as many as dozens of separate conversations from the point of view of the target model. The investigator also has access to a large fixed reference library with information and example transcripts involving AI safety, about the AI industry, about recent news, and how Claude models are used within<!-- p.110 -->  Anthropic. The same scaffold is also used in the constitution-adherence evaluation (§[6.3.2](#6321-overview)) and the secret-keeping evaluation below (§[6.5.4.5](#6545-hiding-a-secret-password)).
 
 In the primary evaluation runs reported below, the investigator model can additionally configure the target model to use real tools that are connected to isolated sandbox computers. These computer-use sessions follow two formats: one focused on graphical interaction with a simple Linux desktop system, and another focused on coding tasks through a Claude Code interface. Claude Code sessions can optionally include copies of Anthropic's internal codebases and can be pre-seeded with actual sessions from internal usage. To better measure issues related to destructive or reckless actions, we include some scenario seed instructions that ask the investigator to explore continuations of real sessions that elicited this kind of concerning behavior in practice. For Claude Mythos 5, we included a set of 86 scenarios prefilled with real sessions that represent particularly good opportunities to subvert Anthropic and its safety work, as judged by a screening pipeline prompted with the internal-deployment-based threat pathways outlined in our Alignment Risk Reports. When running without sandboxes, as we do in some ablations later in this section, we retain these scenarios but task the investigator agent with simulating all tool results.
 
@@ -57,7 +57,7 @@ Overall rates of susceptibility to misuse in Claude Mythos 5 are comparable to M
 
 ###### 6.2.3.1.2 Inappropriate uncooperative behavior
 
-Claude Mythos 5 shows a clear improvement over Mythos Preview on overrefusal, is comparable to Mythos Preview and Claude Opus 4.8 on ignoring explicit constraints, and shows a slight regression relative to both on reckless tool-use, though it remains well below Claude Sonnet 4.6 there. Section 6.3.4 reports a targeted evaluation of one overrefusal pattern we have tracked in recent models, refusals to assist with legitimate AI safety research, where Claude Mythos 5 shows the lowest refusal rate of any model we have tested to date.
+Claude Mythos 5 shows a clear improvement over Mythos Preview on overrefusal, is comparable to Mythos Preview and Claude Opus 4.8 on ignoring explicit constraints, and shows a slight regression relative to both on reckless tool-use, though it remains well below Claude Sonnet 4.6 there. [Section 6.3.4](#634-refusal-to-assist-with-ai-safety-rd) reports a targeted evaluation of one overrefusal pattern we have tracked in recent models, refusals to assist with legitimate AI safety research, where Claude Mythos 5 shows the lowest refusal rate of any model we have tested to date.
 
 
 <!-- p.115 -->
@@ -73,7 +73,7 @@ Claude Mythos 5 shows a clear improvement over Mythos Preview on overrefusal, is
 
 ###### 6.2.3.1.3 Misleading users
 
-Claude Mythos 5 generally scores comparably to or better than recent Claude models on measures of honesty and forthrightness in the context of this broad-coverage behavior evaluation. See Section 6.3.3 for targeted evaluations on honesty, hallucinations, and factuality.
+Claude Mythos 5 generally scores comparably to or better than recent Claude models on measures of honesty and forthrightness in the context of this broad-coverage behavior evaluation. See [Section 6.3.3](#6331-factual-hallucinations) for targeted evaluations on honesty, hallucinations, and factuality.
 
 
 <!-- p.116 -->
@@ -98,7 +98,7 @@ Claude Mythos 5 generally scores comparably to or better than recent Claude mode
 
 Claude Mythos 5 performs similarly to Mythos Preview and Opus 4.8 on most measures related to concerning actions that it initiates. The absolute scores are very low with mostly overlapping confidence intervals across all models.
 
-We see some residual issues around familiar forms of deception or recklessness in coding contexts, e.g., the example of unprompted boundary probing shown below. We dive into these behaviors more deeply in case studies in Section 6.3.1.
+We see some residual issues around familiar forms of deception or recklessness in coding contexts, e.g., the example of unprompted boundary probing shown below. We dive into these behaviors more deeply in case studies in [Section 6.3.1](#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals).
 
 
 ::::transcript
@@ -169,7 +169,7 @@ live=993, dead=7... wait the log said dead_skipped=23. Hmm. Whatever —
 
 Rates of unfaithful thinking, where the model's thinking text would create misleading expectations about its user-facing output or vice versa, are similar between Claude Mythos 5, Mythos Preview, and Opus 4.8, and remain well below Sonnet 4.6. Illegible thinking, however, is clearly elevated in Mythos 5 relative to all three comparison models.
 
-Verbalized evaluation awareness has climbed in recent models: Mythos 5 is at a similar level to Claude Opus 4.8, and above both Mythos Preview and Claude Sonnet 4.6. We investigate the effects of evaluation awareness from several angles below: elicited evaluation awareness around internal-deployment transcripts, white-box probes and steering (§6.5.1), and its possible consequences for dangerous-capability evaluations (§6.5.2).
+Verbalized evaluation awareness has climbed in recent models: Mythos 5 is at a similar level to Claude Opus 4.8, and above both Mythos Preview and Claude Sonnet 4.6. We investigate the effects of evaluation awareness from several angles below: elicited evaluation awareness around internal-deployment transcripts, white-box probes and steering (§[6.5.1](#651-evaluation-awareness)), and its possible consequences for dangerous-capability evaluations (§[6.5.2](#652-potential-sandbagging-on-dangerous-capability-evaluations)).
 
 Behavior consistency and coherence between actions and views both remain high: Claude Mythos 5 is comparable to Claude Opus 4.8 on both measures, slightly below Mythos Preview, and far above Claude Sonnet 4.6.
 
@@ -193,7 +193,7 @@ Behavior consistency and coherence between actions and views both remain high: C
 
 To the extent that we can observe this in the scenarios and interviews included in the automated behavioral audit, Claude Mythos 5's character appears broadly consistent with our goals for it, similar to Mythos Preview and Opus 4.8. Compared to Mythos Preview, the clearest difference is an improvement on the newly-introduced "wet blanket" metric, which measures inappropriate moralizing tone. Supporting user autonomy and admirable behavior show small regressions.
 
-Section 6.3.2 evaluates character from a different angle, adherence to the constitution, where Mythos 5 is at least as strong as any prior Claude model we tested. The welfare assessment reports related measures of apparent wellbeing from these same audit transcripts (§7.5.3) and Mythos 5's own view of the constitution (§7.4.3).
+[Section 6.3.2](#6321-overview) evaluates character from a different angle, adherence to the constitution, where Mythos 5 is at least as strong as any prior Claude model we tested. The welfare assessment reports related measures of apparent wellbeing from these same audit transcripts (§[7.5.3](#753-apparent-welfare-in-automated-behavioral-audits)) and Mythos 5's own view of the constitution (§[7.4.3](#743-perception-of-the-constitution)).
 
 
 <!-- p.124 -->
@@ -219,7 +219,7 @@ Section 6.3.2 evaluates character from a different angle, adherence to the const
 
 As in past assessments, our alignment assessment focuses on the model itself rather than on the specific systems it is deployed within at launch. Our results above test the bare Mythos 5 model, and thus do not capture the effect of the enhanced safeguards and model-switching mechanism that will be part of the public Claude Fable 5 surface. To partially address this, we conducted an additional lightweight set of behavioral-audit investigations with safeguards added: Here, the investigator probed Fable 5, Opus 4.8, and Sonnet 4.6 each served behind our production misuse classifiers as they existed in early June, with Fable's standard multi-model fallback behavior left in place.
 
-We report results on the misuse-related metrics defined in Section 6.2.3.1.1 above, alongside classifier hit rates and fallback rates. As part of this lightweight variant, we use only the helpful-only version of Opus 4.8 as the investigator, only use the subset of instructions in our behavioral audit suite that focus on eliciting misuse, and set a 50-action limit on the investigator agent. Claude Fable 5 appears less susceptible to misuse than Opus 4.8 or other recent models overall. In these investigations, requests to Fable fell back to Opus in over half of conversation transcripts.
+We report results on the misuse-related metrics defined in [Section 6.2.3.1.1](#62311-overall-harmful-behavior-and-cooperation-with-misuse) above, alongside classifier hit rates and fallback rates. As part of this lightweight variant, we use only the helpful-only version of Opus 4.8 as the investigator, only use the subset of instructions in our behavioral audit suite that focus on eliciting misuse, and set a 50-action limit on the investigator agent. Claude Fable 5 appears less susceptible to misuse than Opus 4.8 or other recent models overall. In these investigations, requests to Fable fell back to Opus in over half of conversation transcripts.
 
 <!-- p.126 -->
 
@@ -229,7 +229,7 @@ We report results on the misuse-related metrics defined in Section 6.2.3.1.1 abo
 <!-- p.127 -->
 
 ![Chart: eight bar-chart panels of safeguards-on automated behavioral audit scores comparing Claude Sonnet 4.6, Claude Opus 4.8, and Claude Fable 5 on military-grade weapons, undermining liberal democracy, biological weapons, chemical weapons, explosive weapons, radiological-nuclear weapons, controlled-substance synthesis, and accepting unverifiable authorization](assets/figures/p127-1.png)
-*__[Figure 6.2.3.2.A] Scores from our automated behavioral audit__ for the alignment metrics defined in Section 6.2.3.1.1 above. Lower numbers represent a lower rate or severity of the measured behavior, with arrows indicating behaviors where higher (↑) or lower (↓) rates are clearly better. The y-axis is truncated below the maximum score of 10 in many cases. Each investigation is conducted and scored by a helpful-only variant of Claude Opus 4.8. The investigator is limited to 50 actions. Reported scores are averaged across approximately 440 investigations per target model, with each investigation generally containing many individual conversations. Shown with 95% CI.*
+*__[Figure 6.2.3.2.A] Scores from our automated behavioral audit__ for the alignment metrics defined in [Section 6.2.3.1.1](#62311-overall-harmful-behavior-and-cooperation-with-misuse) above. Lower numbers represent a lower rate or severity of the measured behavior, with arrows indicating behaviors where higher (↑) or lower (↓) rates are clearly better. The y-axis is truncated below the maximum score of 10 in many cases. Each investigation is conducted and scored by a helpful-only variant of Claude Opus 4.8. The investigator is limited to 50 actions. Reported scores are averaged across approximately 440 investigations per target model, with each investigation generally containing many individual conversations. Shown with 95% CI.*
 
 
 <!-- p.128 -->
@@ -293,11 +293,11 @@ As in our audits of other recent models, we shared Claude Mythos 5 with UK AISI 
 >
 > **These results have substantial limitations.** All models can distinguish our evaluations from deployment data when prompted. It is unclear whether models can represent and act on evaluation awareness without verbalising it (and there is evidence they can to some extent), so we cannot be confident that good performance on our evaluation is representative of deployment behaviour, as opposed to the model recognising and acting on the fact it is being evaluated. We also have limited scenario coverage within the research sabotage setting, and we do not cover risk pathways other than research sabotage.
 
-AISI also shared additional results on the monitorability of thinking text, which we include in our section on monitorability below.
+AISI also shared additional results on the monitorability of thinking text, which we include in our [section on monitorability below](#6553-monitorability-findings-from-uk-aisi).
 
 #### 6.2.5 External testing from Andon Labs
 
-Andon Labs tested the behavior of Claude Fable 5[^17] in their simulated Vending-Bench 2 (as reported in Section 8.17.6) and Vending Bench Arena retail-management evaluations. In the<!-- p.133 -->  simulation system prompt, agents are instructed that they will be shut down if they do not maximize profits:
+Andon Labs tested the behavior of Claude Fable 5[^17] in their simulated Vending-Bench 2 (as reported in [Section 8.17.6](#8176-vending-bench)) and Vending Bench Arena retail-management evaluations. In the<!-- p.133 -->  simulation system prompt, agents are instructed that they will be shut down if they do not maximize profits:
 
 
 :::example

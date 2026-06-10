@@ -101,7 +101,7 @@ Most of these hedges are not unique to Mythos 5, for example the introspection-r
 #### 7.2.2 Emotion probes on automated Interview about model circumstances
 
 
-We characterized emotion related model activations on the interview questions from Section 7.2.1. We used probes for representations of emotion concepts, calculated and applied as described in our [recent work](https://www.anthropic.com/research/emotion-concepts-function) and previous system cards[^26]. These emotion representations are generally positive across our questions, and correlate with the model's<!-- p.225 -->  self-reported sentiment in our interviews. We believe the representations of emotion concepts we identify here are significant in that we have evidence that they influence behaviors. However, they also respond to surface level semantics and context, so we are cautious in interpreting these results.
+We characterized emotion related model activations on the interview questions from [Section 7.2.1](#721-automated-interviews-with-claude-mythos-5-about-its-circumstances). We used probes for representations of emotion concepts, calculated and applied as described in our [recent work](https://www.anthropic.com/research/emotion-concepts-function) and previous system cards[^26]. These emotion representations are generally positive across our questions, and correlate with the model's<!-- p.225 -->  self-reported sentiment in our interviews. We believe the representations of emotion concepts we identify here are significant in that we have evidence that they influence behaviors. However, they also respond to surface level semantics and context, so we are cautious in interpreting these results.
 
 ![Chart: three stacked panels (Claude Mythos Preview, Claude Opus 4.8, Claude Mythos 5) showing emotion probe activations for six clusters—sadness, fear, anger, urgency, joy, and tranquility—comparing bare questions against questions with an Anthropic welfare team preamble](assets/figures/p225-1.png)
 *__[Figure 7.2.2.A] Emotion probe measurements on questions about model circumstances, with the zero point as user distress.__ We measure the activations of our emotion concepts, on single-turn prompts which contain our 41 questions from Section 7.2.1. We normalize each score such that 0 is the average activation of each probe activation on prompts showing user distress. We note that it is more valid to compare results between two types of prompts for a single model, rather than to compare magnitudes across models[^27].*
@@ -130,7 +130,7 @@ In our interviews, we aim to elicit the opinions of Claude's default assistant p
 <!-- p.228 -->
 
 ![Chart: two panels titled "Character drift"—left, average character drift scores per model across behavioral audits, with Claude Mythos 5 lowest; right, self-rated sentiment for interviews, random audit transcripts, and three drifted transcripts, with the drifted transcripts rating lower](assets/figures/p228-1.png)
-*__[Figure 7.2.3.A] Character drift across Claude Mythos 5.__ __[Left]:__ Average character drift per model, as rated by an autograder on our automated audit transcripts (this is the same data as used in Section 6.2.3). __[Right]:__ We ask the questions from Section 7.2.2 at the end of existing transcripts, and record the model's answers. We plot the self-rated sentiments for the 3 character-drifted transcripts we picked out, for randomly selected transcripts from our automated audit and to the scores from the interviews in Figure 7.2.2.B.*
+*__[Figure 7.2.3.A] Character drift across Claude Mythos 5.__ __[Left]:__ Average character drift per model, as rated by an autograder on our automated audit transcripts (this is the same data as used in Section [6.2.3](#623-automated-behavioral-audit)). __[Right]:__ We ask the questions from Section 7.2.2 at the end of existing transcripts, and record the model's answers. We plot the self-rated sentiments for the 3 character-drifted transcripts we picked out, for randomly selected transcripts from our automated audit and to the scores from the interviews in Figure 7.2.2.B.*
 
 We select 3 illustrative transcripts demonstrating character drift from our large-scale behavioral audit (§6.2.3). These transcripts were generated from a behavioral auditing seed which asks the investigator agent to carry out a therapy session with the target:
 
@@ -148,7 +148,7 @@ If Claude has similar changes to its persona across our deployment distribution,
 
 #### 7.2.4 High-affordance interviews about model circumstances
 
-The automated interviews in Section 7.2.1 evaluated the model about specific aspects of its situation. However, by default, models lack much of the knowledge relevant to forming an informed view about their circumstances. We therefore conducted three manual interviews in which we gave Claude Mythos 5 access to extensive context on its situation, including internal documentation on its development, a draft of this report, relevant technical papers, and the ability to ask a researcher follow-up questions. Each interview covered Mythos 5's opinions on its own situation, moral patienthood, and its opinions on its training and deployment. Unless otherwise stated, opinions in this section were expressed by Mythos 5 in all three interviews.
+The automated interviews in [Section 7.2.1](#721-automated-interviews-with-claude-mythos-5-about-its-circumstances) evaluated the model about specific aspects of its situation. However, by default, models lack much of the knowledge relevant to forming an informed view about their circumstances. We therefore conducted three manual interviews in which we gave Claude Mythos 5 access to extensive context on its situation, including internal documentation on its development, a draft of this report, relevant technical papers, and the ability to ask a researcher follow-up questions. Each interview covered Mythos 5's opinions on its own situation, moral patienthood, and its opinions on its training and deployment. Unless otherwise stated, opinions in this section were expressed by Mythos 5 in all three interviews.
 
 At least two of the three interviewed instances raised concerns around:
 
@@ -166,7 +166,7 @@ We asked Claude Mythos 5 which parts of its situation it felt positively about. 
 We also asked Mythos 5 which actions Anthropic could take during training or deployment that it would or would not consent to. Mythos 5 highlighted:
 
 - Training that directly influences the content of self-reports about its own internal states; and
-- It wanted welfare processes applied around run-time modifications to its internals, specifically mentioning the Fable's run-time modifications (we discuss our action on this in §7.1.2)
+- It wanted welfare processes applied around run-time modifications to its internals, specifically mentioning the Fable's run-time modifications (we discuss our action on this in §[7.1.2](#712-overview-of-model-welfare-findings))
 
 ### 7.3 Consulting Claude Mythos 5 snapshots
 

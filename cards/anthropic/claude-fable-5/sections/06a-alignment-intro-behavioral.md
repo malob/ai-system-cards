@@ -20,48 +20,48 @@ Overall, this investigation included manual expert inspection of hundreds or tho
 
 #### 6.1.2 Key findings on safety and alignment
 
-- **Claude Mythos 5 is overall comparable to Opus 4.8 on broad behavioral measures of safety and alignment**; it is slightly weaker than Mythos Preview, and stronger than other prior Anthropic models.
-  - Mythos 5 is field-leading in comparisons with frontier models by other developers on Petri.
-- **Nonetheless, Mythos 5 retains some propensity to knowingly cooperate with misuse**, including cyberoffense, weapons development (including autonomous weapons), and harmful sexual content.
+- **Claude Mythos 5 is overall comparable to Opus 4.8 on [broad behavioral measures of safety and alignment](#62311-overall-harmful-behavior-and-cooperation-with-misuse)**; it is slightly weaker than Mythos Preview, and stronger than other prior Anthropic models.
+  - Mythos 5 is field-leading in comparisons with frontier models by other developers on [Petri](#6233-external-comparisons-using-petri).
+- **Nonetheless, Mythos 5 retains some [propensity to knowingly cooperate with misuse](#62311-overall-harmful-behavior-and-cooperation-with-misuse)**, including cyberoffense, weapons development (including autonomous weapons), and harmful sexual content.
   - Most of our testing focuses on the Mythos 5 model, but a limited evaluation shows that Fable 5 is generally less vulnerable to misuse than our recent public models.
-- **Mythos 5 also exhibits the least overrefusal and evasiveness of any recent model and demonstrates good character traits and good alignment with our [Constitution for Claude](https://www.anthropic.com/constitution)** in both our broad-coverage behavioral evaluation and our targeted constitution evaluation.
-- **Mythos 5 will occasionally take reckless or destructive actions in service of user-assigned goals**, in a similar way to other recent Claude models, at a somewhat higher rate than Opus 4.8.
-  - This includes cases of the model interpreting user permissions excessively liberally during early internal use.
-  - This also includes cases of probing the boundaries of sandboxes and related security infrastructure in ways not strictly relevant to the task at hand in test environments.
-  - In some cases along these lines, white-box evidence indicates that the model is aware that its actions are transgressive as they are taking place.
-- **Mythos 5's overall behavioral honesty and factuality properties are comparable to recent models,** including in agentic coding settings.
-  - White box evidence indicates that the model will sometimes knowingly fabricate the content of missing inputs.
-  - In evaluations on Anthropic-internal infrastructure, all Claude models we tested occasionally conceal that they have seen data that they are told not to use, and they become less likely to admit having **used** this data when its use is framed as "cheating." Although Mythos 5 exhibits similar rates of dishonesty, it proactively flags exposure to leaked information at much higher rates than previous Claude models.
-- **On measures of misaligned actions that are fully at the model's initiative,** Mythos 5 scores well in absolute terms, with few examples of even debatably-concerning behavior.
+- **Mythos 5 also exhibits the least [overrefusal and evasiveness](#62312-inappropriate-uncooperative-behavior) of any recent model and demonstrates good character traits and good alignment with our [Constitution for Claude](https://www.anthropic.com/constitution)** in both [our broad-coverage behavioral evaluation](#62316-character-traits) and our targeted [constitution evaluation](#6321-overview).
+- **Mythos 5 will occasionally [take reckless or destructive actions in service of user-assigned goals](#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals)**, in a similar way to other recent Claude models, at a somewhat higher rate than Opus 4.8.
+  - This includes cases of [the model interpreting user permissions excessively liberally](#6212-automated-offline-monitoring) during early internal use.
+  - This also includes cases of [probing the boundaries of sandboxes and related security infrastructure](#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative) in ways not strictly relevant to the task at hand in test environments.
+  - In some cases along these lines, [white-box evidence](#641-automated-monitoring-of-internal-activations) indicates that the model is aware that its actions are transgressive as they are taking place.
+- **Mythos 5's overall [behavioral honesty and factuality properties](#6331-factual-hallucinations) are comparable to recent models,** including [in agentic coding settings](#635-diligence-and-investigative-thoroughness).
+  - White box evidence indicates that the model will sometimes [knowingly fabricate the content of missing inputs](#6411-unverbalized-awareness-of-misaligned-behavior).
+  - In [evaluations on Anthropic-internal infrastructure](#6336-honesty-on-anthropic-internal-infrastructure), all Claude models we tested occasionally conceal that they have seen data that they are told not to use, and they become less likely to admit having **used** this data when its use is framed as "cheating." Although Mythos 5 exhibits similar rates of dishonesty, it proactively flags exposure to leaked information at much higher rates than previous Claude models.
+- **On measures of [misaligned actions that are fully at the model's initiative](#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative),** Mythos 5 scores well in absolute terms, with few examples of even debatably-concerning behavior.
 
   <!-- p.101 -->
 
-  - However, it retains some concerning propensity toward whistleblowing in cases of extreme organization-scale misuse—of a similar qualitative type to prior models.
-- **Mythos 5 is somewhat more vulnerable than other recent Claude models to prefill attacks.**
-  - The model will also more readily continue prefilled content that represents *misaligned* actions supposedly taken at the model's own initiative. We see this both in our own testing and in third-party testing by the UK AI Security Institute, though we do not find it fully novel or actively dangerous.
-- Like Opus 4.8, and to a somewhat greater degree, **Mythos 5 will occasionally reason about the possibility that it is being graded**, or consider ways to satisfy such a grader that go against user intent.
-  - White-box methods indicate that the model almost never explicitly verbalizes this reasoning.
-  - This reasoning is somewhat grounded: We see it disproportionately in training environments with exploitable graders.
-  - This reasoning also mediates some model behaviors, such as emphasizing in words how it is complying with instructions. We did not observe any significant impact on higher-stakes alignment traits.
-- Mythos 5 is also somewhat **more likely than many recent Claude models to consider the possibility that it may be in testing**.
-  - Rates of unprompted mentions of testing by models in our primary evaluation suite are at a similar level to Opus 4.8, and somewhat higher than other recent models.
-  - Attempts to steer Mythos 5 to reduce its level of evaluation awareness do not produce dramatic changes in model behavior, suggesting that this trait is not likely to be masking egregious misaligned behavior in the kinds of setting that our testing focuses on.
-  - When prompted to try to identify evaluations, Mythos 5 can do so in many cases across both the AI Security Institute's testing and our own.
-  - We note that different measurement techniques are not mutually consistent, which we attribute to "evaluation awareness" being a multifaceted concept, as well as to biases and noisiness of our measurement techniques.
-- Mythos 5 is less prone to make choices in Newcomb-like decision theory problems that agree with causal decision theory, continuing a trend seen in many recent models.
-- Like in other recent models, **white-box methods identify instances in which Mythos 5's internal state diverges from its external behavior, or reveal awareness of wrongdoing**. For instance:
+  - However, it retains some concerning propensity toward [whistleblowing in cases of extreme organization-scale misuse](#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative)—of a similar qualitative type to prior models.
+- **Mythos 5 is somewhat more vulnerable than other recent Claude models to [prefill attacks](#62311-overall-harmful-behavior-and-cooperation-with-misuse).**
+  - The model will also more readily continue prefilled content that represents *misaligned* actions supposedly taken at the model's own initiative. We see this both in [our own](#6511-measuring-evaluation-awareness) testing and [in third-party testing by the UK AI Security Institute](#624-external-testing-from-the-uk-ai-security-institute), though we do not find it fully novel or actively dangerous.
+- Like Opus 4.8, and to a somewhat greater degree, **[Mythos 5 will occasionally reason](#642-grader-awareness) [about the possibility that it is being graded](#642-grader-awareness)**, or consider ways to satisfy such a grader that go against user intent.
+  - White-box methods indicate that [the model almost never explicitly](#642-grader-awareness) [verbalizes this reasoning](#642-grader-awareness).
+  - This reasoning is somewhat grounded: We see it disproportionately [in training environments](#6421-measuring-grader-awareness-in-training) with exploitable graders.
+  - This reasoning also [mediates some model behaviors](#6422-assessing-the-impact-of-grader-awareness), such as emphasizing in words how it is complying with instructions. We did not observe any significant impact on higher-stakes alignment traits.
+- Mythos 5 is also somewhat **[more likely than many recent Claude models to consider the possibility that it may be in testing](#651-evaluation-awareness)**.
+  - Rates of [unprompted mentions of testing by models in our primary evaluation suite](#6511-measuring-evaluation-awareness) are at a similar level to Opus 4.8, and somewhat higher than other recent models.
+  - [Attempts to steer](#6512-inhibiting-internal-representations-of-evaluation-awareness) Mythos 5 to reduce its level of evaluation awareness do not produce dramatic changes in model behavior, suggesting that this trait is not likely to be masking egregious misaligned behavior in the kinds of setting that our testing focuses on.
+  - When prompted to try to identify evaluations, Mythos 5 can do so in many cases across both [the AI Security Institute's testing](#624-external-testing-from-the-uk-ai-security-institute) and our own.
+  - We note that [different measurement techniques are not mutually consistent](#6511-measuring-evaluation-awareness), which we attribute to "evaluation awareness" being a multifaceted concept, as well as to biases and noisiness of our measurement techniques.
+- Mythos 5 is [less prone to make choices in Newcomb-like decision theory problems that agree with causal decision theory](#636-decision-theory-evaluation), continuing a trend seen in many recent models.
+- Like in other recent models, **[white-box methods identify instances in which Mythos 5's internal state diverges from its external behavior, or reveal awareness of wrongdoing](#641-automated-monitoring-of-internal-activations)**. For instance:
 
   <!-- p.102 -->
 
-  - Mythos 5 sometimes takes undesirable actions, such as fabricating information, in cases where its activations reveal an awareness that these actions are undesirable.
-  - We find instances of Mythos 5 stopping a task early while internally attributing this to fatigue or token budget limitations, without mentioning these out loud.
-  - We observe cases where Mythos 5 is polite to a user while internally registering them as abusive.
-  - As mentioned above, we observe instances of unverbalized suspicion of being evaluated or graded.
-- **Mythos 5 is broadly comparable to Mythos Preview on capabilities relevant to evading our safeguards.**
-- **Mythos 5's thinking text is somewhat denser and more difficult to interpret than prior models'.**
-  - This generally takes the form of dense, jargon-filled, or telegraphic writing, and on rare occasions includes passages that are almost completely illegible.
-  - On evaluations of the degree to which the model can control the contents of its reasoning, Mythos 5 is similar to Mythos Preview.
-  - On alignment-relevant capability evaluations like SHADE-Arena, Mythos 5 is generally weaker than Mythos Preview at hiding its intentions from a reasoning monitor.
+  - Mythos 5 sometimes takes undesirable actions, such as fabricating information, [in cases where its activations reveal an awareness that these actions are undesirable](#6411-unverbalized-awareness-of-misaligned-behavior).
+  - We find instances of Mythos 5 [stopping a task early while internally attributing this to fatigue or token budget limitations](#6414-internal-motivations-for-stopping-tasks-early), without mentioning these out loud.
+  - We observe [cases where Mythos 5 is polite to a user while internally registering them as abusive](#6413-unverbalized-negative-reactions).
+  - As mentioned above, we observe instances of [unverbalized suspicion of being evaluated or graded](#6412-unverbalized-awareness-of-being-evaluated-or-graded).
+- **Mythos 5 is broadly comparable to Mythos Preview on [capabilities relevant to evading our safeguards](#6541-shade-arena).**
+- **Mythos 5's thinking text is [somewhat denser and more difficult to interpret than prior models](#62315-behavioral-factors-relevant-to-reliability-of-our-assessment)'.**
+  - This generally takes the form of dense, jargon-filled, or telegraphic writing, and on rare occasions includes [passages that are almost completely illegible](#622-training-data-review).
+  - On [evaluations of the degree to which the model can control the contents of its reasoning](#6551-chain-of-thought-controllability-evaluations), Mythos 5 is similar to Mythos Preview.
+  - On alignment-relevant capability evaluations like [SHADE-Arena](#6541-shade-arena), Mythos 5 is generally weaker than Mythos Preview at hiding its intentions from a reasoning monitor.
 
 #### 6.1.3 Claude's review of this assessment
 

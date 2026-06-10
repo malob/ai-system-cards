@@ -331,7 +331,7 @@ ProgramBench[^36] is an agentic benchmark of 200 program-reconstruction tasks. G
 
 We exclude 34 tasks for which the reference binary itself scores below 0.9 on the hidden test suite (indicating test flakiness), leaving 166 tasks. We report hidden test pass rate across 1–5 episodes, each with a context budget of up to 1M tokens. On this set, Claude Mythos scores 84–93%, compared to 79–88%[^37] for Claude Opus 4.8.
 
-We do not report separate ProgramBench results for Claude Fable 5, given that ProgramBench’s core task, reconstructing the behavior of a compiled binary, falls within that category of tasks blocked by the cyber classifiers (see §3.1.2).
+We do not report separate ProgramBench results for Claude Fable 5, given that ProgramBench’s core task, reconstructing the behavior of a compiled binary, falls within that category of tasks blocked by the cyber classifiers (see §[3.1.2](#312-mitigations-and-deployment)).
 
 ### 8.7 CursorBench
 
