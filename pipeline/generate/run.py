@@ -40,6 +40,48 @@ def section_ranges() -> list[tuple[str, int, int]]:
     return out
 
 
+def first_headings() -> dict:
+    """section name -> squashed first-heading text (from v1's files), used to
+    split SHARED boundary pages: v1 sections overlap by one page (02a ends and
+    02b begins on p.36); assembling the full page into both duplicates half a
+    page of content at every boundary."""
+    import sys as _sys
+    _sys.path.insert(0, str(HERE.parents[0] / "verifier"))
+    import norm
+    out = {}
+    for p in sorted((CARD / "sections").glob("*.md")):
+        for line in p.read_text().splitlines():
+            if line.startswith("#"):
+                out[p.name] = norm.squash(line.lstrip("# "))[:40]
+                break
+    return out
+
+
+def first_headings() -> dict:
+    """section name -> squashed first-heading text from v1's files. Used to
+    split SHARED boundary pages (v1 ranges overlap: 02a ends and 02b begins on
+    p.36): content before the incoming section's heading belongs to the
+    previous section."""
+    import norm
+    out = {}
+    for p in sorted((CARD / "sections").glob("*.md")):
+        for line in p.read_text().splitlines():
+            if line.startswith("#"):
+                out[p.name] = norm.squash(line.lstrip("# "))[:40]
+                break
+    return out
+
+
+def heading_index(blocks: list, head_key: str):
+    import norm
+    for i, blk in enumerate(blocks):
+        if blk["type"] == "heading":
+            t = norm.squash(" ".join(l["text"] for l in blk["lines"]))
+            if t.startswith(head_key[:24]) or head_key.startswith(t[:24]):
+                return i
+    return None
+
+
 def manifest_chips() -> dict:
     mtext = (CARD / "style-manifest.yaml").read_text()
     block = re.search(r"^chips:\n((?:  .+\n)+)", mtext, re.M)
@@ -107,21 +149,44 @@ def main():
             best = max((s for s, _ in starts if s <= p), default=a)
             owner[p] = next(n for s, n in starts if s == best)
 
+    firsts = first_headings()
+    shared = {a for _, a, _ in ranges} & {b for _, _, b in ranges}
+
     written = []
-    for name, a, b in ranges:
+    for si, (name, a, b) in enumerate(ranges):
         sel = [p for p in range(a, b + 1) if p in want and p not in TOC and owner.get(p) == name]
         if not sel:
             continue
         blocks = []
+        start_midpage = False
         for pno in sel:
-            blocks += assemble.assemble_page(pno, pages[pno - 1], figures_map.get(str(pno), []),
+            pblocks = assemble.assemble_page(pno, pages[pno - 1], figures_map.get(str(pno), []),
                                              chips, tables.get_tables(pno, pages[pno - 1]))
+            if pno == a and pno in shared:
+                # shared start page: this section's content begins at its heading
+                i = heading_index(pblocks, firsts.get(name, ""))
+                if i:
+                    pblocks = pblocks[i:]
+                    start_midpage = True
+            blocks += pblocks
+        # shared END page (owned by the next section): the pre-heading slice
+        # belongs HERE, so the boundary paragraph can stitch across pages
+        if si + 1 < len(ranges) and ranges[si + 1][1] == b and b in want and b not in TOC \
+                and owner.get(b) != name:
+            pblocks = assemble.assemble_page(b, pages[b - 1], figures_map.get(str(b), []),
+                                             chips, tables.get_tables(b, pages[b - 1]))
+            i = heading_index(pblocks, firsts.get(ranges[si + 1][0], ""))
+            if i:
+                blocks += pblocks[:i]
         # footnote blocks live at page ends and would break cross-page
         # stitching adjacency (the p.19-20 split); they serialize at section
         # end regardless, so lift them out before stitching
-        fn_blocks = [b for b in blocks if b["type"] == "footnote"]
-        blocks = stitch([b for b in blocks if b["type"] != "footnote"]) + fn_blocks
-        md, _ = serialize.serialize_blocks(blocks, page_of_prev_block=-1, oracle_pages=pages, chips=chips)
+        fn_blocks = [bl for bl in blocks if bl["type"] == "footnote"]
+        blocks = stitch([bl for bl in blocks if bl["type"] != "footnote"]) + fn_blocks
+        # a mid-page start suppresses the leading page marker (the previous
+        # section already carries it — v1's shared-page convention, P1-checked)
+        md, _ = serialize.serialize_blocks(blocks, page_of_prev_block=(a if start_midpage else -1),
+                                           oracle_pages=pages, chips=chips)
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")
         written.append((name, sel))
         print(f"{name}: pages {sel[0]}..{sel[-1]} ({len(sel)} pages, {len(blocks)} blocks)")
