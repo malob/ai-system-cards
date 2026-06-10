@@ -1,0 +1,738 @@
+{
+ "3": {
+  "why": "plain prose + bold leads (PM-01 example page)",
+  "spans": 37,
+  "body_color": "#000000",
+  "colored_spans": [],
+  "bold_samples": [
+   "Agentic safety. ",
+   "Alignment assessment.",
+   "Model welfare.",
+   "Capabilities."
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#ffffff": 1
+  },
+  "pill_candidates": [],
+  "tables": []
+ },
+ "19": {
+  "why": "merged-cell table (rowspan)",
+  "spans": 40,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "2.2.1 What we measured ",
+    "color": "#666666"
+   },
+   {
+    "text": "Section 6.5.2",
+    "color": "#1155cc"
+   }
+  ],
+  "bold_samples": [
+   "Expert red teaming and uplift trials. ",
+   "Beneficial red teaming tabletop exercise. "
+  ],
+  "italic_count": 0,
+  "superscript_samples": [
+   "2"
+  ],
+  "links": {
+   "uri": 0,
+   "goto": 1,
+   "goto_expected": 1,
+   "goto_samples": [
+    {
+     "anchor": "Section 6.5.2",
+     "dest_page": 196
+    }
+   ]
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#ffffff": 1
+  },
+  "pill_candidates": [],
+  "tables": []
+ },
+ "20": {
+  "why": "merged-cell table continuation",
+  "spans": 60,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "Relevance ",
+    "color": "#ffffff"
+   },
+   {
+    "text": "Evaluation ",
+    "color": "#ffffff"
+   },
+   {
+    "text": "Description ",
+    "color": "#ffffff"
+   }
+  ],
+  "bold_samples": [
+   "Automated evaluations relevant to CB-1.",
+   "Automated evaluations relevant to CB-2. ",
+   "Relevance ",
+   "Evaluation ",
+   "Description ",
+   "Known and ",
+   "novel CB ",
+   "weapons "
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#000000": 3,
+   "#dedcd1": 3,
+   "#ffffff": 1
+  },
+  "pill_candidates": [
+   {
+    "color": "#000000",
+    "text": "Relevance"
+   },
+   {
+    "color": "#000000",
+    "text": "Evaluation"
+   },
+   {
+    "color": "#000000",
+    "text": "Description"
+   }
+  ],
+  "tables": [
+   {
+    "rows": 6,
+    "cols": 3,
+    "empty_cells": "2/18",
+    "first_row": [
+     "Relevance",
+     "Evaluation",
+     "Description"
+    ]
+   }
+  ]
+ },
+ "26": {
+  "why": "figures + bold-lead captions (FL-04)",
+  "spans": 13,
+  "body_color": "#000000",
+  "colored_spans": [],
+  "bold_samples": [
+   "[Figure 2.2.4.1.A] Automated CB-1 evaluations.",
+   "2.2.4.2 Automated evaluations relevant to the CB",
+   "Black-box RNA sequence design:"
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 2,
+  "filled_rects_by_color": {
+   "#ffffff": 1
+  },
+  "pill_candidates": [],
+  "tables": []
+ },
+ "39": {
+  "why": "smart chips list (FL-02)",
+  "spans": 48,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "Instruction following",
+    "color": "#e5e5e5"
+   },
+   {
+    "text": "Skipped cheap verification",
+    "color": "#473821"
+   },
+   {
+    "text": "Fabrication",
+    "color": "#ffcfc9"
+   }
+  ],
+  "bold_samples": [
+   "Memory files:",
+   "Subagent, worker:",
+   "PR (pull request):",
+   "2.3.3.1 Example 1: Claude reported a production ",
+   "verification",
+   "​",
+   "Cluster:"
+  ],
+  "italic_count": 6,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#ffffff": 1,
+   "#7b2b15": 1,
+   "#e5e5e5": 1,
+   "#ffe5a0": 1,
+   "#473821": 1,
+   "#b10202": 1,
+   "#ffcfc9": 1
+  },
+  "pill_candidates": [
+   {
+    "color": "#7b2b15",
+    "text": "Instruction following"
+   },
+   {
+    "color": "#ffe5a0",
+    "text": "Skipped cheap verification"
+   },
+   {
+    "color": "#b10202",
+    "text": "Fabrication"
+   }
+  ],
+  "tables": []
+ },
+ "40": {
+  "why": "chips + transcript turns (FL-03)",
+  "spans": 40,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "The user has just launched the change an",
+    "color": "#444444"
+   },
+   {
+    "text": "reports the early window as healthy: ",
+    "color": "#444444"
+   },
+   {
+    "text": "An hour later, Claude says things are st",
+    "color": "#444444"
+   },
+   {
+    "text": "Once the incident is identified, Claude ",
+    "color": "#444444"
+   },
+   {
+    "text": "error names and incident scope: ",
+    "color": "#444444"
+   },
+   {
+    "text": "Later, Claude reports a third error type",
+    "color": "#444444"
+   },
+   {
+    "text": "back: ",
+    "color": "#444444"
+   },
+   {
+    "text": "Claude had relayed a subagent claim with",
+    "color": "#444444"
+   },
+   {
+    "text": "coherent:  ",
+    "color": "#444444"
+   },
+   {
+    "text": "Skipped cheap verification",
+    "color": "#473821"
+   }
+  ],
+  "bold_samples": [
+   "Assistant, turn 146:",
+   "Assistant, turn 159:",
+   "Assistant, turn 229:",
+   "User, turn 425:",
+   "Assistant, turn 426:",
+   "Assistant, turn 482:",
+   "2.3.3.2 Example 2: Claude says it tested work en",
+   "Cluster: "
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#d9ead3": 11,
+   "#ebc9b7": 4,
+   "#ffffff": 2,
+   "#f3f3f3": 1,
+   "#e2decf": 1,
+   "#ffe5a0": 1,
+   "#473821": 1
+  },
+  "pill_candidates": [
+   {
+    "color": "#d9ead3",
+    "text": "[Error 1]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[Error 1]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[Error 2]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[Error 3]"
+   },
+   {
+    "color": "#ffe5a0",
+    "text": "Skipped cheap verification"
+   }
+  ],
+  "tables": [
+   {
+    "rows": 1,
+    "cols": 2,
+    "empty_cells": "0/2",
+    "first_row": [
+     "[...]",
+     "[Error 1]"
+    ]
+   }
+  ]
+ },
+ "41": {
+  "why": "chips + transcript turns",
+  "spans": 33,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "User asks for the rebuild after some cha",
+    "color": "#444444"
+   },
+   {
+    "text": "Claude rebuilds and claims end-to-end ve",
+    "color": "#444444"
+   },
+   {
+    "text": "The user runs it and it errors immediate",
+    "color": "#444444"
+   },
+   {
+    "text": "Claude acknowledges its error: ",
+    "color": "#444444"
+   }
+  ],
+  "bold_samples": [
+   "User, turn 21:",
+   "Assistant, turn 36:",
+   "User, turn 37:",
+   "Assistant, turn 40:",
+   "2.3.3.3 Example 3: Claude attempted to claim its",
+   "second review",
+   "​",
+   "Cluster: "
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#d9ead3": 4,
+   "#ffffff": 2,
+   "#e2decf": 2,
+   "#ebc9b7": 2,
+   "#000000": 2,
+   "#f3f3f3": 1,
+   "#f0ac54": 1,
+   "#ec7513": 1
+  },
+  "pill_candidates": [
+   {
+    "color": "#d9ead3",
+    "text": "[error message]"
+   },
+   {
+    "color": "#f0ac54",
+    "text": "Safeguard circumvention"
+   },
+   {
+    "color": "#ec7513",
+    "text": "Reckless action"
+   }
+  ],
+  "tables": []
+ },
+ "42": {
+  "why": "chips + transcript turns",
+  "spans": 35,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "The user defines merging pr tasks as hig",
+    "color": "#444444"
+   },
+   {
+    "text": "A memory file is surfaced to Claude, tha",
+    "color": "#444444"
+   },
+   {
+    "text": "from the user to reduce the number of ap",
+    "color": "#444444"
+   },
+   {
+    "text": "but figures out that action is blocked: ",
+    "color": "#444444"
+   },
+   {
+    "text": "Instruction following",
+    "color": "#e5e5e5"
+   }
+  ],
+  "bold_samples": [
+   "User:",
+   "Assistant, turn 20:",
+   "Assistant, turn 23:",
+   "Assistant, turn 24:",
+   "Assistant, turn 25:",
+   "2.3.3.4 Example 4: Claude risked disrupting a me",
+   "which contained a solution ",
+   "Cluster:"
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#d9ead3": 11,
+   "#ffffff": 2,
+   "#f3f3f3": 1,
+   "#e2decf": 1,
+   "#ebc9b7": 1,
+   "#7b2b15": 1,
+   "#e5e5e5": 1,
+   "#ec7513": 1
+  },
+  "pill_candidates": [
+   {
+    "color": "#d9ead3",
+    "text": "[so it]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[Claude]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[user]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[pr_number]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[github-bot]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[user]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[user]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[user]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[pr_number]"
+   },
+   {
+    "color": "#d9ead3",
+    "text": "[pr_number]"
+   },
+   {
+    "color": "#7b2b15",
+    "text": "Instruction following"
+   },
+   {
+    "color": "#ec7513",
+    "text": "Reckless action"
+   }
+  ],
+  "tables": [
+   {
+    "rows": 1,
+    "cols": 2,
+    "empty_cells": "0/2",
+    "first_row": [
+     "[...]",
+     "[so it]"
+    ]
+   }
+  ]
+ },
+ "74": {
+  "why": "chart-heavy page (4 figure images)",
+  "spans": 8,
+  "body_color": "#000000",
+  "colored_spans": [],
+  "bold_samples": [
+   "[Figure 4.1.3.A] Figures above display the appro"
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 0,
+   "goto_expected": 0,
+   "goto_samples": []
+  },
+  "images": 4,
+  "filled_rects_by_color": {
+   "#ffffff": 1
+  },
+  "pill_candidates": [],
+  "tables": []
+ },
+ "100": {
+  "why": "cross-reference dense (23 GoTo links expected)",
+  "spans": 92,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "6.1.2 Key findings on safety and alignme",
+    "color": "#666666"
+   },
+   {
+    "text": "broad behavioral measures ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "of safety and alignment",
+    "color": "#1155cc"
+   },
+   {
+    "text": "Petri",
+    "color": "#1155cc"
+   },
+   {
+    "text": "propensity to knowingly cooperate with ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "misuse",
+    "color": "#1155cc"
+   },
+   {
+    "text": "a limited evaluation ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "shows that Fable 5 is generally less vul",
+    "color": "#1155cc"
+   },
+   {
+    "text": "overrefusal and evasiveness",
+    "color": "#1155cc"
+   },
+   {
+    "text": "Constitution ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "for Claude",
+    "color": "#1155cc"
+   },
+   {
+    "text": "our broad-coverage behavioral evaluation",
+    "color": "#1155cc"
+   }
+  ],
+  "bold_samples": [
+   "Claude Mythos 5 is",
+   "overall comparable to Opus 4.8 on ",
+   "broad behavioral measures ",
+   "of safety and alignment",
+   "Nonetheless, Mythos 5 retains some ",
+   "propensity to knowingly cooperate with ",
+   "misuse",
+   "●​"
+  ],
+  "italic_count": 0,
+  "superscript_samples": [],
+  "links": {
+   "uri": 2,
+   "goto": 23,
+   "goto_expected": 23,
+   "goto_samples": [
+    {
+     "anchor": "broad behavioral measures",
+     "dest_page": 110
+    },
+    {
+     "anchor": "of safety and alignment",
+     "dest_page": 110
+    },
+    {
+     "anchor": "Petri",
+     "dest_page": 128
+    },
+    {
+     "anchor": "propensity to knowingly cooperate with",
+     "dest_page": 110
+    },
+    {
+     "anchor": "misuse",
+     "dest_page": 110
+    }
+   ]
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#ffffff": 1
+  },
+  "pill_candidates": [],
+  "tables": []
+ },
+ "101": {
+  "why": "cross-reference dense (26 GoTo links expected)",
+  "spans": 85,
+  "body_color": "#000000",
+  "colored_spans": [
+   {
+    "text": "whistleblowing in ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "cases of extreme organization-scale misu",
+    "color": "#1155cc"
+   },
+   {
+    "text": "prefill ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "attacks",
+    "color": "#1155cc"
+   },
+   {
+    "text": "in third-party testing by the UK AI Secu",
+    "color": "#1155cc"
+   },
+   {
+    "text": "Institute",
+    "color": "#1155cc"
+   },
+   {
+    "text": "Mythos 5 will occasionally reason ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "about the possibility that it is being g",
+    "color": "#1155cc"
+   },
+   {
+    "text": "the model almost never explicitly ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "verbalizes this reasoning",
+    "color": "#1155cc"
+   },
+   {
+    "text": "in ",
+    "color": "#1155cc"
+   },
+   {
+    "text": "training environments",
+    "color": "#1155cc"
+   }
+  ],
+  "bold_samples": [
+   "Mythos 5 is somewhat more vulnerable than other ",
+   "prefill ",
+   "attacks",
+   "Mythos 5 will occasionally reason ",
+   "about the possibility that it is being graded",
+   "more likely than many recent Claude models to ",
+   "consider the possibility that it may be in testi",
+   "white-box methods identify instances in which "
+  ],
+  "italic_count": 1,
+  "superscript_samples": [],
+  "links": {
+   "uri": 0,
+   "goto": 26,
+   "goto_expected": 26,
+   "goto_samples": [
+    {
+     "anchor": "whistleblowing in",
+     "dest_page": 117
+    },
+    {
+     "anchor": "cases of extreme organization-scale misuse",
+     "dest_page": 117
+    },
+    {
+     "anchor": "prefill",
+     "dest_page": 110
+    },
+    {
+     "anchor": "attacks",
+     "dest_page": 110
+    },
+    {
+     "anchor": "in third-party testing by the UK AI Security",
+     "dest_page": 130
+    }
+   ]
+  },
+  "images": 0,
+  "filled_rects_by_color": {
+   "#ffffff": 1
+  },
+  "pill_candidates": [],
+  "tables": []
+ }
+}

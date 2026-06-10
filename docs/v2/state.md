@@ -21,33 +21,45 @@ taxonomy in its §2 is load-bearing).
 ## Status
 
 - **Phase:** 1 (groundwork) — in progress.
-- Done: meta scaffolding (charter, decisions D1–D12, this file, root CLAUDE.md);
-  **experiment 01, the v1 defect catalog**
-  ([experiments/01-v1-defect-catalog/](experiments/01-v1-defect-catalog/)) — 18
-  defect classes with detection signals, counts, and calibration refs
-  (`f60899a` = pre-fix content baseline, `fb483fb` = pre-link baseline). Two
-  classes found beyond the brief's taxonomy (CA-01 injected artifact lines —
-  hence bidirectional text equality; FL-06 directive nesting). No v2 code yet.
+- Done:
+  - Meta scaffolding (charter, decisions D1–D13, this file, root CLAUDE.md).
+  - **Experiment 01 — v1 defect catalog**
+    ([experiments/01-v1-defect-catalog/](experiments/01-v1-defect-catalog/)):
+    19 defect classes with detection signals, counts, calibration refs
+    (`f60899a` = pre-fix content baseline, `fb483fb` = pre-link baseline).
+  - **Verification contract** ([verification-contract.md](verification-contract.md))
+    — the spine: stable invariant IDs (T/L/S/TB/F/FN/P/SC gates, N/V advisors,
+    H human surface), normalization allowlist, exclusions, traceability map.
+  - **Experiment 02 part 1 — PyMuPDF probe**
+    ([experiments/02-extractor-bakeoff/](experiments/02-extractor-bakeoff/)):
+    links/styles/superscripts/images all gate-feasible (GoTo extraction exact on
+    probe pages). Discoveries: chip color lives in pill *fills* (S2 amended);
+    narrator commentary is gray #444444 (mechanical prior for turn boundaries);
+    FL-07 found (placeholder highlights flattened).
+- No v2 pipeline code yet. Nothing pushed (D13).
+
+## Pending owner decisions (D2 issue-type queue)
+
+- **FL-07:** should v2 represent the light-green redaction-placeholder highlights
+  (`[Error 1]`, `[user]`…) as a typed mark, or intentionally drop them? (First
+  live entry; decide once, it becomes a spec rule.)
 
 ## Next actions (in order)
 
-1. **Draft the verification contract** — `docs/v2/verification-contract.md`.
-   Every defect class (start from the catalog's `detection:` fields + imagination)
-   mapped to its catcher: mechanical invariant / N-version diff / vision judge /
-   human escalation, each marked gate or advisor (D8). Must include
-   **bidirectional** text equality (see CA-01). This is the spine of v2.
-2. **Extractor bake-off** — `docs/v2/experiments/02-extractor-bakeoff/`.
-   Candidates and test pages per brief §6 (PyMuPDF, marker, docling, MinerU,
-   vision-LLM baseline). Score primarily on *which contract invariants each tool
-   makes enforceable*, not output prettiness.
-3. **Build mechanical verifier v0; calibrate.** Run against `f60899a` sections —
-   must rediscover the cataloged defects (recall scored per experiment 01's
-   "how to use" section); then mutation-test recall per class (D6). Gaps → new
-   checks or explicit human-coverage notes in the contract.
-4. **Design + build the generation loop** (only after 1–3): typed document model
-   schema, semantic-proposal prompts, repair loop against gates, N-version
-   arbitration, vision sweep, escalation worklist.
-5. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
+1. **Bake-off part 2 — layout models** (`experiments/02-extractor-bakeoff/`,
+   pending section of its README): pymupdf_layout / marker / docling / MinerU /
+   vision-LLM on the two unresolved signals only — TB1 merged-cell table
+   structure and T2 reading order (incl. false-positive table rate on transcript
+   pages). Heavy installs; use `uv run --with`.
+2. **Build mechanical verifier v0; calibrate.** Implement the gate invariants on
+   the PyMuPDF oracle; run against `f60899a` sections — must rediscover the
+   cataloged defects (recall per experiment 01's "how to use"); then
+   mutation-test per class (D6). Gaps → new checks or explicit human-coverage
+   notes in the contract.
+3. **Design + build the generation loop** (only after 1–2): typed document model
+   schema (informed by what the oracle emits), semantic-proposal prompts, repair
+   loop against gates, N-version arbitration, vision sweep, escalation worklist.
+4. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
 
 ## Open questions
@@ -57,6 +69,9 @@ taxonomy in its §2 is load-bearing).
 - Escalation/triage UX — start with the dumbest thing (a flat worklist file);
   invest only if volume demands.
 - Where v2 pipeline code lives (`v2/`? `pipeline/`?) — decide when first code lands.
+- ~~Chip/turn mechanical detectability (brief §7)~~ — largely answered by
+  experiment 02: chip = pill fill color; commentary = gray text. Residual
+  ambiguity goes to N1.
 
 ## Protocol reminders
 

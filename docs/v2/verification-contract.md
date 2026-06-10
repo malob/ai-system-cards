@@ -52,9 +52,11 @@ that's noted, and the bake-off (experiment 02) is what firms it up.
 - **S1 — Bold/italic run equality.** Style runs from span flags match the model's
   emphasis marks, modulo *typed* conversions (a bold run consumed by a heading,
   chip, or turn label is accounted for, never silently dropped). (FL-04.)
-- **S2 — Colored-span coverage.** Every non-body-color text span maps to a typed
-  node that explains it (chip, link, heading style); none flattened to plain text
-  (FL-02 detection half).
+- **S2 — Colored-signal coverage.** Every chip-pill background fill (pill-sized
+  filled rect behind a text span — experiment 02: the *fill* color carries the
+  registry color; chip text color is just contrast) and every non-body-color text
+  span maps to a typed node that explains it (chip, link, heading style,
+  transcript commentary, highlight); none flattened to plain text (FL-02, FL-07).
 - **S3 — Chip vocabulary.** Every chip label ∈ the per-card registry
   (`meta.yaml` chips) and each label has exactly one color document-wide.
   (Categorization quality — *which* label — is N1's problem.)
@@ -101,8 +103,11 @@ that's noted, and the bake-off (experiment 02) is what firms it up.
 ### N — Semantic judgment (no exact oracle; D7 machinery)
 
 - **N1 — N-version agreement.** For judgment calls — transcript-turn boundaries
-  (FL-03), chip categorization, heading-vs-bold, blockquote-vs-example,
-  reading-order repair — N independent proposals are tree-diffed. Agreement =
+  (FL-03; experiment 02 found a strong mechanical prior: narrator commentary is
+  gray `#444444` vs body-black turn text, so N1 arbitrates residual ambiguity
+  rather than working unaided), chip categorization, heading-vs-bold,
+  blockquote-vs-example, reading-order repair — N independent proposals are
+  tree-diffed. Agreement =
   accept; disagreement → arbiter with page image; arbiter uncertainty → H1.
   Every generator also emits a structured uncertainty log; logged uncertainties
   route to the judge regardless of agreement.
@@ -162,6 +167,13 @@ Every invariant carries a status; this section is updated as experiments land.
 Target: each gate **mutation-tested** with per-class recall (D6) and, where
 applicable, **calibrated** against the v1 corpus (experiment 01 refs).
 
-As of 2026-06-09: all invariants **untested** (contract just drafted). First
-feasibility probe of the oracle signals (colors, GoTo links, style flags) is
-experiment 02.
+As of 2026-06-09 (experiment 02 part 1, PyMuPDF probe on 11 pages):
+
+- **Signal-feasible:** L1/L2 (URI+GoTo exact on probe pages: 23/23, 26/26, 1/1),
+  S1 (bold/italic flags incl. caption leads), S2 (chip fills — signal amended),
+  FN1 (superscript flag), F1 (image counts exact), P1 (page-anchored by
+  construction).
+- **Extractor-dependent, unresolved:** TB1 (PyMuPDF found a 6×3 merged-cell table
+  but hallucinated 1×2 tables inside transcripts), T2 reading order — both go to
+  experiment 02 part 2 (layout models).
+- **No invariant is yet implemented, calibrated, or mutation-tested.**
