@@ -41,23 +41,6 @@ def section_ranges() -> list[tuple[str, int, int]]:
 
 
 def first_headings() -> dict:
-    """section name -> squashed first-heading text (from v1's files), used to
-    split SHARED boundary pages: v1 sections overlap by one page (02a ends and
-    02b begins on p.36); assembling the full page into both duplicates half a
-    page of content at every boundary."""
-    import sys as _sys
-    _sys.path.insert(0, str(HERE.parents[0] / "verifier"))
-    import norm
-    out = {}
-    for p in sorted((CARD / "sections").glob("*.md")):
-        for line in p.read_text().splitlines():
-            if line.startswith("#"):
-                out[p.name] = norm.squash(line.lstrip("# "))[:40]
-                break
-    return out
-
-
-def first_headings() -> dict:
     """section name -> squashed first-heading text from v1's files. Used to
     split SHARED boundary pages (v1 ranges overlap: 02a ends and 02b begins on
     p.36): content before the incoming section's heading belongs to the
@@ -90,6 +73,41 @@ def manifest_chips() -> dict:
 
 
 UNTERMINATED = tuple(".!?:”\"’")
+TR = re.compile(r"<tr>.*?</tr>", re.S)
+
+
+def _tbl_rows(html):
+    return TR.findall(html)
+
+
+def _row_squash(row):
+    return re.sub(r"\s+", "", re.sub(r"<[^>]+>", "|", row))
+
+
+def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | None:
+    """Merge two adjacent-page docling fragments of one logical table: same
+    column count, repeated header rows dropped (p.20-21, p.252-253, the
+    nine-page appendix table)."""
+    r1, r2 = _tbl_rows(prev_html), _tbl_rows(next_html)
+    if not r1 or not r2:
+        return None
+    ncols = lambda r: len(re.findall(r"<t[hd]", r))
+    if ncols(r2[0]) != ncols(r1[0]) and ncols(r2[0]) != ncols(r1[-1]):
+        return None
+    # drop fragment-2 header rows that repeat fragment-1's
+    i = 0
+    while i < len(r2) and i < len(r1) and _row_squash(r2[i]) == _row_squash(r1[i]):
+        i += 1
+    body = "".join(r2[i:])
+    if body and next_page:
+        # the page marker rides INSIDE the merged table between fragments
+        # (v1's convention; renderer turns it into an anchor)
+        body = f"<!-- p.{next_page} -->" + body
+    if not body:
+        return prev_html
+    if "</tbody>" in prev_html:
+        return prev_html.replace("</tbody>", body + "</tbody>", 1)
+    return prev_html.replace("</table>", body + "</table>", 1)
 
 
 def join_quote_blocks(md: str) -> str:
@@ -129,6 +147,14 @@ def stitch(blocks: list[dict]) -> list[dict]:
     page marker inline at the exact break point."""
     out = []
     for blk in blocks:
+        # adjacent-page table fragments merge into one logical table
+        if (out and blk["type"] == "table_html" and out[-1]["type"] == "table_html"
+                and blk["page"] == out[-1].get("last_page", out[-1]["page"]) + 1):
+            merged = _merge_tables(out[-1]["html"], blk["html"], blk["page"])
+            if merged is not None:
+                out[-1]["html"] = merged
+                out[-1]["last_page"] = blk["page"]  # chain across many pages
+                continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
                 and out[-1]["type"] in ("paragraph", "item")):
             prev = out[-1]

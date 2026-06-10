@@ -202,6 +202,11 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 out.append("```\n" + raw + "\n```\n")
         elif t == "table_html":
             out.append(blk["html"] + "\n")
+            # a merged multi-page table carries embedded page markers: advance
+            # the tracker so those pages don't re-emit duplicate markers later
+            embedded = [int(n) for n in re.findall(r"<!-- p\.(\d+) -->", blk["html"])]
+            if embedded:
+                cur_page = max(cur_page, max(embedded))
         else:
             # never silently drop a block: emit its text so T1 catches issues
             text, marks = block_text_and_marks(blk, page, chips)
