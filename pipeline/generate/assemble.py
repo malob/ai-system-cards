@@ -398,6 +398,10 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                 marks.append(("bold", m_start, m_end, None))
             if s["italic"]:
                 marks.append(("italic", m_start, m_end, None))
+            # NOTE: prose-underline marks were tried here (caption 'underlined'
+            # word) and reverted — rule-matching over-fired outside tables and
+            # corrupted the stream (T1 6->33). Needs rule-color/context
+            # filtering; queued. Table-cell underlines (FL-09) live in tables.py.
             for pi, pill in enumerate(pills):
                 if "bbox" in pill and _rect_contains(pill["bbox"], s["bbox"], slack=2.5):
                     if pill["color"] in manifest_chips:

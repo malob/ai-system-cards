@@ -98,7 +98,11 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
     # bold only signifies when it DEVIATES from the table's dominant weight:
     # some tables (2.2.1.A) are set entirely in Lora-Bold, where the visual
     # weight reads regular and 'bold' carries no information (owner-flagged)
-    boldish = [s for s in spans if s["text"].strip()]
+    # exclude header text (white-on-dark) from the dominance count, else
+    # data-cell bolds get suppressed in tables with bold headers + bold
+    # row-label columns (the 4.4.2 regression)
+    boldish = [s for s in spans
+               if s["text"].strip() and s.get("color") not in ("#ffffff", "#faf9f5")]
     bold_share = sum(1 for s in boldish if s.get("bold")) / max(1, len(boldish))
     bold_signifies = bold_share <= 0.5
 
@@ -106,8 +110,8 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
         sb = s["bbox"]
         for ru in rules:
             rb = ru["bbox"]
-            if (sb[3] - 1.5 <= rb[1] <= sb[3] + 3.5
-                    and min(sb[2], rb[2]) - max(sb[0], rb[0]) > 0.6 * (sb[2] - sb[0])):
+            if (sb[3] - 2.5 <= rb[1] <= sb[3] + 5.0
+                    and min(sb[2], rb[2]) - max(sb[0], rb[0]) > 0.5 * (sb[2] - sb[0])):
                 return True
         return False
 

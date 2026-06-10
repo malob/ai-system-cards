@@ -13,6 +13,7 @@ SYNTAX = {
     "bold": ("**", "**"),
     "italic": ("*", "*"),
     "chip": (":chip[", "]"),
+    "underline": ("<u>", "</u>"),  # inline raw HTML, like v1's <sup> usage
     # placeholder: plain text until the renderer gains :ph (FL-07/D17)
 }
 

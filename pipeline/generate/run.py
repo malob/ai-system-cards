@@ -95,8 +95,21 @@ UNTERMINATED = tuple(".!?:”\"’")
 def join_quote_blocks(md: str) -> str:
     """Adjacent quote blocks separated by a blank line render as SEPARATE
     blockquotes in markdown (owner-flagged on the METR quote, §2.3.8); a bare
-    '>' on the separator keeps them one quote."""
+    '>' on the separator keeps them one quote. A standalone page marker
+    between quote blocks (quote spans a page break, §2.3.8/§3.3.1) moves
+    INSIDE the quote as '> <!-- p.N -->'."""
     lines = md.split("\n")
+    # pass 1: markers sandwiched between quote lines become quoted markers
+    def neighbor(idx, step):
+        j = idx + step
+        while 0 <= j < len(lines) and lines[j] == "":
+            j += step
+        return lines[j] if 0 <= j < len(lines) else ""
+    for i, l in enumerate(lines):
+        if (re.fullmatch(r"<!-- p\.\d+ -->", l.strip())
+                and neighbor(i, -1).startswith(">") and neighbor(i, 1).startswith(">")):
+            lines[i] = "> " + l.strip()
+    # pass 2: blank separators between quote lines become '>'
     out = []
     for i, l in enumerate(lines):
         if (l == "" and out and out[-1].startswith(">")
