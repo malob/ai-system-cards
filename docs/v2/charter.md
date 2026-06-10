@@ -59,6 +59,15 @@ verification quality is what makes the green light mean something.
 7. **The compounding assets are the spec, the verifier suite, and the decision
    log** — not any single converted card. Each card converted should make the next
    one cheaper.
+8. **Universal core, scoped idioms (D16).** The invariants and schema are
+   vendor-agnostic and essentially fixed; each card's visual idioms live in a
+   small per-card style manifest derived from a mechanical signal census and
+   confirmed by the owner once. The closure rule — no unexplained recurring
+   signal — is how new conventions surface without being anticipated. Rules
+   never accumulate globally, so there is no house of cards to topple.
+9. **Capture is fidelity; presentation is editorial (D17).** The model records
+   semantic identity with source provenance; how the site styles those roles is
+   a design decision, reviewed by the owner, never fidelity-gated.
 
 ## Architecture sketch
 

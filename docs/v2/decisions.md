@@ -119,3 +119,49 @@ its paragraph segmentation is too mushy to be the backbone. The LLM proposes the
 semantic layer on top of facts it cannot contradict. marker/MinerU/pymupdf_layout
 left unprobed — nothing left for them to answer. Revisit if verifier-v0
 calibration finds docling-resistant tables.
+
+*(2026-06-10, owner asked for more:* part 3 ran docling and marker on the hard
+table set — p.95/98 mixed spans, the p.252 15×8 monster, the p.309–318 nine-page
+table. Docling: all 2-D merges exact, multi-page tables come back as clean
+per-page fragments to stitch in-pipeline. See experiment 02 README part 3 for
+marker's result. D14 stands.)*
+
+## D15 — FL-07 resolved: preserve placeholder/redaction highlights (2026-06-10)
+
+Owner's call ("I think it would be nice to preserve them"). The light-green
+`#d9ead3` placeholder/redaction signals become a typed mark in the document
+model. The census shows they occur both as inline pills (`[Error 1]`) and as
+larger multi-line boxes, so the mark needs inline and block forms. How they
+*look* on the site is editorial (D17); that they're captured is fidelity.
+
+## D16 — Stratified spec: universal core + per-card style manifests + closure (2026-06-10)
+
+Resolves the owner's "house of cards" worry about cross-card/cross-vendor growth.
+Three strata:
+
+1. **Universal invariants** (the verification contract) — defined against any
+   PDF's mechanical facts; mention no vendor idioms; do not grow per card.
+2. **Universal schema** (typed document model) — heading/para/list/table/figure/
+   footnote/link/emphasis plus a small extensible set of semantic marks (chip,
+   turn, placeholder…). Grows rarely, by owner decision.
+3. **Per-card style manifest** — a small *data* file mapping that card's visual
+   signals to semantic roles ("fill #ffe5a0 ↦ chip(yellow)"; "text #444444 in
+   transcript boxes ↦ commentary"). Derived mechanically by the signal census
+   (experiment 03), confirmed by the owner in one sitting, scoped to the card so
+   manifests can never conflict across cards.
+
+The **closure rule** makes this generalize: any recurring distinctive signal the
+manifest doesn't explain is a flag, not a pass-through. A new vendor's idioms
+don't need anticipating — the census surfaces them, the owner maps them once,
+conversion proceeds. What compounds across cards is machinery (census, gates,
+manifest workflow) and the schema — never a global rule pile.
+
+## D17 — Capture is fidelity-bound; presentation is editorial (2026-06-10)
+
+Owner's framing. The document model captures *semantic identity* with source
+provenance (chip role + registry color family, placeholder mark, code span —
+with exact source colors stored as provenance). How the site *renders* those
+roles (palette, dark mode, pill styling) is a design-system decision the owner
+makes at render review — it is recorded but not fidelity-gated. Consequently the
+V1 vision judge compares structure and semantics ("same content, same emphasis,
+same grouping"), never exact pixels or hex values.

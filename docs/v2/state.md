@@ -3,7 +3,7 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-09 (late evening) — meta scaffolding + experiment 01, with Fable 5.
+**Last updated:** 2026-06-10 (~00:30) — groundwork session with Fable 5.
 
 ## Cold-start capsule
 
@@ -30,21 +30,34 @@ taxonomy in its §2 is load-bearing).
   - **Verification contract** ([verification-contract.md](verification-contract.md))
     — the spine: stable invariant IDs (T/L/S/TB/F/FN/P/SC gates, N/V advisors,
     H human surface), normalization allowlist, exclusions, traceability map.
-  - **Experiment 02 — extractor bake-off, COMPLETE**
+  - **Experiment 02 — extractor bake-off, COMPLETE (3 parts)**
     ([experiments/02-extractor-bakeoff/](experiments/02-extractor-bakeoff/)):
     Part 1 (PyMuPDF): links/styles/superscripts/images gate-feasible (GoTo
-    exact). Discoveries: chip color lives in pill *fills* (S2 amended); narrator
-    commentary is gray #444444 (mechanical prior for turns); FL-07 found.
-    Part 2 (docling): merged-cell table structure exact, zero false positives →
-    TB1 enforceable. **Extraction stack decided: D14** (PyMuPDF oracle + docling
-    tables + LLM semantics).
+    exact); chip color lives in pill *fills*; narrator commentary gray #444444;
+    FL-07 found. Part 2 (docling): merged cells exact, zero false positives →
+    TB1 enforceable. **Stack decided: D14.** Part 3 (hard tables, owner-requested):
+    docling exact on the 15×8 two-level-merge monster (p.252) and mixed-span
+    tables (p.95/98); nine-page table (p.309–318) → per-page fragments, so
+    **cross-page table stitching is a pipeline stage to build**; marker
+    eliminated (pipe tables can't represent merges). Calibration flag: v1 p.252
+    has 28 `<tr>` vs docling 15 rows — adjudicate against the PDF.
+  - **Experiment 03 — signal census**
+    ([experiments/03-signal-census/](experiments/03-signal-census/)): the card's
+    entire visual vocabulary = 33 fills + 21 text colors ≈ ~15 roles, enumerated
+    in ~40 s → empirical basis for per-card style manifests (D16). Found: code
+    styling (#f8f8f8/#188038), turn-bubble role colors, vector-drawn chart
+    furniture (→ exclusion zones must cover drawing clusters, not just raster
+    images), #fefdfb micro-pills ×91 on 2 pages, near-black paste artifacts.
+  - **Decisions D15–D17**: placeholders preserved (FL-07 resolved); stratified
+    spec (universal core + per-card manifests + closure rule — the
+    house-of-cards answer); capture-fidelity vs presentation-editorial split.
 - No v2 pipeline code yet. Nothing pushed (D13).
 
 ## Pending owner decisions (D2 issue-type queue)
 
-- **FL-07:** should v2 represent the light-green redaction-placeholder highlights
-  (`[Error 1]`, `[user]`…) as a typed mark, or intentionally drop them? (First
-  live entry; decide once, it becomes a spec rule.)
+- None right now. (FL-07 resolved → D15.) Census follow-ups queued for
+  conversion time, listed in experiment 03's README; presentation/palette
+  choices are owner-editorial at render review (D17).
 
 ## Next actions (in order)
 
@@ -52,11 +65,14 @@ taxonomy in its §2 is load-bearing).
    the D14 oracle stack (PyMuPDF + docling for tables); run against `f60899a`
    sections — must rediscover the cataloged defects (recall per experiment 01's
    "how to use"); then mutation-test per class (D6). Gaps → new checks or
-   explicit human-coverage notes in the contract. Also the docling revisit
-   trigger lives here: cross-check all tables against v1's hand-built HTML.
+   explicit human-coverage notes in the contract. Includes: docling revisit
+   trigger (cross-check all 12 v1 HTML tables incl. the p.252 row-count
+   discrepancy) and the **style-manifest format** (D16) — write the Fable 5
+   manifest from the census as the worked example.
 2. **Design + build the generation loop** (only after 1): typed document model
    schema (informed by what the oracle emits), semantic-proposal prompts, repair
-   loop against gates, N-version arbitration, vision sweep, escalation worklist.
+   loop against gates, N-version arbitration, **cross-page table stitching
+   stage**, vision sweep, escalation worklist.
 3. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
 

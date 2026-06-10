@@ -6,8 +6,11 @@ tables on transcript pages, and the markdown export for reading-order inspection
 
 Run from the repo root (first run downloads docling's layout/table models):
     uv run --with docling --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_docling.py
+Optionally pass source page numbers as args (e.g. the hard-table set):
+    ... probe_docling.py 95 98 252 309 310 311
 """
 
+import sys
 import tempfile
 from pathlib import Path
 
@@ -16,7 +19,9 @@ import fitz
 CARD = Path("cards/anthropic/claude-fable-5")
 HERE = Path(__file__).parent
 # mini-PDF page i (1-based) = source page PAGES[i-1]
-PAGES = [19, 20, 40, 42, 74, 100]  # tables / transcript FP check / charts / links
+DEFAULT_PAGES = [19, 20, 40, 42, 74, 100]  # tables / transcript FP / charts / links
+PAGES = [int(a) for a in sys.argv[1:]] or DEFAULT_PAGES
+SUFFIX = "" if PAGES == DEFAULT_PAGES else f"-p{PAGES[0]}-{PAGES[-1]}"
 
 mini_path = Path(tempfile.mkdtemp()) / "probe-pages.pdf"
 src = fitz.open(CARD / "source.pdf")
@@ -34,8 +39,9 @@ result = DocumentConverter().convert(mini_path)
 doc = result.document
 
 md = doc.export_to_markdown()
-(HERE / "probe-docling-output.md").write_text(md)
-print(f"markdown export: {len(md)} chars -> probe-docling-output.md")
+out_md = HERE / f"probe-docling-output{SUFFIX}.md"
+out_md.write_text(md)
+print(f"markdown export: {len(md)} chars -> {out_md.name}")
 
 print(f"\ntables found: {len(doc.tables)}")
 for i, t in enumerate(doc.tables):

@@ -24,6 +24,13 @@ that's noted, and the bake-off (experiment 02) is what firms it up.
    exclusions (e.g. running footers) is itself checked for consistency.
 5. **Every normalization is allowlisted.** Text comparisons run under an explicit,
    versioned allowlist (§ Normalization). Anything not listed is a difference.
+6. **Closure: no unexplained signals (D16).** Every recurring distinctive visual
+   signal in the source (fill color, text color, box geometry, font shift) must
+   be explained by an entry in the card's **style manifest** — the per-card data
+   file mapping signals to semantic roles, seeded by the signal census
+   (experiment 03) and confirmed by the owner. An unmapped signal is a flag, not
+   a pass-through. S2 and N1 read their vocabularies from the manifest; nothing
+   about a specific vendor's idioms is hardcoded in the invariants.
 
 ## Invariants
 

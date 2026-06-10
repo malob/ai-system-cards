@@ -85,7 +85,34 @@ Markdown export kept as [probe-docling-output.md](probe-docling-output.md).
 of authority: **PyMuPDF** is the oracle for text/order/styles/links/superscripts/
 images/pages and the prose-block source; **docling** is the table-structure
 oracle (TB1 gate) and a second opinion on block order; the **LLM** proposes
-semantics on top. `marker`/`MinerU`/`pymupdf_layout` are *not* probed — nothing
-left for them to answer. Revisit trigger: if verifier-v0 calibration (which runs
+semantics on top. Revisit trigger: if verifier-v0 calibration (which runs
 docling across *all* table pages and cross-checks v1's hand-built HTML tables)
 finds tables docling gets wrong.
+
+## Part 3 — hard-table stress test, docling vs marker (2026-06-10) ✅
+
+Owner asked: probe the remaining tools anyway, on harder cases.
+[find_hard_tables.py](find_hard_tables.py) ranked v1's 12 HTML tables; the hard
+set: **p.95/98** (mixed rowspan+colspan headers), **p.252** (15×8 benchmark
+monster, two-level merged headers), **p.309–318** (one table spanning nine
+pages). Probe pages 95, 98, 252, 309–311 through both tools:
+
+```sh
+uv run --with docling --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_docling.py 95 98 252 309 310 311
+uv run --with marker-pdf --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_marker.py 95 98 252 309 310 311
+```
+
+- **Docling: all 2-D merges exact** — p.95 `'Model' 1×2 / 'Claude Opus 4.8' 2×1`,
+  p.98's three two-level header groups, p.252's `'Claude family models' 1×4`
+  with 14 merged groups. The nine-page table returns clean per-page fragments
+  (2×3, 4×3, 3×3 …) with zero false positives — **cross-page stitching is
+  pipeline work** (a stitch stage with its own TB check), not an extractor gap.
+  One calibration flag: v1's hand-built p.252 table has 28 `<tr>` vs docling's
+  15 rows — adjudicate against the PDF during verifier-v0 calibration.
+- **Marker (1.10.1): eliminated for tables by output format.** It emits markdown
+  pipe tables only — 0 HTML tables, 0 rowspan/colspan attrs; merged headers
+  degrade to empty cells. Pipe tables *cannot represent* merged cells, so it is
+  structurally lossy for TB1 regardless of recognition quality. (Text quality
+  looked fine; nothing else it answers that part 1 didn't.)
+- **MinerU / pymupdf_layout: still unprobed**, same revisit trigger as D14 —
+  nothing left open for them to answer after docling held on the hard set.

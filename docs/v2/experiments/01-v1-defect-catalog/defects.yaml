@@ -185,8 +185,9 @@ defects:
     evidence: {experiment: "02 part 1", pages: [40, 41, 42]}
     detection: S2 colored-signal coverage (background fills).
     status: >-
-      OPEN ISSUE-TYPE (D2): owner to decide once whether v2 represents the
-      highlight (e.g. a placeholder mark) or intentionally drops it.
+      RESOLVED 2026-06-10 (D15): preserve as a typed placeholder mark, inline
+      and block forms (census found multi-line #d9ead3 boxes too). Presentation
+      is editorial per D17.
 
   # ── Content artifacts — found in diff mining; NOT in the brief's taxonomy ──
   - id: CA-01
