@@ -179,3 +179,16 @@ rule R1 in docs/v2/spec-rules.md, the living spec's first entry, exercising the
 D2 flow end to end. Owner also confirmed the Fable 5 style-manifest role names
 ("all these names look about right… things we want to be tracking"); manifest
 status flips to owner-confirmed, with `#467886` still verify-at-conversion.
+
+## D20 — Overnight autonomy protocol (2026-06-10, ~01:45)
+
+Owner authorized the long unattended stretch: (1) **provisional-rule-and-
+continue** — novel issue-types get a best-judgment rule marked PROVISIONAL in
+spec-rules.md + the worklist, conversion continues, owner reviews the batch at
+check-in (cheap to re-derive: fixes are rules); (2) **full re-conversion
+authorized** — if the seed wave passes the gates, run all 319 pages overnight,
+ending in verifier runs, a rendered site build, and a triage worklist. All
+local; nothing publishes (D13).
+
+<!-- APPEND NEW DECISIONS BELOW THIS LINE (D21 next) — newest at the bottom. -->
+<!-- (Three same-session attempts to insert above the tail prove the need.) -->
