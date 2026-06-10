@@ -30,12 +30,14 @@ taxonomy in its §2 is load-bearing).
   - **Verification contract** ([verification-contract.md](verification-contract.md))
     — the spine: stable invariant IDs (T/L/S/TB/F/FN/P/SC gates, N/V advisors,
     H human surface), normalization allowlist, exclusions, traceability map.
-  - **Experiment 02 part 1 — PyMuPDF probe**
+  - **Experiment 02 — extractor bake-off, COMPLETE**
     ([experiments/02-extractor-bakeoff/](experiments/02-extractor-bakeoff/)):
-    links/styles/superscripts/images all gate-feasible (GoTo extraction exact on
-    probe pages). Discoveries: chip color lives in pill *fills* (S2 amended);
-    narrator commentary is gray #444444 (mechanical prior for turn boundaries);
-    FL-07 found (placeholder highlights flattened).
+    Part 1 (PyMuPDF): links/styles/superscripts/images gate-feasible (GoTo
+    exact). Discoveries: chip color lives in pill *fills* (S2 amended); narrator
+    commentary is gray #444444 (mechanical prior for turns); FL-07 found.
+    Part 2 (docling): merged-cell table structure exact, zero false positives →
+    TB1 enforceable. **Extraction stack decided: D14** (PyMuPDF oracle + docling
+    tables + LLM semantics).
 - No v2 pipeline code yet. Nothing pushed (D13).
 
 ## Pending owner decisions (D2 issue-type queue)
@@ -46,20 +48,16 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-1. **Bake-off part 2 — layout models** (`experiments/02-extractor-bakeoff/`,
-   pending section of its README): pymupdf_layout / marker / docling / MinerU /
-   vision-LLM on the two unresolved signals only — TB1 merged-cell table
-   structure and T2 reading order (incl. false-positive table rate on transcript
-   pages). Heavy installs; use `uv run --with`.
-2. **Build mechanical verifier v0; calibrate.** Implement the gate invariants on
-   the PyMuPDF oracle; run against `f60899a` sections — must rediscover the
-   cataloged defects (recall per experiment 01's "how to use"); then
-   mutation-test per class (D6). Gaps → new checks or explicit human-coverage
-   notes in the contract.
-3. **Design + build the generation loop** (only after 1–2): typed document model
+1. **Build mechanical verifier v0; calibrate.** Implement the gate invariants on
+   the D14 oracle stack (PyMuPDF + docling for tables); run against `f60899a`
+   sections — must rediscover the cataloged defects (recall per experiment 01's
+   "how to use"); then mutation-test per class (D6). Gaps → new checks or
+   explicit human-coverage notes in the contract. Also the docling revisit
+   trigger lives here: cross-check all tables against v1's hand-built HTML.
+2. **Design + build the generation loop** (only after 1): typed document model
    schema (informed by what the oracle emits), semantic-proposal prompts, repair
    loop against gates, N-version arbitration, vision sweep, escalation worklist.
-4. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
+3. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
    oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
 
 ## Open questions

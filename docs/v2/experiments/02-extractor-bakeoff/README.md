@@ -57,10 +57,35 @@ PyMuPDF alone makes **L, S, FN, F, P gates enforceable** and supplies the chip
 and commentary signals. Open for part 2: table structure authority (TB1) and
 reading-order reliability (T2) — the classic layout-model strengths.
 
-## Part 2 — layout-model comparison (pending)
+## Part 2 — layout models on the two unresolved signals (2026-06-10) ✅
 
-Candidates: `pymupdf_layout`, `marker`, `docling`, `MinerU`, vision-LLM baseline.
-Score on: merged-cell table structure (p.19–20, §8.1 summary), reading order on
-multi-column/figure-heavy pages, and false-positive rate on transcript pages
-(where PyMuPDF's table finder hallucinated). Everything else is already settled
-by part 1 — don't re-litigate it.
+Candidate 1: **docling 2.100.0** on a mini PDF of pages 19, 20, 40, 42, 74, 100
+(CPU, ~1 min conversion after first-run model downloads):
+
+```sh
+uv run --with docling --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_docling.py
+```
+
+Markdown export kept as [probe-docling-output.md](probe-docling-output.md).
+
+- **TB1 — solved.** Found exactly one table (the real 6×3 on p.20) with **merged
+  cells structurally correct**: `r1c0 spans 2×1 "Known and novel CB weapons"`,
+  `r4c0 spans 2×1 "Novel biological weapons"`. **Zero false positives** on the
+  transcript pages where PyMuPDF hallucinated 1×2 tables.
+- **T2 — usable as corroboration, not as backbone.** Block-level reading order
+  was correct throughout (headings → prose → footnote; captions after images).
+  But paragraph *segmentation* is mushy: several source paragraphs merged into
+  one, and a bold list lead-in ("Beneficial red teaming tabletop exercise.")
+  detached from its sentence. Some chart-internal text leaked ("0%") — our
+  figure-bbox exclusion handles that on our side.
+- Chips/highlights flattened and some pill boxes emitted as `<!-- image -->` —
+  expected and irrelevant; those signals come from PyMuPDF (part 1).
+
+**Verdict → extraction stack (recorded as D14).** Hybrid, with a sharp division
+of authority: **PyMuPDF** is the oracle for text/order/styles/links/superscripts/
+images/pages and the prose-block source; **docling** is the table-structure
+oracle (TB1 gate) and a second opinion on block order; the **LLM** proposes
+semantics on top. `marker`/`MinerU`/`pymupdf_layout` are *not* probed — nothing
+left for them to answer. Revisit trigger: if verifier-v0 calibration (which runs
+docling across *all* table pages and cross-checks v1's hand-built HTML tables)
+finds tables docling gets wrong.

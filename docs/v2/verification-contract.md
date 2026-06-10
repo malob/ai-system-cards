@@ -173,7 +173,9 @@ As of 2026-06-09 (experiment 02 part 1, PyMuPDF probe on 11 pages):
   S1 (bold/italic flags incl. caption leads), S2 (chip fills — signal amended),
   FN1 (superscript flag), F1 (image counts exact), P1 (page-anchored by
   construction).
-- **Extractor-dependent, unresolved:** TB1 (PyMuPDF found a 6×3 merged-cell table
-  but hallucinated 1×2 tables inside transcripts), T2 reading order — both go to
-  experiment 02 part 2 (layout models).
+- **TB1 signal-feasible via docling** (2026-06-10, experiment 02 part 2): merged
+  cells structurally exact, zero false-positive tables on probe pages. Extraction
+  stack settled as D14 (PyMuPDF oracle + docling tables + LLM semantics).
+- **T2:** block order corroborated by docling; prose segmentation stays anchored
+  to the PyMuPDF span stream (docling's paragraph merging is too mushy to gate on).
 - **No invariant is yet implemented, calibrated, or mutation-tested.**

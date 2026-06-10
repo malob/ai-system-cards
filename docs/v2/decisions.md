@@ -106,3 +106,16 @@ Owner's call. Pushing is reserved for explicit owner request — partly because 
 to main triggers the GitHub Pages deploy, and partly because the v2 effort should
 be pushed as a whole once it's something worth publishing. Liberal local commits
 (D12) are unaffected.
+
+## D14 — Extraction stack: PyMuPDF oracle + docling table authority + LLM semantics (2026-06-10)
+
+Settled empirically by experiment 02 (the brief's §6 bake-off, resolved in two
+probes instead of five candidates). PyMuPDF supplies the verification oracle and
+prose backbone: text spans with style flags, URI+GoTo links (exact on probe
+pages), chip pill fills, gray-commentary signal, superscripts, image rects, page
+geometry. Docling (2.100.0) supplies table structure — merged cells exact, zero
+false-positive tables where PyMuPDF hallucinated — and corroborates block order;
+its paragraph segmentation is too mushy to be the backbone. The LLM proposes the
+semantic layer on top of facts it cannot contradict. marker/MinerU/pymupdf_layout
+left unprobed — nothing left for them to answer. Revisit if verifier-v0
+calibration finds docling-resistant tables.
