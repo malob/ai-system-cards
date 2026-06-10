@@ -1,0 +1,54 @@
+"""Per-page markdown slices for the vision sweep: each p-NNN.md holds every
+markdown run attributed to PDF page N, concatenated across sections in
+document order (a boundary page contributes from two sections).
+
+    python3 pipeline/slice_pages.py OUTDIR [PAGE ...]
+    (no pages = all)
+
+Attribution: a section header comment `<!-- source: source.pdf pages A-B -->`
+sets the section's first page A; from there, every `<!-- p.N -->` marker
+(standalone or inline) advances the current page. Text between markers
+belongs to the page in force where it appears.
+"""
+
+import re
+import sys
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[1]
+SECTIONS = REPO / "cards/anthropic/claude-fable-5/sections-v2"
+MARK = re.compile(r"<!-- p\.(\d+) -->")
+HEADER = re.compile(r"<!-- source: \S+ pages (\d+)-(\d+) -->")
+
+
+def slices() -> dict[int, list[str]]:
+    out: dict[int, list[str]] = {}
+    for f in sorted(SECTIONS.glob("*.md")):
+        text = f.read_text()
+        m = HEADER.search(text)
+        cur = int(m.group(1)) if m else 1
+        pos = 0
+        for mk in MARK.finditer(text):
+            chunk = text[pos:mk.start()]
+            if chunk.strip():
+                out.setdefault(cur, []).append(chunk)
+            cur = int(mk.group(1))
+            pos = mk.end()
+        chunk = text[pos:]
+        if chunk.strip():
+            out.setdefault(cur, []).append(chunk)
+    return out
+
+
+if __name__ == "__main__":
+    outdir = Path(sys.argv[1])
+    want = {int(a) for a in sys.argv[2:]} or None
+    outdir.mkdir(parents=True, exist_ok=True)
+    by_page = slices()
+    n = 0
+    for pno, chunks in sorted(by_page.items()):
+        if want and pno not in want:
+            continue
+        (outdir / f"p-{pno:03d}.md").write_text("\n".join(c.strip("\n") for c in chunks) + "\n")
+        n += 1
+    print(f"{n} slices -> {outdir}")
