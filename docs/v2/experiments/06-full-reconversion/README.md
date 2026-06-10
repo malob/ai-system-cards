@@ -30,7 +30,9 @@ Trajectory over the night's iterations (full-doc major flags):
 
 **Final by invariant:** T1 4, P1 1, L1 5, S1 13, S2 1, S3 1, FN1 1.
 The fidelity-critical gates (T1 text, P1 structure) are essentially clean across
-the whole document. Remaining majors live in known-incomplete layers.
+the whole document. Remaining majors live in known-incomplete layers — and the
+biggest bucket (S1 ×13) is verifier run-segmentation noise, not lost emphasis
+(see triage below), so the *content-loss* surface is far smaller than 26.
 
 ## Render proof
 
@@ -41,10 +43,18 @@ survived assembly → serialization → render.
 
 ## Remaining 26 majors — all triaged, none systemic
 
-- **S1 ×13** — figure/table caption bold-lead convention: the PDF bolds the
-  whole lead phrase (`[Figure X] Title.`), v2 sometimes bolds only the bracket
-  tag. Same class the verifier found unfixed in v1 past §6.5 (a real v1 defect);
-  needs a caption-lead rule. A few are standalone chip *legend* rows (p.44).
+- **S1 ×13** — diagnosed 2026-06-10: **the emphasis is present in v2, not
+  dropped.** The flags arise because v2 sometimes *segments* a bold run that the
+  oracle merges (e.g. p.223 `**…uncertainty** **rather…**` for one PDF bold run),
+  which defeats S1's run-substring match. Verified: the flagged text is bold in
+  the v2 markdown and correctly page-attributed; v1 HEAD is clean on these pages
+  (so it's v2 segmentation, not a shared issue). **Root cause is verifier-side**:
+  S1 should compare bold *token coverage* (every source-bold token is bold in the
+  output), not run-as-substring — robust to segmentation. Deferred because
+  changing a gate's semantics requires re-running S1's mutation (drop-bold) +
+  v1-calibration suites; that's the top next-action, not a rushed late-night
+  edit. A subset (p.222 `[Bottom left:]`, p.304/307 captions) may be genuine
+  caption-lead-extent cases surfaced once the token fix removes the noise.
 - **L1 ×5** — 3 goto links needing L2 destination resolution (page→section
   anchor; mine v1's `apply_internal_links.py`); 2 URI edge cases.
 - **T1 ×4** — chip legend row (p.44) + 2 figure-caption number-format spacing.

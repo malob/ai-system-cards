@@ -84,8 +84,11 @@ taxonomy in its §2 is load-bearing).
 ## Next actions (in order)
 
 Close the 26 worklist majors (all triaged in experiment 06), biggest first:
-1. **Caption-lead rule** (S1 ×13): bold the whole `[Figure X] Lead.` phrase, not
-   just the bracket tag; capture standalone chip legend rows (e.g. p.44).
+1. **S1 token-coverage refinement** (S1 ×13): the emphasis is PRESENT in v2 but
+   run-segmented differently than the oracle, defeating S1's substring match
+   (diagnosed — not lost bold). Change S1 to compare bold *token coverage*, then
+   RE-RUN its mutation (drop-bold) + v1-calibration suites before trusting it.
+   Residual genuine caption-lead-extent cases (p.304/307) surface after.
 2. **L2 destination resolution** (L1 ×5 = 3 goto + 2 uri): resolve `DEST:<page>`
    goto targets to section anchors — mine v1's `tools/apply_internal_links.py`.
 3. **Table-cell footnote refs** (FN1 ×1): re-attach `<sup>` refs docling flattens.
