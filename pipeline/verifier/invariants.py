@@ -387,13 +387,20 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
         # --- ST3: heading groups render as one heading
         groups, cur = [], None
         for l in lines:
-            is_head = l["size"] >= 12.6 or (l["colors"] == {"#666666"} and HEAD_NUM_ST.match(l["text"]))
-            # wrapped continuation: an unnumbered gray line hugging the
-            # heading above it (title-wrap pitch < 6pt; body sits >= 8pt
-            # below) is the heading's second line — same rule as assemble
-            if (not is_head and cur and l["colors"] == {"#666666"}
+            m_h = HEAD_NUM_ST.match(l["text"])
+            is_head = (l["size"] >= 12.6
+                       or (l["colors"] == {"#666666"} and m_h)
+                       # deep headings (h5/h6): bold body-size lines led by a
+                       # >=3-component section number — assemble's rule
+                       or bool(m_h and m_h.group(1).count(".") >= 2 and l["bold"]))
+            # wrapped continuation: an unnumbered line hugging the heading
+            # above it (title-wrap pitch < 6pt; body sits >= 8pt below) with
+            # the SAME style profile is the heading's second line
+            if (not is_head and cur
                     and (l["y0"] - cur["y1"]) < 6
-                    and abs(l["size"] - cur["size"]) < 0.6):
+                    and abs(l["size"] - cur["size"]) < 0.6
+                    and l["colors"] == cur["colors"] and l["bold"] == cur["bold"]
+                    and (l["colors"] == {"#666666"} or cur["bold"])):
                 is_head = True
             if is_head:
                 if cur and (l["y0"] - cur["y1"]) < 10 and abs(l["size"] - cur["size"]) < 0.6:
