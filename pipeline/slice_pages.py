@@ -29,11 +29,15 @@ def slices() -> dict[int, list[str]]:
         cur = int(m.group(1)) if m else 1
         pos = 0
         for mk in MARK.finditer(text):
-            chunk = text[pos:mk.start()]
+            # snap to line start: an inline marker mid-item ('- <!-- p.N -->x')
+            # otherwise strands the '- ' prefix in the previous page's slice
+            ls = text.rfind("\n", 0, mk.start()) + 1
+            cut = ls if text[ls:mk.start()].strip() else mk.start()
+            chunk = text[pos:cut]
             if chunk.strip():
                 out.setdefault(cur, []).append(chunk)
             cur = int(mk.group(1))
-            pos = mk.end()
+            pos = cut if cut == ls else mk.end()
         chunk = text[pos:]
         if chunk.strip():
             out.setdefault(cur, []).append(chunk)

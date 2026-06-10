@@ -218,6 +218,13 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             flush()
             blocks.append(pending_tables.pop(0))
         in_figure = any(_overlaps(r, line["bbox"]) for r in img_rects)
+        # an invisible-only line (a ZWSP-bearing empty paragraph — Google
+        # Docs blank line) is a PARAGRAPH SEPARATOR: it must break the
+        # continuation chain, never contribute content (p.87 glue)
+        if not norm.INVISIBLES.sub("", line["text"]).strip():
+            flush()
+            cur = None
+            continue
         kind = _classify(line, page, in_figure)
         # figure blocks are emitted once, when we first pass their region
         if img_rects and not fig_done and line["bbox"][1] > img_rects[0][1]:
