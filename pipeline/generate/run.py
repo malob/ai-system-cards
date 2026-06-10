@@ -81,9 +81,20 @@ def main():
     chips = manifest_chips()
     OUT.mkdir(exist_ok=True)
 
+    # exclusive page→section assignment: v1 section ranges overlap by one page
+    # at each boundary (…-036 / 036-…), so a page goes to the LAST section whose
+    # start ≤ it (that's where its content belongs). Prevents duplicate markers.
+    ranges = section_ranges()
+    starts = sorted((a, name) for name, a, b in ranges)
+    owner = {}
+    for name, a, b in ranges:
+        for p in range(a, b + 1):
+            best = max((s for s, _ in starts if s <= p), default=a)
+            owner[p] = next(n for s, n in starts if s == best)
+
     written = []
-    for name, a, b in section_ranges():
-        sel = [p for p in range(a, b + 1) if p in want and p not in TOC]
+    for name, a, b in ranges:
+        sel = [p for p in range(a, b + 1) if p in want and p not in TOC and owner.get(p) == name]
         if not sel:
             continue
         blocks = []
@@ -95,6 +106,8 @@ def main():
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")
         written.append((name, sel))
         print(f"{name}: pages {sel[0]}..{sel[-1]} ({len(sel)} pages, {len(blocks)} blocks)")
+    all_pages = sorted({p for _, sel in written for p in sel})
+    (REPO / "pipeline/.cache/genpages.json").write_text(json.dumps(all_pages))
     print(f"\nwrote {len(written)} files to {OUT}")
     print("gate with:")
     names = " ".join(sorted({n.split('-')[0] for n, _ in written}))

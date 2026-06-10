@@ -108,6 +108,9 @@ def extract_page(page) -> dict:
         if fn_mode:
             for s in body_spans:
                 s["zone"] = "fnbody"
+                s["fn"] = cur_n
+            if is_marker:
+                first["fn_marker"] = True   # the leading digit, not body text
             if cur_n is not None:
                 body = "".join(s["text"] for s in body_spans if not (is_marker and s is first))
                 footnotes[cur_n] += " " + body

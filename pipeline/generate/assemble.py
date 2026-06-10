@@ -207,8 +207,22 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         for f in figures:
             blocks.append({"type": "figure", "file": f, "page": pno, "alt": "", "caption_lines": []})
 
-    for n, t in (page.get("footnotes") or {}).items():
-        blocks.append({"type": "footnote", "n": int(n), "text": t.strip(), "page": pno})
+    # footnote blocks built from fnbody spans (grouped by number) so links/
+    # emphasis inside citations attach via block_text_and_marks
+    fn_lines_by_n: dict[int, list] = {}
+    for line in _lines(page):
+        body = [s for s in line["segs"] if s[2]["zone"] == "fnbody"]
+        if not body:
+            continue
+        n = body[0][2].get("fn")
+        if n is None:
+            continue
+        # drop the leading marker-digit span from the first line of a footnote
+        segs = [(a, b, s) for a, b, s in line["segs"] if not s.get("fn_marker")]
+        if segs:
+            fn_lines_by_n.setdefault(n, []).append({**line, "segs": segs})
+    for n in sorted(fn_lines_by_n):
+        blocks.append({"type": "footnote", "n": n, "lines": fn_lines_by_n[n], "page": pno})
     return blocks
 
 
@@ -257,7 +271,15 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         marks.append(("placeholder", m_start, m_end, pi))
                     break
             for l in links:
-                if any(_overlaps(r, s["bbox"]) for r in l.get("rects", [])):
+                # span belongs to a link if its vertical center sits in the
+                # rect's y-band AND >50% of its width overlaps the rect — recovers
+                # thin URI rects while excluding edge-touching neighbor words
+                sx0, sy0, sx1, sy1 = s["bbox"]
+                scy = (sy0 + sy1) / 2
+                sw = max(sx1 - sx0, 0.1)
+                if any(r[1] - 1 <= scy <= r[3] + 1
+                       and (min(sx1, r[2]) - max(sx0, r[0])) / sw > 0.5
+                       for r in l.get("rects", [])):
                     target = l.get("uri") or f"DEST:{l.get('dest_page', 0)}"
                     marks.append(("link", m_start, m_end, target))
                     break
@@ -265,11 +287,16 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
 
 
 def _merge_marks(marks):
-    """Coalesce adjacent same-kind marks (spans fragment runs)."""
+    """Coalesce adjacent same-kind marks (spans fragment runs), then drop bold/
+    italic fully inside a chip range (chips render as pills, not emphasis — keeps
+    leaked '**' out of the chip label)."""
     out = []
     for kind, a, b, data in sorted(marks, key=lambda m: (m[0], m[1])):
         if out and out[-1][0] == kind and out[-1][3] == data and a <= out[-1][2] + 1:
             out[-1][2] = max(out[-1][2], b)
         else:
             out.append([kind, a, b, data])
-    return out
+    chips = [m for m in out if m[0] == "chip"]
+    return [m for m in out
+            if not (m[0] in ("bold", "italic")
+                    and any(c[1] <= m[1] and m[2] <= c[2] for c in chips))]

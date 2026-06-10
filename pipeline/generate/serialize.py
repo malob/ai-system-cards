@@ -133,5 +133,11 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
 
     close_transcript()
     for fb in sorted(footnotes, key=lambda b: b["n"]):
-        out.append(f"[^{fb['n']}]: {fb['text'].strip()}\n\n")
+        page = oracle_pages[fb["page"] - 1]
+        if fb.get("lines"):
+            text, marks = block_text_and_marks(fb, page, chips)
+            body = _hyphen_join(_apply_marks(text, marks)).strip()
+        else:
+            body = _hyphen_join(fb.get("text", "")).strip()
+        out.append(f"[^{fb['n']}]: {body}\n\n")
     return "".join(out), cur_page

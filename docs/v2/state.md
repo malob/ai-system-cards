@@ -3,7 +3,7 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-10 (~01:35) — groundwork, verifier v0 + S-layer, docling cross-check, mutation testing; with Fable 5.
+**Last updated:** 2026-06-10 (~03:10) — full overnight stretch: verifier v0 + generation loop + first full v2 re-conversion; with Fable 5.
 
 ## Cold-start capsule
 
@@ -20,7 +20,16 @@ taxonomy in its §2 is load-bearing).
 
 ## Status
 
-- **Phase:** 1 (groundwork) — in progress.
+- **Phase:** 2 (generation) — first full mechanical re-conversion done; refining.
+- **Headline:** the v2 loop converted all 319 pages mechanically (zero LLM calls)
+  to **26 major gate flags total, T1=4 / P1=1** — text & structure essentially
+  clean document-wide. Site builds + renders against the output (28 chips, 88
+  turns, 38 tables, 153 figures, 51 citation links). NOT accept-ready: a
+  mechanical pre-LLM draft with a triaged worklist ([worklist.md](worklist.md),
+  experiment [06](experiments/06-full-reconversion/)). Output in `sections-v2/`
+  (gitignored); v1 still shipped (D9); nothing pushed (D13).
+
+### Earlier groundwork (phase 1, complete)
 - Done:
   - Meta scaffolding (charter, decisions D1–D13, this file, root CLAUDE.md).
   - **Experiment 01 — v1 defect catalog**
@@ -74,28 +83,20 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-0. **IN PROGRESS (overnight run, D20): generation loop per
-   [generation-design.md](generation-design.md).** Implementation in
-   `pipeline/generate/` (model → assemble → serialize → stitch → driver);
-   output to `cards/anthropic/claude-fable-5/sections-v2/`; seed wave (the
-   construct gauntlet, page list in the design doc) → gates → bulk waves →
-   full verifier → site build → `docs/v2/worklist.md` for the morning
-   check-in. Provisional rules allowed (D20), logged in spec-rules.md.
-1. **Verifier polish** (can interleave): harden oracle stacked-footnote
-   boundary detection, then promote FN1 body-text from advisory to gate (2
-   HEAD advisories are oracle-gluing artifacts, md verified correct); L2 dest
-   resolution; full mutation-suite re-run for the record.
-2. ~~Design the generation loop~~ — done, see generation-design.md: typed document model schema (informed
-   by what the oracle emits), semantic-proposal prompts, repair loop against
-   gates, N-version arbitration, **cross-page table stitching stage** (two
-   confirmed multi-page tables: p.252–253, p.309–318), vision sweep, escalation
-   worklist.
-3. **Re-convert Fable 5**; v1's human-verified range (≤ §6) is a partial regression
-   oracle (brief §8.3 caveats apply). Owner review → acceptance → publish.
-4. Backlog: v1-card fixes the verifier surfaced, applicable any time as
-   post-acceptance edits (D9): 19 caption bold-leads past §6.5 + caption
-   convention unification; chip-order check on p.38/44. (Or simply inherit them
-   via the v2 re-conversion.)
+Close the 26 worklist majors (all triaged in experiment 06), biggest first:
+1. **Caption-lead rule** (S1 ×13): bold the whole `[Figure X] Lead.` phrase, not
+   just the bracket tag; capture standalone chip legend rows (e.g. p.44).
+2. **L2 destination resolution** (L1 ×5 = 3 goto + 2 uri): resolve `DEST:<page>`
+   goto targets to section anchors — mine v1's `tools/apply_internal_links.py`.
+3. **Table-cell footnote refs** (FN1 ×1): re-attach `<sup>` refs docling flattens.
+4. **LLM alt-text pass** — the one genuinely LLM-required step; per figure from
+   page renders. Then an adjudicator pass for residual ambiguities (N1).
+5. **`:ph` placeholder directive** in renderer + verifier (FL-07/D15), then emit it.
+6. **Cross-page table stitching** (p.252–253, p.309–318 come as per-page fragments).
+7. Owner review of rendered v2 vs PDF → acceptance → publish.
+
+Deferred verifier polish (interleave): harden stacked-footnote boundary detection
+→ promote FN1 body-text advisory to gate; full mutation-suite re-run for the record.
 
 Living spec started: [spec-rules.md](spec-rules.md) — R1 auto-links (decided,
 D19), R2 unresolvable dests (proposed default in effect; sic-note presentation
