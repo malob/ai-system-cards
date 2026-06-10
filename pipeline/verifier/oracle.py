@@ -183,7 +183,7 @@ def page_body_text(p: dict) -> str:
         rendered.append(buf)
     text = " ".join(rendered)
     # join end-of-line hyphenations: "self- verifying" -> "self-verifying"
-    text = re.sub(r"(\w)- (?=[a-z])", r"\1", text)
+    text = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", text)  # keep suspended compounds
     return text
 
 

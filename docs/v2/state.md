@@ -3,7 +3,8 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-10 (~03:10) — full overnight stretch: verifier v0 + generation loop + first full v2 re-conversion; with Fable 5.
+**Last updated:** 2026-06-10 (~05:00) — overnight run #2 complete: ST invariant,
+vision sweep (319pp), verifier hardening, sweep-driven fixes; with Fable 5.
 
 ## Cold-start capsule
 
@@ -83,13 +84,31 @@ taxonomy in its §2 is load-bearing).
 
 ## Next actions (in order)
 
-**OVERNIGHT RUN #2 (D22, in progress ~03:00):** ST structural invariant +
-mutation tests → S1 token-coverage refinement + revalidation → L2 dest
-resolution → mechanical fixes (table-cell fnrefs, multi-line headings,
-cross-page table stitching, nested lists, footnote boundaries) → full regen →
-**full 319-page V1 visual sweep** (authorized) → triage/fix → final regen +
-full mutation suite + site build → morning report + worklist. v1 card FROZEN
-(D22). If this run dies mid-way, resume from the first unchecked item above.
+**OVERNIGHT RUN #2 — done (~05:00).** Landed: ST1/2/3 structural invariants
+(+3 mutation classes; ST3 6/6); visual-row reconstruction in the assembler
+(fixed the p.38 bullet-misassociation class + chip row order); multi-line
+heading merge; nested list levels; flush-left item continuations; count-based
+S1 (drop-bold 4/6, residue = duplicate-key + table boundary, documented); two
+document-spanning projection bugs fixed (greedy fn-def regex; RE_BOLD crossing
+newlines via ZWSP-'****' — generator no longer emits invisible emphasis);
+suspended-hyphen A1 fix ('single- and'); ordered-list marker robustness;
+docling re-run over ALL pages (cache; v1-derived table-page list missed
+continuation pages like p.21). **Vision sweep: 16 agents, 312 pages, 134
+findings / 69 majors in 40 classes — experiment 07 + worklist.md** (sweep
+snapshot PREDATES some same-night fixes; re-sweep after next regen is the
+clean baseline). Commits from ~04:30 unsigned (1Password locked).
+
+**NEXT (priority order, sweep-driven):**
+1. table-scrambled ×11 (§4 tables pp.51–91): diagnose ONE root cause
+   (docling grid traversal vs y-slot insertion); add TB2 cell-order check.
+2. Transcript box-mapping: label-only bubbles → empty turns with content
+   displaced to :::example (pp.107/118/120/161) + one role flip (p.153).
+3. Blockquote detection (unimplemented; pp.51/65/67/130/216) + ST4 check.
+4. Caption continuation/association (×7); stacked-footnote oracle boundary
+   (p.113/132) then FN1 body-text → gate; table-cell fnrefs (FN1 major);
+   L2 dest resolution (DEST:N → anchors); ST2 v2 ×12 triage; T1 ×6 triage.
+5. Regen → re-sweep (expect majors well under 69) → full gate+mutations →
+   site build → owner review toward acceptance.
 
 **Earlier context (owner feedback ~02:25, the wrapped-bullet incident):**
 the current gates are token/marks/count-based and CANNOT see token-preserving

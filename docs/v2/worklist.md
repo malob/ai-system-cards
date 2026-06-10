@@ -44,3 +44,46 @@ adjudication passes not yet run.
 - **Figure/chip legends**: standalone legend rows (e.g. p.44 R&D key)
   not yet captured as blocks.
 - **Transcript tool-output / code inside turns**: minimal handling.
+
+## Vision-sweep majors by class (auto-appended)
+
+- **table-scrambled** ×11: pages 51, 61, 72, 73, 77, 80, 82, 85, 89, 91, 269
+- **paragraph-split** ×5: pages 44, 55, 56, 57, 271
+- **emphasis-lost** ×5: pages 72, 73, 77, 79, 80
+- **blockquote-lost** ×3: pages 51, 65, 67
+- **transcript-structure** ×3: pages 107, 118, 120
+- **footnote-broken** ×2: pages 49, 51
+- **list-structure** ×2: pages 60, 65
+- **text-spacing** ×2: pages 100, 101
+- **bold-markup-broken** ×2: pages 136, 140
+- **caption-split** ×2: pages 139, 300
+- **caption-misplaced** ×2: pages 246, 298
+- **list-broken** ×2: pages 249, 256
+- **table-row-flattened** ×1: pages 21
+- **word-merge** ×1: pages 47
+- **heading-merged** ×1: pages 49
+- **table-content-missing** ×1: pages 72
+- **duplicate-caption** ×1: pages 77
+- **text-corruption** ×1: pages 89
+- **footnote-ref-broken** ×1: pages 95
+- **stray-bullet-glyph** ×1: pages 100
+- **emphasis-broken** ×1: pages 101
+- **footnote-split** ×1: pages 113
+- **quote-structure-lost** ×1: pages 130
+- **footnote-merged** ×1: pages 132
+- **duplicate-figure** ×1: pages 139
+- **transcript-role-misattributed** ×1: pages 153
+- **transcript-content-detached** ×1: pages 161
+- **split-paragraph** ×1: pages 165
+- **heading-split** ×1: pages 177
+- **list-nesting** ×1: pages 216
+- **quote-structure** ×1: pages 216
+- **caption-text-corruption** ×1: pages 235
+- **table-broken** ×1: pages 245
+- **bold-loss** ×1: pages 252
+- **table-cell-type** ×1: pages 253
+- **table-bold-lost** ×1: pages 264
+- **caption-misattached** ×1: pages 267
+- **code-term-unescaped** ×1: pages 271
+- **word-corruption** ×1: pages 278
+- **table-structure** ×1: pages 297

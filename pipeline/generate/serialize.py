@@ -46,7 +46,7 @@ def _apply_marks(text: str, marks: list) -> str:
 
 
 def _hyphen_join(text: str) -> str:
-    text = re.sub(r"(\w)- (?=[a-z])", r"\1", text)   # end-of-line hyphenation (A1)
+    text = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", text)  # A1; keep suspended compounds ("single- and")
     text = text.replace("​", "").replace("­", "")  # zero-width, soft hyphen
     return re.sub(r"[ \t]{2,}", " ", text).strip()   # collapse layout double-spaces (A2)
 
@@ -131,7 +131,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         elif t == "item":
             body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
             indent = "    " * blk.get("level", 0)
-            m = re.match(r"^(\d{1,2})[.)]​\s*", body)
+            m = re.match(r"^[‌ ]*(\d{1,2})[.)]​?\s*", body)
             if m:  # ordered item: keep the number, real space after it
                 out.append(f"{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
