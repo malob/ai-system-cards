@@ -116,7 +116,11 @@ def main():
         for pno in sel:
             blocks += assemble.assemble_page(pno, pages[pno - 1], figures_map.get(str(pno), []),
                                              chips, tables.get_tables(pno, pages[pno - 1]))
-        blocks = stitch(blocks)
+        # footnote blocks live at page ends and would break cross-page
+        # stitching adjacency (the p.19-20 split); they serialize at section
+        # end regardless, so lift them out before stitching
+        fn_blocks = [b for b in blocks if b["type"] == "footnote"]
+        blocks = stitch([b for b in blocks if b["type"] != "footnote"]) + fn_blocks
         md, _ = serialize.serialize_blocks(blocks, page_of_prev_block=-1, oracle_pages=pages, chips=chips)
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")
         written.append((name, sel))

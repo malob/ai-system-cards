@@ -122,6 +122,14 @@ def _classify(line, page, in_figure):
     body_colors = {s["color"] for _, _, s in line["segs"] if s["zone"] == "body"}
     if line["size"] >= 12.6 or (body_colors == {HEADING_GRAY} and HEAD_NUM.match(line["text"])):
         return "heading"
+    # deep headings (h5/h6, e.g. "2.3.4.1 Example 1: …") are bold body-size
+    # black text — heading iff the whole line is bold AND it leads with a
+    # multi-component section number (≥3 components; bold leads have no number,
+    # ordered items carry the ZWSP marker)
+    m = HEAD_NUM.match(line["text"])
+    if (m and m.group(1).count(".") >= 2
+            and all(s["bold"] for _, _, s in line["segs"] if s["zone"] == "body")):
+        return "heading"
     role, _, in_transcript = _box_role(line, page)
     if role == "turn":
         return "turn"
