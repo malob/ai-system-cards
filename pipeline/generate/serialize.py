@@ -44,6 +44,24 @@ def _hyphen_join(text: str) -> str:
     return re.sub(r"[ \t]{2,}", " ", text).strip()   # collapse layout double-spaces (A2)
 
 
+def _render_body(blk: dict, page, oracle_pages, chips, marker_if_new, emit_marker) -> str:
+    """Block lines → marked-up text. If the block carries page_break=(pno, i),
+    render in two segments with the page marker spliced inline at the break
+    (v1's convention: 'word<!-- p.N --> continuation')."""
+    if blk.get("page_break"):
+        bp, i = blk["page_break"]
+        first = {**blk, "lines": blk["lines"][:i], "page_break": None}
+        rest = {**blk, "lines": blk["lines"][i:], "page_break": None}
+        t1, m1 = block_text_and_marks(first, page, chips)
+        t2, m2 = block_text_and_marks(rest, oracle_pages[bp - 1], chips)
+        marker_if_new(bp)
+        mk = emit_marker(True)
+        return (_hyphen_join(_apply_marks(t1, m1)).strip()
+                + mk + " " + _hyphen_join(_apply_marks(t2, m2)).strip())
+    text, marks = block_text_and_marks(blk, page, chips)
+    return _hyphen_join(_apply_marks(text, marks)).strip()
+
+
 def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, chips) -> tuple[str, int]:
     """Render an ordered block list to markdown. Emits a `<!-- p.N -->` marker
     whenever the page advances. Returns (markdown, last_page)."""
@@ -51,12 +69,27 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
     cur_page = page_of_prev_block
     footnotes = []
     transcript_open = False
+    pending_marker = ""
+    last_type = None
 
     def marker_if_new(pno):
-        nonlocal cur_page
+        # markers are buffered: standalone between blocks, but INLINE inside a
+        # list item that continues a list across a page break (v1's PM-03
+        # lesson — a standalone marker between items splits the <ul>)
+        nonlocal cur_page, pending_marker
         if pno != cur_page:
-            out.append(f"<!-- p.{pno} -->\n")
+            pending_marker = f"<!-- p.{pno} -->"
             cur_page = pno
+
+    def emit_marker(inline_into_item: bool) -> str:
+        nonlocal pending_marker
+        m, pending_marker = pending_marker, ""
+        if not m:
+            return ""
+        if inline_into_item:
+            return m
+        out.append(m + "\n\n")
+        return ""
 
     def close_transcript():
         nonlocal transcript_open
@@ -73,27 +106,28 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             continue
         if t in ("turn", "commentary"):
             marker_if_new(pno)
+            inline_marker = ""
+            emit_marker(False)
             if not transcript_open:
                 out.append("::::transcript\n")
                 transcript_open = True
         else:
             close_transcript()
             marker_if_new(pno)
+            inline_marker = emit_marker(inline_into_item=(t == "item" and last_type == "item"))
 
         if t == "heading":
             text, _ = block_text_and_marks(blk, page, chips)
             out.append("#" * blk["level"] + " " + text.strip() + "\n")
         elif t == "paragraph":
-            text, marks = block_text_and_marks(blk, page, chips)
-            out.append(_hyphen_join(_apply_marks(text, marks)).strip() + "\n")
+            out.append(_render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker) + "\n")
         elif t == "item":
-            text, marks = block_text_and_marks(blk, page, chips)
-            body = _apply_marks(text, marks).strip()
+            body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
             m = re.match(r"^(\d{1,2})[.)]​\s*", body)
             if m:  # ordered item: keep the number, real space after it
-                out.append(f"{m.group(1)}. " + _hyphen_join(body[m.end():]) + "\n")
+                out.append(f"{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
-                out.append("- " + _hyphen_join(body.lstrip("●•◦▪‣○​ ")) + "\n")
+                out.append("- " + inline_marker + body.lstrip("●•◦▪‣○​ ") + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
             if blk["caption_lines"]:
@@ -133,6 +167,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             text, marks = block_text_and_marks(blk, page, chips)
             if text.strip():
                 out.append(f"<!-- UNHANDLED-BLOCK:{t} -->\n" + _hyphen_join(text).strip() + "\n")
+        last_type = t
         out.append("\n")
 
     close_transcript()

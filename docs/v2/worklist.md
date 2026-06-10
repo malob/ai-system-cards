@@ -8,21 +8,19 @@ adjudication passes not yet run.
 
 - FN1 major: 1
 - FN1 minor: 1
-- L1 major: 5
+- L1 major: 4
 - L1 minor: 31
 - P1 major: 1
 - S1 major: 12
-- T1 major: 4
+- T1 major: 3
 - T1 minor: 243
 
-**Major flags: 23** FN1=1, L1=5, P1=1, S1=12, T1=4
+**Major flags: 21** FN1=1, L1=4, P1=1, S1=12, T1=3
 
 ## Major flags by page
 
 - p.0 [FN1] {"oracle_refs": 77, "md_refs": 72, "oracle_ref_details": [["1", 16], ["2", 19], ["3", 49], ["4", 51], ["5", 55], ["6", 59], ["7", 84], ["8", 92], ["9", 92], ["1…
-- p.3 [T1] {"op": "delete", "missing_from_md": "improvement in some areas of child safety. Although these issues were largely dealt with by updates to the claude.ai system…
 - p.13 [L1] {"kind": "uri", "missing": "https://www.anthropic.com/institute/recursive-self-improvement", "anchor": "accelerate their own development"}
-- p.14 [L1] {"kind": "uri", "missing": "https://trust.anthropic.com/resources?", "anchor": "compliance framework"}
 - p.19 [L1] {"kind": "goto", "anchor": "Section 6.5.2", "dest_page": 196}
 - p.38 [T1] {"op": "replace", "missing_from_md": "Fabrication", "extra_in_md": "Skipped cheap verification", "n_tokens": 3}
 - p.38 [T1] {"op": "replace", "missing_from_md": "Skipped cheap verification", "extra_in_md": "Reckless action", "n_tokens": 3}

@@ -47,18 +47,32 @@ def manifest_chips() -> dict:
             for m in re.finditer(r"^  (.+?):\s+\"(#[0-9a-f]{6})\"", block.group(1), re.M)}
 
 
+UNTERMINATED = tuple(".!?:”\"’")
+
+
 def stitch(blocks: list[dict]) -> list[dict]:
-    """Merge a paragraph split across a page break: previous page ends with an
-    unterminated paragraph and the next begins lowercase (v1 join heuristic)."""
+    """Merge blocks split across a page break (v1's PM-02/03 lessons):
+    - paragraph + paragraph: previous unterminated, next starts lowercase;
+    - item + paragraph: next page's first block is the hanging-indent
+      continuation of a wrapped list item.
+    Records page_break = (page, line_index) so the serializer can splice the
+    page marker inline at the exact break point."""
     out = []
     for blk in blocks:
-        if (out and blk["type"] == "paragraph" and out[-1]["type"] == "paragraph"
-                and blk["page"] == out[-1]["page"] + 1):
-            prev_text = out[-1]["lines"][-1]["text"].rstrip()
-            nxt = blk["lines"][0]["text"].lstrip()
-            if prev_text and prev_text[-1] not in ".!?:”\"’" and nxt[:1].islower():
-                out[-1]["lines"].extend(blk["lines"])
-                out[-1]["break_page"] = blk["page"]
+        if out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph":
+            prev = out[-1]
+            prev_text = prev["lines"][-1]["text"].rstrip()
+            nxt_line = blk["lines"][0]
+            nxt = nxt_line["text"].lstrip()
+            joinable = prev_text and prev_text[-1] not in UNTERMINATED
+            if prev["type"] == "paragraph" and joinable and nxt[:1].islower():
+                prev["page_break"] = (blk["page"], len(prev["lines"]))
+                prev["lines"].extend(blk["lines"])
+                continue
+            if (prev["type"] == "item" and joinable
+                    and nxt_line["bbox"][0] > prev.get("marker_x0", 0) + 6):
+                prev["page_break"] = (blk["page"], len(prev["lines"]))
+                prev["lines"].extend(blk["lines"])
                 continue
         out.append(blk)
     return out
