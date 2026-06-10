@@ -44,7 +44,7 @@ export function siteMarkdown(vendor, slug, assetBase) {
     /<!--\s*p\.(\d+)\s*-->/g,
     (_, n) =>
       `<a class="pagemark" id="p-${n}" href="${assetBase}/source.pdf#page=${n}" ` +
-      `title="Page ${n} of the source PDF" target="_blank" rel="noopener">p. ${n}</a>`,
+      `title="Page ${n} of the source PDF" target="_blank" rel="noopener">p.${n}</a>`,
   );
   md = md.replace(/<!--[\s\S]*?-->/g, '');
   md = md.replace(/\]\(assets\/figures\//g, `](${assetBase}/figures/`);

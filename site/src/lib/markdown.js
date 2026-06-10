@@ -27,6 +27,18 @@ function remarkBoxes() {
   return (tree) => {
     visit(tree, (node) => {
       if (node.type !== 'containerDirective') return;
+      // A speaker turn inside a transcript: role-colored block with a label.
+      if (node.name === 'turn') {
+        const role = node.attributes?.role === 'user' ? 'user' : 'assistant';
+        const label = node.attributes?.label ?? (role === 'user' ? 'User' : 'Assistant');
+        node.data = { hName: 'div', hProperties: { className: ['turn', `turn-${role}`] } };
+        node.children.unshift({
+          type: 'paragraph',
+          data: { hName: 'div', hProperties: { className: ['turn-label'] } },
+          children: [{ type: 'text', value: label }],
+        });
+        return;
+      }
       if (node.name !== 'transcript' && node.name !== 'example') return;
       const title = node.attributes?.title;
       node.data = {
@@ -43,6 +55,22 @@ function remarkBoxes() {
   };
 }
 
+// `:chip[Label]` → a colored pill. Color resolved from the per-card registry
+// (label → color name); unknown labels fall back to gray.
+function remarkChips(chips = {}) {
+  return (tree) => {
+    visit(tree, 'textDirective', (node) => {
+      if (node.name !== 'chip') return;
+      const label = (node.children ?? []).map((c) => c.value ?? '').join('');
+      const color = chips[label] ?? 'gray';
+      node.data = {
+        hName: 'span',
+        hProperties: { className: ['chip', `chip-${color}`] },
+      };
+    });
+  };
+}
+
 function hasClass(node, cls) {
   const c = node.properties?.className;
   return Array.isArray(c) ? c.includes(cls) : c === cls;
@@ -50,6 +78,34 @@ function hasClass(node, cls) {
 
 function rehypeArticle(opts = {}) {
   return (tree) => {
+    // A pagemark in its own paragraph directly before a heading floats far
+    // above it (headings carry large top margins). Move it inside the
+    // heading so it aligns with the first text of that page.
+    visit(tree, 'element', (node, index, parent) => {
+      if (!parent || node.tagName !== 'p') return;
+      const kids = node.children.filter((c) => !(c.type === 'text' && !c.value.trim()));
+      if (kids.length !== 1 || kids[0].tagName !== 'a' || !hasClass(kids[0], 'pagemark')) return;
+      let ni = index + 1;
+      while (parent.children[ni]?.type === 'text' && !parent.children[ni].value.trim()) ni += 1;
+      const next = parent.children[ni];
+      if (next?.type === 'element' && /^h[2-6]$/.test(next.tagName)) {
+        next.children.unshift(kids[0]);
+        parent.children.splice(index, 1);
+        return index;
+      }
+    });
+    // A paragraph that contains ONLY a page marker (no text) is an empty
+    // between-blocks marker; tag it so CSS can collapse its height. (Cannot use
+    // `.pagemark:only-child` in CSS — that ignores text-node siblings and would
+    // wrongly match prose paragraphs that contain one inline marker.)
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'p') return;
+      const kids = node.children.filter((c) => !(c.type === 'text' && !c.value.trim()));
+      if (kids.length === 1 && kids[0].tagName === 'a' && hasClass(kids[0], 'pagemark')) {
+        const c = node.properties.className;
+        node.properties.className = Array.isArray(c) ? [...c, 'pagemark-row'] : ['pagemark-row'];
+      }
+    });
     // Paragraphs made of figure images (1+ <img>, optional trailing <em>
     // caption, caption may also live in the following paragraph) → <figure>
     visit(tree, 'element', (node, index, parent) => {
@@ -113,6 +169,18 @@ function rehypeArticle(opts = {}) {
       })), figure);
     });
 
+    // Table captions are plain markdown paragraphs (e.g. *__[Table 2.2.1.A] …__*)
+    // and otherwise render at body size — tag them so they match figcaptions.
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'p') return;
+      const kids = node.children.filter((c) => !(c.type === 'text' && !c.value.trim()));
+      if (!kids.length) return;
+      if (/^\s*\[(Table|Figure)\b/.test(textOf(node))) {
+        const cls = node.properties.className;
+        node.properties.className = Array.isArray(cls) ? [...cls, 'tablecap'] : ['tablecap'];
+      }
+    });
+
     visit(tree, 'element', (node, index, parent) => {
       if (node.tagName === 'img') {
         node.properties.loading = 'lazy';
@@ -136,6 +204,52 @@ function rehypeArticle(opts = {}) {
   };
 }
 
+// Render-time typography: educate straight quotes/apostrophes into curly ones.
+// Runs on the HTML tree (so raw-HTML tables are covered) and skips code, pre,
+// and transcript/example boxes — those reproduce verbatim output where the
+// source PDF itself prints straight quotes.
+function rehypeSmartQuotes() {
+  const SKIP = new Set(['pre', 'code', 'script', 'style', 'kbd']);
+  // quote context does not flow across block boundaries (new cell, new
+  // paragraph, new list item, …)
+  const BLOCK = new Set([
+    'p', 'li', 'td', 'th', 'tr', 'table', 'caption', 'blockquote', 'figcaption',
+    'div', 'section', 'dt', 'dd', 'h2', 'h3', 'h4', 'h5', 'h6', 'br',
+  ]);
+  const opensAfter = (ch) => /[\s([{=—–‘“>]/.test(ch) || ch === '\n';
+  return (tree) => {
+    let prev = '\n';
+    const walk = (node) => {
+      if (node.type === 'element' && (SKIP.has(node.tagName) || hasClass(node, 'box'))) {
+        prev = '\n';
+        return;
+      }
+      if (node.type === 'element' && BLOCK.has(node.tagName)) prev = '\n';
+      if (node.type === 'text') {
+        const chars = [...node.value];
+        let out = '';
+        for (let i = 0; i < chars.length; i++) {
+          const ch = chars[i];
+          if (ch === '"') {
+            out += opensAfter(prev) ? '“' : '”';
+          } else if (ch === "'") {
+            // decades ('90s) and mid-word apostrophes always close
+            const next = chars[i + 1] ?? '\n';
+            out += opensAfter(prev) && !/\d/.test(next) ? '‘' : '’';
+          } else {
+            out += ch;
+          }
+          prev = out.at(-1);
+        }
+        node.value = out;
+        return;
+      }
+      (node.children ?? []).forEach(walk);
+    };
+    walk(tree);
+  };
+}
+
 const HEADING_RE = /^(\d+(?:\.\d+)*)\s+(.*)$/;
 
 function textOf(node) {
@@ -145,6 +259,7 @@ function textOf(node) {
 
 export async function renderCard(markdown, opts = {}) {
   const toc = [];
+  const chips = opts.chips ?? {};
 
   const collectToc = () => (tree) => {
     visit(tree, 'element', (node) => {
@@ -195,9 +310,11 @@ export async function renderCard(markdown, opts = {}) {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkDirective)
+    .use(remarkChips, chips)
     .use(remarkBoxes)
     .use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: 'Footnotes' })
     .use(rehypeRaw)
+    .use(rehypeSmartQuotes)
     .use(rehypeSlug)
     .use(collectToc)
     .use(rehypeArticle, opts)

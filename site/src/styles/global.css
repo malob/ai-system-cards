@@ -122,6 +122,18 @@ a:hover { text-decoration-color: var(--accent); }
   transition: border-color 0.15s, color 0.15s;
 }
 .iconbtn:hover { border-color: var(--line-strong); color: var(--ink); }
+
+/* the Contents button only drives the mobile drawer — hide it when the
+   TOC rail is permanently visible */
+@media (min-width: 1100px) {
+  #toc-btn { display: none; }
+}
+
+/* theme toggle shows the current mode: sun in light, moon in dark
+   (\FE0E forces text presentation over emoji) */
+#theme-btn { min-width: 2.1rem; justify-content: center; }
+#theme-btn::before { content: '\2600\FE0E'; font-size: 0.85rem; line-height: 1; }
+[data-theme='dark'] #theme-btn::before { content: '\263E\FE0E'; }
 .iconbtn kbd {
   font: inherit;
   font-size: 0.68rem;
@@ -340,7 +352,6 @@ a:hover { text-decoration-color: var(--accent); }
   line-height: 1.18;
   letter-spacing: -0.008em;
   scroll-margin-top: 4rem;
-  position: relative;
 }
 
 .article h2 {
@@ -349,6 +360,12 @@ a:hover { text-decoration-color: var(--accent); }
   margin: 4.2rem 0 1.3rem;
   padding-top: 2.6rem;
   border-top: 1px solid var(--line-strong);
+}
+
+.article h2:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 2.2rem;
 }
 
 .article h3 { font-size: 1.42rem; font-weight: 590; margin: 2.9rem 0 0.9rem; }
@@ -360,19 +377,13 @@ a:hover { text-decoration-color: var(--accent); }
 .article :is(h2, h3, h4, h5, h6) .secnum { color: var(--accent); margin-right: 0.12em; }
 
 .article :is(h2, h3, h4, h5, h6) a.hanchor {
-  position: absolute;
-  left: -1.3em;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1.1em;
-  text-align: center;
-  font-size: 0.8em;
+  margin-left: 0.4em;
+  font-size: 0.75em;
   color: var(--ink-faint);
   text-decoration: none;
   opacity: 0;
   transition: opacity 0.12s;
 }
-.article h2 a.hanchor { top: calc(50% + 1.3rem); }
 .article :is(h2, h3, h4, h5, h6):hover a.hanchor { opacity: 1; }
 .article a.hanchor:hover { color: var(--accent); }
 
@@ -381,8 +392,40 @@ a:hover { text-decoration-color: var(--accent); }
 .article ul, .article ol { padding-left: 1.5em; margin: 0 0 1.15em; }
 .article li { margin-bottom: 0.35em; }
 .article li::marker { color: var(--accent); }
+/* Render "loose" lists (blank line between items in the source → each item
+   wrapped in <p>) identically to tight lists, so bullet spacing is consistent
+   regardless of incidental blank lines. Multi-paragraph items keep their gap. */
+.article li > p { margin: 0; }
+.article li > p + p { margin-top: 0.7em; }
 
 .article strong { font-weight: 640; }
+
+/* Google Docs "smart chip" labels, reproduced as colored pills. A single --chip
+   hue per color drives both the tinted fill and the text, so each chip reads
+   correctly in light and dark mode. Drop the source's dropdown ▾ (UI chrome). */
+.chip {
+  --chip: var(--ink-soft);
+  display: inline-block;
+  padding: 0.04em 0.5em;
+  border-radius: 7px;
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--chip) 26%, var(--paper-raised));
+  color: color-mix(in srgb, var(--chip) 62%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--chip) 38%, transparent);
+}
+.chip-amber  { --chip: #d98f3a; }
+.chip-red    { --chip: #c0392b; }
+.chip-yellow { --chip: #c9a227; }
+.chip-orange { --chip: #d96a1f; }
+.chip-peach  { --chip: #d98a63; }
+.chip-sienna { --chip: #9c5a3c; }
+.chip-green  { --chip: #4a8c4a; }
+.chip-blue   { --chip: #3f7bbf; }
+.chip-purple { --chip: #8a5cc0; }
+.chip-gray   { --chip: #8a8576; }
 
 .article blockquote {
   margin: 1.4em 0;
@@ -415,23 +458,32 @@ a:hover { text-decoration-color: var(--accent); }
 
 .article hr { border: none; border-top: 1px solid var(--line); margin: 3em 0; }
 
-/* page markers — deep links into the source PDF */
+/* Page markers — deep links into the source PDF. Rendered inline at the exact
+   break point but positioned out of flow into the left margin (relative to the
+   .doc column), so they never disturb block structure and sit in the margin at
+   any nesting depth. top:auto keeps the marker on the line where it occurs. */
 .pagemark {
   position: absolute;
-  transform: translateX(calc(-100% - 1.4rem));
+  left: -1.6rem;
+  width: 2.4rem;
+  text-align: right;
   font: 500 0.64rem var(--mono);
-  letter-spacing: 0.06em;
+  /* match the body line box (1.72 × root) so the small marker text shares the
+     baseline of the line it sits on, rather than top-aligning high in it */
+  line-height: 1.72rem;
+  letter-spacing: 0.02em;
   color: var(--ink-faint);
   text-decoration: none;
   white-space: nowrap;
-  padding-top: 0.45em;
   transition: color 0.12s;
 }
 .pagemark:hover { color: var(--accent); }
-.pagemark::before { content: '⌐ '; color: var(--line-strong); }
 @media (max-width: 1099px) { .pagemark { display: none; } }
 
-p:has(> .pagemark:only-child) { margin: 0; height: 0; }
+/* a marker that sits alone between blocks collapses its host paragraph
+   (tagged in the renderer; a CSS :only-child test would wrongly match prose
+   paragraphs that contain a single inline marker) */
+p.pagemark-row { margin: 0; height: 0; }
 
 /* --- figures ----------------------------------------------------------------- */
 
@@ -450,7 +502,7 @@ p:has(> .pagemark:only-child) { margin: 0; height: 0; }
 .article .figure-zoom:hover { border-color: var(--line-strong); }
 .article .figure-zoom img { display: block; width: 100%; height: auto; }
 
-[data-theme='dark'] .article .figure-zoom { background: #f4f1ea; border-color: var(--line-strong); }
+[data-theme='dark'] .article .figure-zoom { border-color: #d9d2c4; }
 
 .article figcaption {
   font-size: 0.82rem;
@@ -460,6 +512,17 @@ p:has(> .pagemark:only-child) { margin: 0; height: 0; }
   max-width: 42rem;
 }
 .article figcaption strong { color: var(--ink); }
+
+/* standalone table captions, styled to match figure captions */
+.article p.tablecap {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 42rem;
+}
+.article .table-wrap + p.tablecap { margin-top: -0.8em; }
+.article p.tablecap em { font-style: normal; }
+.article p.tablecap strong { color: var(--ink); }
 
 /* zoom lightbox */
 dialog.lightbox {
@@ -512,7 +575,9 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
 }
 
 .article tbody tr:last-child td { border-bottom: none; }
-.article tbody tr:hover { background: var(--accent-wash); }
+/* row hover misbehaves on tables with merged (rowspan) cells — the highlight
+   band can't match the visual row group, so only enable it on simple tables */
+.article table:not(:has([rowspan])) tbody tr:hover { background: var(--accent-wash); }
 
 .article td u, .article td ins { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 2px; }
 
@@ -550,6 +615,31 @@ sup.fn-html a, .article sup a { font: 600 0.72em var(--mono); text-decoration: n
 
 .box-example { border-left-color: var(--line-strong); }
 .box-example .box-label { color: var(--ink-soft); }
+
+/* Speaker turns inside a transcript: raised cards set apart from the narrator's
+   plain framing prose, with a role-colored edge (assistant = clay, user = slate)
+   and a small role label. Multi-paragraph turns stay visually unified. */
+.box .turn {
+  --turn-accent: var(--accent);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--turn-accent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.85rem 0.5rem;
+  margin: 0.85rem 0;
+}
+.box .turn-user { --turn-accent: #6f86a8; }
+[data-theme='dark'] .box .turn-user { --turn-accent: #8aa0bd; }
+.box .turn-label {
+  font: 600 0.62rem var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--turn-accent) 72%, var(--ink));
+  margin: 0 0 0.35rem;
+}
+.box .turn p:last-child { margin-bottom: 0; }
+/* the transcript's own left edge is redundant once turns carry the accent */
+.box-transcript { border-left-color: var(--line-strong); }
 
 /* --- footnotes & sidenotes -------------------------------------------------------- */
 
