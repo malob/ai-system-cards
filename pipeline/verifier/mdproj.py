@@ -122,6 +122,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     seg = RE_FIGSKIP.sub(figskip, seg)
     seg = re.sub(r"</?u>", "", seg)   # prose underline (caption legend words)
     seg = re.sub(r"\\([*`])", r"\1", seg)  # escaped literal markup (transcripts)
+    seg = re.sub(r"(?<!`)`(?!`)", "", seg)   # inline code backticks (mono spans)
     seg = RE_COMMENT.sub(" ", seg)
 
     def piperule(m):

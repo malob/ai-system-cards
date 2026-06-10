@@ -14,6 +14,7 @@ SYNTAX = {
     "italic": ("*", "*"),
     "chip": (":chip[", "]"),
     "underline": ("<u>", "</u>"),  # inline raw HTML, like v1's <sup> usage
+    "code": ("`", "`"),
     # placeholder: plain text until the renderer gains :ph (FL-07/D17)
 }
 
@@ -80,7 +81,7 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
         # source must render literally, not as markdown (p.43/44 class).
         # Phase 0.5: the backslash hugs its char, left of it; opens/closes
         # at the same position land further left (applied later)
-        covered = [(a, b) for kind, a, b, _ in marks if kind == "fnref"]
+        covered = [(a, b) for kind, a, b, _ in marks if kind in ("fnref", "code")]
         for i, ch in enumerate(text):
             if ch in "*`" and not any(a <= i < b for a, b in covered):
                 ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))

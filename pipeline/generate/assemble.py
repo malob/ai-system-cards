@@ -435,6 +435,11 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
             if s["zone"] == "fnref":
                 marks.append(("fnref", m_start, m_end, int(s["text"].strip())))
                 continue
+            if "Mono" in s.get("font", "") and s["zone"] == "body":
+                # monospace span = inline code (RobotoMono in this card);
+                # code styling dominates — no bold/italic inside
+                marks.append(("code", m_start, m_end, None))
+                continue
             if s["bold"]:
                 marks.append(("bold", m_start, m_end, None))
             if s["italic"]:
