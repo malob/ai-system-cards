@@ -59,7 +59,8 @@ def stitch(blocks: list[dict]) -> list[dict]:
     page marker inline at the exact break point."""
     out = []
     for blk in blocks:
-        if out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph":
+        if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
+                and out[-1]["type"] in ("paragraph", "item")):
             prev = out[-1]
             prev_text = prev["lines"][-1]["text"].rstrip()
             nxt_line = blk["lines"][0]

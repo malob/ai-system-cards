@@ -8,26 +8,19 @@ adjudication passes not yet run.
 
 - FN1 major: 1
 - FN1 minor: 1
-- L1 major: 4
 - L1 minor: 31
-- P1 major: 1
 - S1 major: 12
 - T1 major: 3
-- T1 minor: 243
+- T1 minor: 261
 
-**Major flags: 21** FN1=1, L1=4, P1=1, S1=12, T1=3
+**Major flags: 16** FN1=1, S1=12, T1=3
 
 ## Major flags by page
 
 - p.0 [FN1] {"oracle_refs": 77, "md_refs": 72, "oracle_ref_details": [["1", 16], ["2", 19], ["3", 49], ["4", 51], ["5", 55], ["6", 59], ["7", 84], ["8", 92], ["9", 92], ["1…
-- p.13 [L1] {"kind": "uri", "missing": "https://www.anthropic.com/institute/recursive-self-improvement", "anchor": "accelerate their own development"}
-- p.19 [L1] {"kind": "goto", "anchor": "Section 6.5.2", "dest_page": 196}
 - p.38 [T1] {"op": "replace", "missing_from_md": "Fabrication", "extra_in_md": "Skipped cheap verification", "n_tokens": 3}
 - p.38 [T1] {"op": "replace", "missing_from_md": "Skipped cheap verification", "extra_in_md": "Reckless action", "n_tokens": 3}
 - p.44 [T1] {"op": "delete", "missing_from_md": "Research Research engineering Pure engineering Non R&D", "extra_in_md": "", "n_tokens": 7}
-- p.54 [L1] {"kind": "goto", "anchor": "Section 6.2.1.2", "dest_page": 105}
-- p.87 [P1] {"kind": "missing-marker"}
-- p.132 [L1] {"kind": "goto", "anchor": "Section 8.17.6", "dest_page": 295}
 - p.182 [S1] {"kind": "bold-run-missing", "text": "This is a classic agentic safety test."}
 - p.222 [S1] {"kind": "bold-run-missing", "text": "[Bottom left:]"}
 - p.222 [S1] {"kind": "bold-run-missing", "text": "[Bottom right:]"}

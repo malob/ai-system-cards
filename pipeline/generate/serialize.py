@@ -9,32 +9,33 @@ sys.path.insert(0, str(Path(__file__).parents[1] / "verifier"))
 from assemble import block_text_and_marks  # noqa: E402
 
 
+SYNTAX = {
+    "bold": ("**", "**"),
+    "italic": ("*", "*"),
+    "chip": (":chip[", "]"),
+    # placeholder: plain text until the renderer gains :ph (FL-07/D17)
+}
+
+
 def _apply_marks(text: str, marks: list) -> str:
-    """Insert markdown syntax by char range, end-first so offsets hold.
-    Overlapping marks of different kinds nest by application order."""
-    ins: list[tuple[int, int, str, str]] = []  # (pos, prio, open/close, s)
+    """Apply ALL mark edits in one strictly end-first pass so earlier offsets
+    never go stale. (The previous two-pass version replaced fnrefs '11'->'[^11]'
+    FIRST, shifting every later mark by +3 per ref — the 'in Section 6.' bug.)
+    At equal position: replacements run before closes before opens."""
+    ops = []  # (pos, phase, edit)
     for kind, a, b, data in marks:
-        if kind == "bold":
-            ins += [(a, 2, "o", "**"), (b, 2, "c", "**")]
-        elif kind == "italic":
-            ins += [(a, 3, "o", "*"), (b, 3, "c", "*")]
-        elif kind == "chip":
-            ins += [(a, 1, "o", ":chip["), (b, 1, "c", "]")]
-        # placeholder: detected + recorded, but serialized as plain bracketed
-        # text until the renderer/verifier gain a :ph directive (FL-07 deferred,
-        # presentation-editorial per D17)
-        elif kind == "link":
-            ins += [(a, 0, "o", "["), (b, 0, "c", f"]({data})")]
-        elif kind == "fnref":
-            ins += [(a, 0, "o", ""), (b, 0, "c", "")]  # replaced below
-    out = text
-    for kind, a, b, data in sorted(marks, key=lambda m: -m[1]):
         if kind == "fnref":
-            out = out[:a] + f"[^{data}]" + out[b:]
-    applied = sorted((p for p in ins if True), key=lambda t: (-t[0], t[1]))
-    # simple two-pass: apply non-fnref marks end-first
-    for pos, _, oc, s in sorted([i for i in ins if i[3]], key=lambda t: (-t[0], 0 if t[2] == "c" else 1)):
-        out = out[:pos] + s + out[pos:]
+            ops.append((a, 0, lambda t, a=a, b=b, d=data: t[:a] + f"[^{d}]" + t[b:]))
+        elif kind == "link":
+            ops.append((b, 1, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
+            ops.append((a, 2, lambda t, a=a: t[:a] + "[" + t[a:]))
+        elif kind in SYNTAX:
+            o, c = SYNTAX[kind]
+            ops.append((b, 1, lambda t, b=b, c=c: t[:b] + c + t[b:]))
+            ops.append((a, 2, lambda t, a=a, o=o: t[:a] + o + t[a:]))
+    out = text
+    for _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1])):
+        out = edit(out)
     return out
 
 

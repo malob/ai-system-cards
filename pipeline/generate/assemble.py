@@ -304,10 +304,10 @@ def _merge_marks(marks):
     emphasis), then coalesce adjacent same-kind marks. Order matters: filtering
     after merging lets a bold bridge across a chip boundary and re-leak '**'
     into the label."""
-    chips = [m for m in marks if m[0] == "chip"]
+    atomic = [m for m in marks if m[0] in ("chip", "fnref")]
     marks = [m for m in marks
              if not (m[0] in ("bold", "italic")
-                     and any(c[1] <= m[1] and m[2] <= c[2] for c in chips))]
+                     and any(c[1] <= m[1] and m[2] <= c[2] for c in atomic))]
     out = []
     for kind, a, b, data in sorted(marks, key=lambda m: (m[0], m[1])):
         # tolerance 2: span trailing-space trim + the line-join space leave a
