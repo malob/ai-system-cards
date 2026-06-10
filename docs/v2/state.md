@@ -3,7 +3,7 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-10 (~01:15) — groundwork + verifier v0 session with Fable 5.
+**Last updated:** 2026-06-10 (~01:35) — groundwork, verifier v0 + S-layer, docling cross-check, mutation testing; with Fable 5.
 
 ## Cold-start capsule
 
