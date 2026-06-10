@@ -165,23 +165,27 @@ whole; p.252-253 = 28 rows matching v1 exactly); :::caption first-class block
 end to end (assembler→serializer→remark directive→CSS; 169 captions,
 DOM-verified uniform style incl. transcript captions); L2 resolution
 (DEST:N→heading slugs, 427 internal links 0 broken in DOM); table footnote
-refs re-injected (FN1 76/77, ref-12 site logged). Gate: T1=6/S1=4/FN1=1/ST1=1
-— all characterized. Round D (re-sweep, 4 agents, fresh vsweep2 slices)
-RUNNING → convergence report vs 69-major baseline. Residuals for after:
-p.38 chip-order T1 (×2, reading-order, typed-model territory), p.182 S1 real
-find, ref-12 fnref, caption-underline word, prose-underline context filter.
+refs re-injected.
 
-**NEXT (priority order, sweep-driven):**
-1. table-scrambled ×11 (§4 tables pp.51–91): diagnose ONE root cause
-   (docling grid traversal vs y-slot insertion); add TB2 cell-order check.
-2. Transcript box-mapping: label-only bubbles → empty turns with content
-   displaced to :::example (pp.107/118/120/161) + one role flip (p.153).
-3. Blockquote detection (unimplemented; pp.51/65/67/130/216) + ST4 check.
-4. Caption continuation/association (×7); stacked-footnote oracle boundary
-   (p.113/132) then FN1 body-text → gate; table-cell fnrefs (FN1 major);
-   L2 dest resolution (DEST:N → anchors); ST2 v2 ×12 triage; T1 ×6 triage.
-5. Regen → re-sweep (expect majors well under 69) → full gate+mutations →
-   site build → owner review toward acceptance.
+**ROUND D done (~afternoon):** re-sweep all 319pp → 25 majors (was 69);
+fix wave closed all 24 actionable (see Status above + experiment 08); gate
+now FN1 0 / S1 4 / ST1 1 / T1 6 majors, all typed. Detector sweep:
+model-name displacement 13→0 across every table.
+
+**ROUND E RUNNING:** two background agents verifying (a) all 30 previously
+flagged pages (verdict per prior finding), (b) 30 random pages (regression
+sample); fresh slices in `pipeline/.cache/vsweep3/md/` from
+`pipeline/slice_pages.py`. Findings → `pipeline/.cache/vsweep3/
+findings-{flagged,sample}.jsonl`. On completion: write convergence verdict
+into experiment 08 + here, then full mutation re-run + site build + report
+to owner.
+
+**KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
+order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
+p.153 '[Assistant]' label, p.182 missing-bold sentence (REAL find, example-box
+content), p.222 '[Bottom left:]'; ST1×1; FN1 minor×1 (ref-12 site); L1
+minor×31 (anchor-text cosmetics); caption-underline word + prose-underline
+context filter (queued; reverted once for T1 6→33 over-fire).
 
 **Earlier context (owner feedback ~02:25, the wrapped-bullet incident):**
 the current gates are token/marks/count-based and CANNOT see token-preserving
