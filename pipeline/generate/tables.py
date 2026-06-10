@@ -34,6 +34,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         if oracle_page is not None:
             # split BEFORE rotation repair: a glued cell defeats x-matching,
             # leaving its row rotated; once split, the row becomes repairable
+            html = _merge_fragment_rows(html, t["bbox"], oracle_page)
             html = _split_glued_cells(html, t["bbox"], oracle_page)
             html = _resplit_misjoined_cells(html, t["bbox"], oracle_page)
             html = _extend_truncated_cells(html, t["bbox"], oracle_page)
@@ -52,21 +53,84 @@ def _table_spans(oracle_page, bbox):
             yield s
 
 
+def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling splits one tall logical row into several <tr>s (welfare
+    interview tables: a 4-line question becomes a row + fragment rows, often
+    with fragments landing in the WRONG columns). A fragment cell's text is a
+    mid-chain run of some column chain whose PREFIX is an existing cell of
+    the previous row: merge it into that cell and drop the fragment row."""
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s["text"].strip() and s.get("zone") != "fnref"]
+    chains = _column_chains(spans)
+    if not chains:
+        return html
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    out_rows = []
+    for r in rows:
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        frags = [_cell_sq(c) for _, _, c in tags if _cell_sq(c)]
+        merged_all = bool(frags) and out_rows and not any(
+            "rowspan" in a or "colspan" in a for _, a, _ in tags)
+        if merged_all:
+            prev = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", out_rows[-1], re.S)
+            prev_cells = [c for _, _, c in prev]
+            plan = []  # (prev_cell_idx, full_text)
+            for f in frags:
+                hit = None
+                for ch in chains:
+                    accs = [""]
+                    for s in ch:
+                        accs.append(accs[-1] + _squash(s["text"]))
+                    for k in range(1, len(ch)):
+                        for m in range(k + 1, len(ch) + 1):
+                            if accs[m][len(accs[k]):] != f:
+                                continue
+                            for ci, pc in enumerate(prev_cells):
+                                if _cell_sq(pc) == accs[k]:
+                                    cand = (ci, " ".join(
+                                        x["text"].strip() for x in ch[:m]))
+                                    hit = cand if hit is None else hit
+                    if hit:
+                        break
+                if not hit:
+                    merged_all = False
+                    break
+                plan.append(hit)
+            if merged_all and len({ci for ci, _ in plan}) == len(plan):
+                import html as _h
+                for ci, full in plan:
+                    prev_cells[ci] = _h.escape(full, quote=False)
+                out_rows[-1] = "<tr>" + "".join(
+                    f"<{tg}{a}>{c}</{tg}>"
+                    for (tg, a, _), c in zip(prev, prev_cells)) + "</tr>"
+                continue
+        out_rows.append(r)
+    if len(out_rows) == len(rows):
+        return html
+    # reassemble in order, preserving everything outside the rows
+    out = html
+    for r in rows:
+        pass
+    body = "".join(out_rows)
+    return re.sub(r"(<tbody>).*(</tbody>)", lambda m: m.group(1) + body + m.group(2), html, flags=re.S) \
+        if "<tbody>" in html else re.sub(r"(<table[^>]*>).*(</table>)", lambda m: m.group(1) + body + m.group(2), html, flags=re.S)
+
+
 def _split_glued_cells(html: str, bbox: list, oracle_page: dict) -> str:
     """Docling sometimes glues two cells' values into one cell, leaving an
     empty cell in the row ('88.1 97.5' | '' — p.85 Sonnet row). When a glued
     cell's text equals the concatenation of exactly two oracle spans and the
     row has exactly one empty cell, split by span x-order."""
-    spans = list(_table_spans(oracle_page, bbox))
+    spans = [s for s in _table_spans(oracle_page, bbox) if s.get("zone") != "fnref"]
     sq = {_squash(s["text"]): s for s in spans}
     out = html
     for r in re.findall(r"<tr>.*?</tr>", html, re.S):
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
-        empties = [i for i, (_, _, c) in enumerate(tags) if not _squash(re.sub(r"<[^>]+>", "", c))]
+        empties = [i for i, (_, _, c) in enumerate(tags) if not _cell_sq(c)]
         if len(empties) != 1:
             continue
         for i, (tg, attr, c) in enumerate(tags):
-            plain = _squash(re.sub(r"<[^>]+>", "", c))
+            plain = _cell_sq(c)
             if not plain or i == empties[0]:
                 continue
             parts = plain.split()  # squash removed spaces; split won't work —
@@ -79,6 +143,10 @@ def _split_glued_cells(html: str, bbox: list, oracle_page: dict) -> str:
             if not hit:
                 continue
             a, b2 = sorted(hit, key=lambda s: s["bbox"][0])
+            # the two pieces must be SIDE BY SIDE (different columns): two
+            # stacked lines are one wrapped cell, not a glue (p.253 Gemini)
+            if b2["bbox"][0] < a["bbox"][2] - 2:
+                continue
             cells = [c2 for _, _, c2 in tags]
             # place by x-order: glued cell gets the piece nearer its column,
             # empty cell gets the other — empty left of glued => takes the
@@ -112,26 +180,33 @@ def _inject_fnrefs(html: str, bbox: list, oracle_page: dict) -> str:
         anchor = max(left, key=lambda s: s["bbox"][2])["text"].strip()
         if not anchor:
             continue
-        pat = re.compile("(" + re.escape(anchor) + r")(?![^<]*</sup>)")
+        # absorb a stray literal digit docling captured from the superscript
+        # ('GDPval-AA 29' -> 'GDPval-AA<sup>[^29]</sup>')
+        pat = re.compile("(" + re.escape(anchor) + r")(\s*" + re.escape(n) + r"\b)?(?![^<]*</sup>)")
         out, k = pat.subn(lambda m: m.group(1) + f"<sup>[^{n}]</sup>", out, count=1)
     return out
 
 
 def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
-    """Recover bold (best-score) and underline (second-best, FL-09) styling in
-    table cells from oracle facts: bold span flags; thin rules under spans."""
-    spans = list(_table_spans(oracle_page, bbox))
+    """Recover bold (best-score) and underline (second-best, FL-09) styling
+    from oracle facts. Cells are segmented GEOMETRICALLY: each row's y-band
+    yields its candidate spans (plus wrapped/sub-line continuations), each
+    cell's text is greedily split into those spans, and every segment is
+    styled by its own span's flags — a bold '97.88%' inside the cell
+    '97.88% (± 0.66%)' gets <b> on just the bold part."""
+    spans = [s for s in _table_spans(oracle_page, bbox) if s.get("zone") != "fnref"]
     rules = oracle_page.get("rules", [])
     # bold only signifies when it DEVIATES from the table's dominant weight:
     # some tables (2.2.1.A) are set entirely in Lora-Bold, where the visual
-    # weight reads regular and 'bold' carries no information (owner-flagged)
-    # exclude header text (white-on-dark) from the dominance count, else
-    # data-cell bolds get suppressed in tables with bold headers + bold
-    # row-label columns (the 4.4.2 regression)
+    # weight reads regular and 'bold' carries no information (owner-flagged).
+    # white header text excluded from the count (the 4.4.2 regression)
     boldish = [s for s in spans
                if s["text"].strip() and s.get("color") not in ("#ffffff", "#faf9f5")]
     bold_share = sum(1 for s in boldish if s.get("bold")) / max(1, len(boldish))
-    bold_signifies = bold_share <= 0.5
+    # suppress only NEAR-UNIFORM bold (the all-Lora-Bold case): a table with
+    # bold row labels + bold best scores can reach ~0.6 share and its bolds
+    # are exactly the legend's promise (p.82/98 missing-bold cluster)
+    bold_signifies = bold_share < 0.9
 
     def underlined(s):
         sb = s["bbox"]
@@ -142,29 +217,101 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 return True
         return False
 
+    spans_xy = _row_spans_xy(oracle_page, bbox)
     out = html
-    for s in spans:
-        text = s["text"].strip()
-        if not text or len(text) < 2:
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        plain = [_cell_sq(c) for _, _, c in tags]
+        band = _row_band(plain, spans_xy)
+        if band is None:
             continue
-        wraps = []
-        if s.get("bold") and bold_signifies:
-            wraps.append(("<b>", "</b>"))
-        if underlined(s):
-            wraps.append(("<u>", "</u>"))
-        if not wraps:
-            continue
-        styled = text
-        for o, c in wraps:
-            styled = f"{o}{styled}{c}"
-        # wrap the first un-styled occurrence of this exact cell text
-        pat = re.compile(r"(<t[hd][^>]*>)" + re.escape(text) + r"(</t[hd]>)")
-        out, n = pat.subn(lambda m: m.group(1) + styled + m.group(2), out, count=1)
+        # row's spans: in band, plus wrapped/sub-line continuations hanging
+        # below a member (the small '± 1.4%' second line)
+        chosen = [s for s in spans if s["text"].strip()
+                  and band[0] <= (s["bbox"][1] + s["bbox"][3]) / 2 <= band[1]]
+        for _ in range(3):
+            for s in spans:
+                if s in chosen or not s["text"].strip():
+                    continue
+                sb = s["bbox"]
+                if any(min(sb[2], m["bbox"][2]) - max(sb[0], m["bbox"][0]) > 0
+                       and -1 <= sb[1] - m["bbox"][3] < 9 for m in chosen):
+                    chosen.append(s)
+        # pool: squash key -> span instances in x-order (cells consume L->R)
+        pool: dict[str, list] = {}
+        for s in sorted(chosen, key=lambda s: (s["bbox"][0], s["bbox"][1])):
+            pool.setdefault(_squash(s["text"]), []).append(s)
+        used: dict[str, int] = {}
+
+        def segment(sq):
+            """Greedy longest-prefix split of a cell's squash into pool keys."""
+            segs, pos = [], 0
+            while pos < len(sq):
+                best = None
+                for k in pool:
+                    if k and sq.startswith(k, pos) and (best is None or len(k) > len(best)):
+                        best = k
+                if best is None:
+                    return None
+                segs.append(best)
+                pos += len(best)
+            return segs
+
+        cells = [c for _, _, c in tags]
+        changed = False
+        for i, (c, p2) in enumerate(zip(cells, plain)):
+            if not p2 or "<" in c:
+                continue
+            segs = segment(p2)
+            if not segs:
+                continue
+            # map each segment's squash range back to the raw cell text
+            raw_idx = [j for j, ch in enumerate(c) if not ch.isspace()]
+            pieces, cur, sq_pos = [], 0, 0
+            styled_any = False
+            for k in segs:
+                inst = pool[k][min(used.get(k, 0), len(pool[k]) - 1)]
+                used[k] = used.get(k, 0) + 1
+                wraps = []
+                if inst.get("bold") and bold_signifies and len(k) >= 2:
+                    wraps.append(("<b>", "</b>"))
+                if underlined(inst) and len(k) >= 2:
+                    wraps.append(("<u>", "</u>"))
+                st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
+                sq_pos += len(k)
+                if wraps:
+                    seg_text = c[st:en]
+                    for o, cl in wraps:
+                        seg_text = o + seg_text + cl
+                    pieces.append(c[cur:st] + seg_text)
+                    cur = en
+                    styled_any = True
+            pieces.append(c[cur:])
+            if styled_any:
+                cells[i] = "".join(pieces)
+                changed = True
+        if changed:
+            rebuilt = "<tr>" + "".join(
+                f"<{tg}{a}>{c2}</{tg}>" for (tg, a, _), c2 in zip(tags, cells)) + "</tr>"
+            out = out.replace(r, rebuilt, 1)
     return out
 
 
+_QUOTE_FOLD = {0x2019: 0x27, 0x2018: 0x27, 0x201C: 0x22, 0x201D: 0x22}
+
+
 def _squash(s: str) -> str:
-    return re.sub(r"\s+", "", s)
+    """Comparison key: whitespace-free, quote-variant-folded (docling
+    normalizes curly quotes; the oracle preserves the PDF's). Output text
+    always comes from the oracle spans, so fidelity is unaffected."""
+    return re.sub(r"\s+", "", s).translate(_QUOTE_FOLD)
+
+
+def _cell_sq(c: str) -> str:
+    """Squash of a cell's visible text: tags stripped, HTML entities decoded
+    (docling emits &#x27; etc., which can never match oracle span text)."""
+    import html as _h
+    return _squash(_h.unescape(re.sub(r"<[^>]+>", "", c)))
 
 
 def _row_spans_xy(oracle_page, bbox):
@@ -185,7 +332,7 @@ def _row_spans_xy(oracle_page, bbox):
     for col in by_x.values():
         col.sort(key=lambda s: s["bbox"][1])
         for i in range(len(col)):
-            for j in range(i + 1, min(i + 3, len(col))):
+            for j in range(i + 1, min(i + 6, len(col))):
                 if col[j]["bbox"][1] - col[j - 1]["bbox"][3] >= 9:
                     break
                 run = col[i:j + 1]
@@ -223,7 +370,7 @@ def _resplit_misjoined_cells(html: str, bbox: list, oracle_page: dict) -> str:
     out = html
     for r in re.findall(r"<tr>.*?</tr>", html, re.S):
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
-        plain = [_squash(re.sub(r"<[^>]+>", "", c)) for _, _, c in tags]
+        plain = [_cell_sq(c) for _, _, c in tags]
         band = _row_band(plain, spans_xy)
         if band is None:
             continue
@@ -294,54 +441,101 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     have = sorted(inviz.sub("", "".join(plain)))
     want = sorted(_squash("".join(texts)))
     if have != want:
-        return None
+        # tolerate surplus equal to in-band fnref digits docling absorbed into
+        # a cell ('Sonnet 4.6' + ref '4' -> 'Sonnet 4.64', p.51); the ref is
+        # re-injected as a proper <sup> afterwards
+        from collections import Counter as _C2
+        fn = "".join(_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
+                     if s.get("zone") == "fnref"
+                     and band[0] <= (s["bbox"][1] + s["bbox"][3]) / 2 <= band[1])
+        if not fn or _C2(have) - _C2(sorted(fn)) != _C2(want):
+            return None
     tg = tags[0][0]
     return "<tr>" + "".join(f"<{tg}>{c}</{tg}>" for c in texts) + "</tr>"
 
 
-def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
-    """Docling sometimes keeps only the FIRST line of a wrapped cell
-    ('Claude Mythos' sans 'Preview', p.72). When a cell's text equals the top
-    span of a stacked run whose continuation is claimed by no cell anywhere
-    in the table, extend the cell to the run's full text."""
-    spans = [s for s in _table_spans(oracle_page, bbox) if s["text"].strip()]
-    spans_xy = _row_spans_xy(oracle_page, bbox)
-    # stacked runs keyed by top-span squash
+def _column_chains(spans):
+    """Maximal vertical chains of spans sharing a left-edge cluster with
+    < 9pt line gaps — the geometry of a wrapped (multi-line) table cell."""
     by_x: dict[float, list] = {}
     for s in spans:
         key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
         by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
-    runs: dict[str, list] = {}
+    chains = []
     for col in by_x.values():
         col.sort(key=lambda s: s["bbox"][1])
-        for i in range(len(col) - 1):
-            run = [col[i]]
-            for j in range(i + 1, min(i + 3, len(col))):
-                if col[j]["bbox"][1] - col[j - 1]["bbox"][3] >= 9:
-                    break
-                run.append(col[j])
-            if len(run) > 1:
-                runs.setdefault(_squash(run[0]["text"]), []).append(run)
-    if not runs:
-        return html
-    all_cells = {_squash(re.sub(r"<[^>]+>", "", c))
+        cur = [col[0]]
+        for s in col[1:]:
+            if s["bbox"][1] - cur[-1]["bbox"][3] < 9:
+                cur.append(s)
+            else:
+                chains.append(cur)
+                cur = [s]
+        chains.append(cur)
+    return [c for c in chains if len(c) > 1]
+
+
+def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling sometimes drops the trailing line(s) of a wrapped cell
+    ('Claude Mythos' sans 'Preview' p.72; a tall interview cell sans its
+    final 'conversations?' line p.311). When a cell's text equals a
+    consecutive span run of an x-column and the run's IMMEDIATE continuation
+    (vertically adjacent, < 9pt) is claimed by no cell in the table, extend
+    the cell with that continuation."""
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s["text"].strip() and s.get("zone") != "fnref"]
+    by_x: dict[float, list] = {}
+    for s in spans:
+        key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
+        by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    cols = []
+    for col in by_x.values():
+        col.sort(key=lambda s: s["bbox"][1])
+        cols.append(col)
+    spans_xy = _row_spans_xy(oracle_page, bbox)
+    all_cells = {_cell_sq(c)
                  for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", html, re.S)}
     out = html
     for r in re.findall(r"<tr>.*?</tr>", html, re.S):
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
-        plain = [_squash(re.sub(r"<[^>]+>", "", c)) for _, _, c in tags]
+        plain = [_cell_sq(c) for _, _, c in tags]
         band = _row_band(plain, spans_xy)
-        if band is None:
-            continue
         cells = [c for _, _, c in tags]
         changed = False
         for i, p2 in enumerate(plain):
-            cand = [run for run in runs.get(p2, [])
-                    if band[0] <= (run[0]["bbox"][1] + run[0]["bbox"][3]) / 2 <= band[1]
-                    and all(_squash(s["text"]) not in all_cells for s in run[1:])]
+            # without a band (a mega-cell continuation row too tall for
+            # composite anchors, p.311) the text match itself is the anchor —
+            # but only for substantial text, where it's unique
+            if not p2 or (band is None and len(p2) < 12):
+                continue
+            cand = []
+            for col in cols:
+                for st in range(len(col)):
+                    y0 = (col[st]["bbox"][1] + col[st]["bbox"][3]) / 2
+                    if band is not None and not band[0] <= y0 <= band[1]:
+                        continue
+                    acc = ""
+                    for j in range(st, len(col)):
+                        acc += _squash(col[j]["text"])
+                        if len(acc) > len(p2):
+                            break
+                        if acc == p2:
+                            # immediate adjacent continuation run below
+                            tail = []
+                            k = j + 1
+                            while (k < len(col)
+                                   and col[k]["bbox"][1] - col[k - 1]["bbox"][3] < 9):
+                                tail.append(col[k])
+                                k += 1
+                            if tail and all(_squash(s["text"]) not in all_cells
+                                            for s in tail):
+                                cand.append(col[st:j + 1] + tail)
+                            break
             if len(cand) != 1:
                 continue
-            cells[i] = " ".join(s["text"].strip() for s in cand[0])
+            import html as _h
+            cells[i] = _h.escape(" ".join(s["text"].strip() for s in cand[0]),
+                                 quote=False)
             changed = True
         if changed:
             rebuilt = "<tr>" + "".join(
@@ -373,7 +567,7 @@ def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
         if len(tags) < 2 or any("colspan" in a or "rowspan" in a for _, a, _ in tags):
             continue
-        plain = [_squash(re.sub(r"<[^>]+>", "", c)) for _, _, c in tags]
+        plain = [_cell_sq(c) for _, _, c in tags]
         if any(not p for p in plain):
             continue
         band = _row_band(plain, spans_xy)
