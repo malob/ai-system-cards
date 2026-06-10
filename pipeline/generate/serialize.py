@@ -235,11 +235,19 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             bolds = [m for m in marks if m[0] == "bold"]
             if bolds and bolds[0][1] == 0:
                 label = text[: bolds[0][2]].strip().rstrip(":")
-                text = text[bolds[0][2]:].lstrip(" :")
-                marks = [m for m in marks if m[0] != "bold" or m[1] != 0]
+                rest = text[bolds[0][2]:]
+                delta = bolds[0][2] + (len(rest) - len(rest.lstrip(" :")))
+                text = rest.lstrip(" :")
+                # remaining marks must shift with the trimmed prefix — stale
+                # offsets displaced every later mark by len(label) (p.153
+                # code spans wrapped the wrong characters)
+                marks = [(k, max(0, a - delta), max(0, b - delta), d)
+                         for k, a, b, d in marks
+                         if not (k == "bold" and a == 0) and b > delta]
             elif re.fullmatch(r"\[[^\]]{1,30}\]:?\s*", text.strip()):
                 label = text.strip().rstrip(":").strip("[]").rstrip(":")
                 text = ""
+                marks = []
             # the label text outranks the bubble fill for role (p.153: assistant
             # turns in #faf9f5 bubbles were mis-roled user by fill alone)
             low = label.lower()
