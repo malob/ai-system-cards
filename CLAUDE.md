@@ -39,3 +39,9 @@ the shipped v1 site and layout.
   renders live at `cards/*/*/extracted/pages/p-NNN.png` — Read them to resolve
   anything the structured extraction leaves unclear, and `open` them for the
   owner when discussing a page.
+- **Never gate on the owner for visual verification** (owner feedback
+  2026-06-10): after each fix batch, verify in the rendered DOM/preview and
+  page renders YOURSELF, then run the convergence loop — regen → re-slice →
+  re-sweep (affected pages + rotating sample) → triage → fix → repeat. The
+  owner sees only editorial decisions and converged results, not per-fix
+  demos.

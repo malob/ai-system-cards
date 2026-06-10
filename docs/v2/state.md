@@ -119,6 +119,16 @@ quote/restyle batch** (suspect: bold leads inside AISI quote items). Then:
 (p.19-21/252-253/309-318), L2 dest resolution, FN1 table-cell refs, ST2×10
 triage, full re-sweep (expect way under 69 majors), mutation re-run.
 
+**OPERATING MODE CHANGE (owner feedback 2026-06-10 ~12:40):** autonomous
+convergence loop — regen → re-slice → re-sweep → triage → fix → repeat,
+self-verifying in the rendered DOM; owner sees editorial decisions and
+converged results only (also in CLAUDE.md). Queued residuals from the midday
+batches: caption-underline word (prose underline marks reverted after T1
+6→33 over-fire; needs rule context filtering), one extra <b> in 4.4.2.A to
+adjudicate, cross-page TABLE stitching (quotes now stitch; tables still
+don't: p.20-21/252-253/309-318), :::caption block + renderer, L2, FN1
+table-cell refs, S1×10 + ST2×12 triage, then FULL RE-SWEEP for convergence.
+
 **NEXT (priority order, sweep-driven):**
 1. table-scrambled ×11 (§4 tables pp.51–91): diagnose ONE root cause
    (docling grid traversal vs y-slot insertion); add TB2 cell-order check.
