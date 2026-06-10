@@ -19,22 +19,28 @@ SYNTAX = {
 
 def _apply_marks(text: str, marks: list) -> str:
     """Apply ALL mark edits in one strictly end-first pass so earlier offsets
-    never go stale. (The previous two-pass version replaced fnrefs '11'->'[^11]'
-    FIRST, shifting every later mark by +3 per ref — the 'in Section 6.' bug.)
-    At equal position: replacements run before closes before opens."""
-    ops = []  # (pos, phase, edit)
+    never go stale. (A two-pass version replaced fnrefs '11'->'[^11]' first,
+    shifting every later mark by +3 per ref — the 'in Section 6.' bug.)
+
+    Equal-position ordering (inserts at the same index stack right-to-left:
+    the LAST insert ends up LEFTMOST):
+    - an OPEN for following text processes before a CLOSE for preceding text,
+      so the close lands left of the open ("]:chip[" not ":chip[]");
+    - among opens, inner (shorter) first so outer ends up leftmost;
+    - among closes, outer (earlier start) first so inner ends up leftmost."""
+    ops = []  # (pos, phase, tiebreak, edit)
     for kind, a, b, data in marks:
         if kind == "fnref":
-            ops.append((a, 0, lambda t, a=a, b=b, d=data: t[:a] + f"[^{d}]" + t[b:]))
+            ops.append((a, 0, 0, lambda t, a=a, b=b, d=data: t[:a] + f"[^{d}]" + t[b:]))
         elif kind == "link":
-            ops.append((b, 1, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
-            ops.append((a, 2, lambda t, a=a: t[:a] + "[" + t[a:]))
+            ops.append((a, 1, b, lambda t, a=a: t[:a] + "[" + t[a:]))
+            ops.append((b, 2, a, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
         elif kind in SYNTAX:
             o, c = SYNTAX[kind]
-            ops.append((b, 1, lambda t, b=b, c=c: t[:b] + c + t[b:]))
-            ops.append((a, 2, lambda t, a=a, o=o: t[:a] + o + t[a:]))
+            ops.append((a, 1, b, lambda t, a=a, o=o: t[:a] + o + t[a:]))
+            ops.append((b, 2, a, lambda t, b=b, c=c: t[:b] + c + t[b:]))
     out = text
-    for _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1])):
+    for _, _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1], x[2])):
         out = edit(out)
     return out
 
@@ -124,11 +130,12 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             out.append(_render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker) + "\n")
         elif t == "item":
             body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
+            indent = "    " * blk.get("level", 0)
             m = re.match(r"^(\d{1,2})[.)]​\s*", body)
             if m:  # ordered item: keep the number, real space after it
-                out.append(f"{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
+                out.append(f"{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
-                out.append("- " + inline_marker + body.lstrip("●•◦▪‣○​ ") + "\n")
+                out.append(f"{indent}- " + inline_marker + body.lstrip("●•◦▪‣○​ ") + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
             if blk["caption_lines"]:

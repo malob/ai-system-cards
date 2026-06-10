@@ -35,6 +35,12 @@ def normalize(text: str, calibration: bool = False) -> str:
 
 BULLET_GLYPHS = "●•◦▪‣○"
 
+# Google Docs exports mark list markers with a zero-width space after the
+# glyph/number ("●​Text", "1.​Text") — the shared mechanical signature used by
+# both the generator (assemble) and the ST structural invariant.
+import re as _re
+LIST_MARKER = _re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)])​")
+
 
 def squash(text: str, calibration: bool = True) -> str:
     """Space-free token-normalized key — immune to span-join glue, wrapping,

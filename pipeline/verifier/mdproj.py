@@ -54,6 +54,8 @@ class Section:
     chips: list = field(default_factory=list)         # [(label, page)]
     headings: list = field(default_factory=list)      # [(text, page)]
     turn_labels: list = field(default_factory=list)   # [(label, page)]
+    items: list = field(default_factory=list)         # [(first-80-chars, page)]
+    block_starts: list = field(default_factory=list)  # [(first-80-chars, page)] per md block
 
 
 def sections_at_ref(repo: Path, ref: str) -> list[tuple[str, str]]:
@@ -184,8 +186,30 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     seg = re.sub(r"^#{1,6}\s+(.*)$", heading, seg, flags=re.M)
     seg = re.sub(r"^>\s?", "", seg, flags=re.M)               # blockquotes
     # unordered bullets: require same-line whitespace so a LONE "-" line (the
-    # CA-01 artifact class!) is NOT consumed — it must surface as an extra token
-    seg = re.sub(r"^[ \t]*[-*+][ \t]+", "", seg, flags=re.M)
+    # CA-01 artifact class!) is NOT consumed — it must surface as an extra token.
+    # Records list items (ST1) and ordered items by line shape.
+    def item_page(m, body):
+        # an item that begins with an inline page marker belongs to that page
+        sm = RE_SENTINEL.match(body.strip())
+        return int(sm.group(1)) if sm else pg(m)
+
+    # consumed item lines get a ZWNJ prefix (stripped by norm) so the
+    # block-starts scan below cannot double-count them as paragraph starts
+    def bullet(m):
+        sec.items.append((m.group(1)[:80], item_page(m, m.group(1))))
+        return "‌" + m.group(1)
+    seg = re.sub(r"^[ \t]*[-*+][ \t]+(.*)$", bullet, seg, flags=re.M)
+
+    def ordered(m):
+        sec.items.append((m.group(0)[:80], item_page(m, m.group(1))))
+        return "‌" + m.group(0)
+    seg = re.sub(r"^\d{1,2}\. (\S.*)$", ordered, seg, flags=re.M)
+
+    # block starts (ST2): first chars of every markdown block (blank-line
+    # separated), for detecting paragraph-starts that are continuations;
+    # ZWNJ-prefixed lines are consumed items, not paragraph starts
+    for m in re.finditer(r"(?:^|\n\n)[ \t]*([^\s#:>|!\[<‌-][^\n]{0,79})", seg):
+        sec.block_starts.append((m.group(1)[:80], pg(m)))
     seg = re.sub(r"^```.*$", " ", seg, flags=re.M)            # code fences
     seg = seg.replace("`", "")
     seg = RE_TAG.sub(" ", seg)

@@ -279,6 +279,115 @@ def s2_chips(md_chips, oracle_pages, page_range, chip_colors, registry) -> list[
     return flags
 
 
+def _olines(page):
+    """Oracle body lines: (text, x0, y0, y1, size, colors) in reading order."""
+    by_line = {}
+    for s in page["spans"]:
+        if s["zone"] == "body":
+            by_line.setdefault(s["line"], []).append(s)
+    out = []
+    for _, spans in sorted(by_line.items()):
+        spans.sort(key=lambda s: s["bbox"][0])
+        out.append({
+            "text": "".join(s["text"] for s in spans),
+            "x0": spans[0]["bbox"][0],
+            "y0": min(s["bbox"][1] for s in spans),
+            "y1": max(s["bbox"][3] for s in spans),
+            "size": max(s["size"] for s in spans),
+            "colors": {s["color"] for s in spans},
+            "bold": all(s["bold"] for s in spans),
+        })
+    return out
+
+
+HEAD_NUM_ST = re.compile(r"^(\d+(?:\.\d+)*)\s+\S")
+
+
+def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=frozenset()) -> list[dict]:
+    """ST structural invariant: token-preserving structural damage (the
+    wrapped-bullet class) is invisible to T1 — check layout-derived structure.
+    ST1: list-marker lines (ZWSP signature) ↔ markdown list items, count per page.
+    ST2: no markdown block starts with a hanging-indent continuation line's text.
+    ST3: each heading line-group renders as ONE markdown heading (split/missing)."""
+    md_items_by_page, md_blocks_by_page, md_heads_by_page = {}, {}, {}
+    for sec in sections:
+        for t, pg in sec.items:
+            md_items_by_page.setdefault(pg, []).append(norm.squash(t))
+        for t, pg in sec.block_starts:
+            md_blocks_by_page.setdefault(pg, []).append(norm.squash(t))
+        for t, pg in sec.headings:
+            md_heads_by_page.setdefault(pg, []).append(norm.squash(t))
+
+    flags = []
+    for pno in page_range:
+        if pno in toc_pages or pno in table_pages or pno > len(oracle_pages):
+            continue
+        lines = _olines(oracle_pages[pno - 1])
+
+        # --- ST1: item counts (strict page, window fallback à la S2)
+        o_marks = [l for l in lines if norm.LIST_MARKER.match(l["text"].lstrip())]
+        n_md = len(md_items_by_page.get(pno, []))
+        if len(o_marks) and n_md < len(o_marks):
+            window_md = sum(len(md_items_by_page.get(p, [])) for p in (pno - 1, pno, pno + 1))
+            window_o = 0
+            for p in (pno - 1, pno, pno + 1):
+                if 0 < p <= len(oracle_pages) and p not in toc_pages:
+                    window_o += sum(1 for l in _olines(oracle_pages[p - 1])
+                                    if norm.LIST_MARKER.match(l["text"].lstrip()))
+            if window_md < window_o:
+                flags.append(_flag("ST1", pno, "major",
+                                   {"kind": "items-missing", "oracle": len(o_marks), "md": n_md,
+                                    "sample": o_marks[0]["text"][:60]}))
+
+        # --- ST2: continuation lines must not start md blocks
+        cont_texts = []
+        in_item, marker_x0 = False, 0.0
+        prev = None
+        for l in lines:
+            if norm.LIST_MARKER.match(l["text"].lstrip()):
+                in_item, marker_x0 = True, l["x0"]
+            elif in_item and prev is not None and l["x0"] > marker_x0 + 6 \
+                    and (l["y0"] - prev["y1"]) < 8:
+                cont_texts.append(norm.squash(l["text"])[:40])
+            else:
+                in_item = False
+            prev = l
+        if cont_texts:
+            blocks = [b for p in (pno - 1, pno, pno + 1) for b in md_blocks_by_page.get(p, [])]
+            for ct in cont_texts:
+                if len(ct) >= 12 and any(b.startswith(ct[:24]) for b in blocks):
+                    flags.append(_flag("ST2", pno, "major",
+                                       {"kind": "item-split-at-continuation", "text": ct[:60]}))
+
+        # --- ST3: heading groups render as one heading
+        groups, cur = [], None
+        for l in lines:
+            is_head = l["size"] >= 12.6 or (l["colors"] == {"#666666"} and HEAD_NUM_ST.match(l["text"]))
+            if is_head:
+                if cur and (l["y0"] - cur["y1"]) < 10 and abs(l["size"] - cur["size"]) < 0.6:
+                    cur["text"] += " " + l["text"]
+                    cur["y1"] = l["y1"]
+                else:
+                    if cur:
+                        groups.append(cur)
+                    cur = dict(l)
+            else:
+                if cur:
+                    groups.append(cur)
+                cur = None
+        if cur:
+            groups.append(cur)
+        heads = [h for p in (pno - 1, pno, pno + 1) for h in md_heads_by_page.get(p, [])]
+        for g in groups:
+            gsq = norm.squash(g["text"])
+            if len(gsq) < 4:
+                continue
+            if not any(h == gsq or h.startswith(gsq) or gsq.startswith(h) and len(h) > 8 for h in heads):
+                flags.append(_flag("ST3", pno, "major",
+                                   {"kind": "heading-split-or-missing", "text": g["text"][:70]}))
+    return flags
+
+
 def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
     """Footnote refs and bodies present (FN1), global — sections share boundary
     pages, so per-section ranges double-count. Count-level for v0."""

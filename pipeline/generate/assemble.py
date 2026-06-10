@@ -32,30 +32,54 @@ def _overlaps(a, b):
 
 
 def _lines(page):
-    """Group body/fnref spans into line records (gap-aware text join)."""
+    """Group spans into VISUAL ROWS (gap-aware x-ordered join). PyMuPDF line
+    ids fragment a row — chip pills, lone bullet glyphs (often with offset y),
+    and side-by-side spans come back as separate 'lines', sometimes out of
+    order (p.38). Rows are rebuilt by y-overlap clustering, then spans joined
+    left-to-right."""
     by_line = {}
     for s in page["spans"]:
         if s["zone"] in ("pagenum",):
             continue
         by_line.setdefault(s["line"], []).append(s)
+
+    frags = []
+    for _, spans in sorted(by_line.items()):
+        y0 = min(s["bbox"][1] for s in spans)
+        y1 = max(s["bbox"][3] for s in spans)
+        frags.append({"spans": spans, "y0": y0, "y1": y1})
+
+    rows = []
+    for f in sorted(frags, key=lambda f: (f["y0"], f["spans"][0]["bbox"][0])):
+        placed = False
+        for r in rows[-4:]:
+            ov = min(r["y1"], f["y1"]) - max(r["y0"], f["y0"])
+            h = min(r["y1"] - r["y0"], f["y1"] - f["y0"])
+            if h > 0 and ov / h > 0.5:
+                r["spans"].extend(f["spans"])
+                r["y0"], r["y1"] = min(r["y0"], f["y0"]), max(r["y1"], f["y1"])
+                placed = True
+                break
+        if not placed:
+            rows.append(dict(f))
+
     lines = []
-    for lid, spans in sorted(by_line.items()):
-        spans.sort(key=lambda s: s["bbox"][0])
+    for i, r in enumerate(rows):
+        spans = sorted(r["spans"], key=lambda s: s["bbox"][0])
         parts, segs = [], []  # segs: (start, end, span) char offsets into text
         pos = 0
-        for i, s in enumerate(spans):
-            if i and s["bbox"][0] - spans[i - 1]["bbox"][2] > 1.0:
+        for j, s in enumerate(spans):
+            if j and s["bbox"][0] - spans[j - 1]["bbox"][2] > 0.5:
                 parts.append(" ")
                 pos += 1
             parts.append(s["text"])
             segs.append((pos, pos + len(s["text"]), s))
             pos += len(s["text"])
-        text = "".join(parts)
-        bbox = [min(s["bbox"][0] for s in spans), min(s["bbox"][1] for s in spans),
-                max(s["bbox"][2] for s in spans), max(s["bbox"][3] for s in spans)]
         body = [s for s in spans if s["zone"] == "body"]
         lines.append({
-            "id": lid, "text": text, "segs": segs, "bbox": bbox,
+            "id": i, "text": "".join(parts), "segs": segs,
+            "bbox": [min(s["bbox"][0] for s in spans), r["y0"],
+                     max(s["bbox"][2] for s in spans), r["y1"]],
             "block": spans[0]["block"],
             "size": max((s["size"] for s in body), default=spans[0]["size"]),
             "fnbody": all(s["zone"] == "fnbody" for s in spans),
@@ -135,6 +159,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
 
     blocks = []
     cur = None
+    marker_x0s: set[int] = set()
 
     def flush():
         nonlocal cur
@@ -173,6 +198,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             flush()
             cur = {"type": "item", "lines": [line], "page": pno,
                    "marker_x0": line["bbox"][0]}
+            marker_x0s.add(round(line["bbox"][0]))
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
             # a new turn starts when the role changes or a bold label leads
@@ -187,12 +213,18 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 if kind == "turn":
                     cur["role"] = role
         else:  # prose
-            # hanging-indent continuation of a wrapped list item: continuation
-            # lines sit ~18pt right of the marker (p.12: bullet x0=90, text 108)
+            # continuation of a wrapped list item — two layouts in this card:
+            # hanging indent (text ~18pt right of marker, p.12) and flush-left
+            # (chip-definition lists, p.38: continuation at the marker x0, only
+            # joinable when the item is mid-sentence)
             if cur and cur["type"] == "item":
                 prev = cur["lines"][-1]
                 gap = line["bbox"][1] - prev["bbox"][3]
-                if line["bbox"][0] > cur["marker_x0"] + 6 and gap < 8:
+                hanging = line["bbox"][0] > cur["marker_x0"] + 6
+                prev_open = prev["text"].rstrip()[-1:] not in ".!?;:”\"’"
+                flush_left = (abs(line["bbox"][0] - cur["marker_x0"]) <= 2
+                              and (prev_open or line["text"].lstrip()[:1].islower()))
+                if gap < 8 and (hanging or flush_left):
                     cur["lines"].append(line)
                     continue
             same_para = False
@@ -215,6 +247,17 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     flush()
     for tb in pending_tables:  # tables below all prose
         blocks.append(tb)
+
+    # nested-list levels from marker-x0 tiers (level 0 = leftmost markers)
+    tiers = sorted(marker_x0s)
+    merged_tiers = []
+    for x in tiers:
+        if not merged_tiers or x - merged_tiers[-1] > 4:
+            merged_tiers.append(x)
+    for blk in blocks:
+        if blk["type"] == "item":
+            x = round(blk["marker_x0"])
+            blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
 
     if not fig_done and figures:
         for f in figures:

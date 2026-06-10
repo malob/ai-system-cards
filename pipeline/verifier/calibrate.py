@@ -64,6 +64,7 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> 
     flags += invariants.fn1_footnotes(sections, pages, page_range, TOC_PAGES)
     flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages)
     flags += invariants.s2_chips(md_chips, pages, page_range, chip_colors, registry)
+    flags += invariants.st_structure(sections, pages, page_range, TOC_PAGES, table_pages)
     if not limited and only_pages is None:
         flags += invariants.p1_markers(sections, EXPECTED_PAGES)
         flags += invariants.f1_figures(sections, figures_map)
@@ -113,7 +114,7 @@ def main():
     for (inv, sev), n in sorted(by_inv.items()):
         print(f"{inv:>4} {sev:<6} {n}")
 
-    for inv in ("T1", "L1", "S1", "S2", "S3", "P1", "F1", "FN1"):
+    for inv in ("T1", "L1", "S1", "S2", "S3", "ST1", "ST2", "ST3", "P1", "F1", "FN1"):
         sample = [f for f in flags if f["invariant"] == inv and f["severity"] == "major"][: args.samples]
         if sample:
             print(f"\n--- {inv} major samples ---")
