@@ -18,7 +18,7 @@ SYNTAX = {
 }
 
 
-def _apply_marks(text: str, marks: list) -> str:
+def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
     """Apply ALL mark edits in one strictly end-first pass so earlier offsets
     never go stale. (A two-pass version replaced fnrefs '11'->'[^11]' first,
     shifting every later mark by +3 per ref — the 'in Section 6.' bug.)
@@ -75,6 +75,15 @@ def _apply_marks(text: str, marks: list) -> str:
             o, c = SYNTAX[kind]
             ops.append((a, 1, b, 0, lambda t, a=a, o=o: t[:a] + o + t[a:]))
             ops.append((b, 2, a, 1, lambda t, b=b, c=c: t[:b] + c + t[b:]))
+    if escape_literals:
+        # transcript bodies are RAW model/user text: literal '*'/'`' in the
+        # source must render literally, not as markdown (p.43/44 class).
+        # Phase 0.5: the backslash hugs its char, left of it; opens/closes
+        # at the same position land further left (applied later)
+        covered = [(a, b) for kind, a, b, _ in marks if kind == "fnref"]
+        for i, ch in enumerate(text):
+            if ch in "*`" and not any(a <= i < b for a, b in covered):
+                ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
     out = text
     for _, _, _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1], x[2], x[3])):
         out = edit(out)
@@ -207,7 +216,13 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             # breaks (PDF intra-turn paragraphs are plain hard returns with no
             # extra spacing — the signal is a line ending short of the right edge)
             maxx = max(l["bbox"][2] for l in blk["lines"])
-            geo = [i + 1 for i, l in enumerate(blk["lines"][:-1]) if l["bbox"][2] < maxx - 50]
+            # a short line is a paragraph break only at a sentence boundary:
+            # terminal punctuation, or the next line opening a new sentence —
+            # bare width split mid-sentence at wrap points (p.44/153)
+            geo = [i + 1 for i, l in enumerate(blk["lines"][:-1])
+                   if l["bbox"][2] < maxx - 50
+                   and (re.search(r"[.!?:…\"”'\)\]]\s*$", l["text"].rstrip())
+                        or blk["lines"][i + 1]["text"].lstrip()[:1].isupper())]
             brks = sorted(set(blk.get("breaks", [])) | set(geo))
             idxs = [0] + brks + [len(blk["lines"])]
             seg_bodies = []
@@ -233,20 +248,20 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             role = label_role or blk.get("role") or "assistant"
             # label keeps its source form (brackets and all): fidelity outranks
             # cosmetics, and stripping made the bold label vanish from S1's view
-            body = _hyphen_join(_apply_marks(text, marks)).strip()
+            body = _hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip()
             for tt, mm in seg_bodies[1:]:
-                body += "\n\n" + _hyphen_join(_apply_marks(tt, mm)).strip()
+                body += "\n\n" + _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 raw = "\n".join(l["text"] for l in blk["code_lines"])
                 body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
             out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
         elif t == "commentary":
             text, marks = block_text_and_marks(blk, page, chips)
-            out.append(_hyphen_join(_apply_marks(text, marks)).strip() + "\n")
+            out.append(_hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip() + "\n")
         elif t in ("example", "code"):
             text, marks = block_text_and_marks(blk, page, chips)
             if t == "example":
-                out.append(":::example\n" + _hyphen_join(_apply_marks(text, marks)).strip() + "\n:::\n")
+                out.append(":::example\n" + _hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip() + "\n:::\n")
             else:
                 raw = "\n".join(l["text"] for l in blk["lines"])
                 out.append("```\n" + raw + "\n```\n")

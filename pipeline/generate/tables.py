@@ -30,6 +30,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
       cyclically mis-assigns columns on wide numeric tables, e.g. 4.4.2.A)."""
     out = []
     for t in _load().get(str(page_no), []):
+        t = {**t, "html": _demote_data_th(t["html"])}
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
         if oracle_page is not None:
             # split BEFORE rotation repair: a glued cell defeats x-matching,
@@ -51,6 +52,38 @@ def _table_spans(oracle_page, bbox):
         if (bbox[0] - 3 <= sb[0] and sb[2] <= bbox[2] + 3
                 and bbox[1] - 3 <= sb[1] and sb[3] <= bbox[3] + 3):
             yield s
+
+
+def _demote_data_th(html: str) -> str:
+    """Docling sometimes emits a DATA row as all-<th> (p.253 RiemannBench),
+    rendering every value bold. A non-first row whose cells are majority
+    numeric is data: th -> td."""
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    out = html
+    for r in rows[1:]:
+        cells = re.findall(r"<th([^>]*)>(.*?)</th>", r, re.S)
+        if not cells or "<td" in r:
+            continue
+        plain = [re.sub(r"<[^>]+>", "", c).strip() for _, c in cells]
+        numeric = sum(1 for c in plain if re.match(r"^[\d.,%±()\s/x×*+-]+$", c or "x"))
+        if numeric < max(2, len(plain) // 2 + 1):
+            continue
+        out = out.replace(r, r.replace("<th", "<td").replace("</th>", "</td>"), 1)
+    return out
+
+
+def _join_wrapped(parts):
+    """Join wrapped-cell lines: no space when a version number wraps after
+    '.'/'-' ('GPT-5.' + '5' -> 'GPT-5.5')."""
+    out = ""
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        if out and not (out[-1] in ".-" and part[:1].isdigit()):
+            out += " "
+        out += part
+    return out
 
 
 def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:
@@ -87,8 +120,8 @@ def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:
                                 continue
                             for ci, pc in enumerate(prev_cells):
                                 if _cell_sq(pc) == accs[k]:
-                                    cand = (ci, " ".join(
-                                        x["text"].strip() for x in ch[:m]))
+                                    cand = (ci, _join_wrapped(
+                                        x["text"] for x in ch[:m]))
                                     hit = cand if hit is None else hit
                     if hit:
                         break
@@ -242,15 +275,25 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
         for s in sorted(chosen, key=lambda s: (s["bbox"][0], s["bbox"][1])):
             pool.setdefault(_squash(s["text"]), []).append(s)
         used: dict[str, int] = {}
+        # fnref digits docling baked into cell text ('LLM training3') are
+        # consumable but unstyled; _inject_fnrefs converts them to <sup> later
+        fn_keys = {_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
+                   if s.get("zone") == "fnref" and _squash(s["text"])}
 
         def segment(sq):
-            """Greedy longest-prefix split of a cell's squash into pool keys."""
+            """Greedy longest-prefix split of a cell's squash into pool keys
+            (baked-in footnote digits pass through unstyled)."""
             segs, pos = [], 0
             while pos < len(sq):
                 best = None
                 for k in pool:
                     if k and sq.startswith(k, pos) and (best is None or len(k) > len(best)):
                         best = k
+                if best is None:
+                    for k in fn_keys:
+                        if sq.startswith(k, pos):
+                            best = k
+                            break
                 if best is None:
                     return None
                 segs.append(best)
@@ -272,6 +315,12 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             raw_idx = [j for j, ch in enumerate(c_dec) if not ch.isspace()]
             pieces, cur, sq_pos = [], 0, 0
             for k in segs:
+                if k not in pool:   # baked-in fnref digit: pass through
+                    st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
+                    sq_pos += len(k)
+                    pieces.append(c_dec[cur:en])
+                    cur = en
+                    continue
                 inst = pool[k][min(used.get(k, 0), len(pool[k]) - 1)]
                 used[k] = used.get(k, 0) + 1
                 wraps = []
@@ -355,6 +404,17 @@ def _row_band(plain, cand, tol=7.0):
     """Median y of the row's uniquely-matchable cells (usually the model
     name) — the anchor that ties HTML rows back to page geometry."""
     ys = [cand[p][0][1] for p in plain if p and len(cand.get(p, [])) == 1]
+    if not ys:
+        # a unique key PREFIXING a garbled cell ('Claude Fable 5' inside
+        # 'Claude Fable 5 88% (±') anchors too — exactly the rows that
+        # need rebuilding
+        for p in plain:
+            if not p:
+                continue
+            hits = [v for k, v in cand.items()
+                    if len(k) >= 8 and p.startswith(k) and len(v) == 1]
+            if len(hits) == 1:
+                ys.append(hits[0][0][1])
     if not ys:
         return None
     ys.sort()
@@ -443,7 +503,7 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     texts = []
     for _, _, members in cells2:
         members.sort(key=lambda s: (round(s["bbox"][1]), s["bbox"][0]))
-        texts.append(inviz.sub("", " ".join(s["text"].strip() for s in members)).strip())
+        texts.append(inviz.sub("", _join_wrapped(s["text"] for s in members)).strip())
     have = sorted(inviz.sub("", "".join(plain)))
     want = sorted(_squash("".join(texts)))
     if have != want:
@@ -540,7 +600,7 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
             if len(cand) != 1:
                 continue
             import html as _h
-            cells[i] = _h.escape(" ".join(s["text"].strip() for s in cand[0]),
+            cells[i] = _h.escape(_join_wrapped(s["text"] for s in cand[0]),
                                  quote=False)
             changed = True
         if changed:
@@ -574,10 +634,15 @@ def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
         if len(tags) < 2 or any("colspan" in a or "rowspan" in a for _, a, _ in tags):
             continue
         plain = [_cell_sq(c) for _, _, c in tags]
-        if any(not p for p in plain):
-            continue
         band = _row_band(plain, spans_xy)
         if band is None:
+            continue
+        if any(not p for p in plain):
+            # an empty cell defeats pool matching but not the geometric
+            # rebuild (p.82 row with '' + glued 'N/A N/A')
+            rb = _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal)
+            if rb:
+                out = out.replace(r, rb, 1)
             continue
         from collections import Counter
         need = Counter(plain)
