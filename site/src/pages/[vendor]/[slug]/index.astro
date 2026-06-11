@@ -41,7 +41,7 @@ const rail = toc
     <a class="brand" href={base}>AI System Cards<span class="amp"> §</span></a>
     <span class="doc-title" id="doc-title">{meta.title}</span>
     <div class="controls">
-      <button class="iconbtn" id="toc-btn" aria-label="Table of contents">Contents</button>
+      <button class="iconbtn" id="toc-btn" aria-label="Table of contents" aria-controls="rail" aria-expanded="true">Contents</button>
       <button class="iconbtn" id="search-btn" aria-label="Search">
         Search <kbd>⌘K</kbd>
       </button>
@@ -125,10 +125,24 @@ const rail = toc
 
   // --- mobile TOC drawer ---
   const rail = document.getElementById('rail');
-  document.getElementById('toc-btn').addEventListener('click', () => rail.classList.toggle('open'));
+  const reader = rail.closest('.reader');
+  const tocBtn = document.getElementById('toc-btn');
+  const narrow = window.matchMedia('(max-width: 1207px)');
+  // TOC is visible when wide & not flipped, or narrow & flipped
+  const syncToc = () =>
+    tocBtn.setAttribute(
+      'aria-expanded',
+      String(reader.classList.contains('toc-flip') ? narrow.matches : !narrow.matches),
+    );
+  tocBtn.addEventListener('click', () => { reader.classList.toggle('toc-flip'); syncToc(); });
+  // tapping a destination closes the overlay drawer (narrow only; the wide
+  // sidebar stays put when you click a link)
   rail.addEventListener('click', (e) => {
-    if (e.target.closest('a')) rail.classList.remove('open');
+    if (e.target.closest('a') && narrow.matches) { reader.classList.remove('toc-flip'); syncToc(); }
   });
+  // crossing the sidebar/drawer breakpoint resets to that width's default
+  narrow.addEventListener('change', () => { reader.classList.remove('toc-flip'); syncToc(); });
+  syncToc();
 
   // --- scrollspy ---
   const links = new Map();

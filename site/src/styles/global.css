@@ -132,12 +132,8 @@ a:hover { text-decoration-color: var(--accent); }
 }
 .iconbtn:hover { border-color: var(--line-strong); color: var(--ink); }
 
-/* the Contents button only drives the mobile drawer — hide it when the
-   TOC rail is permanently visible (the rail appears at 1208px, the width at
-   which the TOC + the centered text column + its page-number gutter all fit) */
-@media (min-width: 1208px) {
-  #toc-btn { display: none; }
-}
+/* the Contents button is always available — it shows/hides the TOC at every
+   width (see `.reader.toc-flip` below). */
 
 /* theme toggle shows the current mode: sun in light, moon in dark
    (\FE0E forces text presentation over emoji) */
@@ -250,6 +246,15 @@ a:hover { text-decoration-color: var(--accent); }
    Rail switches to the grid sidebar at 1208px; below that it's a drawer. */
 @media (max-width: 1207px) { .reader { display: block; } }
 
+/* The Contents button toggles the TOC at ANY width via `toc-flip` on .reader,
+   which shows the state OPPOSITE this width's default: collapse the sidebar to
+   full-width text (wide) or open the drawer (narrow). JS clears the class at
+   the breakpoint so a toggle never carries an inverted meaning across it. */
+@media (min-width: 1208px) {
+  .reader.toc-flip { grid-template-columns: minmax(0, 1fr); }
+  .reader.toc-flip .rail { display: none; }
+}
+
 /* TOC rail */
 .rail {
   position: sticky;
@@ -275,7 +280,7 @@ a:hover { text-decoration-color: var(--accent); }
     height: auto;
     padding: 1.4rem 1.4rem 3rem;
   }
-  .rail.open { display: block; }
+  .reader.toc-flip .rail { display: block; }
 }
 
 .rail .rail-label {
