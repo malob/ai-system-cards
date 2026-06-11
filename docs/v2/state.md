@@ -255,6 +255,17 @@ span their column groups, and normalize the 4.2.A-empty-cell vs
 the just-stabilized header-subrow family: do it fresh + re-run the table
 audit after. One residual th<b> variant left (multiline attr form).
 
+**READING ROUND 2 (18:50) — all fixed:** §6.1.2 'disaster' = items now
+INHERIT quote context (cross-page carry via quote_carry param) instead of
+deriving from x>=112 alone; same-line span-gap word spaces ('isoverall'
+class, T1 minors 100→86); cross-page turn stitching (p.103/104 mid-sentence
+bubble split); mono spans no longer early-out of marks (code boxes get bold
++ green pills: p.182 <b> in <pre> → S1 0, pp.107/108 […] pills incl.
+own-line); example bodies drop code marks (CSS mono) with mono-line hard
+breaks; lettered lists render <ol type=a> (renderer plugin); pill bracket
+windows ±4 ([so it] exact). Adjudicated: transcript role color for p.104
+continuation NOT inferable from source (owner: don't worry about it).
+
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
 p.153 '[Assistant]' label, p.182 missing-bold sentence (REAL find, example-box
