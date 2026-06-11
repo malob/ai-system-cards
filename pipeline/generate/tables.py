@@ -31,6 +31,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
     out = []
     for t in _load().get(str(page_no), []):
         t = {**t, "html": _demote_data_th(t["html"])}
+        t = {**t, "html": _normalize_rowspan_subrows(t["html"])}
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
         if oracle_page is not None:
             # split BEFORE rotation repair: a glued cell defeats x-matching,
@@ -44,6 +45,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _restyle_cells(html, t["bbox"], oracle_page)
             html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
+            html = _normalize_rowspan_subrows(html)
         out.append({**t, "html": html})
     return out
 
@@ -56,12 +58,44 @@ def _table_spans(oracle_page, bbox):
             yield s
 
 
+def _normalize_rowspan_subrows(html: str) -> str:
+    """A row covered by an earlier row's first-column rowspan must not also
+    have a leading EMPTY cell — that renders a phantom column shifting every
+    value one right (docling emits some, and the lead-restore pass added
+    others under rowspan headers)."""
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    covered = 0
+    out = html
+    for r in rows:
+        m = re.match(r'<tr><t[hd][^>]*rowspan="(\d+)"', r)
+        if covered <= 0 and m:
+            covered = int(m.group(1)) - 1
+            continue
+        if covered > 0:
+            covered -= 1
+            lead = re.match(r"<tr><(t[hd])([^>]*)>(\s*)</t[hd]>", r)
+            if lead and "rowspan" not in lead.group(2):
+                out = out.replace(r, "<tr>" + r[len(lead.group(0)):], 1)
+    return out
+
+
 def _demote_data_th(html: str) -> str:
     """Docling sometimes emits a DATA row as all-<th> (p.253 RiemannBench),
     rendering every value bold. A non-first row whose cells are majority
     numeric is data: th -> td."""
     rows = re.findall(r"<tr>.*?</tr>", html, re.S)
     out = html
+    for r in rows:
+        if "<td" in r and "<th" in r:
+            # mixed row = data row: demote every th EXCEPT a first-column
+            # row label (model names are legitimately bold)
+            first = re.match(r"<tr><th([^>]*)>(.*?)</th>", r, re.S)
+            rest = r[len(first.group(0)):] if first else r
+            fixed = (first.group(0) if first else "<tr>") + \
+                rest.replace("<th", "<td").replace("</th>", "</td>")
+            if fixed != r:
+                out = out.replace(r, fixed, 1)
+            continue
     for r in rows:   # incl. row 0: a merged fragment can OPEN with a data row
         cells = re.findall(r"<th([^>]*)>(.*?)</th>", r, re.S)
         if not cells or "<td" in r:
@@ -648,10 +682,7 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     # header sub-row: PDF has [_, span(2-3), Claude.ai])
     if len(cells2) == len(tags) - 1 and cells2 and cells2[0][0] - bbox[0] > 60:
         cells2.insert(0, [bbox[0], bbox[0], []])
-    if modal and len(cells2) > max(modal, len(tags)):
-        # more clusters than the table has columns: the x-clustering broke a
-        # cell apart (excluded fnref gap) — never emit a too-wide row
-        return None
+
     # re-segmentation can only UN-glue: never fewer cells than docling
     # emitted (x-overlapping true columns fuse and are correctly rejected
     # here, e.g. the wide sentence-cell welfare tables)
