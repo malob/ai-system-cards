@@ -198,8 +198,10 @@ def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozen
     md_by_page: dict[int, list[str]] = {}
     md_keys_by_page: dict[int, Counter] = {}
     for text, pg in md_emphasis:
-        k = key(text)
-        md_by_page.setdefault(pg, []).append(k)
+        # same trailing-punctuation strip as the oracle-run keys below —
+        # asymmetry made 'Category:' (md) miss 'Category' (oracle)
+        k = key(text.strip(".,;: "))
+        md_by_page.setdefault(pg, []).append(key(text))
         md_keys_by_page.setdefault(pg, Counter())[k] += 1
 
     flags = []
