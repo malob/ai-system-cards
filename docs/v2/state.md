@@ -337,18 +337,34 @@ claim (refuted 1 major via crop; absorbed dup reports). Gate held at every
 commit: 0 majors (3 accepted) / L1 31 / T1 72; seam auditor 0; mutation
 recall unchanged; site build clean.
 
-**AWAITING OWNER STEER (next session, before declaring canonical):**
-- RESIDUAL: constitution-edits table 7.4.3 (pp.244-245) — all cell text
-  present, but the bold passage-name lead ('§ How we think about
-  corrigibility') is not recovered in its tall multi-line cells (restyle
-  band/pool). Deferred to avoid risking the welfare/dense-cell family. Decide
-  whether the passage-name bold warrants a deeper restyle pass.
-- ADJUDICATE (no code yet): (a) footnote 02a:279 internal `●` list flattened
-  to inline glyphs — split into list items? (b) p.224 'Its' — PDF sets the
-  'I' in Lora-Italic (source font slip), currently faithful; leave? (c) p.153
-  inline-code green-vs-black colour; (d) p.198 `:::example` serif-vs-mono —
-  by-design or fix?
-Then: owner declares canonical → unfreeze v1 replacement → owner pushes.
+**OWNER REVIEW (2026-06-11 ~01:30) — 5 items walked one-by-one, all
+resolved.** Verdicts + outcomes:
+1. Constitution-table passage-name bold (7.4.3) — **FIXED** (fbaa811): new
+   `_bold_cell_leads` pass wraps a plain tall cell's leading bold run;
+   tightly scoped (welfare table untouched, 15 rows). Screenshot-matched PDF.
+2. Footnote 1 internal `●` list — **FIXED** (98d40c7): renders as
+   `<p>Note that:</p><ul>…</ul>`. (Footnotes always rendered; owner's tab was
+   stale.)
+3. p.224 'Its' italic — **LEFT** as-is. The 'I' is italic in the PDF itself
+   (source font-slip). Codified as **D26**: fix our divergences, not the
+   source's own quirks. (Owner's call; I was persuaded.)
+4. Green inline code (p.153) — **LEFT**. Monospace is captured; the green is
+   editorial (owner agreed).
+5. p.198 transcript — **mono FIXED** (2cc34f0: #f0eee6 reclassified as code,
+   the card's lone serif `:::example` is gone). The deeper structure (elision
+   note "[The model proceeds…]" still a user bubble; mono output sits just
+   outside the transcript) is **deferred — see JUDGMENT-CALLS.md J1**: needs
+   an ordered-segment turn model, too risky to rework unsupervised; owner to
+   steer. `git revert 2cc34f0` if the lone mono box is unwanted.
+
+**Owner is asleep; I continued autonomously per their instruction.** Judgment
+calls logged in [JUDGMENT-CALLS.md](JUDGMENT-CALLS.md) (J1 so far). Gate held
+at 0 majors / L1 31 / T1 72 / seams 0 throughout; build clean.
+
+**REMAINING BEFORE CANONICAL:** owner reviews J1 (and any later judgment
+calls) → declares canonical → unfreeze v1 replacement → owner pushes. No open
+defects; the residual is one transcript's deep structure (content faithful,
+styling/structure imperfect, documented).
 
 **ROUND G DESIGN (owner-proposed, 22:30) — two inspector checks:**
 1. **Markdown-smell linter**: read the md itself for suspicious patterns
