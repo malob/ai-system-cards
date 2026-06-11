@@ -78,8 +78,12 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
             ops.append((b, 2, a, 0, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
         elif kind in SYNTAX:
             o, c = SYNTAX[kind]
-            ops.append((a, 1, b, 0, lambda t, a=a, o=o: t[:a] + o + t[a:]))
-            ops.append((b, 2, a, 1, lambda t, b=b, c=c: t[:b] + c + t[b:]))
+            # raw-HTML marks (placeholder/underline) sit OUTERMOST: a span
+            # tag inside backticks renders literally ('`[…]</span>`' leak)
+            r_open = 2 if kind in ("placeholder", "underline") else 0
+            r_close = -1 if kind in ("placeholder", "underline") else 1
+            ops.append((a, 1, b, r_open, lambda t, a=a, o=o: t[:a] + o + t[a:]))
+            ops.append((b, 2, a, r_close, lambda t, b=b, c=c: t[:b] + c + t[b:]))
     if escape_literals:
         # transcript bodies are RAW model/user text: literal '*'/'`' in the
         # source must render literally, not as markdown (p.43/44 class).
