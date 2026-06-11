@@ -66,6 +66,15 @@ body {
 a { color: var(--accent-ink); text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: 2px; }
 a:hover { text-decoration-color: var(--accent); }
 
+/* Body links carry their destination in their underline: internal section
+   cross-references are dotted ("jumps within this page"); external citations
+   stay solid ("leaves the archive"). Heading anchors, footnote ref/backref
+   markers, page markers, and figure links keep their own treatment. */
+.article a[href^="#"]:not(.hanchor):not([data-footnote-ref]):not([data-footnote-backref]) {
+  text-decoration-style: dotted;
+}
+.article a[href^="http"] { text-decoration-style: solid; }
+
 /* --- masthead ------------------------------------------------------------ */
 
 .masthead {

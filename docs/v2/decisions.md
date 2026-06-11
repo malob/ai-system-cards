@@ -365,3 +365,22 @@ the oracle, not HTML) are unchanged — 141 figures → 141 single cards, build
 clean. Considered but rejected: a pipeline flag to un-box just the 2 title
 strips (treats the symptom, not the fragmentation) and dropping the redundant
 title strips (less faithful; the title is part of the figure graphic).
+
+
+## D30 — internal vs external links: underline style (2026-06-11)
+
+Body links now signal their destination through underline style: **internal
+section cross-references are dotted** ("jumps within this page"), **external
+citations stay solid** ("leaves the archive"). The brown link colour is
+unchanged for both — no second hue, keeping the warm palette intact.
+
+- **Owner chose subtle.** Mocked up arrow markers (↗ on external) and a § glyph
+  on internal; owner rejected both as "a little too much" — the source text
+  already writes some refs as '§2.3.5', so our own § would double up. Just the
+  underline-style difference.
+- **CSS-only, scoped to `.article`.** `a[href^="#"]` → dotted, `a[href^="http"]`
+  → solid. Excludes heading anchors (`.hanchor`), footnote ref/backref markers
+  (`[data-footnote-ref]`/`[data-footnote-backref]`), page markers, and figure
+  links — all keep their own treatment. 120 internal cross-refs affected; works
+  in both themes (decoration colour is the already-themed accent). No md/gate
+  impact.
