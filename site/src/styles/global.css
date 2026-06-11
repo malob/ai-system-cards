@@ -211,12 +211,9 @@ a:hover { text-decoration-color: var(--accent); }
 
 .cardlist a.entry {
   display: block;
-  /* bleed the hover highlight ~1.1rem past the text on each side so the text
-     never abuts the box edge, while the text itself stays aligned with the
-     headline/lede above (negative margin cancels the extra padding) */
-  margin: 0 -1.1rem;
-  padding: 1.8rem 1.1rem;
-  border-radius: 9px;
+  /* inner padding gives the text left/right clearance from the hover
+     highlight's edge; the box still spans the full width between the rules */
+  padding: 1.8rem 1rem;
   text-decoration: none;
   color: inherit;
   transition: background 0.15s;
