@@ -52,8 +52,16 @@ const ogImageUrl = new URL(`${base}og/${ogImage}.png`, site).href;
   <body>
     <slot />
     <footer class="sitefoot">
-      Faithful HTML renderings of AI model system cards. All document content belongs to its
-      publisher; each page links to the original PDF.
+      <p>
+        Spot a glitch, or want to help make these conversions better?
+        <a href="https://github.com/malob/ai-system-cards" target="_blank" rel="noopener"
+          >Open an issue or a PR on GitHub</a
+        >.
+      </p>
+      <p>
+        Faithful HTML renderings of AI model system cards — every page links to the original PDF,
+        and all document content belongs to its publisher.
+      </p>
     </footer>
   </body>
 </html>

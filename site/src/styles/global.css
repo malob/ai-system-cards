@@ -56,6 +56,9 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   line-height: 1.72;
   font-variant-numeric: oldstyle-nums proportional-nums;
   text-rendering: optimizeLegibility;
@@ -807,13 +810,14 @@ dialog.searchbox::backdrop { background: rgba(20, 16, 10, 0.5); backdrop-filter:
 /* --- footer --------------------------------------------------------------------------- */
 
 .sitefoot {
+  margin-top: auto; /* pin to the viewport bottom on short pages */
   border-top: 1px solid var(--line);
-  margin-top: 4rem;
   padding: 1.6rem 1.5rem 2.4rem;
-  font: 0.78rem var(--mono);
+  font: 0.78rem/1.7 var(--mono);
   color: var(--ink-faint);
   text-align: center;
 }
+.sitefoot p { margin: 0.3em auto; max-width: 36rem; }
 .sitefoot a { color: var(--ink-soft); }
 
 @media (prefers-reduced-motion: reduce) {
