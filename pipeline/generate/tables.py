@@ -51,6 +51,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
             html = _normalize_rowspan_subrows(html)
             html = _bullet_breaks(html)
+            html = _demote_data_th(html)   # rebuilds can re-tag rows all-th
             html = _debold_th(html)
         out.append({**t, "html": html})
     return out
@@ -117,9 +118,12 @@ def _demote_data_th(html: str) -> str:
 
 
 def _debold_th(html: str) -> str:
-    """th renders bold via CSS; an inner <b> double-bolds (p.82 group labels
-    heavier than p.77's)."""
-    return re.sub(r"(<th[^>]*>)<b>(.*?)</b>(</th>)", r"\1\2\3", html, flags=re.S)
+    """th renders bold via CSS; inner <b> double-bolds (p.82 group labels).
+    Strip EVERY b-tag inside the cell — a single non-greedy pair mangled
+    multi-run cells ('Claude</b> <b>Mythos 5')."""
+    return re.sub(r"(<th[^>]*>)(.*?)(</th>)",
+                  lambda m: m.group(1) + re.sub(r"</?b>", "", m.group(2)) + m.group(3),
+                  html, flags=re.S)
 
 
 def _bullet_breaks(html: str) -> str:
@@ -534,7 +538,10 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
         for ru in rules:
             rb = ru["bbox"]
             if (sb[3] - 2.5 <= rb[1] <= sb[3] + 5.0
-                    and min(sb[2], rb[2]) - max(sb[0], rb[0]) > 0.5 * (sb[2] - sb[0])):
+                    and min(sb[2], rb[2]) - max(sb[0], rb[0]) > 0.5 * (sb[2] - sb[0])
+                    and (rb[2] - rb[0]) < (sb[2] - sb[0]) * 3 + 24):
+                # width guard: word underlines hug their word; a table-width
+                # row border under a TALL row false-fired ('2/14' on p.96)
                 return True
         return False
 
