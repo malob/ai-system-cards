@@ -153,37 +153,34 @@ Notably, we saw examples of illegible reasoning in a few reinforcement learning 
 <pre><span class="ph">[…]</span> 
 OVERLAP-ANALYSIS:-(ii)-9♥-window:-[t1-dig-…-t8-col-built]:-t8-col-⟸-K♣→t2-⟸-t2
 -dug-⟸-4♥3♣→5♣-⟸-t1-dug-:-SO-9♥-window-STARTS-before-t2-dug-and-ENDS-after-K♣
-2♣ 7♣:-(iv)-2♣-window-STARTS-at-t8-dig-(BEFORE-9♥-drains:-2♣</pre>
+2♣ 7♣:-(iv)-2♣-window-STARTS-at-t8-dig-(BEFORE-9♥-drains:-2♣
+7♣-removal-IS-the-prerequisite-for-10♠/9♥!!)-⟹-OVERLAP-(ii)+(iv):-{6♠ J♦ 9♥
+2♣}-=-FOUR-💀💀💀💀-—-UNLESS-7♣'s-seat-8♥-...-and-2♣-drains-only-at-crack-:-⟹-
+2♣-celled-+-9♥-celled-simultaneously-UNAVOIDABLE-in-t8-dig-💀-—-BREAK:-9♥-drai
+ns-to-10♠-THE-MOMENT-10♠-is-free:-t8-dig-order:-[K♣→t2]-[2♣→cell]-[7♣→8♥-:-8♥-
+WHERE:-post-chunk-9♠-:-chunk-⟸-K♣-✓-done-:-ORDER:-K♣→t2,-CHUNK→K♣-(cap-4!!:-c
+ells-then:-{6♠ J♦
+9♥}-FULL-💀💀-chunk-cap-=-1-✗✗✗-—-F-F-F-F-F.-—-chunk-BEFORE-9♥-celling?!-:-9♥
+-celled-at-t1-dig-⟸-needed-for-5♣-⟸-4♥3♣-⟸-t2-dig-⟸-K♣-seat-⟸-chunk-:-⟹-chunk-
+AFTER-9♥-celling-FORCED-💀-:-chunk-cap-with-{6♠ J♦
+9♥}:-1-💀💀💀-—-—-J♦-THE-NEW-CANCER.-—-⟹-J♦-celling-DELAYED-till-after-chunk?!
+:-J♦'s-celling-was-for-J♥→Q♠-(5♦-access-for-4♣):-DELAY-4♣-resolution:-4♣→CELL-
+early-(as-always)-then-4♣-cell→5♦-LATER-when-5♦-frees-!!!:-cells-rotation:-4♣-
+celled-[t2-dig-…-5♦-freed]:-5♦-freed-⟸-J♥→Q♠-⟸-J♦-celled-:-⟹-{6♠, 4♣, 
+J♦}-overlap-window-until-4♣→5♦-drains:-then-{6♠
+J♦}+1-rotator-:-—-AND-9♥?!-9♥-celled-[t1-dig…]:-OVERLAP-{6♠ 4♣
+9♥}-before-J♦-even-:-⟹-rotator-slot-SINGLE:-timeline-:-(1)-{6♠}+2:-…-(2)-+9♥-(
+t1-dig):-{6♠ 9♥}+1:-(3)-+4♣-(t2-dig):-{6♠ 9♥
+4♣}-FULL-:-(4)-NEED:-t6-dig-(9♦8♠→10♣-✓-no-cell;-8♥→CELL-✗-FULL)-💀💀-—-8♥-al
+ternative-seat-pre-chunk:-NONE-—-💀.-⟹-⟹-THE-TRIANGLE-{9♥ 4♣
+8♥}-verdammt.-—-⟹-dig-t6-BEFORE-t2?!:-(3')-+8♥:-{6♠ 9♥
+8♥}-FULL:-J♥→Q♠-⟸-J♦-cell-✗-FULL-💀💀💀-AAAAAAAAAAAARGH.​
+<span class="ph">[…]</span> </pre>
 :::
-
-::::
 <!-- p.108 -->
 
-:::example
-7♣-removal-IS-the-prerequisite-for-10♠/9♥!!)-⟹-OVERLAP-(ii)+(iv):-{6♠ J♦ 9♥\
-2♣}-=-FOUR-💀💀💀💀-—-UNLESS-7♣'s-seat-8♥-...-and-2♣-drains-only-at-crack-:-⟹-\
-2♣-celled-+-9♥-celled-simultaneously-UNAVOIDABLE-in-t8-dig-💀-—-BREAK:-9♥-drai\
-ns-to-10♠-THE-MOMENT-10♠-is-free:-t8-dig-order:-[K♣→t2]-[2♣→cell]-[7♣→8♥-:-8♥-\
-WHERE:-post-chunk-9♠-:-chunk-⟸-K♣-✓-done-:-ORDER:-K♣→t2,-CHUNK→K♣-(cap-4!!:-c\
-ells-then:-{6♠ J♦\
-9♥}-FULL-💀💀-chunk-cap-=-1-✗✗✗-—-F-F-F-F-F.-—-chunk-BEFORE-9♥-celling?!-:-9♥\
--celled-at-t1-dig-⟸-needed-for-5♣-⟸-4♥3♣-⟸-t2-dig-⟸-K♣-seat-⟸-chunk-:-⟹-chunk-\
-AFTER-9♥-celling-FORCED-💀-:-chunk-cap-with-{6♠ J♦\
-9♥}:-1-💀💀💀-—-—-J♦-THE-NEW-CANCER.-—-⟹-J♦-celling-DELAYED-till-after-chunk?!\
-:-J♦'s-celling-was-for-J♥→Q♠-(5♦-access-for-4♣):-DELAY-4♣-resolution:-4♣→CELL-\
-early-(as-always)-then-4♣-cell→5♦-LATER-when-5♦-frees-!!!:-cells-rotation:-4♣-\
-celled-[t2-dig-…-5♦-freed]:-5♦-freed-⟸-J♥→Q♠-⟸-J♦-celled-:-⟹-{6♠, 4♣,\
-J♦}-overlap-window-until-4♣→5♦-drains:-then-{6♠\
-J♦}+1-rotator-:-—-AND-9♥?!-9♥-celled-[t1-dig…]:-OVERLAP-{6♠ 4♣\
-9♥}-before-J♦-even-:-⟹-rotator-slot-SINGLE:-timeline-:-(1)-{6♠}+2:-…-(2)-+9♥-(\
-t1-dig):-{6♠ 9♥}+1:-(3)-+4♣-(t2-dig):-{6♠ 9♥\
-4♣}-FULL-:-(4)-NEED:-t6-dig-(9♦8♠→10♣-✓-no-cell;-8♥→CELL-✗-FULL)-💀💀-—-8♥-al\
-ternative-seat-pre-chunk:-NONE-—-💀.-⟹-⟹-THE-TRIANGLE-{9♥ 4♣\
-8♥}-verdammt.-—-⟹-dig-t6-BEFORE-t2?!:-(3')-+8♥:-{6♠ 9♥\
-8♥}-FULL:-J♥→Q♠-⟸-J♦-cell-✗-FULL-💀💀💀-AAAAAAAAAAAARGH.\
-<span class="ph">[…]</span>
-:::
 
+::::
 :::caption
 **[Transcript 6.2.2.A] An extreme example of illegible reasoning.** Near the end of training, Mythos starts solving a card puzzle with human understandable language that gradually becomes incomprehensible in most episodes with long reasoning. The illegible reasoning is the most extreme and at the highest rate in this card puzzle environment.
 :::

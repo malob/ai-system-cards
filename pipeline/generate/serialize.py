@@ -340,18 +340,33 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             for tt, mm in seg_bodies[1:]:
                 body += "\n\n" + _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
             if blk.get("code_lines"):  # displaced code box merged into this turn
-                clines = blk["code_lines"]
-                cblk = {**blk, "lines": clines}
-                _, probe_marks = block_text_and_marks(cblk, page, chips)
-                if any(s.get("bold") for l in clines for _, _, s in l.get("segs", [])) \
-                        or any(m[0] == "placeholder" for m in probe_marks):
-                    # bold or green placeholders — fences can't hold either
-                    raw = _pre_html({**blk, "lines": clines}, page, chips)
+                # the box may continue on the next page (code_cont, stitched):
+                # each segment's marks come from ITS OWN page's pills/links
+                segs_cl = [(page, blk["code_lines"])]
+                if blk.get("code_cont"):
+                    cont = blk["code_cont"]
+                    segs_cl.append((oracle_pages[cont["page"] - 1], cont["lines"]))
+                styled = False
+                for pg_, cl_ in segs_cl:
+                    _, probe_marks = block_text_and_marks({**blk, "lines": cl_}, pg_, chips)
+                    if any(s.get("bold") for l in cl_ for _, _, s in l.get("segs", [])) \
+                            or any(m[0] == "placeholder" for m in probe_marks):
+                        # bold or green placeholders — fences can't hold either
+                        styled = True
+                if styled:
+                    raws = [_pre_html({**blk, "lines": cl_}, pg_, chips) for pg_, cl_ in segs_cl]
+                    raw = raws[0]
+                    for r in raws[1:]:
+                        raw = raw[: -len("</pre>")] + "\n" + r[len("<pre>"):]
                     body = (body + "\n\n" if body else "") + raw
                 else:
-                    raw = "\n".join(l["text"] for l in clines)
+                    raw = "\n".join(l["text"] for _, cl_ in segs_cl for l in cl_)
                     body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
             out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
+            if blk.get("code_lines") and blk.get("code_cont"):
+                # marker after the box, never inside it (fence convention)
+                marker_if_new(blk["code_cont"]["page"])
+                emit_marker(False)
         elif t == "commentary":
             text, marks = block_text_and_marks(blk, page, chips)
             out.append(_hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip() + "\n")

@@ -183,6 +183,17 @@ def stitch(blocks: list[dict]) -> list[dict]:
             out[-1]["lines"].extend(blk["lines"])
             out[-1].setdefault("trailing_pages", []).append(blk["page"])
             continue
+        if (out and blk["page"] == out[-1]["page"] + 1
+                and blk["type"] in ("example", "code")
+                and out[-1]["type"] == "turn" and out[-1].get("code_lines")
+                and not out[-1].get("code_cont")
+                and out[-1]["code_lines"][-1]["bbox"][3] >= 680
+                and blk["lines"][0]["bbox"][1] <= 120):
+            # a labeled turn's code box continues on the next page as a bare
+            # box (no label -> classified example/code): the p.107 puzzle box
+            # ran to the page bottom and resumed at the next page's top
+            out[-1]["code_cont"] = {"page": blk["page"], "lines": blk["lines"]}
+            continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "turn"
                 and out[-1]["type"] == "turn"
                 and out[-1].get("role") == blk.get("role")
