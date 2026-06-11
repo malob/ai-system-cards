@@ -190,6 +190,15 @@ a:hover { text-decoration-color: var(--accent); }
   font-size: 1.12rem;
   color: var(--ink-soft);
   max-width: 36rem;
+  margin: 0 0 1.15rem;
+}
+
+/* a casual, quieter aside under the lede: conversions aren't perfect */
+.home .caveat {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink-faint);
+  max-width: 36rem;
   margin: 0 0 4rem;
 }
 
