@@ -12,6 +12,12 @@ import unicodedata
 
 LIGATURES = {"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl", "ﬅ": "ft", "ﬆ": "st"}
 INVISIBLES = re.compile("[­​‌‍⁠﻿]")  # soft hyphen, zero-widths
+# A hyphenated compound that wraps after its hyphen extracts as 'X- y'
+# ('introspection- based', 'Self- knowledge'); the faithful render joins it to
+# 'X-y'. Fold both forms to 'X-y' so the comparison is wrap-insensitive (an A2
+# sibling — text-form-only, never affects output). Whitespace-run tolerant:
+# page_body_text puts two spaces at a wrap.
+WRAP_HYPHEN = re.compile(r"(\w)-\s+(?=[a-z])")
 
 # v1 stored straight quotes (renderer smart-quoted them); fold for calibration only.
 CALIBRATION_FOLDS = {
@@ -27,6 +33,7 @@ def normalize(text: str, calibration: bool = False) -> str:
     for k, v in LIGATURES.items():
         text = text.replace(k, v)
     text = INVISIBLES.sub("", text)
+    text = WRAP_HYPHEN.sub(r"\1-", text)
     if calibration:
         for k, v in CALIBRATION_FOLDS.items():
             text = text.replace(k, v)

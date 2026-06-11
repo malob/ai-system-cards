@@ -57,6 +57,9 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             # (empty leads + labels) and _demote_data_th would revert it
             html = _promote_white_text_headers(html, t["bbox"], oracle_page)
             html = _debold_th(html)
+        # hyphen-wrap join in cells the rebuild didn't touch (short label cells
+        # like 'Self- knowledge'): keep the hyphen, drop only the wrap space
+        html = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1-", html)
         out.append({**t, "html": html})
     return out
 
@@ -726,8 +729,12 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 cur = en
             pieces.append(c_dec[cur:])
             rebuilt_cell = "".join(pieces)
-            # hyphen-wrap join artifact ('Self- knowledge')
-            rebuilt_cell = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", rebuilt_cell)
+            # hyphen-wrap join artifact: a compound wrapped after its hyphen
+            # ('introspection- based' -> 'introspection-based'). This card has
+            # no syllabic mid-word hyphenation (surveyed), so the hyphen is
+            # always part of the word — drop only the space, keep the hyphen
+            # (suspended compounds 'single- and' keep both)
+            rebuilt_cell = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1-", rebuilt_cell)
             # adjacent same-style runs read as ONE run ('<b>Mythos</b> <b>5</b>')
             rebuilt_cell = re.sub(r"</b>(\s*)<b>", r"\1", rebuilt_cell)
             rebuilt_cell = re.sub(r"</u>(\s*)<u>", r"\1", rebuilt_cell)
