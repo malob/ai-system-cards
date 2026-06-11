@@ -155,6 +155,14 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 out[-1]["html"] = tables.merge_continuation_rows(merged)
                 out[-1]["last_page"] = blk["page"]  # chain across many pages
                 continue
+        if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "code"
+                and out[-1]["type"] == "code"):
+            # one logical code block split by the page break (9.2 blocklist):
+            # merge; the marker re-emits after the fence (a comment inside a
+            # fence would render literally)
+            out[-1]["lines"].extend(blk["lines"])
+            out[-1].setdefault("trailing_pages", []).append(blk["page"])
+            continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "turn"
                 and out[-1]["type"] == "turn"
                 and out[-1].get("role") == blk.get("role")
