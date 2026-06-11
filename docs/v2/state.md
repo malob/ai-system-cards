@@ -224,13 +224,18 @@ PDF-exact). Adjudicated source-faithful: 'With/Without thinking' bold
 (pp.95-98/252 — PDF bolds them; audit-agent error) and 'GDP.pdf' (real
 benchmark name, p.253). T1 minors at 100 (was 198). Seam auditor 0.
 
-**STILL OPEN (review + builds):**
-1. Owner verdicts: label cosmetics p.153/p.222/p.45; adjudication blessings
-   (literal markup escapes, bracket labels).
-2. Builds: `:ph[]` green placeholder highlights (FL-07/D17); p.182
-   styled-<pre> bold-in-code (owner: FIX); whitelist entries for accepted
-   residuals (chips p.38/44).
-3. Then: site build + DOM check + final convergence note in experiment 08.
+**H2 REVIEW COMPLETE (18:40) — GATE AT 0 MAJORS.** All verdicts in D24.
+Built: `.ph` green placeholder pills (sub-span pill→char mapping; raw-HTML
+spans — directive syntax broke on bracketed content), styled `<pre>` for the
+p.182 bold code box (S1 → 0). Verifier bookkeeping fixes during review:
+S1 punctuation-key symmetry (p.45 was never a content defect), ST1
+sentinel-padding item regex (p.149 ditto), owner-accepted whitelist
+(`pipeline/verifier/accepted.json`, suppressions printed). Review also
+caught + fixed: label-overflow into turn pills (marks-offset class),
+[Bottom left:] split-bold (merge-before-filter), GPT-5.5 etc. Remaining
+gate: FN1 minor 1 (ref-12), L1 minor 31 (anchor cosmetics), T1 minor 100
+(squash-level join noise). Site builds clean; 21 ph pills + 169 captions +
+styled pre DOM-verified.
 
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
