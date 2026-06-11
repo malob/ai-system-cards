@@ -50,6 +50,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
             html = _normalize_rowspan_subrows(html)
+            html = _bullet_breaks(html)
         out.append({**t, "html": html})
     return out
 
@@ -114,6 +115,19 @@ def _demote_data_th(html: str) -> str:
     return out
 
 
+def _bullet_breaks(html: str) -> str:
+    """FINAL normalizer: in any multi-bullet cell, bullets render one per
+    line (v1's convention). Idempotent: strips existing breaks around
+    bullets, then re-inserts uniformly."""
+    def fix(m):
+        c = m.group(3)
+        if c.count("•") >= 2:
+            c = re.sub(r"(?:<br\s*/?>)?\s*•\s*", "<br>• ", c.strip())
+            c = re.sub(r"^((?:<[^>]+>)*)<br>", r"\1", c)
+        return f"<{m.group(1)}{m.group(2)}>{c}</{m.group(1)}>"
+    return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", fix, html, flags=re.S)
+
+
 def _dedup_cascaded_cells(html: str) -> str:
     """Docling cascade bug (7.4.1.A/B): each cell also contains every LATER
     row's same-column content (bullet counts 12/9/6/3 for a uniform-3 table).
@@ -146,9 +160,6 @@ def _dedup_cascaded_cells(html: str) -> str:
             if old_cell in out:
                 out = out.replace(old_cell, new_cell, 1)
                 changed = True
-    if changed:
-        # bullets render one per line, as v1 did
-        out = re.sub(r"(?<!^)(?<!<br>)\s+•\s", "<br>• ", out)
     return out
 
 
