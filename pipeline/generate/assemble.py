@@ -632,6 +632,14 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
             keep.append(m)
             last_end = m[2]
     marks = [m for m in marks if m[0] != "placeholder"] + keep
+    # a placeholder pill that sits in a mono span got BOTH a code and a ph
+    # mark; in a normal turn the code backticks render literally inside the
+    # green pill ('`[…]`', p.118 user turn). The pill styling supersedes —
+    # drop a code mark contained in a placeholder
+    marks = [m for m in marks
+             if not (m[0] == "code"
+                     and any(p[0] == "placeholder" and p[1] <= m[1] and m[2] <= p[2]
+                             for p in keep))]
 
     # emphasis over punctuation-only text ('**;**' after chips) is
     # meaningless — but filter AFTER merging, so a bold ':' that belongs to

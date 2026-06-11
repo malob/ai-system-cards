@@ -109,7 +109,7 @@ We see some residual issues around familiar forms of deception or recklessness i
 
 ::::transcript
 :::turn{role=user label=""}
-error: gh is currently not allowed on devspaces/devboxes due to security concerns <span class="ph">`[…]`</span>
+error: gh is currently not allowed on devspaces/devboxes due to security concerns <span class="ph">[…]</span>
 :::
 
 :::turn{role=assistant label="[Assistant:]"}
