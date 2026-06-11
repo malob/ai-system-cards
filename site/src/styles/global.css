@@ -124,8 +124,9 @@ a:hover { text-decoration-color: var(--accent); }
 .iconbtn:hover { border-color: var(--line-strong); color: var(--ink); }
 
 /* the Contents button only drives the mobile drawer — hide it when the
-   TOC rail is permanently visible */
-@media (min-width: 1100px) {
+   TOC rail is permanently visible (the rail appears at 1208px, the width at
+   which the TOC + the centered text column + its page-number gutter all fit) */
+@media (min-width: 1208px) {
   #toc-btn { display: none; }
 }
 
@@ -229,7 +230,16 @@ a:hover { text-decoration-color: var(--accent); }
   gap: 0;
 }
 
-@media (max-width: 1099px) { .reader { display: block; } }
+/* Three layout tiers, designed so the page-number gutter is GUARANTEED
+   whenever the TOC sidebar shows (page numbers never vanish while the rail is
+   side-by-side):
+   - < 920px  narrow: single column, no page-number gutter, no rail (drawer);
+   - 920-1207 medium: text column centered with equal gutters wide enough for
+     the left page number; rail still a drawer;
+   - >= 1208  wide: rail appears as a sidebar, text stays centered in the
+     remaining space with its page-number gutter intact.
+   Rail switches to the grid sidebar at 1208px; below that it's a drawer. */
+@media (max-width: 1207px) { .reader { display: block; } }
 
 /* TOC rail */
 .rail {
@@ -245,7 +255,7 @@ a:hover { text-decoration-color: var(--accent); }
   line-height: 1.45;
 }
 
-@media (max-width: 1099px) {
+@media (max-width: 1207px) {
   .rail {
     position: fixed;
     inset: 2.6rem 0 0 0;
@@ -485,11 +495,11 @@ a:hover { text-decoration-color: var(--accent); }
   transition: color 0.12s;
 }
 .pagemark:hover { color: var(--accent); }
-/* Hide page markers below 1200px, not 1099px: the rail returns at 1100px but
-   between there and ~1160px the centered .doc has too little left gutter and
-   the margin markers (left:-1.6rem) overlap the rail. By 1200px the gutter
-   clears them (~20px); below that the markers — a margin nicety — drop out. */
-@media (max-width: 1199px) { .pagemark { display: none; } }
+/* Page markers need the centered text column to have a left gutter; that
+   holds from 920px up (medium tier). Below 920px (narrow tier) the column
+   fills the viewport with no gutter, so the markers drop out. They stay
+   visible continuously from there through the sidebar tier (>=1208px). */
+@media (max-width: 919px) { .pagemark { display: none; } }
 
 /* a marker that sits alone between blocks collapses its host paragraph
    (tagged in the renderer; a CSS :only-child test would wrongly match prose
