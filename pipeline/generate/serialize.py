@@ -101,6 +101,36 @@ def _hyphen_join(text: str) -> str:
     return re.sub(r"[ \t]{2,}", " ", text).strip()   # collapse layout double-spaces (A2)
 
 
+def _mono_line(l) -> bool:
+    segs = [s for _, _, s in l.get("segs", []) if s.get("zone") == "body"]
+    return bool(segs) and all("Mono" in s.get("font", "") for s in segs)
+
+
+def _pre_html(blk, page, chips) -> str:
+    """Code box -> <pre> with <b> and green placeholder spans applied per
+    line (fences can't carry styling; positions stay line-local)."""
+    import html as _h
+    rows = []
+    for l in blk["lines"]:
+        lb = {**blk, "lines": [l], "code_lines": None, "page_break": None, "breaks": []}
+        tt, mm = block_text_and_marks(lb, page, chips)
+        mm = [m for m in mm if m[0] in ("bold", "placeholder")]
+        # sentinel-tag application: insert end-first, escape, then swap
+        ins = []
+        for kind, a, b, _ in mm:
+            tag = "B" if kind == "bold" else "P"
+            ins.append((a, 0, "\x01" + tag))   # opens first at a tie ->
+            ins.append((b, 1, "\x02" + tag))   # close ends up leftmost
+        out = tt
+        for pos, _, tok in sorted(ins, key=lambda x: (-x[0], x[1])):
+            out = out[:pos] + tok + out[pos:]
+        out = _h.escape(out, quote=False)
+        out = (out.replace("\x01B", "<b>").replace("\x02B", "</b>")
+                  .replace("\x01P", '<span class="ph">').replace("\x02P", "</span>"))
+        rows.append(out)
+    return "<pre>" + "\n".join(rows).replace("</b>\n<b>", "\n") + "</pre>"
+
+
 def _render_body(blk: dict, page, oracle_pages, chips, marker_if_new, emit_marker) -> str:
     """Block lines → marked-up text. If the block carries page_break=(pno, i),
     render in two segments with the page marker spliced inline at the break
@@ -284,18 +314,12 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 body += "\n\n" + _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 clines = blk["code_lines"]
-                if any(s.get("bold") for l in clines for _, _, s in l.get("segs", [])):
-                    # the box carries BOLD emphasis (p.182 'classic agentic
-                    # safety test') — fences can't hold it; styled <pre> can
-                    import html as _h
-                    rows = []
-                    for l in clines:
-                        segs = "".join(
-                            (f"<b>{_h.escape(s['text'], quote=False)}</b>"
-                             if s.get("bold") else _h.escape(s["text"], quote=False))
-                            for _, _, s in l.get("segs", []))
-                        rows.append(segs)
-                    raw = "<pre>" + "\n".join(rows).replace("</b><b>", "") + "</pre>"
+                cblk = {**blk, "lines": clines}
+                _, probe_marks = block_text_and_marks(cblk, page, chips)
+                if any(s.get("bold") for l in clines for _, _, s in l.get("segs", [])) \
+                        or any(m[0] == "placeholder" for m in probe_marks):
+                    # bold or green placeholders — fences can't hold either
+                    raw = _pre_html({**blk, "lines": clines}, page, chips)
                     body = (body + "\n\n" if body else "") + raw
                 else:
                     raw = "\n".join(l["text"] for l in clines)
@@ -307,10 +331,31 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         elif t in ("example", "code"):
             text, marks = block_text_and_marks(blk, page, chips)
             if t == "example":
-                out.append(":::example\n" + _hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip() + "\n:::\n")
+                parts = []
+                for l in blk["lines"]:
+                    lb = {**blk, "lines": [l], "breaks": [], "page_break": None}
+                    tt, mm = block_text_and_marks(lb, page, chips)
+                    mm = [m for m in mm if m[0] != "code"]
+                    parts.append((_hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip(),
+                                  _mono_line(l)))
+                body2, prev_mono = "", None
+                for txt, mono in parts:
+                    if not txt:
+                        continue
+                    if body2:
+                        # consecutive MONO lines keep the PDF's line breaks
+                        # (code-ish examples); prose lines flow normally
+                        body2 += "\\\n" if (mono and prev_mono) else " "
+                    body2 += txt
+                    prev_mono = mono
+                out.append(":::example\n" + body2 + "\n:::\n")
             else:
-                raw = "\n".join(l["text"] for l in blk["lines"])
-                out.append("```\n" + raw + "\n```\n")
+                _, probe = block_text_and_marks(blk, page, chips)
+                if any(m[0] in ("bold", "placeholder") for m in probe):
+                    out.append(_pre_html(blk, page, chips) + "\n")
+                else:
+                    raw = "\n".join(l["text"] for l in blk["lines"])
+                    out.append("```\n" + raw + "\n```\n")
         elif t == "table_html":
             out.append(blk["html"] + "\n")
             # a merged multi-page table carries embedded page markers: advance
