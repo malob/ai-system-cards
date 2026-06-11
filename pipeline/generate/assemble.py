@@ -517,7 +517,8 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         # the matching close is the FIRST ']' after the open —
                         # an estimate-window search grabbed the NEXT pill's
                         # bracket when two pills sit side by side
-                        rb = t.find("]", lb + 1, min(len(t), i1 + 4)) if lb >= 0 else -1
+                        rb = (t.find("]", lb + 1, min(len(t), max(i1 + 4, lb + 40)))
+                              if lb >= 0 else -1)
                         if lb >= 0 and rb >= 0 and rb > lb:
                             i0, i1 = lb, rb + 1
                         else:
@@ -551,6 +552,17 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
     marks = [m for m in marks
              if not (m[0] in ("bold", "italic", "chip")
                      and not text[m[1]:m[2]].translate(_INVIS))]
+    # nested pill rects (a wide highlight + an inner one) produce CONTAINED
+    # placeholder marks — keep only the outermost
+    phs = sorted([m for m in marks if m[0] == "placeholder"],
+                 key=lambda m: (m[1], -m[2]))
+    keep, last_end = [], -1
+    for m in phs:
+        if m[1] >= last_end:
+            keep.append(m)
+            last_end = m[2]
+    marks = [m for m in marks if m[0] != "placeholder"] + keep
+
     # emphasis over punctuation-only text ('**;**' after chips) is
     # meaningless — but filter AFTER merging, so a bold ':' that belongs to
     # an adjacent bold run joins it instead of dying ('[Bottom left:]')
