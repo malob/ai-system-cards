@@ -182,7 +182,8 @@ def _is_quote(line, page) -> bool:
 
 
 def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict,
-                  page_tables: list[dict] | None = None) -> list[dict]:
+                  page_tables: list[dict] | None = None,
+                  quote_carry: bool = False) -> list[dict]:
     """One page → ordered block dicts. Cross-page joining happens in stitch.
     Lines inside a docling table bbox are removed from prose flow; the table is
     emitted as an HTML block at its vertical position (D14)."""
@@ -212,6 +213,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
 
     fig_done = False
     figures_emitted = []
+    quote_ctx = quote_carry   # items INHERIT quote-ness from context: deep
+    # x alone misfires on nested list items (the 6.1.2 'disaster')
     pending_tables = sorted(table_blocks, key=lambda b: b["_y"])
     for line in sorted(lines, key=lambda l: (round(l["bbox"][1]), l["bbox"][0])):
         # emit any table whose top is above this line, in reading order
@@ -240,6 +243,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             figures_emitted.append(1)
             if len(figures_emitted) == len(figures):
                 fig_done = True
+        if kind in ("heading", "turn", "commentary", "example", "code", "table"):
+            quote_ctx = False if kind != "table" else quote_ctx
         if kind == "prose" and cur and cur["type"] == "heading":
             # wrapped heading continuation: the second line of a wrapped
             # heading has no leading number so it classifies as paragraph
@@ -282,7 +287,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             flush()
             cur = {"type": "item", "lines": [line], "page": pno,
                    "marker_x0": line["bbox"][0],
-                   "quote": _is_quote(line, page)}
+                   "quote": _is_quote(line, page) and quote_ctx}
             marker_x0s.add(round(line["bbox"][0]))
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
@@ -350,8 +355,10 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 cur["lines"].append(line)
             else:
                 flush()
+                q_here = _is_quote(line, page)
+                quote_ctx = q_here
                 cur = {"type": "paragraph", "lines": [line], "page": pno,
-                       "quote": _is_quote(line, page)}
+                       "quote": q_here}
     flush()
     for tb in pending_tables:  # tables below all prose
         blocks.append(tb)
@@ -434,7 +441,17 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
         if li:
             text_parts.append(" ")
             pos += 1
+        prev_span = None
         for a, b, s in line["segs"]:
+            # a >=1pt x-gap between same-line spans is a word space the
+            # span texts may not carry ('…5 is' + 'overall…' -> 'isoverall')
+            if (prev_span is not None
+                    and s["bbox"][0] - prev_span["bbox"][2] > 1.0
+                    and text_parts and not text_parts[-1].endswith(" ")
+                    and not s["text"].startswith(" ")):
+                text_parts.append(" ")
+                pos += 1
+            prev_span = s
             start = pos
             t = s["text"]
             text_parts.append(t)

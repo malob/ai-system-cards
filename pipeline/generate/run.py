@@ -155,6 +155,20 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 out[-1]["html"] = tables.merge_continuation_rows(merged)
                 out[-1]["last_page"] = blk["page"]  # chain across many pages
                 continue
+        if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "turn"
+                and out[-1]["type"] == "turn"
+                and out[-1].get("role") == blk.get("role")
+                and not blk.get("code_lines") and not out[-1].get("code_lines")):
+            prev = out[-1]
+            prev_text = prev["lines"][-1]["text"].rstrip()
+            nxt = blk["lines"][0]["text"].lstrip()
+            if prev_text and prev_text[-1] not in UNTERMINATED and nxt[:1].islower():
+                off = len(prev["lines"])
+                prev["page_break"] = (blk["page"], off)
+                prev["lines"].extend(blk["lines"])
+                if blk.get("breaks"):
+                    prev.setdefault("breaks", []).extend(i + off for i in blk["breaks"])
+                continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
                 and out[-1]["type"] in ("paragraph", "item")):
             prev = out[-1]
@@ -219,10 +233,12 @@ def main():
         if not sel:
             continue
         blocks = []
+        qcarry = False
         start_midpage = False
         for pno in sel:
             pblocks = assemble.assemble_page(pno, pages[pno - 1], figures_map.get(str(pno), []),
-                                             chips, tables.get_tables(pno, pages[pno - 1]))
+                                             chips, tables.get_tables(pno, pages[pno - 1]),
+                                             quote_carry=qcarry)
             if pno == a and pno in shared:
                 # shared start page: this section's content begins at its heading
                 i = heading_index(pblocks, firsts.get(name, ""))
@@ -230,12 +246,15 @@ def main():
                     pblocks = pblocks[i:]
                     start_midpage = True
             blocks += pblocks
+            qcarry = next((b.get("quote", False) for b in reversed(pblocks)
+                           if b["type"] in ("paragraph", "item")), qcarry)
         # shared END page (owned by the next section): the pre-heading slice
         # belongs HERE, so the boundary paragraph can stitch across pages
         if si + 1 < len(ranges) and ranges[si + 1][1] == b and b in want and b not in TOC \
                 and owner.get(b) != name:
             pblocks = assemble.assemble_page(b, pages[b - 1], figures_map.get(str(b), []),
-                                             chips, tables.get_tables(b, pages[b - 1]))
+                                             chips, tables.get_tables(b, pages[b - 1]),
+                                             quote_carry=qcarry)
             i = heading_index(pblocks, firsts.get(ranges[si + 1][0], ""))
             if i:
                 blocks += pblocks[:i]
