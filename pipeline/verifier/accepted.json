@@ -1,0 +1,9 @@
+{
+  "_comment": "Owner-accepted residuals (H2 review 2026-06-10). Each entry silences exact (invariant, page) majors; anything new still fires. Class: drawn-element reading order — pill/legend text extracted at stream positions that differ from visual order; md follows VISUAL order, which is correct for a reader.",
+  "accepted": [
+    {"invariant": "T1", "page": 38},
+    {"invariant": "T1", "page": 44},
+    {"invariant": "T1", "page": 56},
+    {"invariant": "T1", "page": 57}
+  ]
+}

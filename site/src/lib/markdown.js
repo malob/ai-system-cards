@@ -66,7 +66,15 @@ function remarkBoxes() {
 // (label → color name); unknown labels fall back to gray.
 function remarkChips(chips = {}) {
   return (tree) => {
-    visit(tree, 'textDirective', (node) => {
+      visit(tree, 'textDirective', (node) => {
+    if (node.name !== 'ph') return;
+    node.data = {
+      hName: 'span',
+      hProperties: { className: ['ph'] },
+    };
+  });
+
+visit(tree, 'textDirective', (node) => {
       if (node.name !== 'chip') return;
       const label = (node.children ?? []).map((c) => c.value ?? '').join('');
       const color = chips[label] ?? 'gray';

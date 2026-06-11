@@ -162,6 +162,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         sec.chips.append((_strip_sentinels(m.group(1)), pg(m)))
         return m.group(1)
     seg = RE_CHIP.sub(chip, seg)
+    seg = re.sub(r"</?span[^>]*>", "", seg)   # green placeholder pills (.ph)
 
     def link(m):
         sec.links.append((_strip_sentinels(m.group(1)), m.group(2), pg(m)))
@@ -183,6 +184,12 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         sec.bolds.append((_strip_sentinels(text), pg(m)))
         return text
     seg = RE_BOLD.sub(bold, seg)
+
+    def html_bold(m):   # styled <pre> boxes carry <b> emphasis (p.182)
+        sec.bolds.append((_strip_sentinels(m.group(1)), pg(m)))
+        return m.group(1)
+    seg = re.sub(r"<b>(.*?)</b>", html_bold, seg, flags=re.S)
+    seg = re.sub(r"</?pre>", " ", seg)
 
     seg = RE_SUP.sub(" ", seg)
     seg = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"\1", seg)   # italics
@@ -210,7 +217,9 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     def ordered(m):
         sec.items.append((m.group(0)[:80], item_page(m, m.group(1))))
         return "‌" + m.group(0)
-    seg = re.sub(r"^\d{1,2}\. (\S.*)$", ordered, seg, flags=re.M)
+    # \s+ not single space: an inline page marker becomes a PADDED sentinel
+    # ('3.  XQPAGEQX149XQX …'), and the item must still count (ST1 p.149)
+    seg = re.sub(r"^\d{1,2}\.\s+(\S.*)$", ordered, seg, flags=re.M)
 
     # block starts (ST2): first chars of every markdown block (blank-line
     # separated), for detecting paragraph-starts that are continuations;

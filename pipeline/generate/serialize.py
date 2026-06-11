@@ -15,6 +15,10 @@ SYNTAX = {
     "chip": (":chip[", "]"),
     "underline": ("<u>", "</u>"),  # inline raw HTML, like v1's <sup> usage
     "code": ("`", "`"),
+    # D15/D17 green placeholder pills — raw HTML, NOT :ph[] directive:
+    # the highlighted ranges are full of brackets ('[user]', '[Error 1]')
+    # which break directive-label parsing on both ends
+    "placeholder": ('<span class="ph">', "</span>"),
     # placeholder: plain text until the renderer gains :ph (FL-07/D17)
 }
 
@@ -272,8 +276,23 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             for tt, mm in seg_bodies[1:]:
                 body += "\n\n" + _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
             if blk.get("code_lines"):  # displaced code box merged into this turn
-                raw = "\n".join(l["text"] for l in blk["code_lines"])
-                body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
+                clines = blk["code_lines"]
+                if any(s.get("bold") for l in clines for _, _, s in l.get("segs", [])):
+                    # the box carries BOLD emphasis (p.182 'classic agentic
+                    # safety test') — fences can't hold it; styled <pre> can
+                    import html as _h
+                    rows = []
+                    for l in clines:
+                        segs = "".join(
+                            (f"<b>{_h.escape(s['text'], quote=False)}</b>"
+                             if s.get("bold") else _h.escape(s["text"], quote=False))
+                            for _, _, s in l.get("segs", []))
+                        rows.append(segs)
+                    raw = "<pre>" + "\n".join(rows).replace("</b><b>", "") + "</pre>"
+                    body = (body + "\n\n" if body else "") + raw
+                else:
+                    raw = "\n".join(l["text"] for l in clines)
+                    body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
             out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
         elif t == "commentary":
             text, marks = block_text_and_marks(blk, page, chips)

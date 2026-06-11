@@ -403,6 +403,14 @@ a:hover { text-decoration-color: var(--accent); }
 /* Google Docs "smart chip" labels, reproduced as colored pills. A single --chip
    hue per color drives both the tinted fill and the text, so each chip reads
    correctly in light and dark mode. Drop the source's dropdown ▾ (UI chrome). */
+.ph {
+  /* D15 placeholder ranges: the PDF's green highlight (#d9ead3 fill) */
+  background: #d9ead3;
+  color: color-mix(in srgb, #2e5c2e 75%, var(--ink));
+  padding: 0.04em 0.35em;
+  border-radius: 5px;
+}
+
 .chip {
   --chip: var(--ink-soft);
   display: inline-block;

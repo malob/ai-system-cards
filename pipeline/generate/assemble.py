@@ -487,13 +487,35 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         if b2 > a2:
                             marks.append(("underline", a2, b2, None))
             for pi, pill in enumerate(pills):
-                if "bbox" in pill and _rect_contains(pill["bbox"], s["bbox"], slack=2.5):
+                if "bbox" not in pill:
+                    continue
+                if _rect_contains(pill["bbox"], s["bbox"], slack=2.5):
                     if pill["color"] in manifest_chips:
                         # data = pill identity so two distinct chips don't merge
                         marks.append(("chip", m_start, m_end, pi))
                     elif pill["color"] == PLACEHOLDER:
                         marks.append(("placeholder", m_start, m_end, pi))
                     break
+                if pill["color"] == PLACEHOLDER:
+                    # green placeholder pills highlight a RANGE INSIDE a longer
+                    # span (unlike chips, which own theirs): map the pill's
+                    # x-range to chars proportionally, snap to whitespace
+                    pb, sb = pill["bbox"], s["bbox"]
+                    if (min(sb[3], pb[3]) - max(sb[1], pb[1])
+                            > 0.6 * (pb[3] - pb[1])
+                            and min(sb[2], pb[2]) - max(sb[0], pb[0]) > 2):
+                        cw = (sb[2] - sb[0]) / max(1, len(t))
+                        i0 = max(0, int((pb[0] - sb[0]) / cw))
+                        i1 = min(len(t), int((pb[2] - sb[0]) / cw + 0.5))
+                        while i0 > 0 and not t[i0 - 1].isspace():
+                            i0 -= 1
+                        while i1 < len(t) and not t[i1].isspace():
+                            i1 += 1
+                        seg = t[i0:i1]
+                        a2 = start + i0 + (len(seg) - len(seg.lstrip()))
+                        b2 = start + i1 - (len(seg) - len(seg.rstrip()))
+                        if b2 > a2:
+                            marks.append(("placeholder", a2, b2, pi))
             for l in links:
                 # span belongs to a link if its vertical center sits in the
                 # rect's y-band AND >50% of its width overlaps the rect — recovers

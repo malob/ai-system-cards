@@ -109,6 +109,16 @@ def main():
     flags = _flags_for(sections, pages, figures_map, bool(args.sections),
                        only_pages=set(args.only_pages) if args.only_pages else None)
 
+    acc_path = Path(__file__).parent / "accepted.json"
+    if acc_path.exists():
+        acc = {(a["invariant"], a["page"])
+               for a in json.loads(acc_path.read_text())["accepted"]}
+        n_acc = sum(1 for f in flags if f["severity"] == "major"
+                    and (f["invariant"], f["page"]) in acc)
+        flags = [f for f in flags if not (f["severity"] == "major"
+                                          and (f["invariant"], f["page"]) in acc)]
+        if n_acc:
+            print(f"({n_acc} owner-accepted major(s) suppressed — accepted.json)")
     by_inv = Counter((f["invariant"], f["severity"]) for f in flags)
     print(f"\n=== verifier v0 @ {args.ref} — {len(sections)} sections ===")
     for (inv, sev), n in sorted(by_inv.items()):
