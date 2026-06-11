@@ -598,7 +598,7 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
 .article tbody tr:last-child td { border-bottom: none; }
 /* row hover misbehaves on tables with merged (rowspan) cells — the highlight
    band can't match the visual row group, so only enable it on simple tables */
-.article table:not(:has([rowspan])) tbody tr:hover { background: var(--accent-wash); }
+/* table row hover removed (owner: misbehaved on merged tables; off everywhere) */
 
 .article td u, .article td ins { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 2px; }
 

@@ -187,7 +187,9 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         elif t == "item":
             body = _render_body(blk, page, oracle_pages, chips, marker_if_new, emit_marker)
             # 2-space nesting inside quotes (4 spaces would read as code there)
-            indent = ("  " if q else "    ") * blk.get("level", 0)
+            # 3 spaces inside quotes: enough to nest under an ordered parent
+            # ('1. ' is 3 chars), still short of indented-code territory
+            indent = ("   " if q else "    ") * blk.get("level", 0)
             m = re.match(r"^[‌ ]*(\d{1,2})[.)]​?\s*", body)
             if m:  # ordered item: keep the number, real space after it
                 out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")

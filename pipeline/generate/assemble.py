@@ -263,9 +263,12 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             cur = {"type": "heading", "level": min(level, 6),
                    "lines": [line], "page": pno}
         elif kind == "caption":
-            if cur and cur["type"] == "caption":
+            if (cur and cur["type"] == "caption"
+                    and not CAPTION_LEAD.match(line["text"].lstrip())):
                 cur["lines"].append(line)
             else:
+                # a bracket lead starts its OWN caption — two figures' captions
+                # were merging into one block (7.5.1.A/B)
                 flush()
                 cur = {"type": "caption", "lines": [line], "page": pno}
         elif kind == "item":

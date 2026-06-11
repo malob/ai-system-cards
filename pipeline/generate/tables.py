@@ -51,6 +51,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
             html = _normalize_rowspan_subrows(html)
             html = _bullet_breaks(html)
+            html = _debold_th(html)
         out.append({**t, "html": html})
     return out
 
@@ -113,6 +114,12 @@ def _demote_data_th(html: str) -> str:
             continue
         out = out.replace(r, r.replace("<th", "<td").replace("</th>", "</td>"), 1)
     return out
+
+
+def _debold_th(html: str) -> str:
+    """th renders bold via CSS; an inner <b> double-bolds (p.82 group labels
+    heavier than p.77's)."""
+    return re.sub(r"(<th[^>]*>)<b>(.*?)</b>(</th>)", r"\1\2\3", html, flags=re.S)
 
 
 def _bullet_breaks(html: str) -> str:
