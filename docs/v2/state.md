@@ -3,18 +3,25 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-11 (~11:15) — ROUND G + owner review CLOSED; all 5
-review items resolved, p.198 transcript fully reworked to owner's spec (D27:
-interjections → inter-turn narration; continuation output → its own
-[Assistant] card; wrapped green highlight → one pill). Gate 0 majors / L1 31
-/ T1 **70** (the +1 vs the 69 low is the owner-accepted continuation label,
-D27; still below the round-G baseline of 72); seams 0; build clean. Below,
-the ~01:00 convergence record. 23-inspector
-fleet → 16 real defect classes past the 0-major gate, all fixed at class
-level under D25 (commits 2169e2a…2defc4e). Gate 0 majors / L1 31 / T1 72;
-seams 0; mutation recall unchanged; build clean. Experiment 09 is the
-record. One residual + 4 adjudication items await owner steer (below).
-With Fable 5.
+**Last updated:** 2026-06-11 (~15:35) — v2 is CANONICAL (D28); conversion
+converged (gate 0 majors / L1 31 / T1 70; seams 0; build clean). Since then, a
+round of **site polish + features**, all render-only (no markdown/gate impact),
+all committed, **NOTHING PUSHED** (D13):
+- **D29** — figures merged into one card per page (multi-panel charts + the
+  PDF's repeated running-title strips no longer orphaned);
+- **D30** — internal section links get a dotted underline, external citations
+  stay solid;
+- TOC "Contents" button now toggles the sidebar/drawer at *every* width;
+  header meta-row evenly spread (date · Original PDF · Markdown) with clay
+  middot separators;
+- **D31** — social-media previews: per-page Open Graph PNGs via a Satori+resvg
+  `og/[...path].png.ts` endpoint, rendered in the site's own fonts/palette;
+- **Astro docs MCP** added (`.mcp.json`, approved + connected) for live-docs
+  access; `mcp__astro-docs__search_astro_docs`.
+
+The long round-by-round log below PREDATES D28 — historical only (git +
+decisions.md + experiments are the record). **Next:** owner publishes when
+ready (push `main` → Pages, D13). With Fable 5.
 
 ## Cold-start capsule
 
@@ -31,26 +38,19 @@ taxonomy in its §2 is load-bearing).
 
 ## Status
 
-- **Phase:** 2 (generation) — convergence loop, round E (verification) running.
-- **Headline:** loop is converging. Sweep #1: 69 majors → fixes → re-sweep
-  (round D, 4 agents, all 319pp): **25 majors** → fix wave (this session):
-  **all 24 actionable closed at class level** (1 adjudicated source-faithful,
-  p.43). Gate: **FN1 major 0** (was 1), S1 4 / ST1 1 / T1 6 — all known typed
-  sites; T1 minors 198→143. Model-name displacement across all tables: 13→0.
-  Round E (verify 30 flagged + 30 random pages, fresh `vsweep3` slices via the
-  now-committed `pipeline/slice_pages.py`) running in background; results land
-  in `pipeline/.cache/vsweep3/findings-*.jsonl`. Experiment
-  [08](experiments/08-convergence/) is the record. NOT accept-ready until
-  round E verdicts + final mutation re-run + owner H2 review.
-- **Round-D fix inventory (all in `pipeline/generate/tables.py` unless noted):**
-  fragment-row merge; glue-split x-guard + fnref exclusion; misjoin re-split;
-  truncated-cell extension (column-run prefix); y-band rotation pools +
-  char-multiset row rebuild; geometric per-segment bold/underline restyle
-  (suppression ≥0.9); entity/quote folding (compare-only); stray fnref-digit
-  absorb. Elsewhere: cross-page footnote continuation (oracle `cont` key →
-  serialize merge; FN1 mirror), wrapped-heading continuation (assemble + ST3
-  mirror), lettered list markers + space, empty-block guard, caption
-  bracket-lead spacing.
+- **Conversion: COMPLETE and canonical (D28).** Card = Claude Fable 5 & Mythos 5
+  (319pp). Gate: 0 majors / L1 31 (typed v1-parity) / T1 70 minors; seam
+  auditor 0; site builds clean. Verifier still calibrates against git refs
+  (`f60899a`/`fb483fb`) — the D5 corpus is intact, not the working tree.
+- **Site (Astro → GitHub Pages):** recent features/polish all committed, none
+  pushed (D13): figure-card merge (D29), internal/external link underlines
+  (D30), all-width TOC toggle, evenly-spread header meta-row with middots,
+  per-page social-media OG previews (D31). Astro docs MCP wired (`.mcp.json`).
+  OG-image rendering lives in `site/src/lib/og.js` + `site/src/pages/og/`.
+- **Open:** nothing blocking. Owner publishes when ready (push `main` triggers
+  the Pages deploy). Note: OG previews use absolute `malob.github.io` URLs, so
+  they only resolve once deployed — validate then (opengraph.xyz / X composer).
+- The round-by-round history below is pre-D28 and superseded; kept for context.
 
 ### Earlier groundwork (phase 1, complete)
 - Done:
