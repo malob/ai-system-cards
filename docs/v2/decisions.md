@@ -223,5 +223,25 @@ whose captions promise underlined second-best scores must carry underlines;
 detect via thin rule-fills under spans; restyle table cells from oracle spans
 (same pass recovers bold best-scores, the sweep's emphasis-lost class).
 
-<!-- APPEND NEW DECISIONS BELOW THIS LINE (D24 next) — newest at the bottom. -->
+
+## D24 — H2 review round 1: outcomes (2026-06-10)
+
+Owner reviewed the converged v2 preview section by section. Verdicts:
+- **Accepted residuals** (whitelisted in `pipeline/verifier/accepted.json`,
+  suppression printed transparently by calibrate): T1 stream-order majors on
+  pp. 38/44/56/57 — drawn pills/legend text extracted at z-order positions;
+  the md follows VISUAL order, correct for a reader.
+- **Blessed adjudications**: literal `\u2014`/`**` in transcripts kept
+  verbatim (escaped to render as printed); turn labels keep source brackets.
+- **Owner-caught classes, all fixed**: welfare-table cell paragraphs +
+  cross-page row continuation; spurious seam line breaks. These drove the
+  table-audit round (vsweep5) and its fix set.
+- **Built on owner request**: `.ph` green placeholder ranges (D15/D17,
+  sub-span pill mapping → raw-HTML spans); styled `<pre>` for bold code
+  boxes (p.182).
+
+Gate at close: **0 majors** (6 owner-accepted suppressed), FN1/L1/T1 minors
+1/31/100.
+
+<!-- APPEND NEW DECISIONS BELOW THIS LINE (D25 next) — newest at the bottom. -->
 <!-- (Three same-session attempts to insert above the tail prove the need.) -->
