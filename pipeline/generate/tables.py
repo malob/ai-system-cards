@@ -31,6 +31,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
     out = []
     for t in _load().get(str(page_no), []):
         t = {**t, "html": _demote_data_th(t["html"])}
+        t = {**t, "html": _promote_split_rowspan(t["html"])}
         t = {**t, "html": _normalize_rowspan_subrows(t["html"])}
         t = {**t, "html": _dedup_cascaded_cells(t["html"])}
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
@@ -63,6 +64,42 @@ def _table_spans(oracle_page, bbox):
         if (bbox[0] - 3 <= sb[0] and sb[2] <= bbox[2] + 3
                 and bbox[1] - 3 <= sb[1] and sb[3] <= bbox[3] + 3):
             yield s
+
+
+def _split_cells(row: str) -> list[str]:
+    return re.findall(r"<t[hd][^>]*>.*?</t[hd]>", row, re.S)
+
+
+def _promote_split_rowspan(html: str) -> str:
+    """docling inconsistently merges 2-row label groups: in one table it gives
+    'Claude Opus 4.8' a th rowspan=2 over its With/Without-thinking sub-rows
+    but emits a sibling as a plain th + a SEPARATE empty-lead row (p.96
+    5.2.2.2.A — Opus split while Sonnet merged). A col-0 th without rowspan
+    immediately followed by a same-width row whose col-0 is empty and whose
+    rest is real data is exactly that miss: give the th rowspan=2; the empty
+    lead is then dropped by _normalize_rowspan_subrows."""
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    # consistency-only: act solely when the table ALREADY merges at least one
+    # label group with rowspan=2 (docling proved the pattern) — so this never
+    # speculatively merges rows in tables that legitimately have empty leads
+    # (the welfare mega-table's multi-paragraph continuation fragments)
+    if not any('rowspan="2"' in r for r in rows):
+        return html
+    out = html
+    for i, r in enumerate(rows[:-1]):
+        cells = _split_cells(r)
+        m = re.match(r"<tr><th([^>]*)>(.*?)</th>", r, re.S)
+        if not cells or not m or "rowspan" in m.group(1) or not m.group(2).strip():
+            continue
+        ncells = _split_cells(rows[i + 1])
+        if len(ncells) != len(cells):
+            continue
+        lead = re.match(r"<t[hd][^>]*>(\s*)</t[hd]>", ncells[0])
+        rest_nonempty = any(re.sub(r"<[^>]+>", "", c).strip() for c in ncells[1:])
+        if lead and rest_nonempty:
+            promoted = "<tr><th rowspan=\"2\"" + m.group(1) + ">" + m.group(2) + "</th>" + r[len(m.group(0)):]
+            out = out.replace(r, promoted, 1)
+    return out
 
 
 def _normalize_rowspan_subrows(html: str) -> str:
