@@ -195,7 +195,7 @@ def extract_page(page) -> dict:
         if is_box:
             # wide rect = container/bubble/panel (incl. single-line turn bubbles)
             boxes.append({"color": col, "bbox": [round(v, 1) for v in r]})
-        elif 6 < r.height < 30 and 20 < r.width < 250:
+        elif 6 < r.height < 30 and 9 < r.width < 250:  # 9pt: tiny '[…]' placeholder pills count
             # narrow rect = inline pill (chip / placeholder / code span)
             t = page.get_text(clip=r).strip().replace("\n", " ")
             if t:

@@ -510,10 +510,21 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         cw = (sb[2] - sb[0]) / max(1, len(t))
                         i0 = max(0, int((pb[0] - sb[0]) / cw))
                         i1 = min(len(t), int((pb[2] - sb[0]) / cw + 0.5))
-                        while i0 > 0 and not t[i0 - 1].isspace():
-                            i0 -= 1
-                        while i1 < len(t) and not t[i1].isspace():
-                            i1 += 1
+                        # most pills highlight a BRACKETED token: snap to the
+                        # bracket pair near the estimate (whitespace-snapping
+                        # swallowed neighbors: '[user]-authored,', 'Create [')
+                        lb = t.find("[", max(0, i0 - 2), min(len(t), i0 + 3))
+                        # the matching close is the FIRST ']' after the open —
+                        # an estimate-window search grabbed the NEXT pill's
+                        # bracket when two pills sit side by side
+                        rb = t.find("]", lb + 1, min(len(t), i1 + 4)) if lb >= 0 else -1
+                        if lb >= 0 and rb >= 0 and rb > lb:
+                            i0, i1 = lb, rb + 1
+                        else:
+                            while i0 > 0 and not t[i0 - 1].isspace():
+                                i0 -= 1
+                            while i1 < len(t) and not t[i1].isspace():
+                                i1 += 1
                         seg = t[i0:i1]
                         a2 = start + i0 + (len(seg) - len(seg.lstrip()))
                         b2 = start + i1 - (len(seg) - len(seg.rstrip()))
