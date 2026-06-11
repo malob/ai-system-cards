@@ -234,9 +234,18 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             label = ""
             bolds = [m for m in marks if m[0] == "bold"]
             if bolds and bolds[0][1] == 0:
-                label = text[: bolds[0][2]].strip().rstrip(":")
-                rest = text[bolds[0][2]:]
-                delta = bolds[0][2] + (len(rest) - len(rest.lstrip(" :")))
+                cap = bolds[0][2]
+                mb = re.match(r"\[[^\]]{1,30}\]:?", text)
+                resid_bold = None
+                if mb and mb.end() < cap:
+                    # the PDF's bold run continues past the bracket label into
+                    # the body lead-in ('[Assistant]: One thing worth noting') —
+                    # the label ends at the bracket; the rest stays a body bold
+                    cap = mb.end()
+                    resid_bold = bolds[0][2]
+                label = text[:cap].strip().rstrip(":")
+                rest = text[cap:]
+                delta = cap + (len(rest) - len(rest.lstrip(" :")))
                 text = rest.lstrip(" :")
                 # remaining marks must shift with the trimmed prefix — stale
                 # offsets displaced every later mark by len(label) (p.153
@@ -244,6 +253,8 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 marks = [(k, max(0, a - delta), max(0, b - delta), d)
                          for k, a, b, d in marks
                          if not (k == "bold" and a == 0) and b > delta]
+                if resid_bold is not None and resid_bold - delta > 0:
+                    marks.append(("bold", 0, resid_bold - delta, None))
             elif re.fullmatch(r"\[[^\]]{1,30}\]:?\s*", text.strip()):
                 label = text.strip().rstrip(":").strip("[]").rstrip(":")
                 text = ""
