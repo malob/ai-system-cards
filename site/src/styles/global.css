@@ -205,6 +205,9 @@ a:hover { text-decoration-color: var(--accent); }
   margin: 0 0 4rem;
 }
 
+/* 404: center the message vertically between the masthead and footer */
+.notfound { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
 .cardlist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-strong); }
 
 .cardlist li { border-bottom: 1px solid var(--line); }
