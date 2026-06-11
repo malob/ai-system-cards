@@ -347,8 +347,17 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                                     and prev_short)
                 chip_boundary = (_chip_only(line, page, manifest_chips)
                                  or _chip_only(prev, page, manifest_chips))
+                # mirror case: a SHORT fully-bold line is a standalone label —
+                # the next non-bold line starts a new paragraph even at a
+                # tight gap ('**Level 0: Overall spirit**' | 'Does the
+                # model…', p.136; siblings split only thanks to bullets)
+                prev_body = [s for _, _, s in prev["segs"] if s["zone"] == "body"]
+                ends_bold_label = (prev_body and all(s["bold"] for s in prev_body)
+                                   and prev_short
+                                   and line["segs"] and not line["segs"][0][2]["bold"])
                 same_para = (gap < max(4.0, 0.55 * line_h)
                              and not starts_bold_lead
+                             and not ends_bold_label
                              and not chip_boundary
                              and cur.get("quote", False) == _is_quote(line, page))
             if same_para:

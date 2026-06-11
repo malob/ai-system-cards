@@ -88,7 +88,9 @@ Claude models were run with web search, web fetch, programmatic tool calling, ma
 **[Table 8.14.3.B] DeepSearchQA results for Claude models,** broken down by outcome category.
 :::
 
-**Reasoning effort** We ran DeepSearchQA against all reasoning effort levels available for Mythos 5, Mythos Preview and Opus 4.8. We used a 1M token budget and did not use context compaction for these runs.
+**Reasoning effort**
+
+We ran DeepSearchQA against all reasoning effort levels available for Mythos 5, Mythos Preview and Opus 4.8. We used a 1M token budget and did not use context compaction for these runs.
 
 <!-- p.270 -->
 
@@ -104,7 +106,9 @@ Deep Research Accuracy, Completeness, and Objectivity (DRACO[^49]) is a deep res
 
 We evaluated Claude models with web search, web fetch, and code execution tools with programmatic tool calling. All Claude models were evaluated with adaptive thinking at max effort and a 1M token limit. We used a task budget of 980k tokens with no compaction, given that it does not significantly help for this task. Claude Mythos 5 achieved 86.4% at max reasoning effort.
 
-**Grading methodology** The original DRACO paper uses Gemini-3-Pro as the primary judge model, which is no longer available. For our evaluations, we use Claude Opus 4.6 as the LLM judge to grade<!-- p.271 --> responses against the per-task rubrics using the same binary MET/UNMET verdicts aggregated into a normalized score per the paper’s Section 4.2 formula. We follow the paper’s protocol of 5 independent grading runs per response and report the mean. Our judge prompt is taken from the paper’s Appendix C.2. Appendix A shows judge choice can shift absolute scores by 10–25 points while preserving system ordering, so our scores are not directly comparable to the paper’s headline numbers.
+**Grading methodology**
+
+The original DRACO paper uses Gemini-3-Pro as the primary judge model, which is no longer available. For our evaluations, we use Claude Opus 4.6 as the LLM judge to grade<!-- p.271 --> responses against the per-task rubrics using the same binary MET/UNMET verdicts aggregated into a normalized score per the paper’s Section 4.2 formula. We follow the paper’s protocol of 5 independent grading runs per response and report the mean. Our judge prompt is taken from the paper’s Appendix C.2. Appendix A shows judge choice can shift absolute scores by 10–25 points while preserving system ordering, so our scores are not directly comparable to the paper’s headline numbers.
 
 Aside from the change in the judge model, our only other difference from the original paper is that we instruct the model to enclose its final report in `<result>` tags and grade only that span, rather than grading the full agent transcript; this isolates the deliverable from intermediate tool output.
 
