@@ -441,5 +441,23 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         else:
             merged.append((fb["n"], _fn_body(fb)))
     for n, body in merged:
-        out.append(f"[^{n}]: {body}\n\n")
+        out.append(_fn_def(n, body))
     return "".join(out), cur_page
+
+
+def _fn_def(n, body: str) -> str:
+    """A footnote whose body carries '●' bullets is a list the PDF set inside
+    the note (fn1 p.36): lead-in, then items. Emit a GFM footnote with a
+    4-space-indented list (continuation lines belong to the note) instead of
+    leaving the glyphs inline. Only fires with ≥2 bullets."""
+    if "●" in body:
+        parts = [p.strip() for p in body.split("●")]
+        lead, items = parts[0].rstrip(), [p for p in parts[1:] if p]
+        if len(items) >= 2:
+            # 4-space continuation, NO blank line: the verifier's footnote-def
+            # projection captures contiguous `\n    .*` continuations but stops
+            # at a blank line (blank-tolerance was removed — it over-swallowed)
+            lines = [f"[^{n}]: {lead}".rstrip()]
+            lines += [f"    - {it}" for it in items]
+            return "\n".join(lines) + "\n\n"
+    return f"[^{n}]: {body}\n\n"

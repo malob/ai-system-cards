@@ -292,7 +292,9 @@ Some broader considerations also inform our decision, which our evaluations abov
 *Non-novel chemical and biological weapons*. Our analysis and conclusions here are very similar to those in our February Risk Report, and in previous system cards.
 
 *Novel chemical and biological weapons.* Although we do not think that Claude Mythos 5 crosses the CB-2 threshold in our RSP and FCF, we think that the catastrophic risk from<!-- p.36 --> novel CB weapon production posed by the development of this model is low, but higher than for any previous model. As such, we have presented a more detailed analysis of the reasoning behind our CB-2 threshold judgment above, and we plan to present a comprehensive review of our safeguards, threat models, and risk posture for this threat model in a forthcoming Risk Report.
-[^1]: Note that: ● This threshold maps to the “High-stakes sabotage opportunities” threat model in our current [Responsible Scaling Policy](https://www-cdn.anthropic.com/files/4zrzovbb/website/bf04581e4f329735fd90634f6a1962c13c0bd351.pdf). ● This threshold differs from the “AI R&D-4” threshold from version 2.2 of our [Responsible Scaling Policy](https://www-cdn.anthropic.com/872c653b2d0501d6ab44cf87f43e1dc4853e4d37.pdf). It is similar in spirit, but has been revised to better match the key threat model, and we believe it would include several past models.
+[^1]: Note that:
+    - This threshold maps to the “High-stakes sabotage opportunities” threat model in our current [Responsible Scaling Policy](https://www-cdn.anthropic.com/files/4zrzovbb/website/bf04581e4f329735fd90634f6a1962c13c0bd351.pdf).
+    - This threshold differs from the “AI R&D-4” threshold from version 2.2 of our [Responsible Scaling Policy](https://www-cdn.anthropic.com/872c653b2d0501d6ab44cf87f43e1dc4853e4d37.pdf). It is similar in spirit, but has been revised to better match the key threat model, and we believe it would include several past models.
 
 [^2]: We did not directly compare performance between this helpful-only version and the final Claude Mythos 5, but expect its risk-relevant capabilities to have been broadly similar.
 
