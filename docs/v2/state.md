@@ -266,6 +266,21 @@ breaks; lettered lists render <ol type=a> (renderer plugin); pill bracket
 windows ±4 ([so it] exact). Adjudicated: transcript role color for p.104
 continuation NOT inferable from source (owner: don't worry about it).
 
+**FULL FAITHFULNESS PASS (21:30) — owner-directed.** Phases: (A) p.95/96
+covered-row sub-labels unified td+b (values were already fixed); (B)
+group-label colspans (API/Claude.ai span their column groups; uniform bold;
+4.2.B-style 1-col groups correctly untouched); (C) T1-minor census-driven:
+mdproj sentinel-protected literal markup (86→72; escaped stars were being
+re-eaten by the italics stripper); (D) FN1 emphasis-fold (FN1 now ZERO);
+L1×31 adjudicated v1-parity (PDF auto-linked blocklist domains). (E) MANUAL
+TRIANGULATED SWEEP (PDF render + preview screenshot + served-HTML DOM):
+p.96 5.2.2.2.A cell/style exact; CB table 2.2.1.A incl. cross-page AAV row;
+p.85 BBQ pair incl. bold 100 (served HTML; screenshot was stale); p.118
+transcript — sweep CAUGHT a class: multi-block boxed turns lost all but the
+last block (the '<thinking>' opener) — code_lines now APPENDS; §9.2
+blocklist; 7.5.1 figure/caption interleave. Gate: 0 majors, FN1 0, L1 31
+(typed), T1 72 (join noise).
+
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
 p.153 '[Assistant]' label, p.182 missing-bold sentence (REAL find, example-box
