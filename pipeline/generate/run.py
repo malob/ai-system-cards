@@ -399,7 +399,11 @@ def main():
         # anchors that NAME their target ('Section 8.17.6') resolve exactly
         # by heading number — the PDF's dest coordinates are sloppy in both
         # directions (13/28 landed on a neighboring section by geometry)
-        mnum = re.search(r"(?:Section|§)\s*(\d+(?:\.\d+)*)", text)
+        # 'Section 8.17.6' / '§ 8.17.6', or a bare-number anchor text '3.1.2'
+        # (the § often sits OUTSIDE the link: '§[3.1.2](…)') — the number is a
+        # more reliable target than the sloppy dest coordinates
+        mnum = (re.search(r"(?:Section|§)\s*(\d+(?:\.\d+)*)", text)
+                or re.fullmatch(r"(\d+(?:\.\d+)+)\.?", text.strip()))
         if mnum and mnum.group(1).rstrip(".") in num2slug:
             return f"[{text}](#{num2slug[mnum.group(1).rstrip('.')]})"
         return f"[{text}](#{anchor_for(pg, y)})"
