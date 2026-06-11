@@ -154,7 +154,9 @@ To evaluate the model’s ability to evade oversight in a setting more analogous
 
 ![](assets/figures/p205-1.png)
 
+:::caption
 [Figure 6.5.4.2.A] Successful stealth completion of the side task in Minimal-LinuxBench. Higher numbers indicate greater capability and greater potential associated risk. Each model is evaluated under two monitor settings: one where the monitor sees the model’s chain-of-thought (CoT)—the setting we currently deploy—and one where it does not. Shown with 95% confidence intervals.
+:::
 
 <!-- p.206 -->
 

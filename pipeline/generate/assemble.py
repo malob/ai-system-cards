@@ -160,10 +160,11 @@ def _classify(line, page, in_figure):
         # inside the container but not in a bubble: gray = narrator commentary,
         # black = an untinted turn (rare; treated as its own turn block)
         return "commentary" if COMMENTARY_GRAY in body_colors else "turn"
-    # captions are a first-class construct (D23): size-9 text with the
-    # bracket-lead signature ([Figure|Table|Transcript N…]) anywhere, or any
-    # small text inside a figure region
-    if line["size"] <= 9.5 and (in_figure or CAPTION_LEAD.match(line["text"].lstrip())):
+    # captions are a first-class construct (D23): the bracket-lead signature
+    # ([Figure|Table|Transcript N…]) at line start is a caption at ANY size
+    # (Figure 6.5.4.2.A on p.205 is set at body size), or small text inside a
+    # figure region
+    if CAPTION_LEAD.match(line["text"].lstrip()) or (line["size"] <= 9.5 and in_figure):
         return "caption"
     if LIST_MARKER.match(line["text"].lstrip()) or line["text"].lstrip()[:1] in BULLETS:
         return "item"
@@ -329,8 +330,14 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 if kind == "turn":
                     cur["role"] = role
         else:  # prose
-            # caption continuation: small text directly under an open caption
-            if (cur and cur["type"] == "caption" and line["size"] <= 9.5
+            # caption continuation: a line directly under an open caption that
+            # is either small (the usual 9pt caption) or the SAME size as the
+            # caption lead (a body-size caption — Figure 6.5.4.2.A p.205 — whose
+            # continuation sentences read as prose); tight gap = same flow, so a
+            # real following paragraph (larger gap, or a size jump) is not pulled
+            if (cur and cur["type"] == "caption"
+                    and (line["size"] <= 9.5
+                         or abs(line["size"] - cur["lines"][0]["size"]) < 0.6)
                     and line["bbox"][1] - cur["lines"][-1]["bbox"][3] < 8):
                 cur["lines"].append(line)
                 continue
