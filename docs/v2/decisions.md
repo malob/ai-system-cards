@@ -243,5 +243,21 @@ Owner reviewed the converged v2 preview section by section. Verdicts:
 Gate at close: **0 majors** (6 owner-accepted suppressed), FN1/L1/T1 minors
 1/31/100.
 
-<!-- APPEND NEW DECISIONS BELOW THIS LINE (D25 next) — newest at the bottom. -->
+
+## D25 — Orchestrator-owned fixes; tracked output; diff-per-fix protocol (2026-06-10)
+
+Owner directives for round G and beyond:
+- **Inspector agents surface findings; the ORCHESTRATOR owns every fix**
+  (diagnosis, class-vs-patch call, application, verification).
+- **`sections-v2/` is now git-tracked.** The per-fix protocol:
+  pipeline change → regen → `git diff cards/.../sections-v2` → confirm the
+  EXPECTED change is present AND nothing unexpected changed (the diff is
+  primarily a REGRESSION detector) → visual/preview check when the change is
+  renderer-visible → commit pipeline + output together, message naming the
+  fix.
+- Generated files are never hand-edited; the diff is read-only verification.
+  One-off corrections go through the (planned) owner-adjudicated patch layer
+  applied by run.py post-regen.
+
+<!-- APPEND NEW DECISIONS BELOW THIS LINE (D26 next) — newest at the bottom. -->
 <!-- (Three same-session attempts to insert above the tail prove the need.) -->
