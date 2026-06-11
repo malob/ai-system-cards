@@ -384,3 +384,31 @@ unchanged for both — no second hue, keeping the warm palette intact.
   links — all keep their own treatment. 120 internal cross-refs affected; works
   in both themes (decoration colour is the already-themed accent). No md/gate
   impact.
+
+
+## D31 — social-media preview images (Open Graph) (2026-06-11)
+
+Per-page Open Graph / Twitter cards so a shared link renders a branded
+1200×630 preview. Astro-native, generated at build time — no runtime/server.
+
+- **Mechanism (confirmed against the live Astro docs via the new docs MCP):**
+  a static endpoint `site/src/pages/og/[...path].png.ts` with `getStaticPaths`
+  (one entry for home + one per card) returns `new Response(png)`; Astro writes
+  a real PNG per path at build (`/og/home.png`, `/og/<vendor>/<slug>.png`).
+  Rendering is Satori (element tree → SVG) + `@resvg/resvg-js` (SVG → PNG) in
+  `site/src/lib/og.js`, in the site's own palette (warm paper, clay spine, ink)
+  and fonts (Fraunces + IBM Plex Mono, static `.woff` — Satori rejects woff2).
+  Astro has no built-in OG generator; the `.png.ts` endpoint + getStaticPaths
+  IS the native mechanism the docs point to.
+- **Tags** in `Base.astro`: og:type/site_name/title/description/url/image
+  (+width/height) and twitter:card=summary_large_image, absolute URLs built
+  from the configured `site` + `base`, plus a canonical link. New `ogImage`
+  prop is a slug ('home' default; the card page passes '<vendor>/<slug>' +
+  type 'article').
+- **Design:** card = "VENDOR · SYSTEM CARD" eyebrow, Fraunces title, "date ·
+  N pages · faithful HTML archive" (N = highest page marker). Home = wordmark +
+  tagline + url. Owner judgment calls (reversible): the mockup design as shipped;
+  X/Twitter handle attribution skipped (add via twitter:site/creator later).
+- Build-only deps (devDependencies): satori, @resvg/resvg-js,
+  @fontsource/fraunces. PNGs live in gitignored `dist/` (regenerated each
+  build). Render-only — no markdown or verifier-gate impact.

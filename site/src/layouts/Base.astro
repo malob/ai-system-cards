@@ -7,10 +7,15 @@ import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource/ibm-plex-mono/600.css';
 import '../styles/global.css';
 
-const { title, description } = Astro.props;
+const { title, description, ogImage = 'home', ogType = 'website' } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL
   : import.meta.env.BASE_URL + '/';
+// absolute URLs for social cards (crawlers require them). ogImage is a slug —
+// 'home' or '<vendor>/<slug>' — resolved against the built /og/*.png endpoints.
+const site = Astro.site ?? new URL('https://malob.github.io/');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const ogImageUrl = new URL(`${base}og/${ogImage}.png`, site).href;
 ---
 
 <!doctype html>
@@ -21,6 +26,21 @@ const base = import.meta.env.BASE_URL.endsWith('/')
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <meta name="generator" content={Astro.generator} />
+
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="AI System Cards" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImageUrl} />
+
     <script is:inline>
       (() => {
         const saved = localStorage.getItem('theme');

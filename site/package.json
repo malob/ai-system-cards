@@ -27,5 +27,10 @@
     "unified": "^11.0.0",
     "unist-util-visit": "^5.0.0",
     "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@fontsource/fraunces": "^5.2.9",
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.26.0"
   }
 }
