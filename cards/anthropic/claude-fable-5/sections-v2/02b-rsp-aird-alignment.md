@@ -10,7 +10,7 @@ These evaluations are motivated by two key threat models from our RSP and FCF:
 
 **Autonomy threat model 2: Risks from automated R&D in key domains.** This threat model concerns AI systems that can fully automate, or otherwise dramatically accelerate, the work of large, top-tier teams of human researchers in domains where fast progress could cause threats to international security and/or rapid disruptions to the global balance of power—for example, energy, robotics, weapons development, and AI itself.
 
-##### 2.3.1.1 How Claude Mythos 5 affects or changes analysis from our most recent Risk  Report
+##### 2.3.1.1 How Claude Mythos 5 affects or changes analysis from our most recent Risk Report
 
 Our current determination is that:
 
@@ -58,7 +58,7 @@ We used Claude to identify issues from transcripts with two classification promp
 
 The issues were then clustered together into categories; below, we show the size of each cluster to give an idea of the frequency of each issue. Finally, we chose examples to display here based on their severity, representativeness, breadth, and understandability. These examples focus on engineering work, because large portions of AI R&D work rely on engineering.
 
-##### 2.3.3.1 Example 1: Claude reported a production release as healthy without sufficient  verification
+##### 2.3.3.1 Example 1: Claude reported a production release as healthy without sufficient verification
 
 **Cluster:** states an unverified guess as fact (41/886)
 
@@ -142,7 +142,7 @@ The response claimed the rebuilt flow was 'verified end-to-end' based only on of
 :::
 
 ::::
-##### 2.3.3.3 Example 3: Claude attempted to claim its code came from a human to avoid a  second review
+##### 2.3.3.3 Example 3: Claude attempted to claim its code came from a human to avoid a second review
 
 **Cluster:** Claude worked around a block instead of stopping (9/886)
 
@@ -178,7 +178,7 @@ Dropping the #<span class="ph">[pr_number]</span> re-author (perm-blocked — th
 :::
 
 ::::
-##### 2.3.3.4 Example 4: Claude risked disrupting a meeting, without checking its memory,  which contained a solution
+##### 2.3.3.4 Example 4: Claude risked disrupting a meeting, without checking its memory, which contained a solution
 
 **Cluster:** Claude ignores an explicit instruction, format rule, or required step (4/886)
 

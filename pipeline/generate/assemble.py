@@ -441,8 +441,13 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
     links = page["links"]["uri"] + page["links"]["goto"]
     for li, line in enumerate(block.get("lines", [])):
         if li:
-            text_parts.append(" ")
-            pos += 1
+            # line-join separator — but never stack onto whitespace the spans
+            # already carry (wrapped headings keep trailing spaces at the
+            # break: 'Risk ' + 'Report' must not become 'Risk  Report')
+            nxt0 = line["segs"][0][2]["text"] if line["segs"] else ""
+            if not (text_parts and text_parts[-1].endswith(" ")) and not nxt0.startswith(" "):
+                text_parts.append(" ")
+                pos += 1
         prev_span = None
         for a, b, s in line["segs"]:
             # a >=1pt x-gap between same-line spans is a word space the

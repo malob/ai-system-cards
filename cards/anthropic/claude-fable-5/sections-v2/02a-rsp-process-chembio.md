@@ -271,7 +271,7 @@ Some broader considerations also inform our decision, which our evaluations abov
 1. Across many domains, AI capabilities in real-world-contexts tend to lag behind their performance on well-specified measurable evaluation tasks. We are most familiar with this effect on software engineering, but believe it holds across many areas, including biological research productivity. This leads us to downweight results based on short-term use and impressive evaluation performance.
 2. In our experience, eliciting maximal scientific performance from models still requires substantial scientific expertise, substantial LLM expertise, and, often, iteration. In the absence of this, when user steering is suboptimal, capabilities rapidly diminished, and we are not convinced that evaluation performance is maintained in organic, real-world contexts.
 
-##### 2.2.5.1 How these observations affect or change analysis from our most recent Risk  Report
+##### 2.2.5.1 How these observations affect or change analysis from our most recent Risk Report
 
 *Non-novel chemical and biological weapons*. Our analysis and conclusions here are very similar to those in our February Risk Report, and in previous system cards.
 

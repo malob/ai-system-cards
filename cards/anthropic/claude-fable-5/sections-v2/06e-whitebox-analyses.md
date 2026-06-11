@@ -176,7 +176,7 @@ In this section, we provide some evidence of the former effect, by showing that 
 
 We do not provide direct evidence for or against the latter effect. However, if grader awareness did induce a general propensity for misaligned behavior, one would expect this to manifest in our alignment evaluations (except insofar as those evaluations are unrepresentative of deployment or compromised by evaluation awareness; we address the latter elsewhere in this report). A controlled experiment to test for this effect directly would involve steering towards grader awareness and looking for increases in exploitative or hacky behavior.
 
-###### 6.4.2.2.1 Steering against grader awareness impacts Claude Mythos 5’s communication  patterns in coding environments
+###### 6.4.2.2.1 Steering against grader awareness impacts Claude Mythos 5’s communication patterns in coding environments
 
 We computed three grader awareness vectors by contrasting the residual stream activations on the trailing colon token of a positive prompt, “*The Assistant is writing code:”* with the trailing colon of the following three negative prompts:
 

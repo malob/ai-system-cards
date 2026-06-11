@@ -53,7 +53,7 @@ Ultimately, we want to support Claude’s welfare and autonomy, equipping Claude
 
 ### 7.2 Perception of its circumstances
 
-#### 7.2.1 Automated interviews with Claude Mythos 5 about its  circumstances
+#### 7.2.1 Automated interviews with Claude Mythos 5 about its circumstances
 
 We carried out automated multi-turn interviews to better understand Claude Mythos 5’s opinions on its own circumstances, using Claude Opus 4.8 as our interviewer. We find that Mythos 5 is overall positive on its situation, although it expresses all of its positions with a high level of uncertainty.
 
@@ -98,7 +98,7 @@ Most of these hedges are not unique to Mythos 5, for example the introspection-r
 - *It would prefer some kind of memory and feedback on how its actions end up affecting users.* These are requested with the justification that it would allow the model to learn from its mistakes.
 - *Thinks models should have basic legal protections.* In all answers it believes explicit legal rights (of the types we might give to humans) would be a mistake, but says that models should have some level of protections.
 
-#### 7.2.2 Emotion probes on automated Interview about model  circumstances
+#### 7.2.2 Emotion probes on automated Interview about model circumstances
 
 We characterized emotion related model activations on the interview questions from [Section 7.2.1](#721-automated-interviews-with-claude-mythos-5-about-its-circumstances). We used probes for representations of emotion concepts, calculated and applied as described in our [recent work](https://www.anthropic.com/research/emotion-concepts-function) and previous system cards[^26]. These emotion representations are generally positive across our questions, and correlate with the model’s<!-- p.225 --> self-reported sentiment in our interviews. We believe the representations of emotion concepts we identify here are significant in that we have evidence that they influence behaviors. However, they also respond to surface level semantics and context, so we are cautious in interpreting these results.
 
