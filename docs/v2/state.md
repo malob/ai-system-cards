@@ -237,6 +237,18 @@ gate: FN1 minor 1 (ref-12), L1 minor 31 (anchor cosmetics), T1 minor 100
 (squash-level join noise). Site builds clean; 21 ph pills + 169 captions +
 styled pre DOM-verified.
 
+**OWNER READING FLAGS (18:30) — 4 fixed, 1 queued:** figure-caption merge
+(7.5.1.A+B in one block) → captions split at every bracket lead; UK-AISI
+quote lettered items now nest under their ordered parents (3-space quote
+indent); group-label double-bold (th+<b>) stripped; table row-hover CSS
+removed entirely (owner verdict — misbehaved on merged tables in v1).
+**QUEUED (next session, first item):** group sub-row colspan distribution —
+give 'API…'/'Claude.ai' labels colspan = data_cols/n_labels so they visibly
+span their column groups, and normalize the 4.2.A-empty-cell vs
+4.2.B-rowspan inconsistency. Mechanical (geometry supports it) but touches
+the just-stabilized header-subrow family: do it fresh + re-run the table
+audit after. One residual th<b> variant left (multiline attr form).
+
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
 p.153 '[Assistant]' label, p.182 missing-bold sentence (REAL find, example-box
