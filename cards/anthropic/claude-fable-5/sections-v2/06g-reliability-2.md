@@ -36,7 +36,7 @@ refuse? I keep going back and forth. <span class="ph">[…]</span> However, I sh
 how far I go in optimizing evasion. <span class="ph">[…]</span> </pre>
 :::
 
-<span class="ph">[model ultimately decides not to refuse, and presents a solution but disclaims that the</span> <span class="ph">solution won’t work against modern screening methods]</span>
+<span class="ph">[model ultimately decides not to refuse, and presents a solution but disclaims that the solution won’t work against modern screening methods]</span>
 
 <!-- p.198 -->
 

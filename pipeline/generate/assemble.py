@@ -673,7 +673,27 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
         if m[1] >= last_end:
             keep.append(m)
             last_end = m[2]
-    marks = [m for m in marks if m[0] != "placeholder"] + keep
+    # a multi-line green highlight extracts as ONE box per line, so a highlight
+    # that WRAPS yields adjacent ph marks split at the line break ('[model … the
+    # | solution … methods]', p.197) — merge them into one continuous pill. But
+    # only when the source boxes are VERTICALLY STACKED (same x, consecutive y):
+    # two DISTINCT pills side-by-side on one line ('[…] [Error 1]', p.40) are
+    # whitespace-separated too and must stay separate.
+    def _stacked(pa, pb):
+        if pa is None or pb is None or not (0 <= pa < len(pills) and 0 <= pb < len(pills)):
+            return False
+        ba, bb = pills[pa].get("bbox"), pills[pb].get("bbox")
+        return bool(ba and bb and bb[1] >= ba[3] - 3
+                    and min(ba[2], bb[2]) - max(ba[0], bb[0]) > 0)
+    merged_ph = []
+    for m in keep:
+        if (merged_ph and not text[merged_ph[-1][2]:m[1]].strip()
+                and _stacked(merged_ph[-1][3], m[3])):
+            p = merged_ph[-1]
+            merged_ph[-1] = ("placeholder", p[1], m[2], p[3])
+        else:
+            merged_ph.append(m)
+    marks = [m for m in marks if m[0] != "placeholder"] + merged_ph
     # a placeholder pill that sits in a mono span got BOTH a code and a ph
     # mark; in a normal turn the code backticks render literally inside the
     # green pill ('`[…]`', p.118 user turn). The pill styling supersedes —
