@@ -48,6 +48,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
+            html = _bold_cell_leads(html, t["bbox"], oracle_page)
             html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
             html = _normalize_rowspan_subrows(html)
@@ -235,6 +236,66 @@ def _join_wrapped(parts):
         if out and not (out[-1] in ".-" and part[:1].isdigit()):
             out += " "
         out += part
+    return out
+
+
+def _bold_cell_leads(html: str, bbox: list, oracle_page: dict) -> str:
+    """A tall single-paragraph cell that _row_band can't anchor (the
+    constitution-edits table 7.4.3, pp.244-245) loses the bold of its leading
+    run: a passage name '§ How we think about corrigibility' set bold, then a
+    regular-weight quote at uniform line pitch (no ≥9pt gap, so it is one
+    paragraph and restyle/_split_cell_paragraphs both skip it). For a PLAIN
+    cell (no tags) whose text equals a column-chain run with a LEADING bold
+    span run followed by regular spans, wrap just the leading bold text in
+    <b>. Cells already styled (<b>) or paragraph-split (<p>) are skipped, so
+    the welfare mega-table — bold labels already tagged, summary cells already
+    <p> — is untouched."""
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s["text"].strip() and s.get("zone") != "fnref"]
+    by_x: dict[float, list] = {}
+    for s in spans:
+        key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 3), None)
+        by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    cols = [sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
+    out = html
+    for m in re.finditer(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", html, re.S):
+        c = m.group(3)
+        if "<" in c:                 # already tagged (styled / paragraph-split)
+            continue
+        p2 = _cell_sq(c)
+        if len(p2) < 8:
+            continue
+        for col in cols:
+            for st in range(len(col)):
+                acc, run = "", []
+                for j in range(st, len(col)):
+                    acc += _squash(col[j]["text"])
+                    run.append(col[j])
+                    if len(acc) >= len(p2):
+                        break
+                if acc != p2 or not run[0].get("bold"):
+                    continue
+                k = 0
+                while k < len(run) and run[k].get("bold"):
+                    k += 1
+                if k == len(run):        # all-bold cell: not a lead transition
+                    break
+                lead_sq = _squash("".join(s["text"] for s in run[:k]))
+                # map lead_sq's length to a char cut in the raw cell text
+                cnt, i = 0, 0
+                while i < len(c) and cnt < len(lead_sq):
+                    if not c[i].isspace():
+                        cnt += 1
+                    i += 1
+                while i > 0 and c[i - 1].isspace():
+                    i -= 1
+                if i and _cell_sq(c[:i]) == lead_sq:
+                    fixed = f"<{m.group(1)}{m.group(2)}><b>{c[:i]}</b>{c[i:]}</{m.group(1)}>"
+                    out = out.replace(m.group(0), fixed, 1)
+                break
+            else:
+                continue
+            break
     return out
 
 
