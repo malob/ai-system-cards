@@ -90,9 +90,11 @@ def _demote_data_th(html: str) -> str:
             # mixed row = data row: demote every th EXCEPT a first-column
             # row label (model names are legitimately bold)
             first = re.match(r"<tr><th([^>]*)>(.*?)</th>", r, re.S)
-            rest = r[len(first.group(0)):] if first else r
-            fixed = (first.group(0) if first else "<tr>") + \
-                rest.replace("<th", "<td").replace("</th>", "</td>")
+            if first:
+                fixed = first.group(0) + r[len(first.group(0)):] \
+                    .replace("<th", "<td").replace("</th>", "</td>")
+            else:
+                fixed = r.replace("<th", "<td").replace("</th>", "</td>")
             if fixed != r:
                 out = out.replace(r, fixed, 1)
             continue
@@ -144,29 +146,72 @@ def _split_cell_paragraphs(html: str, bbox: list, oracle_page: dict) -> str:
         p2 = _cell_sq(c)
         if len(p2) < 120 or "<" in c:
             continue
-        best = None
-        for col in cols:
-            for st in range(len(col)):
-                acc, paras = "", [[col[st]]]
-                for j in range(st, len(col)):
-                    if j > st:
-                        if col[j]["bbox"][1] - col[j - 1]["bbox"][3] >= 9:
-                            paras.append([])
-                        paras[-1].append(col[j])
-                    acc += _squash(col[j]["text"])
-                    if len(acc) >= len(p2):
-                        break
-                if acc == p2 and len(paras) > 1:
-                    best = paras
-                    break
-            if best:
-                break
+        def scan(columns, topk, botk, textk):
+            for col in columns:
+                for st in range(len(col)):
+                    acc, paras = "", [[col[st]]]
+                    for j in range(st, len(col)):
+                        if j > st:
+                            if col[j][topk] - col[j - 1][botk] >= 9:
+                                paras.append([])
+                            paras[-1].append(col[j])
+                        acc += _squash(col[j][textk] if textk else col[j]["text"])
+                        if len(acc) >= len(p2):
+                            break
+                    if acc == p2 and len(paras) > 1:
+                        return paras
+            return None
+
+        cols_b = [[{"text": s["text"], "top": s["bbox"][1], "bottom": s["bbox"][3]}
+                   for s in col] for col in cols]
+        best = scan(cols_b, "top", "bottom", "text")
+        if not best:
+            # FALLBACK: visual line segments — a line can hold several spans
+            # ('(interview' + 'only)') whose later spans fall outside the
+            # x-cluster; rebuilt lines see the full text. Fallback-only so
+            # already-matching cells can't regress.
+            segs = []
+            for s in sorted(spans, key=lambda s: (round((s["bbox"][1] + s["bbox"][3]) / 8), s["bbox"][0])):
+                sb = s["bbox"]
+                if (segs and abs((sb[1] + sb[3]) / 2 - segs[-1]["yc"]) < 4
+                        and 0 <= sb[0] - segs[-1]["x1"] <= 15):
+                    segs[-1]["text"] += s["text"]
+                    segs[-1]["x1"] = max(segs[-1]["x1"], sb[2])
+                    segs[-1]["bottom"] = max(segs[-1]["bottom"], sb[3])
+                else:
+                    segs.append({"text": s["text"], "x0": sb[0], "x1": sb[2],
+                                 "top": sb[1], "bottom": sb[3],
+                                 "yc": (sb[1] + sb[3]) / 2})
+            fb: dict[float, list] = {}
+            for ln in segs:
+                # looser cluster than the primary (an indented wrap line like
+                # '(interview' sits a few pt right of its column)
+                key = next((k for k in fb if abs(k - ln["x0"]) <= 8), None)
+                fb.setdefault(ln["x0"] if key is None else key, []).append(ln)
+            fcols = [sorted(v, key=lambda l: l["top"]) for v in fb.values()]
+            best = scan(fcols, "top", "bottom", "text")
         if not best:
             continue
         body = "".join(
-            "<p>" + _h.escape(_join_wrapped(s["text"] for s in para), quote=False) + "</p>"
+            "<p>" + _h.escape(_join_wrapped(e["text"] for e in para), quote=False) + "</p>"
             for para in best if para)
         out = out.replace(m.group(0), f"<{m.group(1)}{m.group(2)}>{body}</{m.group(1)}>", 1)
+    return out
+
+
+def _split_inline_questions(html: str) -> str:
+    """Last-mile normalizer: a cell that already has Q-numbered paragraphs
+    but still carries an inline '…? Q6.' run (one fragment cell resisted
+    geometric matching) gets the remaining splits. Scoped: fires only inside
+    cells with >=2 existing <p>QN. paragraphs; prose never matches '? QN.'."""
+    out = html
+    for m in re.finditer(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", html, re.S):
+        c = m.group(3)
+        if len(re.findall(r"<p>\s*Q\d+\.", c)) < 2:
+            continue
+        fixed = re.sub(r"([?.!\u201d\u2019)\]])\s+(Q\d+\.\s)", r"\1</p><p>\2", c)
+        if fixed != c:
+            out = out.replace(m.group(0), f"<{m.group(1)}{m.group(2)}>{fixed}</{m.group(1)}>", 1)
     return out
 
 
@@ -219,7 +264,7 @@ def merge_continuation_rows(html: str) -> str:
             continue
         out_parts.append(r)
         last_row_idx = len(out_parts) - 1
-    return "".join(out_parts) if rows_merged else html
+    return _split_inline_questions("".join(out_parts)) if rows_merged else html
 
 
 def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:
@@ -531,8 +576,10 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
     return out
 
 
-_QUOTE_FOLD = {0x2019: 0x27, 0x2018: 0x27, 0x201C: 0x22, 0x201D: 0x22,
-               0x2014: 0x2D, 0x2013: 0x2D}  # em/en dash (docling folds them)
+# comparison-only fold: ALL quote variants to one class (docling and PyMuPDF
+# can disagree on single vs double for the same glyph), dashes to hyphen
+_QUOTE_FOLD = {0x2019: 0x27, 0x2018: 0x27, 0x201C: 0x27, 0x201D: 0x27,
+               0x22: 0x27, 0x2014: 0x2D, 0x2013: 0x2D}
 
 
 def _squash(s: str) -> str:
