@@ -121,9 +121,10 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         return " "
     seg = RE_FIGSKIP.sub(figskip, seg)
     seg = re.sub(r"</?u>", "", seg)   # prose underline (caption legend words)
-    seg = re.sub(r"\\([*`])", r"\1", seg)  # escaped literal markup (transcripts)
     seg = seg.replace("\\\n", " ")          # hard line breaks (mono example lines)
-    seg = re.sub(r"(?<!`)`(?!`)", "", seg)   # inline code backticks (mono spans)
+    # escaped literal markup -> sentinels BEFORE the markup strippers (the
+    # italics regex was eating escaped pairs through their backslashes)
+    seg = seg.replace("\\*", "\x03").replace("\\`", "\x04")
     seg = RE_COMMENT.sub(" ", seg)
 
     def piperule(m):
@@ -194,6 +195,8 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
 
     seg = RE_SUP.sub(" ", seg)
     seg = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"\1", seg)   # italics
+    seg = re.sub(r"(?<!`)`(?!`)", "", seg)   # inline code backticks (mono spans)
+    seg = seg.replace("\x03", "*").replace("\x04", "`")   # restore literals
 
     def heading(m):
         sec.headings.append((_strip_sentinels(m.group(1)), pg(m)))
