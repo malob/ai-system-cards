@@ -517,8 +517,15 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         # the matching close is the FIRST ']' after the open —
                         # an estimate-window search grabbed the NEXT pill's
                         # bracket when two pills sit side by side
-                        rb = (t.find("]", lb + 1, min(len(t), max(i1 + 4, lb + 40)))
-                              if lb >= 0 else -1)
+                        # prefer the close bracket nearest the END estimate
+                        # (a wide pill spans several bracket groups); fall
+                        # back to first-after-open. Containment dedup below
+                        # resolves adjacent-pill ambiguity.
+                        rb = -1
+                        if lb >= 0:
+                            rb = t.find("]", max(lb + 1, i1 - 3), min(len(t), i1 + 4))
+                            if rb < 0:
+                                rb = t.find("]", lb + 1, min(len(t), max(i1 + 4, lb + 40)))
                         if lb >= 0 and rb >= 0 and rb > lb:
                             i0, i1 = lb, rb + 1
                         else:
