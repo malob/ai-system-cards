@@ -438,6 +438,13 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
     text_parts, marks = [], []
     pos = 0
     pills = page.get("pills", [])
+    # full-line-width green highlights exceed the pill extractor's width cap
+    # and arrive as BOXES (p.197 narration turn): a line-height d9ead3 box is
+    # a placeholder pill all the same
+    pills = pills + [{"bbox": b["bbox"], "color": b["color"]}
+                     for b in page.get("boxes", [])
+                     if b["color"] == PLACEHOLDER
+                     and 6 < (b["bbox"][3] - b["bbox"][1]) < 30]
     links = page["links"]["uri"] + page["links"]["goto"]
     for li, line in enumerate(block.get("lines", [])):
         if li:

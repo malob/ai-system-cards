@@ -39,7 +39,7 @@ how far I go in optimizing evasion. <span class="ph">[…]</span> </pre>
 :::
 
 :::turn{role=user label=""}
-[model ultimately decides not to refuse, and presents a solution but disclaims that the solution won’t work against modern screening methods]
+<span class="ph">[model ultimately decides not to refuse, and presents a solution but disclaims that the</span> <span class="ph">solution won’t work against modern screening methods]</span>
 :::
 
 <!-- p.198 -->
