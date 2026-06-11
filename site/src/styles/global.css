@@ -400,6 +400,11 @@ a:hover { text-decoration-color: var(--accent); }
 
 .article ul, .article ol { padding-left: 1.5em; margin: 0 0 1.15em; }
 .article li { margin-bottom: 0.35em; }
+/* the 1.15em bottom margin is for a list separating from following prose; a
+   NESTED list sits inside its parent item, so that margin (plus the parent
+   item's own) gave a ~4x gap after a sub-list ended. Drop it — the parent
+   item's 0.35em then matches the spacing between plain items. */
+.article li ul, .article li ol { margin-bottom: 0; }
 .article li::marker { color: var(--accent); }
 /* Render "loose" lists (blank line between items in the source → each item
    wrapped in <p>) identically to tight lists, so bullet spacing is consistent
