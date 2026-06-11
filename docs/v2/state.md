@@ -213,28 +213,24 @@ pp.77/80/252/253 phantom columns (`_normalize_rowspan_subrows`: a row covered
 by a first-column rowspan must not carry a leading empty cell). Findings:
 `pipeline/.cache/vsweep5/findings.jsonl`.
 
-**NEXT-ROUND WORKLIST (vsweep5 unfixed + queued builds):**
-1. p.19/20: CB table 2.2.1.A split at page break + orphan 2-cell AAV
-   continuation row (needs rowspan-aware cross-page merge like the welfare
-   fix; renders sit on p-020/021.png).
-2. p.235/236: Top/Bottom cells cascade-duplicate bullets from rows below
-   (PDF = exactly 3 bullets per cell) — docling damage, likely multiset
-   rebuild territory.
-3. Welfare paragraph misses pp.310/311/313 (Q1+Q2 merged etc.) — chain
-   match fails for those cells; debug `_split_cell_paragraphs` per cell.
-4. p.95/96/98/252 'With(out) thinking' sub-labels render bold (th) — the
-   mixed-row demotion in `_demote_data_th` doesn't fire there; debug (maybe
-   whole-table-th + rowspan rows skip both branches).
-5. p.253 'GDP.pdf' garbled row label; verify p.252 'Hard' subrow trailing
-   empties against the PDF.
-6. Builds: `:::ph`/`:ph[]` green placeholder highlights (owner-requested,
-   FL-07/D17); p.182 styled-<pre> bold-in-code (owner verdict: FIX);
-   S1/T1 whitelist entries for accepted residuals (chips p.38/44, labels
-   if owner accepts).
-7. Owner verdicts still pending: label cosmetics p.153/p.222/p.45;
-   adjudication blessings (literal markup, bracket labels).
-8. After fixes: re-run `pipeline/audit_table_seams.py` + a vsweep5-style
-   re-audit of changed pages; regen → gate → commit each batch.
+**TABLE AUDIT: ALL ITEMS CLOSED (18:00).** Welfare paragraphs complete (0
+inline Q-seams, 71 <p>; unified quote-class fold — docling/PyMuPDF disagree
+on quote glyphs — + line-segment fallback matcher + inline-question
+normalizer). CB table p.20-21: rowspan extended over the cross-page
+continuation row (`_extend_rowspans_over_short_rows`). 7.4.1.A/B cascade:
+created by `_extend_truncated_cells` in dense rule-less tables — fixed by
+running the endswith `_dedup_cascaded_cells` after extension (3 bullets/cell,
+PDF-exact). Adjudicated source-faithful: 'With/Without thinking' bold
+(pp.95-98/252 — PDF bolds them; audit-agent error) and 'GDP.pdf' (real
+benchmark name, p.253). T1 minors at 100 (was 198). Seam auditor 0.
+
+**STILL OPEN (review + builds):**
+1. Owner verdicts: label cosmetics p.153/p.222/p.45; adjudication blessings
+   (literal markup escapes, bracket labels).
+2. Builds: `:ph[]` green placeholder highlights (FL-07/D17); p.182
+   styled-<pre> bold-in-code (owner: FIX); whitelist entries for accepted
+   residuals (chips p.38/44).
+3. Then: site build + DOM check + final convergence note in experiment 08.
 
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
