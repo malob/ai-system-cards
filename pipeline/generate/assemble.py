@@ -16,8 +16,13 @@ HEADING_GRAY = "#666666"
 COMMENTARY_GRAY = "#444444"
 TRANSCRIPT_BOXES = {"#f3f3f3"}
 TURN_FILLS = {"#ebc9b7": "assistant", "#e2decf": "user", "#faf9f5": "user"}
-EXAMPLE_BOXES = {"#f0eee6"}
-CODE_BOXES = {"#f1f3f4"}
+# #f0eee6 is ALWAYS a monospace output sub-box nested in a turn (all 11 in the
+# card; zero standalone) — it is the assistant's verbatim output, not a
+# standalone serif "example". Classify it as code so it renders monospace
+# whether or not it merges into its turn (the lone unmerged one — p.198 — was
+# the card's only :::example, rendering serif).
+EXAMPLE_BOXES: set = set()
+CODE_BOXES = {"#f1f3f4", "#f0eee6"}
 PLACEHOLDER = "#d9ead3"
 BULLETS = "●•◦▪‣○"
 
