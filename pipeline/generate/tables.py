@@ -652,9 +652,13 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 inst = pool[k][min(used.get(k, 0), len(pool[k]) - 1)]
                 used[k] = used.get(k, 0) + 1
                 wraps = []
-                if inst.get("bold") and bold_signifies and len(k) >= 2:
+                # single ALNUM segments can carry style (the wrapped '5' of
+                # 'Mythos 5' lost its bold to a len>=2 guard); lone
+                # punctuation stays unstyled
+                styleable = len(k) >= 2 or k.isalnum()
+                if inst.get("bold") and bold_signifies and styleable:
                     wraps.append(("<b>", "</b>"))
-                if underlined(inst) and len(k) >= 2:
+                if underlined(inst) and styleable:
                     wraps.append(("<u>", "</u>"))
                 st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
                 sq_pos += len(k)
@@ -684,6 +688,9 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             rebuilt_cell = "".join(pieces)
             # hyphen-wrap join artifact ('Self- knowledge')
             rebuilt_cell = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", rebuilt_cell)
+            # adjacent same-style runs read as ONE run ('<b>Mythos</b> <b>5</b>')
+            rebuilt_cell = re.sub(r"</b>(\s*)<b>", r"\1", rebuilt_cell)
+            rebuilt_cell = re.sub(r"</u>(\s*)<u>", r"\1", rebuilt_cell)
             if rebuilt_cell != c:
                 cells[i] = rebuilt_cell
                 changed = True
