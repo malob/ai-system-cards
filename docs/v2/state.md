@@ -358,8 +358,12 @@ resolved.** Verdicts + outcomes:
    steer. `git revert 2cc34f0` if the lone mono box is unwanted.
 
 **Owner is asleep; I continued autonomously per their instruction.** Judgment
-calls logged in [JUDGMENT-CALLS.md](JUDGMENT-CALLS.md) (J1 so far). Gate held
-at 0 majors / L1 31 / T1 72 / seams 0 throughout; build clean.
+calls logged in [JUDGMENT-CALLS.md](JUDGMENT-CALLS.md) (J1 only). Gate held
+at 0 majors / L1 31 / T1 72 / seams 0 throughout; build clean; mutation
+recall unchanged. **Final re-verification (vsweep7): two agents re-swept all
+~29 page-units changed across the whole session — 100% clean, zero
+regressions, zero new defects.** The conversion is as faithful as I can make
+it without owner steer on J1.
 
 **REMAINING BEFORE CANONICAL:** owner reviews J1 (and any later judgment
 calls) → declares canonical → unfreeze v1 replacement → owner pushes. No open

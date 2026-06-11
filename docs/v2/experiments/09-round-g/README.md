@@ -80,10 +80,29 @@ code): a single footnote's internal `●` list flattened; p.224 `I`ts (PDF
 sets the `I` in italic — source slip); p.153 inline-code colour; p.198
 `:::example` serif-vs-mono.
 
+**Owner review + post-review fixes (2026-06-11).** Owner walked the residual
++ adjudication items one-by-one. Outcomes: constitution-table passage-name
+bold FIXED (new `_bold_cell_leads` pass — the residual is closed, not
+deferred); footnote-1 `●` list rendered as a real list; p.198 `#f0eee6`
+reclassified as monospace code (the card's lone serif `:::example` removed).
+Left by owner decision: the p.224 italic-"I" (source font-slip — **D26**
+codifies "fix our divergences, not the source's own quirks") and green
+inline-code colour (editorial). Deferred with documentation: the p.198
+transcript's deeper structure (elision note as a user bubble, mono output
+just outside the transcript) — needs an ordered-segment turn model; logged in
+`docs/v2/JUDGMENT-CALLS.md` (J1) for owner steer.
+
+**Re-verification (vsweep7).** Two agents re-swept all ~29 page-units changed
+tonight: every fix confirmed correct PDF→md→DOM (crops), **zero regressions,
+zero new defects**; the J1 residual correctly not re-flagged.
+
 **Conclusion.** Round G converged. Two rulebook-armed AI inspection modes
 (smell-lint + triple-pane) over all 319 pages surfaced 16 real defect
 classes past a 0-major gate; every one was diagnosed to a root cause and
 fixed at the class level under the D25 diff-per-fix protocol (regen → diff
 read twice → preview/crop verify → gate → commit pipeline+output together),
 the orchestrator owning all fixes and adversarially re-verifying each
-inspector claim. The gate never regressed. The loop works at fleet scale.
+inspector claim. The owner-review batch closed all five flagged items (3
+fixed, 2 deliberate leaves, 1 documented deferral). The gate never regressed
+(0 majors / L1 31 / T1 72 throughout); a final re-sweep of every changed page
+came back 100% clean. The loop works at fleet scale.
