@@ -146,37 +146,62 @@ function rehypeArticle(opts = {}) {
         node.properties.className = Array.isArray(c) ? [...c, 'pagemark-row'] : ['pagemark-row'];
       }
     });
-    // Paragraphs made of figure images (1+ <img>, optional trailing <em>
-    // caption, caption may also live in the following paragraph) → <figure>
-    visit(tree, 'element', (node, index, parent) => {
-      if (!parent || node.tagName !== 'p') return;
-      let kids = node.children.filter((c) => !(c.type === 'text' && !c.value.trim()));
-      // hoist page-marker anchors out of figure paragraphs
+    // Paragraphs made of figure images → a <figure> card. CONSECUTIVE image
+    // paragraphs are merged into ONE card, so a multi-panel figure (stacked
+    // charts, plus the running-title strip the PDF repeats atop each page the
+    // figure spans) reads as a single unit instead of N separate boxes. The
+    // merge STOPS at a page marker — so per-page deep-links stay correctly
+    // placed between cards — and at a caption or any non-image block.
+    const parseImgPara = (p) => {
+      if (!p || p.type !== 'element' || p.tagName !== 'p') return null;
+      const kids = p.children.filter((c) => !(c.type === 'text' && !c.value.trim()));
       const pagemarks = [];
-      while (kids[0]?.tagName === 'a' && hasClass(kids[0], 'pagemark')) {
-        pagemarks.push(kids.shift());
-      }
-      if (!kids.length) return;
-      const last = kids[kids.length - 1];
+      let k = 0;
+      while (kids[k]?.tagName === 'a' && hasClass(kids[k], 'pagemark')) pagemarks.push(kids[k++]);
+      const rest = kids.slice(k);
+      if (!rest.length) return null; // pagemark-only / empty
+      const last = rest[rest.length - 1];
       const caption = last.tagName === 'em' ? last : null;
-      const imgs = caption ? kids.slice(0, -1) : kids;
-      if (!imgs.length || !imgs.every((k) => k.tagName === 'img')) return;
+      const imgs = caption ? rest.slice(0, -1) : rest;
+      if (!imgs.length || !imgs.every((c) => c.tagName === 'img')) return null;
+      return { pagemarks, imgs, caption };
+    };
+    visit(tree, 'element', (node, index, parent) => {
+      if (!parent) return;
+      const head = parseImgPara(node);
+      if (!head) return;
+      const imgs = [...head.imgs];
+      let caption = head.caption;
+      let endIdx = index; // last sibling folded into this figure
+      // walk forward over consecutive image paragraphs (blank text skipped),
+      // stopping at a page boundary (pagemark) or any non-image block
+      for (let i = index + 1; !caption; ) {
+        while (parent.children[i]?.type === 'text' && !parent.children[i].value.trim()) i += 1;
+        const parsed = parseImgPara(parent.children[i]);
+        if (!parsed || parsed.pagemarks.length) break;
+        imgs.push(...parsed.imgs);
+        caption = parsed.caption;
+        endIdx = i;
+        i += 1;
+      }
       const zoom = (img) => ({
         type: 'element',
         tagName: 'a',
         properties: { href: img.properties.src, className: ['figure-zoom'] },
         children: [img],
       });
-      const figure = {
+      // the card wraps every panel; .figure-zoom stays the per-image lightbox link
+      const card = {
         type: 'element',
-        tagName: 'figure',
-        properties: {},
+        tagName: 'div',
+        properties: { className: ['figure-card'] },
         children: imgs.map(zoom),
       };
+      const figure = { type: 'element', tagName: 'figure', properties: {}, children: [card] };
       let captionChildren = caption?.children;
       if (!captionChildren) {
-        // caption in the next paragraph: <p><em>…</em></p>
-        let nextIdx = index + 1;
+        // caption in the paragraph after the group: <p><em>…</em></p>
+        let nextIdx = endIdx + 1;
         while (
           parent.children[nextIdx]?.type === 'text' &&
           !parent.children[nextIdx].value.trim()
@@ -190,7 +215,7 @@ function rehypeArticle(opts = {}) {
             : [];
         if (nk.length === 1 && nk[0].tagName === 'em') {
           captionChildren = nk[0].children;
-          parent.children.splice(index + 1, nextIdx - index);
+          endIdx = nextIdx; // consume the caption paragraph too
         }
       }
       if (captionChildren) {
@@ -201,12 +226,17 @@ function rehypeArticle(opts = {}) {
           children: captionChildren,
         });
       }
-      parent.children.splice(index, 1, ...pagemarks.map((a) => ({
-        type: 'element',
-        tagName: 'p',
-        properties: {},
-        children: [a],
-      })), figure);
+      const replacement = [
+        ...head.pagemarks.map((a) => ({
+          type: 'element',
+          tagName: 'p',
+          properties: {},
+          children: [a],
+        })),
+        figure,
+      ];
+      parent.children.splice(index, endIdx - index + 1, ...replacement);
+      return index + replacement.length; // continue after the figure
     });
 
     // Table captions are plain markdown paragraphs (e.g. *__[Table 2.2.1.A] …__*)

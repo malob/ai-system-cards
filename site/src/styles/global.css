@@ -515,20 +515,22 @@ p.pagemark-row { margin: 0; height: 0; }
 
 .article figure { margin: 2.2em 0; }
 
-.article .figure-zoom {
-  display: block;
+/* the card: wraps every panel of a (possibly multi-panel) figure */
+.article .figure-card {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 14px;
   box-shadow: var(--shadow);
-  cursor: zoom-in;
   transition: border-color 0.15s;
 }
-.article .figure-zoom:hover { border-color: var(--line-strong); }
+.article .figure-card:hover { border-color: var(--line-strong); }
+/* each panel is its own lightbox link; stacked panels share an even gap */
+.article .figure-zoom { display: block; cursor: zoom-in; }
+.article .figure-zoom + .figure-zoom { margin-top: 14px; }
 .article .figure-zoom img { display: block; width: 100%; height: auto; }
 
-[data-theme='dark'] .article .figure-zoom { border-color: #d9d2c4; }
+[data-theme='dark'] .article .figure-card { border-color: #d9d2c4; }
 
 .article figcaption {
   font-size: 0.82rem;

@@ -337,3 +337,31 @@ version. v1 is retired, not kept frozen alongside.
 
 Gate after the move: 0 majors / L1 31 / T1 70; seams 0; site builds clean.
 Still nothing pushed (D13) — publishing remains an explicit owner step.
+
+
+## D29 — multi-panel figures render as one card (render-step grouping) (2026-06-11)
+
+A multi-panel figure (stacked chart panels) extracts as N separate image
+strips. The PDF also repeats the figure's title as a thin running-header strip
+atop each page the figure spans; that strip extracts as its own short-wide
+image (e.g. `p151-1.png` 468×33, `p250-1.png` 446×22). Rendering one card per
+image left those title strips as standalone boxes that read like headings
+(owner flag, p.151). Only 2 such strips exist, but the underlying issue —
+multi-panel figures fragmenting into N boxes — is general (7 multi-image groups).
+
+**Decision: group consecutive figure images into ONE card at the render step**
+(`site/src/lib/markdown.js`), not in the markdown. The `sections/*.md` stays
+faithful (one `![]` per image); `rehypeArticle` merges adjacent image
+paragraphs into a single `<figure>` and wraps all panels in a new
+`.figure-card` (the card chrome moved off the per-image `.figure-zoom`, which
+stays the per-panel lightbox link). The merge **stops at a page marker**, so a
+figure spanning pages becomes one card per page with the `p.NNN` deep-link
+correctly placed between them — and a repeated title strip always lands in the
+same card as its same-page charts. Also stops at a caption or any non-image
+block, so distinct back-to-back figures never fuse.
+
+Render-only: markdown and the verifier gates (which compare md/extraction to
+the oracle, not HTML) are unchanged — 141 figures → 141 single cards, build
+clean. Considered but rejected: a pipeline flag to un-box just the 2 title
+strips (treats the symptom, not the fragmentation) and dropping the redundant
+title strips (less faithful; the title is part of the figure graphic).
