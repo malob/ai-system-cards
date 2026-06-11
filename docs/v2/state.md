@@ -3,25 +3,29 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-11 (~15:35) — v2 is CANONICAL (D28); conversion
+**Last updated:** 2026-06-11 (~16:35) — v2 is CANONICAL (D28); conversion
 converged (gate 0 majors / L1 31 / T1 70; seams 0; build clean). Since then, a
-round of **site polish + features**, all render-only (no markdown/gate impact),
-all committed, **NOTHING PUSHED** (D13):
+round of **site polish + production set-up**, all render/config-only (no
+markdown/gate impact), all committed, **NOTHING PUSHED** (D13):
 - **D29** — figures merged into one card per page (multi-panel charts + the
   PDF's repeated running-title strips no longer orphaned);
-- **D30** — internal section links get a dotted underline, external citations
-  stay solid;
-- TOC "Contents" button now toggles the sidebar/drawer at *every* width;
-  header meta-row evenly spread (date · Original PDF · Markdown) with clay
-  middot separators;
+- **D30** — internal section links dotted-underline, external citations solid;
+- TOC "Contents" button toggles the sidebar/drawer at *every* width; header
+  meta-row evenly spread (date · Original PDF · Markdown) with clay middots;
 - **D31** — social-media previews: per-page Open Graph PNGs via a Satori+resvg
-  `og/[...path].png.ts` endpoint, rendered in the site's own fonts/palette;
+  `og/[...path].png.ts` endpoint, in the site's own fonts/palette;
+- Homepage: casual "fair warning" caveat under the lede; card hover-highlight
+  given inner padding so text isn't flush to the box edge;
+- Footer pinned to the bottom (body is now a flex column) + GitHub contribute CTA;
+- **D32** — sitemap (`@astrojs/sitemap`, HTML pages only) + `<link rel=sitemap>`;
+  custom `404.astro`; branded § favicon (clay tile) + light/dark `theme-color`.
+  robots.txt deliberately skipped (Pages project sub-path — see D32);
 - **Astro docs MCP** added (`.mcp.json`, approved + connected) for live-docs
-  access; `mcp__astro-docs__search_astro_docs`.
+  access (`mcp__astro-docs__search_astro_docs`).
 
 The long round-by-round log below PREDATES D28 — historical only (git +
 decisions.md + experiments are the record). **Next:** owner publishes when
-ready (push `main` → Pages, D13). With Fable 5.
+ready (push `main` → Pages deploy, D13). With Fable 5.
 
 ## Cold-start capsule
 

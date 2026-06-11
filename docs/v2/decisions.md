@@ -412,3 +412,29 @@ Per-page Open Graph / Twitter cards so a shared link renders a branded
 - Build-only deps (devDependencies): satori, @resvg/resvg-js,
   @fontsource/fraunces. PNGs live in gitignored `dist/` (regenerated each
   build). Render-only — no markdown or verifier-gate impact.
+
+
+## D32 — production niceties: sitemap, 404, favicon (2026-06-11)
+
+Standard public-site set-up, reviewed against the live Astro docs (docs MCP):
+
+- **Sitemap** — `@astrojs/sitemap` (uses the configured `site`), with a
+  `filter` to the HTML pages only (URLs ending in `/` — home + cards), so the
+  `og/*.png`, `card.md`, `llms.txt`, and `404.html` routes stay out. A
+  `<link rel="sitemap">` is in the head; submit the URL to Search Console when
+  the site is published.
+- **Custom 404** — `src/pages/404.astro`, homepage type, centered between
+  masthead and footer (the body is a flex column for the sticky footer, D-less
+  footer commit).
+- **Favicon + theme-color** — `public/favicon.svg`: cream § on a clay rounded
+  tile (owner picked the high-contrast tile over the paper-tile and bare-§
+  options), referenced with the base path; light/dark `theme-color` metas.
+- **robots.txt — DELIBERATELY SKIPPED.** On a GitHub Pages *project* sub-path
+  site (`malob.github.io/ai-system-cards/`), the authoritative `robots.txt`
+  lives at the user-site domain root, which this repo does not control; a
+  `robots.txt` under the project path is not honored by crawlers. Do not
+  "add it later" thinking it was forgotten.
+- Considered and deferred: RSS (premature at one card), image optimization /
+  link prefetch / JSON-LD (low payoff for a fidelity-sensitive, ~2-page site).
+
+Config/render only; no markdown or verifier-gate impact.
