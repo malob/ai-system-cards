@@ -91,3 +91,24 @@ export async function renderOgPng(input) {
   const svg = await satori(tree, { width: 1200, height: 630, fonts: FONTS });
   return new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } }).render().asPng();
 }
+
+// Square app-tile favicon: cream § on a clay rounded tile, in the real Fraunces.
+// Satori vectorizes the glyph to a <path>, so the favicon is font-independent
+// and carries intrinsic width/height — a <text>-based SVG favicon is neither,
+// which Safari renders unreliably. Same source feeds the SVG and the PNG.
+const faviconTree = (px) =>
+  h({
+    display: 'flex', width: px, height: px, backgroundColor: C.clay,
+    borderRadius: Math.round(px * 0.22), alignItems: 'center', justifyContent: 'center',
+  }, [
+    h({ fontFamily: SERIF, fontWeight: 600, fontSize: Math.round(px * 0.64), color: C.paper, lineHeight: 1 }, '§'),
+  ]);
+
+export async function renderFaviconSvg(px = 64) {
+  return satori(faviconTree(px), { width: px, height: px, fonts: FONTS });
+}
+
+export async function renderFaviconPng(px = 180) {
+  const svg = await satori(faviconTree(px), { width: px, height: px, fonts: FONTS });
+  return new Resvg(svg, { fitTo: { mode: 'width', value: px } }).render().asPng();
+}

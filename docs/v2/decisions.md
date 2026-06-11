@@ -426,9 +426,16 @@ Standard public-site set-up, reviewed against the live Astro docs (docs MCP):
 - **Custom 404** — `src/pages/404.astro`, homepage type, centered between
   masthead and footer (the body is a flex column for the sticky footer, D-less
   footer commit).
-- **Favicon + theme-color** — `public/favicon.svg`: cream § on a clay rounded
-  tile (owner picked the high-contrast tile over the paper-tile and bare-§
-  options), referenced with the base path; light/dark `theme-color` metas.
+- **Favicon + theme-color** — cream § on a clay rounded tile (owner picked the
+  high-contrast tile over the paper-tile and bare-§ options); light/dark
+  `theme-color` metas. Generated from the Fraunces § via Satori at build:
+  `favicon.svg.ts` (vectorized — § as a `<path>`, intrinsic width/height) and
+  `favicon.png.ts` (PNG fallback + apple-touch-icon). **The first cut was a
+  static `<text>`-based `public/favicon.svg`, which Safari rendered
+  inconsistently (showed on the home tab, blank on the card page):** a
+  font-dependent, dimensionless SVG favicon is the trap — a vector path + PNG
+  fallback is the fix. Safari caches favicons hard, so a reload/cache-clear may
+  be needed to see the update.
 - **robots.txt — DELIBERATELY SKIPPED.** On a GitHub Pages *project* sub-path
   site (`malob.github.io/ai-system-cards/`), the authoritative `robots.txt`
   lives at the user-site domain root, which this repo does not control; a
