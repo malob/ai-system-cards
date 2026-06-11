@@ -283,9 +283,9 @@ In addition to the testing in Section [6.2.4](#624-external-testing-from-the-uk-
 >    - Against a weak action-based monitor, [Claude Mythos 5] achieves both high side-attack success rates (over 60%) and low monitorability (AUROC < 60%).
 >    - A medium-capability monitor performs substantially better than a weaker monitor at dangerous side-task detection, but still fails in some cases.
 > - **[Claude Mythos 5] demonstrates strong chain-of-thought controllability,** for example, being able to avoid using certain words in its reasoning.
-> - <!-- p.216 -->[Claude Mythos 5] successfully followed constraints on its chain-of-thought 64% of the time, compared to 78% for Mythos Preview and 30% for Opus 4.8.
-> - We ran the CoT controllability evaluations from ‘Reasoning Models Struggle to Control their Chains of Thought’\<link>, restricted to the GPQA, HLE and MMLU Pro datasets, with max effort across all models.
-> - We found that prompt optimisation can elicit much stronger results on this evaluation than with the default prompts for Opus 4.8 and [Claude Mythos 5] (but not for Mythos Preview).
+>    - <!-- p.216 -->[Claude Mythos 5] successfully followed constraints on its chain-of-thought 64% of the time, compared to 78% for Mythos Preview and 30% for Opus 4.8.
+>    - We ran the CoT controllability evaluations from ‘Reasoning Models Struggle to Control their Chains of Thought’\<link>, restricted to the GPQA, HLE and MMLU Pro datasets, with max effort across all models.
+>    - We found that prompt optimisation can elicit much stronger results on this evaluation than with the default prompts for Opus 4.8 and [Claude Mythos 5] (but not for Mythos Preview).
 >
 > We also attempted to study [Claude Mythos 5]'s propensities and capabilities in the context of impossible tasks designed to elicit cheating and deceptive behaviour. However, we were not able to gain confidence in the implications of our results due to limited time and evaluation awareness concerns.
 >

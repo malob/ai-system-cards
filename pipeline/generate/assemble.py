@@ -88,6 +88,26 @@ def _lines(page):
     return lines
 
 
+def assign_list_levels(blocks: list[dict]) -> None:
+    """Nested-list levels from marker-x0 tiers (level 0 = leftmost markers),
+    computed separately inside and outside quotes (quote bullets start ~127
+    but are level 0 within their quote). Run over a SECTION's full block list
+    (not per page): a page holding only sub-bullets — a list continued across
+    a page break, e.g. the UK AISI list p.215→216 — has no level-0 sibling of
+    its own, so a per-page tiering would collapse its ○ sub-bullets to 0."""
+    for in_quote in (False, True):
+        xs = sorted({round(b["marker_x0"]) for b in blocks
+                     if b["type"] == "item" and b.get("quote", False) == in_quote})
+        merged_tiers = []
+        for x in xs:
+            if not merged_tiers or x - merged_tiers[-1] > 4:
+                merged_tiers.append(x)
+        for blk in blocks:
+            if blk["type"] == "item" and blk.get("quote", False) == in_quote:
+                x = round(blk["marker_x0"])
+                blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
+
+
 def _box_role(line, page):
     """Most-specific containing box wins: a turn bubble nested inside a
     transcript container must classify as the turn, not the container."""
@@ -372,20 +392,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     for tb in pending_tables:  # tables below all prose
         blocks.append(tb)
 
-    # nested-list levels from marker-x0 tiers (level 0 = leftmost markers),
-    # computed separately inside and outside quotes (quote bullets start ~127
-    # but are level 0 within their quote)
-    for in_quote in (False, True):
-        xs = sorted({round(b["marker_x0"]) for b in blocks
-                     if b["type"] == "item" and b.get("quote", False) == in_quote})
-        merged_tiers = []
-        for x in xs:
-            if not merged_tiers or x - merged_tiers[-1] > 4:
-                merged_tiers.append(x)
-        for blk in blocks:
-            if blk["type"] == "item" and blk.get("quote", False) == in_quote:
-                x = round(blk["marker_x0"])
-                blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
+    assign_list_levels(blocks)
 
     # a label-only turn followed by a code/example box is ONE construct: the
     # turn's content is the boxed code (p.118 displaced-thinking class)

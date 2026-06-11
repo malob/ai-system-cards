@@ -362,6 +362,11 @@ def main():
                 mnum = re.match(r"(\d+(?:\.\d+)*)[.\s]", htext + " ")
                 if mnum:
                     num2slug.setdefault(mnum.group(1), slugify(htext))
+        # re-tier nested lists over the whole section: a page that holds only
+        # sub-bullets (a list continued across a page break, UK AISI p.215→216)
+        # tiered them to level 0 in isolation; the full block list has the
+        # level-0 siblings from the previous page
+        assemble.assign_list_levels(blocks)
         fn_blocks = [bl for bl in blocks if bl["type"] == "footnote"]
         blocks = stitch([bl for bl in blocks if bl["type"] != "footnote"]) + fn_blocks
         # a mid-page start suppresses the leading page marker (the previous
