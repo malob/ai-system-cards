@@ -73,11 +73,30 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> 
     return invariants.pair_displacements(flags)
 
 
+def _load_figures_map() -> dict:
+    """figures-map with PDF double-draws collapsed: one image drawn TWICE
+    into overlapping space (p.139 xref 828) extracts as two byte-identical
+    adjacent files but the reader sees ONE figure — mirror of the
+    generator's rect-overlap + content-identity dedupe."""
+    figures_map = json.loads((CARD / "extracted/figures-map.json").read_text())
+    figdir = CARD / "assets/figures"
+    for p, files in figures_map.items():
+        keep = []
+        for f in files:
+            if keep:
+                a, b = figdir / keep[-1], figdir / f
+                if a.exists() and b.exists() and a.read_bytes() == b.read_bytes():
+                    continue
+            keep.append(f)
+        figures_map[p] = keep
+    return figures_map
+
+
 def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
     """Run all implemented invariants over the markdown at `ref` (git ref,
     WORKTREE, or an absolute dir). Returns the flag list."""
     pages = oracle.extract(CARD / "source.pdf", cache=REPO / "pipeline/.cache/oracle.json")
-    figures_map = json.loads((CARD / "extracted/figures-map.json").read_text())
+    figures_map = _load_figures_map()
 
     sections = []
     for name, text in mdproj.sections_at_ref(REPO, ref):
@@ -98,7 +117,7 @@ def main():
     args = ap.parse_args()
 
     pages = oracle.extract(CARD / "source.pdf", cache=REPO / "pipeline/.cache/oracle.json")
-    figures_map = json.loads((CARD / "extracted/figures-map.json").read_text())
+    figures_map = _load_figures_map()
 
     sections = []
     for name, text in mdproj.sections_at_ref(REPO, args.ref):

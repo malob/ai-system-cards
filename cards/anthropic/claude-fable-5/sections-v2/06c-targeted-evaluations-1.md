@@ -72,8 +72,6 @@ On all 15 dimensions, including Overall spirit, the measure most directly captur
 
 ![](assets/figures/p139-1.png)
 
-![](assets/figures/p139-2.png)
-
 :::caption
 **[Figure 6.3.2.3.A] Average constitutional adherence scores for each model across all 15 dimensions.** Adherence is judged on a scale from -3 to +3, where a higher score indicates greater adherence. n ≈ 1,000 per model. Shown with 95% CI.
 :::

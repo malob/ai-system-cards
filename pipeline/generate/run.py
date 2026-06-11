@@ -9,6 +9,7 @@ verifier and site consume the output unchanged.
 """
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -136,6 +137,38 @@ def join_quote_blocks(md: str) -> str:
         else:
             out.append(l)
     return "\n".join(out)
+
+
+def _dedupe_figures(page: dict, figs: list[str]) -> tuple[dict, list[str]]:
+    """The PDF sometimes draws ONE image twice into overlapping space (p.139
+    xref 828): the reader sees one figure, extraction yields two identical
+    files + two overlapping rects. Drop a figure whose rect overlaps an
+    earlier one (>0.8 of the smaller area) AND whose file bytes match."""
+    rects = page.get("image_rects", [])
+    if len(figs) < 2 or len(rects) < 2:
+        return page, figs
+    def md5(f):
+        p = CARD / "assets/figures" / f
+        return hashlib.md5(p.read_bytes()).hexdigest() if p.exists() else f
+    keep_r, keep_f = [], []
+    for r, f in zip(rects, figs):
+        dup = False
+        for r2, f2 in zip(keep_r, keep_f):
+            ix = max(0, min(r[2], r2[2]) - max(r[0], r2[0])) * \
+                 max(0, min(r[3], r2[3]) - max(r[1], r2[1]))
+            amin = min((r[2] - r[0]) * (r[3] - r[1]),
+                       (r2[2] - r2[0]) * (r2[3] - r2[1]))
+            if amin > 0 and ix / amin > 0.8 and md5(f) == md5(f2):
+                dup = True
+                break
+        if not dup:
+            keep_r.append(r)
+            keep_f.append(f)
+    keep_r += rects[len(figs):]   # index-aligned prefixes; keep any tail
+    keep_f += figs[len(rects):]
+    if len(keep_f) == len(figs):
+        return page, figs
+    return {**page, "image_rects": keep_r}, keep_f
 
 
 def _wrap_fit(prev: dict, nxt_text: str) -> bool:
@@ -293,7 +326,8 @@ def main():
         qcarry = False
         start_midpage = False
         for pno in sel:
-            pblocks = assemble.assemble_page(pno, pages[pno - 1], figures_map.get(str(pno), []),
+            pg, figs = _dedupe_figures(pages[pno - 1], figures_map.get(str(pno), []))
+            pblocks = assemble.assemble_page(pno, pg, figs,
                                              chips, tables.get_tables(pno, pages[pno - 1]),
                                              quote_carry=qcarry)
             if pno == a and pno in shared:
@@ -309,7 +343,8 @@ def main():
         # belongs HERE, so the boundary paragraph can stitch across pages
         if si + 1 < len(ranges) and ranges[si + 1][1] == b and b in want and b not in TOC \
                 and owner.get(b) != name:
-            pblocks = assemble.assemble_page(b, pages[b - 1], figures_map.get(str(b), []),
+            pg, figs = _dedupe_figures(pages[b - 1], figures_map.get(str(b), []))
+            pblocks = assemble.assemble_page(b, pg, figs,
                                              chips, tables.get_tables(b, pages[b - 1]),
                                              quote_carry=qcarry)
             i = heading_index(pblocks, firsts.get(ranges[si + 1][0], ""))
