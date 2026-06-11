@@ -294,7 +294,6 @@ a:hover { text-decoration-color: var(--accent); }
 
 .rail a.active {
   color: var(--accent-ink);
-  border-left-color: var(--accent);
   background: var(--accent-wash);
 }
 .rail a.active .num { color: var(--accent); }
@@ -486,7 +485,11 @@ a:hover { text-decoration-color: var(--accent); }
   transition: color 0.12s;
 }
 .pagemark:hover { color: var(--accent); }
-@media (max-width: 1099px) { .pagemark { display: none; } }
+/* Hide page markers below 1200px, not 1099px: the rail returns at 1100px but
+   between there and ~1160px the centered .doc has too little left gutter and
+   the margin markers (left:-1.6rem) overlap the rail. By 1200px the gutter
+   clears them (~20px); below that the markers — a margin nicety — drop out. */
+@media (max-width: 1199px) { .pagemark { display: none; } }
 
 /* a marker that sits alone between blocks collapses its host paragraph
    (tagged in the renderer; a CSS :only-child test would wrongly match prose
