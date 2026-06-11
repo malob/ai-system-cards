@@ -5,3 +5,6 @@ cards/*/*/extracted/pages/
 pipeline/.cache/
 
 # v2 generation output (regenerated artifact, reviewed via gates + render)
+
+# Claude Code per-machine settings (MCP approvals, etc.) — not shared
+.claude/settings.local.json
