@@ -25,9 +25,10 @@ markdown/gate impact), all committed, **NOTHING PUSHED** (D13):
 - Favicon hardened: vectorized SVG (§ as a `<path>`, intrinsic size) + PNG /
   apple-touch fallback, after Safari rendered the first `<text>`-based SVG
   favicon inconsistently (D32; `favicon.svg.ts` / `favicon.png.ts`).
-- Page markers (`p.N` PDF deep-links) render their label via CSS
-  (`.pagemark::before` + `data-page`), so they're out of text selection, copy,
-  Pagefind, and Safari Reader — still visible, clickable, and aria-labelled.
+- Page markers (`p.N` deep-links) and heading permalink `#` anchors render
+  their glyph via CSS (`::before`), not DOM text — so they stay out of text
+  selection, copy, Pagefind, and Safari Reader (still visible/clickable, with
+  aria-labels).
 
 The long round-by-round log below PREDATES D28 — historical only (git +
 decisions.md + experiments are the record). **Next:** owner publishes when
