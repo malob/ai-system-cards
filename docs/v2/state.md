@@ -22,6 +22,12 @@ markdown/gate impact), all committed, **NOTHING PUSHED** (D13):
   robots.txt deliberately skipped (Pages project sub-path — see D32);
 - **Astro docs MCP** added (`.mcp.json`, approved + connected) for live-docs
   access (`mcp__astro-docs__search_astro_docs`).
+- Favicon hardened: vectorized SVG (§ as a `<path>`, intrinsic size) + PNG /
+  apple-touch fallback, after Safari rendered the first `<text>`-based SVG
+  favicon inconsistently (D32; `favicon.svg.ts` / `favicon.png.ts`).
+- Page markers (`p.N` PDF deep-links) render their label via CSS
+  (`.pagemark::before` + `data-page`), so they're out of text selection, copy,
+  Pagefind, and Safari Reader — still visible, clickable, and aria-labelled.
 
 The long round-by-round log below PREDATES D28 — historical only (git +
 decisions.md + experiments are the record). **Next:** owner publishes when
