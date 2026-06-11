@@ -24,6 +24,12 @@ def render(page_no: int, bbox, zoom: float = 5.0) -> Path:
     doc = fitz.open(PDF)
     page = doc[page_no - 1]
     clip = fitz.Rect(*bbox) & page.rect
+    # cap the longest side at ~1900px: oversized crops get whole REQUESTS
+    # rejected by the vision API, killing image reads for the rest of an
+    # agent's run (round-G fleet lesson)
+    side = max(clip.width, clip.height)
+    if side * zoom > 1880:  # pixmap dims round up, so stay under 1900
+        zoom = 1880 / side
     pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom), clip=clip)
     OUT.mkdir(parents=True, exist_ok=True)
     out = OUT / f"p{page_no}-{int(bbox[0])}x{int(bbox[1])}.png"
