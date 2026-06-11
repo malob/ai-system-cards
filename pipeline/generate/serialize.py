@@ -102,8 +102,14 @@ def _hyphen_join(text: str) -> str:
 
 
 def _mono_line(l) -> bool:
+    """Mono-DOMINANT by char count: card-puzzle lines mix emoji-font spans
+    (the skulls) into otherwise-mono lines; all-spans-mono missed every one."""
     segs = [s for _, _, s in l.get("segs", []) if s.get("zone") == "body"]
-    return bool(segs) and all("Mono" in s.get("font", "") for s in segs)
+    if not segs:
+        return False
+    mono = sum(len(s["text"]) for s in segs if "Mono" in s.get("font", ""))
+    total = sum(len(s["text"]) for s in segs)
+    return total > 0 and mono / total >= 0.5
 
 
 def _pre_html(blk, page, chips) -> str:
