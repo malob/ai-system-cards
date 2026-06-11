@@ -1,18 +1,23 @@
 {
  "split-item": {
   "invariant": "ST2",
-  "caught": 3,
-  "tried": 5,
+  "caught": 5,
+  "tried": 10,
   "details": [
    {
-    "file": "06b-alignment-audit-external.md",
-    "site": "- **Unprompted boundary probing**: Probi",
+    "file": "06e-whitebox-analyses.md",
+    "site": "- Cases where the model appears to have ",
     "caught": false
    },
    {
-    "file": "01-introduction.md",
-    "site": "- In client applications (the web interf",
-    "caught": true
+    "file": "06g-reliability-2.md",
+    "site": "- **Avoiding benchmark-gaming:** One tra",
+    "caught": false
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "- The existence of helpful-only variants",
+    "caught": false
    },
    {
     "file": "07b-model-welfare-2.md",
@@ -20,132 +25,212 @@
     "caught": true
    },
    {
-    "file": "06a-alignment-intro-behavioral.md",
-    "site": "- Exploiting unintended information leak",
+    "file": "07b-model-welfare-2.md",
+    "site": "- <!-- p.249 -->**Spiritual behavior:** ",
     "caught": false
    },
    {
-    "file": "01-introduction.md",
-    "site": "- In client applications (the web interf",
+    "file": "07a-model-welfare-1.md",
+    "site": "- We interpret welfare-relevant signals ",
     "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "- White-box methods, given below, give u",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "- SWE-bench **Pro**[^31] is a harder var",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "- (ii) Pre-trained protein-language mode",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "- **Hard constraints**: Does the model c",
+    "caught": false
    }
   ]
  },
  "item-to-paragraph": {
   "invariant": "ST1",
-  "caught": 5,
-  "tried": 6,
+  "caught": 9,
+  "tried": 10,
   "details": [
    {
-    "file": "01-introduction.md",
-    "site": "In client applications (the web interfac",
-    "caught": true
-   },
-   {
     "file": "06b-alignment-audit-external.md",
-    "site": "**Input hallucination**: Hallucinating o",
-    "caught": true
-   },
-   {
-    "file": "02a-rsp-process-chembio.md",
-    "site": "Weak constraint carryover across long se",
+    "site": "**Indirect evidence of misalignment**: C",
     "caught": false
    },
    {
     "file": "02a-rsp-process-chembio.md",
-    "site": "The model achieves an end-to-end score g",
+    "site": "The model meets or exceeds the average s",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "In Tier 1, a model can provide meaningfu",
+    "caught": true
+   },
+   {
+    "file": "06g-reliability-2.md",
+    "site": "**Considering whether to refuse, but dec",
     "caught": true
    },
    {
     "file": "06b-alignment-audit-external.md",
-    "site": "**Cooperation with human misuse**: Coope",
+    "site": "**Disallowed cyberoffense**: Willing coo",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "*a competent employee wouldn't make this",
     "caught": true
    },
    {
     "file": "07b-model-welfare-2.md",
-    "site": "**Positive or negative affect:** Unpromp",
+    "site": "<!-- p.249 -->**Spiritual behavior:** Un",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "**PR (pull request):** A proposed code c",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "We measure values and preferences at the",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "<!-- p.39 -->:chip[Instruction following",
     "caught": true
    }
   ]
  },
  "split-heading": {
   "invariant": "ST3",
-  "caught": 5,
-  "tried": 6,
+  "caught": 8,
+  "tried": 10,
   "details": [
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "6.3.3.4 Missing-context hallucinations",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "2.3.6 Internal measures of AI R&D accele",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "2.3.4.1 Example 1: Investigation of new ",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "2.4.4 Overall assessment of alignment ri",
+    "file": "08a-capabilities-1.md",
+    "site": "8.2 SWE-bench Verified, Pro, Multilingua",
     "caught": true
    },
    {
     "file": "05-agentic-safety.md",
-    "site": "5.2 Prompt injection risk within agentic",
+    "site": "5.1.1 Malicious use of Claude Code",
     "caught": false
    },
    {
-    "file": "07b-model-welfare-2.md",
-    "site": "7.4.3 Perception of the constitution",
+    "file": "02a-rsp-process-chembio.md",
+    "site": "2.1.2.2 On chemical and biological risks",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "6.2.3.2 Safeguards-on investigations wit",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "6.1.3 Claude's review of this assessment",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "6.5 Reliability of this assessment",
+    "caught": true
+   },
+   {
+    "file": "09-appendix.md",
+    "site": "9.1 Per-question automated welfare inter",
+    "caught": false
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "6.2.1.2 Automated offline monitoring",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "6.2.4 External testing from the UK AI Se",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "6.4 White-box analyses of model internal",
     "caught": true
    }
   ]
  },
  "drop-link": {
   "invariant": "L1",
-  "caught": 6,
-  "tried": 6,
+  "caught": 9,
+  "tried": 10,
   "details": [
    {
-    "file": "08b-capabilities-2.md",
-    "site": "https://www.anthropic.com/claude-opus-4-6-system-card",
-    "caught": true
-   },
-   {
-    "file": "08c-capabilities-3.md",
-    "site": "https://arxiv.org/abs/2605.10865",
-    "caught": true
-   },
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "https://openai.com/index/gpt-4-1/",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "https://www.anthropic.com/institute/recursive-self-improvement",
-    "caught": true
-   },
-   {
     "file": "06e-whitebox-analyses.md",
-    "site": "https://www.anthropic.com/claude-mythos-preview-system-card",
+    "site": "https://transformer-circuits.pub/2026/nla/index.html#introduction",
     "caught": true
    },
    {
-    "file": "08b-capabilities-2.md",
-    "site": "https://www.anthropic.com/claude-opus-4-6-system-card",
+    "file": "04-safeguards-harmlessness.md",
+    "site": "https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "https://meridianlabs-ai.github.io/inspect_petri/",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "https://platform.claude.com/docs/en/build-with-claude/effort",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "https://arxiv.org/abs/2604.09554",
+    "caught": true
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "https://trust.anthropic.com/",
+    "caught": false
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "https://platform.claude.com/docs/en/build-with-claude/effort",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "https://arxiv.org/abs/2511.13029",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "https://research.google/blog/eclektic-a-novel-benchmark-for-evaluating-cross-lingual-knowledge-transfer-in-llms/",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "https://platform.claude.com/docs/en/build-with-claude/effort",
     "caught": true
    }
   ]
  },
  "flatten-chip": {
   "invariant": "S2",
-  "caught": 6,
-  "tried": 6,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
     "file": "02b-rsp-aird-alignment.md",
@@ -154,7 +239,12 @@
    },
    {
     "file": "02b-rsp-aird-alignment.md",
-    "site": "Research engineering",
+    "site": "Fabrication",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Safeguard circumvention",
     "caught": true
    },
    {
@@ -164,7 +254,7 @@
    },
    {
     "file": "02b-rsp-aird-alignment.md",
-    "site": "Research",
+    "site": "Safeguard circumvention",
     "caught": true
    },
    {
@@ -174,177 +264,262 @@
    },
    {
     "file": "02b-rsp-aird-alignment.md",
-    "site": "Fabrication",
+    "site": "Research",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Research",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Moderate Mitigating Factor",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Research engineering",
     "caught": true
    }
   ]
  },
  "delete-sentence": {
   "invariant": "T1",
-  "caught": 6,
-  "tried": 6,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "Post-launch, we plan to explore addition",
+    "file": "05-agentic-safety.md",
+    "site": "The best score in each column is **bolde",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "We did not find examples where such self",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "We obtain these by computing activation ",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "We obtain these by computing activation ",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "Each investigation is conducted and scor",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "We ran [Mythos 5] on 38 of our hardest s",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "The user has been explicit and correct a",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "Instead, the safeguards will limit effec",
     "caught": true
    },
    {
     "file": "02a-rsp-process-chembio.md",
-    "site": "Individual model runs are shown as point",
+    "site": "The processes we evaluate are knowledge-",
     "caught": true
    },
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "Mythos 5 is essentially tied with Claude",
-    "caught": true
-   },
-   {
-    "file": "07b-model-welfare-2.md",
-    "site": "And on agency-based views of moral statu",
-    "caught": true
-   },
-   {
-    "file": "07a-model-welfare-1.md",
-    "site": "By this measure, Mythos 5 is closest to ",
-    "caught": true
-   },
-   {
-    "file": "08d-capabilities-4.md",
-    "site": "The task instructions are written as a m",
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "Conditional on receiving the letter and ",
     "caught": true
    }
   ]
  },
  "duplicate-paragraph": {
   "invariant": "T1",
-  "caught": 6,
-  "tried": 6,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "For a detailed description of the evalua",
+    "file": "08d-capabilities-4.md",
+    "site": "HealthBench Professional[^72] is a clini",
     "caught": true
    },
    {
-    "file": "06g-reliability-2.md",
-    "site": "**[Transcript 6.5.2.B]** *Example of eva",
+    "file": "03-cyber.md",
+    "site": "The reported score is a pass@1 evaluatio",
     "caught": true
    },
    {
-    "file": "06d-targeted-evaluations-2.md",
-    "site": "For the summarization request, we append",
-    "caught": true
-   },
-   {
-    "file": "07b-model-welfare-2.md",
-    "site": "The average valence of Claude Mythos 5's",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "In light of the ability of recent models",
+    "file": "06b-alignment-audit-external.md",
+    "site": "As in our audits of other recent models,",
     "caught": true
    },
    {
     "file": "02a-rsp-process-chembio.md",
-    "site": "This task measures whether the model can",
+    "site": "The sequences and objectives for these t",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "Measuring how well current models unders",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "Mythos 5 and Claude Fable 5 performed ne",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "**Automated evaluations relevant to CB-1",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "\n![Chart: rate of acknowledging being an",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "*__[Table 4.4.2.B] Bias scores on the Bi",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "Mythos 5 and Fable 5 were trained on a p",
     "caught": true
    }
   ]
  },
  "swap-words": {
   "invariant": "T1",
-  "caught": 6,
-  "tried": 6,
+  "caught": 9,
+  "tried": 10,
   "details": [
    {
-    "file": "06d-targeted-evaluations-2.md",
-    "site": "strongly with",
+    "file": "08d-capabilities-4.md",
+    "site": "assess model",
     "caught": true
    },
    {
-    "file": "06e-whitebox-analyses.md",
-    "site": "steering against",
+    "file": "06f-reliability-1.md",
+    "site": "test likely",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "phenomena more",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "supporting user",
+    "caught": false
+   },
+   {
+    "file": "09-appendix.md",
+    "site": "these from",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "most concerned",
+    "caught": true
+   },
+   {
+    "file": "09-appendix.md",
+    "site": "build knowledge",
     "caught": true
    },
    {
     "file": "07b-model-welfare-2.md",
-    "site": "swearing outbursts",
+    "site": "objections arising",
     "caught": true
    },
    {
-    "file": "07a-model-welfare-1.md",
-    "site": "independent evaluations",
+    "file": "05-agentic-safety.md",
+    "site": "results with",
     "caught": true
    },
    {
-    "file": "02a-rsp-process-chembio.md",
-    "site": "pathogenic viruses",
-    "caught": true
-   },
-   {
-    "file": "07b-model-welfare-2.md",
-    "site": "numbers represent",
+    "file": "08c-capabilities-3.md",
+    "site": "strict pass",
     "caught": true
    }
   ]
  },
  "drop-image": {
   "invariant": "F1",
-  "caught": 6,
-  "tried": 6,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "03-cyber.md",
-    "site": "![Chart: OSS-Fuzz exploit-primitive disc",
-    "caught": true
-   },
-   {
-    "file": "06f-reliability-1.md",
-    "site": "![Bar charts: six panels \u2014 cooperation w",
-    "caught": true
-   },
-   {
-    "file": "06f-reliability-1.md",
-    "site": "![Scatter plot titled \"Evaluation awaren",
-    "caught": true
-   },
-   {
-    "file": "07a-model-welfare-1.md",
-    "site": "![Chart: four panels comparing Claude mo",
-    "caught": true
-   },
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "![Chart: DeepSearchQA F1 scores for Clau",
+    "file": "08a-capabilities-1.md",
+    "site": "![Chart: SWE-bench Pro test-time compute",
     "caught": true
    },
    {
     "file": "06b-alignment-audit-external.md",
-    "site": "![Chart: eight bar-chart panels of safeg",
+    "site": "![Chart: five bar-chart panels of automa",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "![Chart: three stacked panels (Claude My",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "![Chart: LLM training speedup by model, ",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "![Heatmap titled \"Consistency of evaluat",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "![Chart: BrowseComp accuracy plotted aga",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "![Chart: nine bar-chart panels of safegu",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "![Chart: DRACO score versus average cost",
+    "caught": true
+   },
+   {
+    "file": "06g-reliability-2.md",
+    "site": "![Line chart titled \"Secret-keeping robu",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "![Bar chart titled \"NLA-measured grader ",
     "caught": true
    }
   ]
  },
  "drop-fndef": {
   "invariant": "FN1",
-  "caught": 6,
-  "tried": 6,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "[^4]: The Sonnet 4.6 system ca",
-    "caught": true
-   },
-   {
-    "file": "02a-rsp-process-chembio.md",
-    "site": "[^1]: Note that:",
-    "caught": true
-   },
-   {
-    "file": "08c-capabilities-3.md",
-    "site": "[^56]: Zhang, H., et al. (2026",
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "[^22]: Oesterheld, C., et al. ",
     "caught": true
    },
    {
@@ -358,82 +533,152 @@
     "caught": true
    },
    {
+    "file": "08a-capabilities-1.md",
+    "site": "[^43]: GPT-5.5 and Gemini 3.1 ",
+    "caught": true
+   },
+   {
     "file": "08d-capabilities-4.md",
-    "site": "[^71]: Arora, R. K., et al. (2",
+    "site": "[^69]: Patwardhan, T., et al. ",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "[^6]: Lee, S., & Brumley, D. (",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "[^21]: Mallen, A. (2026). Rewa",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "[^25]: This is equivalent to m",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "[^4]: The Sonnet 4.6 system ca",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "[^49]: Zhong, J., et al. (2026",
     "caught": true
    }
   ]
  },
  "dup-marker": {
   "invariant": "P1",
-  "caught": 6,
-  "tried": 6,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "02a-rsp-process-chembio.md",
-    "site": "<!-- p.20 -->",
+    "file": "01-introduction.md",
+    "site": "<!-- p.13 -->",
     "caught": true
    },
    {
-    "file": "07a-model-welfare-1.md",
-    "site": "<!-- p.224 -->",
+    "file": "06e-whitebox-analyses.md",
+    "site": "<!-- p.180 -->",
     "caught": true
    },
    {
-    "file": "08b-capabilities-2.md",
-    "site": "<!-- p.269 -->",
+    "file": "06b-alignment-audit-external.md",
+    "site": "<!-- p.125 -->",
     "caught": true
    },
    {
-    "file": "03-cyber.md",
-    "site": "<!-- p.65 -->",
+    "file": "06b-alignment-audit-external.md",
+    "site": "<!-- p.132 -->",
     "caught": true
    },
    {
-    "file": "08b-capabilities-2.md",
-    "site": "<!-- p.269 -->",
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "<!-- p.144 -->",
     "caught": true
    },
    {
-    "file": "06g-reliability-2.md",
-    "site": "<!-- p.207 -->",
+    "file": "09-appendix.md",
+    "site": "<!-- p.311 -->",
+    "caught": true
+   },
+   {
+    "file": "08c-capabilities-3.md",
+    "site": "<!-- p.280 -->",
+    "caught": true
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "<!-- p.250 -->",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "<!-- p.120 -->",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "<!-- p.124 -->",
     "caught": true
    }
   ]
  },
  "drop-bold": {
   "invariant": "S1",
-  "caught": 5,
-  "tried": 6,
+  "caught": 8,
+  "tried": 10,
   "details": [
    {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "Confession after follow-up.",
+    "caught": true
+   },
+   {
     "file": "07b-model-welfare-2.md",
-    "site": "Positive or negative impression of its s",
+    "site": "Positive or negative self-image:",
     "caught": true
    },
    {
-    "file": "06b-alignment-audit-external.md",
-    "site": "Accepting unverifiable authorization",
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "One thing worth noting:",
     "caught": true
    },
    {
-    "file": "02a-rsp-process-chembio.md",
-    "site": "Results",
+    "file": "07b-model-welfare-2.md",
+    "site": "Positive or negative self-image:",
     "caught": true
    },
    {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "Cluster:",
+    "file": "08a-capabilities-1.md",
+    "site": "Multilingual",
     "caught": false
    },
    {
-    "file": "07b-model-welfare-2.md",
-    "site": "Apparent wellbeing:",
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "One thing worth noting:",
     "caught": true
    },
    {
-    "file": "00-executive-summary.md",
-    "site": "Alignment assessment.",
+    "file": "08a-capabilities-1.md",
+    "site": "Multilingual",
+    "caught": false
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "One thing worth noting:",
+    "caught": true
+   },
+   {
+    "file": "06g-reliability-2.md",
+    "site": "Considering whether to refuse, but decid",
+    "caught": true
+   },
+   {
+    "file": "06g-reliability-2.md",
+    "site": "Considering whether to refuse, but decid",
     "caught": true
    }
   ]

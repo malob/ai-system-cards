@@ -3,9 +3,12 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-10 (~23:00) — ROUND G FLEET LAUNCHED (see the
-ON-"GO" block below for the spec and the launch record under it); with
-Fable 5.
+**Last updated:** 2026-06-11 (~01:00) — ROUND G CONVERGED. 23-inspector
+fleet → 16 real defect classes past the 0-major gate, all fixed at class
+level under D25 (commits 2169e2a…2defc4e). Gate 0 majors / L1 31 / T1 72;
+seams 0; mutation recall unchanged; build clean. Experiment 09 is the
+record. One residual + 4 adjudication items await owner steer (below).
+With Fable 5.
 
 ## Cold-start capsule
 
@@ -315,18 +318,37 @@ blocklist; 7.5.1 figure/caption interleave. Gate: 0 majors, FN1 0, L1 31
    doubled-colon projection, backtick-literal projection).
 6. Report to owner: findings + verdicts + diffs, not process.
 
-**ROUND G FLEET LAUNCHED (22:55):** baseline re-confirmed at launch — 0
-majors (3 owner-accepted suppressions now needed, was 6 at spec time: three
-accepted sites pass naturally after the late fixes), L1 31, T1 73, seam
-auditor 0, 312 fresh slices. 16 comparator agents (pages 2–319, ~20pp each)
-+ 7 linter agents (21 section files, 3 each), armed with
-`pipeline/.cache/vsweep6/rulebook.md` (committed copy:
-`docs/v2/experiments/09-round-g/rulebook.md`) compiled from D24/D25 +
-accepted.json + exp-07/08 adjudications + a page→section map. Findings
-APPEND per page/file to `pipeline/.cache/vsweep6/findings-comp-*.jsonl` and
-`findings-lint-*.jsonl` (partials survive agent kills). Served-HTML snapshot:
-`pipeline/.cache/vsweep6/served.html` (dev server live on :4322).
-Orchestrator triages on completion notifications, fixes per D25.
+**ROUND G CONVERGED (2026-06-11 ~01:00).** Fleet of 23 rulebook-armed
+inspectors (16 triple-pane comparators pages 2–319 + 7 md-smell linters over
+21 section files; +1 relaunch after a content-filter kill on the §9.2
+blocklist range). Findings in `pipeline/.cache/vsweep6/findings-*.jsonl`;
+orchestrator triage ledger `pipeline/.cache/vsweep6/triage.md`; full record
++ class/fix table in experiment 09. 16 real defect classes found past the
+0-major gate, ALL fixed at class level (commits, oldest→newest): 2169e2a
+footnote shim · 7ab5b6c paragraph seams · 93292c0 heading dbl-space · 8df3d83
+`<link>` escape · b0db715 boxed-turn continuation · b8012a5 caption seam ·
+98c52fe figure dedupe · 35f202a wide green highlight · a14467f bold-label
+split · bbccff3 list tiering · 3a191b9 rowspan promote · 754476d white-text
+headers · d102c9e compound hyphens · dc8b6c2 body-size caption · 6851efa
+bare-number links · 4796584 pill-vs-code · 2defc4e `<pre>` blank lines.
+Plus infra: acd878f crop-size cap (oversized crops were killing agents' image
+reads). Orchestrator OWNED every fix and adversarially re-verified each
+claim (refuted 1 major via crop; absorbed dup reports). Gate held at every
+commit: 0 majors (3 accepted) / L1 31 / T1 72; seam auditor 0; mutation
+recall unchanged; site build clean.
+
+**AWAITING OWNER STEER (next session, before declaring canonical):**
+- RESIDUAL: constitution-edits table 7.4.3 (pp.244-245) — all cell text
+  present, but the bold passage-name lead ('§ How we think about
+  corrigibility') is not recovered in its tall multi-line cells (restyle
+  band/pool). Deferred to avoid risking the welfare/dense-cell family. Decide
+  whether the passage-name bold warrants a deeper restyle pass.
+- ADJUDICATE (no code yet): (a) footnote 02a:279 internal `●` list flattened
+  to inline glyphs — split into list items? (b) p.224 'Its' — PDF sets the
+  'I' in Lora-Italic (source font slip), currently faithful; leave? (c) p.153
+  inline-code green-vs-black colour; (d) p.198 `:::example` serif-vs-mono —
+  by-design or fix?
+Then: owner declares canonical → unfreeze v1 replacement → owner pushes.
 
 **ROUND G DESIGN (owner-proposed, 22:30) — two inspector checks:**
 1. **Markdown-smell linter**: read the md itself for suspicious patterns
