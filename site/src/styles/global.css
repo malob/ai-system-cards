@@ -614,6 +614,14 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
   text-transform: uppercase;
   color: var(--ink-soft);
 }
+/* sub-header rows (any header row below the first) are a secondary tier:
+   lighter and a touch smaller, so the top row stays the primary header */
+.article table tr:not(:has(td:not(:empty))):not(:first-child) th,
+.article thead tr:not(:first-child) th {
+  font-weight: 500;
+  font-size: 0.63rem;
+  color: var(--ink-faint);
+}
 .article thead th,
 .article thead td,
 .article table tr:not(:has(td:not(:empty))) > * {
