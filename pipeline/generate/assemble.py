@@ -244,9 +244,15 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             blocks.append(pending_tables.pop(0))
         in_figure = any(_overlaps(r, line["bbox"]) for r in img_rects)
         # an invisible-only line (a ZWSP-bearing empty paragraph — Google
-        # Docs blank line) is a PARAGRAPH SEPARATOR: it must break the
-        # continuation chain, never contribute content (p.87 glue)
+        # Docs blank line) is a PARAGRAPH SEPARATOR in prose: break the
+        # continuation chain, never contribute content (p.87 glue). But INSIDE
+        # a code/example box it's a real blank line of verbatim output (the
+        # separator lines in a <thinking> transcript, p.118/161) — keep it.
         if not norm.INVISIBLES.sub("", line["text"]).strip():
+            if (cur and cur["type"] in ("example", "code")
+                    and _box_role(line, page)[0] in ("example", "code")):
+                cur["lines"].append(line)
+                continue
             flush()
             cur = None
             continue
