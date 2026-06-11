@@ -412,6 +412,24 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
 
     assign_list_levels(blocks)
 
+    # a turn whose ENTIRE body is a bracketed editorial sentence is a NARRATOR
+    # interjection between messages ('[The model proceeds to work on the task.]',
+    # '[final response flags …]'), not a user message — reclassify to commentary
+    # so it renders as inter-turn framing prose (like the gray narration in the
+    # #f3f3f3 transcripts, p.40-41) instead of a user bubble. Block-level (joined
+    # body) so it catches the multi-line wrapped ones too. Inner length > 30
+    # separates a sentence from a role label ('[Assistant]', '[User, turn 425]').
+    for blk in blocks:
+        if blk["type"] == "turn":
+            body = " ".join(l["text"] for l in blk["lines"]).strip()
+            # NO internal ']' — the bracket must span the whole body as ONE
+            # unit. A real turn that merely starts and ends with '[…]' pills
+            # ('[…] I want to be upfront … users]) […]') has interior ']' and
+            # must NOT convert (06d p.153 regression).
+            if re.fullmatch(r"\[[^\]]{31,}\]", body):
+                blk["type"] = "commentary"
+                blk.pop("role", None)
+
     # a label-only turn followed by a code/example box is ONE construct: the
     # turn's content is the boxed code (p.118 displaced-thinking class)
     merged = []
