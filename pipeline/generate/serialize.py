@@ -218,7 +218,10 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 t == "item" and last_type == "item"
                 and blk.get("quote") == prev_quote):
             out.append("\n")
-        if t in ("turn", "commentary"):
+        if t in ("turn", "commentary") or (t == "code" and blk.get("in_transcript")):
+            # a code box nested in a turn keeps the transcript OPEN (the
+            # assistant's mono output belongs inside the box — p.198), unlike a
+            # standalone code block (§9.2 blocklist), which closes it
             marker_if_new(pno)
             inline_marker = ""
             emit_marker(False)

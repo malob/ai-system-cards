@@ -23,6 +23,9 @@ TURN_FILLS = {"#ebc9b7": "assistant", "#e2decf": "user", "#faf9f5": "user"}
 # the card's only :::example, rendering serif).
 EXAMPLE_BOXES: set = set()
 CODE_BOXES = {"#f1f3f4", "#f0eee6"}
+# a code/example box inside one of these is a turn's nested output (stays in
+# the transcript); a box in none of them is a standalone code block (§9.2)
+_TURN_OR_TRANSCRIPT = set(TURN_FILLS) | TRANSCRIPT_BOXES
 PLACEHOLDER = "#d9ead3"
 BULLETS = "●•◦▪‣○"
 
@@ -340,6 +343,16 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 cur = {"type": kind, "lines": [line], "page": pno}
                 if kind == "turn":
                     cur["role"] = role
+                if kind in ("code", "example"):
+                    # a mono output box nested inside a turn/transcript box is
+                    # the assistant's output WITHIN the transcript — flag it so
+                    # the serializer keeps it inside ::::transcript instead of
+                    # closing the box (p.198 'Here is my design'). A standalone
+                    # code box (the §9.2 blocklist) is in no turn box → unflagged.
+                    cur["in_transcript"] = any(
+                        b["color"] in _TURN_OR_TRANSCRIPT
+                        and _rect_contains(b["bbox"], line["bbox"], slack=4.0)
+                        for b in page.get("boxes", []))
         else:  # prose
             # caption continuation: a line directly under an open caption that
             # is either small (the usual 9pt caption) or the SAME size as the
