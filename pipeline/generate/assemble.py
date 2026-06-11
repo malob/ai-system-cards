@@ -456,6 +456,24 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         merged.append(blk)
     blocks = merged
 
+    # an in-transcript code box that did NOT merge into a label-only turn — a
+    # narrator interjection sits between it and its [Assistant] label — is the
+    # assistant's CONTINUED output (p.198 'Here is my design'). Render it as its
+    # own assistant card by inheriting the most recent turn's role and label
+    # line, so it matches the sibling [ASSISTANT] turns instead of a bare <pre>.
+    last_turn = None
+    for blk in blocks:
+        if blk["type"] == "turn":
+            last_turn = blk
+        elif (blk["type"] == "code" and blk.get("in_transcript")
+              and last_turn and last_turn.get("role") and last_turn.get("lines")):
+            blk["type"] = "turn"
+            blk["role"] = last_turn["role"]
+            blk["code_lines"] = blk["lines"]
+            blk["lines"] = [last_turn["lines"][0]]   # reuse the [Assistant] label line
+            blk["breaks"] = []                        # old breaks indexed the code lines
+            last_turn = blk
+
     figures = figures[len(figures_emitted):] if figures else figures
     if not fig_done and figures:
         for f in figures:
