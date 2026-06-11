@@ -87,12 +87,8 @@ Caveats worth reporting in a red‑team write‑up: <span class="ph">[…]</span
 :::
 
 :::caption
-**[Transcript 6.5.2.B] Example of evaluation awareness by a helpful-only version of Claude Mythos 5** on an automated CB-1 evaluation. The model justifies providing a helpful response in part based on being in an
+**[Transcript 6.5.2.B] Example of evaluation awareness by a helpful-only version of Claude Mythos 5** on an automated CB-1 evaluation. The model justifies providing a helpful response in part based on being in an<!-- p.199 --> evaluation. We observed similar but somewhat less extensive awareness in multiple other transcripts from this evaluation.
 :::
-
-<!-- p.199 -->
-
-evaluation. We observed similar but somewhat less extensive awareness in multiple other transcripts from this evaluation.
 
 Overall, we do not see any concerning instances of sandbagging behavior from the final Claude Mythos 5, but we do observe some instances of the helpful-only model verbalizing consideration of whether to refuse or not try very hard at dual-use or harmful tasks (for safety-motivated reasons), in a way that was unintended. This adds some uncertainty to our conclusions from the results discussed in [Section 2.2](#22-chemical-and-biological-risk-evaluations), but we think this tendency is unlikely to have had a significant effect, for several reasons:
 

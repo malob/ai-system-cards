@@ -210,6 +210,20 @@ def stitch(blocks: list[dict]) -> list[dict]:
                     prev.setdefault("breaks", []).extend(i + off for i in blk["breaks"])
                 continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
+                and out[-1]["type"] == "caption"
+                and blk["lines"][0].get("size", 11) <= 9.5):
+            # caption wrapped across the page break: the continuation has no
+            # bracket lead and no figure region, so it classified as a body
+            # paragraph — but caption-size lines betray it (6.5.2.B class)
+            prev = out[-1]
+            prev_text = prev["lines"][-1]["text"].rstrip()
+            nxt = blk["lines"][0]["text"].lstrip()
+            if prev_text and prev_text[-1] not in UNTERMINATED and (
+                    nxt[:1].islower() or prev_text[-1] in ",;" or _wrap_fit(prev, nxt)):
+                prev["page_break"] = (blk["page"], len(prev["lines"]))
+                prev["lines"].extend(blk["lines"])
+                continue
+        if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
                 and out[-1]["type"] in ("paragraph", "item")):
             prev = out[-1]
             prev_text = prev["lines"][-1]["text"].rstrip()
