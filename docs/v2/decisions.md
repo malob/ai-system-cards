@@ -259,5 +259,27 @@ Owner directives for round G and beyond:
   One-off corrections go through the (planned) owner-adjudicated patch layer
   applied by run.py post-regen.
 
-<!-- APPEND NEW DECISIONS BELOW THIS LINE (D26 next) — newest at the bottom. -->
+<!-- APPEND NEW DECISIONS BELOW THIS LINE (D27 next) — newest at the bottom. -->
 <!-- (Three same-session attempts to insert above the tail prove the need.) -->
+
+## D26 — fidelity line: fix our divergences, not the source's quirks (2026-06-11)
+
+Owner call during round-G review (the p.224 italic "I"). The pipeline
+corrects only its OWN divergences from the source — a hyphen *we* dropped
+("introspectionbased"), a space *we* inserted ("Self- knowledge"), a
+footnote *we* failed to render. It does NOT correct the source document's
+own quirks: typos, font-slips, a stray italic glyph mid-word, a section
+cross-reference the PDF itself points at the wrong place. Reproducing those
+IS faithfulness; "fixing" them is proofreading — an open-ended mandate plus
+fragile detector heuristics that mis-fire elsewhere, and it blurs the line
+the whole v2 premise rests on (mechanical, faithful, no LLM in the loop).
+
+Test for which side a defect is on: **would the same wrong thing be in the
+PDF's own text/styling layer?** If yes → source quirk → reproduce it. If the
+PDF is right and only our output is wrong → our divergence → fix it.
+
+If an errata/correction layer is ever wanted, it is a deliberate, separate,
+owner-driven feature — never smuggled in case-by-case during conversion.
+(Round-G concretely: the "Its" italic mid-word slip is in the PDF → left
+as-is. Bare-number section links resolving to the wrong subsection were OUR
+geometry failing where the PDF's number was right → fixed.)
