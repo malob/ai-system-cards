@@ -3,10 +3,13 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-11 (~10:45) — ROUND G + owner review CLOSED; all 5
-review items resolved (J1/p.198 fully fixed the next morning). Gate 0 majors
-/ L1 31 / T1 **69** (improved as interjections became commentary); seams 0;
-build clean. Below, the ~01:00 convergence record. 23-inspector
+**Last updated:** 2026-06-11 (~11:15) — ROUND G + owner review CLOSED; all 5
+review items resolved, p.198 transcript fully reworked to owner's spec (D27:
+interjections → inter-turn narration; continuation output → its own
+[Assistant] card; wrapped green highlight → one pill). Gate 0 majors / L1 31
+/ T1 **70** (the +1 vs the 69 low is the owner-accepted continuation label,
+D27; still below the round-G baseline of 72); seams 0; build clean. Below,
+the ~01:00 convergence record. 23-inspector
 fleet → 16 real defect classes past the 0-major gate, all fixed at class
 level under D25 (commits 2169e2a…2defc4e). Gate 0 majors / L1 31 / T1 72;
 seams 0; mutation recall unchanged; build clean. Experiment 09 is the
