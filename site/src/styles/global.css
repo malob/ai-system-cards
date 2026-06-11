@@ -604,6 +604,9 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
 
 sup.fn-html a, .article sup a { font: 600 0.72em var(--mono); text-decoration: none; padding: 0 0.1em; }
 
+/* hidden shim refs that keep table-only footnote defs alive (see cards.js) */
+.fnref-shim { display: none; }
+
 /* --- transcript / example boxes -------------------------------------------------- */
 
 .box {

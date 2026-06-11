@@ -52,16 +52,42 @@ export function siteMarkdown(vendor, slug, assetBase) {
   );
   md = md.replace(/<!--[\s\S]*?-->/g, '');
   md = md.replace(/\]\(assets\/figures\//g, `](${assetBase}/figures/`);
-  md = md
-    .split('\n')
-    .map((line) =>
-      /<t[dh][ >]/.test(line)
-        ? line.replace(
-            /\[\^(\d+)\]/g,
-            '<sup class="fn-html"><a href="#user-content-fn-$1" id="user-content-fnref-$1">$1</a></sup>',
-          )
-        : line,
-    )
+  // A footnote whose only refs sit inside raw-HTML table cells is invisible
+  // to remark-gfm: its def is dropped (body lost, dead fn-html links) and
+  // every later footnote renumbers away from the PDF. A hidden shim ref
+  // right after the table keeps the def alive, and because the shim sits at
+  // the table's document position, the whole list numbers 1:1 with the PDF.
+  const lines = md.split('\n');
+  const isTableLine = (l) => /<t[dh][ >]/.test(l);
+  const proseRefs = new Set();
+  const tableRefs = new Map(); // id -> line index of first in-table ref
+  lines.forEach((line, i) => {
+    for (const m of line.matchAll(/\[\^(\d+)\](?!:)/g)) {
+      if (isTableLine(line)) {
+        if (!tableRefs.has(m[1])) tableRefs.set(m[1], i);
+      } else {
+        proseRefs.add(m[1]);
+      }
+    }
+  });
+  const shims = new Map(); // line index -> ids needing a shim there
+  for (const [id, i] of tableRefs) {
+    if (proseRefs.has(id)) continue;
+    if (!shims.has(i)) shims.set(i, []);
+    shims.get(i).push(id);
+  }
+  md = lines
+    .map((line, i) => {
+      if (isTableLine(line))
+        line = line.replace(
+          /\[\^(\d+)\]/g,
+          '<sup class="fn-html"><a href="#user-content-fn-$1">$1</a></sup>',
+        );
+      const ids = shims.get(i);
+      if (!ids) return line;
+      const refs = ids.sort((a, b) => a - b).map((n) => `[^${n}]`).join('');
+      return `${line}\n\n<span class="fnref-shim">${refs}</span>\n`;
+    })
     .join('\n');
   return md;
 }
