@@ -281,6 +281,24 @@ last block (the '<thinking>' opener) — code_lines now APPENDS; §9.2
 blocklist; 7.5.1 figure/caption interleave. Gate: 0 majors, FN1 0, L1 31
 (typed), T1 72 (join noise).
 
+**ROUND G DESIGN (owner-proposed, 22:30) — two inspector checks:**
+1. **Markdown-smell linter**: read the md itself for suspicious patterns
+   (mid-name bold ends like '<b>Mythos</b> 5', dangling markup, odd
+   spacing/structure), cross-check each hit against the page render, propose
+   a class fix or a patch, re-verify after. VALIDATED live: the 8.1 header
+   partial-bold was caught this way by the owner; root cause was a len>=2
+   styleable gate + un-collapsed adjacent runs — both fixed.
+2. **Triple-pane comparator**: PDF page screenshot vs WEB page screenshot vs
+   the corresponding DOM span — flag anything in pane 1 the other two fail
+   to capture. VALIDATED: this mode caught the swallowed '<thinking>' opener
+   (21:30 sweep).
+Build plan: both as rulebook-armed agent prompts (rules = D24 +
+accepted.json + adjudications in experiments 07/08) over all 319 pages;
+findings → class diagnoses (pipeline fixes preferred) + an owner-adjudicated
+post-regen PATCH LAYER for true one-offs (applied by run.py, durable across
+regens — never silent md edits). Owner role: adjudicate the disagreement
+list.
+
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
 p.153 '[Assistant]' label, p.182 missing-bold sentence (REAL find, example-box
