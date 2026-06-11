@@ -383,8 +383,10 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     merged = []
     for blk in blocks:
         if (merged and merged[-1]["type"] == "turn" and blk["type"] in ("code", "example")
-                and _turn_is_label_only(merged[-1])):
-            merged[-1]["code_lines"] = blk["lines"]
+                and (_turn_is_label_only(merged[-1]) or "code_lines" in merged[-1])):
+            # APPEND: a box can split into several code/example blocks (the
+            # '<thinking>' opener/closer rows) — overwrite lost all but the last
+            merged[-1]["code_lines"] = merged[-1].get("code_lines", []) + blk["lines"]
             continue
         merged.append(blk)
     blocks = merged
