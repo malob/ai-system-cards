@@ -3,9 +3,9 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-10 (~afternoon) — convergence rounds D+E: re-sweep
-found 25 majors (vs 69 baseline), ALL 24 actionable fixed at class level;
-verification sweep (flagged 30pp + random 30pp) launched; with Fable 5.
+**Last updated:** 2026-06-10 (~23:00) — ROUND G FLEET LAUNCHED (see the
+ON-"GO" block below for the spec and the launch record under it); with
+Fable 5.
 
 ## Cold-start capsule
 
@@ -314,6 +314,19 @@ blocklist; 7.5.1 figure/caption interleave. Gate: 0 majors, FN1 0, L1 31
    text-form diffs; two mechanically fixable classes deferred: turn-label
    doubled-colon projection, backtick-literal projection).
 6. Report to owner: findings + verdicts + diffs, not process.
+
+**ROUND G FLEET LAUNCHED (22:55):** baseline re-confirmed at launch — 0
+majors (3 owner-accepted suppressions now needed, was 6 at spec time: three
+accepted sites pass naturally after the late fixes), L1 31, T1 73, seam
+auditor 0, 312 fresh slices. 16 comparator agents (pages 2–319, ~20pp each)
++ 7 linter agents (21 section files, 3 each), armed with
+`pipeline/.cache/vsweep6/rulebook.md` (committed copy:
+`docs/v2/experiments/09-round-g/rulebook.md`) compiled from D24/D25 +
+accepted.json + exp-07/08 adjudications + a page→section map. Findings
+APPEND per page/file to `pipeline/.cache/vsweep6/findings-comp-*.jsonl` and
+`findings-lint-*.jsonl` (partials survive agent kills). Served-HTML snapshot:
+`pipeline/.cache/vsweep6/served.html` (dev server live on :4322).
+Orchestrator triages on completion notifications, fixes per D25.
 
 **ROUND G DESIGN (owner-proposed, 22:30) — two inspector checks:**
 1. **Markdown-smell linter**: read the md itself for suspicious patterns
