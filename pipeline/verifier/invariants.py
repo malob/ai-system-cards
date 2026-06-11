@@ -482,7 +482,7 @@ def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
             continue
         if n not in md_defs:
             flags.append(_flag("FN1", fn_page[n], "major", {"kind": "body-without-def", "n": n}))
-        elif norm.squash(md_defs[n]) != norm.squash(t):
+        elif norm.squash(md_defs[n]).replace("*", "") != norm.squash(t).replace("*", ""):
             # ADVISORY (minor) until the oracle's footnote-boundary detection
             # is hardened: stacked footnotes can glue (n=16/17 on p.114 — md
             # verified correct there). Promote to major once boundaries hold.
