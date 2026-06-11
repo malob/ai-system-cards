@@ -164,6 +164,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
     transcript_open = False
     pending_marker = ""
     last_type = None
+    prev_quote = None
 
     def marker_if_new(pno):
         # markers are buffered: standalone between blocks, but INLINE inside a
@@ -197,6 +198,13 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         if t == "footnote":
             footnotes.append(blk)
             continue
+        # block separator, decided AGAINST THE PREDECESSOR: consecutive list
+        # items stay tight (one blank anywhere makes the whole list loose in
+        # CommonMark — every li gains <p> margins and children drift)
+        if last_type is not None and not (
+                t == "item" and last_type == "item"
+                and blk.get("quote") == prev_quote):
+            out.append("\n")
         if t in ("turn", "commentary"):
             marker_if_new(pno)
             inline_marker = ""
@@ -375,7 +383,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             if text.strip():
                 out.append(f"<!-- UNHANDLED-BLOCK:{t} -->\n" + _hyphen_join(text).strip() + "\n")
         last_type = t
-        out.append("\n")
+        prev_quote = blk.get("quote")
 
     close_transcript()
 
