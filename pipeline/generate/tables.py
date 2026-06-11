@@ -83,6 +83,13 @@ def _normalize_rowspan_subrows(html: str) -> str:
             lead = re.match(r"<tr><(t[hd])([^>]*)>(\s*)</t[hd]>", r)
             if lead and "rowspan" not in lead.group(2):
                 out = out.replace(r, "<tr>" + r[len(lead.group(0)):], 1)
+                continue
+            # a covered row's leading th is a SUB-label, not a row label —
+            # demote to td so both 'Without thinking' rows match (p.95)
+            th = re.match(r"<tr><th([^>]*)>(.*?)</th>", r, re.S)
+            if th and "rowspan" not in th.group(1):
+                fixed = "<tr><td" + th.group(1) + ">" + th.group(2) + "</td>" + r[len(th.group(0)):]
+                out = out.replace(r, fixed, 1)
     return out
 
 
@@ -1017,6 +1024,24 @@ def _fix_wrapped_header_cells(html: str, bbox: list, oracle_page: dict) -> str:
         if plain[0] and hit and len(hit) == 1 and hit[0][0] - bbox[0] > 60:
             tags = [(tags[0][0], "", "")] + tags
             changed = True
+        # (3) distribute group labels over their column groups: ['', 'API…',
+        # 'Claude.ai'] over 4 data columns -> colspan=2 each, so the label
+        # visibly spans its group like the PDF (owner-flagged ambiguity)
+        labels = [i for i, (_, a, c) in enumerate(tags)
+                  if _cell_sq(c) and "colspan" not in a]
+        if (tags and not _cell_sq(tags[0][2]) and labels
+                and labels == list(range(1, len(tags)))):
+            data_cols = full - 1
+            n = len(labels)
+            if n and data_cols % n == 0 and data_cols // n > 1:
+                k = data_cols // n
+                # group labels are bold in the PDF (span flags confirm on
+                # every instance); rebuilt rows lost it — enforce uniformly
+                tags = [tags[0]] + [
+                    (g, f' colspan="{k}"',
+                     c if "<b>" in c or g == "th" else f"<b>{c}</b>")
+                    for g, a, c in tags[1:]]
+                changed = True
         if changed:
             rebuilt = "<tr>" + "".join(
                 f"<{g}{a}>{c}</{g}>" for g, a, c in tags) + "</tr>"
