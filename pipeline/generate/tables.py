@@ -53,6 +53,9 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _normalize_rowspan_subrows(html)
             html = _bullet_breaks(html)
             html = _demote_data_th(html)   # rebuilds can re-tag rows all-th
+            # AFTER demotion: a white-text header sub-row reads as a mixed row
+            # (empty leads + labels) and _demote_data_th would revert it
+            html = _promote_white_text_headers(html, t["bbox"], oracle_page)
             html = _debold_th(html)
         out.append({**t, "html": html})
     return out
@@ -1015,6 +1018,33 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
             rebuilt = "<tr>" + "".join(
                 f"<{tg}{a}>{c}</{tg}>" for (tg, a, _), c in zip(tags, cells)) + "</tr>"
             out = out.replace(r, rebuilt, 1)
+    return out
+
+
+def _promote_white_text_headers(html: str, bbox: list, oracle_page: dict) -> str:
+    """A header sub-row that docling tagged <td>: the column sub-labels
+    ('Attempts'/'Scenarios') under a colspan group sit in the dark header
+    band as bold WHITE text, but rendered plain (p.95/96/98 prompt-injection
+    tables). White text occurs only in header bands in this card, so a
+    non-first row whose every non-empty cell is white-text is a header
+    continuation — promote its non-empty <td> to <th>."""
+    white = {_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
+             if s["text"].strip() and s.get("color") == "#ffffff"}
+    if not white:
+        return html
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    out = html
+    for r in rows[1:]:
+        cells = re.findall(r"<(t[dh])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        nonempty = [(tg, a, c) for tg, a, c in cells if re.sub(r"<[^>]+>", "", c).strip()]
+        if not nonempty or not all(
+                _squash(re.sub(r"<[^>]+>", "", c)) in white for _, _, c in nonempty):
+            continue
+        fixed = r
+        for tg, a, c in cells:
+            if tg == "td" and re.sub(r"<[^>]+>", "", c).strip():
+                fixed = fixed.replace(f"<td{a}>{c}</td>", f"<th{a}>{c}</th>", 1)
+        out = out.replace(r, fixed, 1)
     return out
 
 
