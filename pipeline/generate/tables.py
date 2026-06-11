@@ -32,6 +32,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
     for t in _load().get(str(page_no), []):
         t = {**t, "html": _demote_data_th(t["html"])}
         t = {**t, "html": _normalize_rowspan_subrows(t["html"])}
+        t = {**t, "html": _dedup_cascaded_cells(t["html"])}
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
         if oracle_page is not None:
             # split BEFORE rotation repair: a glued cell defeats x-matching,
@@ -40,6 +41,9 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _split_glued_cells(html, t["bbox"], oracle_page)
             html = _resplit_misjoined_cells(html, t["bbox"], oracle_page)
             html = _extend_truncated_cells(html, t["bbox"], oracle_page)
+            # extension can cascade next-row content into a cell in dense
+            # rule-less tables — the endswith-dedup undoes exactly that
+            html = _dedup_cascaded_cells(html)
             html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
@@ -107,6 +111,44 @@ def _demote_data_th(html: str) -> str:
         if numeric < max(2, len(plain) // 2 + 1):
             continue
         out = out.replace(r, r.replace("<th", "<td").replace("</th>", "</td>"), 1)
+    return out
+
+
+def _dedup_cascaded_cells(html: str) -> str:
+    """Docling cascade bug (7.4.1.A/B): each cell also contains every LATER
+    row's same-column content (bullet counts 12/9/6/3 for a uniform-3 table).
+    Invariant: a polluted cell ENDS WITH the next row's entire cell — so
+    truncating to the prefix is provably content-safe. Bullets then join with
+    <br> (v1's convention for these cells)."""
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    if len(rows) < 3:
+        return html
+    grid = [re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S) for r in rows]
+    orig_sq = [[_cell_sq(c) for _, _, c in row] for row in grid]
+    out = html
+    changed = False
+    for ri in range(len(grid) - 1):
+        for ci in range(min(len(grid[ri]), len(grid[ri + 1]))):
+            a, b = orig_sq[ri][ci], orig_sq[ri + 1][ci]
+            if not b or len(a) <= len(b) or not a.endswith(b):
+                continue
+            g, attr, c = grid[ri][ci]
+            keep = len(a) - len(b)
+            import html as _h
+            c_dec = _h.unescape(re.sub(r"<[^>]+>", "", c))
+            idx = [j for j, ch in enumerate(c_dec) if not ch.isspace()]
+            if keep > len(idx):
+                continue
+            cut = idx[keep - 1] + 1 if keep else 0
+            new_c = _h.escape(c_dec[:cut].rstrip(), quote=False)
+            old_cell = f"<{g}{attr}>{c}</{g}>"
+            new_cell = f"<{g}{attr}>{new_c}</{g}>"
+            if old_cell in out:
+                out = out.replace(old_cell, new_cell, 1)
+                changed = True
+    if changed:
+        # bullets render one per line, as v1 did
+        out = re.sub(r"(?<!^)(?<!<br>)\s+•\s", "<br>• ", out)
     return out
 
 
@@ -215,6 +257,49 @@ def _split_inline_questions(html: str) -> str:
     return out
 
 
+def _extend_rowspans_over_short_rows(html: str) -> str:
+    """A cross-page continuation row one cell SHORT of the table width that
+    no first-column rowspan covers belongs to the category above it (the
+    p.20-21 CB table: 'Viral sequence-to-function' under 'Novel biological
+    weapons' rowspan=2 -> 3). Extend that rowspan instead of letting the row
+    shift into the first column."""
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+
+    def logical(row):
+        n = 0
+        for a in re.findall(r"<t[hd]([^>]*)>", row):
+            m = re.search(r'colspan="(\d+)"', a)
+            n += int(m.group(1)) if m else 1
+        return n
+
+    if not rows:
+        return html
+    full = max(logical(r) for r in rows)
+    covered = 0
+    last_span_row = None   # (row_html, span_value)
+    out = html
+    for r in rows:
+        m = re.match(r'<tr><t[hd][^>]*rowspan="(\d+)"', r)
+        if m and covered <= 0:
+            covered = int(m.group(1)) - 1
+            last_span_row = [r, int(m.group(1))]
+            continue
+        if covered > 0:
+            covered -= 1
+            continue
+        if logical(r) == full - 1 and last_span_row is not None:
+            old_r, span = last_span_row
+            new_span = span + 1
+            new_r = old_r.replace(f'rowspan="{span}"', f'rowspan="{new_span}"', 1)
+            cur = out.replace(old_r, new_r, 1)
+            if cur != out:
+                out = cur
+                last_span_row = [new_r, new_span]
+            continue
+        last_span_row = None
+    return out
+
+
 def merge_continuation_rows(html: str) -> str:
     """After cross-page table stitching: a row whose FIRST cell is empty and
     whose content continues the previous row mid-sentence is the same logical
@@ -264,7 +349,8 @@ def merge_continuation_rows(html: str) -> str:
             continue
         out_parts.append(r)
         last_row_idx = len(out_parts) - 1
-    return _split_inline_questions("".join(out_parts)) if rows_merged else html
+    merged_html = "".join(out_parts) if rows_merged else html
+    return _split_inline_questions(_extend_rowspans_over_short_rows(merged_html))
 
 
 def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:
@@ -823,11 +909,20 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
                         if len(acc) > len(p2):
                             break
                         if acc == p2:
-                            # immediate adjacent continuation run below
+                            # immediate adjacent continuation run below — but
+                            # never across a horizontal table rule: in dense
+                            # tables the next ROW starts <9pt below and the
+                            # old guard cascaded its bullets into this cell
+                            rules_y = [ru["bbox"][1] for ru in oracle_page.get("rules", [])
+                                       if min(col[j]["bbox"][2], ru["bbox"][2])
+                                       - max(col[j]["bbox"][0], ru["bbox"][0]) > 4]
                             tail = []
                             k = j + 1
                             while (k < len(col)
-                                   and col[k]["bbox"][1] - col[k - 1]["bbox"][3] < 9):
+                                   and col[k]["bbox"][1] - col[k - 1]["bbox"][3] < 9
+                                   and not any(col[k - 1]["bbox"][3] - 1 <= ry
+                                               <= col[k]["bbox"][1] + 1
+                                               for ry in rules_y)):
                                 tail.append(col[k])
                                 k += 1
                             if tail and all(_squash(s["text"]) not in all_cells
