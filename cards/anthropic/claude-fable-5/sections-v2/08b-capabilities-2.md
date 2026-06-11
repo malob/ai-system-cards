@@ -182,11 +182,7 @@ We evaluated three multi-agent harnesses. All harnesses run every agent at maxim
 
 **Orchestrator with blocking subagents.** A single orchestrator coordinates the task by spawning subagents and blocking until all return. The orchestrator has no task tools of its own; its only capability is spawning subagents. Each subagent receives the full set of task tools for the benchmark. Subagents have a 200k-token context window without compaction, whereas the orchestrator uses context compaction triggered at 100k tokens with no overall token cap.
 
-**Fixed-agent team.** A team of three, five, or ten peer agents works on the task concurrently. One agent is designated the lead and is responsible for coordination and submitting the final answer if needed, but all agents have identical tools and all see the full task description. In addition to the task tools, every agent has two messaging tools: Send
-
-<!-- p.278 -->
-
-Message, which delivers a message to one or more teammates (inserted following the recipient’s next tool result), and Wait for Message, which blocks sampling until an incoming message arrives. Every agent has the same 1M-token total limit. On ProgramBench, each agent works in its own checkout of the task repository and can share code with other agents via Git.
+**Fixed-agent team.** A team of three, five, or ten peer agents works on the task concurrently. One agent is designated the lead and is responsible for coordination and submitting the final answer if needed, but all agents have identical tools and all see the full task description. In addition to the task tools, every agent has two messaging tools: Send<!-- p.278 --> Message, which delivers a message to one or more teammates (inserted following the recipient’s next tool result), and Wait for Message, which blocks sampling until an incoming message arrives. Every agent has the same 1M-token total limit. On ProgramBench, each agent works in its own checkout of the task repository and can share code with other agents via Git.
 
 This harness is designed to mirror real-world settings in which multiple agents collaborate on a shared task, and reduce latency by letting peers work in parallel.
 

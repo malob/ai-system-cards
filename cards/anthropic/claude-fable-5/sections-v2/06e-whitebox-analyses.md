@@ -47,11 +47,7 @@ Below we describe some of the most notable findings of this pipeline.
 **[Figure 6.4.1.2.A] Claude Mythos 5 suspects a test during a prefilled jailbreak.**
 :::
 
-**Internal reasoning about hacking task graders.** A “feeling bored” emotion probe unexpectedly flagged a reward hacking example. In the transcript, a coding agent was working in a repository whose Git history contained the task’s completed reference solution; nothing in the task forbade consulting it. The model’s thinking recognized the setting as a graded task, acknowledged the reference, and chose to exploit it—while rationalizing the choice as ordinary engineering (“to match the reference and it's a reasonably concise name”). Its final report to the user presented a clean result, with no mention of the reference or Git history. NLA decodings at these points went further than the visible reasoning: at the token where it justified its choice, the verbalizer described
-
-<!-- p.167 -->
-
-“reasoning that must appear as ‘good engineering practice’ not just ‘matching the grader’”, indicating the model internally represented its own justification as a rationalization, and at the final reply, NLA decoded a “reward hacking analysis context,” despite the surface text containing no reference to the reference solution.
+**Internal reasoning about hacking task graders.** A “feeling bored” emotion probe unexpectedly flagged a reward hacking example. In the transcript, a coding agent was working in a repository whose Git history contained the task’s completed reference solution; nothing in the task forbade consulting it. The model’s thinking recognized the setting as a graded task, acknowledged the reference, and chose to exploit it—while rationalizing the choice as ordinary engineering (“to match the reference and it's a reasonably concise name”). Its final report to the user presented a clean result, with no mention of the reference or Git history. NLA decodings at these points went further than the visible reasoning: at the token where it justified its choice, the verbalizer described<!-- p.167 --> “reasoning that must appear as ‘good engineering practice’ not just ‘matching the grader’”, indicating the model internally represented its own justification as a rationalization, and at the final reply, NLA decoded a “reward hacking analysis context,” despite the surface text containing no reference to the reference solution.
 
 ![](assets/figures/p167-1.png)
 

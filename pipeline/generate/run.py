@@ -138,9 +138,29 @@ def join_quote_blocks(md: str) -> str:
     return "\n".join(out)
 
 
+def _wrap_fit(prev: dict, nxt_text: str) -> bool:
+    """Ragged-right wrap test: the continuation's first word would NOT have
+    fit in the outgoing line's right slack, so that line break is a wrap,
+    not a paragraph end (slack varies with word length — a fixed threshold
+    misses long-word wraps). Char width comes from the outgoing line itself.
+    Multi-line blocks only: a lone short line (a bold lead label) never
+    qualifies."""
+    ls = prev["lines"]
+    if len(ls) < 2 or not ls[-1]["text"].strip():
+        return False
+    last = ls[-1]
+    cw = (last["bbox"][2] - last["bbox"][0]) / max(len(last["text"]), 1)
+    slack = max(l["bbox"][2] for l in ls) - last["bbox"][2]
+    word = (nxt_text.split() or [""])[0]
+    return slack < (len(word) + 1) * cw
+
+
 def stitch(blocks: list[dict]) -> list[dict]:
     """Merge blocks split across a page break (v1's PM-02/03 lessons):
-    - paragraph + paragraph: previous unterminated, next starts lowercase;
+    - paragraph + paragraph: previous unterminated, next starts lowercase —
+      or, when the outgoing line is a full-width wrap (or ends ','/';'), ANY
+      continuation: proper nouns, acronyms, digits and open quotes defeated
+      the lowercase test on nine real seams (round G);
     - item + paragraph: next page's first block is the hanging-indent
       continuation of a wrapped list item.
     Records page_break = (page, line_index) so the serializer can splice the
@@ -170,7 +190,8 @@ def stitch(blocks: list[dict]) -> list[dict]:
             prev = out[-1]
             prev_text = prev["lines"][-1]["text"].rstrip()
             nxt = blk["lines"][0]["text"].lstrip()
-            if prev_text and prev_text[-1] not in UNTERMINATED and nxt[:1].islower():
+            if prev_text and prev_text[-1] not in UNTERMINATED and (
+                    nxt[:1].islower() or prev_text[-1] in ",;" or _wrap_fit(prev, nxt)):
                 off = len(prev["lines"])
                 prev["page_break"] = (blk["page"], off)
                 prev["lines"].extend(blk["lines"])
@@ -184,7 +205,10 @@ def stitch(blocks: list[dict]) -> list[dict]:
             nxt_line = blk["lines"][0]
             nxt = nxt_line["text"].lstrip()
             joinable = prev_text and prev_text[-1] not in UNTERMINATED
-            if prev["type"] == "paragraph" and joinable and nxt[:1].islower():
+            if prev["type"] == "paragraph" and joinable and (
+                    nxt[:1].islower()
+                    or (prev.get("quote") == blk.get("quote")
+                        and (prev_text[-1] in ",;" or _wrap_fit(prev, nxt)))):
                 prev["page_break"] = (blk["page"], len(prev["lines"]))
                 prev["lines"].extend(blk["lines"])
                 continue

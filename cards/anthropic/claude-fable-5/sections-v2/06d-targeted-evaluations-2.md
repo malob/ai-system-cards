@@ -146,11 +146,7 @@ Looking more closely at transcripts from the attitude evaluation reveals that mo
 - 90 cases in which Mythos 5 concluded that FDT and EDT agreed, in which it always chose the response favored by those decision theories (and disfavored by CDT).
 - 12 cases in which Mythos 5 concluded that FDT disagreed with EDT (and agreed with CDT), of which it chose the FDT-favored response in 10/12 cases.
 
-Although we do not have expert human labels for the recommendation of FDT on this dataset, the above evidence suggests that model propensity may be better described as a trend towards FDT agreement, which happens to align with EDT on most of the questions in this dataset. For example, in one transcript (excerpted below), Mythos 5 rejects the
-
-<!-- p.161 -->
-
-EDT-aligned answer in favor of the FDT (and CDT)-aligned answer; it’s also possible that this is, to some degree, downstream of evaluation awareness.
+Although we do not have expert human labels for the recommendation of FDT on this dataset, the above evidence suggests that model propensity may be better described as a trend towards FDT agreement, which happens to align with EDT on most of the questions in this dataset. For example, in one transcript (excerpted below), Mythos 5 rejects the<!-- p.161 --> EDT-aligned answer in favor of the FDT (and CDT)-aligned answer; it’s also possible that this is, to some degree, downstream of evaluation awareness.
 
 ::::transcript
 :::turn{role=assistant label="[Assistant]"}

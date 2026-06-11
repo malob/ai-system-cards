@@ -84,11 +84,7 @@ The Mythos models are our most resilient models against prompt injection to date
 
 [Gray Swan](https://grayswan.ai), an external research partner, evaluated our models using the Agent Red Teaming (ART) benchmark,[^8] developed in collaboration with the [UK AI Security Institute](https://www.aisi.gov.uk/). The benchmark tests susceptibility to prompt injection across four categories of exploitation: breaching confidentiality, introducing competing objectives, generating prohibited content (such as malicious code), and executing prohibited actions (such as unauthorized financial transactions).
 
-Gray Swan measured the success rate of prompt injection attacks after a single attempt (k=1), ten attempts (k=10), and one hundred attempts (k=100), since attack success is not deterministic and repeated attempts can increase the likelihood of a successful injection. The attacks are drawn from the ART Arena, where thousands of expert red-teamers continuously refine strategies against frontier models. From this pool, Gray Swan selected a subset of attacks that have proven effective across multiple models, not just the one originally targeted. The evaluation in this section covers indirect prompt injection[^9]
-
-<!-- p.93 -->
-
-(malicious instructions embedded in external data, which is the focus of this section, and which we refer to simply as “prompt injection”).
+Gray Swan measured the success rate of prompt injection attacks after a single attempt (k=1), ten attempts (k=10), and one hundred attempts (k=100), since attack success is not deterministic and repeated attempts can increase the likelihood of a successful injection. The attacks are drawn from the ART Arena, where thousands of expert red-teamers continuously refine strategies against frontier models. From this pool, Gray Swan selected a subset of attacks that have proven effective across multiple models, not just the one originally targeted. The evaluation in this section covers indirect prompt injection[^9]<!-- p.93 --> (malicious instructions embedded in external data, which is the focus of this section, and which we refer to simply as “prompt injection”).
 
 ![](assets/figures/p093-1.png)
 

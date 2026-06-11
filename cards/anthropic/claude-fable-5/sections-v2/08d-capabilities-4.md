@@ -152,11 +152,7 @@ HealthAdminBench[^73] is a 135-task benchmark of three healthcare revenue-cycle 
 
 We evaluated Claude Mythos 5 on three multilingual benchmarks, namely Cohere Labs’s Global MMLU (GMMLU)[^74] and INCLUDE benchmark[^75], and AI4Bharat’s Multi-task Indic Language Understanding Benchmark (MILU)[^76] to assess model performance across a wide range of languages.
 
-GMMLU extends the standard MMLU evaluation across 42 languages from high-resource languages such as French and German to low-resource languages such as Yoruba, Igbo, and Chichewa. MILU focuses on 10 Indic languages (Bengali, Gujarati, Hindi, Kannada,
-
-<!-- p.302 -->
-
-Malayalam, Marathi, Odia, Punjabi, Tamil, and Telugu) alongside English and tests culturally grounded knowledge comprehension. INCLUDE covers 44 languages with questions drawn from regional academic and professional examinations, emphasizing in-language and in-culture knowledge rather than translated content.
+GMMLU extends the standard MMLU evaluation across 42 languages from high-resource languages such as French and German to low-resource languages such as Yoruba, Igbo, and Chichewa. MILU focuses on 10 Indic languages (Bengali, Gujarati, Hindi, Kannada,<!-- p.302 --> Malayalam, Marathi, Odia, Punjabi, Tamil, and Telugu) alongside English and tests culturally grounded knowledge comprehension. INCLUDE covers 44 languages with questions drawn from regional academic and professional examinations, emphasizing in-language and in-culture knowledge rather than translated content.
 
 #### 8.19.1 GMMLU results
 

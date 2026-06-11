@@ -286,11 +286,7 @@ We track the rate of capability improvement over time using the Anthropic ECI (A
 
 **Claude Mythos 5 advances the frontier, but its departure from the historical capability-over-time trend is similar to that of Claude Mythos Preview, which doesn’t indicate further acceleration.** Claude Mythos 5’s point estimate is **161.29 AECI (95% [157.32, 165.39], n=67)**. This is the highest of any model we have released or assessed, above the highest score measured for any Claude Mythos Preview snapshot (AECI = 158.91 [156.19, 162.84]).
 
-Mythos 5’s point estimate sits above the trend line traced by recent frontier models, but by a similar degree as Mythos Preview. This is notable, because if the slope change observed for Claude Mythos Preview were the beginning of an acceleration trend with compounding gains feeding into the next models, we would expect Claude Mythos 5’s AECI to further depart from the trend. Instead, it appears Claude Mythos 5’s capabilities are in line with the capability improvement expected along the same frontier trendline we’ve observed since Opus 3, simply shifted up by the Mythos Preview capability jump. We thus interpret Claude
-
-<!-- p.47 -->
-
-Mythos 5’s performance as inconsistent with the type of compounding acceleration outlined by Autonomy threat model 2.
+Mythos 5’s point estimate sits above the trend line traced by recent frontier models, but by a similar degree as Mythos Preview. This is notable, because if the slope change observed for Claude Mythos Preview were the beginning of an acceleration trend with compounding gains feeding into the next models, we would expect Claude Mythos 5’s AECI to further depart from the trend. Instead, it appears Claude Mythos 5’s capabilities are in line with the capability improvement expected along the same frontier trendline we’ve observed since Opus 3, simply shifted up by the Mythos Preview capability jump. We thus interpret Claude<!-- p.47 --> Mythos 5’s performance as inconsistent with the type of compounding acceleration outlined by Autonomy threat model 2.
 
 ![](assets/figures/p047-1.png)
 

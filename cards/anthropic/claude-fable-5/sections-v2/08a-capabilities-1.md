@@ -115,11 +115,7 @@ With maximum reasoning effort and without access to tools or web search, Claude 
 
 ### 8.10 USAMO 2026
 
-The USA Mathematical Olympiad (USAMO) is a six-problem, two-day proof-based competition for high school students. It is the next step of the math olympiad track in the US after the AIME, which was a popular AI benchmark last year but is now saturated. The
-
-<!-- p.262 -->
-
-2026 USAMO took place on March 21–22, 2026, after almost all of Mythos’s training data was collected, and we are confident that there was no contamination.
+The USA Mathematical Olympiad (USAMO) is a six-problem, two-day proof-based competition for high school students. It is the next step of the math olympiad track in the US after the AIME, which was a popular AI benchmark last year but is now saturated. The<!-- p.262 --> 2026 USAMO took place on March 21–22, 2026, after almost all of Mythos’s training data was collected, and we are confident that there was no contamination.
 
 Because USAMO solutions are proofs rather than short answers, grading can be challenging and subjective. We follow the MathArena[^41] grading methodology, where each proof is rewritten by a neutral model (Gemini 3.1 Pro) and judged by a panel of 3 frontier models (we used Gemini 3.1 Pro, Claude Opus 4.6, and Claude Mythos Preview) according to defined rubrics. The final score is the minimum given by any judge.
 
