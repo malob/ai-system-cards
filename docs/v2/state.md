@@ -242,6 +242,12 @@ styled pre DOM-verified.
 quote lettered items now nest under their ordered parents (3-space quote
 indent); group-label double-bold (th+<b>) stripped; table row-hover CSS
 removed entirely (owner verdict — misbehaved on merged tables in v1).
+**LATE FLAGS FIXED (18:40):** lettered sub-lists render as <ol type="a">
+(renderer plugin: consecutive-letter bullets convert, prefixes stripped —
+md keeps literal letters, gates untouched); figure captions interleave under
+their own figures (per-figure emission); p.66 cross-page lettered item
+nests; [so it] pill exact (bracket windows ±4). 38 pills, 0 nested.
+
 **QUEUED (next session, first item):** group sub-row colspan distribution —
 give 'API…'/'Claude.ai' labels colspan = data_cols/n_labels so they visibly
 span their column groups, and normalize the 4.2.A-empty-cell vs
