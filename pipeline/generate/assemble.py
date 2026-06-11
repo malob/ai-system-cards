@@ -515,12 +515,15 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
     marks = [m for m in marks
              if not (m[0] in ("bold", "italic", "chip")
                      and not text[m[1]:m[2]].translate(_INVIS))]
-    # emphasis over punctuation-only text ('**;**' after chips) is meaningless
+    # emphasis over punctuation-only text ('**;**' after chips) is
+    # meaningless — but filter AFTER merging, so a bold ':' that belongs to
+    # an adjacent bold run joins it instead of dying ('[Bottom left:]')
     import re as _re
-    marks = [m for m in marks
-             if not (m[0] in ("bold", "italic")
-                     and not _re.search(r"\w", text[m[1]:m[2]]))]
-    return text, _merge_marks(marks)
+    merged = _merge_marks(marks)
+    merged = [m for m in merged
+              if not (m[0] in ("bold", "italic")
+                      and not _re.search(r"\w", text[m[1]:m[2]]))]
+    return text, merged
 
 
 _INVIS = str.maketrans("", "", "​‌‍﻿­ \t")
