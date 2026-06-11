@@ -200,6 +200,11 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 raw0 = blk["lines"][0]["text"] if blk.get("lines") else ""
                 if re.match(r"^\s*[a-z][.)]\u200b", raw0):
                     body = re.sub(r"^(\**[a-z][.)])(?=\S)", r"\1 ", body)
+                    # lettered markers are SUB-items by definition in this
+                    # card; a page break resets the tier baseline and dropped
+                    # one to level 0 (p.66 item 2b)
+                    if blk.get("level", 0) == 0:
+                        indent = "   " if q else "    "
                 out.append(f"{q}{indent}- " + inline_marker + body + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")

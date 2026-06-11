@@ -211,6 +211,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             cur = None
 
     fig_done = False
+    figures_emitted = []
     pending_tables = sorted(table_blocks, key=lambda b: b["_y"])
     for line in sorted(lines, key=lambda l: (round(l["bbox"][1]), l["bbox"][0])):
         # emit any table whose top is above this line, in reading order
@@ -227,12 +228,18 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             continue
         kind = _classify(line, page, in_figure)
         # figure blocks are emitted once, when we first pass their region
-        if img_rects and not fig_done and line["bbox"][1] > img_rects[0][1]:
+        # emit each figure AS ITS REGION IS PASSED (interleaved with its own
+        # caption) — emitting all at once put both captions below both
+        # figures (7.5.1.A/B)
+        while (img_rects and not fig_done
+               and len(figures_emitted) < len(figures)
+               and line["bbox"][1] > img_rects[min(len(figures_emitted), len(img_rects) - 1)][1]):
             flush()
-            for i, f in enumerate(figures):
-                blocks.append({"type": "figure", "file": f, "page": pno,
-                               "alt": "", "caption_lines": []})
-            fig_done = True
+            blocks.append({"type": "figure", "file": figures[len(figures_emitted)],
+                           "page": pno, "alt": "", "caption_lines": []})
+            figures_emitted.append(1)
+            if len(figures_emitted) == len(figures):
+                fig_done = True
         if kind == "prose" and cur and cur["type"] == "heading":
             # wrapped heading continuation: the second line of a wrapped
             # heading has no leading number so it classifies as paragraph
@@ -375,6 +382,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         merged.append(blk)
     blocks = merged
 
+    figures = figures[len(figures_emitted):] if figures else figures
     if not fig_done and figures:
         for f in figures:
             blocks.append({"type": "figure", "file": f, "page": pno, "alt": "", "caption_lines": []})
