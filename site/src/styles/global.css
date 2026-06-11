@@ -597,15 +597,35 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
   border-bottom: 1px solid var(--line);
 }
 
-.article thead th, .article table tr:first-child th {
+/* Header rows get the full "band" treatment, not just the first row: the top
+   run of rows that are all-<th> (an empty <td> lead from a spanned first column
+   does not disqualify) — so a multi-row header (group label / "Successful
+   attack in" / Attempts·Scenarios) reads as ONE block, not bold body text. A
+   data row always carries a non-empty <td>, which excludes it — and keeps
+   row-header <th> like model names from going uppercase-brown. This also makes
+   the empty-cell vs rowspan difference in the first column invisible: every
+   cell of a header row gets the band either way. */
+.article thead th,
+.article table tr:not(:has(td:not(:empty))) th {
   font-family: var(--mono);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--ink-soft);
+}
+.article thead th,
+.article thead td,
+.article table tr:not(:has(td:not(:empty))) > * {
   background: var(--paper-sunken);
-  border-bottom: 1px solid var(--line-strong);
+  border-bottom: none;
+}
+/* one strong rule between the header block and the body — placed on the FIRST
+   data row's top (a data row immediately after a header row). Doing it this way
+   avoids nested :has() — `:has(+ tr:has(…))` is invalid and silently dropped. */
+.article table tr:not(:has(td:not(:empty))) + tr:has(td:not(:empty)) > *,
+.article thead + tbody tr:first-child > * {
+  border-top: 1px solid var(--line-strong);
 }
 
 .article tbody tr:last-child td { border-bottom: none; }
