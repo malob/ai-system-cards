@@ -283,3 +283,32 @@ owner-driven feature — never smuggled in case-by-case during conversion.
 (Round-G concretely: the "Its" italic mid-word slip is in the PDF → left
 as-is. Bare-number section links resolving to the wrong subsection were OUR
 geometry failing where the PDF's number was right → fixed.)
+
+
+## D27 — transcript: interjections, continuation outputs, wrapped highlights (2026-06-11)
+
+Owner review of the p.198 transcript (6.5.2.B) settled three transcript
+representation rules, all now implemented:
+
+- **Bracketed editorial interjections = inter-turn narration, not turns.** A
+  turn whose entire body is one bracketed sentence ('[The model proceeds to
+  work on the task.]') renders as `commentary` (plain framing prose between
+  turn cards), like the gray narration in the #f3f3f3 transcripts (p.40-41) —
+  NOT a user bubble. (Detection: whole-body `\[[^\]]{31,}\]`; the no-internal-
+  `]` guard keeps real turns that merely start/end with `[…]` pills as turns.)
+- **A continuation output box renders as its own [Assistant] card.** A mono
+  output box nested in a turn, separated from its label by an interjection, is
+  the assistant's continued output → its own [Assistant] turn card (inheriting
+  the preceding turn's role + label), matching sibling cards. **Owner-accepted
+  cost:** the PDF's output box has no label of its own, so the repeated
+  '[Assistant]' adds one token not literally in the source (T1 minor 69→70).
+  Accepted because the box IS the assistant's output — the label makes the
+  PDF-established speaker explicit (presentation, not fabrication); this is the
+  one sanctioned exception-shape to D26 for transcript continuation cards.
+- **A wrapped full-width highlight is ONE pill.** A green highlight spanning
+  two lines extracts as one box per line; the adjacent ph marks merge into one
+  continuous pill — but only when the source boxes are vertically stacked, so
+  distinct side-by-side pills ('[…] [Error 1]', p.40) stay separate.
+
+Gate after: 0 majors / L1 31 / T1 70 (the +1 is this accepted continuation
+label; still below the round-G baseline of 72).
