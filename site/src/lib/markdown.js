@@ -62,6 +62,31 @@ function remarkBoxes() {
   };
 }
 
+// Lettered sub-lists: the source marks them 'a.' 'b.' 'c.' as literal text
+// inside bullet items (markdown has no lettered markers). A list whose items
+// ALL lead with consecutive letters becomes <ol type="a"> with the literal
+// prefixes stripped — ordered semantics, letter markers, content untouched.
+function remarkLetterLists() {
+  return (tree) => {
+    visit(tree, 'list', (node) => {
+      if (node.ordered) return;
+      const leads = node.children.map((li) => {
+        const para = li.children?.[0];
+        const text = para?.children?.[0];
+        if (!text || text.type !== 'text') return null;
+        const m = /^([a-z])([.)])\s+/.exec(text.value);
+        return m ? { text, letter: m[1], len: m[0].length } : null;
+      });
+      if (leads.some((l) => !l) || leads.length < 2) return;
+      const seq = leads.every((l, i) => l.letter.charCodeAt(0) === 97 + i);
+      if (!seq) return;
+      for (const l of leads) l.text.value = l.text.value.slice(l.len);
+      node.ordered = true;
+      node.data = { ...(node.data ?? {}), hProperties: { type: 'a' } };
+    });
+  };
+}
+
 // `:chip[Label]` → a colored pill. Color resolved from the per-card registry
 // (label → color name); unknown labels fall back to gray.
 function remarkChips(chips = {}) {
@@ -326,6 +351,7 @@ export async function renderCard(markdown, opts = {}) {
     .use(remarkGfm)
     .use(remarkDirective)
     .use(remarkChips, chips)
+    .use(remarkLetterLists)
     .use(remarkBoxes)
     .use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: 'Footnotes' })
     .use(rehypeRaw)
