@@ -521,7 +521,7 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         # most pills highlight a BRACKETED token: snap to the
                         # bracket pair near the estimate (whitespace-snapping
                         # swallowed neighbors: '[user]-authored,', 'Create [')
-                        lb = t.find("[", max(0, i0 - 2), min(len(t), i0 + 3))
+                        lb = t.find("[", max(0, i0 - 4), min(len(t), i0 + 4))
                         # the matching close is the FIRST ']' after the open —
                         # an estimate-window search grabbed the NEXT pill's
                         # bracket when two pills sit side by side
@@ -531,7 +531,7 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         # resolves adjacent-pill ambiguity.
                         rb = -1
                         if lb >= 0:
-                            rb = t.find("]", max(lb + 1, i1 - 3), min(len(t), i1 + 4))
+                            rb = t.find("]", max(lb + 1, i1 - 4), min(len(t), i1 + 5))
                             if rb < 0:
                                 rb = t.find("]", lb + 1, min(len(t), max(i1 + 4, lb + 40)))
                         if lb >= 0 and rb >= 0 and rb > lb:
