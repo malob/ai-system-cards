@@ -206,6 +206,36 @@ STILL OPEN: label cosmetics verdicts (p.153/222/45), adjudication blessings
 (owner-requested build, FL-07/D17), p.182 styled-<pre> build, S1/T1
 whitelist entries for accepted residuals.
 
+**TABLE AUDIT ROUND (17:15) — vsweep5, all 36 table pages image-vs-md:**
+9 majors found; root-caused and FIXED: p.297 Toolathlon (my width-cap
+regression — removed; fnref-feasibility now guards the p.49 case instead),
+pp.77/80/252/253 phantom columns (`_normalize_rowspan_subrows`: a row covered
+by a first-column rowspan must not carry a leading empty cell). Findings:
+`pipeline/.cache/vsweep5/findings.jsonl`.
+
+**NEXT-ROUND WORKLIST (vsweep5 unfixed + queued builds):**
+1. p.19/20: CB table 2.2.1.A split at page break + orphan 2-cell AAV
+   continuation row (needs rowspan-aware cross-page merge like the welfare
+   fix; renders sit on p-020/021.png).
+2. p.235/236: Top/Bottom cells cascade-duplicate bullets from rows below
+   (PDF = exactly 3 bullets per cell) — docling damage, likely multiset
+   rebuild territory.
+3. Welfare paragraph misses pp.310/311/313 (Q1+Q2 merged etc.) — chain
+   match fails for those cells; debug `_split_cell_paragraphs` per cell.
+4. p.95/96/98/252 'With(out) thinking' sub-labels render bold (th) — the
+   mixed-row demotion in `_demote_data_th` doesn't fire there; debug (maybe
+   whole-table-th + rowspan rows skip both branches).
+5. p.253 'GDP.pdf' garbled row label; verify p.252 'Hard' subrow trailing
+   empties against the PDF.
+6. Builds: `:::ph`/`:ph[]` green placeholder highlights (owner-requested,
+   FL-07/D17); p.182 styled-<pre> bold-in-code (owner verdict: FIX);
+   S1/T1 whitelist entries for accepted residuals (chips p.38/44, labels
+   if owner accepts).
+7. Owner verdicts still pending: label cosmetics p.153/p.222/p.45;
+   adjudication blessings (literal markup, bracket labels).
+8. After fixes: re-run `pipeline/audit_table_seams.py` + a vsweep5-style
+   re-audit of changed pages; regen → gate → commit each batch.
+
 **KNOWN RESIDUALS (typed, deliberate):** T1×6 majors = p.38/44 chip reading
 order (typed-model territory) + 4 understood sites; S1×4 = p.45 'Category:',
 p.153 '[Assistant]' label, p.182 missing-bold sentence (REAL find, example-box
