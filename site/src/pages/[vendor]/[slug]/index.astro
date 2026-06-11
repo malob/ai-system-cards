@@ -72,7 +72,9 @@ const rail = toc
         <h1>{meta.title}</h1>
         <div class="meta-row">
           <span>{fmt(String(meta.release_date))}</span>
+          <span class="sep" aria-hidden="true">·</span>
           <a href={meta.source_url} target="_blank" rel="noopener">Original PDF</a>
+          <span class="sep" aria-hidden="true">·</span>
           <a href={`${base}${vendor}/${slug}/card.md`}>Markdown</a>
         </div>
       </header>
