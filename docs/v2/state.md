@@ -3,7 +3,10 @@
 Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-11 (~01:00) — ROUND G CONVERGED. 23-inspector
+**Last updated:** 2026-06-11 (~10:45) — ROUND G + owner review CLOSED; all 5
+review items resolved (J1/p.198 fully fixed the next morning). Gate 0 majors
+/ L1 31 / T1 **69** (improved as interjections became commentary); seams 0;
+build clean. Below, the ~01:00 convergence record. 23-inspector
 fleet → 16 real defect classes past the 0-major gate, all fixed at class
 level under D25 (commits 2169e2a…2defc4e). Gate 0 majors / L1 31 / T1 72;
 seams 0; mutation recall unchanged; build clean. Experiment 09 is the
@@ -350,12 +353,14 @@ resolved.** Verdicts + outcomes:
    source's own quirks. (Owner's call; I was persuaded.)
 4. Green inline code (p.153) — **LEFT**. Monospace is captured; the green is
    editorial (owner agreed).
-5. p.198 transcript — **mono FIXED** (2cc34f0: #f0eee6 reclassified as code,
-   the card's lone serif `:::example` is gone). The deeper structure (elision
-   note "[The model proceeds…]" still a user bubble; mono output sits just
-   outside the transcript) is **deferred — see JUDGMENT-CALLS.md J1**: needs
-   an ordered-segment turn model, too risky to rework unsupervised; owner to
-   steer. `git revert 2cc34f0` if the lone mono box is unwanted.
+5. p.198 transcript — **FULLY RESOLVED** (owner steered it next morning; J1 in
+   JUDGMENT-CALLS.md). Mono output (2cc34f0); bracketed editorial interjections
+   → inter-turn `commentary` not user bubbles (6b4004e); nested mono output
+   kept INSIDE the transcript (d7953ab). Now: assistant mono thinking → plain
+   "[The model proceeds…]" narration → mono output, one transcript. Font-
+   faithfulness confirmed (all 11 #f0eee6 boxes are RobotoMono). p.118
+   "error: gh" researched — different class (tool-error input, not a `[…]`
+   interjection), left as-is.
 
 **Owner is asleep; I continued autonomously per their instruction.** Judgment
 calls logged in [JUDGMENT-CALLS.md](JUDGMENT-CALLS.md) (J1 only). Gate held
