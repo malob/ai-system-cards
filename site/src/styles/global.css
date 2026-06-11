@@ -533,7 +533,13 @@ a:hover { text-decoration-color: var(--accent); }
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.12s;
+  /* the visible "p.N" is CSS-generated, not DOM text — so it stays out of text
+     selection, copy, Pagefind, and Safari Reader (it's navigational chrome, not
+     content). The link's accessible name comes from its aria-label. */
+  user-select: none;
+  -webkit-user-select: none;
 }
+.pagemark::before { content: attr(data-page); }
 .pagemark:hover { color: var(--accent); }
 /* Page markers need the centered text column to have a left gutter; that
    holds from 920px up (medium tier). Below 920px (narrow tier) the column
