@@ -93,6 +93,15 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
         for i, ch in enumerate(text):
             if ch in "*`" and not any(a <= i < b for a, b in covered):
                 ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
+    # ALWAYS: a raw '<' before a letter or '/' opens an HTML tag and the
+    # renderer swallows it ('<link>' in p.216 prose vanished); '\<' renders
+    # as the character in every md text context. Code-marked ranges are
+    # backtick-wrapped (remark escapes them) and must stay backslash-free.
+    code_cov = [(a, b) for kind, a, b, _ in marks if kind == "code"]
+    for m in re.finditer(r"<(?=[A-Za-z/])", text):
+        i = m.start()
+        if not any(a <= i < b for a, b in code_cov):
+            ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
     out = text
     for _, _, _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1], x[2], x[3])):
         out = edit(out)
