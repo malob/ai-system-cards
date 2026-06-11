@@ -292,7 +292,7 @@ blocklist; 7.5.1 figure/caption interleave. Gate: 0 majors, FN1 0, L1 31
 
 **ON "GO" → EXECUTE ROUND G (this is the next action, fully specified):**
 1. Launch inspector agents over all 319 pages, two check types per the
-   design below: (a) markdown-smell linter (read sections-v2 md for sus
+   design below: (a) markdown-smell linter (read sections md for sus
    patterns — mid-token emphasis ends, dangling markup, inconsistent
    row styling, odd spacing — then cross-check hits against page renders);
    (b) triple-pane comparator (PDF render `extracted/pages/p-NNN.png` +
@@ -310,13 +310,13 @@ blocklist; 7.5.1 figure/caption interleave. Gate: 0 majors, FN1 0, L1 31
 4. ORCHESTRATOR OWNS ALL FIXES (D25): per finding — diagnose, class-fix in
    pipeline/ (preferred) or queue for the patch layer (NOT YET BUILT: run.py
    post-regen owner-adjudicated patch file — build on first need); regen;
-   `git diff cards/anthropic/claude-fable-5/sections-v2` and read it twice
+   `git diff cards/anthropic/claude-fable-5/sections` and read it twice
    (expected change present? anything UNEXPECTED moved?); preview-verify
    renderer-visible changes; run `python3 pipeline/audit_table_seams.py` +
    the gate; commit pipeline+output together.
 5. Gate after each batch:
    `uv run --with pymupdf python pipeline/verifier/calibrate.py
-   $PWD/cards/anthropic/claude-fable-5/sections-v2` — baseline to hold:
+   $PWD/cards/anthropic/claude-fable-5/sections` — baseline to hold:
    0 majors (6 owner-accepted suppressed), L1 31 (typed v1-parity),
    T1 ~72-73 minors (census: ~31 chip/table page-attribution bookkeeping,
    10 empty-vs-empty, 3 backtick-projection artifacts, ~28 micro

@@ -1,4 +1,4 @@
-"""v2 conversion driver: pages → sections-v2/*.md → verifier gates.
+"""v2 conversion driver: pages → sections/*.md → verifier gates.
 
     uv run --with pymupdf python pipeline/generate/run.py --pages 3 26
     uv run --with pymupdf python pipeline/generate/run.py --seed
@@ -26,7 +26,7 @@ import tables  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[2]
 CARD = REPO / "cards/anthropic/claude-fable-5"
-OUT = CARD / "sections-v2"
+OUT = CARD / "sections"
 SEED = [3, 19, 20, 26, 39, 40, 41, 42, 43, 44, 74, 95, 100, 107, 118, 139,
         235, 236, 252, 253, 309, 310, 311, 318, 319]
 TOC = set(range(4, 11))

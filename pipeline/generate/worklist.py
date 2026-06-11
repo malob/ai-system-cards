@@ -16,7 +16,7 @@ sys.path.insert(0, str(HERE))
 import calibrate  # noqa: E402
 
 REPO = calibrate.REPO
-OUT = REPO / "cards/anthropic/claude-fable-5/sections-v2"
+OUT = REPO / "cards/anthropic/claude-fable-5/sections"
 WL = REPO / "docs/v2/worklist.md"
 
 

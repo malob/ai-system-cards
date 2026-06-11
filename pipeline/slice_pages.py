@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-SECTIONS = REPO / "cards/anthropic/claude-fable-5/sections-v2"
+SECTIONS = REPO / "cards/anthropic/claude-fable-5/sections"
 MARK = re.compile(r"<!-- p\.(\d+) -->")
 HEADER = re.compile(r"<!-- source: \S+ pages (\d+)-(\d+) -->")
 

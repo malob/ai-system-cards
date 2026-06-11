@@ -3,7 +3,7 @@ text gates can't see (T1 excludes tables).
 
     python3 pipeline/audit_table_seams.py
 
-Checks every <table> in sections-v2:
+Checks every <table> in sections:
 - S1: bare text directly followed by a block <p> inside a cell (mixed
   flat/block — renders a spurious line break);
 - S2: a paragraph boundary '</p><p>' where the next paragraph starts
@@ -15,7 +15,7 @@ import re
 import sys
 from pathlib import Path
 
-SECTIONS = Path(__file__).resolve().parents[1] / "cards/anthropic/claude-fable-5/sections-v2"
+SECTIONS = Path(__file__).resolve().parents[1] / "cards/anthropic/claude-fable-5/sections"
 flags = 0
 for f in sorted(SECTIONS.glob("*.md")):
     text = f.read_text()

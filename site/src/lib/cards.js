@@ -22,7 +22,7 @@ export function listCards() {
 }
 
 // Sections dir is env-overridable so v2 pipeline output can be previewed
-// without touching the shipped content (e.g. SECTIONS_DIR=sections-v2).
+// without touching the shipped content (e.g. SECTIONS_DIR=sections).
 const SECTIONS_DIR = process.env.SECTIONS_DIR || 'sections';
 
 // Raw stitched markdown, exactly as transcribed (page markers and all).

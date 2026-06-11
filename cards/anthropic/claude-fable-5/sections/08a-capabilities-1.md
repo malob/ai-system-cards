@@ -6,269 +6,11 @@
 
 ### 8.1 Evaluation summary
 
-<!-- Note: this table uses HTML for its merged header/row cells. The footnote references
-[^28] and [^29] inside <th> cells may need renderer-specific handling at build time. -->
-<table>
-  <thead>
-    <tr>
-      <th rowspan="2" colspan="2">Evaluation</th>
-      <th colspan="4">Claude family models</th>
-      <th colspan="2">Other models</th>
-    </tr>
-    <tr>
-      <th>Mythos 5</th>
-      <th>Fable 5</th>
-      <th>Mythos Preview</th>
-      <th>Opus 4.8</th>
-      <th>GPT-5.5</th>
-      <th>Gemini 3.1 Pro</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th colspan="2">SWE-bench Pro</th>
-      <td><strong>80.3</strong></td>
-      <td>80</td>
-      <td>77.8</td>
-      <td>69.2</td>
-      <td>58.6</td>
-      <td>54.2</td>
-    </tr>
-    <tr>
-      <th colspan="2">SWE-bench Verified</th>
-      <td><strong>95.5</strong></td>
-      <td>95</td>
-      <td>93.9</td>
-      <td>88.6</td>
-      <td>-</td>
-      <td>80.6</td>
-    </tr>
-    <tr>
-      <th colspan="2">Terminal-Bench 2.1</th>
-      <td><strong>88.0</strong></td>
-      <td>84.3</td>
-      <td>-</td>
-      <td>82.7</td>
-      <td>83.4 (Codex CLI)</td>
-      <td>70.7 (Gemini CLI)</td>
-    </tr>
-    <tr>
-      <th colspan="2">BrowseComp</th>
-      <td><strong>88.0</strong> (single-agent)<br><strong>93.3</strong> (multi-agent)</td>
-      <td>-</td>
-      <td>87.9</td>
-      <td>84.3 (single-agent)<br>88.5 (multi-agent)</td>
-      <td>84.4</td>
-      <td>85.9</td>
-    </tr>
-    <tr>
-      <th rowspan="2">Humanity’s Last Exam</th>
-      <th>No tools</th>
-      <td><strong>59.0</strong></td>
-      <td>-</td>
-      <td>56.8</td>
-      <td>49.8</td>
-      <td>41.4</td>
-      <td>44.4</td>
-    </tr>
-    <tr>
-      <th>With tools</th>
-      <td>64.5</td>
-      <td>-</td>
-      <td><strong>64.7</strong></td>
-      <td>57.9</td>
-      <td>52.2</td>
-      <td>51.4</td>
-    </tr>
-    <tr>
-      <th rowspan="2">CharXiv Reasoning</th>
-      <th>No tools</th>
-      <td><strong>88.9</strong></td>
-      <td>-</td>
-      <td>86.2</td>
-      <td>80.5</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th>With tools</th>
-      <td><strong>93.5</strong></td>
-      <td>-</td>
-      <td>92.5</td>
-      <td>89.9</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th rowspan="2">BioMystery Bench</th>
-      <th>Human</th>
-      <td><strong>83.9</strong></td>
-      <td>-</td>
-      <td>82.6</td>
-      <td>80.4</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Hard</th>
-      <td><strong>46.1</strong></td>
-      <td>-</td>
-      <td>29.6</td>
-      <td>40</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th colspan="2">OSWorld-Verified[^28]</th>
-      <td>85.0</td>
-      <td>85.0</td>
-      <td><strong>85.4</strong></td>
-      <td>83.4</td>
-      <td>78.7</td>
-      <td>76.2 (3.5 Flash: 78.4)</td>
-    </tr>
-    <tr>
-      <th colspan="2">CritPt</th>
-      <td><strong>28.6</strong></td>
-      <td>-</td>
-      <td></td>
-      <td>20.9</td>
-      <td>27.1</td>
-      <td>17.7</td>
-    </tr>
-    <tr>
-      <th colspan="2">ArxivMath</th>
-      <td><strong>78.5</strong></td>
-      <td></td>
-      <td>68.7</td>
-      <td>71.8</td>
-      <td>71.5</td>
-      <td>64.8</td>
-    </tr>
-    <tr>
-      <th colspan="2">RiemannBench</th>
-      <td><strong>55.0</strong></td>
-      <td>-</td>
-      <td>43.0</td>
-      <td>34.0</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th colspan="2">GraphWalks BFS 256K</th>
-      <td><strong>91.1</strong></td>
-      <td>-</td>
-      <td>85.7</td>
-      <td>85.9</td>
-      <td>73.7</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th colspan="2">GraphWalks Parents 256K</th>
-      <td><strong>99.96</strong></td>
-      <td>-</td>
-      <td>99.9</td>
-      <td>99.3</td>
-      <td>90.1</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th colspan="2">FrontierCode (Diamond)</th>
-      <td>-</td>
-      <td><strong>29.3</strong></td>
-      <td>-</td>
-      <td>13.4</td>
-      <td>5.7</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th colspan="2">GDPval-AA[^29]</th>
-      <td>-</td>
-      <td><strong>1932</strong></td>
-      <td></td>
-      <td>1890</td>
-      <td>1769</td>
-      <td>1314</td>
-    </tr>
-    <tr>
-      <th colspan="2">GDP.pdf</th>
-      <td>-</td>
-      <td><strong>29.8</strong></td>
-      <td></td>
-      <td>22.5</td>
-      <td>24.9</td>
-      <td>16.7</td>
-    </tr>
-    <tr>
-      <th colspan="2">OfficeQA Pro</th>
-      <td>-</td>
-      <td><strong>57.9</strong></td>
-      <td></td>
-      <td>48.1</td>
-      <td>52.6</td>
-      <td>18.1</td>
-    </tr>
-    <tr>
-      <th colspan="2">AutomationBench</th>
-      <td>-</td>
-      <td><strong>17.4</strong></td>
-      <td></td>
-      <td>15.5</td>
-      <td>12.9</td>
-      <td>9.6 (3.5 Flash: 14.5)</td>
-    </tr>
-    <tr>
-      <th colspan="2">Blueprint-Bench 2</th>
-      <td>-</td>
-      <td><strong>38.6</strong></td>
-      <td></td>
-      <td>14.5</td>
-      <td>36.2</td>
-      <td>26.5 (3.5 Flash: 33.6)</td>
-    </tr>
-    <tr>
-      <th rowspan="2">Legal Agent Benchmark</th>
-      <th>Full Public Set</th>
-      <td><strong>16.9</strong></td>
-      <td>-</td>
-      <td>13.4</td>
-      <td>9.6</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th>Harvey’s Held-Out Set</th>
-      <td>-</td>
-      <td><strong>13.3</strong></td>
-      <td></td>
-      <td>10.4</td>
-      <td>2.1</td>
-      <td>0.0 (3.5 Flash: 0.8)</td>
-    </tr>
-    <tr>
-      <th colspan="2">HealthBench</th>
-      <td><strong>62.7</strong></td>
-      <td>-</td>
-      <td>61.1</td>
-      <td>59.3</td>
-      <td>56.5</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th colspan="2">HealthBench Professional</th>
-      <td><strong>66.0</strong></td>
-      <td>-</td>
-      <td>64.7</td>
-      <td>56.9</td>
-      <td>51.8</td>
-      <td>-</td>
-    </tr>
-  </tbody>
-</table>
+<table><tbody><tr><th colspan="2">Evaluation</th><th colspan="4">Claude family models</th><th colspan="2">Other models</th></tr><tr><td></td><td></td><td><b>Mythos 5</b></td><td><b>Fable 5</b></td><td><b>Mythos Preview</b></td><td><b>Opus 4.8</b></td><td><b>GPT-5.5</b></td><td><b>Gemini 3.1 Pro</b></td></tr><tr><th colspan="2">SWE-bench Pro</th><td><b>80.3</b></td><td>80</td><td>77.8</td><td>69.2</td><td>58.6</td><td>54.2</td></tr><tr><th colspan="2">SWE-bench Verified</th><td><b>95.5</b></td><td>95</td><td>93.9</td><td>88.6</td><td>-</td><td>80.6</td></tr><tr><th colspan="2">Terminal-Bench 2.1</th><td><b>88.0</b></td><td>84.3</td><td>-</td><td>82.7</td><td>83.4 (Codex CLI)</td><td>70.7 (Gemini CLI)</td></tr><tr><th colspan="2">BrowseComp</th><td><b>88.0</b> (single-agent ) <b>93.3</b> (multi-agent)</td><td>-</td><td>87.9</td><td>84.3 (single-agent ) 88.5 (multi-agent)</td><td>84.4</td><td>85.9</td></tr><tr><th rowspan="2">Humanity’s Last Exam</th><td><b>No tools</b></td><td><b>59.0</b></td><td>-</td><td>56.8</td><td>49.8</td><td>41.4</td><td>44.4</td></tr><tr><td><b>With tools</b></td><td>64.5</td><td>-</td><td><b>64.7</b></td><td>57.9</td><td>52.2</td><td>51.4</td></tr><tr><th rowspan="2">CharXiv Reasoning</th><td><b>No tools</b></td><td><b>88.9</b></td><td>-</td><td>86.2</td><td>80.5</td><td>-</td><td>-</td></tr><tr><td><b>With tools</b></td><td><b>93.5</b></td><td>-</td><td>92.5</td><td>89.9</td><td>-</td><td>-</td></tr><tr><th rowspan="2">BioMystery Bench</th><td><b>Human</b></td><td><b>83.9</b></td><td>-</td><td>82.6</td><td>80.4</td><td></td><td></td></tr><tr><td><b>Hard</b></td><td><b>46.1</b></td><td>-</td><td>29.6</td><td>40</td><td></td><td></td></tr><tr><th colspan="2">OSWorld-Verified<sup>[^28]</sup></th><td>85.0</td><td>85.0</td><td><b>85.4</b></td><td>83.4</td><td>78.7</td><td>76.2 (3.5 Flash: 78.4)</td></tr><tr><th colspan="2">CritPt</th><td><b>28.6</b></td><td>-</td><td></td><td>20.9</td><td>27.1</td><td>17.7</td></tr><tr><th colspan="2">ArxivMath</th><td><b>78.5</b></td><td></td><td>68.7</td><td>71.8</td><td>71.5</td><td>64.8</td></tr><!-- p.253 --><tr><td colspan="2"><b>RiemannBench</b></td><td><b>55.0</b></td><td>-</td><td>43.0</td><td>34.0</td><td>-</td><td>-</td></tr><tr><th colspan="2">GraphWalks BFS 256K</th><td><b>91.1</b></td><td>-</td><td>85.7</td><td>85.9</td><td>73.7</td><td>-</td></tr><tr><th colspan="2">GraphWalks Parents 256K</th><td><b>99.96</b></td><td>-</td><td>99.9</td><td>99.3</td><td>90.1</td><td>-</td></tr><tr><th colspan="2">FrontierCode (Diamond)</th><td>-</td><td><b>29.3</b></td><td>-</td><td>13.4</td><td>5.7</td><td>-</td></tr><tr><th colspan="2">GDPval-AA<sup>[^29]</sup></th><td>-</td><td><b>1932</b></td><td></td><td>1890</td><td>1769</td><td>1314</td></tr><tr><th colspan="2">GDP.pdf</th><td>-</td><td><b>29.8</b></td><td></td><td>22.5</td><td>24.9</td><td>16.7</td></tr><tr><th colspan="2">OfficeQA Pro</th><td>-</td><td><b>57.9</b></td><td></td><td>48.1</td><td>52.6</td><td>18.1</td></tr><tr><th colspan="2">AutomationBench</th><td>-</td><td><b>17.4</b></td><td></td><td>15.5</td><td>12.9</td><td>9.6 (3.5 Flash: 14.5)</td></tr><tr><th colspan="2">Blueprint-Bench 2</th><td>-</td><td><b>38.6</b></td><td></td><td>14.5</td><td>36.2</td><td>26.5 (3.5 Flash: 33.6)</td></tr><tr><th rowspan="2">Legal Agent Benchmark</th><td><b>Full Public Set</b></td><td><b>16.9</b></td><td>-</td><td>13.4</td><td>9.6</td><td>-</td><td>-</td></tr><tr><td><b>Harvey’s Held-Out Set</b></td><td>-</td><td><b>13.3</b></td><td></td><td>10.4</td><td>2.1</td><td>0.0 (3.5 Flash: 0.8)</td></tr><tr><th colspan="2">HealthBench</th><td><b>62.7</b></td><td>-</td><td>61.1</td><td>59.3</td><td>56.5</td><td>-</td></tr><tr><th colspan="2">HealthBench Professional</th><td><b>66.0</b></td><td>-</td><td>64.7</td><td>56.9</td><td>51.8</td><td>-</td></tr></tbody></table>
 
-<!-- p.253 -->
-
-*__[Table 8.1.A] Capability evaluation summary.__ Unless otherwise noted, all Mythos 5 results use the following standard configuration: adaptive thinking at max effort, default sampling settings (temperature, top_p), averaged over 5 trials. Context window sizes are evaluation-dependent and do not exceed 1M tokens. The best score in each row is __bolded__. Competitor figures are drawn from the respective developers’ published system cards or benchmark leaderboards. Fable's scores reflect its production safeguards, including fallback to Opus 4.8, which is why certain benchmarks score slightly lower on Fable compared to Mythos.*
+:::caption
+**[Table 8.1.A] Capability evaluation summary.** Unless otherwise noted, all Mythos 5 results use the following standard configuration: adaptive thinking at max effort, default sampling settings (temperature, top_p), averaged over 5 trials. Context window sizes are evaluation-dependent and do not exceed 1M tokens. The best score in each row is **bolded**. Competitor figures are drawn from the respective developers’ published system cards or benchmark leaderboards. Fable's scores reflect its production safeguards, including fallback to Opus 4.8, which is why certain benchmarks score slightly lower on Fable compared to Mythos.
+:::
 
 <!-- p.254 -->
 
@@ -283,11 +25,13 @@ SWE-bench (Software Engineering Bench) tests AI models on real-world software en
 
 All SWE-bench variants use the standard configuration, with thinking blocks included in the sampling results. For our memorization screening, see Section 6.2.1 in the [Mythos Preview System Card](https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf).
 
-
 <!-- p.255 -->
 
-![Chart: SWE-bench Pro test-time compute scaling, plotting pass rate against average cost per task for Claude Opus 4.8 and Claude Mythos 5 across reasoning-effort levels from low to x-high](assets/figures/p255-1.png)
-*__[Figure 8.2.A] SWE-bench Pro__ score versus average cost per task across reasoning-effort levels.*
+![](assets/figures/p255-1.png)
+
+:::caption
+**[Figure 8.2.A] SWE-bench Pro** score versus average cost per task across reasoning-effort levels.
+:::
 
 ### 8.3 Terminal-Bench 2.1
 
@@ -307,17 +51,21 @@ FrontierCode[^34] is an agentic coding benchmark of 150 software engineering tas
 
 Fable 5 ranks #1 on FrontierCode (Diamond subset) with a 29.3% score and 30.2% pass rate (all models at xhigh reasoning effort; score / pass rate), improving on Claude Opus 4.8 (13.4% / 14.5%) and leading GPT-5.5 (5.7% / 6.4%). Fable 5 also ranks #1 on FrontierCode (Main subset) with a 46.3% score and 48.8% pass rate, improving on Claude Opus 4.8 (34.3% / 37.3%) and leading GPT-5.5 (25.5% / 28.2%). Even at medium effort, Fable 5 outperforms every other model at any effort level.
 
-
 <!-- p.257 -->
 
-![Chart: FrontierCode Diamond test-time compute scaling, plotting score against average cost per task on a log scale for GPT-5.5, Claude Opus 4.8, and Claude Mythos 5 across reasoning-effort levels](assets/figures/p257-1.png)
-*__[Figure 8.4.A] FrontierCode (Diamond)__ pass rate across reasoning effort levels with mean output tokens per task on a log scale. Cost is computed from each run's recorded API token usage at measured cache-hit rates, with cache reads billed at 0.1× the input rate and writes at 1.25×, and the full response including extended thinking at the output rate, using published per-token rates.*
+![](assets/figures/p257-1.png)
 
+:::caption
+**[Figure 8.4.A] FrontierCode (Diamond)** pass rate across reasoning effort levels with mean output tokens per task on a log scale. Cost is computed from each run's recorded API token usage at measured cache-hit rates, with cache reads billed at 0.1× the input rate and writes at 1.25×, and the full response including extended thinking at the output rate, using published per-token rates.
+:::
 
 <!-- p.258 -->
 
-![Chart: FrontierCode Main test-time compute scaling, plotting pass rate against average cost per task on a log scale for GPT-5.5, Claude Opus 4.8, and Claude Mythos 5 across reasoning-effort levels](assets/figures/p258-1.png)
-*__[Figure 8.4.B.] FrontierCode (Main)__ pass rate across reasoning effort levels with mean output tokens per task on a log scale.*
+![](assets/figures/p258-1.png)
+
+:::caption
+**[Figure 8.4.B.] FrontierCode (Main)** pass rate across reasoning effort levels with mean output tokens per task on a log scale.
+:::
 
 ### 8.5 Frontier SWE
 
@@ -337,11 +85,13 @@ We do not report separate ProgramBench results for Claude Fable 5, given that Pr
 
 CursorBench[^38] is an agentic coding benchmark from Cursor, composed of real coding tasks (drawn from internal use and external traffic) and executed in Cursor’s production agent harness. All scores and per-task costs were measured and reported independently by Cursor. Claude Fable 5 outperformed the previous best result on CursorBench, scoring 72.9% at maximum effort and 8.6 points above GPT-5.5 at its highest published effort (64.3%). Fable 5 leads at every effort level from Medium upward.
 
-
 <!-- p.260 -->
 
-![Chart: CursorBench test-time compute scaling, plotting score against average cost per task on a log scale for GPT-5.5, Claude Opus 4.8, and Claude Mythos 5 across reasoning-effort settings](assets/figures/p260-1.png)
-*__[Figure 8.7.A] CursorBench score versus mean cost per task by reasoning-effort setting,__ as measured and reported by Cursor in their production agent harness. Cost per task is as measured and reported by Cursor from recorded API usage in their production harness, consistent with published per-token rates assuming 1-hour cache writes.*
+![](assets/figures/p260-1.png)
+
+:::caption
+**[Figure 8.7.A] CursorBench score versus mean cost per task by reasoning-effort setting,** as measured and reported by Cursor in their production agent harness. Cost per task is as measured and reported by Cursor from recorded API usage in their production harness, consistent with published per-token rates assuming 1-hour cache writes.
+:::
 
 ### 8.8 GPQA Diamond
 
@@ -357,8 +107,11 @@ RiemannBench[^40] is a private benchmark of 25 problems developed by Surge AI th
 
 With maximum reasoning effort and without access to tools or web search, Claude Mythos 5 scored 55.0%, ahead of Claude Mythos Preview (43.0%) and Claude Opus 4.8 (34.0%), averaging over 4 attempts per problem.
 
-![Chart: RiemannBench accuracy bar chart showing Claude Mythos Preview at 43.0%, Claude Opus 4.8 at 34.0%, and Claude Mythos 5 at 55.0%](assets/figures/p261-1.png)
-*__[Figure 8.9.A] RiemannBench accuracy scores.__ Models are evaluated with maximum reasoning effort and without access to tools or web search.*
+![](assets/figures/p261-1.png)
+
+:::caption
+**[Figure 8.9.A] RiemannBench accuracy scores.** Models are evaluated with maximum reasoning effort and without access to tools or web search.
+:::
 
 ### 8.10 USAMO 2026
 
@@ -374,22 +127,25 @@ ArXivMath is a final-answer benchmark of research-level mathematics maintained b
 
 We evaluate using the March and April 2026[^42] releases (71 problems total), chosen to avoid contamination with Fable’s training data. Mythos 5 with extended thinking scored 78.52%, averaged over four runs per problem, ahead of GPT-5.5 (xhigh) at 71.48% and Gemini 3.1 Pro Preview at 64.79%[^43].
 
-
 <!-- p.263 -->
 
-![Chart: ArxivMath accuracy bar chart comparing Gemini 3.1 Pro Preview, GPT-5.5 (xhigh), and Claude models, with Claude Mythos 5 highest at 78.5%](assets/figures/p263-1.png)
-*__[Figure 8.11.A] ArxivMath (March and April) accuracy scores.__ Claude models were evaluated with max thinking effort in the no-tools setting.*
+![](assets/figures/p263-1.png)
+
+:::caption
+**[Figure 8.11.A] ArxivMath (March and April) accuracy scores.** Claude models were evaluated with max thinking effort in the no-tools setting.
+:::
 
 ### 8.12 CritPt
 
 CritPt (Complex Research using Integrated Thinking–Physics Test)[^44] is a benchmark of research-level physics problems created by active physics researchers. It comprises 70 composite challenges, each simulating an entry-level research project, spanning 11 subfields including condensed matter, quantum, atomic, molecular, optical, astrophysics, high-energy, statistical, and nuclear physics. Answers use machine-verifiable formats and are scored by an automated physics-specific grading pipeline. We use the independent evaluation run by [Artificial Analysis](https://artificialanalysis.ai/evaluations/critpt) via the CritPt grading API. Claude Mythos 5 scored 28.6% on CritPt, ahead of GPT-5.5 (27.1%) and improving on Claude Opus 4.8 by 7.7 percentage points (20.9%).
 
-
 <!-- p.264 -->
 
-![Chart: CritPt accuracy bar chart showing Gemini 3.1 Pro at 17.7%, GPT-5.5 at 27.1%, Claude Opus 4.8 at 20.9%, and Claude Mythos 5 at 28.6%](assets/figures/p264-1.png)
-*__[Figure 8.12.A] CritPt accuracy scores__. Evaluated by [Artificial Analysis](https://artificialanalysis.ai/evaluations/critpt).*
+![](assets/figures/p264-1.png)
 
+:::caption
+**[Figure 8.12.A] CritPt accuracy scores**. Evaluated by [Artificial Analysis](https://artificialanalysis.ai/evaluations/critpt).
+:::
 [^28]: Changes to the Mythos OSWorld score are due to a bug fix on our zoom tool when paired with batched actions, and increasing the max tokens per turn from 16K to 128K.
 
 [^29]: Elo score as of June 6, 2026.
@@ -423,3 +179,4 @@ CritPt (Complex Research using Integrated Thinking–Physics Test)[^44] is a ben
 [^43]: GPT-5.5 and Gemini 3.1 Pro Preview scores are taken from the MathArena leaderboard for the same releases.
 
 [^44]: Zhu, M., et al. (2025). Probing the critical point (CritPt) of AI reasoning: A frontier physics research benchmark. arXiv:2509.26574. [https://arxiv.org/abs/2509.26574](https://arxiv.org/abs/2509.26574)
+

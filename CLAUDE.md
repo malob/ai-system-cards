@@ -31,7 +31,7 @@ the shipped v1 site and layout.
   method, result, conclusion) and committed scripts — re-runnable from the writeup
   alone.
 - **Sub-agent findings must land in files**, never only in conversation.
-- **Diff-per-fix (D25):** `sections-v2/` is git-tracked. After every fix:
+- **Diff-per-fix (D25):** `sections/` is git-tracked. After every fix:
   regen → `git diff` the output → confirm the expected change AND scan for
   unexpected ones (regression catch) → preview-check if renderer-visible →
   commit pipeline + output together. Never hand-edit generated files.

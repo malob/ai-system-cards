@@ -312,3 +312,28 @@ representation rules, all now implemented:
 
 Gate after: 0 majors / L1 31 / T1 70 (the +1 is this accepted continuation
 label; still below the round-G baseline of 72).
+
+
+## D28 — v2 is canonical; v1 retired (supersedes D22) (2026-06-11)
+
+Owner's call after the owner-review polish: v2 is good enough to be THE
+version. v1 is retired, not kept frozen alongside.
+
+- **v2 output is now the card content.** `cards/anthropic/claude-fable-5/
+  sections-v2/` was renamed to `sections/` (replacing the v1 transcription);
+  the site's default `SECTIONS_DIR=sections` now serves v2, and the dev-server
+  env override is gone. ~14 `sections-v2` path references updated across the
+  pipeline, CLAUDE.md, and state.md; the historical decisions/experiments keep
+  their `sections-v2` mentions (append-only — that was the name at the time).
+- **v1 working files scrubbed:** the old `sections/` transcription and the v1
+  repair scripts in `tools/` (D3: "mine, then retire") are deleted from the
+  working tree. README rewritten to describe the v2 mechanical pipeline.
+- **D5 is preserved, not violated.** The verifier calibrates against git REFS
+  (`f60899a`, `fb483fb`, …) via `sections_at_ref`, not the working tree — and
+  those refs still contain v1 in full. Deleting v1 in a *new commit* leaves the
+  labeled-defect corpus intact; only *rewriting history* would break it, which
+  we do not do. `extracted/` (per-page renders + oracle ground truth) and
+  `source.pdf` are kept — shared infrastructure the v2 pipeline depends on.
+
+Gate after the move: 0 majors / L1 31 / T1 70; seams 0; site builds clean.
+Still nothing pushed (D13) — publishing remains an explicit owner step.

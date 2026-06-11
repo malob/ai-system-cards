@@ -13,29 +13,45 @@ markdown for machine consumption (`card.md` per card, `llms.txt` index).
 cards/<vendor>/<slug>/
   meta.yaml          # title, vendor, release date, source URL
   source.pdf         # the original PDF
-  sections/*.md      # faithful markdown transcription, ordered by filename
+  sections/*.md      # faithful markdown, mechanically generated, ordered by filename
   assets/figures/    # figure images extracted from the PDF (pPPP-K.png)
-  extracted/         # mechanical extraction artifacts (ground truth + verification)
-docs/
-  markdown-conventions.md   # transcription rules all cards follow
+  extracted/         # mechanical extraction artifacts (ground truth + per-page renders)
+  style-manifest.yaml# per-card visual vocabulary (chip/highlight fills, role colors)
+pipeline/            # the conversion pipeline (extract → assemble → verify)
+docs/v2/             # design notes, decisions log, and experiments
 site/                # Astro site rendering cards/ to static HTML
 ```
 
 ## How a card is produced
 
-1. **Extract** ground truth: `pdftotext` text layer, `pdfimages` figures,
-   link annotations, per-page renders.
-2. **Transcribe**: parallel Claude agents convert page-range chunks to markdown
-   following [docs/markdown-conventions.md](docs/markdown-conventions.md), each
-   self-verifying with a word-level diff against the text layer.
-3. **Verify**: an independent sweep checks page-marker continuity and that every
-   page's distinctive sentences appear in the stitched markdown
-   (`extracted/verify_coverage.py`).
+The conversion is **mechanical — no LLM transcribes or edits the content** — so
+fidelity is reproducible and checkable by construction.
+
+1. **Extract** ground truth from the PDF: a PyMuPDF "oracle" (text spans with
+   style flags, links, footnotes, highlight/chip fills, page geometry, per-page
+   renders) plus docling for table structure.
+2. **Assemble**: a block compiler builds the document straight from those facts —
+   paragraphs, lists, headings, tables, transcripts, figures, footnotes — and
+   serializes to `sections/*.md` (`pipeline/generate/`).
+3. **Verify**: independent invariant gates compare the output against the oracle
+   — text tokens, links, bold/chip styling, block structure, tables, figures,
+   footnotes, page-marker continuity — and fail on any unexplained divergence
+   (`pipeline/verifier/`). The gates are calibrated against the project's own
+   labeled history of real defects and mutation-tested for recall.
 4. **Render**: the Astro site stitches `sections/*.md`, turns page markers into
    PDF deep links, footnotes into margin sidenotes, and serves `card.md` +
    `llms.txt` alongside the HTML. Search by Pagefind.
 
 ## Development
+
+Regenerate a card from its PDF, then run the verifier gates:
+
+```sh
+uv run --with pymupdf python pipeline/generate/run.py --all
+uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
+```
+
+Build and serve the site:
 
 ```sh
 cd site
