@@ -371,7 +371,9 @@ export async function renderCard(markdown, opts = {}) {
           ariaLabel: 'Link to this section',
           dataPagefindIgnore: true,
         },
-        children: [{ type: 'text', value: '#' }],
+        // the "#" glyph is rendered via CSS (.hanchor::before), not as DOM text,
+        // so it stays out of heading text content — selection, copy, Reader view
+        children: [],
       });
     });
   };

@@ -427,7 +427,12 @@ a:hover { text-decoration-color: var(--accent); }
   text-decoration: none;
   opacity: 0;
   transition: opacity 0.12s;
+  /* the "#" is CSS-generated, not DOM text — keeps it out of selection, copy,
+     and Safari Reader (it's a permalink affordance, not heading content) */
+  user-select: none;
+  -webkit-user-select: none;
 }
+.article a.hanchor::before { content: "#"; }
 .article :is(h2, h3, h4, h5, h6):hover a.hanchor { opacity: 1; }
 .article a.hanchor:hover { color: var(--accent); }
 
