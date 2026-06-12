@@ -1,6 +1,6 @@
 # AI System Cards
 
-Archive of AI-lab system cards, each converted from its source PDF into a faithful
+Archive of system cards from AI companies, each converted from its source PDF into a faithful
 web page (Astro → GitHub Pages) by a mechanical, verifier-gated pipeline — no LLM
 transcribes the content. The pipeline is a ground-up rebuild of a labor-intensive
 first attempt (the rebuild was called "v2" during development; that's why the design
