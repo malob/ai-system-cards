@@ -8,10 +8,5 @@ pipeline/.cache/
 __pycache__/
 *.pyc
 
-# regenerable morning check-in artifact (pipeline/generate/worklist.py)
-docs/worklist.md
-
-# v2 generation output (regenerated artifact, reviewed via gates + render)
-
 # Claude Code per-machine settings (MCP approvals, etc.) — not shared
 .claude/settings.local.json

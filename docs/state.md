@@ -36,7 +36,10 @@ decisions.md + experiments are the record).
 **Repo is now public/contributor-ready (D33):** MIT `LICENSE`, rewritten README
 (Status / Running it / Adding a card / docs pointer), `__pycache__`/`worklist.md`
 untracked + gitignored, no secrets in tracked files. Docs flattened to `docs/` and
-de-v2'd, CLAUDE.md reframed (D34). **Next:** (1) owner publishes
+de-v2'd, CLAUDE.md reframed (D34). Removed vestigial `worklist.py`; consolidated the
+QA methodology (extraction inputs · the gate · the two agent inspection sweeps ·
+the convergence loop) into `docs/verification-methodology.md`, with a pipeline module
+map in CLAUDE.md. **Next:** (1) owner publishes
 when ready (push `main` → Pages deploy, D13); (2) the pipeline is still
 **single-card** — hard-coded to Fable 5 in `run.py`/`tables.py`/`calibrate.py`,
 per-card style-manifest, Fable-5-calibrated gates — so **generalizing it to

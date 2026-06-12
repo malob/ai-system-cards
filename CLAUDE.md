@@ -18,6 +18,10 @@ playbook** — how to run the pipeline, add or improve a card, and the process r
    first attempt; its §2 defect taxonomy is load-bearing. Superseded where decisions.md says so.
 5. [docs/markdown-conventions.md](docs/markdown-conventions.md) — early transcription
    rules (input to the spec, not gospel).
+6. [docs/verification-methodology.md](docs/verification-methodology.md) — how output is
+   checked: extraction inputs, the automated gate, the two agent inspection sweeps
+   (markdown-smell linter + triple-pane comparator), and the convergence loop.
+   [docs/verification-contract.md](docs/verification-contract.md) holds the invariant IDs.
 
 ## How a card is produced
 
@@ -36,6 +40,24 @@ fidelity is reproducible and checkable. Four stages:
 4. **Render** (`site/`): Astro stitches `sections/*.md`, makes page markers into PDF
    deep links, footnotes into sidenotes, per-page OG images, `card.md` + `llms.txt`;
    Pagefind search.
+
+## Pipeline modules
+
+Core, run every regen:
+
+| Module | Role |
+| --- | --- |
+| `verifier/oracle.py` | extract ground-truth facts from the PDF (the "oracle") |
+| `generate/assemble.py` | oracle facts → typed blocks |
+| `generate/tables.py` | table reconstruction (docling structure + oracle geometry) |
+| `generate/serialize.py` | typed blocks → `sections/*.md` |
+| `generate/run.py` | orchestrates assemble → `sections/` |
+| `verifier/{invariants,mdproj,norm}.py` | the gates · md→facts projection · text normalization |
+| `verifier/calibrate.py` | run the gates (sections vs oracle) |
+
+Not per-regen: `verifier/mutate.py` (mutation-tests the gates' recall — run when
+you change the verifier), `slice_pages.py` / `render_region.py` (per-page md slices /
+zoom crops for the sweeps), `audit_table_seams.py` (table cross-page seam check).
 
 ## Running the pipeline
 
