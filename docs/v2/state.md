@@ -31,8 +31,15 @@ markdown/gate impact), all committed, **NOTHING PUSHED** (D13):
   aria-labels).
 
 The long round-by-round log below PREDATES D28 — historical only (git +
-decisions.md + experiments are the record). **Next:** owner publishes when
-ready (push `main` → Pages deploy, D13). With Fable 5.
+decisions.md + experiments are the record).
+
+**Repo is now public/contributor-ready (D33):** MIT `LICENSE`, rewritten README
+(Status / Running it / Adding a card / docs pointer), `__pycache__`/`worklist.md`
+untracked + gitignored, no secrets in tracked files. **Next:** (1) owner publishes
+when ready (push `main` → Pages deploy, D13); (2) the pipeline is still
+**single-card** — hard-coded to Fable 5 in `run.py`/`tables.py`/`calibrate.py`,
+per-card style-manifest, Fable-5-calibrated gates — so **generalizing it to
+arbitrary cards is the next real milestone** (D33). With Fable 5.
 
 ## Cold-start capsule
 

@@ -445,3 +445,25 @@ Standard public-site set-up, reviewed against the live Astro docs (docs MCP):
   link prefetch / JSON-LD (low payoff for a fidelity-sensitive, ~2-page site).
 
 Config/render only; no markdown or verifier-gate impact.
+
+
+## D33 — repo public-ready; pipeline is single-card (generalization deferred) (2026-06-11)
+
+Owner-requested hygiene + contributor-readiness pass before publishing.
+
+- **MIT license** for the code (`LICENSE`; owner chose MIT over Apache-2.0);
+  reproduced card content stays with its publishers (README "note on content").
+- **README rewritten** for outside readers: honest Status, "Running it", an
+  "Adding a card" workflow, a `docs/v2` pointer (design history, optional), and a
+  License section.
+- **Hygiene:** untracked `pipeline/**/__pycache__/*.pyc` and the stale
+  auto-generated `docs/v2/worklist.md`; gitignored both. Audited tracked files —
+  **no secrets or personal data**, nothing to scrub from history.
+- **Acknowledged honestly: the pipeline is a validated SINGLE-CARD proof, not
+  turnkey for new cards.** The `CARD` path is hard-coded in `run.py`,
+  `tables.py`, and `verifier/calibrate.py`; there's no general new-card
+  extraction entry point; the style-manifest + chip vocab are hand-authored per
+  card; the verifier gates are calibrated against this card's defect corpus (D5).
+  The *site* (`listCards`) is multi-card; the *pipeline* is not. **Generalizing
+  the pipeline to arbitrary cards is the next milestone** — left as a documented
+  follow-up rather than faked as done.
