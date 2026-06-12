@@ -1,4 +1,13 @@
-# Generation loop design (v2 conversion)
+# Generation loop design
+
+> **Historical design intent (2026-06-10, pre-build) — superseded where the built
+> pipeline differs.** For the current process see
+> [verification-methodology.md](verification-methodology.md) + the code. Since this
+> was written: output is `sections/` (not `sections-v2/`); the conversion is
+> mechanical-only (the planned LLM adjudicator / alt-text / N-version passes were not
+> used — alt-text dropped per D21); and the `worklist.md` morning check-in was
+> removed. The central idea below — *structure assignment over immutable text* —
+> still holds.
 
 Governs the implementation in `pipeline/generate/`. Written 2026-06-10 ~01:50
 before the overnight run (D20). The verifier (`pipeline/verifier/`, calibrated
