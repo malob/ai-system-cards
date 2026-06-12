@@ -4,6 +4,13 @@ cards/*/*/extracted/pages/
 .DS_Store
 pipeline/.cache/
 
+# Python bytecode
+__pycache__/
+*.pyc
+
+# regenerable morning check-in artifact (pipeline/generate/worklist.py)
+docs/v2/worklist.md
+
 # v2 generation output (regenerated artifact, reviewed via gates + render)
 
 # Claude Code per-machine settings (MCP approvals, etc.) — not shared

@@ -7,19 +7,29 @@ markdown for machine consumption (`card.md` per card, `llms.txt` index).
 
 **Site:** https://malob.github.io/ai-system-cards/
 
+## Status
+
+The pipeline has been built and validated end-to-end on its first card (Claude Fable 5
+& Mythos 5, 319 pp.). The **site** renders any card present under `cards/`, but the
+**conversion pipeline is currently specialized to that first card**: the card path is
+hard-coded in a few modules, and the verifier gates are calibrated against this card's
+own labeled defect history. Generalizing the pipeline to arbitrary cards is the natural
+next step — see [Adding a card](#adding-a-card).
+
 ## Layout
 
 ```
 cards/<vendor>/<slug>/
-  meta.yaml          # title, vendor, release date, source URL
-  source.pdf         # the original PDF
-  sections/*.md      # faithful markdown, mechanically generated, ordered by filename
-  assets/figures/    # figure images extracted from the PDF (pPPP-K.png)
-  extracted/         # mechanical extraction artifacts (ground truth + per-page renders)
-  style-manifest.yaml# per-card visual vocabulary (chip/highlight fills, role colors)
-pipeline/            # the conversion pipeline (extract → assemble → verify)
-docs/v2/             # design notes, decisions log, and experiments
-site/                # Astro site rendering cards/ to static HTML
+  meta.yaml           # title, slug, vendor, models, release_date, source_url,
+                      #   source_pages, description, and the chip-label vocabulary
+  source.pdf          # the original PDF
+  style-manifest.yaml # per-card visual vocabulary (chip/highlight fills, role colors)
+  sections/*.md       # faithful markdown, mechanically generated, ordered by filename
+  assets/figures/     # figure images extracted from the PDF (pPPP-K.png)
+  extracted/          # extraction artifacts: oracle inputs, links, per-page renders
+pipeline/             # the conversion pipeline (extract → assemble → verify)
+site/                 # Astro site rendering cards/ to static HTML (deploys to Pages)
+docs/v2/              # design notes, decision log, and re-runnable experiments
 ```
 
 ## How a card is produced
@@ -39,16 +49,17 @@ fidelity is reproducible and checkable by construction.
    (`pipeline/verifier/`). The gates are calibrated against the project's own
    labeled history of real defects and mutation-tested for recall.
 4. **Render**: the Astro site stitches `sections/*.md`, turns page markers into
-   PDF deep links, footnotes into margin sidenotes, and serves `card.md` +
-   `llms.txt` alongside the HTML. Search by Pagefind.
+   PDF deep links, footnotes into margin sidenotes, generates per-page Open Graph
+   images, and serves `card.md` + `llms.txt` alongside the HTML. Search by Pagefind.
 
-## Development
+## Running it
 
-Regenerate a card from its PDF, then run the verifier gates:
+Regenerate the card's markdown from its PDF, then run the verifier gates
+(`uv` fetches the Python dependencies inline — `pymupdf`, and `docling` for tables):
 
 ```sh
 uv run --with pymupdf python pipeline/generate/run.py --all
-uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
+uv run --with pymupdf python pipeline/verifier/calibrate.py cards/anthropic/claude-fable-5/sections
 ```
 
 Build and serve the site:
@@ -61,10 +72,39 @@ pnpm build      # dist/ + Pagefind index
 pnpm preview
 ```
 
-Deploys to GitHub Pages via Actions on push to `main`.
+Pushing to `main` deploys to GitHub Pages via the Actions workflow.
+
+## Adding a card
+
+The site picks up any new card under `cards/<vendor>/<slug>/` automatically. The
+pipeline is currently wired to the first card, so onboarding a second is partly a
+generalization exercise. In outline:
+
+1. Create `cards/<vendor>/<slug>/` with the `source.pdf`, a `meta.yaml` (copy the
+   existing one for the field shape), and a `style-manifest.yaml`.
+2. Extract the per-page oracle, figure images, and table structure from the PDF.
+3. Point the pipeline at the new card — the `CARD` path is hard-coded in
+   `pipeline/generate/run.py`, `pipeline/generate/tables.py`, and
+   `pipeline/verifier/calibrate.py` (generalizing this is the main shared work).
+4. Run assemble + the verifier gates and iterate on any divergences.
+5. Author the card's `style-manifest.yaml` (chip/highlight and role colors) and its
+   chip-label vocabulary in `meta.yaml`.
+6. Open a PR with the new `cards/<vendor>/<slug>/` directory.
+
+Issues and PRs are welcome — including the pipeline generalization itself.
+[`docs/v2/`](docs/v2/) holds the design: the [charter](docs/v2/charter.md),
+the [decision log](docs/v2/decisions.md), the
+[verification contract](docs/v2/verification-contract.md), and re-runnable
+experiments. That's design history — useful background, not required reading to use
+the tool.
 
 ## A note on content
 
 The documents reproduced here are published by their respective labs for public
 consumption; this archive reproduces them faithfully and links each page back to the
 original PDF. All document content belongs to its publisher.
+
+## License
+
+[MIT](LICENSE), for the code and pipeline. The reproduced system-card documents under
+`cards/` belong to their respective publishers (see the note above).
