@@ -17,11 +17,12 @@ social-preview images, and search.
 
 ## Status
 
-Built and validated end-to-end on its first card (Claude Fable 5 & Mythos 5, 319 pp.).
-The site renders any card under `cards/`; the conversion pipeline is currently
-specialized to that first card (the card path is hard-coded and the gates are
-calibrated against its own defect history), so generalizing it to arbitrary cards is
-the next step.
+Built and validated end-to-end on its first document (Claude Fable 5 & Mythos 5,
+319 pp.). The site renders any card under `cards/`, but the conversion pipeline is
+**heavily specialized to that one document** — likely not generalizing cleanly even
+to Anthropic's other system cards, let alone other companies'. It's a strong starting
+point, not yet a general tool. The next step is to convert a second document and find
+out whether one shared pipeline can serve many or each will need its own.
 
 ## Layout
 

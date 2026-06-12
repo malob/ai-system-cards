@@ -39,11 +39,13 @@ untracked + gitignored, no secrets in tracked files. Docs flattened to `docs/` a
 de-v2'd, CLAUDE.md reframed (D34). Removed vestigial `worklist.py`; consolidated the
 QA methodology (extraction inputs · the gate · the two agent inspection sweeps ·
 the convergence loop) into `docs/verification-methodology.md`, with a pipeline module
-map in CLAUDE.md. **Next:** (1) owner publishes
-when ready (push `main` → Pages deploy, D13); (2) the pipeline is still
-**single-card** — hard-coded to Fable 5 in `run.py`/`tables.py`/`calibrate.py`,
-per-card style-manifest, Fable-5-calibrated gates — so **generalizing it to
-arbitrary cards is the next real milestone** (D33). With Fable 5.
+map in CLAUDE.md. Owner: **"good to ship."** **Next:** (1) owner publishes when
+ready (push `main` → Pages deploy, D13); (2) the pipeline is **heavily
+document-specialized** (hard-coded paths, per-card style-manifest, gates tuned to
+this card's defects) — likely won't generalize cleanly even to Anthropic's other
+cards. **The next milestone is to convert a *second* document and learn whether one
+shared pipeline serves all or each needs its own** (D35; supersedes D33's looser
+"generalize the `CARD` path" framing). With Fable 5.
 
 ## Cold-start capsule
 

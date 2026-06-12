@@ -484,3 +484,20 @@ instances:
   transition (e.g., D28 "v2 is canonical"), and that was the name at the time. (So
   D33's `docs/v2` path mentions, written just before this rename, are now historical.)
 - Card content's own "v2" and `pnpm-lock.yaml` left alone — not our labels.
+
+
+## D35 — pipeline is document-specialized; "one pipeline vs per-document" is open (2026-06-11)
+
+The pipeline is **heavily specialized to the first document** — its chip vocabulary,
+table shapes, transcript styles, the hard-coded card paths, and gates calibrated to
+*its* specific defects. It likely won't generalize cleanly even to Anthropic's *other*
+system cards, let alone other companies'. It's a strong starting point, not a general
+tool, and we don't pretend otherwise (README + CLAUDE.md say so).
+
+**Next milestone, empirical:** convert a *second* document and find out whether one
+shared pipeline (with per-card config/manifests) can serve many, or whether each
+document needs its own pipeline. The answer is genuinely unknown until we try — this
+supersedes the looser "just generalize the hard-coded `CARD` path" framing of D33
+(that's necessary but probably not sufficient).
+
+Shipping the first card now (owner: "good to ship") does not depend on resolving this.

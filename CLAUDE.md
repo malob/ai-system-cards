@@ -23,6 +23,19 @@ playbook** — how to run the pipeline, add or improve a card, and the process r
    (markdown-smell linter + triple-pane comparator), and the convergence loop.
    [docs/verification-contract.md](docs/verification-contract.md) holds the invariant IDs.
 
+## Where this is headed
+
+The pipeline is **heavily specialized to this first document** — its chip vocabulary,
+table shapes, transcript styles, the hard-coded card paths, and gates calibrated to
+*its* specific defects. It likely won't generalize cleanly even to Anthropic's *other*
+system cards, let alone other companies'. It's a strong starting point, not a general
+tool — and we don't pretend otherwise.
+
+**Next milestone (empirical):** convert a *second* document and find out whether one
+shared pipeline (with per-card config/manifests) can serve many, or whether each
+document needs its own pipeline. That question is open until we try. Shipping the
+first card does not depend on resolving it.
+
 ## How a card is produced
 
 The conversion is **mechanical — no LLM transcribes or edits the content** — so
