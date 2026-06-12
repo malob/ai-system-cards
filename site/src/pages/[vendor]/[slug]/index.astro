@@ -265,7 +265,8 @@ const rail = toc
       new window.PagefindUI({
         element: '#pagefind-mount',
         bundlePath: `${base}pagefind/`,
-        showSubResults: true,
+        // the index holds one record per section (scripts/pagefind-index.mjs),
+        // so results ARE sections — no sub-results to show
         showImages: false,
       });
       searchbox.querySelector('input')?.focus();
@@ -283,5 +284,8 @@ const rail = toc
   });
   searchbox.addEventListener('click', (e) => {
     if (e.target === searchbox) searchbox.close();
+    // result links are same-page fragment jumps — close the modal so the
+    // jumped-to section is actually visible
+    else if (e.target.closest('.pagefind-ui a')) searchbox.close();
   });
 </script>

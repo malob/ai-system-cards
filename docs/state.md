@@ -97,5 +97,17 @@ taxonomy in its §2 is load-bearing), and
   text was invisible there; the sidenote builder now also anchors notes to the visible
   in-table `sup.fn-html` links (notes append to `.doc`). Verified: 77 notes, 0 overlaps,
   all five at drift 0 beside their tables; prose cluster unchanged.
-- **Open:** nothing blocking. Next milestone remains the second-document
+- **Search reworked (committed, unpushed):** owner found unquoted literal phrases
+  ("most forms of world-class") didn't surface. Cause: the whole card is ONE
+  Pagefind page, so the CLI index yields a single result whose sub-results list
+  any-word matches in document order (everything matches "of").
+  `site/scripts/pagefind-index.mjs` (replaces `pagefind --site dist` in the
+  build script) now indexes **one record per h2–h6 section** (252 records;
+  heading text searchable; urls site-relative — pagefind.js prepends the base
+  at runtime, absolute urls 404'd doubled), and a result click closes the
+  search dialog (results are same-page fragment jumps). Verified in Chrome:
+  the phrase ranks §2.1.2.2 #1 unquoted; quoted/single-word/heading queries
+  good; click-through lands on the section.
+- **Open:** the search rework + this note are unpushed (owner push
+  authorization, D13). Next milestone remains the second-document
   generalization (D35).

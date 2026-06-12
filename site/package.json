@@ -7,7 +7,7 @@
     "predev": "node scripts/sync-assets.mjs",
     "dev": "astro dev",
     "prebuild": "node scripts/sync-assets.mjs",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && node scripts/pagefind-index.mjs",
     "preview": "astro preview"
   },
   "dependencies": {
