@@ -35,9 +35,9 @@ markdown/gate impact), now **SHIPPED** — pushed to `main` and deployed live
 - **Deploy workflow bumped to Node 24 action releases** (checkout v6,
   pnpm/action-setup v6, setup-node v6, upload-pages-artifact v5,
   deploy-pages v5) ahead of GitHub's 2026-06-16 node24 default flip;
-  actionlint-clean, committed `d7c7a76` — **unpushed, awaiting owner push
-  authorization (D13)**; on push, verify the run has no Node-20 deprecation
-  annotations and the deploy is green.
+  actionlint-clean, `d7c7a76`, **pushed + deployed 2026-06-11 eve on owner
+  authorization (D13)** — run 27394439921 green, **0 annotations on both jobs**
+  (previously 1 Node-20 deprecation warning each), site 200.
 
 **Repo is now public/contributor-ready (D33):** MIT `LICENSE`, rewritten README
 (Status / Running it / Adding a card / docs pointer), `__pycache__`/`worklist.md`
@@ -97,7 +97,5 @@ taxonomy in its §2 is load-bearing), and
   text was invisible there; the sidenote builder now also anchors notes to the visible
   in-table `sup.fn-html` links (notes append to `.doc`). Verified: 77 notes, 0 overlaps,
   all five at drift 0 beside their tables; prose cluster unchanged.
-- **Open:** `d7c7a76` (deploy-workflow Node 24 bumps) committed but unpushed —
-  needs owner push authorization (D13); then confirm the deploy run is green
-  with the deprecation annotation gone. Next milestone remains the
-  second-document generalization (D35).
+- **Open:** nothing blocking. Next milestone remains the second-document
+  generalization (D35).
