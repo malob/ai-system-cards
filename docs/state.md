@@ -76,7 +76,8 @@ taxonomy in its §2 is load-bearing), and
   is live** at malob.github.io/ai-system-cards (replacing the v1 line). Verified
   live: homepage / card / `og/home.png` all 200; OG previews now resolve (fair to
   validate via opengraph.xyz or an X/Slack link).
-- **Post-ship fix (unpushed):** sidenote placement on wide screens. Clustered
+- **Post-ship fix (pushed + deployed 2026-06-11, `7f0cdbf`; verified on the live
+  site in real Chrome):** sidenote placement on wide screens. Clustered
   footnote refs (p.302 `[^74][^75][^76]`) overprinted; the placement pass now (a)
   skips `display:none .fnref-shim` refs (table-only footnote shims measured at 0 →
   their bogus offset poisoned the de-collision cascade and piled every note at the
