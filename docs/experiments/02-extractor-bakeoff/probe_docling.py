@@ -5,7 +5,7 @@ reports: table structure (merged cells = row_span/col_span > 1), false-positive
 tables on transcript pages, and the markdown export for reading-order inspection.
 
 Run from the repo root (first run downloads docling's layout/table models):
-    uv run --with docling --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_docling.py
+    uv run --with docling --with pymupdf python docs/experiments/02-extractor-bakeoff/probe_docling.py
 Optionally pass source page numbers as args (e.g. the hard-table set):
     ... probe_docling.py 95 98 252 309 310 311
 """

@@ -90,7 +90,7 @@ codifies "fix our divergences, not the source's own quirks") and green
 inline-code colour (editorial). Deferred with documentation: the p.198
 transcript's deeper structure (elision note as a user bubble, mono output
 just outside the transcript) — needs an ordered-segment turn model; logged in
-`docs/v2/JUDGMENT-CALLS.md` (J1) for owner steer.
+`docs/JUDGMENT-CALLS.md` (J1) for owner steer.
 
 **Re-verification (vsweep7).** Two agents re-swept all ~29 page-units changed
 tonight: every fix confirmed correct PDF→md→DOM (crops), **zero regressions,

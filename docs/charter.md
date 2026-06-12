@@ -1,11 +1,11 @@
-# v2 charter
+# Charter
 
-The durable statement of what the v2 conversion pipeline is for, the principles it
+The durable statement of what the conversion pipeline is for, the principles it
 runs on, and how the design effort itself stays resumable. Read together with
 [state.md](state.md) (current status) and [decisions.md](decisions.md) (why things
-are the way they are). The v1 retrospective lives in
-[../v2-design-brief.md](../v2-design-brief.md) — historical record, superseded
-wherever decisions.md says so.
+are the way they are). The retrospective on the labor-intensive first attempt lives
+in [design-brief.md](design-brief.md) — historical record, superseded wherever
+decisions.md says so.
 
 ## North star
 

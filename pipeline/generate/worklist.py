@@ -1,5 +1,5 @@
 """Build the morning check-in worklist (generation-design.md): run the verifier
-over the full v2 output and write a triaged docs/v2/worklist.md.
+over the full v2 output and write a triaged docs/worklist.md.
 
     uv run --with pymupdf python pipeline/generate/worklist.py
 """
@@ -17,7 +17,7 @@ import calibrate  # noqa: E402
 
 REPO = calibrate.REPO
 OUT = REPO / "cards/anthropic/claude-fable-5/sections"
-WL = REPO / "docs/v2/worklist.md"
+WL = REPO / "docs/worklist.md"
 
 
 def main():

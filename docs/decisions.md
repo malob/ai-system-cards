@@ -467,3 +467,20 @@ Owner-requested hygiene + contributor-readiness pass before publishing.
   The *site* (`listCards`) is multi-card; the *pipeline* is not. **Generalizing
   the pipeline to arbitrary cards is the next milestone** — left as a documented
   follow-up rather than faked as done.
+
+
+## D34 — drop the "v2" label from current docs; flatten docs/v2 → docs (2026-06-11)
+
+"v2" was the rebuild's name while v1 still existed; with v1 retired (D28) it's just
+*the* project, so the live label was vestigial/confusing. Renamed the current-facing
+instances:
+
+- `docs/v2/` flattened into `docs/`; `docs/v2-design-brief.md` → `docs/design-brief.md`.
+- CLAUDE.md reframed (no "designing v2" — it's the pipeline) with paths fixed; README
+  + living-doc titles (`# Charter`, `# Project state`) de-v2'd; functional path refs
+  fixed (worklist.py output, mutate.py default, experiment re-run commands).
+- **Left the append-only history intact (owner's call):** the v1/v2 mentions inside
+  `decisions.md` (D1–D33) and the experiment writeups stay — they record the v1→v2
+  transition (e.g., D28 "v2 is canonical"), and that was the name at the time. (So
+  D33's `docs/v2` path mentions, written just before this rename, are now historical.)
+- Card content's own "v2" and `pnpm-lock.yaml` left alone — not our labels.

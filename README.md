@@ -29,7 +29,7 @@ cards/<vendor>/<slug>/
   extracted/          # extraction artifacts: oracle inputs, links, per-page renders
 pipeline/             # the conversion pipeline (extract → assemble → verify)
 site/                 # Astro site rendering cards/ to static HTML (deploys to Pages)
-docs/v2/              # design notes, decision log, and re-runnable experiments
+docs/                 # design notes, decision log, and re-runnable experiments
 ```
 
 ## How a card is produced
@@ -92,9 +92,9 @@ generalization exercise. In outline:
 6. Open a PR with the new `cards/<vendor>/<slug>/` directory.
 
 Issues and PRs are welcome — including the pipeline generalization itself.
-[`docs/v2/`](docs/v2/) holds the design: the [charter](docs/v2/charter.md),
-the [decision log](docs/v2/decisions.md), the
-[verification contract](docs/v2/verification-contract.md), and re-runnable
+[`docs/`](docs/) holds the design: the [charter](docs/charter.md),
+the [decision log](docs/decisions.md), the
+[verification contract](docs/verification-contract.md), and re-runnable
 experiments. That's design history — useful background, not required reading to use
 the tool.
 

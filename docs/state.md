@@ -1,6 +1,6 @@
-# v2 state
+# Project state
 
-Rewritable snapshot of where the v2 effort stands. **Read this first.** Rewrite it
+Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
 **Last updated:** 2026-06-11 (~16:35) — v2 is CANONICAL (D28); conversion
@@ -35,7 +35,8 @@ decisions.md + experiments are the record).
 
 **Repo is now public/contributor-ready (D33):** MIT `LICENSE`, rewritten README
 (Status / Running it / Adding a card / docs pointer), `__pycache__`/`worklist.md`
-untracked + gitignored, no secrets in tracked files. **Next:** (1) owner publishes
+untracked + gitignored, no secrets in tracked files. Docs flattened to `docs/` and
+de-v2'd, CLAUDE.md reframed (D34). **Next:** (1) owner publishes
 when ready (push `main` → Pages deploy, D13); (2) the pipeline is still
 **single-card** — hard-coded to Fable 5 in `run.py`/`tables.py`/`calibrate.py`,
 per-card style-manifest, Fable-5-calibrated gates — so **generalizing it to
@@ -51,7 +52,7 @@ certifies the result after a short flag-directed review. The governing idea is
 **verification-first** — build and calibrate the thing that says "done" before
 rebuilding the thing that generates. Read [charter.md](charter.md) for goal and
 principles, [decisions.md](decisions.md) for settled questions,
-[../v2-design-brief.md](../v2-design-brief.md) for the v1 retrospective (defect
+[design-brief.md](design-brief.md) for the first-attempt retrospective (defect
 taxonomy in its §2 is load-bearing).
 
 ## Status

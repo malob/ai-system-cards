@@ -9,7 +9,7 @@ __pycache__/
 *.pyc
 
 # regenerable morning check-in artifact (pipeline/generate/worklist.py)
-docs/v2/worklist.md
+docs/worklist.md
 
 # v2 generation output (regenerated artifact, reviewed via gates + render)
 

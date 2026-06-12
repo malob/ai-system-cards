@@ -8,7 +8,7 @@ enforceable? (Scored on enforceable invariants, not output prettiness — charte
 Can PyMuPDF surface the signals the gates need? Run:
 
 ```sh
-uv run --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_pymupdf.py
+uv run --with pymupdf python docs/experiments/02-extractor-bakeoff/probe_pymupdf.py
 ```
 
 Probe pages (chosen for one signal each): p.3 prose/bold-leads, p.19–20
@@ -63,7 +63,7 @@ Candidate 1: **docling 2.100.0** on a mini PDF of pages 19, 20, 40, 42, 74, 100
 (CPU, ~1 min conversion after first-run model downloads):
 
 ```sh
-uv run --with docling --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_docling.py
+uv run --with docling --with pymupdf python docs/experiments/02-extractor-bakeoff/probe_docling.py
 ```
 
 Markdown export kept as [probe-docling-output.md](probe-docling-output.md).
@@ -98,8 +98,8 @@ monster, two-level merged headers), **p.309–318** (one table spanning nine
 pages). Probe pages 95, 98, 252, 309–311 through both tools:
 
 ```sh
-uv run --with docling --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_docling.py 95 98 252 309 310 311
-uv run --with marker-pdf --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_marker.py 95 98 252 309 310 311
+uv run --with docling --with pymupdf python docs/experiments/02-extractor-bakeoff/probe_docling.py 95 98 252 309 310 311
+uv run --with marker-pdf --with pymupdf python docs/experiments/02-extractor-bakeoff/probe_marker.py 95 98 252 309 310 311
 ```
 
 - **Docling: all 2-D merges exact** — p.95 `'Model' 1×2 / 'Claude Opus 4.8' 2×1`,

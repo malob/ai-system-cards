@@ -3,7 +3,7 @@ contract's gates need? (S1 bold/italic runs, S2 chip signals, L1 URI+GoTo links,
 FN1 superscripts, F1 image bboxes, TB1 table structure.)
 
 Run from the repo root:
-    uv run --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_pymupdf.py
+    uv run --with pymupdf python docs/experiments/02-extractor-bakeoff/probe_pymupdf.py
 
 Writes probe-summary.json next to this script and prints a human-readable report.
 """

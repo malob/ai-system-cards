@@ -11,7 +11,7 @@ that passes the verifier and renders as a site?
 ```sh
 uv run --with docling --with pymupdf python pipeline/generate/tables.py   # cache all table pages
 uv run --with pymupdf python pipeline/generate/run.py --all
-uv run --with pymupdf python pipeline/generate/worklist.py                # -> docs/v2/worklist.md
+uv run --with pymupdf python pipeline/generate/worklist.py                # -> docs/worklist.md
 ```
 
 ## Result: 26 major flags across 319 pages

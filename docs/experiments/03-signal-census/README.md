@@ -10,7 +10,7 @@ color, with sample pages and sample text. ~40 s. Full data:
 [census.json](census.json).
 
 ```sh
-uv run --with pymupdf python docs/v2/experiments/03-signal-census/census.py
+uv run --with pymupdf python docs/experiments/03-signal-census/census.py
 ```
 
 **Result: 33 fill colors + 21 text colors ≈ ~15 semantic roles.**

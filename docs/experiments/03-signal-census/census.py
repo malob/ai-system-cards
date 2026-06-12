@@ -4,7 +4,7 @@ entire visual vocabulary — the data a per-card style manifest is derived from
 (D16), and the ground the S2/closure gate stands on.
 
 Run from the repo root:
-    uv run --with pymupdf python docs/v2/experiments/03-signal-census/census.py
+    uv run --with pymupdf python docs/experiments/03-signal-census/census.py
 """
 
 import json

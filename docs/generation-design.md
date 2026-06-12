@@ -67,10 +67,10 @@ heuristics; two known multi-page tables: p.252–253, p.309–318).
 Seed wave first (the construct gauntlet): pages 3, 19–20, 26, 39–44, 74, 95,
 100, 107, 118, 139, 235–236, 252–253, 309–311, 318–319. Then bulk waves in
 parallel. Escalations per D20: provisional rule + continue; everything logged
-to `docs/v2/worklist.md` for the morning check-in.
+to `docs/worklist.md` for the morning check-in.
 
 ## Morning check-in artifact
 
-`docs/v2/worklist.md`: provisional rules adopted, escalations, per-wave gate
+`docs/worklist.md`: provisional rules adopted, escalations, per-wave gate
 results, residual flags with page links, site build status, and the
 spot-check menu (flagged pages + a random sample).

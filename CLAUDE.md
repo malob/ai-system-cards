@@ -1,20 +1,22 @@
 # AI System Cards
 
-Archive of AI-lab system cards converted from PDF to faithful web pages (Astro →
-GitHub Pages). v1 shipped one card but was too labor-intensive to maintain; the
-current focus is designing **v2 of the conversion pipeline**. README.md describes
-the shipped v1 site and layout.
+Archive of AI-lab system cards, each converted from its source PDF into a faithful
+web page (Astro → GitHub Pages) by a mechanical, verifier-gated pipeline — no LLM
+transcribes the content. The pipeline is a ground-up rebuild of a labor-intensive
+first attempt (the rebuild was called "v2" during development; that's why the design
+docs say v2). README.md is the front door — what it is, how to run it, how to add a
+card; `docs/` holds the design notes and decision log.
 
 ## Orientation — read before working
 
-1. [docs/v2/state.md](docs/v2/state.md) — current status, next actions, cold-start
+1. [docs/state.md](docs/state.md) — current status, next actions, cold-start
    capsule. **Always read this first.**
-2. [docs/v2/charter.md](docs/v2/charter.md) — v2 goal, principles, roadmap.
-3. [docs/v2/decisions.md](docs/v2/decisions.md) — append-only decision log (D1…).
-4. [docs/v2-design-brief.md](docs/v2-design-brief.md) — v1 retrospective; its §2
-   defect taxonomy is load-bearing. Superseded where decisions.md says so.
-5. [docs/markdown-conventions.md](docs/markdown-conventions.md) — v1 transcription
-   rules (input to the v2 spec, not gospel).
+2. [docs/charter.md](docs/charter.md) — goal, principles, roadmap.
+3. [docs/decisions.md](docs/decisions.md) — append-only decision log (D1…).
+4. [docs/design-brief.md](docs/design-brief.md) — retrospective on the labor-intensive
+   first attempt; its §2 defect taxonomy is load-bearing. Superseded where decisions.md says so.
+5. [docs/markdown-conventions.md](docs/markdown-conventions.md) — early transcription
+   rules (input to the spec, not gospel).
 
 ## Process rules
 
@@ -27,7 +29,7 @@ the shipped v1 site and layout.
   sessions can compact or die at any time. Append-only; supersede, don't rewrite.
 - **Rewrite state.md before stopping** or after any milestone. It's a snapshot;
   git and decisions.md are the history.
-- **Experiments** live in `docs/v2/experiments/NN-name/` with a README (question,
+- **Experiments** live in `docs/experiments/NN-name/` with a README (question,
   method, result, conclusion) and committed scripts — re-runnable from the writeup
   alone.
 - **Sub-agent findings must land in files**, never only in conversation.
@@ -35,8 +37,10 @@ the shipped v1 site and layout.
   regen → `git diff` the output → confirm the expected change AND scan for
   unexpected ones (regression catch) → preview-check if renderer-visible →
   commit pipeline + output together. Never hand-edit generated files.
-- **Never clean up v1 artifacts** (`tools/`, `cards/*/*/extracted/`, pre-fix git
-  states) — they're the verifier calibration corpus (decision D5).
+- **Never clean up the verifier calibration data** — `cards/*/*/extracted/` and the
+  pre-fix git refs (`f60899a`, `fb483fb`); the gates calibrate against them (D5). The
+  retired first-attempt working files (`tools/`, the old `sections/`) were removed in
+  D28 but remain in git history.
 - **Fresh-session test:** these docs must let a cold session continue correctly.
   If they didn't orient you, fixing them is part of your task.
 - **Look at the page when data is ambiguous** (owner-encouraged): per-page

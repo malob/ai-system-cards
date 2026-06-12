@@ -1,7 +1,7 @@
 """Enumerate v1's hand-built HTML tables and rank by hardness (rowspan/colspan,
 size, multi-page span) to pick part-3 probe pages.
 
-Run from the repo root:  python3 docs/v2/experiments/02-extractor-bakeoff/find_hard_tables.py
+Run from the repo root:  python3 docs/experiments/02-extractor-bakeoff/find_hard_tables.py
 """
 
 import re

@@ -4,7 +4,7 @@ Same shape as probe_docling.py: build a mini PDF, convert, dump markdown, report
 table structure stats. First run downloads marker's models (~GBs) from HF.
 
 Run from the repo root:
-    uv run --with marker-pdf --with pymupdf python docs/v2/experiments/02-extractor-bakeoff/probe_marker.py 95 98 252 309 310 311
+    uv run --with marker-pdf --with pymupdf python docs/experiments/02-extractor-bakeoff/probe_marker.py 95 98 252 309 310 311
 """
 
 import re
