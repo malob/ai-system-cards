@@ -3,10 +3,11 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-06-11 (~18:15) — v2 is CANONICAL (D28); conversion
+**Last updated:** 2026-06-11 (~18:55) — v2 is CANONICAL (D28); conversion
 converged (gate 0 majors / L1 31 / T1 70; seams 0; build clean). Since then, a
 round of **site polish + production set-up**, all render/config-only (no
-markdown/gate impact), all committed, **NOTHING PUSHED** (D13):
+markdown/gate impact), now **SHIPPED** — pushed to `main` and deployed live
+(D13, on owner request 2026-06-11):
 - **D29** — figures merged into one card per page (multi-panel charts + the
   PDF's repeated running-title strips no longer orphaned);
 - **D30** — internal section links dotted-underline, external citations solid;
@@ -66,11 +67,14 @@ taxonomy in its §2 is load-bearing), and
   (319pp). Gate: 0 majors / L1 31 (typed v1-parity) / T1 70 minors; seam
   auditor 0; site builds clean. Verifier still calibrates against git refs
   (`f60899a`/`fb483fb`) — the D5 corpus is intact, not the working tree.
-- **Site (Astro → GitHub Pages):** recent features/polish all committed, none
-  pushed (D13): figure-card merge (D29), internal/external link underlines
+- **Site (Astro → GitHub Pages):** recent features/polish all committed **and
+  pushed/deployed** (D13): figure-card merge (D29), internal/external link underlines
   (D30), all-width TOC toggle, evenly-spread header meta-row with middots,
   per-page social-media OG previews (D31). Astro docs MCP wired (`.mcp.json`).
   OG-image rendering lives in `site/src/lib/og.js` + `site/src/pages/og/`.
-- **Open:** nothing blocking. Owner publishes when ready (push `main` triggers
-  the Pages deploy). Note: OG previews use absolute `malob.github.io` URLs, so
-  they only resolve once deployed — validate then (opengraph.xyz / X composer).
+- **Shipped 2026-06-11:** pushed `main` → `74f4fd9`; Pages deploy succeeded; **v2
+  is live** at malob.github.io/ai-system-cards (replacing the v1 line). Verified
+  live: homepage / card / `og/home.png` all 200; OG previews now resolve (fair to
+  validate via opengraph.xyz or an X/Slack link).
+- **Open:** nothing blocking. Next milestone remains the second-document
+  generalization (D35).
