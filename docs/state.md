@@ -76,9 +76,14 @@ taxonomy in its §2 is load-bearing), and
   is live** at malob.github.io/ai-system-cards (replacing the v1 line). Verified
   live: homepage / card / `og/home.png` all 200; OG previews now resolve (fair to
   validate via opengraph.xyz or an X/Slack link).
-- **Post-ship fix (unpushed):** sidenote de-collision — clustered footnote refs
-  (p.305 `[^74][^75][^76]`, three on one line) overprinted in the wide right margin;
-  the placement pass now stacks colliding notes (+14px) instead of piling them at
-  one offset. Verified via DOM geometry (0 overlaps); render-only.
+- **Post-ship fix (unpushed):** sidenote placement on wide screens. Clustered
+  footnote refs (p.302 `[^74][^75][^76]`) overprinted; the placement pass now (a)
+  skips `display:none .fnref-shim` refs (table-only footnote shims measured at 0 →
+  their bogus offset poisoned the de-collision cascade and piled every note at the
+  scroll position — the "weird" regression) and (b) sorts notes by measured position
+  before stacking colliders (+14px). Verified in real Chrome on the production build:
+  72 notes, 0 overlaps, max drift 202px. Render-only. (Known minor gap, pre-existing:
+  table-only footnotes have no sidenote and `section.footnotes` is hidden ≥1500px, so
+  their text isn't shown at wide width — separate follow-up.)
 - **Open:** nothing blocking. Next milestone remains the second-document
   generalization (D35).

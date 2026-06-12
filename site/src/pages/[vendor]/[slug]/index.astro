@@ -184,7 +184,9 @@ const rail = toc
     const id = ref.getAttribute('href')?.slice(1);
     const note = id && document.getElementById(id);
     const sup = ref.closest('sup');
-    if (!note || !sup || !doc) return;
+    // skip refs with no layout box — e.g. the display:none .fnref-shim duplicates
+    // that keep table-only footnotes alive; they'd measure at 0 and poison layout
+    if (!note || !sup || !doc || sup.offsetParent === null) return;
     const sn = document.createElement('span');
     sn.className = 'sidenote';
     const num = document.createElement('span');
@@ -205,12 +207,18 @@ const rail = toc
     if (!sidenotes.length || getComputedStyle(sidenotes[0].sn).display === 'none') return;
     const GAP = 14;
     const docTop = doc.getBoundingClientRect().top;
+    // measure each note's natural position, drop any that lost their layout box,
+    // and sort by position so the walk is always vertical (footnote numbering is
+    // not strictly top-to-bottom — a stray measurement must not poison the rest)
+    const placed = sidenotes
+      .map(({ sn, sup }) => ({ sn, top: sup.getBoundingClientRect().top - docTop, ok: sup.offsetParent !== null }))
+      .filter((o) => o.ok)
+      .sort((a, b) => a.top - b.top);
     let prevBottom = -Infinity;
-    for (const { sn, sup } of sidenotes) {
-      let top = sup.getBoundingClientRect().top - docTop;
-      if (top < prevBottom + GAP) top = prevBottom + GAP;
-      sn.style.top = `${top}px`;
-      prevBottom = top + sn.offsetHeight;
+    for (const o of placed) {
+      const top = o.top < prevBottom + GAP ? prevBottom + GAP : o.top;
+      o.sn.style.top = `${top}px`;
+      prevBottom = top + o.sn.offsetHeight;
     }
   }
   layoutSidenotes();
