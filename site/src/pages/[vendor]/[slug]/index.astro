@@ -177,11 +177,14 @@ const rail = toc
   addEventListener('scroll', spy, { passive: true });
   spy();
 
-  // --- sidenotes (wide screens): clone footnotes next to their references ---
+  // --- sidenotes (wide screens): clone footnotes into the margin, then de-collide ---
+  const doc = document.querySelector('.doc');
+  const sidenotes = [];
   document.querySelectorAll('[data-footnote-ref]').forEach((ref) => {
     const id = ref.getAttribute('href')?.slice(1);
     const note = id && document.getElementById(id);
-    if (!note) return;
+    const sup = ref.closest('sup');
+    if (!note || !sup || !doc) return;
     const sn = document.createElement('span');
     sn.className = 'sidenote';
     const num = document.createElement('span');
@@ -191,8 +194,30 @@ const rail = toc
     const clone = note.cloneNode(true);
     clone.querySelectorAll('[data-footnote-backref]').forEach((b) => b.remove());
     sn.insertAdjacentHTML('beforeend', clone.innerHTML);
-    ref.closest('sup')?.insertAdjacentElement('afterend', sn);
+    sup.insertAdjacentElement('afterend', sn);
+    sidenotes.push({ sn, sup });
   });
+
+  // Each note wants to sit level with its reference; when references cluster
+  // (e.g. [^74][^75][^76] on one line) the notes would overprint, so we walk
+  // them top-to-bottom and push any overlap down — colliding notes stack.
+  function layoutSidenotes() {
+    if (!sidenotes.length || getComputedStyle(sidenotes[0].sn).display === 'none') return;
+    const GAP = 14;
+    const docTop = doc.getBoundingClientRect().top;
+    let prevBottom = -Infinity;
+    for (const { sn, sup } of sidenotes) {
+      let top = sup.getBoundingClientRect().top - docTop;
+      if (top < prevBottom + GAP) top = prevBottom + GAP;
+      sn.style.top = `${top}px`;
+      prevBottom = top + sn.offsetHeight;
+    }
+  }
+  layoutSidenotes();
+  document.fonts?.ready.then(layoutSidenotes);
+  addEventListener('load', layoutSidenotes);
+  let snRaf;
+  addEventListener('resize', () => { cancelAnimationFrame(snRaf); snRaf = requestAnimationFrame(layoutSidenotes); });
 
   // --- figure lightbox ---
   const lightbox = document.getElementById('lightbox');
