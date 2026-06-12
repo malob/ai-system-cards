@@ -501,3 +501,26 @@ supersedes the looser "just generalize the hard-coded `CARD` path" framing of D3
 (that's necessary but probably not sufficient).
 
 Shipping the first card now (owner: "good to ship") does not depend on resolving this.
+
+## D36 — extracted/ carries only current-process data; dead v1 artifacts removed (2026-06-11)
+
+Narrows D5. D5 forbade cleaning `cards/*/*/extracted/` because the build's artifacts were
+calibration/provenance. But the calibration corpus is really the **pre-fix git refs**
+(`f60899a`, `fb483fb`) + the retired `tools/` — both intact in git history — not the
+working tree. And only one file in `extracted/` is read by the current pipeline:
+`figures-map.json` (by `run.py` + `calibrate.py`). Internal links resolve from the oracle's
+`DEST:N:Y` placeholders, not from a separate dump.
+
+So, per the owner (dead files confuse both humans and future AI sessions — "if they're not
+in any way part of the current process, they shouldn't be here"):
+- **Moved** the still-useful figure-extraction script `process_assets.py` →
+  `pipeline/generate/extract_figures.py` (code belongs in `pipeline/`, not a card's data
+  folder; dead `links.json`-writing half trimmed; header documents the flow).
+- **Removed** `extract_internal_links.py` + `internal-links.json` (superseded by the
+  oracle), `verify_coverage.py` (v1-era one-off), and `text-raw.txt` / `text-layout.txt` /
+  `links.json` (unread `pdftotext` / URI dumps). All recoverable from git, regenerable from
+  `source.pdf`.
+- **Kept** `figures-map.json` (live input) + `images-list.txt` (the figure script's
+  inventory input); `pages/` renders stay gitignored.
+
+D5 still holds for what matters: never rewrite the pre-fix refs or `tools/`.

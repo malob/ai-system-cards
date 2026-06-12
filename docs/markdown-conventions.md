@@ -1,5 +1,13 @@
 # Markdown conventions for system card transcription
 
+> **Reference + history.** These rules were written for v1's *manual* transcription; the
+> current pipeline assembles the same target dialect **mechanically** from the oracle (no
+> hand-authoring). Tooling named below (`extract_internal_links.py`, `apply_internal_links.py`,
+> `links.json`, `internal-links.json`) is v1's and has since been removed/superseded — links
+> now come from the oracle (see [verification-methodology.md](verification-methodology.md)).
+> The *dialect* rules (how links, footnotes, tables, and transcripts should look) still
+> describe the output.
+
 These rules govern how system card PDFs are transcribed into markdown. The goal is a
 **faithful, complete** transcription — every sentence, number, table value, and footnote
 from the source, in clean semantic markdown. Never paraphrase, summarize, or omit body

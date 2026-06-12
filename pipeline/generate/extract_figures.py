@@ -1,17 +1,35 @@
-"""Rename extracted figure images by page, composite smasks, dump link URLs."""
+"""Extract a card's figure images from its PDF → assets/figures/ + figures-map.json.
+
+Run ONCE when onboarding a card. The figure map it writes is committed and read by
+`generate/run.py` and `verifier/calibrate.py`; it is not part of every regen.
+
+The raw-image dump is not scripted here (it needs poppler's `pdfimages`) — produce it
+first, then run this:
+
+    cd cards/<vendor>/<slug>
+    pdfimages -png  source.pdf assets/figures/raw          # raw-PPP-NNN.png images
+    pdfimages -list source.pdf > extracted/images-list.txt # the image inventory
+    uv run --with pillow python ../../../pipeline/generate/extract_figures.py
+
+This renames each image to pPPP-K.png (page, k-th figure on that page), composites any
+soft-mask (smask) as alpha, and writes extracted/figures-map.json (page → [filenames]).
+"""
 import json
 from pathlib import Path
+
 from PIL import Image
-from pypdf import PdfReader
+
+REPO = Path(__file__).resolve().parents[2]
+CARD = REPO / "cards/anthropic/claude-fable-5"
+figdir = CARD / "assets/figures"
 
 rows = []
-for line in Path("extracted/images-list.txt").read_text().splitlines()[2:]:
+for line in (CARD / "extracted/images-list.txt").read_text().splitlines()[2:]:
     parts = line.split()
     if len(parts) < 16:
         continue
     rows.append({"page": int(parts[0]), "num": int(parts[1]), "type": parts[2], "objid": parts[11]})
 
-figdir = Path("assets/figures")
 mapping = {}
 counters = {}
 i = 0
@@ -38,20 +56,5 @@ while i < len(rows):
     mapping.setdefault(str(page), []).append(dst.name)
     i += 1
 
-Path("extracted/figures-map.json").write_text(json.dumps(mapping, indent=1))
+(CARD / "extracted/figures-map.json").write_text(json.dumps(mapping, indent=1))
 print("{} figures on {} pages".format(sum(len(v) for v in mapping.values()), len(mapping)))
-
-reader = PdfReader("source.pdf")
-links = {}
-for pno, pg in enumerate(reader.pages, 1):
-    if "/Annots" not in pg:
-        continue
-    for a in pg["/Annots"]:
-        o = a.get_object()
-        if o.get("/Subtype") == "/Link" and "/A" in o and "/URI" in o["/A"]:
-            uri = str(o["/A"]["/URI"])
-            links.setdefault(str(pno), [])
-            if uri not in links[str(pno)]:
-                links[str(pno)].append(uri)
-print("links on {} pages".format(len(links)))
-Path("extracted/links.json").write_text(json.dumps(links, indent=1))

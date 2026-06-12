@@ -68,9 +68,11 @@ Core, run every regen:
 | `verifier/{invariants,mdproj,norm}.py` | the gates · md→facts projection · text normalization |
 | `verifier/calibrate.py` | run the gates (sections vs oracle) |
 
-Not per-regen: `verifier/mutate.py` (mutation-tests the gates' recall — run when
-you change the verifier), `slice_pages.py` / `render_region.py` (per-page md slices /
-zoom crops for the sweeps), `audit_table_seams.py` (table cross-page seam check).
+Not per-regen: `generate/extract_figures.py` (PDF figure images → `assets/figures/` +
+`extracted/figures-map.json`; run once when onboarding a card), `verifier/mutate.py`
+(mutation-tests the gates' recall — run when you change the verifier), `slice_pages.py` /
+`render_region.py` (per-page md slices / zoom crops for the sweeps), `audit_table_seams.py`
+(table cross-page seam check).
 
 ## Running the pipeline
 
@@ -104,7 +106,8 @@ partly a generalization exercise:
 
 1. Create `cards/<vendor>/<slug>/` with `source.pdf`, a `meta.yaml` (copy the existing
    one for the field shape), and a `style-manifest.yaml`.
-2. Extract the per-page oracle, figure images, and table structure from the PDF.
+2. Extract the per-page oracle (`verifier/oracle.py`), figure images
+   (`generate/extract_figures.py`), and table structure (docling) from the PDF.
 3. Point the pipeline at the new card — the `CARD` path is hard-coded in
    `pipeline/generate/run.py`, `pipeline/generate/tables.py`, and
    `pipeline/verifier/calibrate.py` (generalizing this is the main shared work).
@@ -132,10 +135,12 @@ partly a generalization exercise:
   regen → `git diff` the output → confirm the expected change AND scan for
   unexpected ones (regression catch) → preview-check if renderer-visible →
   commit pipeline + output together. Never hand-edit generated files.
-- **Never clean up the verifier calibration data** — `cards/*/*/extracted/` and the
-  pre-fix git refs (`f60899a`, `fb483fb`); the gates calibrate against them (D5). The
-  retired first-attempt working files (`tools/`, the old `sections/`) were removed in
-  D28 but remain in git history.
+- **Never rewrite the verifier calibration corpus** — the pre-fix git refs (`f60899a`,
+  `fb483fb`) and the retired `tools/` / old `sections/` (removed in D28, intact in git
+  history); the gates calibrate against those refs (D5). The *working-tree*
+  `cards/*/*/extracted/` carries only what the current process uses — the figure map,
+  image inventory, and page renders (D36); dead v1 extraction artifacts were removed
+  (recoverable from the refs, regenerable from `source.pdf`).
 - **Fresh-session test:** these docs must let a cold session continue correctly.
   If they didn't orient you, fixing them is part of your task.
 - **Look at the page when data is ambiguous** (owner-encouraged): per-page

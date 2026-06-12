@@ -14,9 +14,8 @@ All derived from `cards/<vendor>/<slug>/source.pdf`:
 | Input | Produced by | Path |
 | --- | --- | --- |
 | Per-page PDF renders | `pdftoppm` (gitignored, regenerable) | `extracted/pages/p-NNN.png` |
-| The "oracle" — PyMuPDF facts (text spans + style flags, links, footnotes, highlight/chip fills, page geometry) | `pipeline/verifier/oracle.py` | `pipeline/.cache/oracle.json` |
-| Figure images + map | `extracted/process_assets.py` | `assets/figures/`, `extracted/figures-map.json` |
-| Internal-link targets | `extracted/extract_internal_links.py` | `extracted/internal-links.json` |
+| The "oracle" — PyMuPDF facts (text spans + style flags, links (URI + internal GoTo dests), footnotes, highlight/chip fills, page geometry) | `pipeline/verifier/oracle.py` | `pipeline/.cache/oracle.json` |
+| Figure images + map | `pipeline/generate/extract_figures.py` | `assets/figures/`, `extracted/figures-map.json` |
 | Table structure | docling | `pipeline/.cache/tables.json` |
 | Per-page markdown slices (every md run attributed to page N) | `pipeline/slice_pages.py` | `.cache/<sweep>/slices/p-NNN.md` |
 | Served HTML (what the reader gets) | the dev server, or a built snapshot | `localhost:PORT/...` / `served.html` |

@@ -34,7 +34,7 @@ cards/<vendor>/<slug>/
   style-manifest.yaml # per-card visual vocabulary (chip/highlight fills, role colors)
   sections/*.md       # faithful markdown, mechanically generated, ordered by filename
   assets/figures/     # figure images extracted from the PDF (pPPP-K.png)
-  extracted/          # extraction artifacts: oracle inputs, links, per-page renders
+  extracted/          # per-card extraction data: figure map + image inventory; renders (gitignored)
 pipeline/             # the conversion pipeline (extract → assemble → verify)
 site/                 # Astro site rendering cards/ to static HTML (deploys to Pages)
 docs/                 # design notes, decision log, and re-runnable experiments

@@ -36,7 +36,9 @@ untracked + gitignored, no secrets in tracked files. Docs flattened to `docs/` a
 de-v2'd, CLAUDE.md reframed (D34); removed vestigial `worklist.py`; consolidated the
 QA methodology into `docs/verification-methodology.md` (+ a pipeline module map in
 CLAUDE.md); trimmed this file's superseded round-by-round tail and marked
-`generation-design.md` historical. Owner: **"good to ship."** **Next:** (1) owner
+`generation-design.md` historical; cleaned `cards/*/*/extracted/` to only the live-process
+inputs — moved the figure-extraction script to `pipeline/generate/extract_figures.py` and
+removed dead v1 dumps/scripts (D36, narrowing D5). Owner: **"good to ship."** **Next:** (1) owner
 publishes when ready (push `main` → Pages deploy, D13); (2) the pipeline is **heavily
 document-specialized** (hard-coded paths, per-card style-manifest, gates tuned to
 this card's defects) — likely won't generalize cleanly even to Anthropic's other
