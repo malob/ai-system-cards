@@ -178,9 +178,14 @@ const rail = toc
   spy();
 
   // --- sidenotes (wide screens): clone footnotes into the margin, then de-collide ---
+  // Both real GFM footnote refs (prose) and the manual <sup class="fn-html"> links
+  // cards.js emits for refs inside raw-HTML tables resolve to the same
+  // #user-content-fn-N definition — give each a sidenote. The hidden .fnref-shim
+  // refs (display:none) are dropped by the offsetParent check below, so a table-only
+  // footnote gets exactly one sidenote, anchored to its in-table superscript.
   const doc = document.querySelector('.doc');
   const sidenotes = [];
-  document.querySelectorAll('[data-footnote-ref]').forEach((ref) => {
+  document.querySelectorAll('[data-footnote-ref], sup.fn-html > a[href^="#"]').forEach((ref) => {
     const id = ref.getAttribute('href')?.slice(1);
     const note = id && document.getElementById(id);
     const sup = ref.closest('sup');
@@ -196,7 +201,7 @@ const rail = toc
     const clone = note.cloneNode(true);
     clone.querySelectorAll('[data-footnote-backref]').forEach((b) => b.remove());
     sn.insertAdjacentHTML('beforeend', clone.innerHTML);
-    sup.insertAdjacentElement('afterend', sn);
+    doc.appendChild(sn);
     sidenotes.push({ sn, sup });
   });
 

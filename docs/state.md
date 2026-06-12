@@ -82,8 +82,11 @@ taxonomy in its §2 is load-bearing), and
   their bogus offset poisoned the de-collision cascade and piled every note at the
   scroll position — the "weird" regression) and (b) sorts notes by measured position
   before stacking colliders (+14px). Verified in real Chrome on the production build:
-  72 notes, 0 overlaps, max drift 202px. Render-only. (Known minor gap, pre-existing:
-  table-only footnotes have no sidenote and `section.footnotes` is hidden ≥1500px, so
-  their text isn't shown at wide width — separate follow-up.)
+  72 notes, 0 overlaps, max drift 202px. Render-only. Then closed the pre-existing
+  wide-width gap: table-only footnotes (3/4/11/28/29 — referenced only via hidden
+  `.fnref-shim`s) had no sidenote while `section.footnotes` is hidden ≥1500px, so their
+  text was invisible there; the sidenote builder now also anchors notes to the visible
+  in-table `sup.fn-html` links (notes append to `.doc`). Verified: 77 notes, 0 overlaps,
+  all five at drift 0 beside their tables; prose cluster unchanged.
 - **Open:** nothing blocking. Next milestone remains the second-document
   generalization (D35).
