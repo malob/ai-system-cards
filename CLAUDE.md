@@ -44,8 +44,12 @@ the Python deps inline — `pymupdf`, and `docling` for tables):
 
 ```sh
 uv run --with pymupdf python pipeline/generate/run.py --all
-uv run --with pymupdf python pipeline/verifier/calibrate.py cards/anthropic/claude-fable-5/sections
+uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
 ```
+
+The gate passes at **0 majors**; `L1 31` and `T1 ~70` are accepted typed residuals
+(the current baseline), not regressions. `calibrate.py` takes a git ref or the literal
+`WORKTREE` (the current sections), not a path.
 
 Build and serve the site:
 
