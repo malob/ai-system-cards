@@ -55,7 +55,11 @@ const rail = toc
       <ol>
         {
           rail.map((t) => (
-            <li data-depth={t.depth} data-parent={t.parent}>
+            <li
+              data-depth={t.depth}
+              data-parent={t.parent}
+              class={t.id === 'footnote-label' ? 'fn-entry' : undefined}
+            >
               <a href={`#${t.id}`} data-target={t.id}>
                 {t.number && <span class="num">{t.number}</span>}
                 <span>{t.title}</span>
@@ -169,6 +173,7 @@ const rail = toc
   const spy = () => {
     let current = headings[0]?.id;
     for (const h of headings) {
+      if (h.offsetParent === null) continue; // e.g. #footnote-label when sidenotes replace the list
       if (h.getBoundingClientRect().top <= 96) current = h.id;
       else break;
     }

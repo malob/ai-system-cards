@@ -792,6 +792,7 @@ section.footnotes #footnote-label {
 @media (min-width: 1500px) {
   .sidenote { display: block; }
   section.footnotes { display: none; }
+  .rail li.fn-entry { display: none; } /* its target section is hidden here */
 }
 
 /* --- search ------------------------------------------------------------------------- */
