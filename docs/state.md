@@ -120,5 +120,7 @@ taxonomy in its §2 is load-bearing), and
   even if Anthropic revises again). Verifier page constants updated (TOC 5–11,
   317pp, p.2 now gated). First changed-doc re-run: ~2.5h end to end, no new
   defect classes.
-- **Open:** the revision conversion is unpushed (owner push authorization,
-  D13). Next milestone remains the second-document generalization (D35).
+- **Open:** nothing blocking — the revision conversion is pushed + deployed
+  (2026-06-12, `6650d07`; live-verified: changelog section, canonical-CDN header
+  link, archived-PDF page links, p.317). Next milestone remains the
+  second-document generalization (D35).
