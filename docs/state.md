@@ -118,8 +118,9 @@ taxonomy in its §2 is load-bearing), and
   is a new first section. Header "Original PDF" → canonical CDN URL; `p.N` deep
   links stay on the archived in-repo PDF (owner: they must match the conversion
   even if Anthropic revises again). Verifier page constants updated (TOC 5–11,
-  317pp, p.2 now gated). First changed-doc re-run: ~2.5h end to end, no new
-  defect classes.
+  317pp, p.2 now gated). First changed-doc re-run: **~20 min of agent wall-clock**
+  (docling re-extraction the long pole), **zero owner time**, no new defect
+  classes — every manual step was page bookkeeping, none was conversion logic.
 - **Open:** nothing blocking — the revision conversion is pushed + deployed
   (2026-06-12, `6650d07`; live-verified: changelog section, canonical-CDN header
   link, archived-PDF page links, p.317). Next milestone remains the
