@@ -108,6 +108,17 @@ taxonomy in its §2 is load-bearing), and
   search dialog (results are same-page fragment jumps). Verified in Chrome:
   the phrase ranks §2.1.2.2 #1 unquoted; quoted/single-word/heading queries
   good; click-through lands on the section.
-- **Open:** the search rework + this note are unpushed (owner push
-  authorization, D13). Next milestone remains the second-document
-  generalization (D35).
+- **June 11 PDF revision converted (D37; committed, unpushed):** Anthropic
+  revised the card (changelog page + corrections + frontier-safeguards rewrite;
+  317pp, was 319) and gave us the stable canonical URL (Drake Thomas thread).
+  Re-converted wholesale: section ranges remapped via the doc's own TOC,
+  everything re-extracted (oracle, renders, 153 figures, docling on 71 pages),
+  regen + gate at the **same baseline (0 majors / L1 31 / T1 70**, accepted.json
+  pages −1). All 7 publisher-changelog items verified in the diff; the changelog
+  is a new first section. Header "Original PDF" → canonical CDN URL; `p.N` deep
+  links stay on the archived in-repo PDF (owner: they must match the conversion
+  even if Anthropic revises again). Verifier page constants updated (TOC 5–11,
+  317pp, p.2 now gated). First changed-doc re-run: ~2.5h end to end, no new
+  defect classes.
+- **Open:** the revision conversion is unpushed (owner push authorization,
+  D13). Next milestone remains the second-document generalization (D35).

@@ -22,22 +22,22 @@ import oracle
 
 REPO = Path(__file__).resolve().parents[2]
 CARD = REPO / "cards/anthropic/claude-fable-5"
-TOC_PAGES = set(range(4, 11))
-EXPECTED_PAGES = [p for p in range(2, 320) if p not in TOC_PAGES]  # 1 = cover
+TOC_PAGES = set(range(5, 12))
+EXPECTED_PAGES = [p for p in range(2, 318) if p not in TOC_PAGES]  # 1 = cover
 
 
 def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> list[dict]:
     # global streams — sections share boundary pages, so compare the whole doc.
-    # Title pages 1-2 are declared exclusions (cover art + title typography;
-    # trivially eyeballable, no body text).
-    md_tokens = [tp for sec in sections for tp in sec.tokens if tp[1] > 2]
+    # Page 1 is a declared exclusion (cover art + title typography; trivially
+    # eyeballable, no body text). p.2 is the changelog — verified like any page.
+    md_tokens = [tp for sec in sections for tp in sec.tokens if tp[1] > 1]
     md_links = [l for sec in sections for l in sec.links]
     table_pages = set().union(*(sec.table_pages for sec in sections))
     table_pages |= {p + 1 for p in table_pages} | {p - 1 for p in table_pages}  # spill
     if limited:
-        page_range = range(max(3, sections[0].page_start), sections[-1].page_end + 1)
+        page_range = range(max(2, sections[0].page_start), sections[-1].page_end + 1)
     else:
-        page_range = range(3, 320)
+        page_range = range(2, 318)
     if only_pages is not None:
         # wave/partial mode: restrict the oracle range AND the md streams to the
         # generated pages, so ungenerated pages don't read as omissions

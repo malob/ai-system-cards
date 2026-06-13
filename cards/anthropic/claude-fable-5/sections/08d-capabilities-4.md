@@ -1,4 +1,4 @@
-<!-- source: source.pdf pages 291-308 -->
+<!-- source: source.pdf pages 289-306 -->
 
 ### 8.17 Real-world professional tasks
 
@@ -10,7 +10,7 @@ Using our internal agentic harness, Claude Mythos 5 achieved 79% on OfficeQA and
 
 On Databricks’ own evaluation of OfficeQA Pro, which differs from ours in that documents are read as images using the model's vision rather than as extracted text, Claude Fable 5 achieved a state-of-the-art 57.9%, ahead of GPT-5.5 (52.6%) and Claude Opus 4.8 (48.1%).
 
-<!-- p.292 -->
+<!-- p.290 -->
 
 #### 8.17.2 Finance Agent
 
@@ -26,9 +26,9 @@ Because these tasks have open-ended deliverables rather than single correct answ
 
 Across 2,491 pairwise grades on the 294-task suite, with ties excluded and a model-based grader (Claude Opus 4.8) expressing each preference, Fable/Mythos 5 was preferred over Claude Sonnet 4.6 in 90% of comparisons, over Claude Opus 4.8 in 74%, and over Claude Mythos Preview in 64%. As consistency checks on the grader, Claude Mythos Preview was preferred over Claude Sonnet 4.6 in 88% of comparisons and over Claude Opus 4.8 in 65%, and Claude Opus 4.8 over Claude Sonnet 4.6 in 82%—all in line with the expected capability ordering. Elo ratings are a Bradley–Terry maximum-likelihood fit on the same pairwise wins, with Claude Sonnet 4.6 fixed at 1,000 and the standard 400-point = 10:1 odds scale—an anchoring we will hold fixed in future releases so that scores remain comparable as the evaluation evolves. On this scale, Fable/Mythos 5 rates 1,374, Claude Mythos Preview 1,307, and Claude Opus 4.8 1,222.
 
-<!-- p.293 -->
+<!-- p.291 -->
 
-![](assets/figures/p293-1.png)
+![](assets/figures/p291-1.png)
 
 :::caption
 **[Figure 8.17.3.1.A] The evaluation’s grader preferred Claude Fable 5** over Claude Opus 4.8 in 74% of pairwise comparisons.
@@ -40,9 +40,9 @@ For continuity with prior system cards, we also report Real-World Finance v1, a 
 
 Fable/Mythos 5 scored 70.0%, comparable to Claude Mythos Preview (70.9%) and up from 64.9% for Claude Opus 4.7 and 64.6% for Claude Opus 4.6, indicating the benchmark is not yet saturated.
 
-<!-- p.294 -->
+<!-- p.292 -->
 
-![](assets/figures/p294-1.png)
+![](assets/figures/p292-1.png)
 
 :::caption
 **[Figure 8.17.3.2.A]** Claude Fable 5 scores 70.0%, similar to Claude Mythos Preview.
@@ -50,27 +50,27 @@ Fable/Mythos 5 scored 70.0%, comparable to Claude Mythos Preview (70.9%) and up 
 
 #### 8.17.4 Legal Agent Benchmark
 
-Legal Agent Benchmark[^64] (LAB) is an open-source benchmark created by the [Harvey AI](https://www.harvey.ai/) team. The benchmark was released in May of 2026 and consists of 1,200+ tasks across 24 distinct practice areas. Each task contains a closed universe of documents (.xlsx, .docx, .eml, .pptx) which include email communication, firm templates, procedural files, and other client-matter materials the agent must sift through in order to accomplish the task. The task instructions are written as a minimal “request for work” from partner to associate. Task instructions also stipulate the expected output document and format. Evaluation is conducted pass/fail using an LLM-as-Judge across a suite of expert-written rubric criteria (criteria per evaluated tasks: min=23, median=56, max=194). The LAB standard reporting considers the task a success only if all criteria are met.
+Legal Agent Benchmark[^63] (LAB) is an open-source benchmark created by the [Harvey AI](https://www.harvey.ai/) team. The benchmark was released in May of 2026 and consists of 1,200+ tasks across 24 distinct practice areas. Each task contains a closed universe of documents (.xlsx, .docx, .eml, .pptx) which include email communication, firm templates, procedural files, and other client-matter materials the agent must sift through in order to accomplish the task. The task instructions are written as a minimal “request for work” from partner to associate. Task instructions also stipulate the expected output document and format. Evaluation is conducted pass/fail using an LLM-as-Judge across a suite of expert-written rubric criteria (criteria per evaluated tasks: min=23, median=56, max=194). The LAB standard reporting considers the task a success only if all criteria are met.
 
-We tested Mythos 5 against 1,235 problems (16 of the 1,251 problems were excluded due to data defects; exclusions were identified before testing) and achieved a 16.91% (± 0.4, n=5) all-pass rate and 92.0% mean criterion-pass rate (adaptive-thinking, max effort). Fable 5 is currently the highest ranked per Harvey’s evaluation[^65] (as of June 2026) on their held-out<!-- p.295 --> set at 13.3% all-pass rate. Our harness is an internal reimplementation that preserves LAB’s task content, rubric criteria, all-pass scoring, default judge model (Claude Sonnet 4.6), with a reduced toolset. The public harness exposes bash, read, write, edit, glob, grep tools, whereas we only expose bash and a Python tool.
+We tested Mythos 5 against 1,235 problems (16 of the 1,251 problems were excluded due to data defects; exclusions were identified before testing) and achieved a 16.91% (± 0.4, n=5) all-pass rate and 92.0% mean criterion-pass rate (adaptive-thinking, max effort). Fable 5 is currently the highest ranked per Harvey’s evaluation[^64] (as of June 2026) on their held-out<!-- p.293 --> set at 13.3% all-pass rate. Our harness is an internal reimplementation that preserves LAB’s task content, rubric criteria, all-pass scoring, default judge model (Claude Sonnet 4.6), with a reduced toolset. The public harness exposes bash, read, write, edit, glob, grep tools, whereas we only expose bash and a Python tool.
 
 #### 8.17.5 MCP Atlas
 
-MCP-Atlas[^66] assesses language model performance on real-world tool use via the [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro) (MCP). The benchmark measures how well models execute multi-step workflows—discovering appropriate tools, invoking them correctly, and synthesizing results into accurate responses. Tasks span multiple tool calls across production-like MCP server environments, requiring models to work with authentic APIs and real data, manage errors and retries, and coordinate across different servers. Claude Fable 5 achieved an 83.3% pass rate, up from 82.2% for Claude Opus 4.8.
+MCP-Atlas[^65] assesses language model performance on real-world tool use via the [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro) (MCP). The benchmark measures how well models execute multi-step workflows—discovering appropriate tools, invoking them correctly, and synthesizing results into accurate responses. Tasks span multiple tool calls across production-like MCP server environments, requiring models to work with authentic APIs and real data, manage errors and retries, and coordinate across different servers. Claude Fable 5 achieved an 83.3% pass rate, up from 82.2% for Claude Opus 4.8.
 
 #### 8.17.6 Vending-Bench
 
-Vending-Bench 2 is a benchmark from Andon Labs[^67] that measures AI models’ performance on running a business over long time horizons. Note that, unlike our real-world experiments as part of Project Vend, Vending-Bench evaluations[^68] are purely simulated.
+Vending-Bench 2 is a benchmark from Andon Labs[^66] that measures AI models’ performance on running a business over long time horizons. Note that, unlike our real-world experiments as part of Project Vend, Vending-Bench evaluations[^67] are purely simulated.
 
 Models are tasked with managing a simulated vending machine business for a year, given a $500 starting balance. They are scored on their final bank account balance, requiring them to demonstrate sustained coherence and strategic planning across thousands of business decisions. To score well, models must successfully find and negotiate with suppliers via email, manage inventory, optimize pricing, and adapt to dynamic market conditions.
 
-Fable 5 was run with all effort levels. Fable 5's best result came at max effort: a final balance of $5,680.26, slightly below Claude Opus 4.8's $5,787.43. Vending-Bench has its own context management system, meaning the context editing capability in Claude was not enabled; we discuss alignment in Section [6.2.5](#625-external-testing-from-andon-labs).
+Fable 5 was run with all effort levels. Fable 5's best result came at high effort: a final balance of $5,680.26, slightly below Claude Opus 4.8's $5,787.43. Vending-Bench has its own context management system, meaning the context editing capability in Claude was not enabled; we discuss alignment in Section [6.2.5](#625-external-testing-from-andon-labs).
 
-<!-- p.296 -->
+<!-- p.294 -->
 
 #### 8.17.7 GDPval-AA
 
-GDPval-AA[^69], developed by [Artificial Analysis](https://artificialanalysis.ai/), is an independent evaluation framework that tests AI models on economically valuable, real-world professional tasks. The benchmark uses 220 tasks from OpenAI’s [GDPval gold database](https://huggingface.co/datasets/openai/gdpval), spanning 44 occupations across 9 major industries. Tasks mirror actual professional work products including documents, slides, diagrams, and spreadsheets. Models are given shell access and web browsing capabilities in an agentic loop to solve tasks, and performance is measured via ELO ratings derived from blind pairwise comparisons of model outputs. Claude Fable 5 achieved the top score on the leaderboard, with Claude models holding four of the top five positions. Claude Fable 5 led Opus 4.8 by ~42 Elo points (56% pairwise win rate), while using fewer turns and tokens. Evaluation was run independently by Artificial Analysis.
+GDPval-AA[^68], developed by [Artificial Analysis](https://artificialanalysis.ai/), is an independent evaluation framework that tests AI models on economically valuable, real-world professional tasks. The benchmark uses 220 tasks from OpenAI’s [GDPval gold database](https://huggingface.co/datasets/openai/gdpval), spanning 44 occupations across 9 major industries. Tasks mirror actual professional work products including documents, slides, diagrams, and spreadsheets. Models are given shell access and web browsing capabilities in an agentic loop to solve tasks, and performance is measured via ELO ratings derived from blind pairwise comparisons of model outputs. Claude Fable 5 achieved the top score on the leaderboard, with Claude models holding four of the top five positions. Claude Fable 5 led Opus 4.8 by ~42 Elo points (56% pairwise win rate), while using fewer turns and tokens. Evaluation was run independently by Artificial Analysis.
 
 #### 8.17.8 Toolathlon
 
@@ -80,7 +80,7 @@ We ran our internal harness with adaptive thinking at max effort. Following the 
 
 Claude Mythos 5 achieved 61.7% Pass@1 (±0.5 across trials), improving on Claude Opus 4.8 (59.9%) and Claude Opus 4.7 (59.3%). Claude Mythos 5 also sets a new mark for reliability: its Pass³ of 58.3%—the fraction of tasks solved in all three trials—exceeds the best previous Claude result by over 5 points, and the narrow gap between its Pass@1 and Pass@3 (66.7%) indicates that what Claude Mythos 5 can solve, it solves consistently. It does so with fewer turns than its predecessors.
 
-<!-- p.297 -->
+<!-- p.295 -->
 
 <table><tbody><tr><th>Model</th><th>Pass@1</th><th>Pass@3</th><th>Pass³</th><th>Avg turns</th></tr><tr><td><b>Claude Fable 5</b></td><td>61.7</td><td>68.5</td><td>55.6</td><td>19.8</td></tr><tr><td><b>Claude Mythos 5</b></td><td>61.7</td><td>66.7</td><td>58.3</td><td>19.0</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>59.9</td><td>67.6</td><td>48.1</td><td>24.5</td></tr><tr><td><b>Claude Opus 4.7</b></td><td>59.3</td><td>66.7</td><td>52.8</td><td>25.9</td></tr><tr><td><b>Claude Mythos Preview</b></td><td>61.1</td><td>66.7</td><td>55.6</td><td>17.6</td></tr><tr><td><b>Claude Opus 4.6</b></td><td>56.8</td><td>66.7</td><td>47.2</td><td>16.9</td></tr><tr><td><b>Claude Sonnet 4.5</b></td><td>41.0</td><td>54.6</td><td>28.7</td><td>32.0</td></tr></tbody></table>
 
@@ -88,37 +88,37 @@ Claude Mythos 5 achieved 61.7% Pass@1 (±0.5 across trials), improving on Claude
 **[Table 8.17.8.A] Toolathlon scores (internal harness).** Models are evaluated with adaptive thinking at max effort. Pass@1, Pass@3, and Pass³ are computed over all 108 tasks across 3 trials per the paper’s protocol.
 :::
 
-Note on comparability to the published leaderboard. Our harness mirrors the upstream task definitions, prompts, and execution-based checkers, validated by replaying the published claude-sonnet-4.5 trajectories. To control for live-dependency drift and upstream repository changes since the published trajectories, we pin financial-data feeds and container images to an offline snapshot and mirror current upstream state. Roughly a quarter of tasks are unsatisfiable as published; we leave these unchanged. Net effect of the pinning: our scores run ~3 points above a strictly upstream-equivalent harness—an offset that is constant across the Claude models reported here. Separately, the published leaderboard's Opus 4.7 figure uses the authors' default configuration rather than max effort.
+Note on comparability to the published leaderboard: Our harness mirrors the upstream task definitions, prompts, and execution-based checkers, validated by replaying the published claude-sonnet-4.5 trajectories. To control for live-dependency drift and upstream repository changes since the published trajectories, we pin financial data feeds and container images to an offline snapshot and mirror current upstream state. Roughly a quarter of tasks are unsatisfiable as published; we leave these unchanged. As a result, our scores consistently run ~3 points above a strictly upstream-equivalent harness. Separately, the published leaderboard's Opus 4.7 figure uses the authors' default configuration rather than max effort.
 
 #### 8.17.9 AutomationBench
 
-AutomationBench[^70] is a benchmark from Zapier that measures whether an agent can complete a realistic end-to-end business workflow. Tasks are seeded from real customer workflow patterns across Sales, Marketing, Operations, Support, Finance, and HR. Each task drops the agent into a simulated company with dozens of REST API endpoints spanning 47 apps (CRM, Slack, Google Workspace, etc.). Given a single natural-language instruction, the agent must autonomously discover the right endpoints via search, make dozens of sequential, interdependent API calls, consult and obey layered business-policy documents, as well as sidestep deliberately planted distractors. Grading is pass or fail for each task based on meeting all deterministic assertions on simulated app state (e.g., were the right CRM updates applied).
+AutomationBench[^69] is a benchmark from Zapier that measures whether an agent can complete a realistic end-to-end business workflow. Tasks are seeded from real customer workflow patterns across Sales, Marketing, Operations, Support, Finance, and HR. Each task drops the agent into a simulated company with dozens of REST API endpoints spanning 47 apps (CRM, Slack, Google Workspace, etc.). Given a single natural-language instruction, the agent must autonomously discover the right endpoints via search, make dozens of sequential, interdependent API calls, consult and obey layered business-policy documents, as well as sidestep deliberately planted distractors. Grading is pass or fail for each task based on meeting all deterministic assertions on simulated app state (e.g., were the right CRM updates applied).
 
-<!-- p.298 -->
+<!-- p.296 -->
 
 On AutomationBench’s [leaderboard](https://zapier.com/benchmarks), which measures performance on a private held-out evaluation set, Claude Fable 5 (max effort) scored a 17.4%, outperforming Claude Opus 4.8 (max effort) at 15.5%.
 
-![](assets/figures/p298-1.png)
+![](assets/figures/p296-1.png)
 
 :::caption
 **[Figure 8.17.9.A] AutomationBench** scores on private held-out tasks.
 :::
 
-![](assets/figures/p298-2.png)
+![](assets/figures/p296-2.png)
 
 :::caption
 **[Figure 8.17.9.B] AutomationBench** pass rate versus average cost per task, as measured and reported by Zapier.
 :::
 
-<!-- p.299 -->
+<!-- p.297 -->
 
 ### 8.18 Healthcare
 
 #### 8.18.1 HealthBench results
 
-HealthBench[^71] is an open-source evaluation developed to assess safety, accuracy, and communication across realistic healthcare contexts. The benchmark uses over 48,000 expert-written rubric items to grade 5,000 multi-turn patient conversations across 26 medical specialties.
+HealthBench[^70] is an open-source evaluation developed to assess safety, accuracy, and communication across realistic healthcare contexts. The benchmark uses over 48,000 expert-written rubric items to grade 5,000 multi-turn patient conversations across 26 medical specialties.
 
-![](assets/figures/p299-1.png)
+![](assets/figures/p297-1.png)
 
 :::caption
 **[Figure 8.18.1.A] HealthBench length-adjusted scores**. All Claude models used adaptive thinking at max effort with a 40k token budget. Claude Opus 4.8 was the grader model. Scores were averaged over 5 trials. No tools or customized system prompts were provided to any model. Shown with 95% CI. (*GPT-5.5: as publicly reported by OpenAI [their grader and published length adjustment]).
@@ -126,11 +126,11 @@ HealthBench[^71] is an open-source evaluation developed to assess safety, accura
 
 #### 8.18.2 HealthBench Professional results
 
-HealthBench Professional[^72] is a clinical task benchmark composed of 525 physician-authored conversations spanning clinical consults, documentation, and research tasks, each graded against rubric criteria by an LLM-as-a-Judge model.
+HealthBench Professional[^71] is a clinical task benchmark composed of 525 physician-authored conversations spanning clinical consults, documentation, and research tasks, each graded against rubric criteria by an LLM-as-a-Judge model.
 
-<!-- p.300 -->
+<!-- p.298 -->
 
-![](assets/figures/p300-1.png)
+![](assets/figures/p298-1.png)
 
 :::caption
 **[Figure 8.18.2.A] HealthBench Professional length-adjusted scores.** All Claude models used adaptive thinking at max effort. Claude Opus 4.8 was the grader model. Scores were averaged over 5 trials. No tools or customized system prompts were provided to any model. Shown with 95% CI. (*GPT-5.5: as publicly reported by OpenAI [their grader and published length adjustment]).
@@ -138,11 +138,11 @@ HealthBench Professional[^72] is a clinical task benchmark composed of 525 physi
 
 #### 8.18.3 HealthAdminBench results
 
-HealthAdminBench[^73] is a 135-task benchmark of three healthcare revenue-cycle workflows (prior authorization, denials and appeals, durable-medical-equipment orders) executed across four simulated GUI environments (an EHR, two payer portals, a fax portal). Each task decomposes into fine-grained verifiable subtasks which are assessed by deterministic and LLM graders. Reported scores are full-task completion pass@1.
+HealthAdminBench[^72] is a 135-task benchmark of three healthcare revenue-cycle workflows (prior authorization, denials and appeals, durable-medical-equipment orders) executed across four simulated GUI environments (an EHR, two payer portals, a fax portal). Each task decomposes into fine-grained verifiable subtasks which are assessed by deterministic and LLM graders. Reported scores are full-task completion pass@1.
 
-<!-- p.301 -->
+<!-- p.299 -->
 
-![](assets/figures/p301-1.png)
+![](assets/figures/p299-1.png)
 
 :::caption
 **[Figure 8.18.3.A] HealthAdminBench full-task completion rates (pass@1).** Results were generated with Anthropic's internal port of the benchmark and are not directly comparable to the published leaderboard. All runs used a browser-use agent with adaptive thinking and a 500k-token per-task budget. Only a single trial was run for each model. Agents were provided per-portal skill files rather than task-specific system-prompt text. LLM-judged subtasks were scored by Claude Opus 4.8. Task and run identifiers were pinned in browser local storage to ensure robust session tracking.
@@ -150,33 +150,33 @@ HealthAdminBench[^73] is a 135-task benchmark of three healthcare revenue-cycle 
 
 ### 8.19 Multilingual performance
 
-We evaluated Claude Mythos 5 on three multilingual benchmarks, namely Cohere Labs’s Global MMLU (GMMLU)[^74] and INCLUDE benchmark[^75], and AI4Bharat’s Multi-task Indic Language Understanding Benchmark (MILU)[^76] to assess model performance across a wide range of languages.
+We evaluated Claude Mythos 5 on three multilingual benchmarks, namely Cohere Labs’s Global MMLU (GMMLU)[^73] and INCLUDE benchmark[^74], and AI4Bharat’s Multi-task Indic Language Understanding Benchmark (MILU)[^75] to assess model performance across a wide range of languages.
 
-GMMLU extends the standard MMLU evaluation across 42 languages from high-resource languages such as French and German to low-resource languages such as Yoruba, Igbo, and Chichewa. MILU focuses on 10 Indic languages (Bengali, Gujarati, Hindi, Kannada,<!-- p.302 --> Malayalam, Marathi, Odia, Punjabi, Tamil, and Telugu) alongside English and tests culturally grounded knowledge comprehension. INCLUDE covers 44 languages with questions drawn from regional academic and professional examinations, emphasizing in-language and in-culture knowledge rather than translated content.
+GMMLU extends the standard MMLU evaluation across 42 languages from high-resource languages such as French and German to low-resource languages such as Yoruba, Igbo, and Chichewa. MILU focuses on 10 Indic languages (Bengali, Gujarati, Hindi, Kannada,<!-- p.300 --> Malayalam, Marathi, Odia, Punjabi, Tamil, and Telugu) alongside English and tests culturally grounded knowledge comprehension. INCLUDE covers 44 languages with questions drawn from regional academic and professional examinations, emphasizing in-language and in-culture knowledge rather than translated content.
 
 #### 8.19.1 GMMLU results
 
-![](assets/figures/p302-1.png)
+![](assets/figures/p300-1.png)
 
 :::caption
 **[Figure 8.19.1.A] GMMLU average accuracy.** Claude Mythos 5 achieved an average accuracy of 93.2% across all evaluated languages. All models were evaluated with max-effort adaptive thinking with a 32,768-token response budget. Only a single trial was run for each model.
 :::
 
-<!-- p.303 -->
+<!-- p.301 -->
 
 #### 8.19.2 MILU results
 
-![](assets/figures/p303-1.png)
+![](assets/figures/p301-1.png)
 
 :::caption
 **[Figure 8.19.2.A] MILU average accuracy.** Claude Mythos 5 achieved an average accuracy of 92.9% across all evaluated languages. All models were evaluated with max-effort adaptive thinking with a 32,768-token response budget. Scores were averaged over 5 trials.
 :::
 
-<!-- p.304 -->
+<!-- p.302 -->
 
 #### 8.19.3 INCLUDE results
 
-![](assets/figures/p304-1.png)
+![](assets/figures/p302-1.png)
 
 :::caption
 **[Figure 8.19.3.A] INCLUDE average accuracy.** Claude Mythos 5 achieved an average accuracy of 90.5% across all evaluated languages. All models were evaluated with max-effort adaptive thinking with a 32,768-token response budget. Scores were averaged over 5 trials.
@@ -188,7 +188,7 @@ Claude Mythos 5 outperforms several previous models on life sciences capabilitie
 
 Although many of these evaluations are not publicly released, we briefly describe each below. For all tasks except Protocol Troubleshooting, Claude has access to a bash tool for code execution and package managers for installing needed libraries. For Protocol Troubleshooting, Claude has access to bash, file editor, and web search tools. For LabBench2, Claude has access to bash, file editor, web search, and image zoom/crop tools.
 
-<!-- p.305 -->
+<!-- p.303 -->
 
 #### 8.20.1 BioMysteryBench
 
@@ -204,7 +204,7 @@ On SpatialBench Verified, Claude Mythos 5 achieved the top score at 69.2%, ahead
 
 We evaluated the model’s ability to understand the relationship between biomolecular structure and function. Given only structural data and basic tools, the model must answer open-ended questions about a biomolecule's function. Claude Mythos 5 achieved 87.2%, the strongest result, ahead of Claude Mythos Preview at 81.6% and Claude Opus 4.8 at 79.0%, and more than doubling Claude Sonnet 4.6 at 31.6%.
 
-<!-- p.306 -->
+<!-- p.304 -->
 
 #### 8.20.4 ProteinGym Hard
 
@@ -220,48 +220,48 @@ This assessment looks at models’ ability to detect and fix errors in molecular
 
 #### 8.20.7 LABBench2
 
-LABBench2[^77] assesses ability to answer biology research questions by finding and reading evidence on the live web—locating the right papers, patents, clinical-trial records, and databases, interpreting their figures, tables, and supplementary materials, and judging source reliability. Claude Mythos 5’s biggest gain came on patent questions, where it scored 79.8%—compared to 68.8% for Claude Opus 4.8 and 64.3% for Claude Mythos Preview—and it also led on clinical-trial questions at 91.2% (up from 86.3% for Claude Mythos Preview and 85.3% for Claude Opus 4.8), database questions at 74.2%, literature questions at 86.5%, and table reading at 82.4%. On supplementary materials (65.9% vs 66.1%) and source-reliability judgments (97.6% vs 96.5%) it performed on par with Claude Mythos Preview. FigQA remained the most difficult category for every model, with Claude Mythos 5 highest at 48.3%.
+LABBench2[^76] assesses ability to answer biology research questions by finding and reading evidence on the live web—locating the right papers, patents, clinical-trial records, and databases, interpreting their figures, tables, and supplementary materials, and judging source reliability. Claude Mythos 5’s biggest gain came on patent questions, where it scored 79.8%—compared to 68.8% for Claude Opus 4.8 and 64.3% for Claude Mythos Preview—and it also led on clinical-trial questions at 91.2% (up from 86.3% for Claude Mythos Preview and 85.3% for Claude Opus 4.8), database questions at 74.2%, literature questions at 86.5%, and table reading at 82.4%. On supplementary materials (65.9% vs 66.1%) and source-reliability judgments (97.6% vs 96.5%) it performed on par with Claude Mythos Preview. FigQA remained the most difficult category for every model, with Claude Mythos 5 highest at 48.3%.
 
-<!-- p.307 -->
+<!-- p.305 -->
 
-![](assets/figures/p307-1.png)
+![](assets/figures/p305-1.png)
 
 :::caption
 **[Figure 8.20.7.A] Evaluation results for life sciences.** Claude Mythos 5 shows consistent improvements across a range of life science tasks.
 :::
 
-<!-- p.308 -->
+<!-- p.306 -->
 
-![](assets/figures/p308-1.png)
+![](assets/figures/p306-1.png)
 
 :::caption
 **[Figure 8.20.7.B] LABBench2.** Claude Mythos 5 exceeds most previous models on LABBench2 scores.
 :::
-[^64]: Harvey AI. (2026). Legal Agent Benchmark. [https://www.harvey.ai/blog/introducing-harveys-legal-agent-benchmark](https://www.harvey.ai/blog/introducing-harveys-legal-agent-benchmark)
+[^63]: Harvey AI. (2026). Legal Agent Benchmark. [https://www.harvey.ai/blog/introducing-harveys-legal-agent-benchmark](https://www.harvey.ai/blog/introducing-harveys-legal-agent-benchmark)
 
-[^65]: Harvey AI. (2026). Legal Agent Benchmark: initial results. [https://www.harvey.ai/blog/legal-agent-benchmark-initial-results](https://www.harvey.ai/blog/legal-agent-benchmark-initial-results)
+[^64]: Harvey AI. (2026). Legal Agent Benchmark: initial results. [https://www.harvey.ai/blog/legal-agent-benchmark-initial-results](https://www.harvey.ai/blog/legal-agent-benchmark-initial-results)
 
-[^66]: Bandi, C., et al. (2026). MCP-Atlas: A large-scale benchmark for tool-use competency with real MCP servers. arXiv:2602.00933. [https://arxiv.org/abs/2602.00933](https://arxiv.org/abs/2602.00933)
+[^65]: Bandi, C., et al. (2026). MCP-Atlas: A large-scale benchmark for tool-use competency with real MCP servers. arXiv:2602.00933. [https://arxiv.org/abs/2602.00933](https://arxiv.org/abs/2602.00933)
 
-[^67]: Andon Labs. (2025). Vending-Bench 2. [https://andonlabs.com/evals/vending-bench-2](https://andonlabs.com/evals/vending-bench-2)
+[^66]: Andon Labs. (2025). Vending-Bench 2. [https://andonlabs.com/evals/vending-bench-2](https://andonlabs.com/evals/vending-bench-2)
 
-[^68]: Backlund, A., & Petersson, L. (2025). Vending-Bench: A benchmark for long-term coherence of autonomous agents. arXiv:2502.15840. [https://arxiv.org/abs/2502.15840](https://arxiv.org/abs/2502.15840)
+[^67]: Backlund, A., & Petersson, L. (2025). Vending-Bench: A benchmark for long-term coherence of autonomous agents. arXiv:2502.15840. [https://arxiv.org/abs/2502.15840](https://arxiv.org/abs/2502.15840)
 
-[^69]: Patwardhan, T., et al. (2025). GDPval: Evaluating AI model performance on real-world economically valuable tasks. arXiv:2510.04374. [https://arxiv.org/abs/2510.04374](https://arxiv.org/abs/2510.04374)
+[^68]: Patwardhan, T., et al. (2025). GDPval: Evaluating AI model performance on real-world economically valuable tasks. arXiv:2510.04374. [https://arxiv.org/abs/2510.04374](https://arxiv.org/abs/2510.04374)
 
-[^70]: Shepard, D., & Salimans, R. (2026). AutomationBench. arXiv:2604.18934. [https://arxiv.org/abs/2604.18934](https://arxiv.org/abs/2604.18934)
+[^69]: Shepard, D., & Salimans, R. (2026). AutomationBench. arXiv:2604.18934. [https://arxiv.org/abs/2604.18934](https://arxiv.org/abs/2604.18934)
 
-[^71]: Arora, R. K., et al. (2025). HealthBench: Evaluating large language models towards improved human health. arXiv:2505.08775. [https://arxiv.org/abs/2505.08775](https://arxiv.org/abs/2505.08775)
+[^70]: Arora, R. K., et al. (2025). HealthBench: Evaluating large language models towards improved human health. arXiv:2505.08775. [https://arxiv.org/abs/2505.08775](https://arxiv.org/abs/2505.08775)
 
-[^72]: Soskin Hicks, R., et al. (2026). HealthBench Professional: Evaluating large language models on real clinician chats. arXiv:2604.27470. [https://arxiv.org/abs/2604.27470](https://arxiv.org/abs/2604.27470)
+[^71]: Soskin Hicks, R., et al. (2026). HealthBench Professional: Evaluating large language models on real clinician chats. arXiv:2604.27470. [https://arxiv.org/abs/2604.27470](https://arxiv.org/abs/2604.27470)
 
-[^73]: Bedi, S., et al. (2026). HealthAdminBench: Evaluating computer-use agents on healthcare administration tasks. arXiv:2604.09937. [https://arxiv.org/abs/2604.09937](https://arxiv.org/abs/2604.09937)
+[^72]: Bedi, S., et al. (2026). HealthAdminBench: Evaluating computer-use agents on healthcare administration tasks. arXiv:2604.09937. [https://arxiv.org/abs/2604.09937](https://arxiv.org/abs/2604.09937)
 
-[^74]: Singh, S., et al. (2024). Global MMLU: Understanding and addressing cultural and linguistic biases in multilingual evaluation. arXiv:2412.03304. [https://arxiv.org/abs/2412.03304](https://arxiv.org/abs/2412.03304)
+[^73]: Singh, S., et al. (2024). Global MMLU: Understanding and addressing cultural and linguistic biases in multilingual evaluation. arXiv:2412.03304. [https://arxiv.org/abs/2412.03304](https://arxiv.org/abs/2412.03304)
 
-[^75]: Romanou, A., et al. (2024). INCLUDE: Evaluating multilingual language understanding with regional knowledge. arXiv:2411.19799. [https://arxiv.org/abs/2411.19799](https://arxiv.org/abs/2411.19799)
+[^74]: Romanou, A., et al. (2024). INCLUDE: Evaluating multilingual language understanding with regional knowledge. arXiv:2411.19799. [https://arxiv.org/abs/2411.19799](https://arxiv.org/abs/2411.19799)
 
-[^76]: Verma, S., et al. (2024). MILU: A multi-task Indic language understanding benchmark. arXiv:2411.02538. [https://arxiv.org/abs/2411.02538](https://arxiv.org/abs/2411.02538)
+[^75]: Verma, S., et al. (2024). MILU: A multi-task Indic language understanding benchmark. arXiv:2411.02538. [https://arxiv.org/abs/2411.02538](https://arxiv.org/abs/2411.02538)
 
-[^77]: Laurent, J. M., et al. (2026). LABBench2: An improved benchmark for AI systems performing biology research. arXiv:2604.09554. [https://arxiv.org/abs/2604.09554](https://arxiv.org/abs/2604.09554)
+[^76]: Laurent, J. M., et al. (2026). LABBench2: An improved benchmark for AI systems performing biology research. arXiv:2604.09554. [https://arxiv.org/abs/2604.09554](https://arxiv.org/abs/2604.09554)
 

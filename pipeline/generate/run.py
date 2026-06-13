@@ -29,7 +29,7 @@ CARD = REPO / "cards/anthropic/claude-fable-5"
 OUT = CARD / "sections"
 SEED = [3, 19, 20, 26, 39, 40, 41, 42, 43, 44, 74, 95, 100, 107, 118, 139,
         235, 236, 252, 253, 309, 310, 311, 318, 319]
-TOC = set(range(4, 11))
+TOC = set(range(5, 12))
 
 
 def section_ranges() -> list[tuple[str, int, int]]:
@@ -286,7 +286,7 @@ def main():
     ap.add_argument("--all", action="store_true")
     args = ap.parse_args()
     want = set(args.pages or (SEED if args.seed else [])) or (
-        set(range(2, 320)) - TOC if args.all else set()
+        set(range(2, 318)) - TOC if args.all else set()
     )
     if not want:
         ap.error("give --pages, --seed, or --all")

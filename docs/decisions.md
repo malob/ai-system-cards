@@ -524,3 +524,24 @@ in any way part of the current process, they shouldn't be here"):
   inventory input); `pages/` renders stay gitignored.
 
 D5 still holds for what matters: never rewrite the pre-fix refs or `tools/`.
+
+## D37 — publisher revisions: re-convert wholesale; page links pin to the archived PDF (2026-06-12)
+
+Anthropic shipped a revised system card (June 11: changelog page + minor corrections +
+frontier-LLM-safeguards rewrite; 317pp, was 319 — pagination shifted) and gave us the
+**stable canonical URL** for "whatever the most recent PDF is" (Drake Thomas, Anthropic).
+Policy decided with the owner:
+
+- **Re-convert wholesale, never patch:** swap `source.pdf`, remap each section's
+  `pages A-B` header via the doc's own TOC (geometry-verified), re-extract everything
+  (oracle, renders, figures, docling tables), regen, re-gate. The revision converged at
+  the same baseline (0 majors / L1 31 / T1 70) with `accepted.json` pages remapped (−1).
+- **Links (owner):** the header "Original PDF" points at the publisher's **stable
+  canonical URL** (`meta.source_url`); the per-page `p.N` deep links point at the
+  **archived in-repo copy** — they must match the conversion's pagination even if the
+  publisher revises again. The repo keeps the PDF version the conversion was built from.
+- **The changelog page is content** — converted like any other page (and the verifier's
+  old "p.2 = title furniture" exclusion is now p.1-only; p.2 is gated).
+- Revision deltas verified item-by-item against the publisher's own changelog before
+  shipping (all 7 items confirmed in the diff; remaining churn = pagemark renumbering,
+  figure re-paths, and the en-GB→en-US sweep).

@@ -1,6 +1,6 @@
-<!-- source: source.pdf pages 011-014 -->
+<!-- source: source.pdf pages 012-014 -->
 
-<!-- p.11 -->
+<!-- p.12 -->
 
 ## 1 Introduction
 
@@ -20,7 +20,7 @@ Claude is multilingual and will typically respond in the same language as the us
 
 Anthropic partners with data work platforms to engage workers who help improve our models through preference selection, safety evaluation, and adversarial testing. Anthropic will only work with platforms that are aligned with our belief in providing fair and ethical compensation to workers, and are committed to engaging in safe workplace practices regardless of location, following our crowd worker wellness standards detailed in our procurement contracts.
 
-<!-- p.12 -->
+<!-- p.13 -->
 
 ### 1.3 Usage Policy and support
 
@@ -38,22 +38,20 @@ In this system card, we determine whether to evaluate Mythos 5 (without safeguar
 
 ### 1.5 Novel safeguards
 
-In addition to our standard set of safeguards—like our ASL-3 blocking classifiers for harmful chemical/biological use that have been deployed with all recent frontier models—Claude Fable 5 is deployed with a number of novel safeguards that enable us to safely release it for general use. These new safeguards are classifiers that trigger when they detect topics related to cybersecurity, biology and chemistry, or distillation attempts. The specific reasoning behind these classifiers is explained in our [launch blog post](https://www.anthropic.com/news/claude-fable-5-mythos-5).
+In addition to our standard set of safeguards—like our ASL-3 blocking classifiers for harmful chemical/biological use that have been deployed with all recent frontier models—Claude Fable 5 is deployed with a number of novel safeguards that enable us to safely release it for general use. These new safeguards are classifiers that trigger when they detect topics related to cybersecurity, biology and chemistry, distillation attempts, or accelerating frontier AI development. The specific reasoning behind the cybersecurity, biology, and chemistry classifiers is explained in our [launch blog post](https://www.anthropic.com/news/claude-fable-5-mythos-5).
+
+Our new safeguards related to frontier LLM development are motivated by risks discussed in Section 6.1 of our [February 2026 Risk Report](https://anthropic.com/feb-2026-risk-report). We are concerned about the risks of accelerating the overall pace of AI development, though we remain uncertain about the severity of these risks. In particular, our concern is with—as we wrote then—“accelerating other AI developers in building powerful AI systems that pose similar risks to the ones ours pose - without necessarily having commensurate safeguards.” Using Claude to develop competing models already violates our [Terms of Service](https://www.anthropic.com/legal/consumer-terms), but enforcing this restriction through classifiers avoids accelerating the actors most willing to violate these terms. Our<!-- p.14 --> classifiers narrowly target frontier LLM development (for example, on building pretraining pipelines, distributed training infrastructure, or ML accelerator design), and should not impact the vast majority of AI development or research.
 
 When Fable’s fallback classifiers trigger, the resulting behavior depends on the surface:
 
 - In client applications (the web interface and the desktop and mobile apps), the request automatically falls back to the most recent Claude Opus model (at the time of release, Claude Opus 4.8), and the user is notified which model their query was routed through;
-- In the Messages API, there is no automatic fallback by default. The request is blocked, and the response returns a reason for the refusal with a structured category. Developers can implement retry or fallback logic client-side, or can opt in<!-- p.13 --> to automatic server-side fallback, in which the request is re-served by a designated fallback model (for example, the most recent Claude Opus model) and the fallback is reflected in the response object;
+- In the Messages API, there is no automatic fallback by default. The request is blocked, and the response returns a reason for the refusal with a structured category. Developers can implement retry or fallback logic client-side, or can opt in to automatic server-side fallback, in which the request is re-served by a designated fallback model (for example, the most recent Claude Opus model) and the fallback is reflected in the response object;
 - In some Claude interfaces, automatic fallback to the most recent Claude Opus model is the default and is not configurable. A session event is emitted whenever fallback occurs.
 
-We have also added safeguards related to frontier LLM development. As discussed in Section 6.1 of our [February 2026 Risk Report](https://anthropic.com/feb-2026-risk-report), we are concerned about the risks of accelerating the overall pace of AI development, though we remain uncertain about the severity of these risks. In particular, our concern is with—as we wrote then—“accelerating other AI developers in building powerful AI systems that pose similar risks to the ones ours pose - without necessarily having commensurate safeguards.”
-
-In light of the ability of recent models to [accelerate their own development](https://www.anthropic.com/institute/recursive-self-improvement), we’ve implemented new interventions that limit Claude’s effectiveness for requests targeting frontier LLM development (for example, on building pretraining pipelines, distributed training infrastructure, or ML accelerator design). Using Claude to develop competing models already violates our [Terms of Service](https://www.anthropic.com/legal/consumer-terms), but enforcing this restriction through our safeguards avoids accelerating the actors most willing to violate these terms.
-
-Unlike our interventions for cybersecurity, biology and chemistry, and distillation attempts, these safeguards will *not* be visible to the user. Fable 5 will not fall back to a different model. Instead, the safeguards will limit effectiveness through methods such as prompt modification, steering vectors, or parameter-efficient fine-tuning (PEFT). These interventions will not affect the vast majority of coding work. We estimate they will impact ~0.03% of traffic, concentrated in fewer than 0.1% of organizations. When these interventions are active, we expect them to have minimal behavioral impact on the model except to limit its effectiveness in developing frontier LLMs. Claude will still respond helpfully to user requests. We’ll continue to improve the precision of our detection methods following the launch of this model.
+We prioritized robustness and coverage of our classifiers in order to launch Fable more quickly, but we will work to improve the precision of our detection methods following the launch of this model.
 
 ### 1.6 External testing
 
-The majority of evaluations of our model were run in-house at Anthropic. However, as part of our Frontier Compliance Framework (“FCF”), we engage external evaluators to test different iterations of our model (e.g., without harmlessness training, with harmlessness training, or both versions). Their inputs contribute to our risk determinations for our systemic risk areas and our launch decision-making processes. For more information on<!-- p.14 --> how we solicit input from external experts in our FCF, please refer to Section 5 of our [compliance framework.](https://trust.anthropic.com/resources?)
+The majority of evaluations of our model were run in-house at Anthropic. However, as part of our Frontier Compliance Framework (“FCF”), we engage external evaluators to test different iterations of our model (e.g., without harmlessness training, with harmlessness training, or both versions). Their inputs contribute to our risk determinations for our systemic risk areas and our launch decision-making processes. For more information on how we solicit input from external experts in our FCF, please refer to Section 5 of our [compliance framework.](https://trust.anthropic.com/resources?)
 
 We are grateful to all of our external testers for running assessments of the model and sharing their results with us. Their specific contributions are described in what follows.

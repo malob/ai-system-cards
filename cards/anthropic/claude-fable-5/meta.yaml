@@ -5,8 +5,8 @@ models:
   - Claude Fable 5
   - Claude Mythos 5
 release_date: 2026-06-09
-source_url: https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf
-source_pages: 319
+source_url: https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf
+source_pages: 317
 description: >-
   System card for Claude Mythos 5 and Claude Fable 5, two configurations of a
   new large language model from Anthropic. Covers RSP evaluations, cyber
