@@ -673,10 +673,13 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
 
     spans_xy = _row_spans_xy(oracle_page, bbox)
     out = html
+    seen_rows: dict[str, int] = {}   # key -> prior HTML rows containing it
     for r in re.findall(r"<tr>.*?</tr>", html, re.S):
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
         plain = [_cell_sq(c) for _, _, c in tags]
-        band = _row_band(plain, spans_xy)
+        band = _row_band(plain, spans_xy, ordinal=seen_rows)
+        for p in set(p for p in plain if p):
+            seen_rows[p] = seen_rows.get(p, 0) + 1
         if band is None:
             continue
         # row's spans: in band, plus wrapped/sub-line continuations hanging
@@ -956,7 +959,7 @@ def _row_spans_xy(oracle_page, bbox):
     return m
 
 
-def _row_band(plain, cand, tol=7.0):
+def _row_band(plain, cand, tol=7.0, ordinal=None):
     """Median y of the row's uniquely-matchable cells (usually the model
     name) — the anchor that ties HTML rows back to page geometry."""
     ys = [cand[p][0][1] for p in plain if p and len(cand.get(p, [])) == 1]
@@ -981,6 +984,18 @@ def _row_band(plain, cand, tol=7.0):
         for k, v in cand.items():
             if len(k) >= 6 and len(v) == 1 and k in concat:
                 ys.append(v[0][1])
+    if not ys and ordinal is not None:
+        # every anchor is AMBIGUOUS (all the row's values recur elsewhere —
+        # p.75 'Without thinking' / '0.41%' / '8/40', D42): HTML rows and
+        # span instances share y-order, so the row's ordinal among prior
+        # rows containing the key picks the instance. The agreement check
+        # below still rejects a bad pick.
+        for p in plain:
+            v = cand.get(p) if p else None
+            if v and len(v) > 1:
+                idx = ordinal.get(p, 0)
+                if idx < len(v):
+                    ys.append(sorted(inst[1] for inst in v)[idx])
     if not ys:
         return None
     ys.sort()
