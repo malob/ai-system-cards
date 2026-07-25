@@ -82,7 +82,16 @@ Claude Mythos 5 achieved 61.7% Pass@1 (±0.5 across trials), improving on Claude
 
 <!-- p.295 -->
 
-<table><tbody><tr><th>Model</th><th>Pass@1</th><th>Pass@3</th><th>Pass³</th><th>Avg turns</th></tr><tr><td><b>Claude Fable 5</b></td><td>61.7</td><td>68.5</td><td>55.6</td><td>19.8</td></tr><tr><td><b>Claude Mythos 5</b></td><td>61.7</td><td>66.7</td><td>58.3</td><td>19.0</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>59.9</td><td>67.6</td><td>48.1</td><td>24.5</td></tr><tr><td><b>Claude Opus 4.7</b></td><td>59.3</td><td>66.7</td><td>52.8</td><td>25.9</td></tr><tr><td><b>Claude Mythos Preview</b></td><td>61.1</td><td>66.7</td><td>55.6</td><td>17.6</td></tr><tr><td><b>Claude Opus 4.6</b></td><td>56.8</td><td>66.7</td><td>47.2</td><td>16.9</td></tr><tr><td><b>Claude Sonnet 4.5</b></td><td>41.0</td><td>54.6</td><td>28.7</td><td>32.0</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Pass@1</th><th>Pass@3</th><th>Pass³</th><th>Avg turns</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td>61.7</td><td>68.5</td><td>55.6</td><td>19.8</td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>61.7</td><td>66.7</td><td>58.3</td><td>19.0</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>59.9</td><td>67.6</td><td>48.1</td><td>24.5</td></tr>
+<tr><td><b>Claude Opus 4.7</b></td><td>59.3</td><td>66.7</td><td>52.8</td><td>25.9</td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>61.1</td><td>66.7</td><td>55.6</td><td>17.6</td></tr>
+<tr><td><b>Claude Opus 4.6</b></td><td>56.8</td><td>66.7</td><td>47.2</td><td>16.9</td></tr>
+<tr><td><b>Claude Sonnet 4.5</b></td><td>41.0</td><td>54.6</td><td>28.7</td><td>32.0</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 8.17.8.A] Toolathlon scores (internal harness).** Models are evaluated with adaptive thinking at max effort. Pass@1, Pass@3, and Pass³ are computed over all 108 tasks across 3 trials per the paper’s protocol.

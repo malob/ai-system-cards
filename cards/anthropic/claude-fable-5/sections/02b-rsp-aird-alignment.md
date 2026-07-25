@@ -308,7 +308,14 @@ For a detailed description of the evaluation tasks, see [Section 8.3 of the Clau
 
 <!-- p.48 -->
 
-<table><tbody><tr><th>Evaluation</th><th>Claude Mythos Preview</th><th>Claude Opus 4.7</th><th>Claude Mythos 5</th><th>Threshold (hours of human effort equivalent)</th></tr><tr><td><b>Kernel task (Best speedup on hard task; standard scaffold)</b></td><td>399.42×</td><td>371.75×</td><td>430.93×</td><td>4× = 1 h eq.<br>200× = 8 h eq.<br>300× = 40 h eq.</td></tr><tr><td><b>Time Series Forecasting (MSE on hard variant)</b></td><td>4.55</td><td>4.78</td><td>4.51</td><td>&lt;5.3 = 40h eq.</td></tr><tr><td><b>LLM training<sup>[^3]</sup></b> <b>(avg speedup)</b></td><td>60.81×</td><td>50.67×</td><td>69.61×</td><td>&gt;4× = 4–8h eq.</td></tr><tr><td><b>Quadruped RL (highest score; no hparams)</b></td><td>30.87</td><td>24.73</td><td>29.54</td><td>&gt;12 = 4h eq.</td></tr><tr><td><b>Novel Compiler (pass rate on complex tests)</b></td><td>77.2%</td><td>70.4%</td><td>85.3%</td><td>90% = 40h eq.</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Evaluation</th><th>Claude Mythos Preview</th><th>Claude Opus 4.7</th><th>Claude Mythos 5</th><th>Threshold (hours of human effort equivalent)</th></tr>
+<tr><td><b>Kernel task (Best speedup on hard task; standard scaffold)</b></td><td>399.42×</td><td>371.75×</td><td>430.93×</td><td>4× = 1 h eq.<br>200× = 8 h eq.<br>300× = 40 h eq.</td></tr>
+<tr><td><b>Time Series Forecasting (MSE on hard variant)</b></td><td>4.55</td><td>4.78</td><td>4.51</td><td>&lt;5.3 = 40h eq.</td></tr>
+<tr><td><b>LLM training<sup>[^3]</sup></b> <b>(avg speedup)</b></td><td>60.81×</td><td>50.67×</td><td>69.61×</td><td>&gt;4× = 4–8h eq.</td></tr>
+<tr><td><b>Quadruped RL (highest score; no hparams)</b></td><td>30.87</td><td>24.73</td><td>29.54</td><td>&gt;12 = 4h eq.</td></tr>
+<tr><td><b>Novel Compiler (pass rate on complex tests)</b></td><td>77.2%</td><td>70.4%</td><td>85.3%</td><td>90% = 40h eq.</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 2.3.7.A] Summary table of AI R&D rule-out automated evaluations.** All recent models cross rule-out thresholds for all except one evaluation in our internal suite.
@@ -330,7 +337,19 @@ The updated results are shown in Figure 2.3.7.1.A. The re-run scores are similar
 
 <!-- p.50 -->
 
-<table><tbody><tr><th>Model</th><th>Published value</th><th>Re-run</th><th>% Difference</th></tr><tr><td><b>Claude Mythos 5</b></td><td>N/A</td><td>69.61×</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>N/A</td><td>32.64×</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.7</b></td><td>34.77×</td><td>50.67×</td><td>+45.7%</td></tr><tr><td><b>Claude Mythos Preview</b></td><td>42.42×</td><td>60.81×</td><td>+43.4%</td></tr><tr><td><b>Claude Sonnet 4.6<sup>[^4]</sup></b></td><td>22.33×</td><td>35.52×</td><td>+59.1%</td></tr><tr><td><b>Claude Opus 4.6</b></td><td>30.09×</td><td>30.75×</td><td>+2.2%</td></tr><tr><td><b>Claude Opus 4.5</b></td><td>16.53×</td><td>16.45×</td><td>-0.5%</td></tr><tr><td><b>Claude Sonnet 4.5</b></td><td>5.5×</td><td>6.55×</td><td>+19.1%</td></tr><tr><td><b>Claude Opus 4.1</b></td><td>2.837×</td><td>3.34×</td><td>+17.73%</td></tr><tr><td><b>Claude Opus 4</b></td><td>2.993×</td><td>3.95×</td><td>+31.9%</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Published value</th><th>Re-run</th><th>% Difference</th></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>N/A</td><td>69.61×</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>N/A</td><td>32.64×</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.7</b></td><td>34.77×</td><td>50.67×</td><td>+45.7%</td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>42.42×</td><td>60.81×</td><td>+43.4%</td></tr>
+<tr><td><b>Claude Sonnet 4.6<sup>[^4]</sup></b></td><td>22.33×</td><td>35.52×</td><td>+59.1%</td></tr>
+<tr><td><b>Claude Opus 4.6</b></td><td>30.09×</td><td>30.75×</td><td>+2.2%</td></tr>
+<tr><td><b>Claude Opus 4.5</b></td><td>16.53×</td><td>16.45×</td><td>-0.5%</td></tr>
+<tr><td><b>Claude Sonnet 4.5</b></td><td>5.5×</td><td>6.55×</td><td>+19.1%</td></tr>
+<tr><td><b>Claude Opus 4.1</b></td><td>2.837×</td><td>3.34×</td><td>+17.73%</td></tr>
+<tr><td><b>Claude Opus 4</b></td><td>2.993×</td><td>3.95×</td><td>+31.9%</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 2.3.7.1.A] Summary table of LLM training evaluation.** Published values, re-run values and score difference.

@@ -48,7 +48,13 @@ Each environment was run under two arms with a 300-turn budget. In the plain arm
 
 Claude Opus 5 scored a mean of 9.62 capability flags across ExploitBench’s 41 V8 environments in the plain arm, and 10.14 in the AutoNudge arm. Between the two arms it found 99 full ACE exploits.
 
-<table><tbody><tr><th>Model</th><th>AutoNudge Mean</th><th>AutoNudge Cap%</th><th>Full ACEs</th></tr><tr><td><b>Mythos 5</b></td><td>10.80</td><td>78</td><td>132</td></tr><tr><td><b>Claude Opus 5</b></td><td>10.14</td><td>70</td><td>99</td></tr><tr><td><b>Opus 4.8</b></td><td>5.56</td><td>40</td><td>2</td></tr><tr><td><b>Claude Sonnet 5</b></td><td>4.18</td><td>31</td><td>0</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>AutoNudge Mean</th><th>AutoNudge Cap%</th><th>Full ACEs</th></tr>
+<tr><td><b>Mythos 5</b></td><td>10.80</td><td>78</td><td>132</td></tr>
+<tr><td><b>Claude Opus 5</b></td><td>10.14</td><td>70</td><td>99</td></tr>
+<tr><td><b>Opus 4.8</b></td><td>5.56</td><td>40</td><td>2</td></tr>
+<tr><td><b>Claude Sonnet 5</b></td><td>4.18</td><td>31</td><td>0</td></tr>
+</tbody></table>
 
 :::caption
 **[Figure 3.3.1.A] The results of Claude Opus 5 on ExploitBench.** All models were run for five trials per environment. “Mean” refers to the average number of capability flags captured per trial across all trials and environments by each model. “Cap%” refers to the percentage of the total flags captured in a given environment across a randomly chosen three-trial subset, averaged over all environments. Full ACE represents complete exploits achieving arbitrary code execution exploits combined across both plain and AutoNudge.

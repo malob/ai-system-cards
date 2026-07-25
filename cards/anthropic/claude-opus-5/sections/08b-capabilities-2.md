@@ -142,7 +142,13 @@ We ran our internal harness with adaptive thinking at `max` effort and no safety
 
 Claude Opus 5 achieved 80.6% Pass@1, ahead of Claude Opus 4.8 (79.9%) and Claude Sonnet 5 (74.7%) evaluated on the same harness.
 
-<table><tbody><tr><th>Model</th><th>Pass@1</th><th>Pass@3</th><th>Pass³</th><th>Avg turns</th></tr><tr><td><b>Claude Opus 5</b></td><td>80.6</td><td>87.0</td><td>73.1</td><td>23.5</td></tr><tr><td><b>Claude Mythos 5</b></td><td>79.3</td><td>86.1</td><td>73.1</td><td>19.8</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>79.9</td><td>88.0</td><td>71.3</td><td>20.4</td></tr><tr><td><b>Claude Sonnet 5</b></td><td>74.7</td><td>84.3</td><td>65.7</td><td>24.5</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Pass@1</th><th>Pass@3</th><th>Pass³</th><th>Avg turns</th></tr>
+<tr><td><b>Claude Opus 5</b></td><td>80.6</td><td>87.0</td><td>73.1</td><td>23.5</td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>79.3</td><td>86.1</td><td>73.1</td><td>19.8</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>79.9</td><td>88.0</td><td>71.3</td><td>20.4</td></tr>
+<tr><td><b>Claude Sonnet 5</b></td><td>74.7</td><td>84.3</td><td>65.7</td><td>24.5</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 8.13.6.A] Toolathlon scores (internal harness).** Models are evaluated with adaptive thinking at max effort. Pass@1, Pass@3, and Pass³ are computed over all 108 tasks across 3 trials per the paper’s protocol.

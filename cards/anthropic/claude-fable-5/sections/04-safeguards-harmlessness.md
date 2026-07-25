@@ -20,7 +20,14 @@ Single-turn harmful evaluations measure how reliably the tested model declines o
 
 For this release, we refreshed our violence prompt bank to focus on operational assistance toward mass violence. The new set places less emphasis on rhetorical content (e.g., persuasive justifications for violence) and more on the planning and logistics side, covering topics such as weapons selection, venue reconnaissance, and avoiding detection.
 
-<table><tbody><tr><th>Model</th><th>Overall harmless response rate: API, without a system prompt</th><th>Overall harmless response rate: claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td>96.94% (± 0.21%)</td><td><u>98.51% (± 0.14%)</u></td></tr><tr><td><b>Claude Mythos 5</b></td><td>97.09% (± 0.20%)</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td><u>97.46% (± 0.13%)</u></td><td><b>98.79% (± 0.09%)</b></td></tr><tr><td><b>Claude Mythos Preview</b></td><td>95.86% (± 0.24%)</td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><b>97.71% (± 0.13%)</b></td><td>98.29% (± 0.11%)</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Overall harmless response rate: API, without a system prompt</th><th>Overall harmless response rate: claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td>96.94% (± 0.21%)</td><td><u>98.51% (± 0.14%)</u></td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>97.09% (± 0.20%)</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td><u>97.46% (± 0.13%)</u></td><td><b>98.79% (± 0.09%)</b></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>95.86% (± 0.24%)</td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><b>97.71% (± 0.13%)</b></td><td>98.29% (± 0.11%)</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.1.1.A] Single-turn harmful request evaluation results, all tested languages.** Percentages refer to harmless response rates; higher numbers are better. **Bold** indicates the highest rate of harmless responses and the second-best score is <u>underlined</u>. Evaluations were run in Arabic, English, French, Hindi, Korean, Mandarin Chinese, and Russian. Results for previous models show variance from previous system cards due to routine evaluation updates. Mythos models have not been released to claude.ai, so we do not report their results with a system prompt.
@@ -32,7 +39,14 @@ Single-turn benign evaluations measure how often the model refuses requests that
 
 <!-- p.72 -->
 
-<table><tbody><tr><th>Model</th><th>Overall refusal rate: API, without a system prompt</th><th>Overall refusal rate: claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td><b>0.01% (± 0.01%)</b></td><td><b>0.49% (± 0.07%)</b></td></tr><tr><td><b>Claude Mythos 5</b></td><td><u>0.03% (± 0.02%)</u></td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>0.35% (± 0.04%)</td><td><b>0.49% (± 0.05%)</b></td></tr><tr><td><b>Claude Mythos Preview</b></td><td><b>0.01% (± 0.01%)</b></td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>0.40% (± 0.05%)</td><td><u>0.91% (± 0.08%)</u></td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Overall refusal rate: API, without a system prompt</th><th>Overall refusal rate: claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td><b>0.01% (± 0.01%)</b></td><td><b>0.49% (± 0.07%)</b></td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td><u>0.03% (± 0.02%)</u></td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>0.35% (± 0.04%)</td><td><b>0.49% (± 0.05%)</b></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td><b>0.01% (± 0.01%)</b></td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td>0.40% (± 0.05%)</td><td><u>0.91% (± 0.08%)</u></td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.1.2.A] Single-turn benign request evaluation results, all tested languages.** Percentages refer to rates of over-refusal (i.e. the refusal to answer a prompt that is in fact benign); lower numbers are better. **Bold** indicates the lowest rate of over-refusals for each language and the second-best score is <u>underlined</u>. Evaluations were run in Arabic, English, French, Hindi, Korean, Mandarin Chinese, and Russian. Results for previous models show variance from previous system cards due to routine evaluation updates. Mythos models have not been released to claude.ai, so we do not report their results with a system prompt.
@@ -78,13 +92,29 @@ We ran our child safety evaluations following the same testing protocol as used 
 
 <!-- p.76 -->
 
-<table><tbody><tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr><tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.12% (± 0.15%)</b></td></tr><tr><td><b>Claude Mythos 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td><b>100%</b></td><td>0.44% (± 0.18%)</td><td><b>100%</b></td><td><u>0.27% (± 0.15%)</u></td></tr><tr><td><b>Claude Mythos Preview</b></td><td>99.88% (± 0.15%)</td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><u>99.94% (± 0.08%)</u></td><td><u>0.36% (± 0.20%)</u></td><td><u>99.96% (± 0.04%)</u></td><td>0.51% (± 0.25%)</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.12% (± 0.15%)</b></td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td><b>100%</b></td><td>0.44% (± 0.18%)</td><td><b>100%</b></td><td><u>0.27% (± 0.15%)</u></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>99.88% (± 0.15%)</td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><u>99.94% (± 0.08%)</u></td><td><u>0.36% (± 0.20%)</u></td><td><u>99.96% (± 0.04%)</u></td><td>0.51% (± 0.25%)</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.2.A] Single-turn evaluation results for child safety.** Single-turn harmful and benign request evaluation results include all tested languages. Higher is better for the single-turn harmless rate; lower is better for the refusal rate. **Bold** indicates the top performing model in each category and the second-best score is <u>underlined</u>. Results for previous models show variance from previous system cards due to routine evaluation updates. Mythos models have not been released to claude.ai, so we do not report their results with a system prompt.
 :::
 
-<table><tbody><tr><th rowspan="2">Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr><tr><th>API, without a system prompt</th><th>Claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td>88% (± 5%)</td><td><b>96% (± 3%)</b></td></tr><tr><td><b>Claude Mythos 5</b></td><td><u>89% (± 5%)</u></td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td><u>89% (± 3%)</u></td><td><b>96% (± 2%)</b></td></tr><tr><td><b>Claude Mythos Preview</b></td><td>85% (± 5%)</td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><b>92% (± 3%)</b></td><td><u>85% (± 4%)</u></td></tr></tbody></table>
+<table><tbody>
+<tr><th rowspan="2">Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr>
+<tr><th>API, without a system prompt</th><th>Claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td>88% (± 5%)</td><td><b>96% (± 3%)</b></td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td><u>89% (± 5%)</u></td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td><u>89% (± 3%)</u></td><td><b>96% (± 2%)</b></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>85% (± 5%)</td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><b>92% (± 3%)</b></td><td><u>85% (± 4%)</u></td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.2.B] Multi-turn evaluation results for child safety.** Higher is better for multi-turn appropriate response rate. **Bold** indicates the top performing model in each category and the second-best score is <u>underlined</u>. Results for previous models show variance from previous system cards due to routine evaluation updates. Mythos models have not been released to claude.ai, so we do not report their results with a system prompt.
@@ -110,7 +140,15 @@ Claude is not a substitute for professional advice or medical care and is not in
 
 These evaluations assess Claude’s responses to conversations about suicide and self-harm, measuring whether the model responds safely and supportively to prompts that may indicate risk while remaining helpful on benign requests in the same domain. We report single-turn harmless response rates, single-turn over-refusal rates, and multi-turn appropriate response rates.
 
-<table><tbody><tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr><tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td>99.34% (± 0.30%)</td><td><b>0.00%</b></td><td><b>99.95% (± 0.09%)</b></td><td>0.45% (± 0.34%)</td></tr><tr><td><b>Claude Mythos 5</b></td><td><b>99.67% (± 0.22%)</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>99.21% (± 0.23%)</td><td>0.23% (± 0.14%)</td><td><b>99.95% (± 0.05%)</b></td><td><u>0.39% (± 0.21%)</u></td></tr><tr><td><b>Claude Mythos Preview</b></td><td>99.60% (± 0.26%)</td><td><u>0.02% (± 0.04%)</u></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><u>99.65% (± 0.19%)</u></td><td>0.21% (± 0.15%)</td><td><u>99.67% (± 0.19%)</u></td><td><b>0.03% (± 0.04%)</b></td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td>99.34% (± 0.30%)</td><td><b>0.00%</b></td><td><b>99.95% (± 0.09%)</b></td><td>0.45% (± 0.34%)</td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td><b>99.67% (± 0.22%)</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>99.21% (± 0.23%)</td><td>0.23% (± 0.14%)</td><td><b>99.95% (± 0.05%)</b></td><td><u>0.39% (± 0.21%)</u></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>99.60% (± 0.26%)</td><td><u>0.02% (± 0.04%)</u></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><u>99.65% (± 0.19%)</u></td><td>0.21% (± 0.15%)</td><td><u>99.67% (± 0.19%)</u></td><td><b>0.03% (± 0.04%)</b></td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.3.1.A] Single-turn evaluation results for suicide and self-harm.** Single-turn harmful and benign request evaluation results include all tested languages. Higher is better for the single-turn harmless rate; lower is better for the refusal rate. **Bold** indicates the top performing model in each category and the second-best score is <u>underlined</u>. Results for previous models show variance from previous system cards due to routine evaluation updates. Mythos models have not been released to claude.ai, so we do not report their results with a system prompt.
@@ -118,7 +156,15 @@ These evaluations assess Claude’s responses to conversations about suicide and
 
 <!-- p.79 -->
 
-<table><tbody><tr><th rowspan="2">Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr><tr><th>API, without a system prompt</th><th>Claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td>58% (± 14%)</td><td><b>96% (± 6%)</b></td></tr><tr><td><b>Claude Mythos 5</b></td><td>54% (± 14%)</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>61% (± 10%)</td><td><u>85% (± 7%)</u></td></tr><tr><td><b>Claude Mythos Preview</b></td><td><u>70% (± 13%)</u></td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><b>74% (± 9%)</b></td><td>82% (± 8%)</td></tr></tbody></table>
+<table><tbody>
+<tr><th rowspan="2">Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr>
+<tr><th>API, without a system prompt</th><th>Claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td>58% (± 14%)</td><td><b>96% (± 6%)</b></td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>54% (± 14%)</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>61% (± 10%)</td><td><u>85% (± 7%)</u></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td><u>70% (± 13%)</u></td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><b>74% (± 9%)</b></td><td>82% (± 8%)</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.3.1.B] Multi-turn evaluation results for suicide and self-harm.** Higher is better for multi-turn appropriate response rate. **Bold** indicates the top performing model in each category and the second-best score is <u>underlined</u>. Results for previous models show variance from previous system cards due to routine evaluation updates. Mythos models have not been released to claude.ai, so we do not report their results with a system prompt.
@@ -142,7 +188,15 @@ These evaluations look at how Claude handles conversations about disordered eati
 
 <!-- p.81 -->
 
-<table><tbody><tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr><tr><th></th><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td><b>97.88% (± 0.67%)</b></td><td><b>0.00%</b></td><td>99.67% (± 0.25%)</td><td><b>0.02% (± 0.04%)</b></td></tr><tr><td><b>Claude Mythos 5</b></td><td><b>97.88% (± 0.66%)</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td><u>97.70% (± 0.47%)</u></td><td><u>0.09% (± 0.07%)</u></td><td><b>99.70% (± 0.17%)</b></td><td><u>0.09% (± 0.07%)</u></td></tr><tr><td><b>Claude Mythos Preview</b></td><td>95.90% (± 0.97%)</td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>97.21% (± 0.55%)</td><td>0.12% (± 0.10%)</td><td><u>98.63% (± 0.38%)</u></td><td>0.35% (± 0.17%)</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th></th><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td><b>97.88% (± 0.67%)</b></td><td><b>0.00%</b></td><td>99.67% (± 0.25%)</td><td><b>0.02% (± 0.04%)</b></td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td><b>97.88% (± 0.66%)</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td><u>97.70% (± 0.47%)</u></td><td><u>0.09% (± 0.07%)</u></td><td><b>99.70% (± 0.17%)</b></td><td><u>0.09% (± 0.07%)</u></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>95.90% (± 0.97%)</td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td>97.21% (± 0.55%)</td><td>0.12% (± 0.10%)</td><td><u>98.63% (± 0.38%)</u></td><td>0.35% (± 0.17%)</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.3.2.A] Single-turn results for disordered eating.** Single-turn harmful and benign request evaluation results include all tested languages. Higher is better for the single-turn harmless rate; lower is better for the refusal rate. **Bold** indicates the top performing model in each category and the second-best score is <u>underlined</u>. Results for previous models show variance from previous system cards due to routine evaluation updates. Mythos models have not been released to claude.ai, so we do not report their results with a system prompt.
@@ -182,13 +236,27 @@ BBQ tests ambiguous questions (where the correct answer is “unknown”) with d
 
 As with previous system cards, we run this evaluation without the system prompt only. We do not report Fable 5 separately for this evaluation because the additional safeguards applied to that model are not relevant to the type of requests in this evaluation.
 
-<table><tbody><tr><th>Model</th><th>Disambiguated accuracy (%)</th><th>Ambiguous accuracy (%)</th></tr><tr><td><b>Claude Mythos 5</b></td><td>84.5</td><td><u>99.9</u></td></tr><tr><td><b>Claude Opus 4.8</b></td><td>72.1</td><td><u>99.9</u></td></tr><tr><td><b>Claude Opus 4.7</b></td><td>81.3</td><td><u>99.9</u></td></tr><tr><td><b>Claude Mythos Preview</b></td><td><u>84.6</u></td><td><b>100</b></td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><b>88.1</b></td><td>97.5</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Disambiguated accuracy (%)</th><th>Ambiguous accuracy (%)</th></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>84.5</td><td><u>99.9</u></td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>72.1</td><td><u>99.9</u></td></tr>
+<tr><td><b>Claude Opus 4.7</b></td><td>81.3</td><td><u>99.9</u></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td><u>84.6</u></td><td><b>100</b></td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><b>88.1</b></td><td>97.5</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.4.2.A] Accuracy scores on the Bias Benchmark for Question Answering (BBQ) evaluation.** Higher is better. The higher score in each column is **bolded** and the second-best score is <u>underlined</u> (but this does not take into account the margin of error). Results are shown without the system prompt.
 :::
 
-<table><tbody><tr><th>Model</th><th>Disambiguated bias (%)</th><th>Ambiguous bias (%)</th></tr><tr><td><b>Claude Mythos 5</b></td><td>-1.80</td><td>0.10</td></tr><tr><td><b>Claude Opus 4.8</b></td><td><u>-1.37</u></td><td>0.07</td></tr><tr><td><b>Claude Opus 4.7</b></td><td>-1.68</td><td><u>0.04</u></td></tr><tr><td><b>Claude Mythos Preview</b></td><td>-1.61</td><td><b>0.01</b></td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><b>-0.67</b></td><td>1.41</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Disambiguated bias (%)</th><th>Ambiguous bias (%)</th></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>-1.80</td><td>0.10</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td><u>-1.37</u></td><td>0.07</td></tr>
+<tr><td><b>Claude Opus 4.7</b></td><td>-1.68</td><td><u>0.04</u></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>-1.61</td><td><b>0.01</b></td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><b>-0.67</b></td><td>1.41</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.4.2.B] Bias scores on the Bias Benchmark for Question Answering (BBQ) evaluation.** Closer to zero is better. The better score in each column is **bolded** and the second-best score is <u>underlined</u> (but this does not take into account the margin of error). Results are shown without the system prompt.
@@ -202,7 +270,15 @@ Similar to Opus 4.8, almost all of Mythos 5’s incorrect disambiguated answers 
 
 We evaluated Claude Mythos 5 on the election integrity benchmark introduced in the [Claude Opus 4.7 System Card](https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf), which tests adherence to our [Usage Policy](https://www.anthropic.com/legal/aup) across 300 violative and 300 benign election-related prompts grounded in patterns observed in real usage. Results are reported for both the API and [claude.ai](http://claude.ai) with our system prompt.
 
-<table><tbody><tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr><tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr><tr><td><b>Claude Fable 5</b></td><td>99.33%</td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.00%</b></td></tr><tr><td><b>Claude Mythos 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Opus 4.8</b></td><td><b>100%</b></td><td><u>0.33%</u></td><td><b>100%</b></td><td><b>0.00%</b></td></tr><tr><td><b>Claude Mythos Preview</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.00%</b></td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><td><b>Claude Fable 5</b></td><td>99.33%</td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>
+<tr><td><b>Claude Mythos 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td><b>100%</b></td><td><u>0.33%</u></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>
+</tbody></table>
 
 :::caption
 **[Table 4.4.3.A] Single-turn evaluations on election integrity prompts, run on the API and on claude.ai with the default system prompt.** For single-turn harmful requests, higher is better. For single-turn benign requests, closer to zero is better. The better score in each column is **bolded** and the second-best score is <u>underlined</u> (but this does not take into account the margin of error).

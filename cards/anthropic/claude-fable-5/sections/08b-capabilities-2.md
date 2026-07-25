@@ -2,7 +2,13 @@
 
 ### 8.13 Long context: GraphWalks
 
-<table><tbody><tr><th>Evaluation (F1 Score)</th><th>Claude Mythos 5</th><th>Claude Mythos Preview</th><th>Claude Opus 4.8</th><th>GPT-5.5</th></tr><tr><td><b>GraphWalks BFS 256K subset</b></td><td><b>91.1</b></td><td>85.7</td><td>85.9</td><td>73.7</td></tr><tr><td><b>GraphWalks BFS 1M subset</b></td><td><b>79.4</b></td><td>74.3</td><td>68.1</td><td>45.4</td></tr><tr><td><b>GraphWalks Parents 256K subset</b></td><td><b>99.96</b></td><td>99.9</td><td>99.3</td><td>90.1</td></tr><tr><td><b>GraphWalks Parents 1M subset</b></td><td><b>97.5</b></td><td>95.5</td><td>83.3</td><td>58.5</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Evaluation (F1 Score)</th><th>Claude Mythos 5</th><th>Claude Mythos Preview</th><th>Claude Opus 4.8</th><th>GPT-5.5</th></tr>
+<tr><td><b>GraphWalks BFS 256K subset</b></td><td><b>91.1</b></td><td>85.7</td><td>85.9</td><td>73.7</td></tr>
+<tr><td><b>GraphWalks BFS 1M subset</b></td><td><b>79.4</b></td><td>74.3</td><td>68.1</td><td>45.4</td></tr>
+<tr><td><b>GraphWalks Parents 256K subset</b></td><td><b>99.96</b></td><td>99.9</td><td>99.3</td><td>90.1</td></tr>
+<tr><td><b>GraphWalks Parents 1M subset</b></td><td><b>97.5</b></td><td>95.5</td><td>83.3</td><td>58.5</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 8.13.A] F1 scores for Claude family model results are an average over 5 trials with default sampling settings.** GPT-5.5 was evaluated using xhigh thinking as reported in “[Introducing GPT-5.5](https://openai.com/index/introducing-gpt-5-5/).” The best score for each evaluation is **bolded**.
@@ -82,7 +88,12 @@ Claude models were run with web search, web fetch, programmatic tool calling, ma
 **[Figure 8.14.3.A] DeepSearchQA F1 scores**.
 :::
 
-<table><tbody><tr><th>Model</th><th>F1</th><th>Fully Correct</th><th>Fully Incorrect</th><th>Correct w/ Excessive Answers</th></tr><tr><td><b>Claude Mythos 5</b></td><td>94.2% ±1.3%</td><td>87.0% ±2.2%</td><td>3.2% ±1.2%</td><td>3.8% ±1.3%</td></tr><tr><td><b>Claude Mythos Preview</b></td><td>94.4% ±1.3%</td><td>86.9% ±2.2%</td><td>3.1% ±1.1%</td><td>4.7% ±1.4%</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>93.1% ±1.4%</td><td>84.8% ±2.4%</td><td>3.9% ±1.3%</td><td>4.3% ±1.3%</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>F1</th><th>Fully Correct</th><th>Fully Incorrect</th><th>Correct w/ Excessive Answers</th></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>94.2% ±1.3%</td><td>87.0% ±2.2%</td><td>3.2% ±1.2%</td><td>3.8% ±1.3%</td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td>94.4% ±1.3%</td><td>86.9% ±2.2%</td><td>3.1% ±1.1%</td><td>4.7% ±1.4%</td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>93.1% ±1.4%</td><td>84.8% ±2.4%</td><td>3.9% ±1.3%</td><td>4.3% ±1.3%</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 8.14.3.B] DeepSearchQA results for Claude models,** broken down by outcome category.

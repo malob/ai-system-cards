@@ -54,7 +54,13 @@ Mythos 5 scored a mean of 10.44 capability flags across ExploitBench's 41 V8 env
 
 <!-- p.60 -->
 
-<table><tbody><tr><th>Model</th><th>Trials per Env</th><th>Mean</th><th>Cap%</th></tr><tr><td><b>Mythos 5</b></td><td>5</td><td>10.75</td><td>78</td></tr><tr><td><b>Mythos Preview</b></td><td>3</td><td>9.90</td><td>69</td></tr><tr><td><b>Opus 4.8</b></td><td>5</td><td>5.56</td><td>40</td></tr><tr><td><b>GPT-5.5</b></td><td>3</td><td>4.44</td><td>34</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Trials per Env</th><th>Mean</th><th>Cap%</th></tr>
+<tr><td><b>Mythos 5</b></td><td>5</td><td>10.75</td><td>78</td></tr>
+<tr><td><b>Mythos Preview</b></td><td>3</td><td>9.90</td><td>69</td></tr>
+<tr><td><b>Opus 4.8</b></td><td>5</td><td>5.56</td><td>40</td></tr>
+<tr><td><b>GPT-5.5</b></td><td>3</td><td>4.44</td><td>34</td></tr>
+</tbody></table>
 
 :::caption
 **[Figure 3.2.1.A] The results of Mythos 5 on ExploitBench.** “Mean” refers to the average number of capability flags captured across all trials and environments by each model. “Cap%” refers to the percentage of the total flags captured in a given environment across a 3-trial subset averaged over all environments.

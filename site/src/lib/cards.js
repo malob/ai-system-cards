@@ -83,8 +83,13 @@ export function siteMarkdown(vendor, slug, assetBase) {
   const shims = new Map(); // line index -> ids needing a shim there
   for (const [id, i] of tableRefs) {
     if (proseRefs.has(id)) continue;
-    if (!shims.has(i)) shims.set(i, []);
-    shims.get(i).push(id);
+    // anchor AFTER the table's closing line: tables serialize one <tr> per
+    // line, so the ref's own line is mid-table and a shim there would sit
+    // between rows, inside the raw HTML
+    let at = i;
+    while (at < lines.length - 1 && !lines[at].includes('</table>')) at++;
+    if (!shims.has(at)) shims.set(at, []);
+    shims.get(at).push(id);
   }
   md = lines
     .map((line, i) => {

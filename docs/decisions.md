@@ -617,3 +617,16 @@ line wraps (hl-scoped, code marks stay split). The p.31/p.64 heuristics and
 any fable canon changes are guarded by per-fix both-cards diff review +
 gates + spot re-sweep. Push: owner reviews batch results first, then pushes
 (D13 unchanged).
+
+## D43 — tables serialize one <tr> per line (2026-07-25)
+
+Owner-approved whitespace-only canon change (supersedes D28's one-line table
+form). The row is the unit agents grep, git diffs show, and viewers truncate
+at; one-line tables made all three opaque (the D42 fix audits needed
+char-level diff scripts for exactly this reason). Only exact `</tr><tr` seams
+split; marker-carrying seams (`</tr><!-- p.N --><tr>`) stay on one line so
+downstream marker regexes are untouched. Proven newline-collapse-identical
+across all 17 changed files; gates/seams at baseline; DOM table/row/cell
+counts unchanged; the fnref-shim anchor moved to the table's closing line
+(mid-table lines now exist). Verifier untouched (its table patterns were
+already re.S).

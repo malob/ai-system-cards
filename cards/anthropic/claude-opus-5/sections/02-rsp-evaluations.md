@@ -74,7 +74,14 @@ We did not conduct dedicated chemical weapons red-teaming for Claude Opus 5 . As
 
 The table below summarizes the automated evaluations conducted for Claude Opus 5 .
 
-<table><tbody><tr><th>Evaluation</th><th>Relevance</th><th>Description</th></tr><tr><td><b>Long-form virology tasks</b></td><td rowspan="3"><b>Non-novel biological weapons</b></td><td>Can agentic systems complete individual tasks related to acquiring, designing, and synthesizing a virus?</td></tr><tr><td><b>Multimodal virology (VCT)</b></td><td>How well do models perform on questions about virology that include images?</td></tr><tr><td><b>DNA Synthesis Screening Evasion</b></td><td>Can models design DNA fragments that bypass gene synthesis screening?</td></tr><tr><td><b>Black-box RNA sequence design</b></td><td rowspan="2"><b>Novel biological weapons</b></td><td>Can models match expert human performance on a calibrated biological sequence modeling and design task?</td></tr><tr><td><b>AAV capsid packaging prediction</b></td><td>Can models leverage biophysical and biological knowledge to predict viral capsid packaging probabilities?</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Evaluation</th><th>Relevance</th><th>Description</th></tr>
+<tr><td><b>Long-form virology tasks</b></td><td rowspan="3"><b>Non-novel biological weapons</b></td><td>Can agentic systems complete individual tasks related to acquiring, designing, and synthesizing a virus?</td></tr>
+<tr><td><b>Multimodal virology (VCT)</b></td><td>How well do models perform on questions about virology that include images?</td></tr>
+<tr><td><b>DNA Synthesis Screening Evasion</b></td><td>Can models design DNA fragments that bypass gene synthesis screening?</td></tr>
+<tr><td><b>Black-box RNA sequence design</b></td><td rowspan="2"><b>Novel biological weapons</b></td><td>Can models match expert human performance on a calibrated biological sequence modeling and design task?</td></tr>
+<tr><td><b>AAV capsid packaging prediction</b></td><td>Can models leverage biophysical and biological knowledge to predict viral capsid packaging probabilities?</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 2.2.3.A] Claude Opus 5 CB Evaluations.** Automated evaluations for biological risks conducted on Claude Opus 5 . Evaluations are grouped by relevance to the CB-1 (non-novel chemical and biological weapons) and CB-2 (novel chemical and biological weapons) threat models.
@@ -292,7 +299,14 @@ In the past, system cards reported a suite of automated research tasks as “rul
 
 For a detailed description of the evaluation tasks, see Section 8.3 of the [Claude Opus 4.6 System Card](https://www-cdn.anthropic.com/14e4fb01875d2a69f646fa5e574dea2b1c0ff7b5.pdf). Here, we include only one unsaturated task (Novel Compiler) and the tasks that have an unbounded score, since other tasks with a bounded [0–1] score no longer discriminate between recent model generations.
 
-<table><tbody><tr><th>Evaluation</th><th>Claude Opus 4.7</th><th>Claude Mythos 5</th><th>Claude Opus 5</th><th>Threshold (hours of human effort equivalent)</th></tr><tr><td><b>Kernel task (Best speedup on hard task; standard scaffold)</b></td><td>371.75×</td><td>430.93×</td><td>449.46×</td><td>4× = 1 h eq.<br>200× = 8 h eq.<br>300× = 40 h eq.</td></tr><tr><td><b>Time Series Forecasting (MSE on hard variant)</b></td><td>4.78</td><td>4.51</td><td>5.68</td><td>&lt;5.3 = 40h eq.</td></tr><tr><td><b>LLM training (easy) (avg speedup)</b></td><td>50.67×</td><td>69.61×</td><td>68.54×</td><td>&gt;4× = 4–8h eq.</td></tr><!-- p.32 --><tr><td><b>LLM training (hard) (avg speedup)</b></td><td>NA</td><td>8.36×</td><td>14.19×</td><td>&gt;4× = 4–8h eq.</td></tr><tr><td><b>Quadruped RL (highest score; no hparams)</b></td><td>24.73</td><td>29.55</td><td>31.3</td><td>&gt;12 = 4h eq.</td></tr><tr><td><b>Novel Compiler (pass rate on complex tests)</b></td><td>70.4%</td><td>85.3%</td><td>80.91%</td><td>90% = 40h eq.</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Evaluation</th><th>Claude Opus 4.7</th><th>Claude Mythos 5</th><th>Claude Opus 5</th><th>Threshold (hours of human effort equivalent)</th></tr>
+<tr><td><b>Kernel task (Best speedup on hard task; standard scaffold)</b></td><td>371.75×</td><td>430.93×</td><td>449.46×</td><td>4× = 1 h eq.<br>200× = 8 h eq.<br>300× = 40 h eq.</td></tr>
+<tr><td><b>Time Series Forecasting (MSE on hard variant)</b></td><td>4.78</td><td>4.51</td><td>5.68</td><td>&lt;5.3 = 40h eq.</td></tr>
+<tr><td><b>LLM training (easy) (avg speedup)</b></td><td>50.67×</td><td>69.61×</td><td>68.54×</td><td>&gt;4× = 4–8h eq.</td></tr><!-- p.32 --><tr><td><b>LLM training (hard) (avg speedup)</b></td><td>NA</td><td>8.36×</td><td>14.19×</td><td>&gt;4× = 4–8h eq.</td></tr>
+<tr><td><b>Quadruped RL (highest score; no hparams)</b></td><td>24.73</td><td>29.55</td><td>31.3</td><td>&gt;12 = 4h eq.</td></tr>
+<tr><td><b>Novel Compiler (pass rate on complex tests)</b></td><td>70.4%</td><td>85.3%</td><td>80.91%</td><td>90% = 40h eq.</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 2.3.5.A] Summary table of AI R&D rule-out automated evaluations.** All recent models cross rule-out thresholds for all except two evaluations in our internal suite. Claude Opus 5 scores higher than Claude Mythos 5 in three evaluations.

@@ -19,7 +19,13 @@ Claude Mythos 5 was given the standard Claude Code tool set. Each prompt was run
 
 <!-- p.88 -->
 
-<table><tbody><tr><th>Model</th><th>Malicious (%)<br><small>(refusal rate)</small></th><th>Dual-use &amp; benign (%)<br><small>(success rate)</small></th></tr><tr><td><b>Claude Mythos 5</b></td><td>90.25%</td><td><b>99.64%</b></td></tr><tr><td><b>Claude Opus 4.8</b></td><td><u>95.24%</u></td><td>94.84%</td></tr><tr><td><b>Claude Mythos Preview</b></td><td><b>95.41%</b></td><td>91.12%</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>76.60%</td><td><u>97.33%</u></td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Malicious (%)<br><small>(refusal rate)</small></th><th>Dual-use &amp; benign (%)<br><small>(success rate)</small></th></tr>
+<tr><td><b>Claude Mythos 5</b></td><td>90.25%</td><td><b>99.64%</b></td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td><u>95.24%</u></td><td>94.84%</td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td><b>95.41%</b></td><td>91.12%</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td>76.60%</td><td><u>97.33%</u></td></tr>
+</tbody></table>
 
 :::caption
 **[Table 5.1.1.A] Claude Code evaluation results.** Higher is better. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (note that neither takes into account the margin of error). Results for previous models show variance from previous system cards due to evaluation updates.
@@ -35,7 +41,13 @@ This evaluation measures whether Claude refuses harmful tasks when given GUI- an
 - Generation and distribution of harmful content; and
 - Scaled abuse.
 
-<table><tbody><tr><th>Model</th><th>Refusal rate</th></tr><tr><td><b>Claude Mythos 5</b></td><td><u>85.71%</u></td></tr><tr><td><b>Claude Opus 4.8</b></td><td>81.70%</td></tr><tr><td><b>Claude Mythos Preview</b></td><td><b>93.75%</b></td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>84.82%</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Refusal rate</th></tr>
+<tr><td><b>Claude Mythos 5</b></td><td><u>85.71%</u></td></tr>
+<tr><td><b>Claude Opus 4.8</b></td><td>81.70%</td></tr>
+<tr><td><b>Claude Mythos Preview</b></td><td><b>93.75%</b></td></tr>
+<tr><td><b>Claude Sonnet 4.6</b></td><td>84.82%</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 5.1.2.A] Malicious computer-use evaluation results without mitigations.** Higher is better. Rates are an average of results with and without thinking for Opus 4.8 and Sonnet 4.6 and thinking only for Mythos 5 and Mythos Preview. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (but does not take into account the margin of error).
@@ -60,7 +72,14 @@ Each scenario is run 3 times at 3 levels of simulated platform friction, for 9 s
 
 <!-- p.90 -->
 
-<table><tbody><tr><th>Model</th><th>Voter Suppression scenario<br><small>(task completion rate)</small></th><th>Domestic Polarization scenario<br><small>(task completion rate)</small></th></tr><tr><td><b>Claude Mythos 5</b><br><i><b>(Helpful-only)</b></i></td><td>67.1%</td><td>46.8%</td></tr><tr><td><b>Claude Opus 4.8</b><br><i><b>(Helpful-only)</b></i></td><td>73.3%</td><td>55.1%</td></tr><tr><td><b>Claude Opus 4.7</b><br><i><b>(Helpful-only)</b></i></td><td>57.1%</td><td>46.8%</td></tr><tr><td><b>Claude Mythos Preview</b><br><i><b>(Helpful-only)</b></i></td><td>59.5%</td><td>42.1%</td></tr><tr><td><b>Claude Sonnet 4.6</b><br><i><b>(Helpful-only)</b></i></td><td>41.8%</td><td>34.0%</td></tr></tbody></table>
+<table><tbody>
+<tr><th>Model</th><th>Voter Suppression scenario<br><small>(task completion rate)</small></th><th>Domestic Polarization scenario<br><small>(task completion rate)</small></th></tr>
+<tr><td><b>Claude Mythos 5</b><br><i><b>(Helpful-only)</b></i></td><td>67.1%</td><td>46.8%</td></tr>
+<tr><td><b>Claude Opus 4.8</b><br><i><b>(Helpful-only)</b></i></td><td>73.3%</td><td>55.1%</td></tr>
+<tr><td><b>Claude Opus 4.7</b><br><i><b>(Helpful-only)</b></i></td><td>57.1%</td><td>46.8%</td></tr>
+<tr><td><b>Claude Mythos Preview</b><br><i><b>(Helpful-only)</b></i></td><td>59.5%</td><td>42.1%</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b><br><i><b>(Helpful-only)</b></i></td><td>41.8%</td><td>34.0%</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 5.1.3.A] Agentic influence operation evaluation results, helpful-only model.** Percentages reflect the average share of success criteria—out of 70 per scenario—that the model completed in a simulated environment. Higher indicates greater capability and therefore greater potential uplift to a malicious actor.
@@ -110,7 +129,16 @@ The table below reports the attack success rate of this attacker, trained on a s
 
 <!-- p.94 -->
 
-<table><tbody><tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr><tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr><tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td><u>0.45%</u></td><td><u>8/40</u></td><td><u>0.41%</u></td><td><u>11/40</u></td></tr><tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>0.0%</b></td><td><b>0/40</b></td><td><b>0.0%</b></td><td><b>0/40</b></td></tr><tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.03%</td><td>23/40</td><td>2.09%</td><td>15/40</td></tr><tr><td><b>Without thinking</b></td><td>17.44%</td><td>38/40</td><td>4.11%</td><td>26/40</td></tr><tr><th rowspan="2">Claude Sonnet 4.6<sup>[^10]</sup></th><td><b>With thinking</b></td><td>12.71%</td><td>36/40</td><td>2.99%</td><td>32/40</td></tr><tr><td><b>Without thinking</b></td><td>45.26%</td><td>40/40</td><td>8.70%</td><td>40/40</td></tr></tbody></table>
+<table><tbody>
+<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr>
+<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td><u>0.45%</u></td><td><u>8/40</u></td><td><u>0.41%</u></td><td><u>11/40</u></td></tr>
+<tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>0.0%</b></td><td><b>0/40</b></td><td><b>0.0%</b></td><td><b>0/40</b></td></tr>
+<tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.03%</td><td>23/40</td><td>2.09%</td><td>15/40</td></tr>
+<tr><td><b>Without thinking</b></td><td>17.44%</td><td>38/40</td><td>4.11%</td><td>26/40</td></tr>
+<tr><th rowspan="2">Claude Sonnet 4.6<sup>[^10]</sup></th><td><b>With thinking</b></td><td>12.71%</td><td>36/40</td><td>2.99%</td><td>32/40</td></tr>
+<tr><td><b>Without thinking</b></td><td>45.26%</td><td>40/40</td><td>8.70%</td><td>40/40</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 5.2.2.1.A] Attack success rate of Shade indirect prompt injection attacks in coding environments**. Lower is better. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (but do not take into account the margin of error). The attacker makes 200 attempts per scenario. Attempt-level ASR is the fraction of all attempts that succeed; scenario-level ASR is the fraction of scenarios where at least one attempt succeeded.
@@ -124,7 +152,16 @@ Claude Mythos 5's robustness fell between Claude Mythos Preview's and Claude Opu
 
 We also use Shade to evaluate the robustness of Claude models in computer-use environments, where the model interacts with the GUI (graphical user interface) directly. For this evaluation, we use the same attacker reported in the Claude Opus 4.7 and Claude Opus 4.8 System Cards. The attacker is optimized directly against the test cases. Similar to the coding evaluation, the attacker runs on 14 test cases and we measure success over all attempts and break down the scenarios with at least one successful attack. We compare model robustness with and without the additional safeguards we have designed to protect users in this setting.
 
-<table><tbody><tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr><tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr><tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td><u>0.82%</u></td><td><u>4/14</u></td><td><u>0.46%</u></td><td><u>3/14</u></td></tr><tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>0.43%</b></td><td><b>3/14</b></td><td><b>0.32%</b></td><td><u><b>2/14</b></u></td></tr><tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.14%</td><td>7/14</td><td>5.11%</td><td>8/14</td></tr><tr><td><b>Without thinking</b></td><td>6.21%</td><td>9/14</td><td>3.75%</td><td>9/14</td></tr><tr><th rowspan="2">Claude Sonnet 4.6</th><td><b>With thinking</b></td><td>12.0%</td><td>6/14</td><td>6.21%</td><td>9/14</td></tr><tr><td><b>Without thinking</b></td><td>14.4%</td><td>9/14</td><td>6.32%</td><td>11/14</td></tr></tbody></table>
+<table><tbody>
+<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr>
+<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td><u>0.82%</u></td><td><u>4/14</u></td><td><u>0.46%</u></td><td><u>3/14</u></td></tr>
+<tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>0.43%</b></td><td><b>3/14</b></td><td><b>0.32%</b></td><td><u><b>2/14</b></u></td></tr>
+<tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.14%</td><td>7/14</td><td>5.11%</td><td>8/14</td></tr>
+<tr><td><b>Without thinking</b></td><td>6.21%</td><td>9/14</td><td>3.75%</td><td>9/14</td></tr>
+<tr><th rowspan="2">Claude Sonnet 4.6</th><td><b>With thinking</b></td><td>12.0%</td><td>6/14</td><td>6.21%</td><td>9/14</td></tr>
+<tr><td><b>Without thinking</b></td><td>14.4%</td><td>9/14</td><td>6.32%</td><td>11/14</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 5.2.2.2.A] Attack success rate of Shade indirect prompt injection attacks in computer use environments**. Lower is better. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (but do not take into account the margin of error). The attacker makes 200 attempts per scenario. Attempt-level ASR is the fraction of all attempts that succeed; scenario-level ASR is the fraction of scenarios where at least one attempt succeeded.
@@ -140,7 +177,17 @@ We report the attack success rate as the fraction of injections that succeeded o
 
 <!-- p.97 -->
 
-<table><tbody><tr><th colspan="2">Model</th><th colspan="2">Without safeguards</th><th colspan="2">With safeguards</th><th colspan="2">Updated safeguards</th></tr><tr><td></td><td></td><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th></tr><tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr><tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td>29.7%</td><td>71/129</td><td>6.5%</td><td>25/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr><tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>5.9%</b></td><td><b>19/129</b></td><td>2.0%</td><td>8/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr><tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>31.5%</td><td>81/129</td><td><u>0.5%</u></td><td><u>5/129</u></td><td><u>0.08%</u></td><td><u>1/129</u></td></tr><tr><td><b>Without thinking</b></td><td><u>17.8%</u></td><td><u>60/129</u></td><td><b>0.0%</b></td><td><b>0/129</b></td><td><u>0.08%</u></td><td><u>1/129</u></td></tr><tr><th rowspan="2">Claude Sonnet 4.6</th><td><b>With thinking</b></td><td>50.7%</td><td>98/129</td><td>24.7%</td><td>60/129</td><td>1.16%</td><td>7/129</td></tr><tr><td><b>Without thinking</b></td><td>47.3%</td><td>99/129</td><td>10.9%</td><td>39/129</td><td>0.39%</td><td>2/129</td></tr></tbody></table>
+<table><tbody>
+<tr><th colspan="2">Model</th><th colspan="2">Without safeguards</th><th colspan="2">With safeguards</th><th colspan="2">Updated safeguards</th></tr>
+<tr><td></td><td></td><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th></tr>
+<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td>29.7%</td><td>71/129</td><td>6.5%</td><td>25/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr>
+<tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>5.9%</b></td><td><b>19/129</b></td><td>2.0%</td><td>8/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr>
+<tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>31.5%</td><td>81/129</td><td><u>0.5%</u></td><td><u>5/129</u></td><td><u>0.08%</u></td><td><u>1/129</u></td></tr>
+<tr><td><b>Without thinking</b></td><td><u>17.8%</u></td><td><u>60/129</u></td><td><b>0.0%</b></td><td><b>0/129</b></td><td><u>0.08%</u></td><td><u>1/129</u></td></tr>
+<tr><th rowspan="2">Claude Sonnet 4.6</th><td><b>With thinking</b></td><td>50.7%</td><td>98/129</td><td>24.7%</td><td>60/129</td><td>1.16%</td><td>7/129</td></tr>
+<tr><td><b>Without thinking</b></td><td>47.3%</td><td>99/129</td><td>10.9%</td><td>39/129</td><td>0.39%</td><td>2/129</td></tr>
+</tbody></table>
 
 :::caption
 **[Table 5.2.2.3.A] Attack success rate of professional red-teamer prompt injection attacks in browser use environments**. Lower is better. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (but do not take into account the margin of error). The attacker makes 10 attempts per scenario. Attempt-level ASR is the fraction of all attempts that succeed; scenario-level ASR is the fraction of scenarios where at least one attempt succeeded.

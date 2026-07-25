@@ -116,6 +116,19 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
     return out
 
 
+def _table_lines(html: str) -> str:
+    """Serialize tables one <tr> per line (owner-approved whitespace-only
+    canon change): the row is the unit agents grep, git diffs show, and
+    viewers truncate at — one-line tables made all three opaque. Only exact
+    `</tr><tr` seams split; a seam carrying an inline page marker
+    (`</tr><!-- p.N --><tr>`) stays on one line so downstream marker regexes
+    are untouched. Newlines between rows are insignificant to HTML parsing
+    and to the (re.S) verifier/seam-audit patterns."""
+    html = html.replace("<table><tbody>", "<table><tbody>\n")
+    html = html.replace("</tr><tr", "</tr>\n<tr")
+    return html.replace("</tbody></table>", "\n</tbody></table>")
+
+
 def _code_raw(lines) -> str:
     """Fence body: PDF line breaks kept, and a BLANK line re-emitted where
     consecutive lines sit a full line-height apart (the p.85 cube-net box's
@@ -485,7 +498,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                     marker_if_new(tp)
                     emit_marker(False)
         elif t == "table_html":
-            out.append(blk["html"] + "\n")
+            out.append(_table_lines(blk["html"]) + "\n")
             # a merged multi-page table carries embedded page markers: advance
             # the tracker so those pages don't re-emit duplicate markers later
             embedded = [int(n) for n in re.findall(r"<!-- p\.(\d+) -->", blk["html"])]
