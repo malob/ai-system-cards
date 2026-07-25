@@ -32,14 +32,15 @@ grows these). The major classes and their fixes (all class-level, in
 Plus: bold-label split defeated by a trailing ZWSP span (14), and mark
 coalescing bridging a non-space gap merged two code spans (193) — both fixed.
 
-**Open (typed or deferred, owner-visible):** docling table char normalization
-(curly quotes/dashes → ASCII, ~27 T1 minors, same class as fable-5's accepted
-p.243 family — candidate for a shared tables.py repair); italic-in-table-cell
-unsupported (bold-italic sub-labels render bold-only, pp.71/148); one missed
-bold cell (p.75); stacked cell lines joined without breaks (p.31); the BBQ
-example quotations render flush instead of indented (p.64); appendix code-box
-`None` language chrome rendered as fence content (pp.191–193); a lost blank
-line inside a mono box (p.85); adjacent `.hl` spans split at line wraps
+**Open (typed or deferred, owner-visible):** all eight items below were
+owner-adjudicated as fixes the same day (D41/D42) and landed — see
+decisions.md and the fix-batch commits; state.md carries the outcome. As
+found by this sweep they were: docling table char normalization (~27 T1
+minors); italic-in-table-cell unsupported (pp.71/148); one missed bold cell
+(p.75); stacked cell lines joined without breaks (p.31); the BBQ example
+quotations render flush instead of indented (p.64); appendix code-box `None`
+language chrome rendered as fence content (pp.191–193); a lost blank line
+inside a mono box (p.85); adjacent `.hl` spans split at line wraps
 (cosmetic).
 
 **Conclusion:** the sweep design transfers to a new document unchanged; the

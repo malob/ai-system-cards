@@ -64,17 +64,48 @@ pipeline serves, with per-card config** (D38–D40). Everything is committed on 
   limitation is gone in the desktop-app browser pane; real Chrome no longer
   needed for this.
 
+## The D41/D42 fix batch (2026-07-25 afternoon)
+
+Owner review walkthrough adjudicated ALL eight deferred minors as fixes (D41,
+D42) — every one landed same-day, each with the per-fix D25 loop (regen both
+cards → page-diff review → gates):
+
+1. **Glyph repair** (`_restore_cell_glyphs`): column-aligned oracle-glyph
+   restoration for cells the row-band can't segment (tall passage rows).
+   Opus pp.140–141 + fable pp.243–245/appendix; all changed files verified
+   fold-identical. Sweep caught one miss (fable p.243 row 3 — a lone ZWSP
+   span broke column contiguity); invisibles are now transparent to the
+   alignment.
+2. **Cell italics** from oracle flags (`(Helpful-only)`, `No tools`, `256K` —
+   both cards).
+3. **Row-band ordinal fallback** for rows whose every anchor recurs (p.75
+   missed bold).
+4. **Stacked-cell `<br>`**: sentence-terminal reflow test with 12pt slack —
+   first cut fired on 76 sites; shipped version fires on exactly the opus
+   p.31 + fable p.48 threshold cells (both crop-verified stacks).
+5. **Quote band context**: x0 106–112 classifies as quote only when no page
+   list claims the tier (BBQ examples pp.64–65 → blockquotes).
+6. **Code-box chrome** → fence info string (```None), mdproj projects info
+   strings (3 opus + 1 fable boxes; phantom blocklist pattern gone).
+7. **Fence blank lines** re-emitted at full line-height gaps (opus p.85 +
+   fable p.317, both crop-verified).
+8. **hl coalescing** across line wraps, ph-style stacking guard (p.138).
+
+Batch verification: seams 0 (both cards); mutation recall at baseline; spot
+re-sweep of every touched page (14 opus + 11 fable, 3 inspectors) — all
+clean after the ZWSP follow-up; all fixes verified in the served DOM.
+New typed baselines: **opus T1 13**, **fable L1 31 / T1 44**.
+
 ## Open
 
-- **Owner review + push:** the opus-5 card is converged and committed; deploy is on
-  owner request (push `main` → Pages). Owner should adjudicate the typed residuals
-  (T1 ~36) — same acceptance shape as fable's.
-- **Typed/deferred minors** (listed in experiment 10's README): docling table char
-  normalization (candidate shared repair, would also fix fable's p.243 family —
-  changes D28-canonical output, needs owner sign-off); italic-in-table-cell
-  unsupported; one missed bold cell (p.75); p.31 stacked cell lines; p.64 indented
-  quotations render flush; appendix `None` code-box chrome; p.85 mono blank line;
-  adjacent `.hl` spans split at wraps.
+- **Push:** owner reviews the batch summary, then pushes (`main` → Pages
+  deploys BOTH the opus-5 card and fable-5's collateral fidelity fixes).
+- **Typed minors, sweep-noted (non-blocking):** docling-lost space in a
+  restored cell (fable p.243 `” —robust`, spacing only — the repair
+  deliberately keeps docling spacing); the site renderer's typographer
+  globally curls straight apostrophes (fable p.310 `you'd` → `you’d` served;
+  md is faithful; PRE-EXISTING renderer behavior, owner may want a
+  renderer-config decision someday).
 - **Next milestone:** a third document from a *different vendor* (different PDF
   producer) — the real test of the oracle/manifest architecture beyond Google-Docs
   exports.
@@ -93,9 +124,10 @@ other card as a byte-identity regression net.
 
 ## Status
 
-- **fable-5: live** at malob.github.io/ai-system-cards (June 11 revision, D37).
-  Gate: 0 majors / L1 31 / T1 66.
-- **opus-5: converted, converged, committed, unpushed.** Gate: 0 majors / T1 36
-  typed minors; seams 0; sweep rounds 1+2 done (round 2: 1 major found+fixed);
-  visual pass done; site builds clean. Ready for owner review + push.
+- **fable-5: live** at malob.github.io/ai-system-cards (June 11 revision, D37),
+  with UNPUSHED D41/D42 fidelity fixes in the worktree (glyphs, italics, br
+  stack, chrome, blank line). Gate: 0 majors / L1 31 / T1 44.
+- **opus-5: converted, converged, committed, unpushed.** Gate: 0 majors / T1 13
+  typed minors; seams 0; sweep rounds 1+2 + D42 batch spot re-sweep all clean;
+  visual pass done; site builds clean. Awaiting owner push.
 - Verifier calibration corpus (D5) untouched: refs `f60899a`/`fb483fb`.
