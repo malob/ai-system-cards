@@ -131,6 +131,20 @@ New typed baselines: **opus T1 13**, **fable L1 31 / T1 44**.
   extent — renderer CSS now centers spanning header cells over an inset
   rule (booktabs cmidrule style; header rows only, body colspan labels
   untouched; 19 opus + 24 fable cells).
+- **Final pre-push sweep (owner-requested belt-and-braces):** 2 inspectors,
+  18 pages covering every scroll-round fix site on both cards
+  (`findings-final-sweep.jsonl`): zero regressions, all fixes verified
+  faithful against crops. Two residual MINORS for owner triage, neither
+  batch-caused: opus p.140 col-1 bold §-headings join their quote with a
+  space where the PDF line-breaks (candidate bold-boundary <br> class);
+  fable p.252 PDF bolds two placeholder dashes, output renders plain
+  (pre-existing).
+- **md exports (owner-requested):** card.md gains a provenance header
+  (title/vendor/date/links + converted-note) and a linked Contents; every
+  top-level section is now a STANDALONE .md route (10 opus + 11 fable,
+  `/[card]/<n>-<slug>.md`) so agents can fetch one section; llms.txt nests
+  the per-section index with page ranges. Grouping is mechanical (h2-opening
+  file starts a group) — future cards get it free.
 - **Next milestone:** a third document from a *different vendor* (different PDF
   producer) — the real test of the oracle/manifest architecture beyond Google-Docs
   exports.
