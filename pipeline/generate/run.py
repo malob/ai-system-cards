@@ -410,6 +410,21 @@ def main():
         md, _ = serialize.serialize_blocks(blocks, page_of_prev_block=(a if start_midpage else -1),
                                            oracle_pages=pages, chips=chips)
         md = join_quote_blocks(md)
+        # an inline highlight split ONLY by a page marker is one continuous
+        # range — the PDF breaks it because the page physically ends, but the
+        # web paragraph reflows, so the seam is an artifact (owner-flagged,
+        # p.137→138). The marker anchor legally lives inside the span. The
+        # nearest opener must itself be an hl span (a bare </span> could
+        # close a ph pill — fusing those would restyle the pill's text).
+        def _hl_seam(m):
+            before = md_cur[: m.start()]
+            opener = before.rfind("<span")
+            if opener != -1 and before[opener:].startswith('<span class="hl">'):
+                return m.group(1)
+            return m.group(0)
+        md_cur = md
+        md = re.sub(r'</span>(\s*<!-- p\.\d+ -->\s*)<span class="hl">',
+                    _hl_seam, md)
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")
         written.append((name, sel))
         print(f"{name}: pages {sel[0]}..{sel[-1]} ({len(sel)} pages, {len(blocks)} blocks)")
