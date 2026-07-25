@@ -9,24 +9,49 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1] / "verifier"))
+sys.path.insert(0, str(Path(__file__).parents[1]))
+import cardcfg  # noqa: E402
 import norm  # noqa: E402
 
+
+def _style_roles(section: str) -> dict:
+    """{hex: role} from the card's style-manifest.yaml (D16: the manifest is
+    the per-card signal→role authority; the role VOCABULARY is fixed here)."""
+    mtext = (cardcfg.CARD / "style-manifest.yaml").read_text()
+    m = re.search(rf"^{section}:\n((?:[ \t]+.*\n)+)", mtext, re.M)
+    if not m:
+        return {}
+    return {mm.group(1): mm.group(2)
+            for mm in re.finditer(r'^  "(#[0-9a-f]{6})":\s*\{\s*role:\s*([\w-]+)',
+                                  m.group(1), re.M)}
+
+
+_TEXT_ROLES = _style_roles("text_colors")
+_FILL_ROLES = _style_roles("fills")
+
+
+def _hexes(rolemap: dict, *roles: str) -> set:
+    return {h for h, r in rolemap.items() if r in roles}
+
+
 BODY_SIZE = 11.0
-HEADING_GRAY = "#666666"
-COMMENTARY_GRAY = "#444444"
-TRANSCRIPT_BOXES = {"#f3f3f3"}
-TURN_FILLS = {"#ebc9b7": "assistant", "#e2decf": "user", "#faf9f5": "user"}
-# #f0eee6 is ALWAYS a monospace output sub-box nested in a turn (all 11 in the
-# card; zero standalone) — it is the assistant's verbatim output, not a
+HEADING_GRAY = next(iter(_hexes(_TEXT_ROLES, "heading")), "#666666")
+COMMENTARY_GRAY = next(iter(_hexes(_TEXT_ROLES, "transcript-commentary")), None)
+TRANSCRIPT_BOXES = _hexes(_FILL_ROLES, "transcript-container")
+TURN_FILLS = {h: "assistant" for h in _hexes(_FILL_ROLES, "turn-assistant")}
+TURN_FILLS.update({h: "user" for h in _hexes(_FILL_ROLES, "turn-user")})
+# example-box fills classify as CODE, not example (first card's lesson):
+# an example-box is ALWAYS a monospace output sub-box nested in a turn (all 11
+# in that card; zero standalone) — the assistant's verbatim output, not a
 # standalone serif "example". Classify it as code so it renders monospace
 # whether or not it merges into its turn (the lone unmerged one — p.198 — was
 # the card's only :::example, rendering serif).
 EXAMPLE_BOXES: set = set()
-CODE_BOXES = {"#f1f3f4", "#f0eee6"}
+CODE_BOXES = _hexes(_FILL_ROLES, "code-block-bg", "example-box")
 # a code/example box inside one of these is a turn's nested output (stays in
 # the transcript); a box in none of them is a standalone code block (§9.2)
 _TURN_OR_TRANSCRIPT = set(TURN_FILLS) | TRANSCRIPT_BOXES
-PLACEHOLDER = "#d9ead3"
+PLACEHOLDER = next(iter(_hexes(_FILL_ROLES, "placeholder")), "#d9ead3")
 BULLETS = "●•◦▪‣○"
 
 

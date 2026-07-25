@@ -1,0 +1,10 @@
+# Per-card style manifest (D16): maps THIS card's visual signals to semantic
+# roles. Seeded from the 2026-07-25 signal census; roles pending confirmation.
+# STUB — being authored; document block is authoritative, role maps landing next.
+
+card: anthropic/claude-opus-5
+status: census done, roles being authored
+
+document:
+  toc_pages: [5, 6, 7, 8, 9]     # site generates its own TOC; excluded
+  page_number_footer: bottom-center bare integer, excluded
