@@ -545,3 +545,50 @@ Policy decided with the owner:
 - Revision deltas verified item-by-item against the publisher's own changelog before
   shipping (all 7 items confirmed in the diff; remaining churn = pagemark renumbering,
   figure re-paths, and the en-GB→en-US sweep).
+
+## D38 — per-card pipeline targeting: CARD env + cardcfg.py (2026-07-25)
+
+Second document arrived (Claude Opus 5 System Card, 2026-07-24, 193pp) — the D35
+generalization question got its empirical test. The card the pipeline targets is now
+selected by the `CARD` environment variable (`CARD=anthropic/claude-opus-5 uv run …`),
+resolved by `pipeline/cardcfg.py`; default remains `anthropic/claude-fable-5` (the
+calibration corpus's card, D5). Per-document constants come from the card's own files —
+`meta.yaml source_pages`, `style-manifest.yaml document.toc_pages` — never from code.
+Caches are per-card (`pipeline/.cache/<vendor>-<slug>/`). `accepted.json` moved from
+`pipeline/verifier/` into the card directory (it is card data: that document's
+owner-accepted majors). Regression bar for every pipeline change since: **fable-5
+sections byte-identical + gate at baseline** — held throughout.
+
+## D39 — assemble reads style ROLES from the manifest; the role vocabulary is fixed (2026-07-25)
+
+The block compiler's style hexes (turn fills, transcript containers, code boxes,
+placeholder green, heading gray) were module constants — correct only for the first
+card. They now load from the card's `style-manifest.yaml` (D16 made the manifest the
+signal→role authority; this makes the assembler actually read it). The role VOCABULARY
+is fixed in code (`heading`, `transcript-commentary`, `transcript-container`,
+`turn-assistant`, `turn-user`, `code-block-bg`, `example-box`, `placeholder`); the
+hex→role mapping is per-card config. This mattered immediately: opus-5 reuses fable-5's
+hexes for different roles (#e2decf: turn-user there → table row-label tint here;
+#141413: chart panel → table header fill; #4d4c48: figure legend → table sub-header).
+
+## D40 — opus-5 onboarding: sections from the PDF's own bookmarks; turn-label grammar (2026-07-25)
+
+- **Section files bootstrap from the PDF bookmark TOC** (level-1 entries), one file per
+  top-level section, split at page-top level-2 boundaries when a section exceeds ~40pp
+  (06a/06b at 6.5, 08a/08b at 8.12). All opus-5 top-level sections start on fresh pages,
+  so ranges are non-overlapping — none of fable-5's shared-boundary-page machinery
+  engages (it remains for cards that need it).
+- **A merely-bold line is not a turn label.** Opus-5 turn bubbles carry whole bold
+  paragraphs; fable-5's "any bold lead starts a new turn" heuristic shredded them. New
+  turns start on role change, bubble-identity change (innermost turn-fill box), or a
+  label GRAMMAR match: `[Bracket label]:` (≤30 chars) or a short bold run-in ending at a
+  colon (`Assistant, turn 146:`). Green placeholder pills that are bracket-only lines
+  (`[tool use]`) stay pill bodies, never labels; label-less bubbles emit `label=""` and
+  the verifier re-emits nothing for them (this also removed 4 false minors from
+  fable-5's typed baseline: 70 → 66).
+- **Opus-5 typed residuals (gate at 0 majors, T1 ~41 minors, pending owner
+  acceptance):** docling table character normalization (curly quotes/dashes → ASCII in
+  cell text, ~27 flags, same class as fable-5's accepted p.243 family — candidate for a
+  future tables.py repair benefiting both cards); literal markdown-in-transcript
+  projection nits (`` `WebSearch` ``, `<answer>`, `<score>`, `<result>`); T2
+  page-attribution spill at table seams and the p.191–193 'None' cells.
