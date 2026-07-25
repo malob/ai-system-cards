@@ -25,16 +25,15 @@ playbook** — how to run the pipeline, add or improve a card, and the process r
 
 ## Where this is headed
 
-The pipeline is **heavily specialized to this first document** — its chip vocabulary,
-table shapes, transcript styles, the hard-coded card paths, and gates calibrated to
-*its* specific defects. It likely won't generalize cleanly even to Anthropic's *other*
-system cards, let alone other companies'. It's a strong starting point, not a general
-tool — and we don't pretend otherwise.
-
-**Next milestone (empirical):** convert a *second* document and find out whether one
-shared pipeline (with per-card config/manifests) can serve many, or whether each
-document needs its own pipeline. That question is open until we try. Shipping the
-first card does not depend on resolving it.
+The D35 question — one shared pipeline vs per-document pipelines — got its first
+empirical answer on 2026-07-25: the **Claude Opus 5 card (193pp) converted through the
+shared pipeline** with per-card config only (a `style-manifest.yaml` whose hexes map to
+a FIXED role vocabulary, section stubs from the PDF's own bookmarks) plus a handful of
+generalization fixes where the first card's heuristics had over-fit (turn-label
+grammar, partial-span links, bullet-bold interactions — see D38–D40). Within
+Anthropic's Google-Docs-exported document family, one pipeline serves. Other vendors'
+PDFs (different producers, different visual grammar) remain untested — expect the
+oracle and manifest roles to carry, and the assembler heuristics to need new cases.
 
 ## How a card is produced
 
@@ -76,17 +75,25 @@ Not per-regen: `generate/extract_figures.py` (PDF figure images → `assets/figu
 
 ## Running the pipeline
 
-Regenerate the card's markdown from its PDF, then run the verifier gates (`uv` fetches
-the Python deps inline — `pymupdf`, and `docling` for tables):
+The pipeline targets the card named by the `CARD` env var (`vendor/slug`; default
+`anthropic/claude-fable-5` — see `pipeline/cardcfg.py`, D38). Regenerate the card's
+markdown from its PDF, then run the verifier gates (`uv` fetches the Python deps
+inline — `pymupdf`, and `docling` for tables):
 
 ```sh
 uv run --with pymupdf python pipeline/generate/run.py --all
 uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
+
+# the second card
+env CARD=anthropic/claude-opus-5 uv run --with pymupdf python pipeline/generate/run.py --all
+env CARD=anthropic/claude-opus-5 uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
 ```
 
-The gate passes at **0 majors**; `L1 31` and `T1 ~70` are accepted typed residuals
-(the current baseline), not regressions. `calibrate.py` takes a git ref or the literal
-`WORKTREE` (the current sections), not a path.
+The gate passes at **0 majors**; typed residual baselines: fable-5 `L1 31` / `T1 66`,
+opus-5 `T1 ~41` (see D40) — accepted noise, not regressions. `calibrate.py` takes a
+git ref or the literal `WORKTREE` (the current sections), not a path. **Any pipeline
+change must leave the OTHER card's `sections/` byte-identical** (regen + `git diff`)
+— that regression net caught real damage repeatedly during the second onboarding.
 
 Build and serve the site:
 
@@ -101,20 +108,30 @@ owner request (D13).
 ## Adding (or generalizing for) a card
 
 The site picks up any new card under `cards/<vendor>/<slug>/` automatically. The
-pipeline, though, is currently wired to the first card, so onboarding a second is
-partly a generalization exercise:
+procedure that onboarded claude-opus-5 (2026-07-25, one session):
 
-1. Create `cards/<vendor>/<slug>/` with `source.pdf`, a `meta.yaml` (copy the existing
-   one for the field shape), and a `style-manifest.yaml`.
-2. Extract the per-page oracle (`verifier/oracle.py`), figure images
-   (`generate/extract_figures.py`), and table structure (docling) from the PDF.
-3. Point the pipeline at the new card — the `CARD` path is hard-coded in
-   `pipeline/generate/run.py`, `pipeline/generate/tables.py`, and
-   `pipeline/verifier/calibrate.py` (generalizing this is the main shared work).
-4. Run assemble + the verifier gates and iterate on divergences.
-5. Author the `style-manifest.yaml` (chip/highlight + role colors) and the chip-label
-   vocabulary in `meta.yaml`.
-6. Open a PR with the new `cards/<vendor>/<slug>/` directory.
+1. Create `cards/<vendor>/<slug>/` with `source.pdf` and a `meta.yaml` (copy the
+   existing field shape; `source_pages` is read by the pipeline).
+2. **Census the signals** (pymupdf probe over all pages: text colors, fill colors,
+   fonts, per-page counts) and author `style-manifest.yaml`: every recurring hex gets a
+   role from the fixed vocabulary (D39) — verify ambiguous ones against page renders,
+   never guess. Same hex, different card, different role is NORMAL (D39). Set
+   `document: toc_pages` (the PDF's own contents pages). No chips → `chips: {}`.
+3. Extract ground truth: oracle (auto-cached per-card on first run), page renders
+   (`pdftoppm -png -r 150 source.pdf extracted/pages/p`), figures (`pdfimages -p -png`
+   + `extract_figures.py` — note the `-p`), docling tables (`tables.py <pages>` with
+   candidate pages from a rule-line scan; chart-page false positives are harmless —
+   docling returns 0 tables).
+4. Create `sections/*.md` stubs from the PDF's bookmark TOC: one file per top-level
+   section, `<!-- source: source.pdf pages AAA-BBB -->` headers, split >40pp sections
+   at page-top subsection boundaries. Non-overlapping ranges when sections start on
+   fresh pages (the shared-page machinery only engages for mid-page boundaries).
+5. Run assemble + gates (`CARD=… run.py --all` / `calibrate.py WORKTREE`), iterate to
+   0 majors. Fix CLASSES in `pipeline/`, never instances; after every fix regen BOTH
+   cards — the other card's diff must stay empty.
+6. Seam audit, mutation test (if the verifier changed), then the two agent sweeps
+   (rulebook template: `docs/experiments/09-round-g/rulebook.md`) to convergence.
+7. Build the site, verify the card page (deep links, sidenotes, turns, search).
 
 ## Process rules
 
