@@ -102,7 +102,7 @@ New typed baselines: **opus T1 13**, **fable L1 31 / T1 44**.
   deploys BOTH the opus-5 card and fable-5's collateral fidelity fixes).
 - **Typed minors, sweep-noted (non-blocking):** docling-lost space in a
   restored cell (fable p.243 `” —robust`, spacing only — the repair
-  deliberately keeps docling spacing; owner adjudication pending). The
+  deliberately keeps docling spacing; owner-accepted as typed, 2026-07-25). The
   renderer typographer question is DECIDED (owner, 2026-07-25): keep the
   educator as-is — the affected interview-table text isn't verbatim-formatted
   in the source either; md/card.md/llms.txt remain the fidelity artifacts.
