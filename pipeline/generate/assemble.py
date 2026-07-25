@@ -297,10 +297,19 @@ def _chip_only(line, page, manifest_chips) -> bool:
 QUOTE_X0 = 112  # blockquote indent (body=72, item-continuation=108, quote=118+)
 
 
-def _is_quote(line, page) -> bool:
+def _is_quote(line, page, list_tiers: frozenset = frozenset()) -> bool:
     """Indented quote region (p.130 UK AISI): x0 >= ~118 outside any box,
-    distinct from item hanging-indent (108) and body (72)."""
-    if line["bbox"][0] < QUOTE_X0:
+    distinct from item hanging-indent (108) and body (72).
+
+    The 106..QUOTE_X0 band is AMBIGUOUS: item continuations own 108, but
+    Google Docs' one-step quote indent lands there too (opus-5 pp.64-65 BBQ
+    examples, D42). Context decides: the band is a quote only when no list
+    on the page claims that tier (list_tiers = text-start x0s of the page's
+    marker lines)."""
+    x0 = line["bbox"][0]
+    if x0 < QUOTE_X0 - 6:
+        return False
+    if x0 < QUOTE_X0 and any(abs(x0 - t) <= 3 for t in list_tiers):
         return False
     return _box_role(line, page)[0] is None
 
@@ -328,6 +337,15 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     blocks = []
     cur = None
     marker_x0s: set[int] = set()
+    # page-wide list TEXT tiers, for the ambiguous quote band in _is_quote
+    # (D42): each marker line claims its own x0 (flush-left chip lists
+    # continue at the marker) and the hanging-indent tier (+18)
+    list_tiers = frozenset(
+        t for l in lines
+        if (LIST_MARKER.match(l["text"].lstrip())
+            or l["text"].lstrip()[:1] in BULLETS
+            or WORD_O_MARKER.match(l["text"].lstrip()))
+        for t in (round(l["bbox"][0]), round(l["bbox"][0]) + 18))
 
     def flush():
         nonlocal cur
@@ -428,7 +446,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             shift_ok = tier is None or line["bbox"][0] - (90 + 36 * tier) >= 12
             cur = {"type": "item", "lines": [line], "page": pno,
                    "marker_x0": line["bbox"][0],
-                   "quote": _is_quote(line, page) and quote_ctx and shift_ok}
+                   "quote": _is_quote(line, page, list_tiers) and quote_ctx and shift_ok}
             marker_x0s.add(round(line["bbox"][0]))
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
@@ -529,12 +547,12 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                              and not starts_bold_lead
                              and not ends_bold_label
                              and not chip_boundary
-                             and cur.get("quote", False) == _is_quote(line, page))
+                             and cur.get("quote", False) == _is_quote(line, page, list_tiers))
             if same_para:
                 cur["lines"].append(line)
             else:
                 flush()
-                q_here = _is_quote(line, page)
+                q_here = _is_quote(line, page, list_tiers)
                 quote_ctx = q_here
                 cur = {"type": "paragraph", "lines": [line], "page": pno,
                        "quote": q_here}
