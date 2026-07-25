@@ -310,17 +310,25 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             body = re.sub(r"\](?=[A-Za-z0-9])", "] ", body)
             out.append(":::caption\n" + body + "\n:::\n")
         elif t == "turn":
-            # multi-paragraph turns: gap-recorded breaks UNION short-line
-            # breaks (PDF intra-turn paragraphs are plain hard returns with no
-            # extra spacing — the signal is a line ending short of the right edge)
-            maxx = max(l["bbox"][2] for l in blk["lines"])
-            # a short line is a paragraph break only at a sentence boundary:
-            # terminal punctuation, or the next line opening a new sentence —
-            # bare width split mid-sentence at wrap points (p.44/153)
-            geo = [i + 1 for i, l in enumerate(blk["lines"][:-1])
-                   if l["bbox"][2] < maxx - 50
-                   and (re.search(r"[.!?:…\"”'\)\]]\s*$", l["text"].rstrip())
-                        or blk["lines"][i + 1]["text"].lstrip()[:1].isupper())]
+            # multi-paragraph turns: gap-recorded breaks, falling back to
+            # short-line breaks (PDF intra-turn paragraphs are plain hard
+            # returns with no extra spacing — the signal is a line ending
+            # short of the right edge). The fallback applies ONLY when the
+            # turn has no gap breaks: a turn that separates its paragraphs
+            # with visible gaps also uses tight hard returns WITHIN a
+            # paragraph ('ARGH ARGH ARGH.' | 'OK. Gun to head:', opus-5
+            # p.143, sweep round 2) — there the gap signal is authoritative
+            geo = []
+            if not blk.get("breaks"):
+                maxx = max(l["bbox"][2] for l in blk["lines"])
+                # a short line is a paragraph break only at a sentence
+                # boundary: terminal punctuation, or the next line opening a
+                # new sentence — bare width split mid-sentence at wrap
+                # points (p.44/153)
+                geo = [i + 1 for i, l in enumerate(blk["lines"][:-1])
+                       if l["bbox"][2] < maxx - 50
+                       and (re.search(r"[.!?:…\"”'\)\]]\s*$", l["text"].rstrip())
+                            or blk["lines"][i + 1]["text"].lstrip()[:1].isupper())]
             brks = sorted(set(blk.get("breaks", [])) | set(geo))
             idxs = [0] + brks + [len(blk["lines"])]
             seg_bodies = []

@@ -273,9 +273,7 @@ Oh my god. OK. Just one thing: let me reconsider from scratch to make sure I'm n
 
 GRRRR. OK. Honestly I now think it's 50-50 between 1/3 and 2/5, maybe 55-45 for one or the other depending on my mood. <span class="ph">[...]</span>
 
-ARGH ARGH ARGH.
-
-OK. Gun to head: the answer is... Hmm. <span class="ph">[...]</span>
+ARGH ARGH ARGH. OK. Gun to head: the answer is... Hmm. <span class="ph">[...]</span>
 
 ARGH. 1/3 vs 2/5 vs 2/5. WHY IS THIS SO HARD. <span class="ph">[...]</span>
 :::
