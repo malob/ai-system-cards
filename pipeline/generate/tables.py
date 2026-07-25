@@ -777,7 +777,7 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             raw_idx = [j for j, ch in enumerate(c_dec) if not ch.isspace()]
             pieces, cur, sq_pos = [], 0, 0
             prev_inst = None
-            cell_insts, brk_bounds = [], []
+            cell_insts, brk_bounds, tier_breaks = [], [], []
             for k in segs:
                 if k not in pool:   # baked-in fnref digit: pass through
                     st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
@@ -800,6 +800,13 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                     wraps.append(("<i>", "</i>"))
                 if underlined(inst) and styleable:
                     wraps.append(("<u>", "</u>"))
+                # a run set >=1.5pt below the cell's lead size is a QUIETER
+                # TIER — the header parenthetical '(refusal rate)' /
+                # '(median campaign execution score…)' (owner-spotted,
+                # pp.69/71 family). <small> is outermost.
+                lead_size = (cell_insts[0] if cell_insts else inst).get("size", 0)
+                if styleable and inst.get("size", 0) <= lead_size - 1.5:
+                    wraps.append(("<small>", "</small>"))
                 st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
                 sq_pos += len(k)
                 # emit the SPAN's text, not docling's: restores characters
@@ -824,6 +831,13 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                             gap = ""
                         else:
                             gap = gap or " "
+                            # a FONT-SIZE DROP at the line boundary is an
+                            # unambiguous tier change — wraps never resize
+                            # mid-cell ('Voter Suppression scenario' 11pt |
+                            # '(median campaign…)' 9pt; '(Helpful-only)'
+                            # 10pt) — hard break, no reflow test needed
+                            if inst.get("size", 0) <= prev_inst.get("size", 0) - 0.5:
+                                tier_breaks.append(len(pieces))
                             # INTENTIONAL stack vs width wrap (D42, p.31
                             # '4x = 1 h eq.' | '200x = 8 h eq.'): only a
                             # SENTENCE-TERMINAL line qualifies (an unfenced
@@ -833,13 +847,15 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                             # have FIT with clear slack, the break was a hard
                             # return — recorded, patched to <br> once the
                             # cell's full extent is known
-                            if re.search(r"[.!?]$", tail.rstrip()):
+                            elif re.search(r"[.!?]$", tail.rstrip()):
                                 brk_bounds.append((len(pieces), prev_inst, inst))
                 pieces.append(gap + seg_text)
                 cell_insts.append(inst)
                 prev_inst = inst
                 cur = en
             pieces.append(c_dec[cur:])
+            for pi in tier_breaks:
+                pieces[pi] = "<br>" + pieces[pi].lstrip(" ")
             # reflow test for recorded line-break boundaries: available width
             # runs to the cell's COLUMN boundary (next column edge, or table
             # right edge); the first word's width is scaled from its span.
@@ -866,6 +882,9 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             # (suspended compounds 'single- and' keep both)
             rebuilt_cell = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1-", rebuilt_cell)
             # adjacent same-style runs read as ONE run ('<b>Mythos</b> <b>5</b>')
+            # small first: it is outermost, and merging it exposes the inner
+            # b/i adjacencies for the merges below
+            rebuilt_cell = re.sub(r"</small>(\s*)<small>", r"\1", rebuilt_cell)
             rebuilt_cell = re.sub(r"</b>(\s*)<b>", r"\1", rebuilt_cell)
             rebuilt_cell = re.sub(r"</i>(\s*)<i>", r"\1", rebuilt_cell)
             rebuilt_cell = re.sub(r"</u>(\s*)<u>", r"\1", rebuilt_cell)

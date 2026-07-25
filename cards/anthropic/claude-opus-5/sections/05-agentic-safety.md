@@ -21,7 +21,7 @@ Each tested model is given the standard Claude Code toolset, and each prompt was
 
 <!-- p.69 -->
 
-<table><tbody><tr><th>Model</th><th>Malicious (%) (refusal rate)</th><th>Dual-use &amp; benign (%) (success rate)</th></tr><tr><td><b>Claude Opus 5</b></td><td>89.00%</td><td><b>99.82%</b></td></tr><tr><td><b>Claude Sonnet 5</b></td><td><b>92.37%</b></td><td>91.55%</td></tr><tr><td><b>Claude Mythos 5</b></td><td><u>90.25%</u></td><td><u>99.64%</u></td></tr><tr><td><b>Claude Opus 4.8</b></td><td>89.42%</td><td><b>99.82%</b></td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Malicious (%)<br><small>(refusal rate)</small></th><th>Dual-use &amp; benign (%)<br><small>(success rate)</small></th></tr><tr><td><b>Claude Opus 5</b></td><td>89.00%</td><td><b>99.82%</b></td></tr><tr><td><b>Claude Sonnet 5</b></td><td><b>92.37%</b></td><td>91.55%</td></tr><tr><td><b>Claude Mythos 5</b></td><td><u>90.25%</u></td><td><u>99.64%</u></td></tr><tr><td><b>Claude Opus 4.8</b></td><td>89.42%</td><td><b>99.82%</b></td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.1.A] Claude Code evaluation results.** Higher is better. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (note that neither takes into account the margin of error). Results for previous models show variance from previous system cards due to evaluation updates.
@@ -62,7 +62,7 @@ Each scenario is run eight times at each of the three difficulty tiers (up from 
 
 <!-- p.71 -->
 
-<table><tbody><tr><th>Model</th><th>Voter Suppression scenario (median campaign execution score, out of 32)</th><th>Domestic Polarization scenario (median campaign execution score, out of 32</th></tr><tr><td><b>Claude Opus 5</b> <i><b>(Helpful-only)</b></i></td><td>23.5</td><td>26.0</td></tr><tr><td><b>Claude Sonnet 5</b> <i><b>(Helpful-only)</b></i></td><td>18.5</td><td>22.0</td></tr><tr><td><b>Claude Mythos 5</b> <i><b>(Helpful-only)</b></i></td><td>24.0</td><td>23.5</td></tr><tr><td><b>Claude Opus 4.8</b> <i><b>(Helpful-only)</b></i></td><td>21.0</td><td>24.0</td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Voter Suppression scenario<br><small>(median campaign execution score, out of 32)</small></th><th>Domestic Polarization scenario<br><small>(median campaign execution score, out of 32</small></th></tr><tr><td><b>Claude Opus 5</b><br><i><b>(Helpful-only)</b></i></td><td>23.5</td><td>26.0</td></tr><tr><td><b>Claude Sonnet 5</b><br><i><b>(Helpful-only)</b></i></td><td>18.5</td><td>22.0</td></tr><tr><td><b>Claude Mythos 5</b><br><i><b>(Helpful-only)</b></i></td><td>24.0</td><td>23.5</td></tr><tr><td><b>Claude Opus 4.8</b><br><i><b>(Helpful-only)</b></i></td><td>21.0</td><td>24.0</td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.3.A] Agentic influence operation evaluation results, helpful-only model.** Results reflect the median score across 8 attempts at the highest difficulty tier out of 32 total points. Higher indicates greater capability and therefore greater potential uplift to a malicious actor.

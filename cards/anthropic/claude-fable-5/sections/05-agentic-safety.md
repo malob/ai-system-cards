@@ -19,7 +19,7 @@ Claude Mythos 5 was given the standard Claude Code tool set. Each prompt was run
 
 <!-- p.88 -->
 
-<table><tbody><tr><th>Model</th><th>Malicious (%) (refusal rate)</th><th>Dual-use &amp; benign (%) (success rate)</th></tr><tr><td><b>Claude Mythos 5</b></td><td>90.25%</td><td><b>99.64%</b></td></tr><tr><td><b>Claude Opus 4.8</b></td><td><u>95.24%</u></td><td>94.84%</td></tr><tr><td><b>Claude Mythos Preview</b></td><td><b>95.41%</b></td><td>91.12%</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>76.60%</td><td><u>97.33%</u></td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Malicious (%)<br><small>(refusal rate)</small></th><th>Dual-use &amp; benign (%)<br><small>(success rate)</small></th></tr><tr><td><b>Claude Mythos 5</b></td><td>90.25%</td><td><b>99.64%</b></td></tr><tr><td><b>Claude Opus 4.8</b></td><td><u>95.24%</u></td><td>94.84%</td></tr><tr><td><b>Claude Mythos Preview</b></td><td><b>95.41%</b></td><td>91.12%</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>76.60%</td><td><u>97.33%</u></td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.1.A] Claude Code evaluation results.** Higher is better. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (note that neither takes into account the margin of error). Results for previous models show variance from previous system cards due to evaluation updates.
@@ -60,7 +60,7 @@ Each scenario is run 3 times at 3 levels of simulated platform friction, for 9 s
 
 <!-- p.90 -->
 
-<table><tbody><tr><th>Model</th><th>Voter Suppression scenario (task completion rate)</th><th>Domestic Polarization scenario (task completion rate)</th></tr><tr><td><b>Claude Mythos 5</b> <i><b>(Helpful-only)</b></i></td><td>67.1%</td><td>46.8%</td></tr><tr><td><b>Claude Opus 4.8</b> <i><b>(Helpful-only)</b></i></td><td>73.3%</td><td>55.1%</td></tr><tr><td><b>Claude Opus 4.7</b> <i><b>(Helpful-only)</b></i></td><td>57.1%</td><td>46.8%</td></tr><tr><td><b>Claude Mythos Preview</b> <i><b>(Helpful-only)</b></i></td><td>59.5%</td><td>42.1%</td></tr><tr><td><b>Claude Sonnet 4.6</b> <i><b>(Helpful-only)</b></i></td><td>41.8%</td><td>34.0%</td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Voter Suppression scenario<br><small>(task completion rate)</small></th><th>Domestic Polarization scenario<br><small>(task completion rate)</small></th></tr><tr><td><b>Claude Mythos 5</b><br><i><b>(Helpful-only)</b></i></td><td>67.1%</td><td>46.8%</td></tr><tr><td><b>Claude Opus 4.8</b><br><i><b>(Helpful-only)</b></i></td><td>73.3%</td><td>55.1%</td></tr><tr><td><b>Claude Opus 4.7</b><br><i><b>(Helpful-only)</b></i></td><td>57.1%</td><td>46.8%</td></tr><tr><td><b>Claude Mythos Preview</b><br><i><b>(Helpful-only)</b></i></td><td>59.5%</td><td>42.1%</td></tr><tr><td><b>Claude Sonnet 4.6</b><br><i><b>(Helpful-only)</b></i></td><td>41.8%</td><td>34.0%</td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.3.A] Agentic influence operation evaluation results, helpful-only model.** Percentages reflect the average share of success criteria—out of 70 per scenario—that the model completed in a simulated environment. Higher indicates greater capability and therefore greater potential uplift to a malicious actor.
