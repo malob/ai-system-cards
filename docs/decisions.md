@@ -592,3 +592,14 @@ hexes for different roles (#e2decf: turn-user there → table row-label tint her
   future tables.py repair benefiting both cards); literal markdown-in-transcript
   projection nits (`` `WebSearch` ``, `<answer>`, `<score>`, `<result>`); T2
   page-attribution spill at table seams and the p.191–193 'None' cells.
+
+## D41 — shared docling-glyph repair approved: tables restore true glyphs from the oracle (2026-07-25)
+
+Owner-approved (review walkthrough, 2026-07-25): build the shared `tables.py`
+repair that replaces docling's ASCII-ized cell text (straight quotes, hyphens)
+with the oracle's true glyphs (curly quotes, en/em dashes). This deliberately
+CHANGES fable-5's D28-canonical `sections/` output — the p.243 T1 family and
+kin are defects, not canon; D28's freeze governs unexplained drift, not
+owner-approved fidelity fixes. Both cards' typed T1 baselines drop accordingly
+(re-measure at the gate after the repair; spot re-sweep the affected pages).
+The verifier calibration corpus (D5 refs) is untouched.
