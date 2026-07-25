@@ -457,7 +457,18 @@ def merge_continuation_rows(html: str) -> str:
                      if last_row_idx is not None else None)
         starts_lower = any(re.match(r"[a-z(\u2018\u2019]", re.sub(r"<[^>]+>", "", c).strip())
                            for _, _, c in tags[1:] if _cell_sq(c))
-        if (prev_tags and len(tags) == len(prev_tags) and tags and not plain[0]
+        # the FIRST cell may itself continue across the page (opus-5 p.140\u2192141
+        # welfare table: the row-label quote wraps): treat it as a continuation
+        # when prev's first cell ends mid-sentence and cur's starts lowercase
+        first_continues = False
+        if plain[0] and prev_tags and prev_tags[0][2].strip():
+            pt = re.sub(r"<[^>]+>", "", prev_tags[0][2]).strip()
+            ct = re.sub(r"<[^>]+>", "", tags[0][2]).strip()
+            first_continues = bool(pt and ct
+                                   and not re.search(r"[.!?:;\u2026\"\u201d')\]]$", pt)
+                                   and re.match(r"[a-z(\u2018\u2019]", ct))
+        if (prev_tags and len(tags) == len(prev_tags) and tags
+                and (not plain[0] or first_continues)
                 and any(plain[1:]) and starts_lower
                 and not any("colspan" in a for _, a, _ in tags)):
             cells = []
