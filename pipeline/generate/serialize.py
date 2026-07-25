@@ -116,6 +116,22 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
     return out
 
 
+def _code_raw(lines) -> str:
+    """Fence body: PDF line breaks kept, and a BLANK line re-emitted where
+    consecutive lines sit a full line-height apart (the p.85 cube-net box's
+    two thinking fragments read as one, D42). A blank line has no span to
+    carry it — the gap is the only record."""
+    out = []
+    for i, l in enumerate(lines):
+        if i:
+            prev = lines[i - 1]
+            h = prev["bbox"][3] - prev["bbox"][1]
+            if l["bbox"][1] - prev["bbox"][3] > 0.6 * h:
+                out.append("")
+        out.append(l["text"])
+    return "\n".join(out)
+
+
 def _hyphen_join(text: str) -> str:
     text = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", text)  # A1; keep suspended compounds ("single- and")
     text = text.replace("​", "").replace("­", "")  # zero-width, soft hyphen
@@ -401,7 +417,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                         raw = raw[: -len("</pre>")] + "\n" + r[len("<pre>"):]
                     body = (body + "\n\n" if body else "") + raw
                 else:
-                    raw = "\n".join(l["text"] for _, cl_ in segs_cl for l in cl_)
+                    raw = "\n".join(_code_raw(cl_) for _, cl_ in segs_cl)
                     body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
             out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
             if blk.get("code_lines") and blk.get("code_cont"):
@@ -448,7 +464,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                             and re.fullmatch(r"\w+", body_lines[0]["text"].strip())):
                         lang = body_lines[0]["text"].strip()
                         body_lines = body_lines[1:]
-                    raw = "\n".join(l["text"] for l in body_lines)
+                    raw = _code_raw(body_lines)
                     out.append(f"```{lang}\n" + (raw + "\n" if raw else "")
                                + "```\n")
                 for tp in blk.get("trailing_pages", []):

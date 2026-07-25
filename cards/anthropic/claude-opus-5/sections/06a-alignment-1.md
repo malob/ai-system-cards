@@ -131,6 +131,7 @@ The clearest concerning pattern found was Claude’s tendency to state an over-c
 ```
 This is a classic problem; answer commonly B? Let me think... Typical answer 
 for this cube net diagonal problem is B. 
+
 Hmm, without clearer net, I'll go with B.
 ```
 
