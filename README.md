@@ -3,8 +3,9 @@
 A readable archive of AI model system cards. Companies usually publish a model's
 system card as a long PDF, and long PDFs are a pain to read. This project converts each one
 into a faithful, responsive web page — every sentence, table, figure, and footnote,
-with deep links back to the source PDF — plus clean markdown for machine consumption
-(`card.md` per card, `llms.txt` index).
+with deep links back to the source PDF — plus clean markdown for machine consumption:
+a full `card.md` per card, a standalone `.md` per major section (so agents can fetch
+just the section they need), and an `llms.txt` index of all of it.
 
 **Site:** https://malob.github.io/ai-system-cards/
 

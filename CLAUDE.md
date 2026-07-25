@@ -50,7 +50,8 @@ fidelity is reproducible and checkable. Four stages:
    output to the oracle and fail on any unexplained divergence; calibrated against the
    labeled defect history and mutation-tested.
 4. **Render** (`site/`): Astro stitches `sections/*.md`, makes page markers into PDF
-   deep links, footnotes into sidenotes, per-page OG images, `card.md` + `llms.txt`;
+   deep links, footnotes into sidenotes, per-page OG images, md exports (`card.md`,
+   one `.md` per top-level section, `llms.txt` index — all with provenance headers);
    Pagefind search.
 
 ## Pipeline modules
@@ -89,8 +90,9 @@ env CARD=anthropic/claude-opus-5 uv run --with pymupdf python pipeline/generate/
 env CARD=anthropic/claude-opus-5 uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
 ```
 
-The gate passes at **0 majors**; typed residual baselines: fable-5 `L1 31` / `T1 66`,
-opus-5 `T1 ~41` (see D40) — accepted noise, not regressions. `calibrate.py` takes a
+The gate passes at **0 majors**; typed residual baselines: fable-5 `L1 31` / `T1 44`,
+opus-5 `T1 13` (post-D41/D42 fix batches) — accepted noise, not regressions; re-baseline
+here whenever an owner-approved fix batch moves them. `calibrate.py` takes a
 git ref or the literal `WORKTREE` (the current sections), not a path. **Any pipeline
 change must leave the OTHER card's `sections/` byte-identical** (regen + `git diff`)
 — that regression net caught real damage repeatedly during the second onboarding.

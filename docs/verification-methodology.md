@@ -29,8 +29,9 @@ S1 bold, S2 chips, ST structure, …) comparing the markdown (projected to
 comparable facts by `mdproj.py`, normalized by `norm.py`) against the oracle.
 It fails on any unexplained divergence. Calibrated against the labeled defect
 history and mutation-tested for recall (`mutate.py`). Baseline = **0 majors**;
-`L1 31` / `T1 ~70` are accepted typed residuals. See `verification-contract.md`
-for the invariant IDs and exclusions.
+the accepted typed-residual counts per card live in CLAUDE.md §"Running the
+pipeline" (re-baselined there when owner-approved fix batches move them). See
+`verification-contract.md` for the invariant IDs and exclusions.
 
 This layer is token/link/style/structure level. It **cannot see** layout and
 visual structure — split list items, mis-merged paragraphs, a value shifted one
@@ -74,6 +75,19 @@ preview-verify** if renderer-visible **→ seam audit + gate → commit pipeline
 output together.** Then **re-sweep** the affected pages plus a rotating sample,
 and repeat until a round comes back clean. The owner sees editorial decisions
 and converged results, not per-fix demos.
+
+## Layer 4 — the owner scroll pass (before certification)
+
+The layers above verify per-page CONTENT strongly and visual layout weakly —
+the sweeps compare renders/slices/DOM per page but do not experience the page
+the way a reader does. Empirically (opus-5, 2026-07-25): after full gate + two
+sweep rounds converged, the owner's manual scroll found six real issues, every
+one in the visual-layout plane the sweeps are blind to — cross-element overlap
+(stacked page markers), intra-cell typography tiers, bubble scoping, page-seam
+highlight artifacts, spanning-header extent. So the final step of onboarding
+(CLAUDE.md §"Adding a card", step 8) is a human scroll with the PDF renders at
+hand; treat its findings as a normal layer-3 fix queue. Nothing here replaces
+the sweeps — the two catch disjoint failure classes.
 
 ## Provenance
 

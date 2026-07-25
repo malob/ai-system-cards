@@ -66,3 +66,23 @@ baseline (0 majors; T1 36 / L1 31 + T1 66), DOM render matches the crop's
 grouping. New source-faithful notes for the rulebook: p.69 "benign tasks.."
 double period; p.3 "goal.Monitoring"; p.126 unclosed quote + "PT mode"; p.112
 item-6 period outside bold.
+
+## Later rounds (same day) — batch verification and the scroll-review lesson
+
+- **D42 batch spot re-sweep** (`findings-d42-batch.jsonl`, 25 units): after the
+  owner-adjudicated eight-fix batch (D41/D42), 3 inspectors re-verified every
+  touched page on BOTH cards. Caught one real miss — fable p.243 row 3, where a
+  lone ZWSP span broke the glyph repair's column alignment (fixed: invisibles
+  transparent to alignment). Everything else faithful.
+- **Owner scroll review**: the owner's manual scroll then found SIX more issues
+  the sweeps had passed — all visual-layout classes (marker overlap, cell size
+  tiers, cell blank lines, hl page-seam split, same-bubble turn split, spanning
+  header extent). All fixed same-day; the lesson is institutionalized as
+  CLAUDE.md onboarding step 8 and verification-methodology.md layer 4.
+- **Final pre-push sweep** (`findings-final-sweep.jsonl`, 18 units): 2
+  inspectors over every scroll-fix site on both cards — zero regressions; two
+  residual minors surfaced (constitution bold-lead line breaks, bold placeholder
+  dashes), both fixed before ship.
+
+**Ship state:** opus-5 live 2026-07-25; typed baselines after all batches:
+opus `T1 13`, fable `L1 31 / T1 44`.
