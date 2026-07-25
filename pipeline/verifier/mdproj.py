@@ -165,6 +165,8 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
 
     def directive(m):
         label = RE_TURN_LABEL.search(m.group(2) or "")
+        if label and not label.group(1):
+            return " "   # label-less bubble (opus-5 p.80): nothing to re-emit
         if label:
             sec.turn_labels.append((_strip_sentinels(label.group(1)), pg(m)))
             # re-emit BOLD (the PDF sets labels bold): the later bold collector

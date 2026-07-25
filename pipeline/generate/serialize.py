@@ -336,7 +336,11 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                          if not (k == "bold" and a == 0) and b > delta]
                 if resid_bold is not None and resid_bold - delta > 0:
                     marks.append(("bold", 0, resid_bold - delta, None))
-            elif re.fullmatch(r"\[[^\]]{1,30}\]:?\s*", text.strip()):
+            elif (re.fullmatch(r"\[[^\]]{1,30}\]:?\s*", text.strip())
+                  and not any(k == "placeholder" for k, _, _, _ in marks)):
+                # a bracket-only line that is a GREEN PILL is a D15 placeholder
+                # ('[tool use]', opus-5 p.93), not a speaker label — leave it
+                # as the turn's body so the pill span survives
                 label = text.strip().rstrip(":").strip("[]").rstrip(":")
                 text = ""
                 marks = []
