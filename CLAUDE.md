@@ -132,6 +132,12 @@ procedure that onboarded claude-opus-5 (2026-07-25, one session):
 6. Seam audit, mutation test (if the verifier changed), then the two agent sweeps
    (rulebook template: `docs/experiments/09-round-g/rulebook.md`) to convergence.
 7. Build the site, verify the card page (deep links, sidenotes, turns, search).
+8. **Owner scroll pass before certification.** The sweep stack verifies per-page
+   CONTENT; it is demonstrably weak on visual-layout classes — cross-element
+   overlap (page-marker smear), intra-cell typography tiers, bubble scoping,
+   seam artifacts. The opus-5 owner scroll found five such issues after full
+   sweep convergence (2026-07-25, state.md). Compare suspicious constructs
+   against `extracted/pages/p-NNN.png` side by side.
 
 ## Process rules
 
