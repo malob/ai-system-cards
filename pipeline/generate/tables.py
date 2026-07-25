@@ -56,6 +56,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
             html = _normalize_rowspan_subrows(html)
+            html = _cell_blank_lines(html, t["bbox"], oracle_page)
             html = _bullet_breaks(html)
             html = _demote_data_th(html)   # rebuilds can re-tag rows all-th
             # AFTER demotion: a white-text header sub-row reads as a mixed row
@@ -777,7 +778,7 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             raw_idx = [j for j, ch in enumerate(c_dec) if not ch.isspace()]
             pieces, cur, sq_pos = [], 0, 0
             prev_inst = None
-            cell_insts, brk_bounds, tier_breaks = [], [], []
+            cell_insts, brk_bounds, tier_breaks, blank_breaks = [], [], [], []
             for k in segs:
                 if k not in pool:   # baked-in fnref digit: pass through
                     st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
@@ -831,12 +832,21 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                             gap = ""
                         else:
                             gap = gap or " "
+                            # a BLANK LINE inside the cell (full line-height
+                            # gap — '80% (Claude Opus 5)' | gap | '12–65%
+                            # (other models)', constitution table
+                            # edit-frequency column, owner-spotted) — same
+                            # signal as the fence blank-line rule
+                            line_gap = inst["bbox"][1] - prev_inst["bbox"][3]
+                            line_h = prev_inst["bbox"][3] - prev_inst["bbox"][1]
+                            if line_gap > 0.6 * line_h:
+                                blank_breaks.append(len(pieces))
                             # a FONT-SIZE DROP at the line boundary is an
                             # unambiguous tier change — wraps never resize
                             # mid-cell ('Voter Suppression scenario' 11pt |
                             # '(median campaign…)' 9pt; '(Helpful-only)'
                             # 10pt) — hard break, no reflow test needed
-                            if inst.get("size", 0) <= prev_inst.get("size", 0) - 0.5:
+                            elif inst.get("size", 0) <= prev_inst.get("size", 0) - 0.5:
                                 tier_breaks.append(len(pieces))
                             # INTENTIONAL stack vs width wrap (D42, p.31
                             # '4x = 1 h eq.' | '200x = 8 h eq.'): only a
@@ -856,6 +866,8 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             pieces.append(c_dec[cur:])
             for pi in tier_breaks:
                 pieces[pi] = "<br>" + pieces[pi].lstrip(" ")
+            for pi in blank_breaks:
+                pieces[pi] = "<br><br>" + pieces[pi].lstrip(" ")
             # reflow test for recorded line-break boundaries: available width
             # runs to the cell's COLUMN boundary (next column edge, or table
             # right edge); the first word's width is scaled from its span.
@@ -896,6 +908,101 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 f"<{tg}{a}>{c2}</{tg}>" for (tg, a, _), c2 in zip(tags, cells)) + "</tr>"
             out = out.replace(r, rebuilt, 1)
     return out
+
+
+def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
+    """Blank lines INSIDE cells the row-band machinery can't reach (tall
+    constitution rows): '80% (Claude Opus 5)' | gap | '12–65% (other
+    models)' reads as one run (owner-spotted, D42). Column-align the cell's
+    visible text to its span run (same alignment as _restore_cell_glyphs,
+    but tag-tolerant and char→span indexed); where consecutive chars cross
+    spans separated by a full line-height gap, the joining space becomes
+    <br><br>. Ambiguous or unlocatable cells are left alone."""
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s.get("zone") != "fnref" and s["text"].strip()]
+    if not spans:
+        return html
+    clusters: dict[float, int] = {}
+    for s in spans:
+        key = next((k for k in clusters if abs(k - s["bbox"][0]) <= 2),
+                   s["bbox"][0])
+        clusters[key] = clusters.get(key, 0) + 1
+    edges = sorted(k for k, n in clusters.items() if n >= 3)
+    if not edges:
+        return html
+    cols: list[list] = [[] for _ in edges]
+    for s in spans:
+        i = max((j for j, e in enumerate(edges) if s["bbox"][0] >= e - 2), default=0)
+        cols[i].append(s)
+    col_chars, col_spans = [], []
+    for col in cols:
+        col.sort(key=lambda s: ((s["bbox"][1] + s["bbox"][3]) / 2, s["bbox"][0]))
+        chars, srcs = [], []
+        for s in col:
+            for ch in s["text"]:
+                if not ch.isspace() and ch not in _INVIS:
+                    chars.append(ch)
+                    srcs.append(s)
+        col_chars.append("".join(chars))
+        col_spans.append(srcs)
+    col_folds = [c.translate(_QUOTE_FOLD) for c in col_chars]
+
+    import html as _h
+
+    def fix_cell(m):
+        tg, attrs, c = m.groups()
+        if "<p>" in c:
+            # already paragraph-split by _split_cell_paragraphs — the <p>
+            # boundary IS the blank line; a <br><br> would double it
+            return m.group(0)
+        plain = _h.unescape(re.sub(r"<[^>]+>", "", c))
+        sq = _squash(plain).translate(_INVIS_DEL)
+        if len(sq) < 8:
+            return m.group(0)
+        hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
+                if cf.count(sq) == 1]
+        hits = [h for h in hits if h[1] >= 0]
+        if len(hits) != 1 or any(cf.count(sq) > 1 for cf in col_folds):
+            return m.group(0)
+        ci, at = hits[0]
+        srcs = col_spans[ci][at:at + len(sq)]
+        # non-space char ordinals (0-based) AFTER which a blank line falls
+        breaks = set()
+        for k in range(1, len(srcs)):
+            a, b = srcs[k - 1], srcs[k]
+            if a is b:
+                continue
+            gap = b["bbox"][1] - a["bbox"][3]
+            if gap > 0.6 * (a["bbox"][3] - a["bbox"][1]):
+                breaks.add(k - 1)
+        if not breaks:
+            return m.group(0)
+        # walk the TAGGED cell as (tag | entity | char) tokens, counting
+        # visible non-space chars; after ordinal k in `breaks`, a pending
+        # <br><br> is emitted before the NEXT visible char (tags pass
+        # through; the joining whitespace is swallowed)
+        toks = re.findall(r"<[^>]+>|&[a-zA-Z0-9#]{1,8};|.", c, re.S)
+        out, k, pending = [], -1, False
+        for t in toks:
+            if t.startswith("<"):
+                out.append(t)
+                continue
+            vis = _h.unescape(t)
+            if vis.isspace() or vis in _INVIS:
+                if not pending:
+                    out.append(t)
+                continue
+            if pending:
+                out.append("<br><br>")
+                pending = False
+            out.append(t)
+            k += 1
+            if k in breaks:
+                breaks.discard(k)
+                pending = True
+        return f"<{tg}{attrs}>{''.join(out)}</{tg}>"
+
+    return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", fix_cell, html, flags=re.S)
 
 
 def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
