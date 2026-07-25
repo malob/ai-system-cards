@@ -791,8 +791,9 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 wraps = []
                 # single ALNUM segments can carry style (the wrapped '5' of
                 # 'Mythos 5' lost its bold to a len>=2 guard); lone
-                # punctuation stays unstyled
-                styleable = len(k) >= 2 or k.isalnum()
+                # punctuation stays unstyled — UNLESS it is the whole cell
+                # (fable p.252 bolds two placeholder dashes, final sweep)
+                styleable = len(k) >= 2 or k.isalnum() or k == p2
                 if inst.get("bold") and bold_signifies and styleable:
                     wraps.append(("<b>", "</b>"))
                 if inst.get("italic") and styleable:
@@ -949,32 +950,56 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
 
     import html as _h
 
-    def fix_cell(m):
-        tg, attrs, c = m.groups()
-        if "<p>" in c:
-            # already paragraph-split by _split_cell_paragraphs — the <p>
-            # boundary IS the blank line; a <br><br> would double it
-            return m.group(0)
+    def cell_breaks(c):
+        """Break map for one cell's inner HTML: char ordinal -> break tag.
+        '<br><br>' at a full line-height gap (a blank line). '<br>' at a
+        bold→non-bold LINE boundary when either (a) the cell's leading
+        all-bold run ends there — a label construct, breaking like prose's
+        standalone bold labels ('§ …' headings, final-sweep p.140; sibling
+        rows must render uniformly, and a wrap exactly at a lead's end is
+        not observed in either card) — or (b) mid-cell, when the next
+        line's first word would have FIT (a deliberate return, not a
+        wrap)."""
         plain = _h.unescape(re.sub(r"<[^>]+>", "", c))
         sq = _squash(plain).translate(_INVIS_DEL)
         if len(sq) < 8:
-            return m.group(0)
+            return {}
         hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
                 if cf.count(sq) == 1]
         hits = [h for h in hits if h[1] >= 0]
         if len(hits) != 1 or any(cf.count(sq) > 1 for cf in col_folds):
-            return m.group(0)
+            return {}
         ci, at = hits[0]
         srcs = col_spans[ci][at:at + len(sq)]
-        # non-space char ordinals (0-based) AFTER which a blank line falls
-        breaks = set()
+        cell_x2 = max(s["bbox"][2] for s in srcs)
+        right = min([e for e in edges if e > cell_x2 + 2], default=bbox[2]) - 6
+        breaks = {}
         for k in range(1, len(srcs)):
             a, b = srcs[k - 1], srcs[k]
             if a is b:
                 continue
+            if b["bbox"][1] <= a["bbox"][3] - 2:
+                continue  # same line
+            line_h = a["bbox"][3] - a["bbox"][1]
             gap = b["bbox"][1] - a["bbox"][3]
-            if gap > 0.6 * (a["bbox"][3] - a["bbox"][1]):
-                breaks.add(k - 1)
+            if gap > 0.6 * line_h and "<p>" not in c:
+                # paragraph-split cells keep their <p> boundary as the blank
+                breaks[k - 1] = "<br><br>"
+                continue
+            if not (a.get("bold") and not b.get("bold")):
+                continue
+            is_lead = all(s.get("bold") for s in srcs[:k])
+            word = b["text"].strip().split(" ")[0]
+            w = ((b["bbox"][2] - b["bbox"][0]) * len(word)
+                 / max(1, len(b["text"].rstrip())))
+            fits = bool(word) and a["bbox"][2] + 0.25 * line_h + w <= right - 12
+            if is_lead or fits:
+                breaks[k - 1] = "<br>"
+        return breaks
+
+    def fix_cell(m):
+        tg, attrs, c = m.groups()
+        breaks = cell_breaks(c)
         if not breaks:
             return m.group(0)
         # walk the TAGGED cell as (tag | entity | char) tokens, counting
@@ -985,6 +1010,10 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         out, k, pending = [], -1, False
         for t in toks:
             if t.startswith("<"):
+                if pending and re.fullmatch(r"<br\s*/?>", t):
+                    # the cell already breaks here (a _restyle_cells tier
+                    # break) — don't double it
+                    pending = False
                 out.append(t)
                 continue
             vis = _h.unescape(t)
@@ -993,13 +1022,12 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
                     out.append(t)
                 continue
             if pending:
-                out.append("<br><br>")
+                out.append(pending)
                 pending = False
             out.append(t)
             k += 1
             if k in breaks:
-                breaks.discard(k)
-                pending = True
+                pending = breaks.pop(k)
         return f"<{tg}{attrs}>{''.join(out)}</{tg}>"
 
     return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", fix_cell, html, flags=re.S)
