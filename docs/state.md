@@ -134,11 +134,13 @@ New typed baselines: **opus T1 13**, **fable L1 31 / T1 44**.
 - **Final pre-push sweep (owner-requested belt-and-braces):** 2 inspectors,
   18 pages covering every scroll-round fix site on both cards
   (`findings-final-sweep.jsonl`): zero regressions, all fixes verified
-  faithful against crops. Two residual MINORS for owner triage, neither
-  batch-caused: opus p.140 col-1 bold §-headings join their quote with a
-  space where the PDF line-breaks (candidate bold-boundary <br> class);
-  fable p.252 PDF bolds two placeholder dashes, output renders plain
-  (pre-existing).
+  faithful against crops. Two residual MINORS surfaced, both then FIXED
+  (owner-approved): (a) a cell's leading all-bold run breaks like a label
+  — all 9 constitution '§ …' headings line-break uniformly on both cards
+  (the fit test alone split visually identical siblings); (b) a lone
+  punctuation segment can carry style when it is the whole cell — 10
+  crop-verified bold placeholder dashes restored in fable's capabilities
+  tables.
 - **md exports (owner-requested):** card.md gains a provenance header
   (title/vendor/date/links + converted-note) and a linked Contents; every
   top-level section is now a STANDALONE .md route (10 opus + 11 fable,
