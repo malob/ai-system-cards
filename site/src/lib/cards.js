@@ -102,10 +102,101 @@ export function siteMarkdown(vendor, slug, assetBase) {
   return md;
 }
 
-// Self-contained markdown for machine consumption (card.md): absolute asset
-// URLs, page markers preserved as comments.
-export function portableMarkdown(vendor, slug, absoluteAssetBase) {
-  return stitchedMarkdown(vendor, slug)
+// Top-level section groups: consecutive section files form one group until a
+// file that OPENS with a level-2 heading starts the next (the pipeline splits
+// big sections into 06a/06b… for its own reasons; only the first part carries
+// the '## N Title' heading, so deeper-opening files are continuations).
+export function sectionGroups(vendor, slug) {
+  const dir = join(CARDS_ROOT, vendor, slug, SECTIONS_DIR);
+  const groups = [];
+  for (const f of readdirSync(dir).filter((n) => n.endsWith('.md')).sort()) {
+    const text = readFileSync(join(dir, f), 'utf8').trim();
+    const head = text.match(/^#{2,6} .*$/m)?.[0] ?? '';
+    const range = text.match(/<!-- source: source\.pdf pages (\d+)-(\d+) -->/);
+    if (head.startsWith('## ') || !groups.length) {
+      const title = (head || f).replace(/^#+ /, '').trim();
+      groups.push({
+        title,
+        slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
+        parts: [text],
+        pages: range ? [Number(range[1]), Number(range[2])] : null,
+      });
+    } else {
+      const g = groups[groups.length - 1];
+      g.parts.push(text);
+      if (range && g.pages) g.pages[1] = Number(range[2]);
+    }
+  }
+  return groups.map(({ parts, ...g }) => ({ ...g, md: parts.join('\n\n') }));
+}
+
+function portableBody(md, absoluteAssetBase) {
+  return md
     .replace(/<!--\s*source: [^>]*-->\n?/g, '')
-    .replace(/\]\(assets\/figures\//g, `](${absoluteAssetBase}/figures/`);
+    .replace(/\]\(assets\/figures\//g, `](${absoluteAssetBase}/figures/`)
+    // the document's own leading H1 + date line, when a card carries one —
+    // the export header below supplies both
+    .replace(/^(\s*(<!--[^>]*-->\s*)*)# .*\n+(?:\*?[A-Z][a-z]+ \d{1,2}, \d{4}\*?\n+)?/, '$1')
+    .trim();
+}
+
+// Self-describing header so a fetched .md identifies itself (owner-requested:
+// exports previously opened on a bare page marker).
+function exportHeader(meta, links, note) {
+  return [
+    `# ${meta.title}`,
+    '',
+    `**${meta.vendor}** · ${meta.release_date} · ${links.join(' · ')}`,
+    '',
+    `> ${note} Mechanically converted from the source PDF; page markers are`,
+    '> preserved as `<!-- p.N -->` comments. There may be occasional',
+    '> transcription artifacts.',
+    '',
+  ];
+}
+
+// Self-contained markdown for machine consumption (card.md): provenance
+// header, per-section contents (each entry a fetchable .md — agents can pull
+// just the section they need), absolute asset URLs, page markers preserved.
+export function portableMarkdown(vendor, slug, absoluteAssetBase, urls = {}) {
+  const { meta } = listCards().find((c) => c.vendor === vendor && c.slug === slug);
+  const cardUrl = urls.cardUrl ?? '';
+  const links = [
+    `[Original PDF](${absoluteAssetBase}/source.pdf)`,
+    ...(urls.htmlUrl ? [`[Web version](${urls.htmlUrl})`] : []),
+  ];
+  const toc = sectionGroups(vendor, slug).map(
+    (g) =>
+      `- [${g.title}](${cardUrl}${g.slug}.md)` +
+      (g.pages ? ` — pp. ${g.pages[0]}–${g.pages[1]}` : ''),
+  );
+  return [
+    ...exportHeader(meta, links, 'Complete system card.'),
+    '## Contents (each section is a standalone markdown file)',
+    '',
+    ...toc,
+    '',
+    '---',
+    '',
+    portableBody(stitchedMarkdown(vendor, slug), absoluteAssetBase),
+    '',
+  ].join('\n');
+}
+
+// One top-level section as a standalone, self-identifying markdown file.
+export function portableSectionMarkdown(vendor, slug, group, absoluteAssetBase, urls = {}) {
+  const { meta } = listCards().find((c) => c.vendor === vendor && c.slug === slug);
+  const links = [
+    ...(urls.cardUrl ? [`[Full card (markdown)](${urls.cardUrl}card.md)`] : []),
+    `[Original PDF](${absoluteAssetBase}/source.pdf)`,
+    ...(urls.htmlUrl ? [`[Web version](${urls.htmlUrl})`] : []),
+  ];
+  const note =
+    `Section “${group.title}”` +
+    (group.pages ? ` (pp. ${group.pages[0]}–${group.pages[1]} of the PDF).` : '.');
+  return [
+    ...exportHeader(meta, links, note),
+    portableBody(group.md, absoluteAssetBase),
+    '',
+  ].join('\n');
 }

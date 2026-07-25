@@ -9,7 +9,10 @@ export const GET: APIRoute = ({ props, site }) => {
   const { vendor, slug } = props as { vendor: string; slug: string };
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const origin = site ? new URL(site).origin : '';
-  const md = portableMarkdown(vendor, slug, `${origin}${base}/cards/${vendor}/${slug}`);
+  const md = portableMarkdown(vendor, slug, `${origin}${base}/cards/${vendor}/${slug}`, {
+    cardUrl: `${origin}${base}/${vendor}/${slug}/`,
+    htmlUrl: `${origin}${base}/${vendor}/${slug}/`,
+  });
   return new Response(md, {
     headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
   });
