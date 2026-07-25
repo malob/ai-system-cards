@@ -72,6 +72,8 @@ def heading_index(blocks: list, head_key: str):
 def manifest_chips() -> dict:
     mtext = (CARD / "style-manifest.yaml").read_text()
     block = re.search(r"^chips:\n((?:  .+\n)+)", mtext, re.M)
+    if not block:   # a card with no smart-chip vocabulary (e.g. claude-opus-5)
+        return {}
     return {m.group(2): m.group(1).strip()
             for m in re.finditer(r"^  (.+?):\s+\"(#[0-9a-f]{6})\"", block.group(1), re.M)}
 

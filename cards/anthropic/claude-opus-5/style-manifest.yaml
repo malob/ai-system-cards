@@ -1,9 +1,62 @@
-# Per-card style manifest (D16): maps THIS card's visual signals to semantic
-# roles. Seeded from the 2026-07-25 signal census; roles pending confirmation.
-# STUB — being authored; document block is authoritative, role maps landing next.
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded from the 2026-07-25 signal census (pymupdf span/fill
+# probe over all 193 pages) + page-render inspection of every ambiguous signal.
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+#
+# NOTE vs claude-fable-5: several hexes carry DIFFERENT roles in this document
+# — #141413 (there: dark chart panel) is the table header fill; #dedcd1
+# (there: figure furniture) and #e2decf (there: turn-user) are table cell
+# tints; #4d4c48 (there: figure legend) is the table sub-header fill. The
+# assembler reads roles from this file (D16), so the reassignment is config,
+# not code.
 
 card: anthropic/claude-opus-5
-status: census done, roles being authored
+status: >-
+  roles seeded mechanically 2026-07-25; verify-at-conversion notes inline;
+  closure rule applies to anything not listed
+
+text_colors:
+  "#000000": {role: body}
+  "#1155cc": {role: link}                      # 194 spans / 80 pages
+  "#666666": {role: heading}   # 110 spans / 93 pages — gray section headings
+  "#188038": {role: code-text}                 # green code spans, 17 pages
+  "#1264a3": {role: link}                      # bare-URL footnote links (claude.ai)
+  "#0b57d0": {role: link, note: verify at conversion}   # 'open-source' p.61
+  "#467886": {role: link, note: verify at conversion}   # 'Our evaluations' p.104
+  "#38761d": {role: code-text}                 # 'aiohttp' RobotoMono p.150
+  # near-black paste artifacts in the source doc — render as body, keep note
+  "#121212": {role: body, note: paste-artifact}   # exec summary pp.2-4, 75-77
+  "#1d1c1d": {role: body, note: paste-artifact}
+  "#1f1f1e": {role: body, note: paste-artifact}   # Georgia figure-quote p.130
+  "#24292f": {role: body, note: paste-artifact}   # '71.2' table cell p.123
+  "#141413": {role: body, note: paste-artifact}   # prose pp.137-138
+  "#ffffff": {role: table-header-text}         # light text on dark header fills
+  "#faf9f5": {role: table-header-text}         # sub-header row text (pp.52-53, 148)
+  "#747775": {role: table-empty-cell}          # 'None' placeholder, pp.191-193
+
+fills:
+  "#d9ead3": {role: placeholder, forms: [inline-pill]}  # […], [tool use] pills
+  "#f3f3f3": {role: transcript-container}   # p.93 [System] box; in-table cells
+                                            # (p.52 'N/A') are consumed by docling
+  "#faf9f5": {role: turn-assistant}   # [Assistant] boxes pp.80-93, 143; note:
+                                      # one thin inline strip p.137 — verify
+  "#f0eee6": {role: example-box}      # mono output sub-boxes nested in turns
+  "#f1f3f4": {role: code-block-bg}    # appendix code boxes pp.191-193
+  "#141413": {role: table-header-fill, exclude: true}   # dark header rows, 20 pages
+  "#dedcd1": {role: table-cell-bg, exclude: true}       # row-label tint, 19 pages
+  "#e2decf": {role: table-cell-bg, exclude: true}       # row-label tint pp.148-149
+  "#4d4c48": {role: table-subheader-fill, exclude: true} # 'Opus 5 / Opus 4.8 /
+                                                         # Fable 5 / GPT 5.6 Sol' row
+  "#fefdfb": {role: table-cell-bg, exclude: true}       # p.131 cell striping
+  "#fdfdfc": {role: page-furniture, exclude: true}      # 1 non-semantic rect p.156
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# No smart-chip vocabulary in this document: the census found zero chip-pill
+# fills (the #d9ead3 pills are D15 placeholders, not chips). meta.yaml chips: {}
 
 document:
   toc_pages: [5, 6, 7, 8, 9]     # site generates its own TOC; excluded

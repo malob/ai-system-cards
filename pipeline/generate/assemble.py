@@ -141,6 +141,54 @@ def assign_list_levels(blocks: list[dict]) -> None:
                 blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
 
 
+def _turn_box(line, page):
+    """bbox of the INNERMOST turn-fill bubble containing the line, or None.
+    Identity of the bubble — not just its role — separates adjacent
+    same-role bubbles into distinct turns."""
+    best = None
+    for b in page.get("boxes", []):
+        if b["color"] in TURN_FILLS and _rect_contains(b["bbox"], line["bbox"]):
+            area = (b["bbox"][2] - b["bbox"][0]) * (b["bbox"][3] - b["bbox"][1])
+            if best is None or area < best[0]:
+                best = (area, tuple(b["bbox"]))
+    return best[1] if best else None
+
+
+def _container_box(line, page):
+    """bbox of the OUTERMOST turn-or-transcript box containing the line, or
+    None. A displaced code box may only inherit a label from a turn in the
+    SAME container (fable-5 p.198) — inheriting across containers stamped a
+    previous transcript's [Assistant] on an unrelated box (opus-5 p.85)."""
+    best = None
+    for b in page.get("boxes", []):
+        if b["color"] in _TURN_OR_TRANSCRIPT and _rect_contains(b["bbox"], line["bbox"], slack=4.0):
+            area = (b["bbox"][2] - b["bbox"][0]) * (b["bbox"][3] - b["bbox"][1])
+            if best is None or area > best[0]:
+                best = (area, tuple(b["bbox"]))
+    return best[1] if best else None
+
+
+def _label_lead(line) -> bool:
+    """Does the line START with something that reads as a turn label?
+    Bracket labels ('[Assistant]:', '[User, turn 425]') or a short bold
+    run-in ending at a colon ('Assistant, turn 146:'). A merely-bold body
+    line is not a label."""
+    if not (line["segs"] and line["segs"][0][2]["bold"]):
+        return False
+    txt = line["text"].lstrip()
+    if re.match(r"\[[^\]]{1,30}\]:?", txt):
+        return True
+    cap = 0   # end of the leading bold run, char offset into line text
+    for a, b, s in line["segs"]:
+        if s["bold"] and a <= cap + 1:
+            cap = b
+        elif a > cap:
+            break
+    colon = txt.find(":")
+    off = len(line["text"]) - len(txt)
+    return 0 <= colon <= 40 and cap <= off + colon + 2
+
+
 def _box_role(line, page):
     """Most-specific containing box wins: a turn bubble nested inside a
     transcript container must classify as the turn, not the container."""
@@ -351,10 +399,16 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             marker_x0s.add(round(line["bbox"][0]))
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
-            # a new turn starts when the role changes or a bold label leads
+            # a new turn starts when the role changes, the line sits in a
+            # DIFFERENT turn bubble (adjacent same-fill bubbles, claude-opus-5
+            # p.80), or a label lead opens a new message. A merely-bold line is
+            # NOT a label — opus-5 turns carry whole bold paragraphs, and the
+            # old any-bold trigger shredded them into label-only turns (p.85).
+            line_box = _turn_box(line, page) if kind == "turn" else None
             new_turn = (kind == "turn" and cur and cur.get("type") == "turn"
                         and (cur.get("role") != role
-                             or (line["segs"] and line["segs"][0][2]["bold"])))
+                             or cur.get("box") != line_box
+                             or _label_lead(line)))
             if cur and cur["type"] == kind and not new_turn:
                 # paragraph breaks INSIDE turns/boxes (PDF turn 229 has two
                 # paragraphs): record split indices for the serializer
@@ -365,9 +419,11 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 cur["lines"].append(line)
             else:
                 flush()
-                cur = {"type": kind, "lines": [line], "page": pno}
+                cur = {"type": kind, "lines": [line], "page": pno,
+                       "container": _container_box(line, page)}
                 if kind == "turn":
                     cur["role"] = role
+                    cur["box"] = line_box
                 if kind in ("code", "example"):
                     # a mono output box nested inside a turn/transcript box is
                     # the assistant's output WITHIN the transcript — flag it so
@@ -491,7 +547,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         if blk["type"] == "turn":
             last_turn = blk
         elif (blk["type"] == "code" and blk.get("in_transcript")
-              and last_turn and last_turn.get("role") and last_turn.get("lines")):
+              and last_turn and last_turn.get("role") and last_turn.get("lines")
+              and blk.get("container") == last_turn.get("container")):
             blk["type"] = "turn"
             blk["role"] = last_turn["role"]
             blk["code_lines"] = blk["lines"]

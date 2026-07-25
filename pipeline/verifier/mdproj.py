@@ -101,6 +101,11 @@ def _table_to_text(m: re.Match, sec: "Section", page: int) -> str:
 
 
 def _strip_sentinels(s: str) -> str:
+    # also restore escaped-literal sentinels (\x03/\x04/\x05, set in
+    # _clean_segment): collectors run BEFORE the seg-level restoration, so a
+    # bold like '**\<answer>B\</answer>**' (opus-5 p.85) was recorded with
+    # raw \x05 bytes and could never match its oracle run
+    s = s.replace("\x03", "*").replace("\x04", "`").replace("\x05", "<")
     return RE_SENTINEL.sub(" ", s).strip()
 
 
@@ -159,7 +164,12 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         label = RE_TURN_LABEL.search(m.group(2) or "")
         if label:
             sec.turn_labels.append((_strip_sentinels(label.group(1)), pg(m)))
-            return f"{label.group(1)}:"
+            # re-emit BOLD (the PDF sets labels bold): the later bold collector
+            # then records the label at its document position, ADJACENT to a
+            # bold body lead — S1's substring matcher needs that adjacency for
+            # runs that span the label/body boundary ('[Assistant]: Looking…',
+            # opus-5 p.85). Tokens are unchanged (RE_BOLD strips the markers).
+            return f"**{label.group(1)}:**"
         return " "
     seg = RE_DIRECTIVE.sub(directive, seg)
 
