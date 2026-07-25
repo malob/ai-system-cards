@@ -140,6 +140,22 @@ function portableBody(md, absoluteAssetBase) {
     .trim();
 }
 
+// word-wrap for raw-md readability (blockquote soft-wraps don't affect
+// rendering; ragged template wrapping did affect reading the file raw)
+function wrapQuote(text, width = 78) {
+  const out = [];
+  let line = '>';
+  for (const w of text.split(/\s+/)) {
+    if (line.length + w.length + 1 > width && line !== '>') {
+      out.push(line);
+      line = '>';
+    }
+    line += ` ${w}`;
+  }
+  if (line !== '>') out.push(line);
+  return out;
+}
+
 // Self-describing header so a fetched .md identifies itself (owner-requested:
 // exports previously opened on a bare page marker).
 function exportHeader(meta, links, note) {
@@ -148,9 +164,12 @@ function exportHeader(meta, links, note) {
     '',
     `**${meta.vendor}** · ${meta.release_date} · ${links.join(' · ')}`,
     '',
-    `> ${note} Mechanically converted from the source PDF; page markers are`,
-    '> preserved as `<!-- p.N -->` comments. There may be occasional',
-    '> transcription artifacts.',
+    ...wrapQuote(
+      `${note} Mechanically converted from the archived PDF (the exact` +
+      ' revision transcribed — vendors sometimes revise in place); page' +
+      ' markers are preserved as `<!-- p.N -->` comments. There may be' +
+      ' occasional transcription artifacts.',
+    ),
     '',
   ];
 }
@@ -161,8 +180,12 @@ function exportHeader(meta, links, note) {
 export function portableMarkdown(vendor, slug, absoluteAssetBase, urls = {}) {
   const { meta } = listCards().find((c) => c.vendor === vendor && c.slug === slug);
   const cardUrl = urls.cardUrl ?? '';
+  // Original = the vendor's authoritative URL (matches the HTML masthead);
+  // Archived = the exact bytes this conversion is faithful to (vendors
+  // revise PDFs in place — fable's June 11 revision, D37)
   const links = [
-    `[Original PDF](${absoluteAssetBase}/source.pdf)`,
+    ...(meta.source_url ? [`[Original PDF](${meta.source_url})`] : []),
+    `[Archived PDF](${absoluteAssetBase}/source.pdf)`,
     ...(urls.htmlUrl ? [`[Web version](${urls.htmlUrl})`] : []),
   ];
   const toc = sectionGroups(vendor, slug).map(
@@ -188,7 +211,8 @@ export function portableSectionMarkdown(vendor, slug, group, absoluteAssetBase, 
   const { meta } = listCards().find((c) => c.vendor === vendor && c.slug === slug);
   const links = [
     ...(urls.cardUrl ? [`[Full card (markdown)](${urls.cardUrl}card.md)`] : []),
-    `[Original PDF](${absoluteAssetBase}/source.pdf)`,
+    ...(meta.source_url ? [`[Original PDF](${meta.source_url})`] : []),
+    `[Archived PDF](${absoluteAssetBase}/source.pdf)`,
     ...(urls.htmlUrl ? [`[Web version](${urls.htmlUrl})`] : []),
   ];
   const note =
