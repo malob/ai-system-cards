@@ -672,6 +672,13 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
         return False
 
     spans_xy = _row_spans_xy(oracle_page, bbox)
+    # column left edges (x0 clusters with >=3 members), for the stacked-line
+    # reflow test: a cell's usable width runs to the NEXT column's edge
+    _cl: dict[float, int] = {}
+    for s in spans:
+        k2 = next((k for k in _cl if abs(k - s["bbox"][0]) <= 2), s["bbox"][0])
+        _cl[k2] = _cl.get(k2, 0) + 1
+    col_edges = sorted(k for k, n in _cl.items() if n >= 3)
     out = html
     seen_rows: dict[str, int] = {}   # key -> prior HTML rows containing it
     for r in re.findall(r"<tr>.*?</tr>", html, re.S):
@@ -770,6 +777,7 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             raw_idx = [j for j, ch in enumerate(c_dec) if not ch.isspace()]
             pieces, cur, sq_pos = [], 0, 0
             prev_inst = None
+            cell_insts, brk_bounds = [], []
             for k in segs:
                 if k not in pool:   # baked-in fnref digit: pass through
                     st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
@@ -812,11 +820,44 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                         tail = re.sub(r"<[^>]+>", "", pieces[-1])
                         head = re.sub(r"<[^>]+>", "", seg_text)[:1]
                         wrap_join = bool(re.search(r"(\d\.|-)$", tail)) and head.isdigit()
-                        gap = "" if wrap_join else (gap or " ")
+                        if wrap_join:
+                            gap = ""
+                        else:
+                            gap = gap or " "
+                            # INTENTIONAL stack vs width wrap (D42, p.31
+                            # '4x = 1 h eq.' | '200x = 8 h eq.'): only a
+                            # SENTENCE-TERMINAL line qualifies (an unfenced
+                            # reflow test fired on 76 sites across both cards
+                            # — header wraps, value/± stacks, mid-sentence
+                            # prose); if the next line's first word would
+                            # have FIT with clear slack, the break was a hard
+                            # return — recorded, patched to <br> once the
+                            # cell's full extent is known
+                            if re.search(r"[.!?]$", tail.rstrip()):
+                                brk_bounds.append((len(pieces), prev_inst, inst))
                 pieces.append(gap + seg_text)
+                cell_insts.append(inst)
                 prev_inst = inst
                 cur = en
             pieces.append(c_dec[cur:])
+            # reflow test for recorded line-break boundaries: available width
+            # runs to the cell's COLUMN boundary (next column edge, or table
+            # right edge); the first word's width is scaled from its span.
+            # Space width ~ 0.25em.
+            if brk_bounds and cell_insts:
+                cell_x2 = max(i["bbox"][2] for i in cell_insts)
+                right = min([e for e in col_edges if e > cell_x2 + 2],
+                            default=bbox[2]) - 6
+                for pi, pv, nx in brk_bounds:
+                    word = nx["text"].strip().split(" ")[0]
+                    if not word or not nx["text"].strip():
+                        continue
+                    w = (nx["bbox"][2] - nx["bbox"][0]) * len(word) / max(1, len(nx["text"].rstrip()))
+                    em = (pv["bbox"][3] - pv["bbox"][1])
+                    # 12pt slack margin: estimated widths are noisy; a
+                    # marginal fit is not evidence of a hard return
+                    if pv["bbox"][2] + 0.25 * em + w <= right - 12:
+                        pieces[pi] = "<br>" + pieces[pi].lstrip(" ")
             rebuilt_cell = "".join(pieces)
             # hyphen-wrap join artifact: a compound wrapped after its hyphen
             # ('introspection- based' -> 'introspection-based'). This card has
