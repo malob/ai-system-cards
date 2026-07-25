@@ -953,6 +953,22 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
         else:
             merged_ph.append(m)
     marks = [m for m in marks if m[0] != "placeholder"] + merged_ph
+    # inline cream highlights wrap the same way (p.138 'imagine how | a
+    # thoughtful senior…', D42): a highlight continuing on the next PDF line
+    # arrives as a second strip — merge whitespace-gap, vertically-stacked
+    # hl marks into one span. Same stacking guard as placeholders; code
+    # marks never coalesce (the p.193 lesson).
+    hls = sorted([m for m in marks if m[0] == "highlight"],
+                 key=lambda m: (m[1], m[2]))
+    merged_hl = []
+    for m in hls:
+        if (merged_hl and not text[merged_hl[-1][2]:m[1]].strip()
+                and _stacked(merged_hl[-1][3], m[3])):
+            p = merged_hl[-1]
+            merged_hl[-1] = ("highlight", p[1], max(p[2], m[2]), p[3])
+        else:
+            merged_hl.append(m)
+    marks = [m for m in marks if m[0] != "highlight"] + merged_hl
     # a placeholder pill that sits in a mono span got BOTH a code and a ph
     # mark; in a normal turn the code backticks render literally inside the
     # green pill ('`[…]`', p.118 user turn). The pill styling supersedes —
