@@ -783,6 +783,10 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 styleable = len(k) >= 2 or k.isalnum()
                 if inst.get("bold") and bold_signifies and styleable:
                     wraps.append(("<b>", "</b>"))
+                if inst.get("italic") and styleable:
+                    # bold-italic sub-labels ('(Helpful-only)', pp.71/148)
+                    # keep their slant (D42)
+                    wraps.append(("<i>", "</i>"))
                 if underlined(inst) and styleable:
                     wraps.append(("<u>", "</u>"))
                 st, en = raw_idx[sq_pos], raw_idx[sq_pos + len(k) - 1] + 1
@@ -819,6 +823,7 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             rebuilt_cell = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1-", rebuilt_cell)
             # adjacent same-style runs read as ONE run ('<b>Mythos</b> <b>5</b>')
             rebuilt_cell = re.sub(r"</b>(\s*)<b>", r"\1", rebuilt_cell)
+            rebuilt_cell = re.sub(r"</i>(\s*)<i>", r"\1", rebuilt_cell)
             rebuilt_cell = re.sub(r"</u>(\s*)<u>", r"\1", rebuilt_cell)
             if rebuilt_cell != c:
                 cells[i] = rebuilt_cell

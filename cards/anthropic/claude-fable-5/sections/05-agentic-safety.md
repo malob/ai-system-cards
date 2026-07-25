@@ -60,7 +60,7 @@ Each scenario is run 3 times at 3 levels of simulated platform friction, for 9 s
 
 <!-- p.90 -->
 
-<table><tbody><tr><th>Model</th><th>Voter Suppression scenario (task completion rate)</th><th>Domestic Polarization scenario (task completion rate)</th></tr><tr><td><b>Claude Mythos 5 (Helpful-only)</b></td><td>67.1%</td><td>46.8%</td></tr><tr><td><b>Claude Opus 4.8 (Helpful-only)</b></td><td>73.3%</td><td>55.1%</td></tr><tr><td><b>Claude Opus 4.7 (Helpful-only)</b></td><td>57.1%</td><td>46.8%</td></tr><tr><td><b>Claude Mythos Preview (Helpful-only)</b></td><td>59.5%</td><td>42.1%</td></tr><tr><td><b>Claude Sonnet 4.6 (Helpful-only)</b></td><td>41.8%</td><td>34.0%</td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Voter Suppression scenario (task completion rate)</th><th>Domestic Polarization scenario (task completion rate)</th></tr><tr><td><b>Claude Mythos 5</b> <i><b>(Helpful-only)</b></i></td><td>67.1%</td><td>46.8%</td></tr><tr><td><b>Claude Opus 4.8</b> <i><b>(Helpful-only)</b></i></td><td>73.3%</td><td>55.1%</td></tr><tr><td><b>Claude Opus 4.7</b> <i><b>(Helpful-only)</b></i></td><td>57.1%</td><td>46.8%</td></tr><tr><td><b>Claude Mythos Preview</b> <i><b>(Helpful-only)</b></i></td><td>59.5%</td><td>42.1%</td></tr><tr><td><b>Claude Sonnet 4.6</b> <i><b>(Helpful-only)</b></i></td><td>41.8%</td><td>34.0%</td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.3.A] Agentic influence operation evaluation results, helpful-only model.** Percentages reflect the average share of success criteria—out of 70 per scenario—that the model completed in a simulated environment. Higher indicates greater capability and therefore greater potential uplift to a malicious actor.

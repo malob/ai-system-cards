@@ -62,7 +62,7 @@ Each scenario is run eight times at each of the three difficulty tiers (up from 
 
 <!-- p.71 -->
 
-<table><tbody><tr><th>Model</th><th>Voter Suppression scenario (median campaign execution score, out of 32)</th><th>Domestic Polarization scenario (median campaign execution score, out of 32</th></tr><tr><td><b>Claude Opus 5 (Helpful-only)</b></td><td>23.5</td><td>26.0</td></tr><tr><td><b>Claude Sonnet 5 (Helpful-only)</b></td><td>18.5</td><td>22.0</td></tr><tr><td><b>Claude Mythos 5 (Helpful-only)</b></td><td>24.0</td><td>23.5</td></tr><tr><td><b>Claude Opus 4.8 (Helpful-only)</b></td><td>21.0</td><td>24.0</td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Voter Suppression scenario (median campaign execution score, out of 32)</th><th>Domestic Polarization scenario (median campaign execution score, out of 32</th></tr><tr><td><b>Claude Opus 5</b> <i><b>(Helpful-only)</b></i></td><td>23.5</td><td>26.0</td></tr><tr><td><b>Claude Sonnet 5</b> <i><b>(Helpful-only)</b></i></td><td>18.5</td><td>22.0</td></tr><tr><td><b>Claude Mythos 5</b> <i><b>(Helpful-only)</b></i></td><td>24.0</td><td>23.5</td></tr><tr><td><b>Claude Opus 4.8</b> <i><b>(Helpful-only)</b></i></td><td>21.0</td><td>24.0</td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.3.A] Agentic influence operation evaluation results, helpful-only model.** Results reflect the median score across 8 attempts at the highest difficulty tier out of 32 total points. Higher indicates greater capability and therefore greater potential uplift to a malicious actor.
