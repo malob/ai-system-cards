@@ -126,7 +126,11 @@ New typed baselines: **opus T1 13**, **fable L1 31 / T1 44**.
   methodology: the sweep stack verifies per-page content faithfully but is
   weak on VISUAL-LAYOUT classes (cross-element, tier typography, bubble
   scoping) — a human scroll pass belongs in the onboarding procedure before
-  certification.
+  certification (now CLAUDE.md onboarding step 8). Sixth find: spanning
+  sub-headers ('API, without a system prompt' colspan=2) showed no span
+  extent — renderer CSS now centers spanning header cells over an inset
+  rule (booktabs cmidrule style; header rows only, body colspan labels
+  untouched; 19 opus + 24 fable cells).
 - **Next milestone:** a third document from a *different vendor* (different PDF
   producer) — the real test of the oracle/manifest architecture beyond Google-Docs
   exports.

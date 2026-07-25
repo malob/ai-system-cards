@@ -711,6 +711,18 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
   background: var(--paper-sunken);
   border-bottom: none;
 }
+/* a SPANNING header cell shows its extent (owner-flagged: 'API, without a
+   system prompt' over two columns read as belonging to one): centered label
+   + an inset rule under the span, booktabs \cmidrule(lr) style. Scoped to
+   header rows, so body label cells with colspan (GraphWalks) are untouched */
+.article table tr:not(:has(td:not(:empty))) th[colspan],
+.article thead tr th[colspan] {
+  text-align: center;
+  background-image: linear-gradient(var(--ink-faint), var(--ink-faint));
+  background-size: calc(100% - 1.8rem) 1px;
+  background-position: bottom 0.35rem center;
+  background-repeat: no-repeat;
+}
 /* one strong rule between the header block and the body — placed on the FIRST
    data row's top (a data row immediately after a header row). Doing it this way
    avoids nested :has() — `:has(+ tr:has(…))` is invalid and silently dropped. */
