@@ -6,8 +6,9 @@ freely before any stopping point — history lives in git and decisions.md, not 
 **Last updated:** 2026-07-25 — **the second card is converted.** Anthropic released
 the **Claude Opus 5 system card** (2026-07-24, 193pp) and it went through the pipeline
 in one session, answering D35's question for the within-Anthropic case: **one shared
-pipeline serves, with per-card config** (D38–D40). Everything is committed on `main`,
-**not pushed** (D13 — owner pushes).
+pipeline serves, with per-card config** (D38–D40). **PUSHED + DEPLOYED 2026-07-25
+~14:10 on owner authorization (D13)** — run 30175128325 green; live site verified
+cache-busted (homepage, 187 pagemarks, card.md/section md/llms.txt all 200).
 
 ## What happened (2026-07-25, one session)
 
@@ -165,10 +166,8 @@ other card as a byte-identity regression net.
 
 ## Status
 
-- **fable-5: live** at malob.github.io/ai-system-cards (June 11 revision, D37),
-  with UNPUSHED D41/D42 fidelity fixes in the worktree (glyphs, italics, br
-  stack, chrome, blank line). Gate: 0 majors / L1 31 / T1 44.
-- **opus-5: converted, converged, committed, unpushed.** Gate: 0 majors / T1 13
-  typed minors; seams 0; sweep rounds 1+2 + D42 batch spot re-sweep all clean;
-  visual pass done; site builds clean. Awaiting owner push.
+- **fable-5: live** (June 11 revision + the 2026-07-25 fidelity/renderer
+  improvements). Gate: 0 majors / L1 31 / T1 44.
+- **opus-5: LIVE** as of 2026-07-25. Gate: 0 majors / T1 13 typed minors;
+  seams 0; three sweep rounds + owner scroll review, all converged.
 - Verifier calibration corpus (D5) untouched: refs `f60899a`/`fb483fb`.
