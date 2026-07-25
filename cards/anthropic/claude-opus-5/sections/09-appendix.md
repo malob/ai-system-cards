@@ -112,6 +112,6 @@ The following “pass to pass” tests fail nondeterministically on our infrastr
 None
 ```
 
-For `chartjs/Chart.js, processing/p5.js`, and `markedjs/marked`, the harness rewrites the JavaScript test-framework configuration (Karma, Grunt, Jasmine respectively) to emit machine-parseable output rather than the default formatted reporter. This changes only the output format, not which tests run or their pass/fail criteria.
+For `chartjs/Chart.js`, `processing/p5.js`, and `markedjs/marked`, the harness rewrites the JavaScript test-framework configuration (Karma, Grunt, Jasmine respectively) to emit machine-parseable output rather than the default formatted reporter. This changes only the output format, not which tests run or their pass/fail criteria.
 
 All images referenced in issue text are fetched once, validated, cached, and inlined into the problem statement as base64 data URIs.

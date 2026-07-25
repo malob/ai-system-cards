@@ -76,7 +76,14 @@ function remarkLetterLists() {
       if (node.ordered) return;
       const leads = node.children.map((li) => {
         const para = li.children?.[0];
-        const text = para?.children?.[0];
+        const kids = para?.children ?? [];
+        // an inline page marker (`- <!-- p.44 -->a. On …`) parses as a
+        // leading html node — skip comments so it can't defeat the letter
+        // detection (opus-5 p.44 rendered `• a.` where the PDF has a plain
+        // lettered list)
+        let k = 0;
+        while (k < kids.length && kids[k].type === 'html' && /^<!--[\s\S]*?-->\s*$/.test(kids[k].value ?? '')) k++;
+        const text = kids[k];
         if (!text || text.type !== 'text') return null;
         const m = /^([a-z])([.)])\s+/.exec(text.value);
         return m ? { text, letter: m[1], len: m[0].length } : null;

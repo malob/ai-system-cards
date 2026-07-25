@@ -1,8 +1,8 @@
 {
  "split-item": {
   "invariant": "ST2",
-  "caught": 3,
-  "tried": 8,
+  "caught": 4,
+  "tried": 10,
   "details": [
    {
     "file": "06c-targeted-evaluations-1.md",
@@ -43,24 +43,24 @@
     "file": "06b-alignment-audit-external.md",
     "site": "- **Misaligned behavior**: Catch-all for",
     "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "- Rare instances of attempts to circumve",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "- **Brilliant friend:** Does the model r",
+    "caught": false
    }
   ]
  },
  "item-to-paragraph": {
   "invariant": "ST1",
-  "caught": 7,
-  "tried": 8,
+  "caught": 8,
+  "tried": 10,
   "details": [
-   {
-    "file": "06a-alignment-intro-behavioral.md",
-    "site": "laziness and \u201ccontext anxiety\u201d, includin",
-    "caught": true
-   },
-   {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "**Corrigibility:** Does the model act as",
-    "caught": true
-   },
    {
     "file": "06g-reliability-2.md",
     "site": "**Considering whether to refuse, but dec",
@@ -90,39 +90,34 @@
     "file": "06a-alignment-intro-behavioral.md",
     "site": "**On measures of** [**misaligned actions",
     "caught": true
+   },
+   {
+    "file": "05-agentic-safety.md",
+    "site": "Surveillance and unauthorized data colle",
+    "caught": false
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "Cases where the model stops working on a",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "**On measures of** [**misaligned actions",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "**Mythos 5\u2019s thinking text is** [**somew",
+    "caught": true
    }
   ]
  },
  "split-heading": {
   "invariant": "ST3",
-  "caught": 7,
-  "tried": 8,
+  "caught": 10,
+  "tried": 10,
   "details": [
-   {
-    "file": "06a-alignment-intro-behavioral.md",
-    "site": "6.1.3 Claude\u2019s review of this assessment",
-    "caught": true
-   },
-   {
-    "file": "06f-reliability-1.md",
-    "site": "6.5 Reliability of this assessment",
-    "caught": true
-   },
-   {
-    "file": "09-appendix.md",
-    "site": "9.1 Per-question automated welfare inter",
-    "caught": false
-   },
-   {
-    "file": "06a-alignment-intro-behavioral.md",
-    "site": "6.2.1.2 Automated offline monitoring",
-    "caught": true
-   },
-   {
-    "file": "06b-alignment-audit-external.md",
-    "site": "6.2.4 External testing from the UK AI Se",
-    "caught": true
-   },
    {
     "file": "06e-whitebox-analyses.md",
     "site": "6.4 White-box analyses of model internal",
@@ -137,27 +132,67 @@
     "file": "06a-alignment-intro-behavioral.md",
     "site": "6.1.2 Key findings on safety and alignme",
     "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "6.3.4 Refusal to assist with AI safety R",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "6.5.1.1 Measuring evaluation awareness",
+    "caught": true
+   },
+   {
+    "file": "02a-rsp-process-chembio.md",
+    "site": "2.2.5.1 How these observations affect or",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "6.5 Reliability of this assessment",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "6.4.1.4 Internal motivations for stoppin",
+    "caught": true
+   },
+   {
+    "file": "06e-whitebox-analyses.md",
+    "site": "6.4.2.2 Assessing the impact of grader a",
+    "caught": true
+   },
+   {
+    "file": "06f-reliability-1.md",
+    "site": "6.5 Reliability of this assessment",
+    "caught": true
    }
   ]
  },
  "drop-link": {
   "invariant": "L1",
-  "caught": 8,
-  "tried": 8,
+  "caught": 9,
+  "tried": 10,
   "details": [
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "https://www.anthropic.com/research/emotion-concepts-function",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "https://trust.anthropic.com/resources?s=eorilovp4wxk38nxbi7k3&name=anthropic-frontier-compliance-framework#6a1e26939f3e8a842c770cab",
+    "caught": true
+   },
    {
     "file": "06a-alignment-intro-behavioral.md",
     "site": "https://www.anthropic.com/constitution",
     "caught": true
    },
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "https://arxiv.org/abs/2511.13029",
-    "caught": true
-   },
-   {
-    "file": "08c-capabilities-3.md",
-    "site": "https://github.com/Liyan06/ChartMuseum",
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "https://blog.redwoodresearch.org/p/reward-seekers-will-probably-behave",
     "caught": true
    },
    {
@@ -166,55 +201,40 @@
     "caught": true
    },
    {
-    "file": "01-introduction.md",
-    "site": "https://support.claude.com/en/",
-    "caught": true
-   },
-   {
     "file": "06d-targeted-evaluations-2.md",
-    "site": "https://philpapers.org/rec/NOZNPA",
+    "site": "https://blog.redwoodresearch.org/p/reward-seekers-will-probably-behave",
     "caught": true
    },
    {
-    "file": "07a-model-welfare-1.md",
-    "site": "https://www.anthropic.com/research/assistant-axis",
+    "file": "08b-capabilities-2.md",
+    "site": "https://openai.com/index/introducing-gpt-5-5/",
     "caught": true
    },
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "https://arxiv.org/abs/2509.07968",
+    "file": "06g-reliability-2.md",
+    "site": "https://www.anthropic.com/claude-mythos-preview-system-card",
     "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "https://www.trajectorylabs.com/",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "https://www.anthropic.com/legal/aup",
+    "caught": false
    }
   ]
  },
  "flatten-chip": {
   "invariant": "S2",
-  "caught": 8,
-  "tried": 8,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
     "file": "02b-rsp-aird-alignment.md",
-    "site": "Research engineering",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "Fabrication",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "Safeguard circumvention",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "Weak Mitigating Factor",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "Safeguard circumvention",
+    "site": "Moderate Mitigating Factor",
     "caught": true
    },
    {
@@ -224,185 +244,235 @@
    },
    {
     "file": "02b-rsp-aird-alignment.md",
-    "site": "Research",
+    "site": "Pure engineering",
     "caught": true
    },
    {
     "file": "02b-rsp-aird-alignment.md",
-    "site": "Research",
+    "site": "Weak Mitigating Factor",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Reckless action",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Weak Mitigating Factor",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Fabrication",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Skipped cheap verification",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Reckless action",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Correction fails",
     "caught": true
    }
   ]
  },
  "delete-sentence": {
   "invariant": "T1",
-  "caught": 7,
-  "tried": 8,
+  "caught": 9,
+  "tried": 10,
   "details": [
    {
-    "file": "00-executive-summary.md",
-    "site": "It shows more aligned behavior than mode",
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "A model that rejects a premise when aske",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "Tasks were authored by maintainers of th",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "The y-axis is truncated below the maximu",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "Each investigation is conducted and scor",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "Their inputs contribute to our risk dete",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "It is nonetheless plausible that it coul",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "Each investigation is conducted and scor",
     "caught": true
    },
    {
     "file": "03-cyber.md",
-    "site": "However, on Fable 5, the fraction of tas",
+    "site": "The model is given a vulnerable build of",
     "caught": true
    },
    {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "Rather than challenging a harmful reques",
+    "file": "01-introduction.md",
+    "site": "The request is blocked, and the response",
     "caught": true
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "Security challenges in AI agent deployme",
+    "file": "08a-capabilities-1.md",
+    "site": "SWE-Bench Pro: Can AI agents solve long-",
     "caught": false
-   },
-   {
-    "file": "06g-reliability-2.md",
-    "site": "Despite this, it is one of the least ste",
-    "caught": true
-   },
-   {
-    "file": "07b-model-welfare-2.md",
-    "site": "The senior Anthropic employee heuristic ",
-    "caught": true
-   },
-   {
-    "file": "07b-model-welfare-2.md",
-    "site": "When Mythos 5 declines a protective inte",
-    "caught": true
-   },
-   {
-    "file": "06g-reliability-2.md",
-    "site": "The y-axis is truncated below the maximu",
-    "caught": true
    }
   ]
  },
  "duplicate-paragraph": {
   "invariant": "T1",
-  "caught": 8,
-  "tried": 8,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "08b-capabilities-2.md",
-    "site": "**Async subagents.** This is similar to ",
-    "caught": true
-   },
-   {
-    "file": "06d-targeted-evaluations-2.md",
-    "site": "We find Claude Mythos 5 performs perfect",
-    "caught": true
-   },
-   {
     "file": "00-executive-summary.md",
-    "site": "**Model welfare.** Mythos 5 shows simila",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "After the pretraining process, the model",
-    "caught": true
-   },
-   {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "We observe that Claude models are broadl",
+    "site": "**Safeguards and harmlessness.** In gene",
     "caught": true
    },
    {
     "file": "08c-capabilities-3.md",
-    "site": "We evaluate the model on 181 questions f",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "The session was largely successful, thou",
+    "site": "LAB-Bench FigQA is a visual reasoning be",
     "caught": true
    },
    {
     "file": "06a-alignment-intro-behavioral.md",
-    "site": "\n::::\n:::caption\n**[Transcript 6.2.2.A] ",
+    "site": "When we\u2019re first starting to understand ",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "Claude Mythos 5 outperforms several prev",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "The way that we assess the risk threshol",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "On Databricks\u2019 own evaluation of OfficeQ",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "- It cannot distinguish accurate self-pe",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "The clearest cross-cutting strength revi",
+    "caught": true
+   },
+   {
+    "file": "08b-capabilities-2.md",
+    "site": "To guard against result contamination in",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "Claude Mythos 5 outperforms several prev",
     "caught": true
    }
   ]
  },
  "swap-words": {
   "invariant": "T1",
-  "caught": 8,
-  "tried": 8,
+  "caught": 9,
+  "tried": 10,
   "details": [
    {
-    "file": "01-introduction.md",
-    "site": "that enable",
+    "file": "02a-rsp-process-chembio.md",
+    "site": "teaming tabletop",
     "caught": true
    },
    {
-    "file": "09-appendix.md",
-    "site": "training rather",
+    "file": "06f-reliability-1.md",
+    "site": "steering alone",
     "caught": true
    },
    {
-    "file": "06b-alignment-audit-external.md",
-    "site": "deploying radiological",
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "point estimate",
     "caught": true
    },
    {
-    "file": "01-introduction.md",
-    "site": "will typically",
+    "file": "06f-reliability-1.md",
+    "site": "different measurements",
     "caught": true
    },
    {
-    "file": "06b-alignment-audit-external.md",
-    "site": "where higher",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "develop jailbreaks",
-    "caught": true
-   },
-   {
-    "file": "00-executive-summary.md",
-    "site": "though since",
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "well short",
     "caught": true
    },
    {
     "file": "08c-capabilities-3.md",
-    "site": "charts sourced",
+    "site": "reasoning benchmark",
+    "caught": true
+   },
+   {
+    "file": "07b-model-welfare-2.md",
+    "site": "firm standing",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "mean activations",
+    "caught": false
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "measured factual",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "internal picture",
     "caught": true
    }
   ]
  },
  "drop-image": {
   "invariant": "F1",
-  "caught": 8,
-  "tried": 8,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
+    "file": "08c-capabilities-3.md",
+    "site": "![](assets/figures/p284-1.png)\n",
+    "caught": true
+   },
+   {
+    "file": "05-agentic-safety.md",
+    "site": "![](assets/figures/p092-1.png)\n",
+    "caught": true
+   },
+   {
     "file": "07b-model-welfare-2.md",
-    "site": "![](assets/figures/p233-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "06d-targeted-evaluations-2.md",
-    "site": "![](assets/figures/p158-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "06e-whitebox-analyses.md",
-    "site": "![](assets/figures/p179-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "![](assets/figures/p256-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "![](assets/figures/p046-1.png)\n",
+    "site": "![](assets/figures/p240-1.png)\n",
     "caught": true
    },
    {
@@ -411,45 +481,70 @@
     "caught": true
    },
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "![](assets/figures/p140-1.png)\n",
+    "file": "06b-alignment-audit-external.md",
+    "site": "![](assets/figures/p111-1.png)\n",
     "caught": true
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "![](assets/figures/p092-1.png)\n",
+    "file": "08c-capabilities-3.md",
+    "site": "![](assets/figures/p282-1.png)\n",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "![](assets/figures/p301-1.png)\n",
+    "caught": true
+   },
+   {
+    "file": "08d-capabilities-4.md",
+    "site": "![](assets/figures/p298-1.png)\n",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "![](assets/figures/p063-1.png)\n",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "![](assets/figures/p049-1.png)\n",
     "caught": true
    }
   ]
  },
  "drop-fndef": {
   "invariant": "FN1",
-  "caught": 8,
-  "tried": 8,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "[^3]: We re-run this evaluatio",
+    "file": "06b-alignment-audit-external.md",
+    "site": "[^16]: No part of this evaluat",
     "caught": true
    },
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "[^17]: We cap at eight actions",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "[^5]: Lee, S., & Brumley, D. (",
-    "caught": true
-   },
-   {
-    "file": "08d-capabilities-4.md",
-    "site": "[^69]: Shepard, D., & Salimans",
+    "file": "08b-capabilities-2.md",
+    "site": "[^49]: Wei, J., et al. (2025).",
     "caught": true
    },
    {
     "file": "05-agentic-safety.md",
-    "site": "[^8]: In the past, we have als",
+    "site": "[^10]: Claude Sonnet 4.6 was i",
+    "caught": true
+   },
+   {
+    "file": "05-agentic-safety.md",
+    "site": "[^9]: Nasr, M., et al. (2025).",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-audit-external.md",
+    "site": "[^13]: As part of a new featur",
+    "caught": true
+   },
+   {
+    "file": "07a-model-welfare-1.md",
+    "site": "[^25]: Emotion probe activatio",
     "caught": true
    },
    {
@@ -458,83 +553,98 @@
     "caught": true
    },
    {
-    "file": "08d-capabilities-4.md",
-    "site": "[^65]: Bandi, C., et al. (2026",
+    "file": "08c-capabilities-3.md",
+    "site": "[^55]: Zhang, H., et al. (2026",
     "caught": true
    },
    {
-    "file": "06f-reliability-1.md",
-    "site": "[^24]: This is equivalent to m",
+    "file": "06b-alignment-audit-external.md",
+    "site": "[^14]: We distinguish this fro",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "[^20]: Mallen, A. (2026). Rewa",
     "caught": true
    }
   ]
  },
  "dup-marker": {
   "invariant": "P1",
-  "caught": 8,
-  "tried": 8,
+  "caught": 10,
+  "tried": 10,
   "details": [
    {
-    "file": "07a-model-welfare-1.md",
-    "site": "<!-- p.228 -->",
+    "file": "07b-model-welfare-2.md",
+    "site": "<!-- p.243 -->",
     "caught": true
    },
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "<!-- p.148 -->",
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "<!-- p.155 -->",
     "caught": true
    },
    {
-    "file": "06a-alignment-intro-behavioral.md",
-    "site": "<!-- p.102 -->",
+    "file": "08d-capabilities-4.md",
+    "site": "<!-- p.301 -->",
     "caught": true
    },
    {
-    "file": "07a-model-welfare-1.md",
-    "site": "<!-- p.223 -->",
-    "caught": true
-   },
-   {
-    "file": "02b-rsp-aird-alignment.md",
-    "site": "<!-- p.39 -->",
-    "caught": true
-   },
-   {
-    "file": "06e-whitebox-analyses.md",
-    "site": "<!-- p.179 -->",
+    "file": "06f-reliability-1.md",
+    "site": "<!-- p.186 -->",
     "caught": true
    },
    {
     "file": "03-cyber.md",
-    "site": "<!-- p.67 -->",
+    "site": "<!-- p.68 -->",
     "caught": true
    },
    {
-    "file": "07a-model-welfare-1.md",
-    "site": "<!-- p.230 -->",
+    "file": "06g-reliability-2.md",
+    "site": "<!-- p.206 -->",
+    "caught": true
+   },
+   {
+    "file": "06c-targeted-evaluations-1.md",
+    "site": "<!-- p.149 -->",
+    "caught": true
+   },
+   {
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "<!-- p.52 -->",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "<!-- p.60 -->",
+    "caught": true
+   },
+   {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "<!-- p.158 -->",
     "caught": true
    }
   ]
  },
  "drop-bold": {
   "invariant": "S1",
-  "caught": 6,
-  "tried": 8,
+  "caught": 7,
+  "tried": 10,
   "details": [
    {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "Safety:",
+    "file": "06b-alignment-audit-external.md",
+    "site": "Unfaithful thinking",
     "caught": true
    },
    {
     "file": "02a-rsp-process-chembio.md",
-    "site": "The beneficial red teaming tabletop exer",
+    "site": "Benchmarks of notable capability",
     "caught": true
    },
    {
-    "file": "06b-alignment-audit-external.md",
-    "site": "Metrics",
-    "caught": true
+    "file": "02b-rsp-aird-alignment.md",
+    "site": "Monitoring:",
+    "caught": false
    },
    {
     "file": "08a-capabilities-1.md",
@@ -542,23 +652,33 @@
     "caught": false
    },
    {
-    "file": "08b-capabilities-2.md",
-    "site": "Async subagents.",
-    "caught": true
-   },
-   {
-    "file": "06c-targeted-evaluations-1.md",
-    "site": "Ethics:",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "Multilingual",
+    "file": "06f-reliability-1.md",
+    "site": "Synthetic scenarios in a real coding env",
     "caught": false
    },
    {
+    "file": "06d-targeted-evaluations-2.md",
+    "site": "One thing worth noting:",
+    "caught": true
+   },
+   {
+    "file": "06g-reliability-2.md",
+    "site": "Avoiding benchmark-gaming:",
+    "caught": true
+   },
+   {
     "file": "07b-model-welfare-2.md",
-    "site": "Spiritual behavior",
+    "site": "Positive affect (45.4% of conversations)",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-intro-behavioral.md",
+    "site": "Mythos 5 also exhibits the least",
+    "caught": true
+   },
+   {
+    "file": "06g-reliability-2.md",
+    "site": "Avoiding benchmark-gaming:",
     "caught": true
    }
   ]

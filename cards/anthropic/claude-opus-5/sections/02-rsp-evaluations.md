@@ -46,7 +46,9 @@ This threat model concerns AI systems that meet three conditions: they are highl
 
 **Autonomy threat model 1 is applicable to Claude Opus 5**, as it is to some of our previous AI models. As discussed in [Section 2.4](#24-alignment-risk-update) Claude Opus 5 does not appear to have more concerning alignment properties than Fable 5 and its observed covert capabilities do not imply lower confidence in this assessment than for prior models. We discuss in Section 2.4 why we do not believe this raises the level of risk under this threat model beyond what was assessed in the [Claude Mythos Preview Alignment Risk Update](https://www.anthropic.com/claude-mythos-preview-risk-report).
 
-**Autonomy threat model 2: Risks from automated R&D in key domains.** This threat model concerns AI systems that can fully automate, or otherwise dramatically accelerate, the work of large, top-tier teams of human researchers in domains where fast progress could cause threats to international security and/or rapid disruptions to the global balance of power. Examples of such domains include energy, robotics, weapons development, and AI itself.
+**Autonomy threat model 2: Risks from automated R&D in key domains.**
+
+This threat model concerns AI systems that can fully automate, or otherwise dramatically accelerate, the work of large, top-tier teams of human researchers in domains where fast progress could cause threats to international security and/or rapid disruptions to the global balance of power. Examples of such domains include energy, robotics, weapons development, and AI itself.
 
 **Autonomy threat model 2 is not applicable to Claude Opus 5**. Claude Opus 5 has capabilities in the AI R&D domain that are comparable to our capability frontier set by<!-- p.15 --> Mythos 5. We conclude the risk threshold is not crossed, on the same two grounds as our determination for our previous frontier model, Claude Mythos 5: (1) we do not observe a sustained AI-attributable 2× acceleration in the pace of our AI progress, and (2) the model is not close to substituting for our Research Scientists and Research Engineers, especially relatively senior ones.
 

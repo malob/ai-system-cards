@@ -482,6 +482,19 @@ a:hover { text-decoration-color: var(--accent); }
   border-radius: 5px;
 }
 
+.hl {
+  /* inline text highlight: the PDF's cream tint strip under quoted prose
+     (opus-5 p.137 constitution quotes) */
+  background: #faf9f5;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--line) 60%, transparent);
+  padding: 0.02em 0.2em;
+  border-radius: 4px;
+}
+[data-theme='dark'] .hl {
+  background: color-mix(in srgb, #faf9f5 14%, transparent);
+  color: inherit;
+}
+
 .chip {
   --chip: var(--ink-soft);
   display: inline-block;

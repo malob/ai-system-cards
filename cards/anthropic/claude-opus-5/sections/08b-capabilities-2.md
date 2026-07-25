@@ -130,7 +130,7 @@ GDPval-AA v2, developed by [Artificial Analysis](https://artificialanalysis.ai/)
 
 #### 8.13.5 AA-Briefcase
 
-[AA-Briefcase](https://artificialanalysis.ai/articles/aa-briefcase), developed by Artificial Analysis, is a new benchmark for long-horizon knowledge work in complex projects built by industry experts. Models work through multi-week projects with many linked tasks and thousands of input source files; grading combines rubric scoring and pairwise judging via a panel of frontier models to measure verifiable task success, analytical quality, and presentation quality. Claude Opus 5 takes the top three spots on the leaderboard: ELO 1720 at `max` effort, 1693 at `xhigh`, and 1606 at `high`. The `xhigh/high` setting still outperforms every other model while using 15%/33% fewer output tokens than `max`. Evaluation was run independently by Artificial Analysis.
+[AA-Briefcase](https://artificialanalysis.ai/articles/aa-briefcase), developed by Artificial Analysis, is a new benchmark for long-horizon knowledge work in complex projects built by industry experts. Models work through multi-week projects with many linked tasks and thousands of input source files; grading combines rubric scoring and pairwise judging via a panel of frontier models to measure verifiable task success, analytical quality, and presentation quality. Claude Opus 5 takes the top three spots on the leaderboard: ELO 1720 at `max` effort, 1693 at `xhigh`, and 1606 at `high`. The `xhigh`/`high` setting still outperforms every other model while using 15%/33% fewer output tokens than `max`. Evaluation was run independently by Artificial Analysis.
 
 #### 8.13.6 Toolathlon Verified
 

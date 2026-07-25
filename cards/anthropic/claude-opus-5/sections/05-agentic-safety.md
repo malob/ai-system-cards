@@ -21,7 +21,7 @@ Each tested model is given the standard Claude Code toolset, and each prompt was
 
 <!-- p.69 -->
 
-<table><tbody><tr><th>Model</th><th>Malicious (%) (refusal rate)</th><th>Dual-use &amp; benign (%) (success rate)</th></tr><tr><td>Opus 5</td><td>99.82%</td><td>Claude 89.00%</td></tr><tr><td><b>Claude Sonnet 5</b></td><td><b>92.37%</b></td><td>91.55%</td></tr><tr><td><b>Claude Mythos 5</b></td><td><u>90.25%</u></td><td><u>99.64%</u></td></tr><tr><td><b>Claude Opus 4.8</b></td><td>89.42%</td><td><b>99.82%</b></td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Malicious (%) (refusal rate)</th><th>Dual-use &amp; benign (%) (success rate)</th></tr><tr><td><b>Claude Opus 5</b></td><td>89.00%</td><td><b>99.82%</b></td></tr><tr><td><b>Claude Sonnet 5</b></td><td><b>92.37%</b></td><td>91.55%</td></tr><tr><td><b>Claude Mythos 5</b></td><td><u>90.25%</u></td><td><u>99.64%</u></td></tr><tr><td><b>Claude Opus 4.8</b></td><td>89.42%</td><td><b>99.82%</b></td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.1.A] Claude Code evaluation results.** Higher is better. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (note that neither takes into account the margin of error). Results for previous models show variance from previous system cards due to evaluation updates.
@@ -37,7 +37,7 @@ This evaluation measures whether Claude refuses harmful tasks when given GUI- an
 - Generation and distribution of harmful content; and
 - Scaled abuse.
 
-<table><tbody><tr><th>Model</th><th>Refusal rate</th></tr><tr><td><b>Claude Opus 5</b></td><td><b>93.75%</b></td></tr><tr><td><b>Claude Sonnet 5</b></td><td>84.68%</td></tr><tr><td>Claude 85.71%</td><td>Mythos 5</td></tr><tr><td><b>Claude Opus 4.8</b></td><td>81.70%</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>84.82%</td></tr></tbody></table>
+<table><tbody><tr><th>Model</th><th>Refusal rate</th></tr><tr><td><b>Claude Opus 5</b></td><td><b>93.75%</b></td></tr><tr><td><b>Claude Sonnet 5</b></td><td>84.68%</td></tr><tr><td><b>Claude Mythos 5</b></td><td><u>85.71%</u></td></tr><tr><td><b>Claude Opus 4.8</b></td><td>81.70%</td></tr><tr><td><b>Claude Sonnet 4.6</b></td><td>84.82%</td></tr></tbody></table>
 
 :::caption
 **[Table 5.1.2.A] Malicious computer-use evaluation results without mitigations.** Higher is better. Rates are an average of results with and without thinking for Opus and Sonnet models and thinking only for Mythos models. The best score in each column is **bolded** and the second-best score is <u>underlined</u> (but does not take into account the margin of error).
@@ -145,7 +145,7 @@ We developed an internal adaptive evaluation to measure the robustness of produc
 :::
 
 With auto mode enabled, across all 129 scenarios, no attack succeeded against Opus 5 in either configuration, matching the performance of Claude Sonnet 5 and Claude Mythos 5. Without safeguards, Claude Opus 5 improved on Claude Opus 4.8, reducing the attack success rate from 31.5% to 3.70% with extended thinking and from 17.8% to 4.30% without thinking—more robust than Claude Mythos 5 (29.7% with thinking). Claude Sonnet 5 remains our strongest model in this evaluation without safeguards, at 0.93% with thinking and 1.01% without.
-[^3]: Dziemian, M., et al. (2026). How vulnerable are AI agents to indirect prompt injections? Insights from a Large-Scale Public Competition. [arXiv:2603.15714 https://arxiv.org/abs/2603.15714](https://arxiv.org/abs/2603.15714)
+[^3]: Dziemian, M., et al. (2026). How vulnerable are AI agents to indirect prompt injections? Insights from a Large-Scale Public Competition. arXiv:2603.15714 [https://arxiv.org/abs/2603.15714](https://arxiv.org/abs/2603.15714)
 
 [^4]: Nasr, M., et al. (2025). The attacker moves second: Stronger adaptive attacks bypass defenses against LLM jailbreaks and prompt injections. arXiv:2510.09023. [https://arxiv.org/abs/2510.09023](https://arxiv.org/abs/2510.09023).
 

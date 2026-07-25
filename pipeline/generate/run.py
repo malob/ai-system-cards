@@ -104,6 +104,37 @@ def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | N
     i = 0
     while i < len(r2) and i < len(r1) and _row_squash(r2[i]) == _row_squash(r1[i]):
         i += 1
+    # normalize fragment rows to the host's dominant shape: docling gives
+    # the continuation fragment PLAIN first cells where the host's body rows
+    # carry a label colspan ('8.1.A ARC-AGI-2/3', p.149 — every data cell
+    # shifted one column left in the render)
+    def _eff_w(row):
+        return sum(int(m.group(1)) if m else 1
+                   for m in (re.search(r'colspan="(\d+)"', tag)
+                             for tag in re.findall(r"<t[hd][^>]*>", row)))
+    from collections import Counter as _Counter
+    host_shapes = _Counter()
+    for hr in r1[1:]:
+        mfc = re.search(r"<t[hd][^>]*?colspan=\"(\d+)\"", hr.split("</t", 1)[0])
+        host_shapes[(_eff_w(hr), int(mfc.group(1)) if mfc else 1)] += 1
+    if host_shapes:
+        (host_w, host_c), _n = host_shapes.most_common(1)[0]
+        if host_c > 1:
+            fixed = []
+            pending_rowspan = 0   # rows still covered by an earlier rowspan
+            for r in r2[i:]:
+                if (pending_rowspan == 0 and _eff_w(r) == host_w - (host_c - 1)
+                        and "colspan" not in r and "rowspan" not in r):
+                    r = re.sub(r"(<t[hd])(?=[ >])", rf'\1 colspan="{host_c}"', r, count=1)
+                elif pending_rowspan:
+                    # a rowspan-continuation row is SUPPOSED to be one cell
+                    # short (fable 'Harvey's Held-Out Set') — leave it alone
+                    pending_rowspan -= 1
+                mrs = re.search(r'rowspan="(\d+)"', r)
+                if mrs:
+                    pending_rowspan = max(pending_rowspan, int(mrs.group(1)) - 1)
+                fixed.append(r)
+            r2[i:] = fixed
     body = "".join(r2[i:])
     if body and next_page:
         # the page marker rides INSIDE the merged table between fragments

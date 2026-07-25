@@ -20,6 +20,9 @@ SYNTAX = {
     # which break directive-label parsing on both ends
     "placeholder": ('<span class="ph">', "</span>"),
     # placeholder: plain text until the renderer gains :ph (FL-07/D17)
+    # inline text highlight (a line-height tint strip under prose — the
+    # opus-5 p.137 cream constitution quotes), NOT a box
+    "highlight": ('<span class="hl">', "</span>"),
 }
 
 
@@ -83,10 +86,10 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
             ops.append((b, 2, a, 0, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
         elif kind in SYNTAX:
             o, c = SYNTAX[kind]
-            # raw-HTML marks (placeholder/underline) sit OUTERMOST: a span
-            # tag inside backticks renders literally ('`[…]</span>`' leak)
-            r_open = 2 if kind in ("placeholder", "underline") else 0
-            r_close = -1 if kind in ("placeholder", "underline") else 1
+            # raw-HTML marks (placeholder/underline/highlight) sit OUTERMOST:
+            # a span tag inside backticks renders literally ('`[…]</span>`')
+            r_open = 2 if kind in ("placeholder", "underline", "highlight") else 0
+            r_close = -1 if kind in ("placeholder", "underline", "highlight") else 1
             ops.append((a, 1, b, r_open, lambda t, a=a, o=o: t[:a] + o + t[a:]))
             ops.append((b, 2, a, r_close, lambda t, b=b, c=c: t[:b] + c + t[b:]))
     if escape_literals:
@@ -259,7 +262,12 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             if m:  # ordered item: keep the number, real space after it
                 out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
-                body = re.sub(r"^(\**)[●•◦▪‣○​‌ ]+", r"\1", body.lstrip("●•◦▪‣○​‌ "))
+                body = re.sub(r"^(\**)[●•◦▪‣○■□​‌ ]+", r"\1", body.lstrip("●•◦▪‣○■□​‌ "))
+                # Word-style lone-'o' marker (p.104): regex, not lstrip — a
+                # char-set strip would eat the 'O' of the following word
+                raw0_o = blk["lines"][0]["text"] if blk.get("lines") else ""
+                if re.match(r"^\s*o[\s​]+\S", raw0_o):
+                    body = re.sub(r"^o[\s​]+", "", body)
                 # the strip can leave an EMPTY bold pair when the bullet's
                 # bold run ends before a following link ('**○​** [**Reckless…',
                 # opus-5 p.79) — a literal '****' desyncs every later bold
@@ -275,7 +283,15 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                     # one to level 0 (p.66 item 2b)
                     if blk.get("level", 0) == 0:
                         indent = "   " if q else "    "
-                out.append(f"{q}{indent}- " + inline_marker + body + "\n")
+                # a page marker BEFORE a lettered marker ('- <!-- p.44 -->a. On…')
+                # makes remark parse the whole line as one raw-HTML block, which
+                # defeats the renderer's lettered-list transform — emit the
+                # marker AFTER the letter (same line, same page attribution)
+                ml = re.match(r"^([a-z][.)]\s+)", body)
+                if inline_marker and ml:
+                    out.append(f"{q}{indent}- " + ml.group(1) + inline_marker + body[ml.end():] + "\n")
+                else:
+                    out.append(f"{q}{indent}- " + inline_marker + body + "\n")
         elif t == "figure":
             out.append(f"![{blk['alt']}](assets/figures/{blk['file']})\n")
             if blk["caption_lines"]:  # legacy in-figure captions (rare)

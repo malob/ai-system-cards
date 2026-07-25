@@ -890,6 +890,16 @@ def _row_band(plain, cand, tol=7.0):
             if len(hits) == 1:
                 ys.append(hits[0][0][1])
     if not ys:
+        # fully-scrambled row (docling hallucinated a wrap and rotated the
+        # fragments — opus-5 p.52 'Sonnet 5 96.65% | … | Claude (± 0.07%)'):
+        # no cell equals or prefixes any span, but a unique span key is still
+        # CONTAINED in the row's concatenated text. The char-multiset guard
+        # in _rebuild_row keeps a false anchor from doing damage.
+        concat = "".join(plain)
+        for k, v in cand.items():
+            if len(k) >= 6 and len(v) == 1 and k in concat:
+                ys.append(v[0][1])
+    if not ys:
         return None
     ys.sort()
     ymed = ys[len(ys) // 2]

@@ -52,7 +52,7 @@ CODE_BOXES = _hexes(_FILL_ROLES, "code-block-bg", "example-box")
 # the transcript); a box in none of them is a standalone code block (§9.2)
 _TURN_OR_TRANSCRIPT = set(TURN_FILLS) | TRANSCRIPT_BOXES
 PLACEHOLDER = next(iter(_hexes(_FILL_ROLES, "placeholder")), "#d9ead3")
-BULLETS = "●•◦▪‣○"
+BULLETS = "●•◦▪‣○■□"  # ■/□: opus-5 third-level bullets use U+25A0, not U+25AA
 
 
 def _rect_contains(outer, inner, slack=2.0):
@@ -141,12 +141,23 @@ def assign_list_levels(blocks: list[dict]) -> None:
                 blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
 
 
+MIN_BOX_H = 20.0  # a "box" shorter than ~1.3 line-heights is an inline
+# highlight strip riding under text (opus-5 p.137 cream constitution quotes),
+# not a container — classifying it as a turn split one sentence into three
+
+
+def _is_container(b) -> bool:
+    return b["bbox"][3] - b["bbox"][1] >= MIN_BOX_H
+
+
 def _turn_box(line, page):
     """bbox of the INNERMOST turn-fill bubble containing the line, or None.
     Identity of the bubble — not just its role — separates adjacent
     same-role bubbles into distinct turns."""
     best = None
     for b in page.get("boxes", []):
+        if not _is_container(b):
+            continue
         if b["color"] in TURN_FILLS and _rect_contains(b["bbox"], line["bbox"]):
             area = (b["bbox"][2] - b["bbox"][0]) * (b["bbox"][3] - b["bbox"][1])
             if best is None or area < best[0]:
@@ -161,6 +172,8 @@ def _container_box(line, page):
     previous transcript's [Assistant] on an unrelated box (opus-5 p.85)."""
     best = None
     for b in page.get("boxes", []):
+        if not _is_container(b):
+            continue
         if b["color"] in _TURN_OR_TRANSCRIPT and _rect_contains(b["bbox"], line["bbox"], slack=4.0):
             area = (b["bbox"][2] - b["bbox"][0]) * (b["bbox"][3] - b["bbox"][1])
             if best is None or area > best[0]:
@@ -193,7 +206,8 @@ def _box_role(line, page):
     """Most-specific containing box wins: a turn bubble nested inside a
     transcript container must classify as the turn, not the container."""
     containing = [b for b in page.get("boxes", [])
-                  if _rect_contains(b["bbox"], line["bbox"], slack=4.0)]
+                  if _is_container(b)
+                  and _rect_contains(b["bbox"], line["bbox"], slack=4.0)]
     # smallest-area box first
     containing.sort(key=lambda b: (b["bbox"][2] - b["bbox"][0]) * (b["bbox"][3] - b["bbox"][1]))
     in_transcript = any(b["color"] in TRANSCRIPT_BOXES for b in containing)
@@ -210,12 +224,18 @@ def _box_role(line, page):
     return (None, None, in_transcript)
 
 
-HEAD_NUM = re.compile(r"^(\d+(?:\.\d+)*)\s+\S")
+HEAD_NUM = re.compile(r"^(\d+(?:\.\d+)*)\.?\s+\S")  # tolerate the trailing
+# dot in opus-5's '1.1. Training data and process' (an authoring typo —
+# without it the level fell back to 2 and outranked the heading's own parent)
 CAPTION_LEAD = re.compile(r"^\[(Figure|Table|Transcript)\b")
 # Google Docs exports mark list markers with a zero-width space after the
 # glyph/number: "●​Text", "1.​Text" — a mechanical signature that
 # also distinguishes ordered-list markers from prose lines starting with digits
-LIST_MARKER = re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists
+LIST_MARKER = re.compile(r"^([●•◦▪‣○■□]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists
+# Word-style lists (pasted reviews) use a LONE LATIN 'o' as the level-1
+# glyph, no ZWSP (UK AISI, opus-5 p.104). Only a lone 'o' + space at a deep
+# indent qualifies — 'of …' etc. never match.
+WORD_O_MARKER = re.compile(r"^o[\s​]+\S")  # ZWSP after the marker, like ●​
 
 
 def _classify(line, page, in_figure):
@@ -248,6 +268,8 @@ def _classify(line, page, in_figure):
     if CAPTION_LEAD.match(line["text"].lstrip()) or (line["size"] <= 9.5 and in_figure):
         return "caption"
     if LIST_MARKER.match(line["text"].lstrip()) or line["text"].lstrip()[:1] in BULLETS:
+        return "item"
+    if WORD_O_MARKER.match(line["text"].lstrip()) and line["bbox"][0] >= 100:
         return "item"
     return "prose"
 
@@ -393,9 +415,20 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 cur = {"type": "caption", "lines": [line], "page": pno}
         elif kind == "item":
             flush()
+            # glyph-tier check: geometry alone can't tell a QUOTED level-0
+            # bullet from a normal level-1 bullet (both sit ~x0 126) — but
+            # the GLYPH advances with the tier (● → ○/o → ■), while a quote
+            # shifts the whole list right (fable quoted L0 ●≈127/L1 ○≈145;
+            # opus normal L1 ○≈126.8). A marker within ~12pt of its glyph's
+            # HOME column (● 90 / ○ 126 / ■ 162) is a normal nested item,
+            # never a quote (opus-5 p.83 vs fable UK AISI, both geometries).
+            g = line["text"].lstrip()[:1]
+            tier = (0 if g in "●•" else 1 if g in "○◦o" else
+                    2 if g in "■▪□‣" else None)
+            shift_ok = tier is None or line["bbox"][0] - (90 + 36 * tier) >= 12
             cur = {"type": "item", "lines": [line], "page": pno,
                    "marker_x0": line["bbox"][0],
-                   "quote": _is_quote(line, page) and quote_ctx}
+                   "quote": _is_quote(line, page) and quote_ctx and shift_ok}
             marker_x0s.add(round(line["bbox"][0]))
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
@@ -431,7 +464,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                     # closing the box (p.198 'Here is my design'). A standalone
                     # code box (the §9.2 blocklist) is in no turn box → unflagged.
                     cur["in_transcript"] = any(
-                        b["color"] in _TURN_OR_TRANSCRIPT
+                        _is_container(b)
+                        and b["color"] in _TURN_OR_TRANSCRIPT
                         and _rect_contains(b["bbox"], line["bbox"], slack=4.0)
                         for b in page.get("boxes", []))
         else:  # prose
@@ -483,7 +517,11 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 # the next non-bold line starts a new paragraph even at a
                 # tight gap ('**Level 0: Overall spirit**' | 'Does the
                 # model…', p.136; siblings split only thanks to bullets)
-                prev_body = [s for _, _, s in prev["segs"] if s["zone"] == "body"]
+                # invisible-only spans don't count: a trailing non-bold ZWSP
+                # span defeated the all-bold test on 'Autonomy threat model 2:
+                # …' (opus-5 p.14) while its twin TM1 split fine
+                prev_body = [s for _, _, s in prev["segs"] if s["zone"] == "body"
+                             and s["text"].strip("​‌‍﻿­ ")]
                 ends_bold_label = (prev_body and all(s["bold"] for s in prev_body)
                                    and prev_short
                                    and line["segs"] and not line["segs"][0][2]["bold"])
@@ -610,6 +648,13 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                      for b in page.get("boxes", [])
                      if b["color"] == PLACEHOLDER
                      and 6 < (b["bbox"][3] - b["bbox"][1]) < 30]
+    # sub-container tint strips (a turn-fill color at line height) are INLINE
+    # HIGHLIGHTS riding under prose — opus-5 p.137's cream constitution
+    # quotes — and mark their covered range like placeholder pills do
+    pills = pills + [{"bbox": b["bbox"], "color": b["color"]}
+                     for b in page.get("boxes", [])
+                     if b["color"] in TURN_FILLS
+                     and 6 < (b["bbox"][3] - b["bbox"][1]) < MIN_BOX_H]
     links = page["links"]["uri"] + page["links"]["goto"]
 
     def _full_span_hit(l, s):
@@ -721,7 +766,30 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         marks.append(("chip", m_start, m_end, pi))
                     elif pill["color"] == PLACEHOLDER:
                         marks.append(("placeholder", m_start, m_end, pi))
+                    elif pill["color"] in TURN_FILLS:
+                        marks.append(("highlight", m_start, m_end, pi))
                     break
+                if pill["color"] in TURN_FILLS:
+                    # partial inline highlight: map the strip's x-range to
+                    # chars, snap to whitespace (no bracket snapping — these
+                    # cover ordinary quoted prose)
+                    pb, sb = pill["bbox"], s["bbox"]
+                    if (min(sb[3], pb[3]) - max(sb[1], pb[1])
+                            > 0.6 * (pb[3] - pb[1])
+                            and min(sb[2], pb[2]) - max(sb[0], pb[0]) > 2):
+                        cw = (sb[2] - sb[0]) / max(1, len(t))
+                        i0 = max(0, int((pb[0] - sb[0]) / cw))
+                        i1 = min(len(t), int((pb[2] - sb[0]) / cw + 0.5))
+                        while i0 > 0 and not t[i0 - 1].isspace():
+                            i0 -= 1
+                        while i1 < len(t) and not t[i1].isspace():
+                            i1 += 1
+                        seg = t[i0:i1]
+                        a2 = start + i0 + (len(seg) - len(seg.lstrip()))
+                        b2 = start + i1 - (len(seg) - len(seg.rstrip()))
+                        if b2 > a2:
+                            marks.append(("highlight", a2, b2, pi))
+                    continue
                 if pill["color"] == PLACEHOLDER:
                     # green placeholder pills highlight a RANGE INSIDE a longer
                     # span (unlike chips, which own theirs): map the pill's
@@ -788,6 +856,12 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                 for lidx, l in enumerate(links):
                     if lidx in block_full:
                         continue
+                    if not l.get("uri"):
+                        # GoTo dests have sloppy rects (13/28 landed on a
+                        # neighboring section by geometry) — a partial-span
+                        # fallback on them fabricated a link over unrelated
+                        # prose (opus-5 p.81 'discussion, it')
+                        continue
                     hit = None
                     for r in l.get("rects", []):
                         rw = max(r[2] - r[0], 0.1)
@@ -801,13 +875,21 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                             break
                     if hit is None:
                         continue
-                    cw = (sx1 - sx0) / max(1, len(t))
-                    i0 = max(0, int((hit[0] - sx0) / cw))
-                    i1 = min(len(t), int((hit[2] - sx0) / cw + 0.5))
-                    while i0 > 0 and not t[i0 - 1].isspace():
-                        i0 -= 1
-                    while i1 < len(t) and not t[i1].isspace():
-                        i1 += 1
+                    anchor = (l.get("anchor") or "").strip()
+                    if anchor and t.count(anchor) == 1:
+                        # the PDF names the link's own anchor text — exact
+                        # beats geometric estimate (the estimate's whitespace
+                        # snap pulled in 'arXiv:2603.15714 ' before the URL)
+                        i0 = t.index(anchor)
+                        i1 = i0 + len(anchor)
+                    else:
+                        cw = (sx1 - sx0) / max(1, len(t))
+                        i0 = max(0, int((hit[0] - sx0) / cw))
+                        i1 = min(len(t), int((hit[2] - sx0) / cw + 0.5))
+                        while i0 > 0 and not t[i0 - 1].isspace():
+                            i0 -= 1
+                        while i1 < len(t) and not t[i1].isspace():
+                            i1 += 1
                     seg = t[i0:i1]
                     a2 = start + i0 + (len(seg) - len(seg.lstrip()))
                     b2 = start + i1 - (len(seg) - len(seg.rstrip()))
@@ -866,7 +948,7 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
     # meaningless — but filter AFTER merging, so a bold ':' that belongs to
     # an adjacent bold run joins it instead of dying ('[Bottom left:]')
     import re as _re
-    merged = _merge_marks(marks)
+    merged = _merge_marks(marks, text)
     merged = [m for m in merged
               if not (m[0] in ("bold", "italic")
                       and not _re.search(r"\w", text[m[1]:m[2]]))]
@@ -876,7 +958,7 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
 _INVIS = str.maketrans("", "", "​‌‍﻿­ \t")
 
 
-def _merge_marks(marks):
+def _merge_marks(marks, text=""):
     """Drop bold/italic inside chip ranges FIRST (chips render as pills, not
     emphasis), then coalesce adjacent same-kind marks. Order matters: filtering
     after merging lets a bold bridge across a chip boundary and re-leak '**'
@@ -889,8 +971,13 @@ def _merge_marks(marks):
     for kind, a, b, data in sorted(marks, key=lambda m: (m[0], m[1])):
         # tolerance 2: span trailing-space trim + the line-join space leave a
         # 2-char gap at line wraps; without this, wrapped links/bolds fragment
-        # ("Project|Glasswing" double anchors; "**…** **…**" split bolds)
-        if out and out[-1][0] == kind and out[-1][3] == data and a <= out[-1][2] + 2:
+        # ("Project|Glasswing" double anchors; "**…** **…**" split bolds).
+        # WHITESPACE-ONLY gaps only: a plain-text ', ' between two mono spans
+        # is content, not a wrap ('`chartjs/Chart.js`, `processing/p5.js`',
+        # opus-5 p.193 — bridging it swallowed the serif comma into the code)
+        gap = text[out[-1][2]:a] if (out and text) else ""
+        if (out and out[-1][0] == kind and out[-1][3] == data
+                and a <= out[-1][2] + 2 and not gap.strip()):
             out[-1][2] = max(out[-1][2], b)
         else:
             out.append([kind, a, b, data])
