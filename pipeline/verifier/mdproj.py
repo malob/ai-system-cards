@@ -252,7 +252,9 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     # ZWNJ-prefixed lines are consumed items, not paragraph starts
     for m in re.finditer(r"(?:^|\n\n)[ \t]*([^\s#:>|!\[<‌-][^\n]{0,79})", seg):
         sec.block_starts.append((m.group(1)[:80], pg(m)))
-    seg = re.sub(r"^```.*$", " ", seg, flags=re.M)            # code fences
+    # code fences: the delimiter vanishes, but an INFO STRING is projected —
+    # it carries the PDF's code-box language chrome ('None', pp.191-193 D42)
+    seg = re.sub(r"^```(\w*)[ \t]*$", r" \1", seg, flags=re.M)
     seg = seg.replace("`", "")
     seg = RE_TAG.sub(" ", seg)
     seg = html.unescape(seg)

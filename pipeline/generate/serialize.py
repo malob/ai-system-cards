@@ -437,8 +437,20 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 if any(m[0] in ("bold", "placeholder") for m in probe):
                     out.append(_pre_html(blk, page, chips) + "\n")
                 else:
-                    raw = "\n".join(l["text"] for l in blk["lines"])
-                    out.append("```\n" + raw + "\n```\n")
+                    # Google-Docs code boxes print their language chooser as
+                    # a non-mono chrome line at the box top ('None',
+                    # pp.191-193 D42) — that's the fence INFO STRING, not
+                    # content (a reader copying the blocklist must not get a
+                    # phantom 'None' pattern)
+                    body_lines = blk["lines"]
+                    lang = ""
+                    if (body_lines and not _mono_line(body_lines[0])
+                            and re.fullmatch(r"\w+", body_lines[0]["text"].strip())):
+                        lang = body_lines[0]["text"].strip()
+                        body_lines = body_lines[1:]
+                    raw = "\n".join(l["text"] for l in body_lines)
+                    out.append(f"```{lang}\n" + (raw + "\n" if raw else "")
+                               + "```\n")
                 for tp in blk.get("trailing_pages", []):
                     marker_if_new(tp)
                     emit_marker(False)

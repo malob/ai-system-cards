@@ -10,8 +10,7 @@ The blocklist functions by substring matching against web URLs. We normalize the
 
 Our blocklist contains the following patterns:
 
-```
-None
+```None
 huggingface.co 
 hf.co 
 hf-mirror.com 
@@ -79,8 +78,7 @@ The blocklist for BrowseComp uses the same URL substring matching described in S
 
 In addition to the URL blocklist, for BrowseComp any search result or fetched page whose page content contains the string “browsecomp” (case-insensitive substring match) is also blocked. Our blocklist contains the following patterns:
 
-```
-None
+```None
 browsecomp 
 openaipublic.blob.core.windows.net/simple-evals 
 github.com/openai/simple-evals 
@@ -108,8 +106,7 @@ We remove one instance (`diegomura__react-pdf-1552`) due to incompatibilities wi
 
 The following “pass to pass” tests fail nondeterministically on our infrastructure and are unrelated to the target fix; we drop them from the pass criteria:
 
-```
-None
+```None
 ```
 
 For `chartjs/Chart.js`, `processing/p5.js`, and `markedjs/marked`, the harness rewrites the JavaScript test-framework configuration (Karma, Grunt, Jasmine respectively) to emit machine-parseable output rather than the default formatted reporter. This changes only the output format, not which tests run or their pass/fail criteria.

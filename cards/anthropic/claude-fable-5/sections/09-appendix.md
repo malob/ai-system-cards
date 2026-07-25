@@ -18,8 +18,7 @@ The blocklist functions by substring matching against web URLs. We normalize the
 
 Our blocklist contains the following patterns:
 
-```
-None
+```None
 huggingface.co 
 hf.co 
 hf-mirror.com 
