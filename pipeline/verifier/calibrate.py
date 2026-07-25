@@ -15,15 +15,17 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import cardcfg
 import invariants
 import mdproj
 import oracle
 
-REPO = Path(__file__).resolve().parents[2]
-CARD = REPO / "cards/anthropic/claude-fable-5"
-TOC_PAGES = set(range(5, 12))
-EXPECTED_PAGES = [p for p in range(2, 318) if p not in TOC_PAGES]  # 1 = cover
+REPO = cardcfg.REPO
+CARD = cardcfg.CARD
+TOC_PAGES = cardcfg.TOC_PAGES
+EXPECTED_PAGES = cardcfg.EXPECTED_PAGES  # 1 = cover (declared exclusion)
 
 
 def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> list[dict]:
@@ -37,7 +39,7 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> 
     if limited:
         page_range = range(max(2, sections[0].page_start), sections[-1].page_end + 1)
     else:
-        page_range = range(2, 318)
+        page_range = range(2, cardcfg.SOURCE_PAGES + 1)
     if only_pages is not None:
         # wave/partial mode: restrict the oracle range AND the md streams to the
         # generated pages, so ungenerated pages don't read as omissions
@@ -95,7 +97,7 @@ def _load_figures_map() -> dict:
 def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
     """Run all implemented invariants over the markdown at `ref` (git ref,
     WORKTREE, or an absolute dir). Returns the flag list."""
-    pages = oracle.extract(CARD / "source.pdf", cache=REPO / "pipeline/.cache/oracle.json")
+    pages = oracle.extract(CARD / "source.pdf", cache=cardcfg.ORACLE_CACHE)
     figures_map = _load_figures_map()
 
     sections = []
@@ -116,7 +118,7 @@ def main():
                     help="restrict all checks to these source pages (for wave/partial runs)")
     args = ap.parse_args()
 
-    pages = oracle.extract(CARD / "source.pdf", cache=REPO / "pipeline/.cache/oracle.json")
+    pages = oracle.extract(CARD / "source.pdf", cache=cardcfg.ORACLE_CACHE)
     figures_map = _load_figures_map()
 
     sections = []
@@ -128,7 +130,7 @@ def main():
     flags = _flags_for(sections, pages, figures_map, bool(args.sections),
                        only_pages=set(args.only_pages) if args.only_pages else None)
 
-    acc_path = Path(__file__).parent / "accepted.json"
+    acc_path = CARD / "accepted.json"
     if acc_path.exists():
         acc = {(a["invariant"], a["page"])
                for a in json.loads(acc_path.read_text())["accepted"]}

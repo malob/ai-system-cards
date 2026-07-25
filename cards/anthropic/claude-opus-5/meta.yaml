@@ -1,0 +1,17 @@
+title: "Claude Opus 5"
+slug: claude-opus-5
+vendor: Anthropic
+models:
+  - Claude Opus 5
+release_date: 2026-07-24
+source_url: https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf
+source_pages: 193
+description: >-
+  System card for Claude Opus 5, an upgrade to Claude Opus 4.8 from Anthropic.
+  Covers RSP evaluations, safeguards and harmlessness, agentic safety,
+  alignment assessment, model welfare, and capabilities.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+# (Seeded empty — the signal census found no chip-pill fills in this document;
+# confirm during conversion.)
+chips: {}

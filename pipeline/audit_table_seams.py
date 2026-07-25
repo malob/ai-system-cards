@@ -15,7 +15,10 @@ import re
 import sys
 from pathlib import Path
 
-SECTIONS = Path(__file__).resolve().parents[1] / "cards/anthropic/claude-fable-5/sections"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import cardcfg  # noqa: E402
+
+SECTIONS = cardcfg.SECTIONS
 flags = 0
 for f in sorted(SECTIONS.glob("*.md")):
     text = f.read_text()

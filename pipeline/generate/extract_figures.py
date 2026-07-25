@@ -15,12 +15,16 @@ This renames each image to pPPP-K.png (page, k-th figure on that page), composit
 soft-mask (smask) as alpha, and writes extracted/figures-map.json (page → [filenames]).
 """
 import json
+import sys
 from pathlib import Path
 
 from PIL import Image
 
-REPO = Path(__file__).resolve().parents[2]
-CARD = REPO / "cards/anthropic/claude-fable-5"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import cardcfg  # noqa: E402
+
+REPO = cardcfg.REPO
+CARD = cardcfg.CARD
 figdir = CARD / "assets/figures"
 
 rows = []

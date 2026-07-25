@@ -12,9 +12,12 @@ import sys
 import tempfile
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[2]
-CARD = REPO / "cards/anthropic/claude-fable-5"
-CACHE = REPO / "pipeline/.cache/tables.json"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import cardcfg  # noqa: E402
+
+REPO = cardcfg.REPO
+CARD = cardcfg.CARD
+CACHE = cardcfg.TABLES_CACHE
 
 
 def _load() -> dict:

@@ -10,12 +10,15 @@ v1-calibration shims (documented, removed for v2's typed model):
 import html
 import re
 import subprocess
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import cardcfg  # noqa: E402
 import norm
 
-SECTIONS_DIR = "cards/anthropic/claude-fable-5/sections"
+SECTIONS_DIR = f"cards/{cardcfg.CARD_ID}/sections"
 
 RE_HEADER = re.compile(r"<!--\s*source: source\.pdf pages (\d+)-(\d+)\s*-->")
 RE_MARKER = re.compile(r"<!--\s*p\.(\d+)\s*-->")

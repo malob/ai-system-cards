@@ -17,19 +17,22 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[0] / "verifier"))
+sys.path.insert(0, str(HERE.parents[0]))
 sys.path.insert(0, str(HERE))
 
 import assemble  # noqa: E402
+import cardcfg  # noqa: E402
 import oracle  # noqa: E402
 import serialize  # noqa: E402
 import tables  # noqa: E402
 
-REPO = Path(__file__).resolve().parents[2]
-CARD = REPO / "cards/anthropic/claude-fable-5"
+REPO = cardcfg.REPO
+CARD = cardcfg.CARD
 OUT = CARD / "sections"
+# first card's calibration seed pages (only meaningful with --seed there)
 SEED = [3, 19, 20, 26, 39, 40, 41, 42, 43, 44, 74, 95, 100, 107, 118, 139,
         235, 236, 252, 253, 309, 310, 311, 318, 319]
-TOC = set(range(5, 12))
+TOC = cardcfg.TOC_PAGES
 
 
 def section_ranges() -> list[tuple[str, int, int]]:
@@ -286,12 +289,12 @@ def main():
     ap.add_argument("--all", action="store_true")
     args = ap.parse_args()
     want = set(args.pages or (SEED if args.seed else [])) or (
-        set(range(2, 318)) - TOC if args.all else set()
+        set(cardcfg.EXPECTED_PAGES) if args.all else set()
     )
     if not want:
         ap.error("give --pages, --seed, or --all")
 
-    pages = oracle.extract(CARD / "source.pdf", cache=REPO / "pipeline/.cache/oracle.json")
+    pages = oracle.extract(CARD / "source.pdf", cache=cardcfg.ORACLE_CACHE)
     figures_map = json.loads((CARD / "extracted/figures-map.json").read_text())
     chips = manifest_chips()
     OUT.mkdir(exist_ok=True)
@@ -415,7 +418,8 @@ def main():
         f.write_text(md)
 
     all_pages = sorted({p for _, sel in written for p in sel})
-    (REPO / "pipeline/.cache/genpages.json").write_text(json.dumps(all_pages))
+    cardcfg.CACHE.mkdir(parents=True, exist_ok=True)
+    (cardcfg.CACHE / "genpages.json").write_text(json.dumps(all_pages))
     print(f"\nwrote {len(written)} files to {OUT}")
     print("gate with:")
     names = " ".join(sorted({n.split('-')[0] for n, _ in written}))

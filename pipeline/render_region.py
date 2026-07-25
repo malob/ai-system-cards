@@ -15,8 +15,10 @@ from pathlib import Path
 
 import fitz
 
-REPO = Path(__file__).resolve().parents[1]
-PDF = REPO / "cards/anthropic/claude-fable-5/source.pdf"
+import cardcfg
+
+REPO = cardcfg.REPO
+PDF = cardcfg.CARD / "source.pdf"
 OUT = REPO / "pipeline/.cache/crops"
 
 
@@ -44,7 +46,7 @@ if __name__ == "__main__":
         zoom = float(sys.argv[6]) if len(sys.argv) > 6 else 5.0
         print(render(pno, bbox, zoom))
     else:
-        tables = json.loads((REPO / "pipeline/.cache/tables.json").read_text())
+        tables = json.loads(cardcfg.TABLES_CACHE.read_text())
         for t in tables.get(str(pno), []):
             b = t["bbox"]
             pad = [b[0] - 6, b[1] - 6, b[2] + 6, b[3] + 6]
