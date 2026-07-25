@@ -51,6 +51,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
+            html = _restore_cell_glyphs(html, t["bbox"], oracle_page)
             html = _bold_cell_leads(html, t["bbox"], oracle_page)
             html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
@@ -679,10 +680,15 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
         if band is None:
             continue
         # row's spans: in band, plus wrapped/sub-line continuations hanging
-        # below a member (the small '± 1.4%' second line)
+        # below a member (the small '± 1.4%' second line). Absorb to a
+        # FIXPOINT: a 3-pass cap only reached ~4 stacked lines, leaving the
+        # tall passage cells of the constitution-edits table (pp.140-141)
+        # unsegmentable — their docling glyph folds then survived (D41)
         chosen = [s for s in spans if s["text"].strip()
                   and band[0] <= (s["bbox"][1] + s["bbox"][3]) / 2 <= band[1]]
-        for _ in range(3):
+        grew = True
+        while grew:
+            grew = False
             for s in spans:
                 if s in chosen or not s["text"].strip():
                     continue
@@ -690,6 +696,7 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 if any(min(sb[2], m["bbox"][2]) - max(sb[0], m["bbox"][0]) > 0
                        and -1 <= sb[1] - m["bbox"][3] < 9 for m in chosen):
                     chosen.append(s)
+                    grew = True
         # pool: squash key -> span instances in x-order (cells consume L->R)
         pool: dict[str, list] = {}
         for s in sorted(chosen, key=lambda s: (s["bbox"][0], s["bbox"][1])):
@@ -821,6 +828,76 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 f"<{tg}{a}>{c2}</{tg}>" for (tg, a, _), c2 in zip(tags, cells)) + "</tr>"
             out = out.replace(r, rebuilt, 1)
     return out
+
+
+def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
+    """Glyph repair for cells _restyle_cells cannot segment (D41): tall
+    multi-line passage rows (constitution-edits table, opus-5 pp.140-141 /
+    fable-5 pp.243-245) defeat the row-band anchor, so their text stays
+    docling's — with curly quotes folded to straight and dashes to hyphens.
+
+    Repair by COLUMN alignment: a cell's lines are contiguous top-to-bottom
+    within its column, so the cell's whitespace-free fold-squash occurs as a
+    substring of the column's. When that occurrence is UNIQUE across all
+    columns, map the oracle glyphs back 1:1 over non-space chars (docling's
+    spacing kept). Squash-equality means only fold-class characters can
+    change; ambiguous or unlocatable cells are left untouched."""
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s.get("zone") != "fnref" and s["text"].strip()]
+    if not spans:
+        return html
+    # column edges = x0 clusters with enough members to be a real column
+    # start (mid-line style-boundary spans have stray x0s and must not
+    # found a column of their own)
+    clusters: dict[float, int] = {}
+    for s in spans:
+        key = next((k for k in clusters if abs(k - s["bbox"][0]) <= 2),
+                   s["bbox"][0])
+        clusters[key] = clusters.get(key, 0) + 1
+    edges = sorted(k for k, n in clusters.items() if n >= 3)
+    if not edges:
+        return html
+    cols: list[list] = [[] for _ in edges]
+    for s in spans:
+        i = max((j for j, e in enumerate(edges) if s["bbox"][0] >= e - 2), default=0)
+        cols[i].append(s)
+    col_chars = []
+    for col in cols:
+        col.sort(key=lambda s: ((s["bbox"][1] + s["bbox"][3]) / 2, s["bbox"][0]))
+        col_chars.append("".join(ch for s in col for ch in s["text"]
+                                 if not ch.isspace()))
+    col_folds = [c.translate(_QUOTE_FOLD) for c in col_chars]
+
+    import html as _h
+
+    def fix_cell(m):
+        tg, attrs, c = m.groups()
+        if "<" in c:
+            return m.group(0)
+        c_dec = _h.unescape(c)
+        sq = _squash(c_dec)
+        if len(sq) < 8:          # short cells: containment too ambiguous
+            return m.group(0)
+        hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
+                if cf.count(sq) == 1]
+        hits = [h for h in hits if h[1] >= 0]
+        if len(hits) != 1 or any(cf.count(sq) > 1 for cf in col_folds):
+            return m.group(0)
+        ci, at = hits[0]
+        true_chars = col_chars[ci][at:at + len(sq)]
+        out_chars, k = [], 0
+        for ch in c_dec:
+            if ch.isspace():
+                out_chars.append(ch)
+            else:
+                out_chars.append(true_chars[k])
+                k += 1
+        new_dec = "".join(out_chars)
+        if new_dec == c_dec:
+            return m.group(0)
+        return f"<{tg}{attrs}>{_h.escape(new_dec, quote=False)}</{tg}>"
+
+    return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", fix_cell, html, flags=re.S)
 
 
 # comparison-only fold: ALL quote variants to one class (docling and PyMuPDF
