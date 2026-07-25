@@ -32,11 +32,15 @@ function remarkBoxes() {
         const role = node.attributes?.role === 'user' ? 'user' : 'assistant';
         const label = node.attributes?.label ?? (role === 'user' ? 'User' : 'Assistant');
         node.data = { hName: 'div', hProperties: { className: ['turn', `turn-${role}`] } };
-        node.children.unshift({
-          type: 'paragraph',
-          data: { hName: 'div', hProperties: { className: ['turn-label'] } },
-          children: [{ type: 'text', value: label }],
-        });
+        // label="" = the PDF shows a bare bubble with no speaker label
+        // (claude-opus-5 pilot quotes) — emit no label element at all
+        if (label) {
+          node.children.unshift({
+            type: 'paragraph',
+            data: { hName: 'div', hProperties: { className: ['turn-label'] } },
+            children: [{ type: 'text', value: label }],
+          });
+        }
         return;
       }
       // A caption block: uniform small/muted styling attached to the
