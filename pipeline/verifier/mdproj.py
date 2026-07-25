@@ -37,8 +37,11 @@ RE_DIRECTIVE = re.compile(r"^:{3,}(\w*)(\{[^}]*\})?\s*$", re.M)
 RE_TURN_LABEL = re.compile(r'label="([^"]*)"')
 RE_CHIP = re.compile(r":chip\[([^\]]+)\]")
 RE_LINK = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
-RE_BOLD = re.compile(r"\*\*([^*\n]+)\*\*|__([^_\n]+(?:_[^_\n]+)*?)__")  # never cross lines:
-# [^*]+ once crossed newlines, so one stray '****' re-paired every later bold
+RE_BOLD = re.compile(r"\*\*((?:[^*\n]|\*[^*\n]+\*)+)\*\*|__([^_\n]+(?:_[^_\n]+)*?)__")
+# never cross lines: [^*]+ once crossed newlines, so one stray '****'
+# re-paired every later bold. The inner \*…\* alternative admits nested
+# italics ('**is slightly *less aligned* on…**', opus-5 p.79 — the PDF sets
+# BoldItalic inside a bold sentence); collectors strip the inner markers.
 RE_SUP = re.compile(r"<sup>(.*?)</sup>", re.S)
 RE_TABLE = re.compile(r"<table.*?</table>", re.S)
 RE_TAG = re.compile(r"</?[a-zA-Z][^>]*>")
@@ -196,7 +199,11 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
 
     def bold(m):
         text = m.group(1) or m.group(2)
-        sec.bolds.append((_strip_sentinels(text), pg(m)))
+        # strip italic markers BEFORE sentinel restoration: bare '*' here are
+        # markdown italics; the document's LITERAL asterisks (Claude's own
+        # markdown quoted in a transcript, opus-5 p.86) are \x03 sentinels at
+        # this point and survive the strip
+        sec.bolds.append((_strip_sentinels(text.replace("*", "")), pg(m)))
         return text
     seg = RE_BOLD.sub(bold, seg)
 

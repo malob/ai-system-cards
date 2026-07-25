@@ -245,8 +245,10 @@ def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozen
             run = exacts[t]
             if have_page.get(t, 0) >= n or have_window.get(t, 0) >= n:
                 continue
-            if t in hay and n == 1:
-                continue  # glued/segmented but present once
+            if hay.count(t) >= n:
+                continue  # glued/segmented but present (each count is a real
+                # contiguous match; n>1 needs n occurrences — 'weapons
+                # production capabilities.' ends BOTH CB leads on opus-5 p.13)
             # NOTE: a token-coverage suppression was tried here and removed —
             # it ate real drops (recall collapsed: common words elsewhere
             # covered dropped runs). Residual segmentation noise is accepted

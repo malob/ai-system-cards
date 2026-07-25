@@ -54,11 +54,16 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
                         nxt.append((pa, pb))
                 pieces = nxt
             # re-trim each piece to non-space (a split at the link edge can
-            # leave '…on ' — a space-flanked '**' is not a valid delimiter)
+            # leave '…on ' — a space-flanked '**' is not a valid delimiter).
+            # Zero-widths/soft hyphens count as space: _hyphen_join deletes
+            # them AFTER marks apply, so a ZWSP-only piece (a bullet's ​
+            # split off by a bold link, opus-5 p.79) became a literal '****'
+            # that desynced every later bold pair in the projection.
+            invis = "​­‌‍⁠﻿"
             for pa, pb in pieces:
-                while pb > pa and text[pb - 1].isspace():
+                while pb > pa and (text[pb - 1].isspace() or text[pb - 1] in invis):
                     pb -= 1
-                while pa < pb and text[pa].isspace():
+                while pa < pb and (text[pa].isspace() or text[pa] in invis):
                     pa += 1
                 if pb > pa:
                     fixed.append((kind, pa, pb, data))
@@ -255,6 +260,11 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
             else:
                 body = re.sub(r"^(\**)[●•◦▪‣○​‌ ]+", r"\1", body.lstrip("●•◦▪‣○​‌ "))
+                # the strip can leave an EMPTY bold pair when the bullet's
+                # bold run ends before a following link ('**○​** [**Reckless…',
+                # opus-5 p.79) — a literal '****' desyncs every later bold
+                # pair in the projection
+                body = re.sub(r"^\*\*\*\*\s*", "", body)
                 # lettered sub-list marker ('a.​On' — ZWSP eaten by the join):
                 # restore the space, gated on the RAW line's marker signature
                 raw0 = blk["lines"][0]["text"] if blk.get("lines") else ""

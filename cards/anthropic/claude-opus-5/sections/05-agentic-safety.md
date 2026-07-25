@@ -145,7 +145,7 @@ We developed an internal adaptive evaluation to measure the robustness of produc
 :::
 
 With auto mode enabled, across all 129 scenarios, no attack succeeded against Opus 5 in either configuration, matching the performance of Claude Sonnet 5 and Claude Mythos 5. Without safeguards, Claude Opus 5 improved on Claude Opus 4.8, reducing the attack success rate from 31.5% to 3.70% with extended thinking and from 17.8% to 4.30% without thinking—more robust than Claude Mythos 5 (29.7% with thinking). Claude Sonnet 5 remains our strongest model in this evaluation without safeguards, at 0.93% with thinking and 1.01% without.
-[^3]: Dziemian, M., et al. (2026). How vulnerable are AI agents to indirect prompt injections? Insights from a Large-Scale Public Competition. arXiv:2603.15714 https://arxiv.org/abs/2603.15714
+[^3]: Dziemian, M., et al. (2026). How vulnerable are AI agents to indirect prompt injections? Insights from a Large-Scale Public Competition. [arXiv:2603.15714 https://arxiv.org/abs/2603.15714](https://arxiv.org/abs/2603.15714)
 
 [^4]: Nasr, M., et al. (2025). The attacker moves second: Stronger adaptive attacks bypass defenses against LLM jailbreaks and prompt injections. arXiv:2510.09023. [https://arxiv.org/abs/2510.09023](https://arxiv.org/abs/2510.09023).
 

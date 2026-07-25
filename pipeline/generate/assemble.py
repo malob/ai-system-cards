@@ -611,6 +611,24 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                      if b["color"] == PLACEHOLDER
                      and 6 < (b["bbox"][3] - b["bbox"][1]) < 30]
     links = page["links"]["uri"] + page["links"]["goto"]
+
+    def _full_span_hit(l, s):
+        sx0, sy0, sx1, sy1 = s["bbox"]
+        scy = (sy0 + sy1) / 2
+        sw = max(sx1 - sx0, 0.1)
+        return any(r[1] - 1 <= scy <= r[3] + 1
+                   and (min(sx1, r[2]) - max(sx0, r[0])) / sw > 0.5
+                   for r in l.get("rects", []))
+
+    # links that already own a whole span somewhere in this BLOCK never fall
+    # back to partial-span mapping on another span: a wrapped URL carries a
+    # ~3pt sliver rect at the previous line's edge (fable-5 fn6 p.83), and the
+    # fallback bit the sliver and linked the preceding 'arXiv:…' token
+    block_full = {i for i, l in enumerate(links)
+                  if any(_full_span_hit(l, s)
+                         for ln in block.get("lines", [])
+                         for _, _, s in ln["segs"])}
+
     for li, line in enumerate(block.get("lines", [])):
         if li:
             # line-join separator — but never stack onto whitespace the spans
@@ -743,6 +761,7 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         b2 = start + i1 - (len(seg) - len(seg.rstrip()))
                         if b2 > a2:
                             marks.append(("placeholder", a2, b2, pi))
+            linked = False
             for l in links:
                 # span belongs to a link if its vertical center sits in the
                 # rect's y-band AND >50% of its width overlaps the rect — recovers
@@ -756,7 +775,47 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                     target = l.get("uri") or "DEST:{}:{}".format(
                         l.get("dest_page", 0), int(l.get("dest_y", -1)))
                     marks.append(("link", m_start, m_end, target))
+                    linked = True
                     break
+            if not linked:
+                # PARTIAL-span link: a URL embedded mid-span (plain-black
+                # footnote URLs, opus-5 p.72 — fable-5 set them as their own
+                # colored spans, so full-span overlap never missed there).
+                # The rect sits INSIDE the span; map its x-range to chars
+                # like pills do, snapped to non-space.
+                sx0, sy0, sx1, sy1 = s["bbox"]
+                scy = (sy0 + sy1) / 2
+                for lidx, l in enumerate(links):
+                    if lidx in block_full:
+                        continue
+                    hit = None
+                    for r in l.get("rects", []):
+                        rw = max(r[2] - r[0], 0.1)
+                        ov = min(sx1, r[2]) - max(sx0, r[0])
+                        # rw >= 6: a rect too narrow to hold a character is a
+                        # wrap sliver, not an anchor
+                        if (r[1] - 1 <= scy <= r[3] + 1 and rw >= 6
+                                and ov > 0.8 * rw
+                                and rw < 0.9 * max(sx1 - sx0, 0.1)):
+                            hit = r
+                            break
+                    if hit is None:
+                        continue
+                    cw = (sx1 - sx0) / max(1, len(t))
+                    i0 = max(0, int((hit[0] - sx0) / cw))
+                    i1 = min(len(t), int((hit[2] - sx0) / cw + 0.5))
+                    while i0 > 0 and not t[i0 - 1].isspace():
+                        i0 -= 1
+                    while i1 < len(t) and not t[i1].isspace():
+                        i1 += 1
+                    seg = t[i0:i1]
+                    a2 = start + i0 + (len(seg) - len(seg.lstrip()))
+                    b2 = start + i1 - (len(seg) - len(seg.rstrip()))
+                    if b2 > a2:
+                        target = l.get("uri") or "DEST:{}:{}".format(
+                            l.get("dest_page", 0), int(l.get("dest_y", -1)))
+                        marks.append(("link", a2, b2, target))
+                        break
     text = "".join(text_parts)
     # drop emphasis over invisible-only text: a ZWSP-only bold serializes to
     # '**​**' → '****' after invisible-stripping, and a literal '****'
