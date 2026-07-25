@@ -102,10 +102,17 @@ New typed baselines: **opus T1 13**, **fable L1 31 / T1 44**.
   deploys BOTH the opus-5 card and fable-5's collateral fidelity fixes).
 - **Typed minors, sweep-noted (non-blocking):** docling-lost space in a
   restored cell (fable p.243 `” —robust`, spacing only — the repair
-  deliberately keeps docling spacing); the site renderer's typographer
-  globally curls straight apostrophes (fable p.310 `you'd` → `you’d` served;
-  md is faithful; PRE-EXISTING renderer behavior, owner may want a
-  renderer-config decision someday).
+  deliberately keeps docling spacing; owner adjudication pending). The
+  renderer typographer question is DECIDED (owner, 2026-07-25): keep the
+  educator as-is — the affected interview-table text isn't verbatim-formatted
+  in the source either; md/card.md/llms.txt remain the fidelity artifacts.
+- **In-table page-marker overlap (owner-spotted, FIXED):** markers between
+  table rows were foster-parented out of the table and stacked at its top
+  (nine-marker smear beside fable's appendix interview table, live since
+  June). cards.js now anchors an in-table marker inside the following row's
+  first cell (contained by `.doc`, so the table's scroll wrapper can't clip
+  it) — all 15 in-table markers across both cards verified at their rows,
+  zero overlaps.
 - **Next milestone:** a third document from a *different vendor* (different PDF
   producer) — the real test of the oracle/manifest architecture beyond Google-Docs
   exports.

@@ -41,16 +41,25 @@ export function stitchedMarkdown(vendor, slug) {
 // (remark-gfm cannot parse [^N] inside raw HTML).
 export function siteMarkdown(vendor, slug, assetBase) {
   let md = stitchedMarkdown(vendor, slug);
+  const pagemark = (n) =>
+    `<a class="pagemark" id="p-${n}" href="${assetBase}/source.pdf#page=${n}" ` +
+    `title="Page ${n} of the source PDF" aria-label="Page ${n} of the source PDF" ` +
+    `data-page="p.${n}" target="_blank" rel="noopener"></a>`;
   // the page template supplies the title/date, so drop the document's own
   // leading H1 and a standalone date line right after it
   md = md.replace(/^(<!--[\s\S]*?-->\s*)*# .*\n+(?:\*?[A-Z][a-z]+ \d{1,2}, \d{4}\*?\n+)?/, '$1');
+  // a marker between table rows would be FOSTER-PARENTED out of the table
+  // by the HTML parser (an <a> between </tr> and <tr> is invalid), landing
+  // every such anchor at the table top — nine of them overlapped into a
+  // smear beside the fable appendix interview table (pp.307–316). Anchor it
+  // inside the following row's first cell instead: same margin X (its
+  // containing block is .doc, so .table-wrap's overflow can't clip it),
+  // and its static Y is the row it belongs to.
   md = md.replace(
-    /<!--\s*p\.(\d+)\s*-->/g,
-    (_, n) =>
-      `<a class="pagemark" id="p-${n}" href="${assetBase}/source.pdf#page=${n}" ` +
-      `title="Page ${n} of the source PDF" aria-label="Page ${n} of the source PDF" ` +
-      `data-page="p.${n}" target="_blank" rel="noopener"></a>`,
+    /<\/tr><!--\s*p\.(\d+)\s*--><tr>(<t[dh][^>]*>)/g,
+    (_, n, cell) => `</tr><tr>${cell}${pagemark(n)}`,
   );
+  md = md.replace(/<!--\s*p\.(\d+)\s*-->/g, (_, n) => pagemark(n));
   md = md.replace(/<!--[\s\S]*?-->/g, '');
   md = md.replace(/\]\(assets\/figures\//g, `](${assetBase}/figures/`);
   // A footnote whose only refs sit inside raw-HTML table cells is invisible
