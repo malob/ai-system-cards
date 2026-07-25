@@ -44,6 +44,24 @@ line inside a mono box (p.85); adjacent `.hl` spans split at line wraps
 
 **Conclusion:** the sweep design transfers to a new document unchanged; the
 rulebook needed only path/page-map/accepted-list edits. Every major had a
-mechanical class fix — none required hand-editing output. Round 2 (fix
-verification + rotating sample) ran after the fix batch; see git history for
-its result.
+mechanical class fix — none required hand-editing output.
+
+## Round 2 (same day) — fix verification + rotating sample
+
+28 units (`findings-round2.jsonl`): all 13 round-1 fix pages re-inspected
+against fresh post-fix slices/served.html (`pipeline/.cache/opus-sweep2/`),
+plus a 15-page rotating sample (3, 13, 20, 33, 48, 60, 66, 73, 91, 112, 126,
+143, 155, 175, 186). **All 13 fixes verified in place with no nearby
+regressions** — including an every-row check of the p.69 transposition and the
+p.148–149 stitched-table shape. Sample: 14/15 clean; **1 new confirmed major
+(p.143)** — the turn serializer's short-line fallback split "ARGH ARGH ARGH." |
+"OK. Gun to head: …" into two paragraphs although the oracle shows them
+y-contiguous (one tight hard return) inside a turn whose real paragraphs are
+gap-separated. Class fix in `serialize.py`: the short-line fallback applies
+only to turns with NO gap-recorded breaks (the case it was built for — fable
+p.39, opus p.93); when the gap signal exists it is authoritative. Verified:
+fable-5 byte-identical, opus-5 diff is exactly the p.143 join, both gates at
+baseline (0 majors; T1 36 / L1 31 + T1 66), DOM render matches the crop's
+grouping. New source-faithful notes for the rulebook: p.69 "benign tasks.."
+double period; p.3 "goal.Monitoring"; p.126 unclosed quote + "PT mode"; p.112
+item-6 period outside bold.

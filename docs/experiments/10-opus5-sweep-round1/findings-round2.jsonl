@@ -1,0 +1,28 @@
+{"page": 10, "status": "clean", "note": "fix verified: '1.1. Training data and process' renders as <h3 id=11-training-data-and-process>, same tier as 1.2-1.5 (all h3); links, prose, knowledge-cutoff paragraph all intact"}
+{"page": 14, "status": "clean", "note": "fix verified: 'Autonomy threat model 2: Risks from automated R&D in key domains.' is its own <p><strong> paragraph, matching threat model 1; bolds, section links, 2.1.3.2 heading intact"}
+{"page": 44, "status": "clean", "note": "fix verified: both a./b./c. sub-lists in the UK AISI blockquote render as <ol type=\"a\"> with no literal letter prefixes in li text; blockquote nesting, item text, and p.44->45 seam all correct"}
+{"page": 83, "status": "clean"}
+{"page": 104, "status": "clean"}
+{"page": 137, "status": "clean"}
+{"page": 138, "status": "clean"}
+{"page": 13, "status": "clean"}
+{"page": 20, "status": "clean"}
+{"page": 33, "status": "clean"}
+{"page": 48, "status": "clean"}
+{"page": 60, "status": "clean"}
+{"page": 66, "status": "clean"}
+{"page": 52, "status": "clean", "note": "fix verified: Table 4.1.1.A rows/cells all match zoom-5 crop — 5 model rows in PDF order, every value under the correct column (API-no-sysprompt vs Claude.ai), bold 99.20%/97.46% and underlined 97.09%/98.79% placed exactly as printed; no duplicated or lost cell text; caption, prose, headings, claude.ai link intact"}
+{"page": 56, "status": "clean", "note": "fix verified: both child-safety tables match zoom-5 crops cell-by-cell — 4.2.A two-tier header (API/Claude.ai colspan=2 sub-header row) with all 5 model rows' values under the correct single-turn harmful/benign columns, 4.2.B likewise; bold/underline best/second-best markings placed exactly as printed; no scrambled rows, no duplicated/lost cells; captions and trailing prose intact"}
+{"page": 69, "status": "clean", "note": "fix verified: column transposition gone — Table 5.1.1.A checked cell-by-cell against zoom-5 crop, every Malicious(refusal) vs Dual-use(success) value under its correct column for all 4 rows, bold 92.37%/99.82%x2 and underlined 90.25%/99.64% exactly as printed; Table 5.1.2.A all 5 refusal rates correct with bold 93.75%/underlined 85.71%; captions, 5.1.2 heading, bullet list intact. Note: trailing double period in 'benign tasks..' is IN the PDF (verdict source-faithful, not a defect)"}
+{"page": 149, "status": "clean", "note": "fix verified: stitched 8.1.A table (host p.148 + continuation p.149) is one 6-column table, every row incl. rowspan HLE pair sums to 6; continuation rows ARC-AGI-2/-3 carry the host's colspan=2 label shape with 90.4/72.1/-/92.5 and 30.2(high)/1.5/-/7.8 under the correct Opus 5/Opus 4.8/Fable 5/GPT 5.6 Sol columns (checked against p148+p149 crops); no column shift anywhere in the 20 rows; p.150 correctly contributes no rows (figure page); caption link, 8.2 bullets, fn 12-14 sidenote defs, Section 9.3 anchor all intact. ARC-AGI-2 label is td+b vs siblings' th - rendered weight matches PDF (rulebook rule 5, not flagged)"}
+{"page": 81, "status": "clean", "note": "fix verified: fabricated link gone — PDF p.81 has 0 link annotations and served region has only pagemark/hanchor infrastructure links; neighboring p.80's two real internal links (undermining oversight -> #671-shade-arena, sandbagging -> #67-...) survive intact"}
+{"page": 193, "status": "clean", "note": "fix verified: mark coalescing no longer bridges non-space gaps — served.html has three separate <code> spans (chartjs/Chart.js, processing/p5.js, markedjs/marked) with commas/and outside, and diegomura__react-pdf-1552 as its own span, matching PDF; stitched p.192-193 code box complete incl. wrapped zdnet URL; 'None' fence-chrome lines are the tracked open minor, not re-reported"}
+{"page": 175, "status": "clean", "note": "prose-only page (GDP.pdf eval); all four paragraphs verbatim vs render incl. em-dashes and all percentages (83.4/85.5/77.5/84.8/81.8/87.3); p.174->175 seam joins mid-sentence in one <p> with inline pagemark; PDF has 0 link annotations, output adds none"}
+{"page": 186, "status": "clean", "note": "h3 8.16 + h4 8.16.1 tiers correct; paragraph verbatim with footnote refs 33/34/35 at exact PDF superscript positions and em-dashes intact; figure asset p186-1.png is the correct GMMLU chart (92.9/90.9/93.2/89.0/92.5, same labels/colors); caption bold extent matches ('[Figure 8.16.1.A] GMMLU average accuracy.' bold, rest plain); footnote defs 33-35 present with correct arxiv URLs as live links"}
+{"page": 3, "status": "flagged", "findings": [{"severity": "minor", "construct": "paragraph", "desc": "'independent goal.Monitoring' missing space after period, carried into md and served.html", "evidence": "crop p3-72x430.png shows the PDF itself has 'goal.Monitoring' with no space; md and served.html line 15 match", "verdict": "source-faithful"}]}
+{"page": 73, "status": "clean"}
+{"page": 91, "status": "clean"}
+{"page": 112, "status": "clean"}
+{"page": 126, "status": "clean"}
+{"page": 143, "status": "flagged", "findings": [{"severity": "major", "construct": "turn", "desc": "Transcript 7.5.1.C: 'ARGH ARGH ARGH.' and 'OK. Gun to head: the answer is... Hmm. [...]' are one block joined by a plain line break in the PDF (normal line-height, same leading as within the GRRRR paragraph) but the conversion splits them into two paragraphs, rendering a paragraph gap not in the source", "evidence": "crop p143-80x520.png shows normal line spacing between the two lines vs clear blank-line gaps between other segments; served.html renders <p>ARGH ARGH ARGH.</p><p>OK. Gun to head...</p>", "verdict": "confirmed"}]}
+{"page": 155, "status": "clean"}
