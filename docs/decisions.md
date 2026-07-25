@@ -603,3 +603,17 @@ kin are defects, not canon; D28's freeze governs unexplained drift, not
 owner-approved fidelity fixes. Both cards' typed T1 baselines drop accordingly
 (re-measure at the gate after the repair; spot re-sweep the affected pages).
 The verifier calibration corpus (D5 refs) is untouched.
+
+## D42 — owner adjudication of the opus-5 deferred minors: fix all (2026-07-25)
+
+Review walkthrough (one item at a time, PDF crop vs preview side-by-side).
+All eight deferred items approved for class-level fixes: D41 glyph repair;
+italic-in-table-cell; p.75 duplicate-cell-text bold matching; p.31 stacked
+cell lines → <br> (conservative geometry, owner asked for regression
+vigilance); p.64–65 indented quotations → blockquote; pp.191–193 code-box
+language chrome → fence info string (verifier projection typed accordingly);
+p.85 mono-box blank lines from line-grid gaps; p.138 .hl coalescing across
+line wraps (hl-scoped, code marks stay split). The p.31/p.64 heuristics and
+any fable canon changes are guarded by per-fix both-cards diff review +
+gates + spot re-sweep. Push: owner reviews batch results first, then pushes
+(D13 unchanged).
