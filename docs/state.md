@@ -113,6 +113,20 @@ New typed baselines: **opus T1 13**, **fable L1 31 / T1 44**.
   first cell (contained by `.doc`, so the table's scroll wrapper can't clip
   it) — all 15 in-table markers across both cards verified at their rows,
   zero overlaps.
+- **Owner scroll-review round (2026-07-25 afternoon, post-batch):** the owner's
+  manual scroll found FIVE more issues — all fixed same-day, each with the
+  D25 loop: (1) in-table page-marker overlap (foster-parenting smear — renderer
+  fix, cards.js); (2) intra-cell size tiers flattened (header parentheticals,
+  '(Helpful-only)' — <br> at size drops + <small>, 38 sites both cards);
+  (3) blank lines lost in band-less cells (constitution frequency column —
+  _cell_blank_lines column-alignment pass, 11 sites); (4) hl highlight split
+  at the page seam (joined; marker lives inside the span); (5) same-bubble
+  turn split at nested code boxes (p.93 [Assistant] bubble — turn_cont merge;
+  labeled resumes like fable's 'Assistant, turn N:' unchanged). Lesson for the
+  methodology: the sweep stack verifies per-page content faithfully but is
+  weak on VISUAL-LAYOUT classes (cross-element, tier typography, bubble
+  scoping) — a human scroll pass belongs in the onboarding procedure before
+  certification.
 - **Next milestone:** a third document from a *different vendor* (different PDF
   producer) — the real test of the oracle/manifest architecture beyond Google-Docs
   exports.
