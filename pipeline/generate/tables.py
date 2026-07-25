@@ -913,8 +913,11 @@ def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
     col_chars = []
     for col in cols:
         col.sort(key=lambda s: ((s["bbox"][1] + s["bbox"][3]) / 2, s["bbox"][0]))
+        # zero-widths are TRANSPARENT to alignment: a lone ZWSP span between
+        # 'Inserts:' and its quote (fable p.243 row 3) broke contiguity and
+        # the cell silently kept its docling folds
         col_chars.append("".join(ch for s in col for ch in s["text"]
-                                 if not ch.isspace()))
+                                 if not ch.isspace() and ch not in _INVIS))
     col_folds = [c.translate(_QUOTE_FOLD) for c in col_chars]
 
     import html as _h
@@ -924,7 +927,7 @@ def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
         if "<" in c:
             return m.group(0)
         c_dec = _h.unescape(c)
-        sq = _squash(c_dec)
+        sq = _squash(c_dec).translate(_INVIS_DEL)
         if len(sq) < 8:          # short cells: containment too ambiguous
             return m.group(0)
         hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
@@ -936,7 +939,7 @@ def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
         true_chars = col_chars[ci][at:at + len(sq)]
         out_chars, k = [], 0
         for ch in c_dec:
-            if ch.isspace():
+            if ch.isspace() or ch in _INVIS:
                 out_chars.append(ch)
             else:
                 out_chars.append(true_chars[k])
@@ -948,6 +951,10 @@ def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
 
     return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", fix_cell, html, flags=re.S)
 
+
+# zero-width/invisible characters, transparent to glyph-repair alignment
+_INVIS = "​‌‍⁠﻿­"
+_INVIS_DEL = {ord(c): None for c in _INVIS}
 
 # comparison-only fold: ALL quote variants to one class (docling and PyMuPDF
 # can disagree on single vs double for the same glyph), dashes to hyphen
