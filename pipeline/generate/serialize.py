@@ -419,7 +419,21 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 else:
                     raw = "\n".join(_code_raw(cl_) for _, cl_ in segs_cl)
                     body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
-            out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
+            # same-bubble continuation (assemble's turn_cont, D42): splice
+            # this body into the previous :::turn instead of opening a
+            # second bubble for one physical box. Look back past block
+            # separators; anything else between (a page marker) vetoes the
+            # splice and the turn falls back to its own directive.
+            j = len(out) - 1
+            while j >= 0 and out[j] == "\n":
+                j -= 1
+            if (blk.get("turn_cont") and j >= 0
+                    and out[j].startswith(":::turn{")
+                    and out[j].endswith("\n:::\n")):
+                out[j] = out[j][: -len(":::\n")] + "\n" + body + "\n:::\n"
+                del out[j + 1:]
+            else:
+                out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
             if blk.get("code_lines") and blk.get("code_cont"):
                 # marker after the box, never inside it (fence convention)
                 marker_if_new(blk["code_cont"]["page"])

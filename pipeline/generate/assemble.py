@@ -612,6 +612,25 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             blk["breaks"] = []                        # old breaks indexed the code lines
             last_turn = blk
 
+    # consecutive turns sharing ONE physical bubble (identical turn-fill box)
+    # are one turn interrupted by nested code boxes — the [Assistant] bubble
+    # that contains thinking box + [tool use] pill + output box + narrator
+    # line (opus-5 p.93, owner-spotted, D42). A genuine LABEL lead starts a
+    # new logical turn even in a shared box (fable pp.39-43 'Assistant,
+    # turn N:' — accepted rendering); label-less continuations merge back:
+    # the serializer splices a turn_cont body into the previous bubble.
+    prev_turn = None
+    for blk in blocks:
+        if blk["type"] == "turn":
+            if (prev_turn is not None and blk.get("box") is not None
+                    and blk.get("box") == prev_turn.get("box")
+                    and blk.get("lines")
+                    and not _label_lead(blk["lines"][0])):
+                blk["turn_cont"] = True
+            prev_turn = blk
+        else:
+            prev_turn = None
+
     figures = figures[len(figures_emitted):] if figures else figures
     if not fig_done and figures:
         for f in figures:
