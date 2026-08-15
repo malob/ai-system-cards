@@ -461,6 +461,9 @@ def tb2_cell_order(sections_text, oracle_pages, page_range, toc_pages) -> list[d
         # SINGLE ('dramatic acceleration', the T1-owned residual class) and
         # TB2's charter is ORDER, not glyph fidelity
         s = re.sub(r"['\"]", "", s)
+        # bullet glyphs are STRUCTURE, not order: a cell rendering its list
+        # as <ul>/<li> carries no glyph while the span stream still does
+        s = re.sub(r"[●•◦▪‣○■□]", "", s)
         return re.sub(r"[\s\-–—­​‌]+", "", s)
 
     streams_cache: dict[int, list[str]] = {}

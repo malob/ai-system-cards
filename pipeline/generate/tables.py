@@ -468,6 +468,99 @@ def _bullet_breaks(html: str) -> str:
     return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", fix, html, flags=re.S)
 
 
+def _cell_lists(html: str, ctx) -> str:
+    """In-cell bulleted lists become REAL lists (owner-approved 2026-08-15).
+
+    The PDF sets these with a hanging indent: the glyph sits at the cell's
+    own left edge and the bullet's text — including its follow-on paragraphs
+    — is indented one step further. Rendered as literal '●' glyphs joined by
+    <br>, that indent is lost and a bullet's sub-paragraphs read as
+    cell-level text (p.113 Table 3.10.A, p.155; same shape on both certified
+    cards). Each cell segment is located in the source spans through the
+    shared alignment, so its x0 is exact: a glyph segment opens an <li>, a
+    segment indented past the cell edge continues the current <li>, one back
+    at the edge closes the list. Cells that cannot be located are untouched.
+    """
+    import html as _h
+    G = "●•◦▪‣○■□"
+    if not any(g in html for g in G) or ctx is None:
+        return html
+
+    out, pos = [], 0
+    for m in re.finditer(r"(<t[hd][^>]*>)(.*?)(</t[hd]>)", html, re.S):
+        out.append(html[pos:m.start()])
+        pos = m.end()
+        inner = m.group(2)
+        if not any(g in inner for g in G):
+            out.append(m.group(0))
+            continue
+        matched = _match_cell_chars(_h.unescape(re.sub(r"<[^>]+>", "", inner)), ctx)
+        if matched is None:
+            out.append(m.group(0))
+            continue
+        srcs, _raw = matched
+        # a cell rebuilt by _split_cell_paragraphs is wrapped in <p>…</p>;
+        # splitting on <br> would leave the closing tag inside the last <li>
+        # (an empty trailing paragraph in the DOM)
+        wrapped = False
+        if inner.startswith("<p>") and inner.endswith("</p>"):
+            depth, ok = 0, True
+            for mm in re.finditer(r"<p>|</p>", inner):
+                depth += 1 if mm.group(0) == "<p>" else -1
+                if depth == 0 and mm.end() < len(inner):
+                    ok = False
+                    break
+            if ok:
+                inner, wrapped = inner[3:-4], True
+        parts = [p for p in re.split(r"<br\s*/?>(?:\s*<br\s*/?>)?", inner) if p.strip()]
+        info, ordinal = [], 0
+        ok = True
+        for p2 in parts:
+            plain = _h.unescape(re.sub(r"<[^>]+>", "", p2))
+            sq = (_squash(plain).translate(_INVIS_DEL).translate(_BULLET_DEL)
+                  .translate(ctx["LOW9"]).translate(_QALL))
+            if ordinal >= len(srcs) or not sq:
+                ok = False
+                break
+            sp = srcs[ordinal]
+            glyph = plain.strip()[:1] in G
+            info.append((p2, sp["bbox"][0], glyph))
+            ordinal += len(sq)
+        if not ok or not any(g for _, _, g in info):
+            out.append(m.group(0))
+            continue
+        base = min(x0 for _, x0, _ in info)
+        items, lead, tail = [], [], []
+        for p2, x0, glyph in info:
+            body = re.sub(r"^((?:<[^>]+>)*)[" + G + r"\s\u200b]+", r"\1", p2.strip())
+            if not re.sub(r"<[^>]+>", "", body).strip():
+                continue          # a segment that strips to nothing adds no <p>
+            if glyph:
+                items.append([body])
+            elif items and x0 > base + 6:
+                items[-1].append(body)
+            elif items:
+                tail.append(p2)
+            else:
+                lead.append(p2)
+        if not items:
+            out.append(m.group(0))
+            continue
+        lis = "".join(
+            "<li>" + (parts_[0] if len(parts_) == 1
+                      else "".join(f"<p>{x}</p>" for x in parts_)) + "</li>"
+            for parts_ in items)
+        def _blk(segs):
+            if not segs:
+                return ""
+            return ("".join(f"<p>{x}</p>" for x in segs) if wrapped
+                    else "<br><br>".join(segs) + "<br><br>")
+        rebuilt = _blk(lead) + "<ul>" + lis + "</ul>" + _blk(tail)
+        out.append(m.group(1) + rebuilt + m.group(3))
+    out.append(html[pos:])
+    return "".join(out)
+
+
 def _dedup_cascaded_cells(html: str) -> str:
     """Docling cascade bug (7.4.1.A/B): each cell also contains every LATER
     row's same-column content (bullet counts 12/9/6/3 for a uniform-3 table).
@@ -1441,6 +1534,130 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 f"<{tg}{a}>{c2}</{tg}>" for (tg, a, _), c2 in zip(tags, cells)) + "</tr>"
             out = out.replace(r, rebuilt, 1)
     return out
+
+
+def _cell_align_ctx(parts, oracle_page=None):
+    """Per-table alignment context: the column / interval character streams a
+    cell's text is matched against, plus their span and raw-char parallels.
+    Factored out of _cell_blank_lines so other cell repairs (in-cell list
+    reconstruction) can locate a cell's characters in the source spans
+    instead of re-deriving lines from scratch."""
+    """Blank lines INSIDE cells the row-band machinery can't reach (tall
+    constitution rows): '80% (Claude Opus 5)' | gap | '12–65% (other
+    models)' reads as one run (owner-spotted, D42). Column-align the cell's
+    visible text to its span run (same alignment as _restore_cell_glyphs,
+    but tag-tolerant and char→span indexed); where consecutive chars cross
+    spans separated by a full line-height gap, the joining space becomes
+    <br><br>. Ambiguous or unlocatable cells are left alone."""
+    if oracle_page is not None:          # single-page call site
+        parts = [(parts, oracle_page)]
+    spans = []
+    for i, (bx, pg) in enumerate(parts):
+        for s in _table_spans(pg, bx):
+            if (s.get("zone") == "fnref" or not s["text"].strip()
+                    or s["text"].strip() in tuple("●•◦▪‣○■□")):
+                continue
+            if i:   # keep later pages after earlier ones in every ordering
+                s = {**s, "bbox": [s["bbox"][0], s["bbox"][1] + 10000 * i,
+                                   s["bbox"][2], s["bbox"][3] + 10000 * i]}
+            spans.append(s)
+    if not spans:
+        return None
+    clusters: dict[float, int] = {}
+    for s in spans:
+        key = next((k for k in clusters if abs(k - s["bbox"][0]) <= 2),
+                   s["bbox"][0])
+        clusters[key] = clusters.get(key, 0) + 1
+    edges = sorted(k for k, n in clusters.items() if n >= 3)
+    if not edges:
+        return None
+    cols: list[list] = [[] for _ in edges]
+    for s in spans:
+        i = max((j for j, e in enumerate(edges) if s["bbox"][0] >= e - 2), default=0)
+        cols[i].append(s)
+    def _colify(mem, by_band=False):
+        mem = sorted(mem, key=(lambda s: (round((s["bbox"][1] + s["bbox"][3]) / 8),
+                                          s["bbox"][0])) if by_band
+                     else (lambda s: ((s["bbox"][1] + s["bbox"][3]) / 2, s["bbox"][0])))
+        chars, srcs = [], []
+        for s in mem:
+            for ch in s["text"]:
+                # glyph chars can be GLUED into a text span ('●​No user…')
+                # and QUOTE glyphs fold unpredictably (docling turns double
+                # quotes into singles — the p.13 'dramatic acceleration'
+                # cell) — both dropped from BOTH sides of the alignment
+                # quote glyphs are KEPT (folded only for comparison) so the
+                # arrays stay parallel with the cell's chars and docling's
+                # fold can be repaired from the span's true glyph
+                if (not ch.isspace() and ch not in _INVIS
+                        and ch not in "●•◦▪‣○■□"):
+                    chars.append(ch)
+                    srcs.append(s)
+        return "".join(chars), srcs
+
+    col_chars, col_spans = [], []
+    for col in cols:
+        chars, srcs = _colify(col)
+        col_chars.append(chars)
+        col_spans.append(srcs)
+    # low-9 comma ‚ folds locally (docling normalizes it to ',' in cells;
+    # the p.113 'standard‚' broke alignment mid-cell) — _QUOTE_FOLD itself
+    # stays untouched, other repairs depend on its exact reach
+    _LOW9 = str.maketrans({"‚": ","})
+    col_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9).translate(_QALL)
+                 for c in col_chars]
+    # FALLBACK families: pairwise edge intervals in band order — a cell whose
+    # sub-structure spans two x0 tiers (an intro line at the cell edge plus
+    # bullet text at a hanging indent, Table 3.10.A) matches no single-edge
+    # column. Tried only when the canon single-column match fails, so
+    # previously-matching cells keep their exact behavior.
+    int_chars, int_spans = [], []
+    seen_int = set()
+    for i in range(len(edges)):
+        for j in range(i + 1, len(edges) + 1):
+            right = edges[j] - 2 if j < len(edges) else 1e9
+            mem = [s for s in spans if edges[i] - 2 <= s["bbox"][0] < right]
+            if len(mem) < 2:
+                continue
+            chars, srcs = _colify(mem, by_band=True)
+            if chars in seen_int:
+                continue
+            seen_int.add(chars)
+            int_chars.append(chars)
+            int_spans.append(srcs)
+    int_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9).translate(_QALL)
+                 for c in int_chars]
+
+    import html as _h
+    return {"col_chars": col_chars, "col_spans": col_spans, "col_folds": col_folds,
+            "int_chars": int_chars, "int_spans": int_spans, "int_folds": int_folds,
+            "edges": edges, "spans": spans, "LOW9": _LOW9}
+
+
+def _match_cell_chars(plain: str, ctx: dict):
+    """(srcs, raw) for a cell's visible characters, or None when the cell
+    cannot be located unambiguously. Same matcher _cell_blank_lines uses."""
+    if ctx is None:
+        return None
+    sq = (_squash(plain).translate(_INVIS_DEL).translate(_BULLET_DEL)
+          .translate(ctx["LOW9"]).translate(_QALL))
+    if len(sq) < 8:
+        return None
+    col_folds, int_folds = ctx["col_folds"], ctx["int_folds"]
+    hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds) if cf.count(sq) == 1]
+    hits = [h for h in hits if h[1] >= 0]
+    if len(hits) == 1 and not any(cf.count(sq) > 1 for cf in col_folds):
+        ci, at = hits[0]
+        return ctx["col_spans"][ci][at:at + len(sq)], ctx["col_chars"][ci][at:at + len(sq)]
+    if hits or any(cf.count(sq) > 1 for cf in col_folds):
+        return None
+    ihits = sorted(((len(int_folds[ci]), ci, int_folds[ci].find(sq))
+                    for ci in range(len(int_folds)) if int_folds[ci].count(sq) == 1))
+    ihits = [h for h in ihits if h[2] >= 0]
+    if not ihits:
+        return None
+    _, ci, at = ihits[0]
+    return ctx["int_spans"][ci][at:at + len(sq)], ctx["int_chars"][ci][at:at + len(sq)]
 
 
 def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:

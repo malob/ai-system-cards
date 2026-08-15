@@ -258,6 +258,7 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 out[-1]["html"] = tables._bullet_breaks(
                     tables.merge_continuation_rows(merged))
                 out[-1]["last_page"] = blk["page"]  # chain across many pages
+                out[-1].setdefault("parts", []).extend(blk.get("parts", []))
                 continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "code"
                 and out[-1]["type"] == "code"):
@@ -464,6 +465,15 @@ def main():
         assemble.assign_list_levels(blocks)
         fn_blocks = [bl for bl in blocks if bl["type"] == "footnote"]
         blocks = stitch([bl for bl in blocks if bl["type"] != "footnote"]) + fn_blocks
+        # in-cell bulleted lists are built on the COMPLETE logical table, so a
+        # bullet split by a page break stays one <li> (owner-approved
+        # 2026-08-15). Per-fragment construction produced two <ul>s with the
+        # seam paragraph stranded between them.
+        for bl in blocks:
+            if bl["type"] == "table_html" and bl.get("parts"):
+                ctx = tables._cell_align_ctx(
+                    [(bx, pages[pg - 1]) for bx, pg in bl["parts"]])
+                bl["html"] = tables._cell_lists(bl["html"], ctx)
         # a mid-page start suppresses the leading page marker (the previous
         # section already carries it — v1's shared-page convention, P1-checked)
         md, _ = serialize.serialize_blocks(blocks, page_of_prev_block=(a if start_midpage else -1),

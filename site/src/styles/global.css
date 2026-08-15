@@ -673,6 +673,16 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
   font-variant-numeric: lining-nums tabular-nums;
 }
 
+/* Lists inside table cells: the PDF sets these with a hanging indent, so the
+   cell reads as a list, not a run of glyph-prefixed lines (owner-approved
+   2026-08-15). Tighter than body lists — a cell is already a small column —
+   and the last item loses its trailing margin so rows stay compact. */
+.article td ul, .article th ul { padding-left: 1.1em; margin: 0.2em 0 0; }
+.article td li, .article th li { margin: 0 0 0.35em; }
+.article td li:last-child, .article th li:last-child { margin-bottom: 0; }
+.article td li > p, .article th li > p { margin: 0 0 0.5em; }
+.article td li > p:last-child, .article th li > p:last-child { margin-bottom: 0; }
+
 .article th, .article td {
   text-align: left;
   vertical-align: top;
