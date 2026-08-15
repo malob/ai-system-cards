@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import re
+import shlex
 import sys
 from pathlib import Path
 
@@ -33,6 +34,24 @@ OUT = CARD / "sections"
 SEED = [3, 19, 20, 26, 39, 40, 41, 42, 43, 44, 74, 95, 100, 107, 118, 139,
         235, 236, 252, 253, 309, 310, 311, 318, 319]
 TOC = cardcfg.TOC_PAGES
+
+
+def verifier_command(*, full: bool, section_prefixes: list[str]) -> str:
+    """Shell-safe verifier handoff for this process's selected card.
+
+    A full generation must run the literal WORKTREE gate: passing section
+    prefixes would intentionally disable document-wide P1 and stale-acceptance
+    checks. Partial generation keeps the absolute-directory + prefix form.
+    """
+    command = [
+        "env", f"CARD={cardcfg.CARD_ID}", "uv", "run", "--with", "pymupdf",
+        "python", "pipeline/verifier/calibrate.py",
+    ]
+    if full:
+        command.append("WORKTREE")
+    else:
+        command.extend([str(OUT), "--sections", *section_prefixes])
+    return shlex.join(command)
 
 
 def section_ranges() -> list[tuple[str, int, int]]:
@@ -605,8 +624,8 @@ def main():
     (cardcfg.CACHE / "genpages.json").write_text(json.dumps(all_pages))
     print(f"\nwrote {len(written)} files to {OUT}")
     print("gate with:")
-    names = " ".join(sorted({n.split('-')[0] for n, _ in written}))
-    print(f"  uv run --with pymupdf python pipeline/verifier/calibrate.py {OUT} --sections {names}")
+    prefixes = sorted({n.split('-')[0] for n, _ in written})
+    print("  " + verifier_command(full=args.all, section_prefixes=prefixes))
 
 
 if __name__ == "__main__":
