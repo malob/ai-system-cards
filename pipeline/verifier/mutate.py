@@ -123,7 +123,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-class", type=int, default=10)
     ap.add_argument("--seed", type=int, default=5)
-    ap.add_argument("--json", type=Path, default=Path("docs/experiments/05-mutation-testing/results.json"))
+    # per-card default: the plain results.json is the fable-5 calibration
+    # record (D5-adjacent) and must never be clobbered by another card's run
+    ap.add_argument("--json", type=Path,
+                    default=Path("docs/experiments/05-mutation-testing/"
+                                 f"results-{calibrate.cardcfg.CARD_ID.replace('/', '-')}.json"))
     ap.add_argument("--classes", nargs="*", help="limit to these mutation kinds")
     args = ap.parse_args()
     rng = random.Random(args.seed)
@@ -138,8 +142,13 @@ def main():
             continue
         caught = tried = 0
         details = []
+        eligible = [n for n, t in files.items() if mutations(kind, t, random.Random(0)) is not None]
+        if not eligible:
+            # class not present in this card (e.g. no chips) — n/a, not a miss
+            print(f"{kind:>20} n/a (no eligible section)")
+            continue
         for i in range(args.per_class):
-            name = rng.choice([n for n, t in files.items() if mutations(kind, t, random.Random(0)) is not None])
+            name = rng.choice(eligible)
             mut = mutations(kind, files[name], rng)
             if not mut:
                 continue
