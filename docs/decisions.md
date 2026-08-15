@@ -685,3 +685,30 @@ and classes with no eligible section (chips here) report n/a instead of
 crashing; the plain `results.json` remains the fable-5 calibration record.
 Risk-report mutation recall: loss classes 100%, structural splits 50–62% —
 the calibrated band (ST skips table pages by design; sweeps are the backstop).
+
+## D46 — risk-report sweep round 1: nine fix classes; extended link resolution is a manifest knob (2026-08-14)
+
+Experiment 11 (the layer-2 sweep on the third card) found ~40 distinct majors
+in 9 mechanical classes — all invisible to the gates by design (tables,
+anchors, styling). All fixed at class level; full table and root causes in
+`docs/experiments/11-risk-report-sweep-round1/README.md`. Notables:
+
+- **`link_text_resolution: extended`** (style-manifest `document:` block):
+  Claim-number/Appendix/unique-title/pooled-split-half resolution for
+  internal links. This document's dest coordinates are sloppy enough to SWAP
+  the Claim 6/7 links and land 'Appendix 6.4' on the redacted 6.3 stub. The
+  knob is per-card (D16 scoped idiom) because the same rules would re-anchor
+  a handful of certified fable/opus links — likely improvements, but canon
+  changes needing owner adjudication before enabling there.
+- **Table-repair guards** (ownership, y-band anchoring, width authority,
+  fragment-or-scramble proof): the §6.6/§2.23 damage was inflicted by the
+  REPAIR chain itself over-extending and mis-merging — raw docling was
+  often clean. The guards are structural (span geometry), not per-instance.
+- **The regression net earned its keep**: four intermediate fix attempts
+  broke system-card canon (fnref styling leak, overflow over-merge ×2,
+  full-width bold split on the opus welfare run-in, split-cell region
+  upgrade) and were caught by byte-identity within minutes each.
+
+Deferred typed minors (owner-visible, README §Deferred): p.13 cell-paragraph
+merge, p.153 shallow-indent quotes, p.36 code-span color, footnote URL wrap
+spaces, p.42 blockquote-wrapped sub-list.
