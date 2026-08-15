@@ -1453,7 +1453,7 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         sq = (_squash(plain).translate(_INVIS_DEL).translate(_BULLET_DEL)
               .translate(_LOW9).translate(_QDEL))
         if len(sq) < 8:
-            return {}
+            return {}, {}, {}
         hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
                 if cf.count(sq) == 1]
         hits = [h for h in hits if h[1] >= 0]
@@ -1462,14 +1462,14 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
             srcs = col_spans[ci][at:at + len(sq)]
         else:
             if hits or any(cf.count(sq) > 1 for cf in col_folds):
-                return {}
+                return {}, {}, {}
             # interval fallback: tightest family holding the cell exactly once
             ihits = sorted(((len(int_folds[ci]), ci, int_folds[ci].find(sq))
                             for ci in range(len(int_folds))
                             if int_folds[ci].count(sq) == 1))
             ihits = [h for h in ihits if h[2] >= 0]
             if not ihits:
-                return {}
+                return {}, {}, {}
             _, ci, at = ihits[0]
             srcs = int_spans[ci][at:at + len(sq)]
         cell_x2 = max(s["bbox"][2] for s in srcs)
@@ -1496,12 +1496,29 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
             fits = bool(word) and a["bbox"][2] + 0.25 * line_h + w <= right - 12
             if is_lead or fits:
                 breaks[k - 1] = "<br>"
-        return breaks
+        # ITALIC runs (D42's in-cell italics live in restyle's segmentation,
+        # which these tall/bulleted cells defeat — Table 3.10.A 'double the
+        # rate of progress…', owner-flagged): the same char→span map knows
+        # each char's slant. Only for cells restyle left untouched (no <i>),
+        # runs of ≥2 chars.
+        opens, closes = {}, {}
+        if "<i>" not in c:
+            run_start = None
+            for k in range(len(srcs) + 1):
+                it = bool(srcs[k].get("italic")) if k < len(srcs) else False
+                if it and run_start is None:
+                    run_start = k
+                elif not it and run_start is not None:
+                    if k - run_start >= 2:
+                        opens[run_start] = "<i>"
+                        closes[k - 1] = "</i>"
+                    run_start = None
+        return breaks, opens, closes
 
     def fix_cell(m):
         tg, attrs, c = m.groups()
-        breaks = cell_breaks(c)
-        if not breaks:
+        breaks, opens, closes = cell_breaks(c)
+        if not breaks and not opens:
             return m.group(0)
         # walk the TAGGED cell as (tag | entity | char) tokens, counting
         # visible non-space chars; after ordinal k in `breaks`, a pending
@@ -1538,8 +1555,12 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
             if pending:
                 out.append(pending)
                 pending = False
-            out.append(t)
             k += 1
+            if k in opens:
+                out.append(opens.pop(k))
+            out.append(t)
+            if k in closes:
+                out.append(closes.pop(k))
             if k in breaks:
                 pending = breaks.pop(k)
         return f"<{tg}{attrs}>{''.join(out)}</{tg}>"
