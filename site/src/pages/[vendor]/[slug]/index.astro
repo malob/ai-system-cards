@@ -242,6 +242,45 @@ const rail = toc
   let snRaf;
   addEventListener('resize', () => { cancelAnimationFrame(snRaf); snRaf = requestAnimationFrame(layoutSidenotes); });
 
+  // --- page markers: align each label with the line its page actually starts on ---
+  // The anchor sits in the markup exactly where the page breaks, but it is
+  // position:absolute — out of flow, so it never wraps with the following
+  // word. When the break happens to fall at a rendered line end, the label
+  // is stranded beside the PREVIOUS line and reads one line too high
+  // (owner-spotted). Re-align to the first following text's own line box.
+  // Reflow-dependent, so it re-runs with the sidenote layout.
+  const pagemarks = [...document.querySelectorAll('a.pagemark')];
+  function layoutPagemarks() {
+    if (!pagemarks.length || getComputedStyle(pagemarks[0]).display === 'none') return;
+    for (const a of pagemarks) {
+      a.style.transform = '';
+      // a marker standing alone between blocks already labels the block
+      // below it; only inline (mid-paragraph) markers can strand
+      if (a.parentElement?.classList.contains('pagemark-row')) continue;
+      const walker = document.createTreeWalker(
+        a.closest('.doc') || document.body, NodeFilter.SHOW_TEXT);
+      walker.currentNode = a;
+      let n, rect = null;
+      while ((n = walker.nextNode())) {
+        if (!n.nodeValue.trim()) continue;
+        const rg = document.createRange();
+        rg.selectNodeContents(n);
+        const rects = rg.getClientRects();
+        if (rects.length) { rect = rects[0]; break; }
+      }
+      if (!rect) continue;
+      const delta = rect.top - a.getBoundingClientRect().top;
+      // only a genuine one-line strand: never drag a label across a figure,
+      // table or heading that follows the marker
+      if (delta > 4 && delta < 60) a.style.transform = `translateY(${Math.round(delta)}px)`;
+    }
+  }
+  layoutPagemarks();
+  document.fonts?.ready.then(layoutPagemarks);
+  addEventListener('load', layoutPagemarks);
+  let pmRaf;
+  addEventListener('resize', () => { cancelAnimationFrame(pmRaf); pmRaf = requestAnimationFrame(layoutPagemarks); });
+
   // --- figure lightbox ---
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
