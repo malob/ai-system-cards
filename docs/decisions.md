@@ -630,3 +630,58 @@ across all 17 changed files; gates/seams at baseline; DOM table/row/cell
 counts unchanged; the fnref-shim anchor moved to the table's closing line
 (mid-table lines now exist). Verifier untouched (its table patterns were
 already re.S).
+
+## D44 — third card: the archive accepts non-system-card safety documents (2026-08-14)
+
+The owner handed the pipeline Anthropic's **Risk Report: August 2026** (public
+redacted edition, 186pp, published 2026-08-14 — an RSP v3.4 company-wide risk
+assessment, not a model card). Scope follows the hand-off: the archive carries
+AI-lab safety documents generally, with system cards as the founding type.
+Consequences:
+
+- **Slug convention for periodic documents:** `risk-report-YYYY-MM` (sortable;
+  these recur every 3–6 months per the RSP).
+- **`doc_type` meta field** (default `System Card`): drives the card-page
+  eyebrow and OG-image label ("Anthropic · Risk Report"). Both system cards
+  unchanged.
+- Same Google-Docs-export family as both system cards — the D35 within-family
+  answer held again: per-card config (manifest, stubs) plus four class-level
+  generalizations (D45), zero per-instance fixes. Same-day onboarding:
+  census → manifest → stubs → assemble → 0 majors in one fix batch.
+
+## D45 — risk-report onboarding generalizations: footnote region, orphan refs, table links, in-box lists (2026-08-14)
+
+Four defect classes surfaced by the first gate run (25 majors), all fixed at
+class level in `pipeline/`, both system cards regen byte-identical:
+
+- **Footnote-marker gate y>0.6H → bottom contiguous small-font region walk**
+  (oracle). This document's footnotes quote whole paragraphs and fill more
+  than the bottom 40% of a page (pp.50, 117); the absolute-height gate missed
+  their markers. The region walk keys on structure, not height.
+- **Orphan footnote refs are a source-defect class.** p.126 carries a
+  superscript "18" between fn57 and fn58 with no def anywhere — a stale
+  paste artifact in the SOURCE (its number collides with the unrelated §2
+  fn18, so document-wide def existence is not enough). Rule: a ref with no
+  def on its own page whose number falls outside the def-sequence bracket
+  around that page is orphaned — rendered as a plain `<sup>N</sup>` (a [^N]
+  would print literally or mislink), FN1-classified as a declared
+  source-defect minor (cf. `source-defect-unresolvable-dest`). In-band refs
+  with missing defs still flag major (extraction-failure recall preserved).
+- **Links inside docling table cells** (`tables._inject_links`): re-attached
+  per-cell from oracle link rects, entity-/tag-tolerant anchor matching,
+  never straddling a td boundary; the oracle's per-page same-URI anchor
+  merge is undone by k-fold periodicity (two identical links in one table
+  arrive as one doubled anchor). Goto links carry the DEST placeholder;
+  run.py resolves the HTML form like body links; mdproj collects table
+  anchors for L1. First card with links in tables — neither system card has
+  any (their sections are the regression proof).
+- **List items inside turn/transcript bubbles** (serialize): a LIST_MARKER
+  line inside a bubble opens its own segment and renders as a markdown item
+  (tight list); the §2.24 audit-rubric bullets had flattened into prose
+  (ST1 12→2 on p.85).
+
+Also: mutate.py results are per-card files now (`results-<vendor>-<slug>.json`)
+and classes with no eligible section (chips here) report n/a instead of
+crashing; the plain `results.json` remains the fable-5 calibration record.
+Risk-report mutation recall: loss classes 100%, structural splits 50–62% —
+the calibrated band (ST skips table pages by design; sweeps are the backstop).
