@@ -61,9 +61,9 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
   content-strong, visual-layout-weak). Table-dense stretches: pp.10-14, 22,
   78-80, 115-119, 123-132, 155-156, 182-185; boxed prompts pp.72-74/84-86.
 - **Deploy decision** (push to main → Pages).
-- **Deferred typed minors** (experiment 11 README §Deferred): p.13 cell
-  paragraph merge, p.153 shallow-indent quotes, p.36 code-span color,
-  footnote URL wrap spaces, p.42 blockquote-wrapped sub-list.
+- **Deferred typed minors** (experiment 11 README §Deferred): p.153
+  shallow-indent quotes, p.36 code-span color, footnote URL wrap spaces
+  (p.13 and p.42 retired by owner-scroll fixes).
 - **Editorial flags:** index-page intro copy is system-card-specific ("when
   AI companies release a new model…") — may want a line acknowledging risk
   reports; p.22's color-coded rating cells render as plain cells (text

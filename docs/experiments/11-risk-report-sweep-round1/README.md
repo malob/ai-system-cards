@@ -102,3 +102,14 @@ scroll pass (onboarding step 8).
    healed §2.20's review box (pp.73-74). **Carries one system-card canon
    change pending owner approval: fable 06a p.101→102 pilot-quote box (the
    identical construct) now one bubble.**
+
+3. **Table 3.10.A cell paragraphs** (owner, 2026-08-14 ~22:30): sub-
+   paragraphs INSIDE bulleted cells rendered as one dense blob per bullet.
+   Root: `_cell_blank_lines` could never align bulleted cells (glyphs in
+   their own x0 cluster or glued into spans; intro + hanging-indent bullets
+   spanning two x0 tiers; docling's quote folds, low-9 comma, and absorbed
+   fnref digits each breaking the char match mid-cell). Fixed as five
+   tolerance classes + pairwise edge-interval fallback families (canon
+   single-column path untouched; commits `c3d046c`, this one). Restored the
+   full 9-paragraph structure of the frontier-developer cell, the §4.8
+   twins, AND the p.13 two-paragraph cell — retiring that deferred minor.
