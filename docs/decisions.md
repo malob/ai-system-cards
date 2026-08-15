@@ -712,3 +712,35 @@ anchors, styling). All fixed at class level; full table and root causes in
 Deferred typed minors (owner-visible, README §Deferred): p.13 cell-paragraph
 merge, p.153 shallow-indent quotes, p.36 code-span color, footnote URL wrap
 spaces, p.42 blockquote-wrapped sub-list.
+
+## D47 — a styling rule reads per-instance oracle evidence, never a class-wide sample (2026-08-15)
+
+**Decision.** When a rule decides how to render a *styled* construct, it must
+consult the oracle span for THAT instance. A rule may not generalize a
+weight/colour/size reading from the handful of instances that motivated it.
+
+**What forced it.** The round-3 fix "footnote superscripts are lifted out of
+bold label runs — the PDF sets them at regular weight" was a whole-table
+regex with no span access. The premise held for the three risk-report cells
+that prompted it and was false elsewhere: across the corpus 9 of 205 in-table
+footnote refs are set in `Lora-Bold` (fable pp.48/50/94/251/252, opus p.148,
+risk-report pp.22/25/115), and the rule de-bolded four of them. Nothing
+caught it — the gates count refs and tokens, not their weight; the sweeps
+had been told the premise as fact. The certified-card regression sweep found
+it, three inspectors independently, from the PDF.
+
+**Now.** `tables._lift_regular_sups` matches each marker to its own fnref
+span by digits and lifts only on that span's `bold` flag; no span, or
+conflicting spans for one number, leaves the markup alone. Four cells
+reverted to bold-inclusive, three genuinely regular ones stayed lifted.
+
+**Consequence for process.** A fix's commit message is not evidence. Round
+3's message stated the regular-weight premise, and the regression rulebook
+inherited it as background — the wording that survived ("Check the PDF: is
+the superscript regular weight there?") is what let the inspectors disagree
+with it. Prompts must pose the question, never assert the answer; this is
+the same independence failure recorded for round 2, in a new disguise.
+
+**Renderer note.** The site pins footnote refs to a uniform mono citation
+style (`sup.fn-html a`), so no rendered page changed — the fix is source
+fidelity, and it reaches readers through the `.md` exports.

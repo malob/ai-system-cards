@@ -21,7 +21,7 @@ Claude Opus 5 is meaningfully more intelligent than Opus 4.8 and achieves state 
 <tr><th rowspan="2">Humanity’s Last Exam</th><td><i><b>No tools</b></i></td><td>56.3</td><td>49.8</td><td><b>56.5</b></td><td>-</td></tr>
 <tr><td><i><b>With tools</b></i></td><td><b>64.7</b></td><td>57.9</td><td>63.9</td><td>-</td></tr>
 <tr><th colspan="2">OSWorld 2.0</th><td><b>70.6</b></td><td>55.7</td><td>66.1</td><td>62.6</td></tr>
-<tr><th colspan="2">HealthBench Professional</th><td>59.8</td><td>57.4</td><td><b>66.0</b><sup>[^11]</sup></td><td>60.5</td></tr>
+<tr><th colspan="2">HealthBench Professional</th><td>59.8</td><td>57.4</td><td><b>66.0<sup>[^11]</sup></b></td><td>60.5</td></tr>
 <tr><th colspan="2">GDPval-AA v2</th><td><b>1861</b></td><td>1593</td><td>1747</td><td>1736</td></tr>
 <tr><th colspan="2">AA-Briefcase</th><td><b>1720</b></td><td>1346</td><td>1574</td><td>1505</td></tr>
 <tr><th colspan="2">AutomationBench</th><td><b>26.0</b></td><td>17.0</td><td>17.4</td><td>18.1</td></tr>

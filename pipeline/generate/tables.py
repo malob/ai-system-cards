@@ -87,12 +87,35 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         # ('More below .', p.115; 'actors , but', p.12 — six instances,
         # owner-flagged). Only after a LINK close, where the artifact lives.
         html = re.sub(r"(</a>(?:</[a-z]+>)*)\s+([,.;:)])", r"\1\2", html)
-        # a footnote superscript is set at REGULAR weight in the PDF even when
-        # its label is bold — lift a trailing sup out of the bold run
-        # (pp.125/126/128, sweep round 3)
-        html = re.sub(r"(<sup>(?:\[\^)?\d+\]?</sup>)</b>", r"</b>\1", html)
+        # a footnote superscript trailing a bold label sits OUTSIDE the bold
+        # run only when the PDF sets it at regular weight (round 3 read that
+        # as the rule; the regression sweep found the exceptions)
+        if oracle_page is not None:
+            html = _lift_regular_sups(html, t["bbox"], oracle_page)
         out.append({**t, "html": html})
     return out
+
+
+def _lift_regular_sups(html: str, bbox: list, oracle_page: dict) -> str:
+    """A footnote marker trailing a bold label belongs outside the <b> only
+    when the PDF sets the marker itself at regular weight. That is the common
+    case but not the rule — the source carries the label's bold into the
+    marker for 9 of this corpus's 205 in-table refs (fable pp.48/50, opus
+    p.148, risk-report p.22 among them), so each marker is matched to its own
+    oracle fnref span by digits and only lifted on that span's evidence. No
+    span, or conflicting spans for one number: leave the markup alone."""
+    weight: dict[str, list] = {}
+    for s in _table_spans(oracle_page, bbox):
+        if s.get("zone") == "fnref":
+            weight.setdefault(s["text"].strip(), []).append(bool(s["bold"]))
+
+    def repl(m):
+        flags = weight.get(m.group(2))
+        if not flags or any(flags):
+            return m.group(0)
+        return "</b>" + m.group(1)
+
+    return re.sub(r"(<sup>(?:\[\^)?(\d+)\]?</sup>)</b>", repl, html)
 
 
 def _header_text_hexes() -> set:
@@ -766,12 +789,9 @@ def _bold_label_cells(html: str, bbox: list, oracle_page: dict) -> str:
         run = _match_run(plain)
         if not run or not all(s.get("bold") for s in run):
             continue
-        inner_s = inner.strip()
-        m_sup = re.search(r"(<sup>.*?</sup>)\s*$", inner_s)
-        if m_sup:
-            new_c = f"<b>{inner_s[:m_sup.start()].strip()}</b>{m_sup.group(1)}"
-        else:
-            new_c = f"<b>{inner_s}</b>"
+        # no sup handling here: the guard above admits only b/u markup, and
+        # refs become <sup> later in _inject_fnrefs
+        new_c = f"<b>{inner.strip()}</b>"
         old_cell = f"<{tg}{attr}>{c}</{tg}>"
         if f"<b>{inner.strip()}</b>" == c:
             new_cell = old_cell   # already exactly bold

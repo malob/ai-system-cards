@@ -82,7 +82,7 @@ A simplified representation of the argument is shown in the table below. Note, a
 
 <table><tbody>
 <tr><th>Type of misalignment</th><th>Probability of occurrence</th><th>Expected harm (pre-mitigation), conditional on occurrence</th><th>Fraction of harm expected to go unmitigated, conditional on occurrence</th><th>Overall risk</th></tr>
-<tr><td><b>Known</b><sup>[^11]</sup> <b>misalignment</b></td><td>High (observed)</td><td>Low</td><td>Low</td><td>Low</td></tr>
+<tr><td><b>Known<sup>[^11]</sup></b> <b>misalignment</b></td><td>High (observed)</td><td>Low</td><td>Low</td><td>Low</td></tr>
 <tr><td><b>Unknown severe pervasive misalignment</b></td><td>Very low</td><td>Potentially high</td><td>Somewhat low</td><td>Low</td></tr>
 <tr><td><b>Unknown severe context-dependent misalignment</b></td><td>Low</td><td>Moderate</td><td>Low</td><td>Low</td></tr>
 </tbody></table>

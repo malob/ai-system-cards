@@ -254,3 +254,51 @@ The agent independently confirmed the pp.155–156 table seam (one table, one
 header row, seam marker inside the continuation cell), live ↩ backlinks for
 footnotes 74–85 including the four table-only refs, page-marker placement,
 figure order on pp.161–162, and every link URI on its range.
+
+## Certified-card regression sweep (2026-08-15)
+
+**Question.** The risk-report onboarding changed pipeline code shared with two
+LIVE cards. Did any of it make fable or opus worse?
+
+**Method.** Five agents, `rulebook-regression.md` (the question is per page:
+"as good as, or better than, before?"; the PDF is the only authority; a
+difference is a regression only when it matches the PDF worse).
+
+| agent | scope | result |
+| --- | --- | --- |
+| fable changed | 8 pages (48, 50, 52, 99–103, 234) | 12 major improvements, 2 minor regressions |
+| opus changed | 5 pages (79–81, 131, 148) | 5 major improvements, 1 minor regression |
+| fable control | 12 pages, markdown unchanged | 11 clean, 1 improvement, 0 regressions |
+| opus control | 11 pages, markdown unchanged | 10 clean, 1 improvement, 0 regressions |
+| link audit | all 163 internal links, both cards | 0 mismatches |
+
+The control samples exist because three changes are RENDERER-level and touch
+every page whether or not its markdown moved: the page-marker realign pass,
+the footnote backlink anchor move, and the table CSS. Both control agents
+verified in the live DOM, not just the markdown — the realign pass fired
+exactly once per sample (fable p.182, opus p.175, both mid-paragraph markers
+moved `translateY(31px)` onto the line their page truly starts on), and
+card-wide checks found all 155 fable markers within 6px of their page's first
+line, 76/76 and 36/36 footnote backlinks resolving.
+
+**The link audit is the load-bearing result.** 163 links, each matched to its
+PDF goto annotation: 0 mismatches, 0 broken anchors, 0 goto annots missing
+from the markdown. All 94 number-named anchors (`Section 6.2.3.1.1`) resolve
+to the exactly-matching numbered heading — text and geometry agree 94/94,
+where before the coordinate fix they disagreed. On the 13 destinations with a
+heading within 40pt on BOTH sides, 9 are corroborated by a sibling link whose
+literal section number matches the resolved heading. Parent/child destinations
+on one page stay distinct (p.161 6.4 vs 6.4.1; p.202 6.5.4 vs 6.5.4.1; p.210
+6.5.5 vs 6.5.5.1). One dead `](#)` link on fable p.99 is the already-declared
+source defect: the PDF names a destination absent from its own name tree.
+
+**One real regression, found by three agents independently** — the footnote
+superscript lift, fixed per D47. Everything else the sweep surfaced was an
+improvement, a neutral difference (in-cell list hanging indent, a deliberate
+divergence), or the pre-existing dead link.
+
+**Verification after the fix:** 4 cells changed across 3 cards and nothing
+else; gates unchanged at baseline (fable `L1 31`/`T1 44`, opus `T1 13`,
+risk-report `FN1 1`/`T1 22`/`TB2 1`, 0 majors everywhere); seam audit 0 on
+all three; site rebuilds clean; opus Table 8.1.A checked cell-for-cell
+against the p.148 render, and both repaired cells checked in the live DOM.
