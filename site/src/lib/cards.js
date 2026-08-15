@@ -199,7 +199,7 @@ export function portableMarkdown(vendor, slug, absoluteAssetBase, urls = {}) {
       (g.pages ? ` — pp. ${g.pages[0]}–${g.pages[1]}` : ''),
   );
   return [
-    ...exportHeader(meta, links, 'Complete system card.'),
+    ...exportHeader(meta, links, `Complete ${(meta.doc_type ?? 'system card').toLowerCase()}.`),
     '## Contents (each section is a standalone markdown file)',
     '',
     ...toc,
