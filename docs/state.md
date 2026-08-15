@@ -20,7 +20,9 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
 - **risk-report-2026-08: converged; owner scroll pass IN PROGRESS.** Gate:
   0 majors / `FN1 1` (declared orphan-ref source defect — the PDF's own
   stray superscript 18 on p.126, D45) / `T1 25` (docling cell tokenization
-  + seam displacement noise). Seam audit 0. Mutation recall at the
+  + seam displacement noise) / `TB2 2` (seam-cell advisors). Seam audit 0.
+  NEW GATE TB2 (owner-requested): table-cell order integrity from markdown
+  alone — the scramble class the sweeps used to own; contract updated. Mutation recall at the
   calibrated band. Scroll findings so far (experiment 11 §findings log,
   both class-fixed same session): p.42 taxonomy sub-list (spurious
   blockquote + bold-letter-defeated `<ol type="a">` transform, `8d96f1a`);
