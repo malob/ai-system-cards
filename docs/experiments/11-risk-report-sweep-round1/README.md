@@ -92,3 +92,13 @@ scroll pass (onboarding step 8).
    discriminates), and the renderer's `<ol type="a">` transform aborting on
    a source-faithful bold letter marker. This retires the p.42 entry from
    the deferred-minors list.
+
+2. **Cross-page bubble splits** (owner, 2026-08-14 ~22:00): the §2.24
+   prompt box (one box in the PDF, pp.84-86) rendered as three bubbles cut
+   at the page seams, the p.86 fragment promoted to an 'OUTPUT FORMAT'
+   label. Class-fixed (commit `076161f`): geometry continuation rule in
+   stitch() (same fill, box to the bottom margin, resuming at the top) +
+   per-segment page facts and inline seam markers in the serializer. Also
+   healed §2.20's review box (pp.73-74). **Carries one system-card canon
+   change pending owner approval: fable 06a p.101→102 pilot-quote box (the
+   identical construct) now one bubble.**
