@@ -28,12 +28,14 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
   blockquote + bold-letter-defeated `<ol type="a">` transform, `8d96f1a`);
   cross-page bubble splits §2.24/§2.20 (geometry continuation rule,
   `076161f`).
-- **PENDING OWNER DECISION:** the bubble-continuation rule also heals the
-  IDENTICAL construct in certified fable-5 (§6.2.4 pilot-quote box,
-  p.101→102: two `label=""` bubbles → one). That canon change is currently
-  IN the working tree (uncommitted-to-approval in the sense of D41 —
-  committed in git, flagged for sign-off; revert = gate the rule per-card).
-  Opus unchanged.
+- **RESOLVED (owner asked for a judgment, 2026-08-14 ~22:10):** the
+  bubble-continuation rule initially also merged fable-5's §6.2.4
+  pilot-quote box — judged NOT a fidelity fix there (fable's convention is
+  box-per-paragraph: its p.102 continuation paragraph sits in its own
+  closed box mid-page; the risk report's p.72 twin of the same quote holds
+  both paragraphs in one box). Rule gated behind
+  `bubble_page_continuation: true` (risk report on, fable/opus off);
+  fable canon restored byte-for-byte (`fdda931`).
 
 ## What today established (pointers, not narrative)
 
