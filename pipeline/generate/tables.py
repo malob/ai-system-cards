@@ -188,12 +188,18 @@ def _merge_overflow_cells(html: str, bbox: list, oracle_page: dict) -> str:
                         break
         return False
 
+    spans_xy = _row_spans_xy(oracle_page, bbox)
     out = html
     for r in plain_rows:
         if counts[id(r)] <= modal:
             continue
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
         cells = [c for _, _, c in tags]
+        # the row's y-band (anchored by its value cells) pins the true run:
+        # multiset coincidences exist ACROSS rows ('MonitorBench Hard
+        # (n=60' repeats three times on p.80) and matched a run crossing a
+        # row boundary in scrambled order
+        band = _row_band([_cell_sq(c) for c in cells], spans_xy)
         changed = False
         while len(cells) > modal:
             merged = False
@@ -211,6 +217,9 @@ def _merge_overflow_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 hit = None
                 for col in cols:
                     for st in range(len(col)):
+                        y0 = (col[st]["bbox"][1] + col[st]["bbox"][3]) / 2
+                        if band is not None and not (band[0] - 4 <= y0 <= band[1] + 4):
+                            continue   # run must START in this row's band
                         acc: Counter = Counter()
                         run = []
                         for j in range(st, len(col)):
