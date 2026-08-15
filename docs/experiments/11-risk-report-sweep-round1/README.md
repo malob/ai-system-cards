@@ -113,3 +113,10 @@ scroll pass (onboarding step 8).
    single-column path untouched; commits `c3d046c`, this one). Restored the
    full 9-paragraph structure of the frontier-developer cell, the §4.8
    twins, AND the p.13 two-paragraph cell — retiring that deferred minor.
+
+4. **In-cell italics** (owner, 2026-08-14 ~22:40): Table 3.10.A's italic
+   runs rendered regular — restyle's segmentation (where D42's italic
+   support lives) can't reach these cells. `_cell_blank_lines`' tolerant
+   alignment now emits `<i>` runs too. Side effect kept as a canon
+   improvement: fable p.313 '(interview only)' (Lora-Italic in the PDF)
+   gains its italics after rendering regular since June.
