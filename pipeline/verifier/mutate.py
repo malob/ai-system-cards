@@ -2,7 +2,7 @@
 sections, run the verifier, and measure per-class recall — turning "calibrated
 on history" into a number.
 
-    uv run --with pymupdf python pipeline/verifier/mutate.py [--per-class 10] [--seed 5]
+    uv run --with pymupdf python pipeline/verifier/mutate.py [--per-class 8] [--seed 5]
 
 Detection rule: a mutation is caught iff the run produces a flag of the class's
 invariant that was NOT in the unmutated baseline (matched on invariant+detail).
@@ -119,16 +119,55 @@ def flag_keys(flags):
     return {(f["invariant"], json.dumps(f["detail"], sort_keys=True)) for f in flags}
 
 
+def baseline_regressions(results: dict, expected: dict) -> list[str]:
+    """Return human-readable reasons that mutation recall fell below baseline.
+
+    The seeded sample count is part of the contract: silently comparing different
+    sample sizes makes the raw caught count meaningless.  Improvements are allowed;
+    removed or newly unbaselined classes require an intentional baseline update.
+    Per-mutation site details are evidence, not the gate — source edits can move a
+    seeded sample while preserving the measured class recall.
+    """
+    problems = []
+    actual_classes = set(results)
+    expected_classes = set(expected)
+    for kind in sorted(expected_classes - actual_classes):
+        problems.append(f"{kind}: baseline class is missing from this run")
+    for kind in sorted(actual_classes - expected_classes):
+        problems.append(f"{kind}: current class has no committed baseline")
+    for kind in sorted(actual_classes & expected_classes):
+        got, want = results[kind], expected[kind]
+        if got.get("invariant") != want.get("invariant"):
+            problems.append(
+                f"{kind}: invariant changed {want.get('invariant')} -> {got.get('invariant')}"
+            )
+        if got.get("tried") != want.get("tried"):
+            problems.append(
+                f"{kind}: sample count changed {want.get('tried')} -> {got.get('tried')}"
+            )
+        elif got.get("caught", 0) < want.get("caught", 0):
+            problems.append(
+                f"{kind}: recall regressed {want.get('caught')}/{want.get('tried')}"
+                f" -> {got.get('caught')}/{got.get('tried')}"
+            )
+    return problems
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--per-class", type=int, default=10)
+    ap.add_argument("--per-class", type=int, default=8)
     ap.add_argument("--seed", type=int, default=5)
-    # per-card default: the plain results.json is the fable-5 calibration
-    # record (D5-adjacent) and must never be clobbered by another card's run
+    # Per-card default. The legacy plain results.json remains the original
+    # fable-5 calibration record and must never be clobbered by a current run.
     ap.add_argument("--json", type=Path,
                     default=Path("docs/experiments/05-mutation-testing/"
                                  f"results-{calibrate.cardcfg.CARD_ID.replace('/', '-')}.json"))
     ap.add_argument("--classes", nargs="*", help="limit to these mutation kinds")
+    ap.add_argument(
+        "--baseline",
+        type=Path,
+        help="committed results JSON; fail if class coverage/sample count changes or recall drops",
+    )
     args = ap.parse_args()
     rng = random.Random(args.seed)
 
@@ -176,6 +215,16 @@ def main():
     args.json.parent.mkdir(parents=True, exist_ok=True)
     args.json.write_text(json.dumps(results, indent=1))
     print(f"wrote {args.json}")
+
+    if args.baseline:
+        expected = json.loads(args.baseline.read_text())
+        regressions = baseline_regressions(results, expected)
+        if regressions:
+            print("\n=== MUTATION BASELINE FAILED ===")
+            for problem in regressions:
+                print(f"- {problem}")
+            raise SystemExit(1)
+        print(f"mutation baseline held: {args.baseline}")
 
 
 if __name__ == "__main__":
