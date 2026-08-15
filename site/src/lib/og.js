@@ -78,7 +78,7 @@ const homeTree = () =>
         textTransform: 'uppercase', color: C.clay, marginBottom: 26 }, 'A readable archive'),
     wordmark(104),
     h({ display: 'flex', fontFamily: SERIF, fontWeight: 400, fontSize: 35, color: C.soft, marginTop: 30 },
-      'Faithful, readable web renderings of AI model system cards.'),
+      'Faithful, readable web renderings of AI system cards and safety reports.'),
     h({ display: 'flex', fontFamily: SERIF, fontWeight: 400, fontSize: 28, color: C.faint, marginTop: 14 },
       'Every sentence, table, figure, and footnote — linked to the source PDF.'),
     h({ display: 'flex', fontFamily: MONO, fontWeight: 500, fontSize: 24, color: C.clay, marginTop: 48 },

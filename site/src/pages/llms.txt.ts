@@ -9,8 +9,8 @@ export const GET: APIRoute = ({ site }) => {
   const lines = [
     '# AI System Cards',
     '',
-    '> A readable archive of AI model system cards, faithfully converted from the',
-    '> original PDFs into markdown and HTML. Each card links to its complete',
+    '> A readable archive of AI system cards and safety reports, faithfully converted',
+    '> from the original PDFs into markdown and HTML. Each card links to its complete',
     '> markdown transcription; the nested entries are standalone per-section',
     '> markdown files — fetch just the section you need (figures referenced by',
     '> absolute URL).',

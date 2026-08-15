@@ -86,9 +86,11 @@ readers through the `.md` exports.
 
 - **Deploy decision** (push to main → Pages). Nothing is blocking it
   technically: 0 majors on all three cards, seam 0, site builds clean.
-- **Editorial:** the index-page intro copy is still system-card-specific
-  ("when AI companies release a new model… the system card is usually a long
-  PDF") — worth a line acknowledging risk reports now that one is archived.
+- **Editorial: done 2026-08-15.** The archive's self-description said it held
+  system cards only. The NAME stays (identity, URL, wordmark; per-card labels
+  already read `doc_type`); the five description strings now read "AI system
+  cards and safety reports" — index lede, page meta, footer, home OG subtitle,
+  llms.txt, plus README.
 - **Closed 2026-08-15 (D48):** `link_text_resolution: extended` for
   fable/opus is a **no-op** — enabling it changes zero bytes of either
   card's `sections/`, because after the coordinate fix geometry and text

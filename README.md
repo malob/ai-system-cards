@@ -1,7 +1,8 @@
 # AI System Cards
 
-A readable archive of AI model system cards. Companies usually publish a model's
-system card as a long PDF, and long PDFs are a pain to read. This project converts each one
+A readable archive of AI system cards and safety reports. Companies publish this work
+as long PDFs — a system card when a model ships, a risk report in between — and long
+PDFs are a pain to read. This project converts each one
 into a faithful, responsive web page — every sentence, table, figure, and footnote,
 with deep links back to the source PDF — plus clean markdown for machine consumption:
 a full `card.md` per card, a standalone `.md` per major section (so agents can fetch
