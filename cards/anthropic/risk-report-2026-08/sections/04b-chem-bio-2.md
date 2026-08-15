@@ -274,9 +274,9 @@ We will continue to work toward better capability evaluations and better threat 
 
 Our most capable models are relatively close to the CB-2 threshold described in our RSP, and we expect that subsequent Anthropic models will cross this threshold in the relatively near future. For models which cross this threshold, our planned mitigations described in our RSP are:
 
-*We will apply protections at least as strong as our ASL-3 protections to an expanded set of potential use cases for AI, covering the most likely vectors for this threat.*
-
-*Additionally, we will identify the most concerning specific threat pathways, create policy recommendations for early detection and response for such threats, and share this content with policymakers.*
+> *We will apply protections at least as strong as our ASL-3 protections to an expanded set of potential use cases for AI, covering the most likely vectors for this threat.*
+>
+> *Additionally, we will identify the most concerning specific threat pathways, create policy recommendations for early detection and response for such threats, and share this content with policymakers.*
 
 We already meet the first of these criteria for all of our models as or more capable than Opus 4, as detailed above in [Section 4.5.2.1](#4521-extension-in-coverage-since-our-prior-risk-report), and we apply protections for an even more expansive set of use cases for Fable 5, as described in [Section 4.5.2.2](#4522-wider-coverage-of-cb-classifiers-for-fable-5).
 

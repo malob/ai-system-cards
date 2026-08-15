@@ -59,6 +59,22 @@ def join_wrap_hyphens(text: str) -> str:
         return m.group(1)
     return A1_HYPHEN.sub(_sub, text)
 
+
+# MIRROR of A1 — the line wraps BEFORE the hyphen, so the continuation opens
+# with it ('national-security' | '-relevant'). Unlike A1 this is NOT safe as
+# a text rule: 'sed -i' and 'well-resourced and -staffed' are identical in
+# text and must keep their space. It is therefore applied only where the
+# LINE BOUNDARY is known — the join sites in oracle.page_body_text and
+# assemble.block_text_and_marks, via this predicate.
+LEAD_HYPHEN = re.compile(r"^-[a-z]", re.I)
+
+
+def wrap_joins_tight(prev_line: str, next_line: str) -> bool:
+    """True when a line join must NOT insert a space: the continuation opens
+    with a hyphen that belongs to the word the previous line ended on."""
+    return bool(prev_line and prev_line.rstrip()[-1:].isalnum()
+                and LEAD_HYPHEN.match(next_line.lstrip()))
+
 # Google Docs exports mark list markers with a zero-width space after the
 # glyph/number ("●​Text", "1.​Text") — the shared mechanical signature used by
 # both the generator (assemble) and the ST structural invariant.

@@ -621,8 +621,20 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
         page = oracle_pages[fb["page"] - 1]
         if fb.get("lines"):
             text, marks = block_text_and_marks(fb, page, chips)
-            return _hyphen_join(_apply_marks(text, marks)).strip()
-        return _hyphen_join(fb.get("text", "")).strip()
+            body = _hyphen_join(_apply_marks(text, marks)).strip()
+        else:
+            body = _hyphen_join(fb.get("text", "")).strip()
+        # BARE-URL citation: the visible text IS the URL, so a mid-URL line
+        # wrap leaves a space inside it ('…Compliance-Re port_Final…', fn53
+        # p.119; owner-flagged). When the anchor squashes to its own href,
+        # the href is the authority — reprint it. Footnote-scoped: all four
+        # bare-URL links in this document are citations, and footnote text
+        # is outside T1 (FN1 squashes whitespace), so no stream drifts.
+        def _bare(m):
+            txt, url = m.group(1), m.group(2)
+            sq = lambda s: re.sub(r"\s+", "", s)
+            return f"[{url}]({url})" if sq(txt) == sq(url) else m.group(0)
+        return re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", _bare, body)
 
     # document order: (page, cont-first, n); a "cont" block is the tail of the
     # PREVIOUS page's last footnote — merge it into that body (rendered with

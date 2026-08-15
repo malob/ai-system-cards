@@ -70,8 +70,23 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _demote_black_text_th(html, t["bbox"], oracle_page)
             html = _debold_th(html)
         # hyphen-wrap join in cells the rebuild didn't touch (short label cells
-        # like 'Self- knowledge'): keep the hyphen, drop only the wrap space
+        # like 'Self- knowledge'): keep the hyphen, drop only the wrap space.
+        # Both directions, same rules as the shared A1 (norm.join_wrap_hyphens)
+        # so the oracle's text stream transforms identically for T1:
+        # 'Self- knowledge' and 'national-security -relevant' (p.184) join;
+        # suspended compounds ('well-resourced and -staffed') keep the space.
         html = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1-", html)
+        # mirror direction, cells only: docling has no line info, so the
+        # preceding token must itself be HYPHENATED for the space to read as
+        # a wrap inside one compound ('national-security -relevant', p.184).
+        # That test keeps 'sed -i' and 'and -staffed' — plain preceding
+        # tokens — exactly as they are.
+        html = re.sub(r"(\w+-\w+) (-[a-z])", r"\1\2", html)
+        # docling emits punctuation as its own run, so a link anchor is
+        # joined to a following ',' / '.' / ')' by a space the PDF never has
+        # ('More below .', p.115; 'actors , but', p.12 — six instances,
+        # owner-flagged). Only after a LINK close, where the artifact lives.
+        html = re.sub(r"(</a>(?:</[a-z]+>)*)\s+([,.;:)])", r"\1\2", html)
         out.append({**t, "html": html})
     return out
 
@@ -1417,8 +1432,11 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
                 # and QUOTE glyphs fold unpredictably (docling turns double
                 # quotes into singles — the p.13 'dramatic acceleration'
                 # cell) — both dropped from BOTH sides of the alignment
+                # quote glyphs are KEPT (folded only for comparison) so the
+                # arrays stay parallel with the cell's chars and docling's
+                # fold can be repaired from the span's true glyph
                 if (not ch.isspace() and ch not in _INVIS
-                        and ch not in "●•◦▪‣○■□'\"“”‘’"):
+                        and ch not in "●•◦▪‣○■□"):
                     chars.append(ch)
                     srcs.append(s)
         return "".join(chars), srcs
@@ -1432,7 +1450,8 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
     # the p.113 'standard‚' broke alignment mid-cell) — _QUOTE_FOLD itself
     # stays untouched, other repairs depend on its exact reach
     _LOW9 = str.maketrans({"‚": ","})
-    col_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9) for c in col_chars]
+    col_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9).translate(_QALL)
+                 for c in col_chars]
     # FALLBACK families: pairwise edge intervals in band order — a cell whose
     # sub-structure spans two x0 tiers (an intro line at the cell edge plus
     # bullet text at a hanging indent, Table 3.10.A) matches no single-edge
@@ -1452,7 +1471,8 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
             seen_int.add(chars)
             int_chars.append(chars)
             int_spans.append(srcs)
-    int_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9) for c in int_chars]
+    int_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9).translate(_QALL)
+                 for c in int_chars]
 
     import html as _h
 
@@ -1468,27 +1488,40 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         wrap)."""
         plain = _h.unescape(re.sub(r"\[\^\d+\]", "", re.sub(r"<[^>]+>", "", c)))
         sq = (_squash(plain).translate(_INVIS_DEL).translate(_BULLET_DEL)
-              .translate(_LOW9).translate(_QDEL))
+              .translate(_LOW9).translate(_QALL))
         if len(sq) < 8:
-            return {}, {}, {}
+            return {}, {}, {}, {}
         hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
                 if cf.count(sq) == 1]
         hits = [h for h in hits if h[1] >= 0]
         if len(hits) == 1 and not any(cf.count(sq) > 1 for cf in col_folds):
             ci, at = hits[0]
             srcs = col_spans[ci][at:at + len(sq)]
+            raw = col_chars[ci][at:at + len(sq)]
         else:
             if hits or any(cf.count(sq) > 1 for cf in col_folds):
-                return {}, {}, {}
+                return {}, {}, {}, {}
             # interval fallback: tightest family holding the cell exactly once
             ihits = sorted(((len(int_folds[ci]), ci, int_folds[ci].find(sq))
                             for ci in range(len(int_folds))
                             if int_folds[ci].count(sq) == 1))
             ihits = [h for h in ihits if h[2] >= 0]
             if not ihits:
-                return {}, {}, {}
+                return {}, {}, {}, {}
             _, ci, at = ihits[0]
             srcs = int_spans[ci][at:at + len(sq)]
+            raw = int_chars[ci][at:at + len(sq)]
+        # GLYPH REPAIR: docling folds the PDF's curly quotes to straight
+        # ones ('dramatic acceleration', p.13). The alignment folds every
+        # quote variant, so any position where the cell's char and the
+        # span's raw char are both quote-ish but differ is a fold to undo.
+        cellraw = [ch for ch in _squash(plain).translate(_INVIS_DEL)
+                   .translate(_BULLET_DEL).translate(_LOW9)]
+        subs = {}
+        if len(cellraw) == len(raw):
+            for k, (a2, b2) in enumerate(zip(cellraw, raw)):
+                if a2 != b2 and a2 in "'\"“”‘’" and b2 in "'\"“”‘’":
+                    subs[k] = b2
         cell_x2 = max(s["bbox"][2] for s in srcs)
         right = min([e for e in edges if e > cell_x2 + 2], default=bbox[2]) - 6
         breaks = {}
@@ -1530,12 +1563,12 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
                         opens[run_start] = "<i>"
                         closes[k - 1] = "</i>"
                     run_start = None
-        return breaks, opens, closes
+        return breaks, opens, closes, subs
 
     def fix_cell(m):
         tg, attrs, c = m.groups()
-        breaks, opens, closes = cell_breaks(c)
-        if not breaks and not opens:
+        breaks, opens, closes, subs = cell_breaks(c)
+        if not breaks and not opens and not subs:
             return m.group(0)
         # walk the TAGGED cell as (tag | entity | char) tokens, counting
         # visible non-space chars; after ordinal k in `breaks`, a pending
@@ -1561,9 +1594,9 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
                 if not pending:
                     out.append(t)
                 continue
-            if vis in "●•◦▪‣○■□'\"“”‘’":
-                # glyphs and quote chars are outside the alignment — pass
-                # through, and a pending break lands BEFORE a bullet glyph
+            if vis in "●•◦▪‣○■□":
+                # bullet glyphs are outside the alignment — pass through,
+                # and a pending break lands BEFORE the glyph
                 if pending:
                     out.append(pending)
                     pending = False
@@ -1575,7 +1608,7 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
             k += 1
             if k in opens:
                 out.append(opens.pop(k))
-            out.append(t)
+            out.append(_h.escape(subs[k], quote=False) if k in subs else t)
             if k in closes:
                 out.append(closes.pop(k))
             if k in breaks:
@@ -1660,6 +1693,7 @@ def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
 
 # zero-width/invisible characters, transparent to glyph-repair alignment
 _INVIS = "​‌‍⁠﻿­"
+_QALL = str.maketrans({c: '"' for c in "'\"“”‘’"})
 _QDEL = str.maketrans("", "", "'\"“”‘’")
 _BULLET_DEL = str.maketrans("", "", "●•◦▪‣○■□")
 _INVIS_DEL = {ord(c): None for c in _INVIS}

@@ -347,7 +347,21 @@ def _is_quote(line, page, list_tiers: frozenset = frozenset()) -> bool:
     marker lines)."""
     x0 = line["bbox"][0]
     if x0 < QUOTE_X0 - 6:
-        return False
+        # a SHALLOW indent still marks a quotation when the whole line is
+        # italic (risk-report p.153: the two RSP quotations sit at x0 81 vs
+        # body 72 — the indent is their only quote signal, and rendering
+        # them flush loses it). Census-verified as unambiguous: across all
+        # three cards the only all-italic lines in the 76–90 band outside
+        # boxes are those quotations plus in-table '(Helpful-only)' labels,
+        # which never reach here (table lines are removed before assembly).
+        # The bullet tier (90) is excluded so italic list items stay items.
+        body = [s for _, _, s in line["segs"]
+                if s["zone"] == "body" and s["text"].strip()]
+        if not (body and 76 <= x0 < 90 and all(s["italic"] for s in body)):
+            return False
+        if LIST_MARKER.match(line["text"].lstrip()) or line["text"].lstrip()[:1] in BULLETS:
+            return False
+        return _box_role(line, page)[0] is None
     if x0 < QUOTE_X0 and any(abs(x0 - t) <= 3 for t in list_tiers):
         return False
     return _box_role(line, page)[0] is None
@@ -787,7 +801,12 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
             # already carry (wrapped headings keep trailing spaces at the
             # break: 'Risk ' + 'Report' must not become 'Risk  Report')
             nxt0 = line["segs"][0][2]["text"] if line["segs"] else ""
-            if not (text_parts and text_parts[-1].endswith(" ")) and not nxt0.startswith(" "):
+            # a continuation opening with a hyphen joins TIGHT — the wrap
+            # fell inside a hyphenated compound or a bare URL (fn50 p.118)
+            tight = (not line.get("mono") and not block["lines"][li - 1].get("mono")
+                     and norm.wrap_joins_tight("".join(text_parts), line["text"]))
+            if (not (text_parts and text_parts[-1].endswith(" "))
+                    and not nxt0.startswith(" ") and not tight):
                 text_parts.append(" ")
                 pos += 1
         prev_span = None

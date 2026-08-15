@@ -238,14 +238,27 @@ def page_body_text(p: dict) -> str:
     for s in p["spans"]:
         if s["zone"] == "body":
             lines.setdefault(s["line"], []).append(s)
-    rendered = []
+    rendered, mono_flags = [], []
     for _, spans in sorted(lines.items()):
         buf = spans[0]["text"]
         for prev, cur in zip(spans, spans[1:]):
             gap = cur["bbox"][0] - prev["bbox"][2]
             buf += (" " if gap > 1.0 else "") + cur["text"]
         rendered.append(buf)
-    text = " ".join(rendered)
+        mono_flags.append(any("Mono" in sp.get("font", "") or "Courier" in sp.get("font", "")
+                              for sp in spans))
+    # a continuation opening with a hyphen joins TIGHT (the wrap fell inside
+    # a hyphenated compound / URL: 'national-security' | '-relevant').
+    # MONO lines are exempt: a code box prints its wrap as a real line break
+    # and the md fence keeps it verbatim, so joining would desync the two
+    # (the §9.2 blocklist URLs on both certified cards).
+    buf = ""
+    for i, (ln, mono) in enumerate(zip(rendered, mono_flags)):
+        if i and not (not mono and not mono_flags[i - 1]
+                      and norm.wrap_joins_tight(buf, ln)):
+            buf += " "
+        buf += ln
+    text = buf
     # join end-of-line hyphenations (A1, shared with the serializer so both
     # T1 sides transform identically — incl. the suspended-compound family
     # exception, risk-report p.181)
