@@ -234,3 +234,23 @@ cross-page merging — building per fragment produced two lists with the seam
 paragraph stranded between them. TB2 now ignores bullet glyphs on both sides
 (the invariant checks order; a real list carries no glyph). 22 cells across
 the three cards converted, including 10 on each certified card.
+
+### Late round-3 comparator (pp.145–166), adjudicated 2026-08-15
+
+The last round-3 agent returned after the in-cell-list work landed: 20 clean,
+0 major, 2 minor, both now closed.
+
+- **p.155 CB-1 cell bullets flattened to `●` glyphs** — fixed by the in-cell
+  list change above; that section now carries a real `<ul>` and zero bullet
+  glyphs in the pp.154–157 region.
+- **p.153 RSP quotation over-italicized** (claimed the PDF sets "ASL-3" and
+  "AI" upright inside the italic run) — NOT a defect. The PDF's span dump for
+  that passage is a single continuous `Lora-Italic` run at x0=81; there is no
+  upright span. A vision artifact of the downscaled full-page render, which is
+  exactly the failure mode the rulebook's zoom-crop requirement exists to
+  prevent. Output is source-faithful.
+
+The agent independently confirmed the pp.155–156 table seam (one table, one
+header row, seam marker inside the continuation cell), live ↩ backlinks for
+footnotes 74–85 including the four table-only refs, page-marker placement,
+figure order on pp.161–162, and every link URI on its range.
