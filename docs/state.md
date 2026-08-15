@@ -17,12 +17,21 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
 - **fable-5: live**, byte-identical through every pipeline change today.
   Gate: 0 majors / `L1 31` / `T1 44`.
 - **opus-5: live**, byte-identical likewise. Gate: 0 majors / `T1 13`.
-- **risk-report-2026-08: converged, awaiting owner scroll pass (step 8) +
-  deploy decision.** Gate: 0 majors / `FN1 1` (declared orphan-ref source
-  defect — the PDF's own stray superscript 18 on p.126, D45) / `T1 26`
-  (docling cell tokenization + seam displacement noise). Seam audit 0.
-  Mutation recall at the calibrated band (loss classes 100%). 10/10
-  rendered-page assertions pass on the production build.
+- **risk-report-2026-08: converged; owner scroll pass IN PROGRESS.** Gate:
+  0 majors / `FN1 1` (declared orphan-ref source defect — the PDF's own
+  stray superscript 18 on p.126, D45) / `T1 25` (docling cell tokenization
+  + seam displacement noise). Seam audit 0. Mutation recall at the
+  calibrated band. Scroll findings so far (experiment 11 §findings log,
+  both class-fixed same session): p.42 taxonomy sub-list (spurious
+  blockquote + bold-letter-defeated `<ol type="a">` transform, `8d96f1a`);
+  cross-page bubble splits §2.24/§2.20 (geometry continuation rule,
+  `076161f`).
+- **PENDING OWNER DECISION:** the bubble-continuation rule also heals the
+  IDENTICAL construct in certified fable-5 (§6.2.4 pilot-quote box,
+  p.101→102: two `label=""` bubbles → one). That canon change is currently
+  IN the working tree (uncommitted-to-approval in the sense of D41 —
+  committed in git, flagged for sign-off; revert = gate the rule per-card).
+  Opus unchanged.
 
 ## What today established (pointers, not narrative)
 
