@@ -744,3 +744,30 @@ the same independence failure recorded for round 2, in a new disguise.
 **Renderer note.** The site pins footnote refs to a uniform mono citation
 style (`sup.fn-html a`), so no rendered page changed — the fix is source
 fidelity, and it reaches readers through the `.md` exports.
+
+## D48 — `link_text_resolution: extended` stays off for the certified cards; the open question from D46 is closed (2026-08-15)
+
+**Decision.** Leave the knob off for fable-5 and opus-5. Keep it on for the
+risk report. D46 left this open on the belief that enabling it would
+re-anchor "a handful" of certified links, needing owner adjudication.
+
+**Measured, not assumed.** Enabling it on both certified cards and
+regenerating changes **zero bytes** of either card's `sections/`. There is
+nothing to adjudicate. This is consistent with the regression sweep's link
+audit: after the D47-adjacent coordinate fix, all 94 number-named anchors on
+those cards resolve identically by geometry and by text, so the extended
+rules have nothing left to correct.
+
+**And the converse: the risk report still needs it.** Turning it off there
+and regenerating misroutes four links even with correct coordinates —
+`Claim 6` lands on "Claim 7: Threat modeling is sufficient", `Claim 8` on
+"2.15 Pathway-specific risk assessments", `Claim 3` on the 3.1 subsection,
+and a `below` fragment one level too deep. So the two problems the knob was
+built around are genuinely separate: the bottom-up/top-down coordinate bug
+(now fixed, global) and this document's own sloppy destination placement
+(per-card, still real). The D16 scoped-idiom framing holds.
+
+**Method note.** Both directions were tested by flipping the manifest,
+regenerating, and diffing — the same byte-identity net used for pipeline
+changes, pointed at a config question. Config knobs left "open pending
+adjudication" should be measured this way rather than carried as open items.

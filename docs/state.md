@@ -89,9 +89,12 @@ readers through the `.md` exports.
 - **Editorial:** the index-page intro copy is still system-card-specific
   ("when AI companies release a new model… the system card is usually a long
   PDF") — worth a line acknowledging risk reports now that one is archived.
-- **Optional:** enable `link_text_resolution: extended` for fable/opus. It
-  would re-anchor a handful of certified links — likely improvements, but
-  canon changes wanting adjudication.
+- **Closed 2026-08-15 (D48):** `link_text_resolution: extended` for
+  fable/opus is a **no-op** — enabling it changes zero bytes of either
+  card's `sections/`, because after the coordinate fix geometry and text
+  agree on all 94 number-named anchors. Nothing to adjudicate; knob stays
+  off there and on for the risk report, which still needs it (four links
+  misroute without it).
 - **Owner-closed 2026-08-15:** p.22 rating-cell tints ("plain is fine");
   p.36's part-black/part-green code span ("fine to ignore"); table column
   width ratios ("don't want to force the ratios"); in-cell bulleted lists
@@ -103,7 +106,7 @@ The first attempt converted one card but needed so much manual review the owner
 judged it unmaintainable. The rebuild's goal: hand over a PDF, the pipeline runs
 unattended, the owner certifies after a short flag-directed review.
 Verification-first: the gates were built and calibrated before the generator.
-Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D47),
+Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D48),
 [design-brief.md](design-brief.md) (§2 defect taxonomy), and
 [verification-methodology.md](verification-methodology.md) (4 layers: gates →
 agent sweeps → convergence loop → owner scroll). Three cards have now proven
