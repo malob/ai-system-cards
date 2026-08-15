@@ -61,9 +61,13 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
 
 ## Open — owner attention needed
 
-- **Owner scroll pass** on the risk-report page (step 8; sweeps are
-  content-strong, visual-layout-weak). Table-dense stretches: pp.10-14, 22,
-  78-80, 115-119, 123-132, 155-156, 182-185; boxed prompts pp.72-74/84-86.
+- **Ship decision.** Sweep round 3 (the ship gate, 2026-08-15) found 4
+  major classes, all fixed — including a LATENT link-destination bug that
+  affected both live cards. Convergence state in experiment 11 §Round 3.
+- **One editorial call outstanding:** in-cell bulleted lists render as
+  literal ● + `<br><br>` rather than `<ul>/<li>` (p.113, p.155), so a
+  bullet's follow-on paragraphs lose their association. Long-standing
+  convention on all three cards; changing it is a D17 presentation call.
 - **Deploy decision** (push to main → Pages).
 - **Deferred typed minors** — now just ONE: p.36's code span (the PDF sets
   'sed' black and the rest green; the renderer styles code uniformly). All

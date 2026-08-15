@@ -1,48 +1,58 @@
 {
- "drop-bold": {
-  "invariant": "S1",
-  "caught": 5,
-  "tried": 8,
+ "drop-link": {
+  "invariant": "L1",
+  "caught": 6,
+  "tried": 10,
   "details": [
    {
-    "file": "03-automated-rd.md",
-    "site": "CoBench",
+    "file": "01-introduction.md",
+    "site": "https://cdn.sanity.io/files/4zrzovbb/website/0bacdc8440ea96e62a8766d99ebe1d4eea6d5f3a.pdf",
     "caught": false
    },
    {
     "file": "02a-autonomy-misalignment-1.md",
-    "site": "The threat:",
-    "caught": false
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "Likelihood of impact:",
-    "caught": false
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "EAP users:",
+    "site": "https://metr.org/blog/2026-05-19-frontier-risk-report",
     "caught": true
    },
    {
-    "file": "04a-chem-bio-1.md",
-    "site": "Why this is a priority threat:",
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf",
+    "caught": false
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "https://arxiv.org/abs/2511.18397",
+    "caught": true
+   },
+   {
+    "file": "06-appendices.md",
+    "site": "https://anthropic.com/rsp/roadmap",
+    "caught": true
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "http://anthropic.com/feb-2026-risk-report",
+    "caught": false
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "https://www.anthropic.com/system-cards",
     "caught": true
    },
    {
     "file": "02c-autonomy-misalignment-3.md",
-    "site": "Pathway 8: Undermining decisions within ",
+    "site": "https://arxiv.org/abs/2508.17511",
     "caught": true
    },
    {
     "file": "05-cross-cutting.md",
-    "site": "Volume:",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "How to investigate",
-    "caught": true
+    "site": "https://www.anthropic.com/responsible-scaling-policy/roadmap",
+    "caught": false
    }
   ]
  }

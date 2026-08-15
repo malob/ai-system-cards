@@ -179,3 +179,46 @@ scroll.
    following text's line box, clamped so labels never cross a figure or
    table. Risk report 34 → 5 stranded (all standalone-before-table, benign);
    opus 0.
+
+## Round 3 (2026-08-15) — ship gate
+
+Run because 23 commits (+575 lines across 11 pipeline/renderer files) had
+landed since the last full inspection: the output nobody had swept was the
+output about to ship. 11 agents, 185 units, fresh inputs in
+`pipeline/.cache/rr-sweep3/`, under `rulebook-round3.md` — which fixes the
+round-2 process failure by describing the PDF rather than the fixes, and by
+holding only OWNER decisions in the do-not-flag list.
+
+**4 majors, all fixed** (commit `aab9e96`):
+
+| class | pages | root cause → fix |
+| --- | --- | --- |
+| header band read as a body row | 10, 11, 12 | header-text promotion recognised only `#ffffff`; this card's headers are CREAM `#faf9f5` → colours read from the manifest's `table-header-text` role, and header cells matched by per-COLUMN containment (a header cell spans several spans; reading order interleaves multi-column header rows) |
+| seam marker outside the box | 74 | the LEGACY mid-sentence turn merge never learned the inline-marker trick the geometry merge uses → ~90 words of p.74 deep-linked to p.73 |
+| footnote sup inside a bold run | 125, 126, 128 | whole-cell bold wrapped the superscript, which the PDF sets at regular weight → trailing sup lifted out of the bold |
+| link destinations resolved to the wrong heading | doc-wide, **both certified cards** | PDF dests are BOTTOM-UP, span geometry top-down → every geometric comparison failed and multi-heading destination pages fell back to their FIRST heading. Converted at the oracle; `anchor_for` now takes the first heading at-or-below the dest (measured: dests sit 0–40pt above their heading, modes 15/17pt, 99% within 40pt; PDF-verified at +1pt for a TOC dest and +15pt for a body dest) |
+
+Also fixed: dest-pooling restricted to short fragments (a full anchor phrase
+was inheriting a coarser target from another link sharing its destination,
+p.121), and the last-row border rule extended to `th` (stray segment under
+the first column, p.80).
+
+**Minors** were either owner-decided (smart quotes — the typographer stays
+on, 2026-07-25; p.22 tints; p.36 code span), source-faithful on inspection
+(p.153's fully-italic quotation, p.181's bold-lead absence, p.42's bold
+`c.`), or cosmetic-latent (th/td mix in row labels, invisible under current
+CSS). Two disagreements between inspectors were resolved against the PDF.
+
+**Open, owner's call:** in-cell bulleted lists render as literal `●` glyphs
+separated by `<br><br>` rather than `<ul>/<li>`, so a bullet's follow-on
+paragraphs lose their indent and no longer read as belonging to it
+(p.113 Table 3.10.A, p.155). One inspector called it major, one called it
+the document-wide convention, one flagged only the inconsistency with the
+`<p>`-based cell on p.156. It is how the pipeline has always rendered
+in-cell bullets — including on both shipped cards — so changing it is a
+D17 presentation decision, not a bug fix.
+
+**Convergence state:** gates 0 majors (FN1 1 declared source defect, T1 22,
+TB2 1 seam advisor); fable `L1 31`/`T1 44`, opus `T1 13`; seam audit 0;
+mutation at baseline; 7/8 rendered-page assertions pass (the 8th targeted
+the wrong card and passed once retargeted).
