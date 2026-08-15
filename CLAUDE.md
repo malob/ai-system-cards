@@ -91,7 +91,8 @@ env CARD=anthropic/claude-opus-5 uv run --with pymupdf python pipeline/verifier/
 ```
 
 The gate passes at **0 majors**; typed residual baselines: fable-5 `L1 31` / `T1 44`,
-opus-5 `T1 13` (post-D41/D42 fix batches) — accepted noise, not regressions; re-baseline
+opus-5 `T1 13` (post-D41/D42 fix batches), risk-report-2026-08 `FN1 1` (declared
+orphan-ref source defect, D45) / `T1 26` — accepted noise, not regressions; re-baseline
 here whenever an owner-approved fix batch moves them. `calibrate.py` takes a
 git ref or the literal `WORKTREE` (the current sections), not a path. **Any pipeline
 change must leave the OTHER card's `sections/` byte-identical** (regen + `git diff`)

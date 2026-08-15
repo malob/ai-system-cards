@@ -57,3 +57,25 @@ taxonomy sub-list rides in a blockquote (content correct).
 typed); seam audit 0; mutation recall at the calibrated band. Round 2
 (fresh `rr-sweep2/` inputs): 4 agents — 3 fix-verification comparators over
 the 37 affected pages + 1 rotating 15-page regression sample.
+
+## Round 2 (same day) — fix verification + rotating sample
+
+52 units, 4 agents (`pipeline/.cache/rr-sweep2/findings-*.jsonl`): the
+15-page rotating regression sample came back **fully clean — zero
+regressions** from the ~30-commit fix batch. Of the 37 re-inspected fix
+pages, 30 verified immediately; 7 residuals surfaced and were fixed the
+same evening (commit `e352168`): p.9 lettered siblings nesting (indent
+inheritance), p.52 wrapped Claim 4.1 lead (grammar now tests the
+paragraph's first line), p.113 cross-seam third bullet (`_bullet_breaks`
+re-runs post-merge), and the §6.6 label-bold cluster pp.182–184
+(`_bold_label_cells` whole-cell pass + duplicate-word leak strip + false
+`<u>` removal). One agent flag (p.80 scrambled label) was stale — its
+snapshot predated the y-band fix; the corrected row was verified directly.
+Each residual fix was re-verified by direct crop/DOM inspection rather
+than a third agent round.
+
+**Convergence state:** gates 0 majors (FN1 1 declared source-defect +
+T1 26 typed residuals); seam audit 0; both system cards byte-identical;
+10/10 rendered-page assertions pass on the production build. Remaining
+items are the five deferred typed minors (owner list above) and the owner
+scroll pass (onboarding step 8).

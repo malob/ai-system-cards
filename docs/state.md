@@ -3,58 +3,60 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-07-25 (post-ship rewrite) — **two cards LIVE** at
-malob.github.io/ai-system-cards. The Claude Opus 5 card (193pp, PDF released
-2026-07-24) shipped 2026-07-25 — converted, converged, and deployed the day after
-release, answering D35's question for the within-Anthropic case: **one shared
-pipeline serves, with per-card config** (D38–D40).
+**Last updated:** 2026-08-14 (late evening) — **third card converted and
+converged, awaiting the owner scroll pass.** Anthropic published its **Risk
+Report: August 2026** (public redacted edition, 186pp, RSP v3.4 — the
+archive's first non-system-card document, D44) at ~17:41 UTC; it went through
+the full pipeline the same day: census → manifest → stubs → assemble → 0
+majors → seam audit → mutation test → two full agent sweep rounds → site
+build, all local. **NOT deployed** — pushes only on explicit owner request
+(D13).
 
 ## Status
 
-- **fable-5: live** (June 11 PDF revision, D37, plus the 2026-07-25 fidelity and
-  renderer improvements — same-construct fixes carried over from the opus work).
+- **fable-5: live**, byte-identical through every pipeline change today.
   Gate: 0 majors / `L1 31` / `T1 44`.
-- **opus-5: live** (2026-07-25). Gate: 0 majors / `T1 13`.
-- Baselines are re-recorded in CLAUDE.md §"Running the pipeline" whenever an
-  owner-approved batch moves them. Verifier calibration corpus (D5) untouched:
-  refs `f60899a`/`fb483fb`.
+- **opus-5: live**, byte-identical likewise. Gate: 0 majors / `T1 13`.
+- **risk-report-2026-08: converged, awaiting owner scroll pass (step 8) +
+  deploy decision.** Gate: 0 majors / `FN1 1` (declared orphan-ref source
+  defect — the PDF's own stray superscript 18 on p.126, D45) / `T1 26`
+  (docling cell tokenization + seam displacement noise). Seam audit 0.
+  Mutation recall at the calibrated band (loss classes 100%). 10/10
+  rendered-page assertions pass on the production build.
 
-## How the second card converged (pointers, not narrative)
+## What today established (pointers, not narrative)
 
-One day, four phases — details live in the decision log and experiment 10:
+1. **D44** — the archive's scope now includes non-system-card safety
+   documents; slug convention `risk-report-YYYY-MM`; `doc_type` meta field
+   drives the eyebrow/OG/export labels.
+2. **D45** — onboarding generalizations: footnote-region walk (long quoted
+   footnotes), orphan-fnref source-defect rule, links inside docling table
+   cells (`_inject_links`), in-bubble list items.
+3. **D46 + experiment 11** — the sweeps found ~40 distinct majors in 9
+   classes that the gates cannot see (tables/anchors/styling); all fixed at
+   class level; `link_text_resolution: extended` is a per-card manifest knob
+   because the same rules would re-anchor certified fable/opus links (owner
+   may enable later). Round 2: 15-page regression sample fully clean; 7
+   residuals fixed and directly verified.
+4. **The byte-identity regression net caught five real canon breaks** during
+   the fix batches — it is the load-bearing safety mechanism for shared-
+   pipeline evolution.
 
-1. **Onboard + gate** (D38–D40): census → manifest → stubs → assemble → 0 majors
-   same day. Procedure: CLAUDE.md §"Adding a card".
-2. **Sweeps** (experiment 10): round 1 found 15 majors in 8 classes (all class-
-   fixed); round 2 verified fixes + found 1 more; both cards held as each
-   other's regression net throughout.
-3. **Owner adjudication batches** (D41/D42): all eight deferred minors fixed
-   (glyph repair, cell italics/bolds, stacked lines, blockquotes, fence chrome,
-   fence blank lines, hl coalescing), verified by a 25-unit spot re-sweep that
-   caught one repair miss (ZWSP alignment).
-4. **Owner scroll review**: six further visual-layout finds, all fixed and
-   final-swept (18 units, zero regressions). Lesson institutionalized:
-   onboarding step 8 (CLAUDE.md) + verification-methodology layer 4 — the
-   sweeps are content-strong but visual-layout-weak; a human scroll pass
-   belongs before certification.
+## Open — owner attention needed
 
-Also shipped 2026-07-25: **md export suite** (card.md with provenance header +
-linked contents; a standalone `.md` per top-level section; llms.txt index of
-everything) and **D43** (tables serialize one `<tr>` per line — canon
-whitespace change, proven newline-collapse-identical and render-inert).
-
-## Open
-
-- Nothing blocking. Typed residuals (`T1 13` / `L1 31 + T1 44`) are owner-
-  accepted noise. One typed cosmetic on the books: docling-lost space in one
-  restored cell (fable p.243 `” —robust`; the glyph repair deliberately keeps
-  docling spacing — owner-accepted).
-- Renderer typographer decision recorded (owner, 2026-07-25): the quote
-  educator stays on; md/card.md/llms.txt remain the fidelity artifacts.
-- **Next milestone:** a third document from a *different vendor* (different PDF
-  producer) — the real test of the oracle/manifest architecture beyond
-  Google-Docs exports. Expect the oracle and manifest roles to carry; expect
-  new assembler cases.
+- **Owner scroll pass** on the risk-report page (step 8; sweeps are
+  content-strong, visual-layout-weak). Table-dense stretches: pp.10-14, 22,
+  78-80, 115-119, 123-132, 155-156, 182-185; boxed prompts pp.72-74/84-86.
+- **Deploy decision** (push to main → Pages).
+- **Deferred typed minors** (experiment 11 README §Deferred): p.13 cell
+  paragraph merge, p.153 shallow-indent quotes, p.36 code-span color,
+  footnote URL wrap spaces, p.42 blockquote-wrapped sub-list.
+- **Editorial flags:** index-page intro copy is system-card-specific ("when
+  AI companies release a new model…") — may want a line acknowledging risk
+  reports; p.22's color-coded rating cells render as plain cells (text
+  carries the ratings — declared exclusion; a renderer treatment is possible
+  if wanted); `link_text_resolution: extended` could be enabled for
+  fable/opus after adjudicating the handful of anchor changes it implies.
 
 ## Cold-start capsule
 
@@ -62,10 +64,13 @@ The first attempt converted one card but needed so much manual review the owner
 judged it unmaintainable. The rebuild's goal: hand over a PDF, the pipeline runs
 unattended, the owner certifies after a short flag-directed review.
 Verification-first: the gates were built and calibrated before the generator.
-Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D43),
+Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D46),
 [design-brief.md](design-brief.md) (§2 defect taxonomy), and
 [verification-methodology.md](verification-methodology.md) (4 layers: gates →
-agent sweeps → convergence loop → owner scroll). The second card validated the
-architecture end-to-end: census → manifest → stubs → assemble → gate → sweeps →
-scroll, with the other card held byte-identical as the regression net for every
-pipeline change.
+agent sweeps → convergence loop → owner scroll). Three cards have now proven
+the architecture: within Anthropic's Google-Docs-export family, one pipeline
+serves with per-card config (manifest roles, stubs, and now grammar knobs like
+`link_text_resolution`); every fix is a class in `pipeline/`, never an
+instance; the other cards' byte-identity is the regression net for all of it.
+A different vendor's PDF (different producer) remains the next architectural
+test.
