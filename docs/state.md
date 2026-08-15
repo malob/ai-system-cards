@@ -3,79 +3,99 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-14 (late evening) — **third card converted and
-converged, awaiting the owner scroll pass.** Anthropic published its **Risk
-Report: August 2026** (public redacted edition, 186pp, RSP v3.4 — the
-archive's first non-system-card document, D44) at ~17:41 UTC; it went through
-the full pipeline the same day: census → manifest → stubs → assemble → 0
-majors → seam audit → mutation test → two full agent sweep rounds → site
-build, all local. **NOT deployed** — pushes only on explicit owner request
-(D13).
+**Last updated:** 2026-08-15 (midday) — **third card converged and the two
+certified cards regression-swept clean. Awaiting the owner's deploy
+decision.** Anthropic's **Risk Report: August 2026** (public redacted
+edition, 186pp, RSP v3.4 — the archive's first non-system-card document,
+D44) went through the full pipeline on 2026-08-14, then a ship-gate sweep,
+an owner scroll pass, and a certified-card regression sweep on 2026-08-15.
+**NOT deployed** — pushes only on explicit owner request (D13).
 
 ## Status
 
-- **fable-5: live**, byte-identical through every pipeline change today.
-  Gate: 0 majors / `L1 31` / `T1 44`.
-- **opus-5: live**, byte-identical likewise. Gate: 0 majors / `T1 13`.
-- **risk-report-2026-08: converged; owner scroll pass IN PROGRESS.** Gate:
-  0 majors / `FN1 1` (declared orphan-ref source defect — the PDF's own
-  stray superscript 18 on p.126, D45) / `T1 22` (docling cell tokenization
-  + seam displacement noise) / `TB2 1` (seam-cell advisor). Seam audit 0.
-  NEW GATE TB2 (owner-requested): table-cell order integrity from markdown
-  alone — the scramble class the sweeps used to own; contract updated. Mutation recall at the
-  calibrated band. Scroll findings so far (experiment 11 §findings log,
-  both class-fixed same session): p.42 taxonomy sub-list (spurious
-  blockquote + bold-letter-defeated `<ol type="a">` transform, `8d96f1a`);
-  cross-page bubble splits §2.24/§2.20 (geometry continuation rule,
-  `076161f`); Table 3.10.A cell paragraphs + in-cell italics
-  (`c3d046c`/`2eee70e`); seam page marker foster-parented to the table top
-  (`e0d4d34`); dead ↩ backlinks on table-only footnotes (`a05e334`); and the
-  owner-re-adjudicated deferred batch — wrap-join corruption, in-cell
-  punctuation spaces, quote folds, indented RSP quotations (`e8f8f61`).
-- **RESOLVED (owner asked for a judgment, 2026-08-14 ~22:10):** the
-  bubble-continuation rule initially also merged fable-5's §6.2.4
-  pilot-quote box — judged NOT a fidelity fix there (fable's convention is
-  box-per-paragraph: its p.102 continuation paragraph sits in its own
-  closed box mid-page; the risk report's p.72 twin of the same quote holds
-  both paragraphs in one box). Rule gated behind
-  `bubble_page_continuation: true` (risk report on, fable/opus off);
-  fable canon restored byte-for-byte (`fdda931`).
+- **fable-5: live.** Gate 0 majors / `L1 31` / `T1 44`. Seam 0.
+- **opus-5: live.** Gate 0 majors / `T1 13`. Seam 0.
+- **risk-report-2026-08: converged, certification-ready.** Gate 0 majors /
+  `FN1 1` (declared orphan-ref source defect — the PDF's own stray
+  superscript 18 on p.126, D45) / `T1 22` (docling cell tokenization + seam
+  displacement noise) / `TB2 1` (seam-cell advisor). Seam 0. Mutation recall
+  at the calibrated band.
 
-## What today established (pointers, not narrative)
+Both certified cards' output DID change this session — deliberately, and
+every change is verified as an improvement (see the regression sweep below).
+Byte-identity remains the net for *unintended* change; it is asserted per fix
+within a batch, not across an approved canon change.
 
-1. **D44** — the archive's scope now includes non-system-card safety
-   documents; slug convention `risk-report-YYYY-MM`; `doc_type` meta field
-   drives the eyebrow/OG/export labels.
-2. **D45** — onboarding generalizations: footnote-region walk (long quoted
-   footnotes), orphan-fnref source-defect rule, links inside docling table
-   cells (`_inject_links`), in-bubble list items.
-3. **D46 + experiment 11** — the sweeps found ~40 distinct majors in 9
-   classes that the gates cannot see (tables/anchors/styling); all fixed at
-   class level; `link_text_resolution: extended` is a per-card manifest knob
-   because the same rules would re-anchor certified fable/opus links (owner
-   may enable later). Round 2: 15-page regression sample fully clean; 7
-   residuals fixed and directly verified.
-4. **The byte-identity regression net caught five real canon breaks** during
-   the fix batches — it is the load-bearing safety mechanism for shared-
-   pipeline evolution.
+## What this session established
+
+1. **D44 / D45 / D46** — non-system-card scope and slug convention; the
+   onboarding generalizations (footnote-region walk, orphan-fnref rule,
+   links inside docling cells, in-bubble lists); and the round-1 sweep's ~40
+   distinct majors in 9 classes, all class-fixed.
+2. **D47 — a styling rule reads per-instance oracle evidence, never a
+   class-wide sample.** Forced by the one real regression this session (see
+   below). Its process half matters more than its code half: a fix's own
+   commit message is not evidence, and an inspector prompt must pose the
+   question rather than assert the answer.
+3. **A LATENT bug in both live cards, found at the ship gate:** PDF link
+   destinations are stored bottom-up while span geometry is top-down, so
+   every geometric comparison failed and a multi-heading destination page
+   resolved to its FIRST heading. Fixed at the oracle; 12 links re-anchored.
+4. **TB2** (owner-requested): table-cell order integrity from markdown alone
+   — the scramble class the agent sweeps used to own, now mechanical.
+5. **New gate on the sweep design itself:** three rounds each produced a
+   finding the previous round's prompts had *told* inspectors was fine.
+   Round 2's prompts described the fixes; round 3's message asserted a
+   premise the regression sweep disproved. The rulebooks now describe the
+   PDF only, and the do-not-flag list holds owner decisions only.
+
+## Certified-card regression sweep (2026-08-15) — the ship evidence
+
+5 agents; `docs/experiments/11-risk-report-sweep-round1/rulebook-regression.md`.
+
+| scope | result |
+| --- | --- |
+| fable 8 changed pages | 12 major improvements, 2 minor regressions (one class) |
+| opus 5 changed pages | 5 major improvements, 1 minor regression (same class) |
+| fable 12 control pages | 11 clean, 1 improvement, 0 regressions |
+| opus 11 control pages | 10 clean, 1 improvement, 0 regressions |
+| all 163 internal links, both cards | **0 mismatches** |
+
+The control samples cover the three RENDERER-level changes that touch every
+page regardless of markdown (marker realign pass, footnote backlink anchor,
+table CSS); both control agents verified in the live DOM. Card-wide: all 155
+fable inline markers within 6px of their page's first line; 76/76 and 36/36
+footnote backlinks resolving.
+
+The link audit is the load-bearing result: all 94 number-named anchors now
+resolve to the exactly-matching numbered heading (text and geometry agree
+94/94; before the coordinate fix they disagreed), parent/child destinations
+on one page stay distinct, and the single dead `](#)` on fable p.99 is the
+already-declared source defect (the PDF names a destination absent from its
+own name tree).
+
+**The one real regression, fixed (D47):** round 3's footnote-superscript lift
+was a whole-table regex asserting the PDF sets in-table markers at regular
+weight. 9 of the corpus's 205 in-table refs are `Lora-Bold`; the rule
+de-bolded four. `tables._lift_regular_sups` now matches each marker to its
+own oracle fnref span. Source fidelity only — the site pins footnote refs to
+a uniform mono citation style, so no rendered page changed; it reaches
+readers through the `.md` exports.
 
 ## Open — owner attention needed
 
-- **Ship decision.** Sweep round 3 (the ship gate, 2026-08-15) found 4
-  major classes, all fixed — including a LATENT link-destination bug that
-  affected both live cards. Convergence state in experiment 11 §Round 3.
-- **Closed 2026-08-15:** in-cell bulleted lists now render as real lists
-  with nested sub-paragraphs (owner-approved), on all three cards.
-- **Deploy decision** (push to main → Pages).
-- **Deferred typed minors** — now just ONE: p.36's code span (the PDF sets
-  'sed' black and the rest green; the renderer styles code uniformly). All
-  others were re-adjudicated as real and fixed 2026-08-15.
-- **Editorial flags:** index-page intro copy is system-card-specific ("when
-  AI companies release a new model…") — may want a line acknowledging risk
-  reports; p.22's color-coded rating cells render as plain cells (text
-  carries the ratings — declared exclusion; a renderer treatment is possible
-  if wanted); `link_text_resolution: extended` could be enabled for
-  fable/opus after adjudicating the handful of anchor changes it implies.
+- **Deploy decision** (push to main → Pages). Nothing is blocking it
+  technically: 0 majors on all three cards, seam 0, site builds clean.
+- **Editorial:** the index-page intro copy is still system-card-specific
+  ("when AI companies release a new model… the system card is usually a long
+  PDF") — worth a line acknowledging risk reports now that one is archived.
+- **Optional:** enable `link_text_resolution: extended` for fable/opus. It
+  would re-anchor a handful of certified links — likely improvements, but
+  canon changes wanting adjudication.
+- **Owner-closed 2026-08-15:** p.22 rating-cell tints ("plain is fine");
+  p.36's part-black/part-green code span ("fine to ignore"); table column
+  width ratios ("don't want to force the ratios"); in-cell bulleted lists
+  (approved and shipped, all three cards).
 
 ## Cold-start capsule
 
@@ -83,13 +103,17 @@ The first attempt converted one card but needed so much manual review the owner
 judged it unmaintainable. The rebuild's goal: hand over a PDF, the pipeline runs
 unattended, the owner certifies after a short flag-directed review.
 Verification-first: the gates were built and calibrated before the generator.
-Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D46),
+Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D47),
 [design-brief.md](design-brief.md) (§2 defect taxonomy), and
 [verification-methodology.md](verification-methodology.md) (4 layers: gates →
 agent sweeps → convergence loop → owner scroll). Three cards have now proven
 the architecture: within Anthropic's Google-Docs-export family, one pipeline
-serves with per-card config (manifest roles, stubs, and now grammar knobs like
-`link_text_resolution`); every fix is a class in `pipeline/`, never an
-instance; the other cards' byte-identity is the regression net for all of it.
-A different vendor's PDF (different producer) remains the next architectural
-test.
+serves with per-card config (manifest roles, stubs, and grammar knobs like
+`link_text_resolution` and `bubble_page_continuation`); every fix is a class
+in `pipeline/`, never an instance. A different vendor's PDF (different
+producer) remains the next architectural test.
+
+**If you are picking this up cold and the cards changed under you:** the
+regression sweep in experiment 11 is the template — changed pages plus a
+control sample for renderer-level changes, the PDF as sole authority, and
+one question per page ("as good as, or better than, before?").
