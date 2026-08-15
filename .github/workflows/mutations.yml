@@ -1,0 +1,71 @@
+name: Mutation sensitivity
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 9 * * 1"
+  pull_request:
+    paths:
+      - .github/workflows/mutations.yml
+      - pipeline/verifier/**
+      - pipeline/cardcfg.py
+      - cards/*/*/accepted.json
+      - cards/*/*/sections/**
+      - cards/*/*/source.pdf
+      - docs/experiments/05-mutation-testing/results-*.json
+  push:
+    paths:
+      - .github/workflows/mutations.yml
+      - pipeline/verifier/**
+      - pipeline/cardcfg.py
+      - cards/*/*/accepted.json
+      - cards/*/*/sections/**
+      - cards/*/*/source.pdf
+      - docs/experiments/05-mutation-testing/results-*.json
+
+permissions:
+  contents: read
+
+jobs:
+  mutations:
+    name: Mutations (${{ matrix.card }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - card: anthropic/claude-fable-5
+            baseline: results-anthropic-claude-fable-5.json
+            result: mutation-anthropic-claude-fable-5.json
+          - card: anthropic/claude-opus-5
+            baseline: results-anthropic-claude-opus-5.json
+            result: mutation-anthropic-claude-opus-5.json
+          - card: anthropic/risk-report-2026-08
+            baseline: results-anthropic-risk-report-2026-08.json
+            result: mutation-anthropic-risk-report-2026-08.json
+    env:
+      CARD: ${{ matrix.card }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v9.0.0
+        with:
+          version: "0.12.1"
+      - name: Run mutation sensitivity gate
+        run: >-
+          uv run --python 3.12 --with 'pymupdf==1.28.2'
+          python pipeline/verifier/mutate.py
+          --per-class 8
+          --seed 5
+          --baseline docs/experiments/05-mutation-testing/${{ matrix.baseline }}
+          --json /tmp/${{ matrix.result }}
+      - name: Upload mutation results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ matrix.result }}
+          path: /tmp/${{ matrix.result }}
+          if-no-files-found: warn

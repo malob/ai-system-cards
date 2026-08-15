@@ -1,0 +1,73 @@
+name: Verify
+
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  verifier-unit-tests:
+    name: Verifier unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v9.0.0
+        with:
+          version: "0.12.1"
+      - name: Run verifier unit tests
+        run: >-
+          uv run --python 3.12 --with 'pymupdf==1.28.2'
+          python -m unittest discover -s pipeline/verifier -p 'test_*.py'
+
+  card-gates:
+    name: Gate (${{ matrix.card }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        card:
+          - anthropic/claude-fable-5
+          - anthropic/claude-opus-5
+          - anthropic/risk-report-2026-08
+    env:
+      CARD: ${{ matrix.card }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v9.0.0
+        with:
+          version: "0.12.1"
+      - name: Run full verifier gate
+        run: >-
+          uv run --python 3.12 --with 'pymupdf==1.28.2'
+          python pipeline/verifier/calibrate.py WORKTREE
+      - name: Audit table seams
+        run: python3 pipeline/audit_table_seams.py
+
+  site-build:
+    name: Clean site build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+        working-directory: site
+      - run: pnpm build
+        working-directory: site
