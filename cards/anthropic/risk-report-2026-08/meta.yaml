@@ -1,0 +1,21 @@
+title: "Risk Report: August 2026"
+slug: risk-report-2026-08
+vendor: Anthropic
+models:
+  - Claude Mythos 5
+  - Model 2 (unreleased internal model)
+release_date: 2026-08-14
+source_url: https://www-cdn.anthropic.com/f61d49fa5596956a5dec75fea0e973bf6a6a8378/Redacted%20Risk%20Report%20August%202026%20.pdf
+source_pages: 186
+description: >-
+  Anthropic’s Risk Report for August 2026 (public redacted edition), published
+  under version 3.4 of the Responsible Scaling Policy. Unlike a system card, it
+  assesses catastrophic risk from Anthropic’s activities as a whole —
+  misalignment in high-stakes settings, automated AI R&D, and chemical and
+  biological weapons production — across all models including Claude Mythos 5
+  and the unreleased internal “Model 2”, together with security controls,
+  deployment safeguards, and cross-cutting considerations.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+# (Seeded empty pending the signal census; confirm during conversion.)
+chips: {}

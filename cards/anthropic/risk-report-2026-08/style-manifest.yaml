@@ -1,0 +1,55 @@
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded from the 2026-08-14 signal census (pymupdf span/fill
+# probe over all 186 pages) + page-render inspection of every ambiguous signal.
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+#
+# NOTE vs the two system cards: this document's visual vocabulary is small —
+# no chips, no figure furniture, no code-block boxes. #faf9f5 fill (opus-5:
+# turn-assistant) is here the generic prompt/response box of §2.20 and §2.24;
+# the document has no [User]/[Assistant] turn labels at all, so the faithful
+# role is transcript-container (no invented attribution — verified against
+# pp.72-74: prompt and Claude's review share the identical box style).
+# #dedcd1 / #141413 carry their opus-5 table roles (D39: same hex, different
+# card, different role is normal — here they happen to match opus-5).
+
+card: anthropic/risk-report-2026-08
+status: >-
+  roles seeded mechanically 2026-08-14; verified against page renders
+  (pp.10, 22, 72-74, 84, 115, 118); closure rule applies to anything not listed
+
+text_colors:
+  "#000000": {role: body}
+  "#1155cc": {role: link}                      # 340 spans / 125 pages
+  "#666666": {role: heading}   # 100 spans / 59 pages — gray subsection headings
+  "#38761d": {role: code-text}                 # RobotoMono sed/bash spans, pp.36-37, 167
+  # near-black paste artifacts in the source doc — render as body, keep note
+  "#1d1c1d": {role: body, note: paste-artifact}   # quoted review/transcript prose, 10 pages
+  "#222222": {role: body, note: paste-artifact}   # pp.118, 146 prose
+  "#faf9f5": {role: table-header-text}         # light text on #141413 header fills
+  "#ffffff": {role: table-header-text}         # pp.79, 115, 130, 182
+
+fills:
+  "#d9ead3": {role: placeholder, forms: [inline-pill]}  # D15 […] pills, §2.24 pp.84-86
+  "#faf9f5": {role: transcript-container}   # §2.20 prompt + Claude-review boxes
+                                            # pp.72-74; §2.24 prompt boxes pp.84-86
+  "#141413": {role: table-header-fill, exclude: true}   # dark header rows/cells, 16 pages
+  "#dedcd1": {role: table-cell-bg, exclude: true}       # row-label tint, 25 pages
+  # p.22 [Table 2.4.A] color-coded qualitative rating cells — the tint restates
+  # the rating the cell text already carries; docling consumes the text
+  "#b6d7a8": {role: table-cell-bg, exclude: true}   # 'Low' (light green)
+  "#6aa84f": {role: table-cell-bg, exclude: true}   # 'Very low' (dark green)
+  "#f4cccc": {role: table-cell-bg, exclude: true}   # 'High (observed)' (red)
+  "#ffe599": {role: table-cell-bg, exclude: true}   # 'Somewhat low' (yellow)
+  "#f9cb9c": {role: table-cell-bg, exclude: true}   # 'Moderate' (orange)
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# No smart-chip vocabulary in this document: the census found zero chip-pill
+# fills (the #d9ead3 pills are D15 placeholders, not chips). meta.yaml chips: {}
+
+document:
+  toc_pages: [2, 3, 4, 5, 6]     # site generates its own TOC; excluded
+  page_number_footer: bottom-center bare integer, excluded
