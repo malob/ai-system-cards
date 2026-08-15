@@ -469,10 +469,20 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             tier = (0 if g in "●•" else 1 if g in "○◦o" else
                     2 if g in "■▪□‣" else None)
             shift_ok = tier is None or line["bbox"][0] - (90 + 36 * tier) >= 12
+            q_item = _is_quote(line, page, list_tiers)
             cur = {"type": "item", "lines": [line], "page": pno,
                    "marker_x0": line["bbox"][0],
-                   "quote": _is_quote(line, page, list_tiers) and quote_ctx and shift_ok}
+                   "quote": q_item and quote_ctx and shift_ok}
             marker_x0s.add(round(line["bbox"][0]))
+            # an item that is clearly NOT at quote depth closes any quote
+            # context: a page-leading hanging-indent continuation of the
+            # previous page's item self-classifies as a quote paragraph and
+            # its stale ctx was blockquoting the nested a/b/c taxonomy that
+            # followed a flush level-0 item (risk-report p.42). A genuinely
+            # quoted list never contains a flush item, so quoted runs keep
+            # their context.
+            if not q_item:
+                quote_ctx = False
         elif kind in ("turn", "commentary", "example", "code"):
             role = _box_role(line, page)[1] if kind == "turn" else None
             # a new turn starts when the role changes, the line sits in a

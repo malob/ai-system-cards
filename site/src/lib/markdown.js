@@ -84,14 +84,34 @@ function remarkLetterLists() {
         let k = 0;
         while (k < kids.length && kids[k].type === 'html' && /^<!--[\s\S]*?-->\s*$/.test(kids[k].value ?? '')) k++;
         const text = kids[k];
-        if (!text || text.type !== 'text') return null;
-        const m = /^([a-z])([.)])\s+/.exec(text.value);
-        return m ? { text, letter: m[1], len: m[0].length } : null;
+        if (text?.type === 'text') {
+          const m = /^([a-z])([.)])\s+/.exec(text.value);
+          return m ? { text, letter: m[1], len: m[0].length } : null;
+        }
+        // a BOLD letter marker ('**c.** …', source-faithful in the
+        // risk-report taxonomy) parses as a leading strong node whose text
+        // is just the letter — accept it and drop the whole strong
+        if (text?.type === 'strong' && text.children?.length === 1
+            && text.children[0].type === 'text') {
+          const m = /^([a-z])([.)])\s*$/.exec(text.children[0].value.trim());
+          if (m) return { para, strongIdx: k, letter: m[1], len: 0 };
+        }
+        return null;
       });
       if (leads.some((l) => !l) || leads.length < 2) return;
       const seq = leads.every((l, i) => l.letter.charCodeAt(0) === 97 + i);
       if (!seq) return;
-      for (const l of leads) l.text.value = l.text.value.slice(l.len);
+      for (const l of leads) {
+        if (l.text) {
+          l.text.value = l.text.value.slice(l.len);
+        } else {
+          // bold letter marker: remove the strong node and any following
+          // whitespace-only text node
+          l.para.children.splice(l.strongIdx, 1);
+          const nxt = l.para.children[l.strongIdx];
+          if (nxt?.type === 'text') nxt.value = nxt.value.replace(/^\s+/, '');
+        }
+      }
       node.ordered = true;
       node.data = { ...(node.data ?? {}), hProperties: { type: 'a' } };
     });
