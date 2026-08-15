@@ -77,6 +77,17 @@ that's noted, and the bake-off (experiment 02) is what firms it up.
   adds. If the bake-off shows extractor table structure is weak (merged cells!),
   TB1 degrades to advisor + N-version for affected tables — declared per table,
   never silently.
+- **TB2 — Cell order integrity (gate for single-page tables; advisor for
+  seam-merged, 2026-08-14, owner-requested).** Every md table cell's text
+  (squashed: tags/refs/quotes/whitespace/hyphens dropped) must appear as a
+  CONTIGUOUS run of its page's span streams (reading order, x0 columns, and
+  all-pairs column-edge intervals; ±1-page one-cut split for seam cells). A
+  scrambled/flipped cell — invisible to T1's table-zone demotion — cannot.
+  Calibrated 2026-08-14: 0 false flags on all three cards' certified tables;
+  known recall limit: a scramble whose flipped form coincides with adjacent
+  REPEATED rows ('MonitorBench Hard (n=60 sample) + …' neighborhoods)
+  streams as contiguous and escapes — the layer-2 sweeps remain the catcher
+  for that shape.
 
 ### F — Figures (gates)
 

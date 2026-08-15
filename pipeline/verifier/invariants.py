@@ -438,6 +438,141 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
     return flags
 
 
+def tb2_cell_order(sections_text, oracle_pages, page_range, toc_pages) -> list[dict]:
+    """Table-cell ORDER integrity (TB2, owner-requested 2026-08-14): a cell's
+    text must appear as a CONTIGUOUS run of its page's span stream — a
+    scrambled/flipped cell ('sample) MonitorBench Hard (n=60') can't. T1
+    demotes table pages to minor and never sees traversal order; this is the
+    mechanical md-only catcher for it. `sections_text` = [(name, raw md)].
+
+    A cell is checked against three stream families (reading order, x0
+    columns, coarse column regions) on its page, then the ±1-page split
+    tolerance for seam-merged cells. Squash removes whitespace/hyphens (wrap
+    joins), folds quote variants, strips tags and [^N] refs."""
+    import html as _h
+
+    def _sq(s: str) -> str:
+        s = re.sub(r"<sup>\d+</sup>", "", s)   # orphan superscript digits
+        s = re.sub(r"<[^>]+>", " ", s)
+        s = _h.unescape(s)
+        s = re.sub(r"\[\^\d+\]", "", s)
+        s = s.translate(_TBFOLD)
+        # quote glyphs dropped entirely: docling folds DOUBLE quotes to
+        # SINGLE ('dramatic acceleration', the T1-owned residual class) and
+        # TB2's charter is ORDER, not glyph fidelity
+        s = re.sub(r"['\"]", "", s)
+        return re.sub(r"[\s\-–—­​‌]+", "", s)
+
+    streams_cache: dict[int, list[str]] = {}
+
+    def _streams(pno: int) -> list[str]:
+        if pno in streams_cache:
+            return streams_cache[pno]
+        spans = [s for s in oracle_pages[pno - 1]["spans"]
+                 if s["text"].strip() and s["zone"] not in ("pagenum", "fnref")]
+                # fnref digits ride INSIDE cell text in the stream
+                # ('otherwise8 require') while the md cell strips its [^N]
+        fams = []
+        rd = sorted(spans, key=lambda s: (round((s["bbox"][1] + s["bbox"][3]) / 8),
+                                          s["bbox"][0]))
+        fams.append("".join(_sq(s["text"]) for s in rd))
+        cl: dict[float, list] = {}
+        for s in spans:
+            k = next((k for k in cl if abs(k - s["bbox"][0]) <= 3), None)
+            cl.setdefault(s["bbox"][0] if k is None else k, []).append(s)
+        for col in cl.values():
+            col.sort(key=lambda s: s["bbox"][1])
+            fams.append("".join(_sq(s["text"]) for s in col))
+        def _mid_line(mem):
+            # an x0 cluster whose every span directly continues another span
+            # on its own line (a bold lead ending mid-line, a link fragment)
+            # is an intra-cell wrap position, not a column start — keeping
+            # it as an edge severs the cell's run (11 false positives on
+            # first calibration, all this class)
+            for s in mem:
+                sb = s["bbox"]
+                if not any(o is not s
+                           and sb[0] - 6 <= o["bbox"][2] <= sb[0] + 2
+                           and min(o["bbox"][3], sb[3]) - max(o["bbox"][1], sb[1]) > 2
+                           for o in spans):
+                    return False
+            return True
+
+        edges = sorted(k for k, mem in cl.items()
+                       if len(mem) >= 3 and not _mid_line(mem))
+        # ALL-PAIRS x-intervals as stream families: a single page-wide
+        # bucketing lets body-prose columns (bullet tiers at 90/108)
+        # fragment a table's column region — but for the true column there
+        # is always SOME [left, right) window holding exactly its spans
+        for i in range(len(edges)):
+            rights = [edges[j] - 2 for j in range(i + 1, len(edges))] + [1e9]
+            for r in rights:
+                mem = [s for s in spans if edges[i] - 2 <= s["bbox"][0] < r]
+                if len(mem) < 2:
+                    continue
+                mem.sort(key=lambda s: (round((s["bbox"][1] + s["bbox"][3]) / 8),
+                                        s["bbox"][0]))
+                fams.append("".join(_sq(s["text"]) for s in mem))
+        streams_cache[pno] = fams
+        return fams
+
+    def _found(sq: str, pno: int) -> bool:
+        if any(sq in f for f in _streams(pno)):
+            return True
+        # seam-merged cell: a prefix on this page, the suffix on a neighbor
+        for nb in (pno + 1, pno - 1):
+            if not (0 < nb <= len(oracle_pages)) or nb in toc_pages:
+                continue
+            here, there = _streams(pno), _streams(nb)
+            for cut in range(6, len(sq) - 5):
+                if any(sq[:cut] in f for f in here) and any(sq[cut:] in f for f in there):
+                    return True
+        return False
+
+    flags = []
+    for name, text in sections_text:
+        h = re.search(r"pages (\d+)-(\d+)", text)
+        cur = int(h.group(1)) if h else 0
+        for tm in re.finditer(r"<!--\s*p\.(\d+)\s*-->|<table.*?</table>", text, re.S):
+            if tm.group(1):
+                cur = int(tm.group(1))
+                continue
+            tbl = tm.group(0)
+            # a SEAM table (embedded page markers = cross-page merge) holds
+            # cells legitimately assembled from two pages; twin phrases can
+            # defeat the one-cut split proof, so its cells are ADVISORS
+            # (minor) — the seam auditor owns that construct. Single-page
+            # tables (where the p.80 scramble lived) stay gated (major).
+            seam = "<!-- p." in tbl
+            tcur = cur
+            for m in re.finditer(r"<!--\s*p\.(\d+)\s*-->|<t[hd][^>]*>(.*?)</t[hd]>", tbl, re.S):
+                if m.group(1):
+                    tcur = int(m.group(1))
+                    continue
+                cell = m.group(2)
+                if "<!-- p." in cell:
+                    continue   # marker mid-cell: page-split cell
+                sq = _sq(cell)
+                if len(sq) < 14 or not re.search(r"[A-Za-z]{4}", sq):
+                    continue
+                if tcur in toc_pages or not (0 < tcur <= len(oracle_pages)):
+                    continue
+                if tcur not in page_range:
+                    continue
+                if not _found(sq, tcur):
+                    plain = re.sub(r"<[^>]+>", " ", cell)
+                    flags.append(_flag("TB2", tcur, "minor" if seam else "major",
+                                       {"kind": "cell-order", "seam": seam,
+                                        "section": name,
+                                        "cell": plain.strip()[:80]}))
+            cur = tcur
+    return flags
+
+
+_TBFOLD = str.maketrans({"“": '"', "”": '"', "‘": "'", "’": "'", "‚": ",",
+                         "‑": "-", " ": " ", "×": "x"})
+
+
 def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
     """Footnote refs and bodies present (FN1), global — sections share boundary
     pages, so per-section ranges double-count. Count-level for v0."""

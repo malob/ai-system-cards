@@ -28,7 +28,8 @@ TOC_PAGES = cardcfg.TOC_PAGES
 EXPECTED_PAGES = cardcfg.EXPECTED_PAGES  # 1 = cover (declared exclusion)
 
 
-def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> list[dict]:
+def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
+               sections_text=None) -> list[dict]:
     # global streams — sections share boundary pages, so compare the whole doc.
     # Page 1 is a declared exclusion (cover art + title typography; trivially
     # eyeballable, no body text). p.2 is the changelog — verified like any page.
@@ -67,6 +68,12 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None) -> 
     flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages)
     flags += invariants.s2_chips(md_chips, pages, page_range, chip_colors, registry)
     flags += invariants.st_structure(sections, pages, page_range, TOC_PAGES, table_pages)
+    if sections_text:
+        # TB2 (owner-requested): table-cell ORDER integrity — a scrambled
+        # cell is invisible to T1's table-zone demotion but md-detectable
+        flags += [f for f in invariants.tb2_cell_order(sections_text, pages,
+                                                       page_range, TOC_PAGES)
+                  if only_pages is None or f["page"] in only_pages]
     if not limited and only_pages is None:
         flags += invariants.p1_markers(sections, EXPECTED_PAGES)
         flags += invariants.f1_figures(sections, figures_map)
@@ -100,12 +107,14 @@ def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
     pages = oracle.extract(CARD / "source.pdf", cache=cardcfg.ORACLE_CACHE)
     figures_map = _load_figures_map()
 
-    sections = []
+    sections, stexts = [], []
     for name, text in mdproj.sections_at_ref(REPO, ref):
         if section_prefixes and not any(name.startswith(p) for p in section_prefixes):
             continue
         sections.append(mdproj.project(name, text))
-    return _flags_for(sections, pages, figures_map, bool(section_prefixes))
+        stexts.append((name, text))
+    return _flags_for(sections, pages, figures_map, bool(section_prefixes),
+                      sections_text=stexts)
 
 
 def main():
@@ -121,14 +130,16 @@ def main():
     pages = oracle.extract(CARD / "source.pdf", cache=cardcfg.ORACLE_CACHE)
     figures_map = _load_figures_map()
 
-    sections = []
+    sections, stexts = [], []
     for name, text in mdproj.sections_at_ref(REPO, args.ref):
         if args.sections and not any(name.startswith(p) for p in args.sections):
             continue
         sections.append(mdproj.project(name, text))
+        stexts.append((name, text))
 
     flags = _flags_for(sections, pages, figures_map, bool(args.sections),
-                       only_pages=set(args.only_pages) if args.only_pages else None)
+                       only_pages=set(args.only_pages) if args.only_pages else None,
+                       sections_text=stexts)
 
     acc_path = CARD / "accepted.json"
     if acc_path.exists():
