@@ -93,8 +93,16 @@ def sections_at_ref(repo: Path, ref: str) -> list[tuple[str, str]]:
 def _table_to_text(m: re.Match, sec: "Section", page: int) -> str:
     t = m.group(0)
 
-    def sup(sm):  # footnote refs inside tables, e.g. <sup>[11](#fn)</sup>
-        for d in re.findall(r"\d+", sm.group(1)):
+    # links injected into cells (tables._inject_links) — collect before the
+    # tag strip erases them; L1 counts these like body links
+    for am in re.finditer(r'<a href="([^"]+)"[^>]*>(.*?)</a>', t, re.S):
+        atext = re.sub(r"<[^>]+>", " ", am.group(2))
+        sec.links.append((_strip_sentinels(atext), am.group(1), page))
+
+    def sup(sm):  # footnote refs inside tables, e.g. <sup>[^11]</sup>; a
+        # bracket-less <sup>N</sup> is an ORPHAN ref (source artifact), not
+        # a footnote reference — [11](#fn) is the v1 calibration-era form
+        for d in re.findall(r"\[\^?(\d+)\]", sm.group(1)):
             sec.fn_refs.append((int(d), page))
         return " "
     t = RE_SUP.sub(sup, t)

@@ -443,6 +443,14 @@ def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
             continue
         for s in oracle_pages[pno - 1]["spans"]:
             if s["zone"] == "fnref":
+                if s.get("orphan"):
+                    # oracle-tagged: no def anywhere in the source document —
+                    # a source artifact (cf. source-defect-unresolvable-dest);
+                    # rendered as a plain superscript, excluded from counts
+                    flags.append(_flag("FN1", pno, "minor",
+                                       {"kind": "source-defect-orphan-ref",
+                                        "n": s["text"].strip()}))
+                    continue
                 o_refs.append((s["text"].strip(), pno))
     md_refs = sum(len(sec.fn_refs) for sec in sections)
     if len(o_refs) != md_refs:

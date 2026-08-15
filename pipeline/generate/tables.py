@@ -55,6 +55,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _bold_cell_leads(html, t["bbox"], oracle_page)
             html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
+            html = _inject_links(html, t["bbox"], oracle_page)
             html = _normalize_rowspan_subrows(html)
             html = _cell_blank_lines(html, t["bbox"], oracle_page)
             html = _bullet_breaks(html)
@@ -629,14 +630,78 @@ def _inject_fnrefs(html: str, bbox: list, oracle_page: dict) -> str:
         anchor = max(left, key=lambda s: s["bbox"][2])["text"].strip()
         if not anchor:
             continue
+        # an ORPHAN ref (oracle-tagged: no def anywhere in the document) is a
+        # source artifact — render the superscript digits, not a dangling [^N]
+        sup = f"<sup>{n}</sup>" if ref.get("orphan") else f"<sup>[^{n}]</sup>"
         # absorb a stray literal digit docling captured from the superscript
         # ('GDPval-AA 29' -> 'GDPval-AA<sup>[^29]</sup>')
         pat = re.compile("(" + re.escape(anchor) + r")(\s*" + re.escape(n) + r"\b)?(?![^<]*</sup>)")
-        out, k = pat.subn(lambda m: m.group(1) + f"<sup>[^{n}]</sup>", out, count=1)
+        out, k = pat.subn(lambda m: m.group(1) + sup, out, count=1)
     # a stray literal digit can survive BEHIND a closing tag the absorb
     # above can't see ('<b>X<sup>[^3]</sup></b> 3'): drop it
-    out = re.sub(r"(<sup>\[\^(\d+)\]</sup>)((?:</\w+>)*)\s*\2\b", r"\1\3", out)
+    out = re.sub(r"(<sup>\[?\^?(\d+)\]?</sup>)((?:</\w+>)*)\s*\2\b", r"\1\3", out)
     return out
+
+
+def _inject_links(html: str, bbox: list, oracle_page: dict) -> str:
+    """Hyperlinks inside tables: docling emits cell text only, so links whose
+    rects fall inside the table bbox are re-attached by wrapping their anchor
+    text in <a> (risk-report L1 class: exec-summary and model-list tables).
+    URI links keep their target; goto links carry the DEST placeholder that
+    run.py resolves to a heading anchor, same as body links. Anchor matching
+    is whitespace/tag-tolerant — clip-text anchors arrive space-mashed
+    ('ProjectGlasswing') while docling cells keep the spaces — and stays
+    inside ONE cell so a wrap can never straddle a td boundary."""
+    links = []
+    for l in oracle_page["links"]["uri"] + oracle_page["links"]["goto"]:
+        rects = l.get("rects") or []
+        if not any(min(r[2], bbox[2]) - max(r[0], bbox[0]) > 1
+                   and min(r[3], bbox[3]) - max(r[1], bbox[1]) > 1 for r in rects):
+            continue
+        chars = [c for c in (l.get("anchor") or "") if not c.isspace()]
+        if len(chars) < 3:
+            continue
+        target = l.get("uri") or "DEST:{}:{}".format(
+            l.get("dest_page", 0), int(l.get("dest_y", -1)))
+        sep = r"(?:\s|<[^>]+>)*"
+
+        def esc(c):
+            # docling cells hold HTML — entity-escape tolerant matching
+            # ('Fable 5 &amp; Mythos 5' vs the anchor's literal '&')
+            return {"&": "(?:&amp;|&)", "<": "(?:&lt;|<)", ">": "(?:&gt;|>)"}.get(c) or re.escape(c)
+        # the oracle merges same-URI annots per page, CONCATENATING their
+        # anchors — two identical links in one table (the p.183 'Fable 5 &
+        # Mythos 5 System Card' rows) arrive as one doubled string that can
+        # never match. A k-fold periodic anchor is k instances of its unit.
+        text_all = "".join(chars)
+        n_inst = next((k for k in (2, 3, 4)
+                       if len(text_all) % k == 0
+                       and text_all == text_all[: len(text_all) // k] * k), 1)
+        unit = text_all[: len(text_all) // n_inst]
+        pat = re.compile(sep.join(esc(c) for c in unit))
+        links.extend((pat, target) for _ in range(n_inst))
+    if not links:
+        return html
+    placed: set = set()
+    out, pos = [], 0
+    for m in re.finditer(r"(<t[hd][^>]*>)(.*?)(</t[hd]>)", html, re.S):
+        out.append(html[pos:m.start()])
+        pos = m.end()
+        inner = m.group(2)
+        for i, (pat, target) in enumerate(links):
+            if i in placed:
+                continue
+            for mm in pat.finditer(inner):
+                before = inner[:mm.start()]
+                if before.count("<a ") > before.count("</a>"):
+                    continue   # already inside an anchor (duplicate anchors)
+                inner = (before + f'<a href="{target}">' + mm.group(0)
+                         + "</a>" + inner[mm.end():])
+                placed.add(i)
+                break
+        out.append(m.group(1) + inner + m.group(3))
+    out.append(html[pos:])
+    return "".join(out)
 
 
 def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:

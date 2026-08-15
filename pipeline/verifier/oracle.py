@@ -96,15 +96,27 @@ def extract_page(page) -> dict:
             continue
         first = body_spans[0]
         small = first["size"] <= BODY_SIZE - 0.8
-        is_marker = (
+        marker_shape = bool(
             first["size"] <= 7.5
             and re.fullmatch(r"\d{1,2}", first["text"].strip())
-            and first["bbox"][1] > H * 0.6
         )
         infos.append({"body_spans": body_spans, "first": first, "small": small,
-                      "is_marker": bool(is_marker),
+                      "marker_shape": marker_shape,
                       "top": min(s["bbox"][1] for s in body_spans),
                       "bottom": max(s["bbox"][3] for s in body_spans)})
+    # the footnote REGION is the page's maximal contiguous BOTTOM run of
+    # sub-body-size lines. A fixed y>0.6H marker gate missed documents whose
+    # footnotes fill more than the bottom 40% of the page (risk-report p.50:
+    # fn24 quotes a full paragraph; p.117 is footnote-dominated) — the region
+    # walk keys on structure, not an absolute height.
+    region_top = None
+    for inf in reversed(infos):
+        if not inf["small"]:
+            break
+        region_top = inf["top"]
+    for inf in infos:
+        inf["is_marker"] = (inf["marker_shape"] and region_top is not None
+                            and inf["top"] >= region_top - 0.5)
     # cross-page continuation: unmarked small bottom-region lines chained
     # immediately ABOVE the page's first marker line are the tail of the
     # PREVIOUS page's last footnote -> keyed "cont"
@@ -116,7 +128,7 @@ def extract_page(page) -> dict:
         while j >= 0:
             inf = infos[j]
             if (not inf["small"] or inf["is_marker"]
-                    or inf["top"] <= H * 0.6 or edge - inf["bottom"] > 14):
+                    or edge - inf["bottom"] > 14):
                 break
             cont_idx.add(j)
             edge = inf["top"]
@@ -246,6 +258,31 @@ def extract(pdf_path: Path, cache: Path | None = None) -> list[dict]:
         return json.loads(cache.read_text())
     doc = fitz.open(pdf_path)
     pages = [extract_page(doc[i]) for i in range(len(doc))]
+    # document-wide ORPHAN pass. Footnote numbering is strictly increasing in
+    # this document family and a ref's def sits on the ref's own page (long
+    # defs spill forward as "cont") — so a ref whose number has no def on its
+    # page AND falls outside the def-sequence bracket around that page is a
+    # source artifact (risk-report p.126 'trial18' between fn57 and fn58 —
+    # a stale ref pasted from another document; its number collides with the
+    # unrelated fn18 of §2). Tagged so downstream renders a plain superscript
+    # instead of a dangling/mislinked [^N], and FN1 classifies it as a
+    # declared source defect. An IN-band ref with a missing def is never
+    # orphaned: that is an extraction failure FN1 must keep flagging.
+    all_defs: dict[int, int] = {}
+    for pno, p in enumerate(pages, 1):
+        for n in p["footnotes"]:
+            if str(n) != "cont":
+                all_defs.setdefault(int(n), pno)
+    for pno, p in enumerate(pages, 1):
+        page_defs = {int(n) for n in p["footnotes"] if str(n) != "cont"}
+        lo = max((d for d, pg in all_defs.items() if pg < pno), default=0)
+        hi = min((d for d, pg in all_defs.items() if pg > pno), default=10 ** 9)
+        for s in p["spans"]:
+            if s["zone"] != "fnref":
+                continue
+            n = int(s["text"].strip())
+            if n not in page_defs and not (lo <= n <= hi):
+                s["orphan"] = True
     if cache:
         cache.parent.mkdir(parents=True, exist_ok=True)
         cache.write_text(json.dumps(pages))

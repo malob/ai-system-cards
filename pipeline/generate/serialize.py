@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1] / "verifier"))
-from assemble import block_text_and_marks  # noqa: E402
+from assemble import BULLETS, LIST_MARKER, block_text_and_marks  # noqa: E402
 
 
 SYNTAX = {
@@ -23,6 +23,9 @@ SYNTAX = {
     # inline text highlight (a line-height tint strip under prose — the
     # opus-5 p.137 cream constitution quotes), NOT a box
     "highlight": ('<span class="hl">', "</span>"),
+    # ORPHAN footnote ref (oracle-tagged source artifact): superscript digits
+    # with no def to point at — raw HTML like <u>/<span>
+    "sup": ("<sup>", "</sup>"),
 }
 
 
@@ -86,10 +89,10 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
             ops.append((b, 2, a, 0, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
         elif kind in SYNTAX:
             o, c = SYNTAX[kind]
-            # raw-HTML marks (placeholder/underline/highlight) sit OUTERMOST:
-            # a span tag inside backticks renders literally ('`[…]</span>`')
-            r_open = 2 if kind in ("placeholder", "underline", "highlight") else 0
-            r_close = -1 if kind in ("placeholder", "underline", "highlight") else 1
+            # raw-HTML marks (placeholder/underline/highlight/sup) sit
+            # OUTERMOST: a span tag inside backticks renders literally
+            r_open = 2 if kind in ("placeholder", "underline", "highlight", "sup") else 0
+            r_close = -1 if kind in ("placeholder", "underline", "highlight", "sup") else 1
             ops.append((a, 1, b, r_open, lambda t, a=a, o=o: t[:a] + o + t[a:]))
             ops.append((b, 2, a, r_close, lambda t, b=b, c=c: t[:b] + c + t[b:]))
     if escape_literals:
@@ -358,12 +361,22 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                        if l["bbox"][2] < maxx - 50
                        and (re.search(r"[.!?:…\"”'\)\]]\s*$", l["text"].rstrip())
                             or blk["lines"][i + 1]["text"].lstrip()[:1].isupper())]
-            brks = sorted(set(blk.get("breaks", [])) | set(geo))
+            # a LIST-MARKER line inside a bubble starts its own segment,
+            # rendered as a markdown item — in-box lists were flattening to
+            # prose (the §2.24 rubric bullets, ST1 p.85 items-missing 12→2);
+            # continuation lines of a wrapped item stay in its segment
+            def _item_lead(l):
+                t = l["text"].lstrip()
+                return bool(LIST_MARKER.match(t)) or t[:1] in BULLETS
+            item_brks = {i for i in range(1, len(blk["lines"]))
+                         if _item_lead(blk["lines"][i])}
+            brks = sorted(set(blk.get("breaks", [])) | set(geo) | item_brks)
             idxs = [0] + brks + [len(blk["lines"])]
-            seg_bodies = []
+            seg_bodies, seg_item = [], []
             for i0, i1 in zip(idxs, idxs[1:]):
                 tt, mm = block_text_and_marks({**blk, "lines": blk["lines"][i0:i1]}, page, chips)
                 seg_bodies.append((tt, mm))
+                seg_item.append(_item_lead(blk["lines"][i0]))
             text, marks = seg_bodies[0]
             label = ""
             bolds = [m for m in marks if m[0] == "bold"]
@@ -406,9 +419,26 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             role = label_role or blk.get("role") or "assistant"
             # label keeps its source form (brackets and all): fidelity outranks
             # cosmetics, and stripping made the bold label vanish from S1's view
+            def _item_line(txt):
+                # marker → markdown item: ZWSPs are already gone (_hyphen_join)
+                mo = re.match(r"^(\d{1,2})[.)]\s*", txt)
+                if mo:
+                    return f"{mo.group(1)}. " + txt[mo.end():]
+                return "- " + re.sub(r"^(\**)[●•◦▪‣○■□‌ ]+", r"\1",
+                                     txt.lstrip("●•◦▪‣○■□‌ "))
             body = _hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip()
-            for tt, mm in seg_bodies[1:]:
-                body += "\n\n" + _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
+            if seg_item[0] and body:
+                body = _item_line(body)
+            for k, (tt, mm) in enumerate(seg_bodies[1:], start=1):
+                txt = _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
+                if not txt:
+                    continue
+                if seg_item[k]:
+                    txt = _item_line(txt)
+                # consecutive items stay tight (a blank line makes the whole
+                # list loose in CommonMark); anything else keeps the
+                # paragraph break
+                body += ("\n" if (seg_item[k] and seg_item[k - 1]) else "\n\n") + txt
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 # the box may continue on the next page (code_cont, stitched):
                 # each segment's marks come from ITS OWN page's pills/links

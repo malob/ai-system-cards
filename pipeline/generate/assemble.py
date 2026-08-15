@@ -740,7 +740,13 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
             t_strip_r = len(t) - len(t.rstrip())
             m_start, m_end = start + t_strip_l, pos - t_strip_r
             if s["zone"] == "fnref":
-                marks.append(("fnref", m_start, m_end, int(s["text"].strip())))
+                # an ORPHAN ref (no def anywhere in the document — source
+                # artifact, oracle-tagged) renders as a plain superscript:
+                # a [^N] without a def would print literally
+                if s.get("orphan"):
+                    marks.append(("sup", m_start, m_end, None))
+                else:
+                    marks.append(("fnref", m_start, m_end, int(s["text"].strip())))
                 continue
             if "Mono" in s.get("font", "") and s["zone"] == "body":
                 # monospace span = inline code (RobotoMono in this card) —

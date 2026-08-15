@@ -458,11 +458,24 @@ def main():
         if mnum and mnum.group(1).rstrip(".") in num2slug:
             return f"[{text}](#{num2slug[mnum.group(1).rstrip('.')]})"
         return f"[{text}](#{anchor_for(pg, y)})"
+    def resolve_html(m):
+        # goto links injected into table HTML (tables._inject_links) carry the
+        # same DEST placeholder as body links — resolve with the same rules
+        pg, y, text = int(m.group(1)), int(m.group(2)), m.group(3)
+        plain = re.sub(r"<[^>]+>", "", text)
+        mnum = (re.search(r"(?:Section|§)\s*(\d+(?:\.\d+)*)", plain)
+                or re.fullmatch(r"(\d+(?:\.\d+)+)\.?", plain.strip()))
+        if mnum and mnum.group(1).rstrip(".") in num2slug:
+            return f'<a href="#{num2slug[mnum.group(1).rstrip(".")]}">{text}</a>'
+        return f'<a href="#{anchor_for(pg, y)}">{text}</a>'
+
     for name, _ in written:
         f = OUT / name
         md = f.read_text()
         md = re.sub(r"\[([^\]]*)\]\(DEST:(\d+):(-?\d+)\)", resolve_link, md)
         md = re.sub(r"\(DEST:0(?::-?\d+)?\)", "(#)", md)
+        md = re.sub(r'<a href="DEST:(\d+):(-?\d+)">(.*?)</a>', resolve_html, md, flags=re.S)
+        md = re.sub(r'href="DEST:0(?::-?\d+)?"', 'href="#"', md)
         f.write_text(md)
 
     all_pages = sorted({p for _, sel in written for p in sel})
