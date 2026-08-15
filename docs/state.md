@@ -64,10 +64,8 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
 - **Ship decision.** Sweep round 3 (the ship gate, 2026-08-15) found 4
   major classes, all fixed — including a LATENT link-destination bug that
   affected both live cards. Convergence state in experiment 11 §Round 3.
-- **One editorial call outstanding:** in-cell bulleted lists render as
-  literal ● + `<br><br>` rather than `<ul>/<li>` (p.113, p.155), so a
-  bullet's follow-on paragraphs lose their association. Long-standing
-  convention on all three cards; changing it is a D17 presentation call.
+- **Closed 2026-08-15:** in-cell bulleted lists now render as real lists
+  with nested sub-paragraphs (owner-approved), on all three cards.
 - **Deploy decision** (push to main → Pages).
 - **Deferred typed minors** — now just ONE: p.36's code span (the PDF sets
   'sed' black and the rest green; the renderer styles code uniformly). All

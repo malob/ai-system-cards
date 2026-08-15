@@ -222,3 +222,15 @@ D17 presentation decision, not a bug fix.
 TB2 1 seam advisor); fable `L1 31`/`T1 44`, opus `T1 13`; seam audit 0;
 mutation at baseline; 7/8 rendered-page assertions pass (the 8th targeted
 the wrong card and passed once retargeted).
+
+### In-cell lists (owner-approved, 2026-08-15)
+
+The one open item from round 3 is closed: bulleted lists inside table cells
+now render as real `<ul>/<li>` with their follow-on paragraphs nested in the
+owning item, instead of literal `●` glyphs joined by `<br>`. Location comes
+from the shared cell alignment (a segment's x0 decides item vs continuation
+vs cell-level), and construction happens on the COMPLETE logical table after
+cross-page merging — building per fragment produced two lists with the seam
+paragraph stranded between them. TB2 now ignores bullet glyphs on both sides
+(the invariant checks order; a real list carries no glyph). 22 cells across
+the three cards converted, including 10 on each certified card.
