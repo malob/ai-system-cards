@@ -87,8 +87,51 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         # ('More below .', p.115; 'actors , but', p.12 — six instances,
         # owner-flagged). Only after a LINK close, where the artifact lives.
         html = re.sub(r"(</a>(?:</[a-z]+>)*)\s+([,.;:)])", r"\1\2", html)
+        # a footnote superscript is set at REGULAR weight in the PDF even when
+        # its label is bold — lift a trailing sup out of the bold run
+        # (pp.125/126/128, sweep round 3)
+        html = re.sub(r"(<sup>(?:\[\^)?\d+\]?</sup>)</b>", r"</b>\1", html)
         out.append({**t, "html": html})
     return out
+
+
+def _header_text_hexes() -> set:
+    """Hexes the card's manifest marks `table-header-text` (D16). Was
+    hardcoded to #ffffff, so this card's CREAM header text (#faf9f5) never
+    promoted a demoted header row back to <th> — Tables 1.2.A/B/C read as
+    body rows while their twins on pp.13-14 read as headers (sweep round 3,
+    3 majors)."""
+    try:
+        mtext = (cardcfg.CARD / "style-manifest.yaml").read_text()
+    except OSError:
+        return {"#ffffff"}
+    m = re.search(r"^text_colors:\n((?:[ \t]+.*\n)+)", mtext, re.M)
+    if not m:
+        return {"#ffffff"}
+    hexes = {mm.group(1) for mm in re.finditer(
+        r'^  "(#[0-9a-f]{6})":\s*\{\s*role:\s*table-header-text', m.group(1), re.M)}
+    return hexes or {"#ffffff"}
+
+
+HEADER_TEXT = _header_text_hexes()
+
+
+def _header_blobs(hdr_spans: list) -> list:
+    """Header-colored text concatenated per COLUMN (x0 clusters, top-down).
+    A header cell's text often arrives as several spans, and reading order
+    interleaves the columns of a multi-column header row — so containment is
+    tested per column, never against one global stream."""
+    cols: dict = {}
+    for s in hdr_spans:
+        k = next((k for k in cols if abs(k - s["bbox"][0]) <= 3), s["bbox"][0])
+        cols.setdefault(k, []).append(s)
+    blobs = []
+    for mem in cols.values():
+        mem.sort(key=lambda s: s["bbox"][1])
+        blob = "".join(_squash(s["text"]) for s in mem)
+        if blob:
+            blobs.append(blob)
+    return blobs
 
 
 def _table_spans(oracle_page, bbox):
@@ -285,8 +328,8 @@ def _demote_black_text_th(html: str, bbox: list, oracle_page: dict) -> str:
     dark = [b["bbox"] for b in oracle_page.get("boxes", [])
             if re.fullmatch(r"#[0-9a-f]{6}", b.get("color", ""))
             and _lum(b["color"]) < 0.35]
-    whites = [_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
-              if s["text"].strip() and s.get("color") in ("#ffffff", "#faf9f5")]
+    whites = _header_blobs([s for s in _table_spans(oracle_page, bbox)
+                            if s["text"].strip() and s.get("color") in HEADER_TEXT])
     spans_xy = _row_spans_xy(oracle_page, bbox)
     out = html
     for r in re.findall(r"<tr>.*?</tr>", html, re.S):
@@ -294,8 +337,11 @@ def _demote_black_text_th(html: str, bbox: list, oracle_page: dict) -> str:
             continue
         plain = [_cell_sq(c)
                  for c in re.findall(r"<th[^>]*>(.*?)</th>", r, re.S)]
-        joined = "".join(plain)
-        if not joined or any(w and w in joined for w in whites):
+        # a row whose ANY cell text is header-colored is a header row, never
+        # demote it. (Per-cell containment: the row's full text spans several
+        # columns and can never be inside one column's blob — testing that way
+        # demoted every real header row on both certified cards.)
+        if not any(plain) or any(p2 and any(p2 in b for b in whites) for p2 in plain):
             continue
         band = _row_band(plain, spans_xy)
         if band is None:
@@ -627,7 +673,12 @@ def _bold_label_cells(html: str, bbox: list, oracle_page: dict) -> str:
         run = _match_run(plain)
         if not run or not all(s.get("bold") for s in run):
             continue
-        new_c = f"<b>{inner.strip()}</b>"
+        inner_s = inner.strip()
+        m_sup = re.search(r"(<sup>.*?</sup>)\s*$", inner_s)
+        if m_sup:
+            new_c = f"<b>{inner_s[:m_sup.start()].strip()}</b>{m_sup.group(1)}"
+        else:
+            new_c = f"<b>{inner_s}</b>"
         old_cell = f"<{tg}{attr}>{c}</{tg}>"
         if f"<b>{inner.strip()}</b>" == c:
             new_cell = old_cell   # already exactly bold
@@ -2030,9 +2081,14 @@ def _promote_white_text_headers(html: str, bbox: list, oracle_page: dict) -> str
     tables). White text occurs only in header bands in this card, so a
     non-first row whose every non-empty cell is white-text is a header
     continuation — promote its non-empty <td> to <th>."""
-    white = {_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
-             if s["text"].strip() and s.get("color") == "#ffffff"}
-    if not white:
+    hdr = [s for s in _table_spans(oracle_page, bbox)
+           if s["text"].strip() and s.get("color") in HEADER_TEXT]
+    # a header cell can span several spans ('Non-novel chemical/ biological
+    # weapons' + 'production', p.12) — test containment in the header stream
+    # rather than equality with one span, and group by COLUMN: reading order
+    # interleaves the columns of a multi-column header row
+    white_blobs = _header_blobs(hdr)
+    if not white_blobs:
         return html
     rows = re.findall(r"<tr>.*?</tr>", html, re.S)
     out = html
@@ -2040,7 +2096,8 @@ def _promote_white_text_headers(html: str, bbox: list, oracle_page: dict) -> str
         cells = re.findall(r"<(t[dh])([^>]*)>(.*?)</t[hd]>", r, re.S)
         nonempty = [(tg, a, c) for tg, a, c in cells if re.sub(r"<[^>]+>", "", c).strip()]
         if not nonempty or not all(
-                _squash(re.sub(r"<[^>]+>", "", c)) in white for _, _, c in nonempty):
+                any(_squash(re.sub(r"<[^>]+>", "", c)) in b for b in white_blobs)
+                for _, _, c in nonempty):
             continue
         fixed = r
         for tg, a, c in cells:

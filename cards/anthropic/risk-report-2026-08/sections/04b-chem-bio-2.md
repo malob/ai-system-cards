@@ -301,7 +301,7 @@ Our [recommendations for industry-wide safety](https://cdn.sanity.io/files/4zrzo
 
 We believe, in light of the above analysis, that:
 
-- Many of our models possibly meet the left column’s threshold for CB-1 (non-novel weapons)—as [discussed above](#441-notes-on-how-we-weigh-evidence), we currently have high uncertainty about this.
+- Many of our models possibly meet the left column’s threshold for CB-1 (non-novel weapons)—as [discussed above](#442-cb-1-evidence), we currently have high uncertainty about this.
 - We currently do meet the right column’s criterion for CB-1: we have, above, made a sufficiently strong case arguing that individual users and relatively small teams will not become significantly more likely to cause catastrophic harm via their usage of product surfaces or via theft of model weights.
 - Our models do not meet the left column’s threshold for CB-2 (novel bioweapons). This judgment is significantly more difficult and uncertain than it was in our previous Risk Report, and we have proactively strengthened our safeguards to target this threat model as described in [Section 4.5](#45-our-risk-mitigations). As noted above in [Section 4.6.2](#462-risks-from-the-cb-2-threat-model), there is still a reasonable case to be made that the ideal ecosystem would require greater restrictions, particularly on our recent Opus-class models.
 

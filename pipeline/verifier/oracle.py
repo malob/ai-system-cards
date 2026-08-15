@@ -186,7 +186,14 @@ def extract_page(page) -> dict:
                      "rects": [[round(v, 1) for v in fitz.Rect(l["from"])]]}
             if l.get("to") is not None:   # dest y disambiguates multi-heading pages
                 try:
-                    entry["dest_y"] = round(l["to"].y, 1)
+                    # PDF destinations are BOTTOM-UP; span bboxes are
+                    # top-down. Storing the raw value made every geometric
+                    # comparison in run.anchor_for fail its <= test, so a
+                    # multi-heading destination page silently fell back to
+                    # its FIRST heading (p.121 '…threat model' → §4.2 where
+                    # the dest names §4.2.1; ~125 links per card sit on such
+                    # pages). Convert to top-down here, at the source.
+                    entry["dest_y"] = round(H - l["to"].y, 1)
                 except Exception:
                     pass
             if dest_page == 0:  # named dest that doesn't resolve in the PDF's name tree

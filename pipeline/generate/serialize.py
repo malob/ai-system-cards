@@ -408,11 +408,21 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             # pill lives in p.86's pills) and the seam segment carries the
             # page marker inline. The legacy mid-sentence turn merge keeps
             # its single-page behavior byte-for-byte.
+            # a turn merged across a page break carries its seam marker
+            # INLINE: the geometry merge (page_breaks_multi) breaks at a
+            # paragraph, the legacy mid-sentence merge (page_break) inside
+            # one — both must mark the page there, or the continuation's
+            # text deep-links to the previous page (p.74, sweep round 3)
             multi = bool(blk.get("page_breaks_multi"))
+            pb_off = blk["page_break"][1] if blk.get("page_break") else None
+            if pb_off is not None:
+                brks = sorted(set(brks) | {pb_off})
+                idxs = [0] + brks + [len(blk["lines"])]
+            seams = multi or pb_off is not None
             seg_bodies, seg_item, seg_pg = [], [], []
             for i0, i1 in zip(idxs, idxs[1:]):
-                pg_no = blk["lines"][i0].get("pno", blk["page"]) if multi else blk["page"]
-                seg_page = oracle_pages[pg_no - 1] if multi else page
+                pg_no = blk["lines"][i0].get("pno", blk["page"]) if seams else blk["page"]
+                seg_page = oracle_pages[pg_no - 1] if seams else page
                 tt, mm = block_text_and_marks({**blk, "lines": blk["lines"][i0:i1]}, seg_page, chips)
                 seg_bodies.append((tt, mm))
                 seg_item.append(_item_lead(blk["lines"][i0]))
@@ -484,7 +494,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 if not txt:
                     continue
                 seam_marker = ""
-                if multi and seg_pg[k] > emitted_pg:
+                if seams and seg_pg[k] > emitted_pg:
                     seam_marker = f"<!-- p.{seg_pg[k]} -->"
                     emitted_pg = seg_pg[k]
                 if seg_item[k]:
@@ -504,7 +514,10 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                     body += ("\n" if last_item else "\n\n") + txt
                     last_item = True
                 else:
-                    body += "\n\n" + seam_marker + txt
+                    # a MID-SENTENCE seam continues its paragraph: join with
+                    # a space, marker inline, exactly as prose page breaks do
+                    sep = " " if idxs[k] == pb_off else "\n\n"
+                    body += sep + seam_marker + txt
                     in_ordered = last_item = False
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 # the box may continue on the next page (code_cont, stitched):
@@ -544,7 +557,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 del out[j + 1:]
             else:
                 out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
-            if multi:
+            if seams:
                 # inline seam markers already cover the merged pages — the
                 # tracker must not re-emit them after the bubble
                 cur_page = max(cur_page, emitted_pg)

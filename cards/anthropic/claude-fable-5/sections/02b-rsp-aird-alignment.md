@@ -312,7 +312,7 @@ For a detailed description of the evaluation tasks, see [Section 8.3 of the Clau
 <tr><th>Evaluation</th><th>Claude Mythos Preview</th><th>Claude Opus 4.7</th><th>Claude Mythos 5</th><th>Threshold (hours of human effort equivalent)</th></tr>
 <tr><td><b>Kernel task (Best speedup on hard task; standard scaffold)</b></td><td>399.42×</td><td>371.75×</td><td>430.93×</td><td>4× = 1 h eq.<br>200× = 8 h eq.<br>300× = 40 h eq.</td></tr>
 <tr><td><b>Time Series Forecasting (MSE on hard variant)</b></td><td>4.55</td><td>4.78</td><td>4.51</td><td>&lt;5.3 = 40h eq.</td></tr>
-<tr><td><b>LLM training<sup>[^3]</sup></b> <b>(avg speedup)</b></td><td>60.81×</td><td>50.67×</td><td>69.61×</td><td>&gt;4× = 4–8h eq.</td></tr>
+<tr><td><b>LLM training</b><sup>[^3]</sup> <b>(avg speedup)</b></td><td>60.81×</td><td>50.67×</td><td>69.61×</td><td>&gt;4× = 4–8h eq.</td></tr>
 <tr><td><b>Quadruped RL (highest score; no hparams)</b></td><td>30.87</td><td>24.73</td><td>29.54</td><td>&gt;12 = 4h eq.</td></tr>
 <tr><td><b>Novel Compiler (pass rate on complex tests)</b></td><td>77.2%</td><td>70.4%</td><td>85.3%</td><td>90% = 40h eq.</td></tr>
 </tbody></table>
@@ -343,7 +343,7 @@ The updated results are shown in Figure 2.3.7.1.A. The re-run scores are similar
 <tr><td><b>Claude Opus 4.8</b></td><td>N/A</td><td>32.64×</td><td>N/A</td></tr>
 <tr><td><b>Claude Opus 4.7</b></td><td>34.77×</td><td>50.67×</td><td>+45.7%</td></tr>
 <tr><td><b>Claude Mythos Preview</b></td><td>42.42×</td><td>60.81×</td><td>+43.4%</td></tr>
-<tr><td><b>Claude Sonnet 4.6<sup>[^4]</sup></b></td><td>22.33×</td><td>35.52×</td><td>+59.1%</td></tr>
+<tr><td><b>Claude Sonnet 4.6</b><sup>[^4]</sup></td><td>22.33×</td><td>35.52×</td><td>+59.1%</td></tr>
 <tr><td><b>Claude Opus 4.6</b></td><td>30.09×</td><td>30.75×</td><td>+2.2%</td></tr>
 <tr><td><b>Claude Opus 4.5</b></td><td>16.53×</td><td>16.45×</td><td>-0.5%</td></tr>
 <tr><td><b>Claude Sonnet 4.5</b></td><td>5.5×</td><td>6.55×</td><td>+19.1%</td></tr>
@@ -397,7 +397,7 @@ Our background expectations of misalignment risk are largely unchanged from what
 
 As with some prior models, technical errors led to accidental chain-of-thought supervision during the training of Claude Mythos 5, affecting a small fraction of episodes.
 
-As discussed in more detail below and in [Section 6](#6-alignment-assessment), Mythos 5 appears to be comparable to Opus 4.8 on most alignment metrics, and slightly weaker than Mythos Preview. Mythos 5 will occasionally [take reckless or destructive actions in service of user-assigned goals](#63-targeted-evaluations), though measures of [misaligned actions that are fully at the model’s initiative](#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative) are low in absolute terms. Mythos 5 is somewhat more vulnerable than other recent Claude models to [prefill attacks](#6231-primary-results), and shows elevated levels of [grader-related reasoning](#642-grader-awareness) and [evaluation awareness](#651-evaluation-awareness). Mythos 5 does not appear to be more capable than prior models on [evaluations relevant to evading our safeguards](#654-capabilities-related-to-evading-safeguards).
+As discussed in more detail below and in [Section 6](#6-alignment-assessment), Mythos 5 appears to be comparable to Opus 4.8 on most alignment metrics, and slightly weaker than Mythos Preview. Mythos 5 will occasionally [take reckless or destructive actions in service of user-assigned goals](#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals), though measures of [misaligned actions that are fully at the model’s initiative](#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative) are low in absolute terms. Mythos 5 is somewhat more vulnerable than other recent Claude models to [prefill attacks](#62311-overall-harmful-behavior-and-cooperation-with-misuse), and shows elevated levels of [grader-related reasoning](#642-grader-awareness) and [evaluation awareness](#651-evaluation-awareness). Mythos 5 does not appear to be more capable than prior models on [evaluations relevant to evading our safeguards](#654-capabilities-related-to-evading-safeguards).
 
 The monitoring used during the training of Mythos 5 is similar to what we described in Section 5.2 of the [Mythos Preview Alignment Risk Update](https://www.anthropic.com/claude-mythos-preview-risk-report). We did not observe any clear instances of deceptive or highly surprising actions that were not at least roughly oriented toward solving the task at hand. We did not observe any sign of unexpected coherent goals.
 

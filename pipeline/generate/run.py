@@ -490,17 +490,21 @@ def main():
     # L2: resolve DEST:N placeholders to the first heading anchor on page N,
     # else the nearest heading before it (v1's apply_internal_links logic)
     def anchor_for(n, y=-1):
-        on_page = [(hy, s) for pg, hy, s in heading_anchors if pg == n]
+        on_page = sorted((hy, s) for pg, hy, s in heading_anchors if pg == n)
         if on_page:
             if y >= 0:
-                # the dest y lands AT the target heading or anywhere inside
-                # its section (sloppy PDF dests point mid-section): the
-                # OWNING heading is the last one at-or-above y(+8); a dest
-                # above every heading takes the first one below
-                own = [s for hy, s in on_page if hy <= y + 8]
-                if own:
-                    return own[-1]
-                return on_page[0][1]
+                # A PDF destination sits slightly ABOVE the heading it names
+                # — measured across all three cards, 0-40pt above, modes at
+                # 15/17pt (99% of dests have a heading within 40pt below).
+                # So the target is the FIRST heading at-or-below the dest;
+                # only a dest past the last heading falls back to it.
+                # (The old rule took the last heading ABOVE the dest, which
+                # combined with the bottom-up dest_y bug meant multi-heading
+                # destination pages resolved to their first heading.)
+                below = [s for hy, s in on_page if hy >= y - 2]
+                if below:
+                    return below[0]
+                return on_page[-1][1]
             return on_page[0][1]
         before = [s for pg, hy, s in heading_anchors if pg <= n]
         return before[-1] if before else ""
@@ -543,6 +547,14 @@ def main():
         for name, _ in written:
             md0 = (OUT / name).read_text()
             for mm in re.finditer(r"\[([^\]]*)\]\(DEST:(\d+):(-?\d+)\)", md0):
+                # pooling exists for a WRAPPED link arriving as two annots
+                # ('Section' + '3.6'), so only short fragments seed the pool:
+                # a full anchor phrase sharing a dest with a section-numbered
+                # link elsewhere was inheriting the coarser target
+                # ('previous threat model' → §4.2 where the dest names
+                # §4.2.1, p.121, sweep round 3)
+                if len(mm.group(1).split()) > 2:
+                    continue
                 r = text_resolution(mm.group(1))
                 if r and mm.group(2) != "0":
                     pooled.setdefault((mm.group(2), mm.group(3)), r)
@@ -553,16 +565,20 @@ def main():
 
     def resolve_link(m):
         text, pg, y = m.group(1), int(m.group(2)), int(m.group(3))
-        slug = (text_resolution(text) or pooled.get((m.group(2), m.group(3)))
-                or anchor_for(pg, y))
+        # the pool only serves SHORT fragments of a wrapped link; a full
+        # anchor phrase keeps its own geometry (p.121)
+        pooled_hit = (pooled.get((m.group(2), m.group(3)))
+                      if len(text.split()) <= 2 else None)
+        slug = text_resolution(text) or pooled_hit or anchor_for(pg, y)
         return f"[{text}](#{slug})"
     def resolve_html(m):
         # goto links injected into table HTML (tables._inject_links) carry the
         # same DEST placeholder as body links — resolve with the same rules
         pg, y, text = int(m.group(1)), int(m.group(2)), m.group(3)
         plain = re.sub(r"<[^>]+>", "", text)
-        slug = (text_resolution(plain) or pooled.get((m.group(1), m.group(2)))
-                or anchor_for(pg, y))
+        pooled_hit = (pooled.get((m.group(1), m.group(2)))
+                      if len(plain.split()) <= 2 else None)
+        slug = text_resolution(plain) or pooled_hit or anchor_for(pg, y)
         return f'<a href="#{slug}">{text}</a>'
 
     for name, _ in written:

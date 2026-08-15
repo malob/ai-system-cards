@@ -731,7 +731,8 @@ dialog.lightbox img { display: block; max-width: 100%; max-height: 94vh; cursor:
   border-top: 1px solid var(--line-strong);
 }
 
-.article tbody tr:last-child td { border-bottom: none; }
+.article tbody tr:last-child td,
+.article tbody tr:last-child th { border-bottom: none; }
 /* row hover misbehaves on tables with merged (rowspan) cells — the highlight
    band can't match the visual row group, so only enable it on simple tables */
 /* table row hover removed (owner: misbehaved on merged tables; off everywhere) */
