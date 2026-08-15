@@ -1369,7 +1369,12 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
     spans separated by a full line-height gap, the joining space becomes
     <br><br>. Ambiguous or unlocatable cells are left alone."""
     spans = [s for s in _table_spans(oracle_page, bbox)
-             if s.get("zone") != "fnref" and s["text"].strip()]
+             if s.get("zone") != "fnref" and s["text"].strip()
+             # bullet glyphs sit in their OWN x0 cluster and defeated the
+             # cell↔column char alignment for every bulleted cell (the
+             # 3.10.A sub-paragraph gaps, owner-flagged) — drop them from
+             # both sides of the alignment
+             and s["text"].strip() not in tuple("●•◦▪‣○■□")]
     if not spans:
         return html
     clusters: dict[float, int] = {}
@@ -1384,18 +1389,51 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
     for s in spans:
         i = max((j for j, e in enumerate(edges) if s["bbox"][0] >= e - 2), default=0)
         cols[i].append(s)
-    col_chars, col_spans = [], []
-    for col in cols:
-        col.sort(key=lambda s: ((s["bbox"][1] + s["bbox"][3]) / 2, s["bbox"][0]))
+    def _colify(mem, by_band=False):
+        mem = sorted(mem, key=(lambda s: (round((s["bbox"][1] + s["bbox"][3]) / 8),
+                                          s["bbox"][0])) if by_band
+                     else (lambda s: ((s["bbox"][1] + s["bbox"][3]) / 2, s["bbox"][0])))
         chars, srcs = [], []
-        for s in col:
+        for s in mem:
             for ch in s["text"]:
-                if not ch.isspace() and ch not in _INVIS:
+                # glyph chars can be GLUED into a text span ('●​No user…')
+                # — dropped on both sides of the alignment, like the cell's
+                # _BULLET_DEL
+                if not ch.isspace() and ch not in _INVIS and ch not in "●•◦▪‣○■□":
                     chars.append(ch)
                     srcs.append(s)
-        col_chars.append("".join(chars))
+        return "".join(chars), srcs
+
+    col_chars, col_spans = [], []
+    for col in cols:
+        chars, srcs = _colify(col)
+        col_chars.append(chars)
         col_spans.append(srcs)
-    col_folds = [c.translate(_QUOTE_FOLD) for c in col_chars]
+    # low-9 comma ‚ folds locally (docling normalizes it to ',' in cells;
+    # the p.113 'standard‚' broke alignment mid-cell) — _QUOTE_FOLD itself
+    # stays untouched, other repairs depend on its exact reach
+    _LOW9 = str.maketrans({"‚": ","})
+    col_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9) for c in col_chars]
+    # FALLBACK families: pairwise edge intervals in band order — a cell whose
+    # sub-structure spans two x0 tiers (an intro line at the cell edge plus
+    # bullet text at a hanging indent, Table 3.10.A) matches no single-edge
+    # column. Tried only when the canon single-column match fails, so
+    # previously-matching cells keep their exact behavior.
+    int_chars, int_spans = [], []
+    seen_int = set()
+    for i in range(len(edges)):
+        for j in range(i + 1, len(edges) + 1):
+            right = edges[j] - 2 if j < len(edges) else 1e9
+            mem = [s for s in spans if edges[i] - 2 <= s["bbox"][0] < right]
+            if len(mem) < 2:
+                continue
+            chars, srcs = _colify(mem, by_band=True)
+            if chars in seen_int:
+                continue
+            seen_int.add(chars)
+            int_chars.append(chars)
+            int_spans.append(srcs)
+    int_folds = [c.translate(_QUOTE_FOLD).translate(_LOW9) for c in int_chars]
 
     import html as _h
 
@@ -1410,16 +1448,27 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         line's first word would have FIT (a deliberate return, not a
         wrap)."""
         plain = _h.unescape(re.sub(r"<[^>]+>", "", c))
-        sq = _squash(plain).translate(_INVIS_DEL)
+        sq = _squash(plain).translate(_INVIS_DEL).translate(_BULLET_DEL).translate(_LOW9)
         if len(sq) < 8:
             return {}
         hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
                 if cf.count(sq) == 1]
         hits = [h for h in hits if h[1] >= 0]
-        if len(hits) != 1 or any(cf.count(sq) > 1 for cf in col_folds):
-            return {}
-        ci, at = hits[0]
-        srcs = col_spans[ci][at:at + len(sq)]
+        if len(hits) == 1 and not any(cf.count(sq) > 1 for cf in col_folds):
+            ci, at = hits[0]
+            srcs = col_spans[ci][at:at + len(sq)]
+        else:
+            if hits or any(cf.count(sq) > 1 for cf in col_folds):
+                return {}
+            # interval fallback: tightest family holding the cell exactly once
+            ihits = sorted(((len(int_folds[ci]), ci, int_folds[ci].find(sq))
+                            for ci in range(len(int_folds))
+                            if int_folds[ci].count(sq) == 1))
+            ihits = [h for h in ihits if h[2] >= 0]
+            if not ihits:
+                return {}
+            _, ci, at = ihits[0]
+            srcs = int_spans[ci][at:at + len(sq)]
         cell_x2 = max(s["bbox"][2] for s in srcs)
         right = min([e for e in edges if e > cell_x2 + 2], default=bbox[2]) - 6
         breaks = {}
@@ -1469,6 +1518,14 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
             if vis.isspace() or vis in _INVIS:
                 if not pending:
                     out.append(t)
+                continue
+            if vis in "●•◦▪‣○■□":
+                # glyphs are outside the alignment — pass through, and a
+                # pending break lands BEFORE the glyph (its bullet)
+                if pending:
+                    out.append(pending)
+                    pending = False
+                out.append(t)
                 continue
             if pending:
                 out.append(pending)
@@ -1557,6 +1614,7 @@ def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
 
 # zero-width/invisible characters, transparent to glyph-repair alignment
 _INVIS = "​‌‍⁠﻿­"
+_BULLET_DEL = str.maketrans("", "", "●•◦▪‣○■□")
 _INVIS_DEL = {ord(c): None for c in _INVIS}
 
 # comparison-only fold: ALL quote variants to one class (docling and PyMuPDF
