@@ -129,3 +129,10 @@ scroll pass (onboarding step 8).
    merged cell at its seam (only in the foster-parenting case — canon
    placements before surviving rows untouched). In-browser verified:
    p-114 anchors 624px into the table at the true seam.
+
+6. **Dead footnote backlinks** (owner, 2026-08-14 ~23:05): the ↩ on
+   table-only footnotes (10, 11) did nothing — their GFM ref anchor lives
+   in the display:none .fnref-shim, an unscrollable target. The visible
+   in-table ref now carries the anchor id (shim ids stripped post-render).
+   Renderer-level, so it also heals the certified cards' table-only
+   footnotes. Click-verified in-browser.
