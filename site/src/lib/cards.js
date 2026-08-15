@@ -81,6 +81,7 @@ export function siteMarkdown(vendor, slug, assetBase) {
     }
   });
   const shims = new Map(); // line index -> ids needing a shim there
+  const claimedIds = new Set(); // fn ids whose visible table ref got the anchor
   for (const [id, i] of tableRefs) {
     if (proseRefs.has(id)) continue;
     // anchor AFTER the table's closing line: tables serialize one <tr> per
@@ -95,10 +96,21 @@ export function siteMarkdown(vendor, slug, assetBase) {
     .map((line, i) => {
       if (isTableLine(line))
         // consume an enclosing literal <sup> pair (tables serialize refs as
-        // '<sup>[^N]</sup>') so the shim doesn't nest sup inside sup
+        // '<sup>[^N]</sup>') so the shim doesn't nest sup inside sup.
+        // The FIRST table ref of a shim-kept footnote carries the GFM ref
+        // id: the backref ↩ otherwise targets the display:none shim, which
+        // browsers refuse to scroll to (owner-reported dead backlinks on
+        // table-only footnotes). The shim's duplicate ids are stripped
+        // after render.
         line = line.replace(
           /(?:<sup>)?\[\^(\d+)\](?:<\/sup>)?/g,
-          '<sup class="fn-html"><a href="#user-content-fn-$1">$1</a></sup>',
+          (_, n) => {
+            const first = tableRefs.get(n) === i && !proseRefs.has(n)
+              && !claimedIds.has(n);
+            if (first) claimedIds.add(n);
+            const id = first ? ` id="user-content-fnref-${n}"` : '';
+            return `<sup class="fn-html"><a${id} href="#user-content-fn-${n}">${n}</a></sup>`;
+          },
         );
       const ids = shims.get(i);
       if (!ids) return line;

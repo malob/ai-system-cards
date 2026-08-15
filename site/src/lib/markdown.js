@@ -425,5 +425,13 @@ export async function renderCard(markdown, opts = {}) {
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);
 
-  return { html: String(file), toc };
+  // the hidden .fnref-shim duplicates the ref anchors of table-only
+  // footnotes; strip their ids so the VISIBLE in-table ref (cards.js gives
+  // it the id) is the unique backref target — a display:none target makes
+  // the ↩ backlink dead
+  const html = String(file).replace(
+    /<span class="fnref-shim">[\s\S]*?<\/span>/g,
+    (seg) => seg.replace(/\s?id="user-content-fnref[^"]*"/g, ''),
+  );
+  return { html, toc };
 }
