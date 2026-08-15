@@ -9,18 +9,14 @@ on:
       - .github/workflows/mutations.yml
       - pipeline/verifier/**
       - pipeline/cardcfg.py
-      - cards/*/*/accepted.json
-      - cards/*/*/sections/**
-      - cards/*/*/source.pdf
+      - cards/**
       - docs/experiments/05-mutation-testing/results-*.json
   push:
     paths:
       - .github/workflows/mutations.yml
       - pipeline/verifier/**
       - pipeline/cardcfg.py
-      - cards/*/*/accepted.json
-      - cards/*/*/sections/**
-      - cards/*/*/source.pdf
+      - cards/**
       - docs/experiments/05-mutation-testing/results-*.json
 
 permissions:
