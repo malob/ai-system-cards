@@ -120,3 +120,12 @@ scroll pass (onboarding step 8).
    alignment now emits `<i>` runs too. Side effect kept as a canon
    improvement: fable p.313 '(interview only)' (Lora-Italic in the PDF)
    gains its italics after rendering regular since June.
+
+5. **Seam marker hoisted to table top** (owner asked for a full in-browser
+   look at Table 3.10.A, 2026-08-14 ~22:50): the p.114 gutter label sat at
+   the table's top. HTML foster-parenting: the between-fragments marker
+   was left between `</tr>` and `</tbody>` after the seam row merged, and
+   the parser hoists it out of the table. Marker now rides inside the
+   merged cell at its seam (only in the foster-parenting case — canon
+   placements before surviving rows untouched). In-browser verified:
+   p-114 anchors 624px into the table at the true seam.
