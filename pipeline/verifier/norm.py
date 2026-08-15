@@ -1,7 +1,7 @@
 """Shared normalization for text comparison (verification contract §Normalization).
 
 Two allowlists:
-- PRODUCTION: what v2 output is allowed to differ from the source by (A1-A4).
+- PRODUCTION: what v2 output is allowed to differ from the source by (A1-A5).
 - CALIBRATION adds v1's known, accepted divergences (quote folding) so that
   calibrating against v1 markdown doesn't drown in them. v2 generation must NOT
   rely on the calibration extras.
@@ -90,7 +90,7 @@ def squash(text: str, calibration: bool = True) -> str:
 
 def tokens(text: str, calibration: bool = False) -> list[str]:
     """Whitespace-insensitive token stream (A2). Bullet glyphs are layout
-    artifacts (list structure is checked at the schema level), dropped (A5) —
+    artifacts (list structure is checked by ST invariants), dropped (A5) —
     including when glued to the following word."""
     out = []
     for t in normalize(text, calibration).split():

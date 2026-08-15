@@ -1,11 +1,11 @@
 # Verification & QA methodology
 
-How a converted card is checked for faithfulness to its source PDF. The PDF is
+How a converted document is checked for faithfulness to its source PDF. The PDF is
 the ground truth; the current `sections/*.md` + rendered site are the accepted
 output. Nothing is checked against the retired first attempt — that only ever
 served as a labeled test corpus for tuning the gates (see `decisions.md` D5).
 
-Three checking layers, over a common set of extracted inputs.
+Four checking layers, over a common set of extracted inputs.
 
 ## Inputs — what everything works from
 
@@ -14,9 +14,9 @@ All derived from `cards/<vendor>/<slug>/source.pdf`:
 | Input | Produced by | Path |
 | --- | --- | --- |
 | Per-page PDF renders | `pdftoppm` (gitignored, regenerable) | `extracted/pages/p-NNN.png` |
-| The "oracle" — PyMuPDF facts (text spans + style flags, links (URI + internal GoTo dests), footnotes, highlight/chip fills, page geometry) | `pipeline/verifier/oracle.py` | `pipeline/.cache/oracle.json` |
+| The "oracle" — PyMuPDF facts (text spans + style flags, links (URI + internal GoTo dests), footnotes, highlight/chip fills, page geometry) | `pipeline/verifier/oracle.py` | `pipeline/.cache/<vendor>-<slug>/oracle.json` |
 | Figure images + map | `pipeline/generate/extract_figures.py` | `assets/figures/`, `extracted/figures-map.json` |
-| Table structure | docling | `pipeline/.cache/tables.json` |
+| Table structure | docling via `pipeline/generate/tables.py` | `pipeline/.cache/<vendor>-<slug>/tables.json` |
 | Per-page markdown slices (every md run attributed to page N) | `pipeline/slice_pages.py` | `.cache/<sweep>/slices/p-NNN.md` |
 | Served HTML (what the reader gets) | the dev server, or a built snapshot | `localhost:PORT/...` / `served.html` |
 | High-zoom region crops (full pages are vision-downscaled to ~1.15MP, too soft for glyph-level checks) | `pipeline/render_region.py PAGE [x0 y0 x1 y1 ZOOM]` | `pipeline/.cache/crops/` |
@@ -27,15 +27,26 @@ All derived from `cards/<vendor>/<slug>/source.pdf`:
 (`pipeline/verifier/invariants.py`: T1 text tokens, L1 links, FN1 footnotes,
 S1 bold, S2 chips, ST structure, …) comparing the markdown (projected to
 comparable facts by `mdproj.py`, normalized by `norm.py`) against the oracle.
-It fails on any unexplained divergence. Calibrated against the labeled defect
-history and mutation-tested for recall (`mutate.py`). Baseline = **0 majors**;
-the accepted typed-residual counts per card live in CLAUDE.md §"Running the
-pipeline" (re-baselined there when owner-approved fix batches move them). See
-`verification-contract.md` for the invariant IDs and exclusions.
+It exits 1 on any unsuppressed major and exits 2 on invalid exact acceptance
+configuration; an unfiltered current `WORKTREE` run also treats unmatched entries as
+stale. `--report-only` is the explicit diagnostic mode for majors. Owner-accepted
+majors are matched by a canonical fingerprint of the full
+invariant/page/severity/detail payload, never just by class and page (D49).
+Calibrated against the labeled defect history and mutation-tested for recall
+(`mutate.py`). Baseline = **0 unsuppressed majors**; the accepted and typed-residual
+counts per document live in CLAUDE.md §"Running the pipeline" (re-baselined there
+when owner-approved fix batches move them). See `verification-contract.md` for the
+invariant IDs and exclusions.
 
-This layer is token/link/style/structure level. It **cannot see** layout and
-visual structure — split list items, mis-merged paragraphs, a value shifted one
-table column, a swallowed line. That's layer 2.
+The fast GitHub Actions workflow runs the unit suite, this full gate and the seam
+audit for every certified document, plus a clean site build. The Pages workflow
+depends on that workflow, so a failed gate blocks deployment. Mutation floors run
+separately on relevant changes, weekly, and on demand because they are slower.
+
+This layer is token/link/style/structure level, not a proof of rendered layout.
+ST1/ST2/ST3 and TB2 catch specific token-preserving list/block/heading and cell-order
+failures, but overlap, typography tiers, bubble/highlight geometry, merged-cell
+semantics, and repeated-text/seam ambiguities remain layer 2.
 
 ## Layer 2 — agent inspection sweeps
 
@@ -54,7 +65,7 @@ reporting. Good at catching defects that are invisible once rendered.
 **(b) Triple-pane comparator.** For each page, agents compare three views and
 flag anything in pane 1 the others fail to capture:
 1. the **PDF page render** (`extracted/pages/p-NNN.png`) — source of truth;
-2. the **per-page md slice** (`slice_pages.py`) — what was transcribed;
+2. the **per-page md slice** (`slice_pages.py`) — what was serialized;
 3. the **served-HTML DOM** — what the reader actually gets (the arbiter when md
    syntax is ambiguous: tags, list types, table cells, `<b>`/`<u>`, pills,
    blockquote nesting).
@@ -85,7 +96,7 @@ sweep rounds converged, the owner's manual scroll found six real issues, every
 one in the visual-layout plane the sweeps are blind to — cross-element overlap
 (stacked page markers), intra-cell typography tiers, bubble scoping, page-seam
 highlight artifacts, spanning-header extent. So the final step of onboarding
-(CLAUDE.md §"Adding a card", step 8) is a human scroll with the PDF renders at
+(CLAUDE.md §"Adding a document", step 8) is a human scroll with the PDF renders at
 hand; treat its findings as a normal layer-3 fix queue. Nothing here replaces
 the sweeps — the two catch disjoint failure classes.
 

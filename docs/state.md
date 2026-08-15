@@ -3,122 +3,103 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-15 (midday) — **third card converged and the two
-certified cards regression-swept clean. Awaiting the owner's deploy
-decision.** Anthropic's **Risk Report: August 2026** (public redacted
-edition, 186pp, RSP v3.4 — the archive's first non-system-card document,
-D44) went through the full pipeline on 2026-08-14, then a ship-gate sweep,
-an owner scroll pass, and a certified-card regression sweep on 2026-08-15.
-**NOT deployed** — pushes only on explicit owner request (D13).
+**Last updated:** 2026-08-15 (maintainer hardening, local and not pushed). The three
+document editions are live; the published corpus commit is `6fed282`. The current
+local series makes verification and deployment fail closed, commits three-card
+mutation floors, and reconciles the operational docs. Per D13, none of this
+maintenance series has been pushed.
 
 ## Status
 
-- **fable-5: live.** Gate 0 majors / `L1 31` / `T1 44`. Seam 0.
-- **opus-5: live.** Gate 0 majors / `T1 13`. Seam 0.
-- **risk-report-2026-08: converged, certification-ready.** Gate 0 majors /
-  `FN1 1` (declared orphan-ref source defect — the PDF's own stray
-  superscript 18 on p.126, D45) / `T1 22` (docling cell tokenization + seam
-  displacement noise) / `TB2 1` (seam-cell advisor). Seam 0. Mutation recall
-  at the calibrated band.
+- **fable-5: live.** 3 exact owner-accepted T1 majors; 0 unsuppressed majors;
+  `L1 31` / `T1 44` minors; seam 0.
+- **opus-5: live.** 0 majors; `T1 13` minors; seam 0.
+- **risk-report-2026-08: live.** 0 majors; `FN1 1` (declared orphan-ref source
+  defect, D45) / `T1 22` / `TB2 1` minors; seam 0.
 
-Both certified cards' output DID change this session — deliberately, and
-every change is verified as an improvement (see the regression sweep below).
-Byte-identity remains the net for *unintended* change; it is asserted per fix
-within a batch, not across an approved canon change.
+The Risk Report push and deployment happened after the previous snapshot said they
+were awaiting an owner decision. Local git recorded `origin/main` at `6fed282`, and
+GitHub Pages run [31905426276](https://github.com/malob/ai-system-cards/actions/runs/31905426276)
+completed successfully for that exact commit. The home page, report page, `llms.txt`,
+exported `card.md`, and source PDF all returned HTTP 200. The maintenance commits
+described below are newer local work and are not deployed.
 
-## What this session established
+## Maintainer hardening completed locally (D49/D50)
 
-1. **D44 / D45 / D46** — non-system-card scope and slug convention; the
-   onboarding generalizations (footnote-region walk, orphan-fnref rule,
-   links inside docling cells, in-bubble lists); and the round-1 sweep's ~40
-   distinct majors in 9 classes, all class-fixed.
-2. **D47 — a styling rule reads per-instance oracle evidence, never a
-   class-wide sample.** Forced by the one real regression this session (see
-   below). Its process half matters more than its code half: a fix's own
-   commit message is not evidence, and an inspector prompt must pose the
-   question rather than assert the answer.
-3. **A LATENT bug in both live cards, found at the ship gate:** PDF link
-   destinations are stored bottom-up while span geometry is top-down, so
-   every geometric comparison failed and a multi-heading destination page
-   resolved to its FIRST heading. Fixed at the oracle; 12 links re-anchored.
-4. **TB2** (owner-requested): table-cell order integrity from markdown alone
-   — the scramble class the agent sweeps used to own, now mechanical.
-5. **New gate on the sweep design itself:** three rounds each produced a
-   finding the previous round's prompts had *told* inspectors was fine.
-   Round 2's prompts described the fixes; round 3's message asserted a
-   premise the regression sweep disproved. The rulebooks now describe the
-   PDF only, and the do-not-flag list holds owner decisions only.
+1. **Verifier is an enforceable gate.** `calibrate.py` exits 1 for unsuppressed
+   majors and 2 for invalid acceptance configuration. `--report-only` is explicit.
+   Fable's old `(invariant,page)` allowances were migrated to fingerprints of the
+   complete finding; two stale entries were removed and the two distinct p.37
+   findings are separate.
+2. **Gate behavior is tested.** 15 verifier unit tests cover exact matching, stale/
+   duplicate/invalid acceptance rejection, exit semantics, mutation-floor
+   comparisons, and the generator's same-card/full-vs-partial verifier handoff. An
+   isolated duplicate page-marker probe produced `P1 major 1` and exit 1;
+   `--report-only` changed only that exit to 0.
+3. **CI covers the real release path.** The reusable fast workflow runs unit tests,
+   all three full gates + seam audits, and a clean site build. The Pages workflow
+   depends on it; a verifier failure skips build and deployment. Pages/OIDC write
+   permissions are confined to the final deploy job. `actionlint` 1.7.12 and YAML
+   parsing report no workflow errors.
+4. **Mutation recall has committed floors.** At 8 trials/class, seed 5: Fable
+   86/96 (89.6%), Opus 72/88 (81.8%), Risk Report 74/88 (84.1%). The slower workflow
+   runs on relevant changes, weekly, and manually; class/invariant/sample drift or a
+   caught-count regression fails it.
+5. **Repository truth is reconciled.** README/CLAUDE now describe all three
+   documents and the within-family limit. D50 and the charter supersede the unbuilt
+   pre-build JSON/LLM mechanisms in D1/D2/D7/D9/D10/D14 with the shipped mechanical
+   compiler and inspection loop.
 
-## Certified-card regression sweep (2026-08-15) — the ship evidence
+No generated `sections/*.md` changed during this maintenance work.
 
-5 agents; `docs/experiments/11-risk-report-sweep-round1/rulebook-regression.md`.
+## Validation evidence for this series
 
-| scope | result |
-| --- | --- |
-| fable 8 changed pages | 12 major improvements, 2 minor regressions (one class) |
-| opus 5 changed pages | 5 major improvements, 1 minor regression (same class) |
-| fable 12 control pages | 11 clean, 1 improvement, 0 regressions |
-| opus 11 control pages | 10 clean, 1 improvement, 0 regressions |
-| all 163 internal links, both cards | **0 mismatches** |
+- Fresh no-cache baseline: all three full gates at the counts above; all seam audits
+  0. Python 3.12 / uv 0.12.1 / PyMuPDF 1.28.2.
+- Mutation artifacts regenerated from current sections: Fable 86/96, Opus 72/88,
+  Risk Report 74/88. Risk Report was byte-identical to its prior committed artifact;
+  Fable and Opus now have normalized per-document artifacts.
+- Clean site install/build: local Node 24.18.1 / pnpm 11.20.0 (CI pins Node 22 /
+  pnpm 11), 599 Pagefind records and all routes generated.
+- Workflows: all parse, `actionlint` clean, dependency chain independently reviewed;
+  deployment cannot reach the Pages job after a failed reusable verifier job.
 
-The control samples cover the three RENDERER-level changes that touch every
-page regardless of markdown (marker realign pass, footnote backlink anchor,
-table CSS); both control agents verified in the live DOM. Card-wide: all 155
-fable inline markers within 6px of their page's first line; 76/76 and 36/36
-footnote backlinks resolving.
+## Durable process invariants
 
-The link audit is the load-bearing result: all 94 number-named anchors now
-resolve to the exactly-matching numbered heading (text and geometry agree
-94/94; before the coordinate fix they disagreed), parent/child destinations
-on one page stay distinct, and the single dead `](#)` on fable p.99 is the
-already-declared source defect (the PDF names a destination absent from its
-own name tree).
-
-**The one real regression, fixed (D47):** round 3's footnote-superscript lift
-was a whole-table regex asserting the PDF sets in-table markers at regular
-weight. 9 of the corpus's 205 in-table refs are `Lora-Bold`; the rule
-de-bolded four. `tables._lift_regular_sups` now matches each marker to its
-own oracle fnref span. Source fidelity only — the site pins footnote refs to
-a uniform mono citation style, so no rendered page changed; it reaches
-readers through the `.md` exports.
+- The PDF is the sole content truth. Reproduce publisher errors; do not silently
+  correct them.
+- Capture is mechanical. Agents inspect and report; they do not transcribe or polish
+  publisher text.
+- Fix classes in `pipeline/`, never instances or generated sections. Regenerate,
+  inspect the exact output diff, preview visible changes, run gate + seam, then
+  re-sweep affected pages and controls.
+- A shared-pipeline change covers the target plus every non-target certified
+  document. Byte identity catches unintended movement; approved PDF-evidenced canon
+  improvements may move a baseline only with a regression sweep.
+- Mechanical majors gate within each invariant's documented scope;
+  probabilistic/vision checks advise. The owner scroll remains mandatory because it
+  catches layout classes disjoint from page sweeps.
+- Commit early and append decisions. Never push without an explicit owner request.
 
 ## Open — owner attention needed
 
-- **Deploy decision** (push to main → Pages). Nothing is blocking it
-  technically: 0 majors on all three cards, seam 0, site builds clean.
-- **Editorial: done 2026-08-15.** The archive's self-description said it held
-  system cards only. The NAME stays (identity, URL, wordmark; per-card labels
-  already read `doc_type`); the five description strings now read "AI system
-  cards and safety reports" — index lede, page meta, footer, home OG subtitle,
-  llms.txt, plus README.
-- **Closed 2026-08-15 (D48):** `link_text_resolution: extended` for
-  fable/opus is a **no-op** — enabling it changes zero bytes of either
-  card's `sections/`, because after the coordinate fix geometry and text
-  agree on all 94 number-named anchors. Nothing to adjudicate; knob stays
-  off there and on for the risk report, which still needs it (four links
-  misroute without it).
-- **Owner-closed 2026-08-15:** p.22 rating-cell tints ("plain is fine");
-  p.36's part-black/part-green code span ("fine to ignore"); table column
-  width ratios ("don't want to force the ratios"); in-cell bulleted lists
-  (approved and shipped, all three cards).
+- **Review/push decision for the local maintenance series.** No technical blocker is
+  known, but the new CI can only be proven on GitHub-hosted runners after a push. Do
+  not push without the owner's explicit instruction.
+- **Next architectural experiment:** onboard a document from a different vendor/PDF
+  producer. Three Anthropic Google-Docs-export documents prove within-family reuse,
+  not cross-vendor generality.
+- **Nonblocking policy question:** whether the web edition should annotate an
+  internal destination that is already unresolvable in the source PDF remains open
+  in `spec-rules.md`.
 
 ## Cold-start capsule
 
-The first attempt converted one card but needed so much manual review the owner
-judged it unmaintainable. The rebuild's goal: hand over a PDF, the pipeline runs
-unattended, the owner certifies after a short flag-directed review.
-Verification-first: the gates were built and calibrated before the generator.
-Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D48),
-[design-brief.md](design-brief.md) (§2 defect taxonomy), and
-[verification-methodology.md](verification-methodology.md) (4 layers: gates →
-agent sweeps → convergence loop → owner scroll). Three cards have now proven
-the architecture: within Anthropic's Google-Docs-export family, one pipeline
-serves with per-card config (manifest roles, stubs, and grammar knobs like
-`link_text_resolution` and `bubble_page_continuation`); every fix is a class
-in `pipeline/`, never an instance. A different vendor's PDF (different
-producer) remains the next architectural test.
-
-**If you are picking this up cold and the cards changed under you:** the
-regression sweep in experiment 11 is the template — changed pages plus a
-control sample for renderer-level changes, the PDF as sole authority, and
-one question per page ("as good as, or better than, before?").
+The first attempt converted one card but made the human the test suite. The rebuild's
+goal is unattended mechanical conversion followed by bounded, evidence-directed
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D50),
+[verification-contract.md](verification-contract.md), and
+[verification-methodology.md](verification-methodology.md). For a changed corpus,
+experiment 11 is the regression-sweep template: changed pages plus renderer controls,
+the PDF as sole authority, and prompts that ask rather than assert the expected
+answer.

@@ -9,11 +9,11 @@ decisions.md says so.
 
 ## North star
 
-Given a new system-card PDF, the pipeline runs unattended — spending as many tokens
-and as much wall-clock as it needs — and produces a web version faithful enough to be
-the canonical HTML edition people cite instead of the PDF. The owner's role is a
-short, flag-directed review (minutes to an hour, not a 319-page read), and that role
-shrinks card over card as the spec and verifiers mature.
+Given a new AI system-card or safety-report PDF, the pipeline runs unattended —
+spending as much wall-clock as it needs — and produces a web version faithful enough
+to be the canonical HTML edition people cite instead of the PDF. The owner's role is
+a bounded flag-directed review plus the final scroll, and that role shrinks document
+over document as the spec and verifiers mature.
 
 **Non-goals:** minimizing token spend; zero human involvement on the first v2 card
 (trust is earned by measurement, not assumed); preserving v1 pipeline code.
@@ -29,71 +29,68 @@ verification quality is what makes the green light mean something.
 ## Principles
 
 1. **Every defect class has a designated catcher.** The verification contract maps
-   each way the output can be wrong to the mechanism that catches it (mechanical
-   invariant, N-version diff, vision judge, or human escalation). A defect later
+   each way the output can be wrong to the mechanism that owns it (mechanical
+   invariant, rulebook-driven inspection sweep, or owner escalation). A defect later
    found by a human that no catcher flagged is a process bug; closing that gap is
    part of fixing the defect.
-2. **Gates vs. advisors.** Exact mechanical checks (text-stream equality, link-set
-   equality, style runs, table shape, pagination offsets) are gates: the loop cannot
-   pass until they do, and their pass is authoritative. Probabilistic judges (vision
-   page-diff, LLM judges) start as advisors — they direct attention, but their
-   silence proves nothing — and may be promoted to gate status only on measured
-   recall (see 3) plus track record.
+2. **Gates vs. advisors.** An unsuppressed major from an executable mechanical check
+   blocks the loop; a pass is authoritative only for that invariant's stated scope.
+   Probabilistic/vision inspection directs attention, but its silence proves nothing.
+   Any automated probabilistic judge would earn gate status only through measured
+   recall (see 3) plus a cross-document track record.
 3. **Calibrate, don't assume.** v1's git history is a labeled defect corpus: run
    candidate verifiers against pre-fix states and measure whether they catch what
    the human caught. Supplement with mutation testing — inject synthetic defects of
    each class, measure recall per class. Verifier trust is a number, not a vibe.
-4. **Independence.** Verifiers never share context with generators (self-review
+4. **Independence.** Verifiers never inherit a generator's conclusions (self-review
    rationalizes its own mistakes — a v1 lesson). Where no mechanical oracle exists,
-   run N independent conversions and tree-diff them: agreement is evidence,
-   disagreement localizes exactly where an arbiter or human must look.
-5. **Two-phase artifact lifecycle.** *During conversion*, fixes are expressed as
-   rules/spec changes, never hand edits — re-runs clobber edits, and rules fix all
-   instances and compound. *After acceptance*, the card is ordinary content: hand
-   edits (reader-reported typos, small polish) are fine and never trigger a re-run.
-   Edits that reveal a systematic miss get an errata note feeding the next card's
-   spec.
-6. **Free-form polish only behind gates.** A final LLM polish pass is welcome, but
-   every edit is re-validated by the exact invariants — polish can't silently drop a
-   sentence or break a link, because the gates re-run after it.
+   inspectors report from the PDF without editing; the orchestrator owns fixes, and
+   owner decisions alone enter the accepted-divergence list.
+5. **Generated artifacts stay generated.** Fixes are expressed as class-level
+   pipeline/spec changes, never as hand edits to `sections/*.md` — re-runs clobber
+   edits, and rules fix all instances and compound. Reader-reported defects re-enter
+   the same regenerate/diff/gate/sweep loop.
+6. **No transcription or free-form polish.** The PDF's extracted facts are assembled
+   mechanically. Agents inspect and classify; they do not rewrite publisher text.
+   Every pipeline change is re-validated by the implemented invariants and inspection
+   layers.
 7. **The compounding assets are the spec, the verifier suite, and the decision
    log** — not any single converted card. Each card converted should make the next
    one cheaper.
-8. **Universal core, scoped idioms (D16).** The invariants and schema are
-   vendor-agnostic and essentially fixed; each card's visual idioms live in a
+8. **Universal core, scoped idioms (D16).** The invariants and typed role vocabulary
+   are vendor-agnostic and essentially fixed; each document's visual idioms live in a
    small per-card style manifest derived from a mechanical signal census and
    confirmed by the owner once. The closure rule — no unexplained recurring
    signal — is how new conventions surface without being anticipated. Rules
    never accumulate globally, so there is no house of cards to topple.
-9. **Capture is fidelity; presentation is editorial (D17).** The model records
-   semantic identity with source provenance; how the site styles those roles is
-   a design decision, reviewed by the owner, never fidelity-gated.
+9. **Capture is fidelity; presentation is editorial (D17).** The generator records
+   semantic roles in tracked markdown with page provenance; how the site presents
+   those captured roles is a design decision reviewed by the owner.
 
-## Architecture sketch
+## Built architecture (D50; supersedes the pre-build architecture decisions)
 
-Structure-aware extraction (spans + styles + links + bboxes + pages; PyMuPDF
-presumed in-stack, layout model TBD by bake-off) serves as both conversion input
-and validation oracle. Canonical output is a typed document model (JSON); markdown,
-HTML, and llms.txt are projections. The LLM proposes semantic structure *over*
-extracted facts it cannot contradict. Conversion proceeds in staged waves with a
-living spec: issues are triaged by type, the owner decides each type once, a judge
-model applies existing rules and escalates only novel types. Layered verification
-per the principles above; escalations land in a worklist; final flag-directed human
-review; then acceptance and publish. Details and rationale: brief §4 plus
-decisions.md.
+PyMuPDF supplies the immutable span/style/link/geometry oracle; docling supplies
+table candidates. The generator assigns transient typed block dictionaries and
+serializes them directly to tracked `sections/*.md`. Astro consumes that markdown
+for HTML, `card.md`, `llms.txt`, social images, and search. There is no canonical JSON
+tree and no LLM transcription, semantic proposal, N-version conversion, or polish
+pass in the shipped pipeline.
 
-## Roadmap
+Verification is layered: fail-closed mechanical gates → independent rulebook-driven
+page/markdown/DOM sweeps → orchestrator-owned class fixes and regression controls →
+owner scroll. Exact owner acceptances fingerprint a complete observed finding.
+Per-document visual grammar lives in the style manifest; shared fixes live in
+`pipeline/`.
 
-1. Catalog v1's defects from git history into a structured eval set.
-2. Write the verification contract (defect class → catcher → gate/advisor).
-3. Extractor bake-off, scored on which invariants each tool makes enforceable.
-4. Build the mechanical verifier suite; calibrate against the v1 corpus; mutation-
-   test recall per class.
-5. Build the generation loop (extraction → semantic proposal → repair loop →
-   N-version arbitration → visual sweep → escalation worklist).
-6. Re-convert the Fable 5 card; use v1's human-verified range (≤ §6) as a partial
-   regression oracle per brief §8.
-7. Owner review, acceptance, publish; retrospective; fold lessons into spec.
+## Roadmap status and next test
+
+The original seven-step build roadmap is complete in its shipped, mechanical form:
+the defect corpus, contract, extractor bake-off, calibrated/mutation-tested verifier,
+generation loop, Fable reconversion, owner review, and publication all landed. Opus
+and the Risk Report subsequently proved one shared pipeline across three documents
+from Anthropic's Google-Docs-export family. The next architectural experiment is a
+document from a different vendor/PDF producer; until then, cross-vendor generality is
+an open hypothesis rather than a project claim.
 
 ## Meta-process (how this effort stays durable)
 

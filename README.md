@@ -19,12 +19,13 @@ social-preview images, and search.
 
 ## Status
 
-Built and validated end-to-end on its first document (Claude Fable 5 & Mythos 5,
-319 pp.). The site renders any card under `cards/`, but the conversion pipeline is
-**heavily specialized to that one document** — likely not generalizing cleanly even
-to Anthropic's other system cards, let alone other companies'. It's a strong starting
-point, not yet a general tool. The next step is to convert a second document and find
-out whether one shared pipeline can serve many or each will need its own.
+Built and validated end-to-end on three Anthropic documents: **Claude Fable 5 &
+Claude Mythos 5** (317 pp.), **Claude Opus 5** (193 pp.), and **Risk Report:
+August 2026** (186 pp.). All three run through one shared pipeline with per-document
+configuration, establishing that the approach works within Anthropic's
+Google-Docs-export family. That is not yet evidence that it generalizes to a different
+PDF producer or visual grammar. A document from another vendor is the next
+architectural test.
 
 ## Layout
 
@@ -46,10 +47,10 @@ CLAUDE.md             # operational playbook for an AI coding agent (see below)
 ## Working on this repo
 
 This project is built and maintained with an **AI coding agent.** To convert a new
-system card, or to fix or improve an existing one, open the repo in
-[Claude Code](https://claude.com/claude-code) (or your agent of choice): the working
-instructions — how the pipeline runs, the commands, and the card-generation /
-"adding a card" workflow — live in **[CLAUDE.md](CLAUDE.md)**, with the design
+system card or safety report, or to fix or improve an existing document, open the repo
+in [Claude Code](https://claude.com/claude-code) (or your agent of choice): the working
+instructions — how the pipeline runs, the commands, and the document-generation /
+"adding a document" workflow — live in **[CLAUDE.md](CLAUDE.md)**, with the design
 rationale and decision log in **[docs/](docs/)**. Issues and PRs are welcome,
 including the pipeline generalization itself.
 
@@ -61,5 +62,6 @@ original PDF. All document content belongs to its publisher.
 
 ## License
 
-[MIT](LICENSE), for the code and pipeline. The reproduced system-card documents under
-`cards/` belong to their respective publishers (see the note above).
+[MIT](LICENSE), for the code and pipeline. The reproduced documents under `cards/` —
+system cards and safety reports — belong to their respective publishers (see the note
+above).

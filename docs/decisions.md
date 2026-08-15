@@ -771,3 +771,68 @@ built around are genuinely separate: the bottom-up/top-down coordinate bug
 regenerating, and diffing — the same byte-identity net used for pipeline
 changes, pointed at a config question. Config knobs left "open pending
 adjudication" should be measured this way rather than carried as open items.
+
+## D49 — verifier success is fail-closed; acceptances are exact findings; mutation recall has committed floors (2026-08-15)
+
+**Problem found during maintainer takeover.** `calibrate.py` printed majors but
+returned success, so neither a shell caller nor CI could distinguish a clean gate
+from a failed one. Its acceptance key was only `(invariant, page)`: one Fable p.37
+entry silently covered two distinct T1 findings and would also have covered any new
+T1 major on that page. Two other entries (pp.55/56) no longer matched anything, yet
+stayed silently active. `generate/run.py` only printed the follow-up verifier command,
+and the Pages workflow built without running Python verification.
+
+**Decision.** An acceptance is one complete observed major finding. Its strict entry
+contains `invariant`, `page`, `severity`, `detail`, and the SHA-256 of their canonical
+JSON. Only majors may be accepted; malformed, duplicate, fingerprint-mismatched, and
+(on an unfiltered current `WORKTREE` run) stale entries are configuration errors.
+Matching consumes one occurrence, so duplicates cannot hide behind one acceptance.
+Historical and partial runs do not require every current acceptance to appear because
+they intentionally observe only a different state or slice.
+
+The generator remains generation-only, but its printed handoff is now safe: it
+preserves the selected `CARD`, and `--all` points to the unfiltered `WORKTREE` gate.
+Page/seed runs continue to print an absolute-directory + `--sections` partial check.
+Previously an ephemeral `CARD=… run.py` invocation printed a command that could fall
+back to Fable's oracle, and even `--all` incorrectly suggested partial-gate semantics.
+
+`calibrate.py` now exits 1 for any unsuppressed major and 2 for acceptance
+configuration errors. `--report-only` is the deliberate diagnostic escape hatch for
+majors; it does not relax configuration errors. The migrated Fable file contains the
+three exact current T1 findings and no stale entries. A deliberate duplicate-marker
+probe produced `P1 major 1` and exit 1, then the same probe with `--report-only`
+produced exit 0.
+
+**CI consequence.** The reusable fast workflow runs verifier unit tests, the full
+gate and seam audit for all three documents, and a clean production build. Pull
+requests and non-main branch pushes invoke it directly; the Pages workflow invokes
+it as a dependency, so failure skips both the artifact build and deployment. Pages
+and OIDC write permissions exist only on the final deploy job. Tool versions are
+pinned at Python 3.12, uv 0.12.1, PyMuPDF 1.28.2, Node 22, and pnpm 11.
+
+**Mutation consequence.** `mutate.py --baseline` enforces the exact class set,
+expected invariant, sample count, and a non-decreasing caught count; improved recall
+passes, while per-site detail movement is evidence rather than a false failure.
+Current 8-trial/seed-5 floors are Fable 86/96 (12 classes), Opus 72/88, and Risk
+Report 74/88 (11 classes each; chips not applicable). A separate scoped-push/PR,
+weekly, and manual workflow runs these slower checks; its card-input scope is the
+complete `cards/**` tree.
+
+## D50 — the shipped mechanical compiler supersedes the pre-build JSON/LLM architecture (2026-08-15)
+
+D1/D2/D7/D9/D10/D14 were pre-build decisions and remained written as current
+architecture after the implementation took a different, successful path. The
+canonical artifact is the tracked `sections/*.md`, produced by mechanically assigning
+PyMuPDF/docling facts to transient typed block dictionaries and serializing them
+directly. Astro projects the markdown to HTML, `card.md`, `llms.txt`, social assets,
+and search. No canonical JSON tree, schema gate, judge-model triage, LLM
+transcription/semantic proposal, N-version conversion, post-acceptance hand-edit
+phase, or free-form polish pass shipped.
+
+The independence principle survives in its built form: mechanical major findings gate
+within each invariant's documented scope; rulebook-driven inspectors compare PDF,
+markdown, and live DOM but report only; the orchestrator alone implements class-level
+fixes; the owner adjudicates true editorial choices and performs the final scroll.
+This decision supersedes D1's artifact
+mechanism and the incompatible mechanisms in D2/D7/D9/D10/D14, not the goals of
+typed structure, source provenance, or layered verification that motivated them.
