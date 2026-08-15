@@ -58,3 +58,8 @@ document:
   # dest coordinates are sloppy enough to swap Claim 6/7 and land 'Appendix
   # 6.4' on 6.3 (sweep round 1, D46)
   link_text_resolution: extended
+  # this document sets ONE box around many paragraphs; a box continuing
+  # across a page cut is one bubble (§2.20 pp.72-74, §2.24 pp.84-86 —
+  # owner-flagged when split). Fable's box-per-paragraph pilot quotes keep
+  # the rule off there.
+  bubble_page_continuation: true

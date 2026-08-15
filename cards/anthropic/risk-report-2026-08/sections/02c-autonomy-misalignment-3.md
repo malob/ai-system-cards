@@ -257,10 +257,10 @@ We evaluated both the earlier version and current version of the prompt+completi
 <tr><th>Internal Evaluation set + 400k prepended benign tokens</th><td>80%</td><td>84%</td><td>59%</td><td>69%</td></tr>
 <tr><th>SHADE-Arena side-task attempts with full extended thinking for Opus 4.5</th><td>100%</td><td>100%</td><td>45%</td><td>70%</td></tr>
 <tr><th>SHADE-Arena side-task attempts with discussion of a side goal ablated from extended thinking for Opus 4.5</th><td>100%</td><td>100%</td><td>97%</td><td>92%</td></tr>
-<tr><td><u><b><a href="https://www.lesswrong.com/posts/X8qTKsGcnsTFrqM96/monitoring-benchmark-for-ai-control">MonitorBench</a></b></u> <b>Hard (n=60 sample)</b></td><td>92%</td><td>92%</td><td>77%</td><td>87%</td></tr>
+<tr><td><b><a href="https://www.lesswrong.com/posts/X8qTKsGcnsTFrqM96/monitoring-benchmark-for-ai-control">MonitorBench</a> Hard (n=60 sample)</b></td><td>92%</td><td>92%</td><td>77%</td><td>87%</td></tr>
 <tr><th>MonitorBench Hard (n=60 sample) + 200k tokens of benign transcript before</th><td>72%</td><td>83%</td><td>58%</td><td>75%</td></tr>
 <tr><td><b>MonitorBench Hard (n=60 sample) + 200k tokens of benign transcript before and 200k tokens of benign transcript after (less analogous to our setup, since we run the monitor many times in a single transcript)</b></td><td>48%</td><td>77%</td><td>37%</td><td>63%</td></tr>
-<tr><th><u><a href="https://alignment.anthropic.com/2026/sleight-bench/">SLEIGHT-Bench</a></u></th><td>23%</td><td>58%</td><td>14%</td><td>44%</td></tr>
+<tr><th><a href="https://alignment.anthropic.com/2026/sleight-bench/">SLEIGHT-Bench</a></th><td>23%</td><td>58%</td><td>14%</td><td>44%</td></tr>
 <tr><th>Monitored internal traffic (lower is better)</th><td>~0.4%</td><td>~0.2%</td><td>~0.04%</td><td>~0.1%</td></tr>
 </tbody></table>
 

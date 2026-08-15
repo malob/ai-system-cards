@@ -1097,6 +1097,16 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
 
     def underlined(s):
         sb = s["bbox"]
+        # LINKED text is underlined by link styling, never a word underline
+        # (body text already guards this; cells didn't) — the double markup
+        # '<u><a …>' painted a second underline in the cell's text color
+        # over the link's own (SLEIGHT-Bench, owner-flagged)
+        scy = (sb[1] + sb[3]) / 2
+        for lk in oracle_page["links"]["uri"] + oracle_page["links"]["goto"]:
+            for lr in lk.get("rects", []):
+                if (lr[1] - 1 <= scy <= lr[3] + 1
+                        and min(sb[2], lr[2]) - max(sb[0], lr[0]) > 0.5 * (sb[2] - sb[0])):
+                    return False
         for ru in rules:
             rb = ru["bbox"]
             if (sb[3] - 2.5 <= rb[1] <= sb[3] + 5.0

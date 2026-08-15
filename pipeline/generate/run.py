@@ -79,6 +79,17 @@ def manifest_chips() -> dict:
 
 
 UNTERMINATED = tuple(".!?:”\"’")
+
+# per-card grammar knob (D16): merge a bubble that continues across a page
+# cut into ONE bubble. Both conventions exist in this family and both draw
+# box borders at the cut, so geometry can't discriminate: the risk report
+# sets one box around many paragraphs (§2.24 spans pp.84-86 — owner-flagged
+# when split), while fable's pilot quotes are box-PER-PARAGRAPH (its p.102
+# continuation paragraph sits in its own closed box mid-page) and must stay
+# separate bubbles.
+BUBBLE_CONT = bool(re.search(
+    r"^\s*bubble_page_continuation:\s*true",
+    (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
 TR = re.compile(r"<tr>.*?</tr>", re.S)
 
 
@@ -282,7 +293,7 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 if blk.get("breaks"):
                     prev.setdefault("breaks", []).extend(i + off for i in blk["breaks"])
                 continue
-        if (out and blk["type"] == "turn" and out[-1]["type"] == "turn"
+        if (BUBBLE_CONT and out and blk["type"] == "turn" and out[-1]["type"] == "turn"
                 and blk["page"] == out[-1].get("last_page", out[-1]["page"]) + 1
                 and out[-1].get("role") == blk.get("role")
                 and out[-1].get("fill") and out[-1].get("fill") == blk.get("fill")
