@@ -136,3 +136,33 @@ scroll pass (onboarding step 8).
    in-table ref now carries the anchor id (shim ids stripped post-render).
    Renderer-level, so it also heals the certified cards' table-only
    footnotes. Click-verified in-browser.
+
+## Deferred-minor re-adjudication (2026-08-15, owner-directed)
+
+The owner asked what the agents had caught that remained unfixed. Auditing
+the findings files against the current output gave an uncomfortable answer:
+**three of the owner's five scroll findings had been flagged by the round-1
+agents and downgraded by the orchestrator** (p.42's blockquote as
+"cosmetic", the in-cell italics and cell-paragraph flattening as "typed
+minors"). Worse, the round-2 verification prompts described the *fix*
+("verify the `<br>●` breaks") rather than the PDF, so the sweep could only
+confirm the partial repair — the charter's independence principle (§4)
+violated at the orchestration layer, and the rulebook's do-not-flag list
+seeded with self-adjudicated entries rather than owner decisions.
+
+Of the nine minors still open, four classes were re-adjudicated as real and
+fixed (`e8f8f61`): hyphen-lead wrap-join corruption in visible text
+(p.184, fn50/fn53 URLs), space-before-punctuation after in-cell links (6),
+docling quote folds in cells (p.13), and p.153's indented RSP quotations
+rendering flush — the same error shape as p.42, an indent that is the only
+signal marking a quotation. T1 residual fell 25 → 22 as a side effect.
+One deferral survives: p.36's part-black/part-green code span.
+
+Process changes proposed to the owner and pending decision: (1) sweep-flagged
+majors may not be downgraded by the orchestrator — only mechanically
+disproven with an archived crop, or owner-adjudicated; (2) verification
+prompts describe the PDF, never the fix, and the do-not-flag list holds
+owner decisions only; (3) a mechanical cross-page-construct check from
+oracle box geometry; (4) a rendered-DOM assertion station (anchor
+y-monotonicity, backref targets having layout boxes) between build and
+scroll.

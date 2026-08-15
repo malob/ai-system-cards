@@ -19,15 +19,19 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
 - **opus-5: live**, byte-identical likewise. Gate: 0 majors / `T1 13`.
 - **risk-report-2026-08: converged; owner scroll pass IN PROGRESS.** Gate:
   0 majors / `FN1 1` (declared orphan-ref source defect — the PDF's own
-  stray superscript 18 on p.126, D45) / `T1 25` (docling cell tokenization
-  + seam displacement noise) / `TB2 2` (seam-cell advisors). Seam audit 0.
+  stray superscript 18 on p.126, D45) / `T1 22` (docling cell tokenization
+  + seam displacement noise) / `TB2 1` (seam-cell advisor). Seam audit 0.
   NEW GATE TB2 (owner-requested): table-cell order integrity from markdown
   alone — the scramble class the sweeps used to own; contract updated. Mutation recall at the
   calibrated band. Scroll findings so far (experiment 11 §findings log,
   both class-fixed same session): p.42 taxonomy sub-list (spurious
   blockquote + bold-letter-defeated `<ol type="a">` transform, `8d96f1a`);
   cross-page bubble splits §2.24/§2.20 (geometry continuation rule,
-  `076161f`).
+  `076161f`); Table 3.10.A cell paragraphs + in-cell italics
+  (`c3d046c`/`2eee70e`); seam page marker foster-parented to the table top
+  (`e0d4d34`); dead ↩ backlinks on table-only footnotes (`a05e334`); and the
+  owner-re-adjudicated deferred batch — wrap-join corruption, in-cell
+  punctuation spaces, quote folds, indented RSP quotations (`e8f8f61`).
 - **RESOLVED (owner asked for a judgment, 2026-08-14 ~22:10):** the
   bubble-continuation rule initially also merged fable-5's §6.2.4
   pilot-quote box — judged NOT a fidelity fix there (fable's convention is
@@ -61,9 +65,9 @@ build, all local. **NOT deployed** — pushes only on explicit owner request
   content-strong, visual-layout-weak). Table-dense stretches: pp.10-14, 22,
   78-80, 115-119, 123-132, 155-156, 182-185; boxed prompts pp.72-74/84-86.
 - **Deploy decision** (push to main → Pages).
-- **Deferred typed minors** (experiment 11 README §Deferred): p.153
-  shallow-indent quotes, p.36 code-span color, footnote URL wrap spaces
-  (p.13 and p.42 retired by owner-scroll fixes).
+- **Deferred typed minors** — now just ONE: p.36's code span (the PDF sets
+  'sed' black and the rest green; the renderer styles code uniformly). All
+  others were re-adjudicated as real and fixed 2026-08-15.
 - **Editorial flags:** index-page intro copy is system-card-specific ("when
   AI companies release a new model…") — may want a line acknowledging risk
   reports; p.22's color-coded rating cells render as plain cells (text

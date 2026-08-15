@@ -1,148 +1,47 @@
 {
- "item-to-paragraph": {
-  "invariant": "ST1",
-  "caught": 3,
-  "tried": 6,
-  "details": [
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "We believe that it is hard to construct ",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "We have an offline monitor that looks fo",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "We defend two narrowings-of-focus: this ",
-    "caught": false
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "There are known ways in which current mo",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "Claude Opus 5, which was internally depl",
-    "caught": false
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "a) The level of risk our systems pose ov",
-    "caught": false
-   }
-  ]
- },
- "drop-link": {
-  "invariant": "L1",
-  "caught": 6,
-  "tried": 6,
-  "details": [
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "https://www.aisi.gov.uk/",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "https://www.anthropic.com/claude-mythos-preview-system-card",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "https://www.anthropic.com/news/redeploying-fable-5",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "https://support.claude.com/en/articles/12119250-model-safety-bug-bounty-program",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "https://www.anthropic.com/claude-mythos-preview-system-card",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "https://metr.org/blog/2026-05-08-rd-section-anthropic-risk-report-feb-2026-review/",
-    "caught": true
-   }
-  ]
- },
- "drop-fndef": {
-  "invariant": "FN1",
-  "caught": 6,
-  "tried": 6,
-  "details": [
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "[^63]: We paid out a bounty fo",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "[^28]: While we consider it un",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "[^90]: We define \u201csophisticate",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "[^42]: Some detail here redact",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "[^21]: See [Section 2.18](#218",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "[^43]: \u201cDouble the rate of pro",
-    "caught": true
-   }
-  ]
- },
  "drop-bold": {
   "invariant": "S1",
   "caught": 5,
-  "tried": 6,
+  "tried": 8,
   "details": [
    {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "Direct misalignment:",
+    "file": "03-automated-rd.md",
+    "site": "CoBench",
+    "caught": false
+   },
+   {
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "The threat:",
+    "caught": false
+   },
+   {
+    "file": "03-automated-rd.md",
+    "site": "Likelihood of impact:",
+    "caught": false
+   },
+   {
+    "file": "04b-chem-bio-2.md",
+    "site": "EAP users:",
+    "caught": true
+   },
+   {
+    "file": "04a-chem-bio-1.md",
+    "site": "Why this is a priority threat:",
     "caught": true
    },
    {
     "file": "02c-autonomy-misalignment-3.md",
-    "site": "Pathway 4: Poisoning the training data o",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "Risk equals total expected",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "Claim 1",
-    "caught": false
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "Risk mitigations.",
+    "site": "Pathway 8: Undermining decisions within ",
     "caught": true
    },
    {
     "file": "05-cross-cutting.md",
-    "site": "Engaging with potential risks of labor m",
+    "site": "Volume:",
+    "caught": true
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "How to investigate",
     "caught": true
    }
   ]
