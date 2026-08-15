@@ -5,16 +5,42 @@ the verifier catch it? This turns "calibrated on history" into a number and
 covers the censorship gap in the v1 corpus (D5/D6).
 
 **Method.** [mutate.py](../../../pipeline/verifier/mutate.py) injects one
-synthetic defect into a copy of the HEAD sections, runs the full invariant
-suite, and counts a catch iff a flag of the expected invariant appears that was
-not in the unmutated baseline. 8 mutations/class, seeded. Raw:
-[results.json](results.json).
+synthetic defect into a temporary copy of the current sections, runs the full
+invariant suite, and counts a catch iff a flag of the expected invariant appears
+that was not in the unmutated baseline. The current calibration is 8
+mutations/class with seed 5. The original Fable-only record remains
+[results.json](results.json); the enforceable current baselines are:
+
+- [Fable 5](results-anthropic-claude-fable-5.json)
+- [Opus 5](results-anthropic-claude-opus-5.json)
+- [Risk Report: August 2026](results-anthropic-risk-report-2026-08.json)
 
 ```sh
-uv run --with pymupdf python pipeline/verifier/mutate.py --per-class 8
+env CARD=anthropic/claude-fable-5 uv run --python 3.12 --with pymupdf==1.28.2 \
+  python pipeline/verifier/mutate.py --per-class 8 --seed 5 \
+  --baseline docs/experiments/05-mutation-testing/results-anthropic-claude-fable-5.json \
+  --json /tmp/mutation-anthropic-claude-fable-5.json
 ```
 
-## Recall per class
+With `--baseline`, the command exits nonzero if an expected class disappears,
+an unbaselined class appears, its invariant or sample count changes, or its caught
+count falls. Improvements pass. Per-site details remain evidence rather than the
+gate because an otherwise harmless source edit can move a seeded sample.
+
+## Current three-document baselines (2026-08-15)
+
+| document | eligible classes | caught | recall | not applicable |
+| --- | ---: | ---: | ---: | --- |
+| Claude Fable 5 & Claude Mythos 5 | 12 | 86/96 | 89.6% | — |
+| Claude Opus 5 | 11 | 72/88 | 81.8% | `flatten-chip` |
+| Risk Report: August 2026 | 11 | 74/88 | 84.1% | `flatten-chip` |
+
+These are floors, not a claim of universal defect recall. The weakest measured
+classes are structural splits and S1 bold removal; the agent inspection layers
+remain their explicit backstop. The scoped/weekly GitHub Actions mutation workflow
+runs all three baselines independently of the fast per-change verifier gate.
+
+## Original Fable calibration (historical)
 
 | mutation            | invariant | recall      | misses explained                                  |
 |---------------------|-----------|-------------|---------------------------------------------------|
@@ -57,9 +83,9 @@ written, owned boundary, not a mystery.**
 
 ## Conclusion
 
-Structural invariants (P1/F1/FN1-count) are at 100%; text-family strong
-(75–100%) with all misses traced to two named blind spots (footnote bodies,
-table interiors) that have designated owners in the contract; L1 reached 88%
-after the fixes this experiment forced. The verifier's trust level is now a
-measured quantity with a written boundary — exactly what D6 demanded. Re-run
-this suite after every verifier extension; recall regressions are bugs.
+The initial experiment established the method and forced concrete L1/FN1/S2
+repairs. The three current, per-document artifacts turn that measurement into a
+checked floor: structural invariants remain strongest, while the documented
+structural/style blind spots remain assigned to the inspection layers. Re-run the
+suite after every verifier extension or source/canon change; a drop below a
+committed floor is a gate failure, not an observation to overlook.
