@@ -34,6 +34,7 @@ export function getStaticPaths() {
         kind: 'card',
         title: c.meta.title,
         vendor: c.meta.vendor,
+        docType: c.meta.doc_type,
         date: fmtDate(String(c.meta.release_date)),
         pages: pageCount(c.vendor, c.slug),
       },

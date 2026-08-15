@@ -53,7 +53,7 @@ const cardTree = (o) =>
     h({ display: 'flex', flexDirection: 'column' }, [
       h({ fontFamily: MONO, fontWeight: 500, fontSize: 24, letterSpacing: 4,
           textTransform: 'uppercase', color: C.clay, marginBottom: 22 },
-        `${o.vendor} · System Card`),
+        `${o.vendor} · ${o.docType ?? 'System Card'}`),
       h({ display: 'flex', fontFamily: SERIF, fontWeight: 600,
           fontSize: o.title.length > 30 ? 76 : 92, color: C.ink, lineHeight: 1.05, letterSpacing: -1 },
         o.title),

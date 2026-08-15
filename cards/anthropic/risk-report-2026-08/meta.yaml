@@ -1,6 +1,9 @@
 title: "Risk Report: August 2026"
 slug: risk-report-2026-08
 vendor: Anthropic
+# document type shown in the page eyebrow and OG image (defaults to
+# "System Card" when absent — the archive's founding document type)
+doc_type: Risk Report
 models:
   - Claude Mythos 5
   - Model 2 (unreleased internal model)

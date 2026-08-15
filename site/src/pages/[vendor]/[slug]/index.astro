@@ -77,7 +77,7 @@ const rail = toc
 
     <main class="doc">
       <header class="cardhead" id="cardhead">
-        <p class="eyebrow">{meta.vendor} · System Card</p>
+        <p class="eyebrow">{meta.vendor} · {meta.doc_type ?? 'System Card'}</p>
         <h1>{meta.title}</h1>
         <div class="meta-row">
           <span>{fmt(String(meta.release_date))}</span>
