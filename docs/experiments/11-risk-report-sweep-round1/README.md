@@ -79,3 +79,16 @@ T1 26 typed residuals); seam audit 0; both system cards byte-identical;
 10/10 rendered-page assertions pass on the production build. Remaining
 items are the five deferred typed minors (owner list above) and the owner
 scroll pass (onboarding step 8).
+
+## Owner scroll pass — findings log
+
+1. **p.42 taxonomy sub-list** (owner, 2026-08-14 ~21:50): rendered as a
+   blockquoted bullet list with literal/bold letter markers vs the PDF's
+   plain nested lettered list. Two roots, both class-fixed (commit
+   `8d96f1a`): a stale quote context from a cross-page item continuation
+   (non-quote items now close the context — a marker-grid discriminator was
+   tried and REVERTED, it de-quoted the genuinely-quoted UK-AISI lists:
+   quoted lists sit on-grid in this family, only the bullet-glyph signal
+   discriminates), and the renderer's `<ol type="a">` transform aborting on
+   a source-faithful bold letter marker. This retires the p.42 entry from
+   the deferred-minors list.
