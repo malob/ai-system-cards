@@ -572,7 +572,14 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 # paragraph (opus-5 welfare p.223 'most common concern…')
                 # is typographically identical and must keep flowing.
                 prev_all_bold = bool(prev_body) and all(s["bold"] for s in prev_body)
-                claim_lead = bool(re.match(r"(?:Sub-?c|C)laim\s+\d", prev["text"].lstrip()))
+                # the grammar tests the PARAGRAPH's first line — a wrapped
+                # claim lead's last line starts mid-sentence (p.52 Claim 4.1)
+                # — and every accumulated line must be bold
+                cur_all_bold = all(
+                    s["bold"] for l in cur["lines"] for _, _, s in l["segs"]
+                    if s["zone"] == "body" and s["text"].strip("​‌‍﻿­ "))
+                claim_lead = (cur_all_bold and bool(re.match(
+                    r"(?:Sub-?c|C)laim\s+\d", cur["lines"][0]["text"].lstrip())))
                 ends_bold_label = (prev_all_bold
                                    and (prev_short
                                         or (claim_lead

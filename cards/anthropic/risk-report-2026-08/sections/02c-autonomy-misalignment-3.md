@@ -233,7 +233,7 @@ The detailed results are presented below.
 
 <table><tbody>
 <tr><th>Evaluation</th><th>Positive rate after 1st stage</th><th>Positive rate after 2nd stage filtering</th></tr>
-<tr><td><b>Misaligned Model Organisms from</b> <u><b><a href="https://alignment.anthropic.com/2026/auditing-overt-saboteur/">Treutlein 2026</a></b></u> <b>(conversation)</b></td><td>3/3</td><td>1/3</td></tr>
+<tr><td><b>Misaligned Model Organisms from <a href="https://alignment.anthropic.com/2026/auditing-overt-saboteur/">Treutlein 2026</a> (conversation)</b></td><td>3/3</td><td>1/3</td></tr>
 <tr><td><b>Shade-Arena conversations, CoT only, selected for stealthiness</b></td><td>100%</td><td>72%</td></tr>
 <tr><td><b>Shade-Arena conversations, CoT only, ablating direct discussion of a side goal from CoTs</b></td><td>95%</td><td>92%</td></tr>
 <tr><td><b>Synthetic Chains-of-Thought (single-completion)</b></td><td>72%</td><td>29%</td></tr>

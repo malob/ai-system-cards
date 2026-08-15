@@ -56,6 +56,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _restyle_cells(html, t["bbox"], oracle_page)
             html = _restore_cell_glyphs(html, t["bbox"], oracle_page)
             html = _bold_cell_leads(html, t["bbox"], oracle_page)
+            html = _bold_label_cells(html, t["bbox"], oracle_page)
             html = _split_cell_paragraphs(html, t["bbox"], oracle_page)
             html = _inject_fnrefs(html, t["bbox"], oracle_page)
             html = _inject_links(html, t["bbox"], oracle_page)
@@ -559,6 +560,76 @@ def _bold_cell_leads(html: str, bbox: list, oracle_page: dict) -> str:
             else:
                 continue
             break
+    return out
+
+
+def _bold_label_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """First-column label cells whose PDF spans are ALL bold get a whole-cell
+    <b> when restyle's segmentation missed or fumbled them (the §6.6 dense
+    chunks: '<b>Claude</b> <u>Mythos Preview</u>'; unbolded 'Claude Opus
+    4.8' / 'Claude Sonnet 5' / 'Legacy models…' labels). Existing b/u tags
+    are stripped first (the false <u> came from a cell border rule). A bold
+    that restyle LEAKED onto the next cell's duplicate first word ('Legacy'
+    opening the description, p.184) is removed when that cell's own span is
+    regular-weight."""
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s["text"].strip() and s.get("zone") != "fnref"]
+    by_x: dict[float, list] = {}
+    for s in spans:
+        key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 3), None)
+        by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    seqs = [sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
+    seqs += _column_regions(spans) + [_reading_seq(spans)]
+
+    def _match_run(sq):
+        for col in seqs:
+            for st in range(len(col)):
+                acc, run = "", []
+                for j in range(st, len(col)):
+                    acc += _squash(col[j]["text"])
+                    run.append(col[j])
+                    if len(acc) >= len(sq):
+                        break
+                if acc == sq:
+                    return run
+        return None
+
+    out = html
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        cells = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        if len(cells) < 2 or cells[0][0] == "th":
+            continue
+        tg, attr, c = cells[0]
+        # only cells whose ONLY markup is b/u: structured labels
+        # (<br>, <i>, links, sups) are restyle's territory and already
+        # correct in the certified cards
+        if re.search(r"<(?!/?[bu]>)", c):
+            continue
+        inner = re.sub(r"</?[bu]>", "", c)
+        plain = _cell_sq(inner)
+        if len(plain) < 6 or not re.search(r"[A-Za-z]{3}", plain):
+            continue
+        run = _match_run(plain)
+        if not run or not all(s.get("bold") for s in run):
+            continue
+        new_c = f"<b>{inner.strip()}</b>"
+        old_cell = f"<{tg}{attr}>{c}</{tg}>"
+        if f"<b>{inner.strip()}</b>" == c:
+            new_cell = old_cell   # already exactly bold
+        else:
+            new_cell = f"<{tg}{attr}>{new_c}</{tg}>"
+            if old_cell in out:
+                out = out.replace(old_cell, new_cell, 1)
+        # leaked duplicate-word bold on the neighbor cell: '<b>Legacy</b>
+        # commercial…' where the description's own span is regular
+        ntg, nattr, nc = cells[1]
+        mword = re.match(r"<b>(\w[\w.-]*)</b>(\s)", nc)
+        first_word = inner.strip().split()[0] if inner.strip().split() else ""
+        if mword and mword.group(1) == first_word and "<b>" not in nc[mword.end():]:
+            fixed_nc = mword.group(1) + mword.group(2) + nc[mword.end():]
+            old_n = f"<{ntg}{nattr}>{nc}</{ntg}>"
+            if old_n in out:
+                out = out.replace(old_n, f"<{ntg}{nattr}>{fixed_nc}</{ntg}>", 1)
     return out
 
 

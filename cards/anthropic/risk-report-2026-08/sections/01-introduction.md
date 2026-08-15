@@ -37,7 +37,7 @@ For each of the sections devoted to a specific category of catastrophic risk, we
 <!-- p.9 -->
 
 - a) The level of risk our systems pose over and above the risks posed by other AI developers’ systems (that is, a description of the “marginal” risk of our systems); and
-    - b) The level of risk that would be posed industry-wide, if all AI developers had models and practices similar to ours (that is, a description of the “absolute” risk across the industry). This distinction is further discussed in our Responsible Scaling Policy.
+- b) The level of risk that would be posed industry-wide, if all AI developers had models and practices similar to ours (that is, a description of the “absolute” risk across the industry). This distinction is further discussed in our Responsible Scaling Policy.
 
 **Looking forward.** We discuss our plans for continuing to monitor and mitigate the relevant risk over time.
 

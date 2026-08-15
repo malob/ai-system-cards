@@ -221,6 +221,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
     pending_marker = ""
     last_type = None
     prev_quote = None
+    last_lettered_indent = None   # indent of the previous LETTERED item
 
     def marker_if_new(pno):
         # markers are buffered: standalone between blocks, but INLINE inside a
@@ -302,6 +303,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 boldopen = ("**" if (m.group(2) is None
                                      and body.lstrip("‌ ").startswith("**")) else "")
                 out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + boldopen + body[m.end():] + "\n")
+                last_lettered_indent = None
             else:
                 body = re.sub(r"^(\**)[●•◦▪‣○■□​‌ ]+", r"\1", body.lstrip("●•◦▪‣○■□​‌ "))
                 # Word-style lone-'o' marker (p.104): regex, not lstrip — a
@@ -317,6 +319,8 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 # lettered sub-list marker ('a.​On' — ZWSP eaten by the join):
                 # restore the space, gated on the RAW line's marker signature
                 raw0 = blk["lines"][0]["text"] if blk.get("lines") else ""
+                if not re.match(r"^\s*[a-z][.)]\u200b", raw0):
+                    last_lettered_indent = None
                 if re.match(r"^\s*[a-z][.)]\u200b", raw0):
                     # insert the marker space without splitting an emphasis
                     # pair: '\**' backtracking half-consumed a closing '**'
@@ -326,14 +330,19 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                     if not re.match(r"^\**[a-z][.)]\**\s", body):
                         body = re.sub(r"^(\*\*[a-z][.)]\*\*|\*\*[a-z][.)]|[a-z][.)])",
                                       r"\1 ", body, count=1)
-                    # lettered markers are SUB-items when a list is open
-                    # (fable p.66 item 2b: a page break reset the tier
-                    # baseline and dropped one to level 0) — but a lettered
-                    # list directly under a PARAGRAPH (risk-report p.9
-                    # 'We address both: a)/b)') is level 0: parentless
-                    # indent renders as an indented code block
-                    if blk.get("level", 0) == 0 and last_type == "item":
-                        indent = "   " if q else "    "
+                    # lettered markers are SUB-items when they follow a
+                    # NON-lettered item (fable p.66 item 2b: a page break
+                    # reset the tier baseline and dropped one to level 0) —
+                    # but a lettered list directly under a PARAGRAPH
+                    # (risk-report p.9) is level 0, and lettered SIBLINGS
+                    # inherit the previous letter's indent (b) must not
+                    # nest under a))
+                    if blk.get("level", 0) == 0:
+                        if last_lettered_indent is not None:
+                            indent = last_lettered_indent
+                        elif last_type == "item":
+                            indent = "   " if q else "    "
+                    last_lettered_indent = indent
                 # a page marker BEFORE a lettered marker ('- <!-- p.44 -->a. On…')
                 # makes remark parse the whole line as one raw-HTML block, which
                 # defeats the renderer's lettered-list transform — emit the
@@ -579,6 +588,8 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 out.append(f"<!-- UNHANDLED-BLOCK:{t} -->\n" + _hyphen_join(text).strip() + "\n")
         last_type = t
         prev_quote = blk.get("quote")
+        if t != "item":
+            last_lettered_indent = None
 
     close_transcript()
 

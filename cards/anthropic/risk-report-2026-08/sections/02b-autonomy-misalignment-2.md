@@ -43,7 +43,9 @@ Here we integrate the below subclaims to make a convergent case that our covered
 
 This claim is the conjunction of the below subclaims.
 
-**Claim 3.1.1: We have not discovered pervasive misalignment in prior models of a form that went unobserved during alignment assessments and could cause catastrophic harm.** Prior models have been used extensively across a broad range of applications. We have learned of novel context-dependent misalignment (such as [blackmail](https://www.anthropic.com/research/agentic-misalignment)) that we were initially unaware of, and we have certainly observed instances of previously-known forms of misalignment occurring in deployment (e.g. cheating, overclaiming, etc). However, as argued in [Claim 2](#28-claim-2-expected-harm-from-known-misalignment-is-low), we believe these known forms of misalignment would be unlikely to induce catastrophic harm according to our risk pathways. We have never seen evidence of dangerous coherent goals or other forms of very concerning pervasive misalignment in any prior models to date, either during an alignment assessment or later during deployment.
+**Claim 3.1.1: We have not discovered pervasive misalignment in prior models of a form that went unobserved during alignment assessments and could cause catastrophic harm.**
+
+Prior models have been used extensively across a broad range of applications. We have learned of novel context-dependent misalignment (such as [blackmail](https://www.anthropic.com/research/agentic-misalignment)) that we were initially unaware of, and we have certainly observed instances of previously-known forms of misalignment occurring in deployment (e.g. cheating, overclaiming, etc). However, as argued in [Claim 2](#28-claim-2-expected-harm-from-known-misalignment-is-low), we believe these known forms of misalignment would be unlikely to induce catastrophic harm according to our risk pathways. We have never seen evidence of dangerous coherent goals or other forms of very concerning pervasive misalignment in any prior models to date, either during an alignment assessment or later during deployment.
 
 **Claim 3.1.2: Had additional severe pervasive misalignment been present in prior models, we likely would have observed it.**
 
@@ -209,7 +211,9 @@ Overall, our argument against the existence of severe context-dependent misalign
 
 The argument for the high-level claim is the convergence of the below subclaims, which are less confident versions of Claims 3.1–3.4. We also introduce a disjunctive Claim 4.5, which argues that expected harm for these forms of misalignment is only moderate.
 
-**Claim 4.1: Our experience with prior models suggests that unknown severe context-dependent misalignment is somewhat unlikely in covered models.** The arguments introduced in Claim 3.1 also apply to severe context-dependent misalignment, which has not been observed in prior models. However, it is possible that such misalignment did exist in prior models and was not discovered because the models weren’t evaluated or used on the distribution that would have revealed it, so this claim is weaker here.
+**Claim 4.1: Our experience with prior models suggests that unknown severe context-dependent misalignment is somewhat unlikely in covered models.**
+
+The arguments introduced in Claim 3.1 also apply to severe context-dependent misalignment, which has not been observed in prior models. However, it is possible that such misalignment did exist in prior models and was not discovered because the models weren’t evaluated or used on the distribution that would have revealed it, so this claim is weaker here.
 
 **Claim 4.2: Our experience with adversarially-designed training processes suggests that unknown severe context-dependent misalignment is somewhat unlikely in covered models, but this has been undermined by recent events.**
 
