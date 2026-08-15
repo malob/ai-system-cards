@@ -166,3 +166,16 @@ owner decisions only; (3) a mechanical cross-page-construct check from
 oracle box geometry; (4) a rendered-DOM assertion station (anchor
 y-monotonicity, backref targets having layout boxes) between build and
 scroll.
+
+7. **Page-marker labels one line high** (owner, 2026-08-15 ~11:15): where a
+   page break fell at a rendered line end, the gutter label sat beside the
+   previous line — 34/180 markers here, 22/187 on opus. Root: `.pagemark`
+   is `position: absolute`, so the anchor is out of flow and never wraps
+   with the following word; its static position stays on the previous line.
+   A markup fix (bind the marker to the following word) was tried and
+   reverted — 126 lines of canon churn, zero rendering change, for exactly
+   that reason. Fixed in the renderer (`site/.../index.astro`): a
+   reflow-dependent layout pass re-aligns inline markers to the first
+   following text's line box, clamped so labels never cross a figure or
+   table. Risk report 34 → 5 stranded (all standalone-before-table, benign);
+   opus 0.
