@@ -282,6 +282,36 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 if blk.get("breaks"):
                     prev.setdefault("breaks", []).extend(i + off for i in blk["breaks"])
                 continue
+        if (out and blk["type"] == "turn" and out[-1]["type"] == "turn"
+                and blk["page"] == out[-1].get("last_page", out[-1]["page"]) + 1
+                and out[-1].get("role") == blk.get("role")
+                and out[-1].get("fill") and out[-1].get("fill") == blk.get("fill")
+                and not blk.get("code_lines") and not out[-1].get("code_lines")
+                and out[-1].get("last_container", out[-1].get("container"))
+                and blk.get("container")
+                and out[-1].get("last_container", out[-1]["container"])[3] >= 670
+                and blk["container"][1] <= 120
+                and blk.get("lines") and not assemble._label_lead(blk["lines"][0])):
+            # the SAME physical box continuing across the page break — the
+            # §2.24 prompt box spans pp.84-86, one bubble in the PDF but
+            # split into per-page bubbles here (the p.86 fragment even got
+            # its bold lead promoted to a label). The text tests above
+            # rightly refuse a SENTENCE splice; the geometry (same fill, box
+            # to the bottom margin, resuming at the top) proves the bubble.
+            # Merge with a paragraph break at the seam; the serializer
+            # emits the page marker inline and uses each segment's own
+            # page facts (the p.86 placeholder pill).
+            prev = out[-1]
+            off = len(prev["lines"])
+            prev.setdefault("page_breaks_multi", []).append((blk["page"], off))
+            prev.setdefault("breaks", []).append(off)
+            prev["lines"].extend(blk["lines"])
+            if blk.get("breaks"):
+                prev["breaks"] = sorted(set(prev["breaks"])
+                                        | {i + off for i in blk["breaks"]})
+            prev["last_page"] = blk["page"]          # chain 3+-page bubbles
+            prev["last_container"] = blk["container"]
+            continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
                 and out[-1]["type"] == "caption"
                 and blk["lines"][0].get("size", 11) <= 9.5):

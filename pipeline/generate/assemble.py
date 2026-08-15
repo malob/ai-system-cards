@@ -190,6 +190,20 @@ def _turn_box(line, page):
     return best[1] if best else None
 
 
+def _container_fill(line, page):
+    """Fill color of the INNERMOST turn-or-transcript box containing the
+    line — the identity signal for cross-page bubble continuation."""
+    best = None
+    for b in page.get("boxes", []):
+        if not _is_container(b):
+            continue
+        if b["color"] in _TURN_OR_TRANSCRIPT and _rect_contains(b["bbox"], line["bbox"], slack=4.0):
+            area = (b["bbox"][2] - b["bbox"][0]) * (b["bbox"][3] - b["bbox"][1])
+            if best is None or area < best[0]:
+                best = (area, b["color"])
+    return best[1] if best else None
+
+
 def _container_box(line, page):
     """bbox of the OUTERMOST turn-or-transcript box containing the line, or
     None. A displaced code box may only inherit a label from a turn in the
@@ -354,6 +368,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                    and t["bbox"][1] - 3 <= cy <= t["bbox"][3] + 3 for t in page_tables)
 
     lines = [l for l in _lines(page) if not l["fnbody"] and not _in_table(l)]
+    for l in lines:
+        l["pno"] = pno   # per-line page, for cross-page bubble continuation
     img_rects = page.get("image_rects", [])
     # table blocks slotted by their top y-coordinate
     table_blocks = [{"type": "table_html", "html": t["html"], "page": pno,
@@ -510,6 +526,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 if kind == "turn":
                     cur["role"] = role
                     cur["box"] = line_box
+                    cur["fill"] = _container_fill(line, page)
                 if kind in ("code", "example"):
                     # a mono output box nested inside a turn/transcript box is
                     # the assistant's output WITHIN the transcript — flag it so

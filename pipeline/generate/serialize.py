@@ -403,11 +403,20 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                          if _item_lead(blk["lines"][i])}
             brks = sorted(set(blk.get("breaks", [])) | set(geo) | item_brks)
             idxs = [0] + brks + [len(blk["lines"])]
-            seg_bodies, seg_item = [], []
+            # a GEOMETRY-merged multi-page bubble (stitch page_breaks_multi):
+            # each segment renders with its OWN page's facts (the p.86 […]
+            # pill lives in p.86's pills) and the seam segment carries the
+            # page marker inline. The legacy mid-sentence turn merge keeps
+            # its single-page behavior byte-for-byte.
+            multi = bool(blk.get("page_breaks_multi"))
+            seg_bodies, seg_item, seg_pg = [], [], []
             for i0, i1 in zip(idxs, idxs[1:]):
-                tt, mm = block_text_and_marks({**blk, "lines": blk["lines"][i0:i1]}, page, chips)
+                pg_no = blk["lines"][i0].get("pno", blk["page"]) if multi else blk["page"]
+                seg_page = oracle_pages[pg_no - 1] if multi else page
+                tt, mm = block_text_and_marks({**blk, "lines": blk["lines"][i0:i1]}, seg_page, chips)
                 seg_bodies.append((tt, mm))
                 seg_item.append(_item_lead(blk["lines"][i0]))
+                seg_pg.append(pg_no)
             text, marks = seg_bodies[0]
             label = ""
             bolds = [m for m in marks if m[0] == "bold"]
@@ -466,6 +475,7 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                                                txt.lstrip("●•◦▪‣○■□‌ ")), False)
             body = _hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip()
             in_ordered = last_item = False
+            emitted_pg = seg_pg[0]
             if seg_item[0] and body:
                 body, in_ordered = _item_line(body)
                 last_item = True
@@ -473,18 +483,28 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 txt = _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
                 if not txt:
                     continue
+                seam_marker = ""
+                if multi and seg_pg[k] > emitted_pg:
+                    seam_marker = f"<!-- p.{seg_pg[k]} -->"
+                    emitted_pg = seg_pg[k]
                 if seg_item[k]:
                     # bullets directly under an ordered enumeration nest
                     # beneath it (the §2.24 rubric: '1. Broad…' then its ●
                     # criteria) — 4-space indent continues the 'N. ' item
                     txt, is_ord = _item_line(txt, indent="    " if (in_ordered and not re.match(r"^\**\d{1,2}[.)]", txt)) else "")
                     in_ordered = is_ord or (in_ordered and not is_ord)
+                    if seam_marker:
+                        # marker AFTER the list marker (a leading comment
+                        # makes remark treat the line as raw HTML)
+                        mm2 = re.match(r"^(\s*(?:- |\d{1,2}\. ))", txt)
+                        txt = (txt[:mm2.end()] + seam_marker + txt[mm2.end():]
+                               if mm2 else seam_marker + txt)
                     # consecutive items stay tight (a blank line makes the
                     # whole list loose in CommonMark)
                     body += ("\n" if last_item else "\n\n") + txt
                     last_item = True
                 else:
-                    body += "\n\n" + txt
+                    body += "\n\n" + seam_marker + txt
                     in_ordered = last_item = False
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 # the box may continue on the next page (code_cont, stitched):
@@ -524,6 +544,10 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 del out[j + 1:]
             else:
                 out.append(f':::turn{{role={role} label="{label}"}}\n{body}\n:::\n')
+            if multi:
+                # inline seam markers already cover the merged pages — the
+                # tracker must not re-emit them after the bubble
+                cur_page = max(cur_page, emitted_pg)
             if blk.get("code_lines") and blk.get("code_cont"):
                 # marker after the box, never inside it (fence convention)
                 marker_if_new(blk["code_cont"]["page"])
