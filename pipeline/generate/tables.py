@@ -1397,9 +1397,11 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         for s in mem:
             for ch in s["text"]:
                 # glyph chars can be GLUED into a text span ('●​No user…')
-                # — dropped on both sides of the alignment, like the cell's
-                # _BULLET_DEL
-                if not ch.isspace() and ch not in _INVIS and ch not in "●•◦▪‣○■□":
+                # and QUOTE glyphs fold unpredictably (docling turns double
+                # quotes into singles — the p.13 'dramatic acceleration'
+                # cell) — both dropped from BOTH sides of the alignment
+                if (not ch.isspace() and ch not in _INVIS
+                        and ch not in "●•◦▪‣○■□'\"“”‘’"):
                     chars.append(ch)
                     srcs.append(s)
         return "".join(chars), srcs
@@ -1447,8 +1449,9 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         not observed in either card) — or (b) mid-cell, when the next
         line's first word would have FIT (a deliberate return, not a
         wrap)."""
-        plain = _h.unescape(re.sub(r"<[^>]+>", "", c))
-        sq = _squash(plain).translate(_INVIS_DEL).translate(_BULLET_DEL).translate(_LOW9)
+        plain = _h.unescape(re.sub(r"\[\^\d+\]", "", re.sub(r"<[^>]+>", "", c)))
+        sq = (_squash(plain).translate(_INVIS_DEL).translate(_BULLET_DEL)
+              .translate(_LOW9).translate(_QDEL))
         if len(sq) < 8:
             return {}
         hits = [(ci, cf.find(sq)) for ci, cf in enumerate(col_folds)
@@ -1504,9 +1507,14 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         # visible non-space chars; after ordinal k in `breaks`, a pending
         # <br><br> is emitted before the NEXT visible char (tags pass
         # through; the joining whitespace is swallowed)
-        toks = re.findall(r"<[^>]+>|&[a-zA-Z0-9#]{1,8};|.", c, re.S)
+        toks = re.findall(r"<[^>]+>|&[a-zA-Z0-9#]{1,8};|\[\^\d+\]|.", c, re.S)
         out, k, pending = [], -1, False
         for t in toks:
+            if t.startswith("[^"):
+                # footnote-ref token: outside the alignment (the family
+                # stream excludes fnref spans); pending breaks ride past it
+                out.append(t)
+                continue
             if t.startswith("<"):
                 if pending and re.fullmatch(r"<br\s*/?>", t):
                     # the cell already breaks here (a _restyle_cells tier
@@ -1519,9 +1527,9 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
                 if not pending:
                     out.append(t)
                 continue
-            if vis in "●•◦▪‣○■□":
-                # glyphs are outside the alignment — pass through, and a
-                # pending break lands BEFORE the glyph (its bullet)
+            if vis in "●•◦▪‣○■□'\"“”‘’":
+                # glyphs and quote chars are outside the alignment — pass
+                # through, and a pending break lands BEFORE a bullet glyph
                 if pending:
                     out.append(pending)
                     pending = False
@@ -1614,6 +1622,7 @@ def _restore_cell_glyphs(html: str, bbox: list, oracle_page: dict) -> str:
 
 # zero-width/invisible characters, transparent to glyph-repair alignment
 _INVIS = "​‌‍⁠﻿­"
+_QDEL = str.maketrans("", "", "'\"“”‘’")
 _BULLET_DEL = str.maketrans("", "", "●•◦▪‣○■□")
 _INVIS_DEL = {ord(c): None for c in _INVIS}
 
