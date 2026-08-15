@@ -777,11 +777,12 @@ def merge_continuation_rows(html: str) -> str:
     out_parts = []
     last_row_idx = None
     rows_merged = 0
-    for part in parts:
+    for pi, part in enumerate(parts):
         if not part.startswith("<tr>"):
             out_parts.append(part)   # inter-row content (page markers) kept
             continue
         r = part
+        last_row_of_table = not any(p2.startswith("<tr>") for p2 in parts[pi + 1:])
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
         plain = [_cell_sq(c) for _, _, c in tags]
         prev_tags = (re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", out_parts[last_row_idx], re.S)
@@ -802,6 +803,21 @@ def merge_continuation_rows(html: str) -> str:
                 and (not plain[0] or first_continues)
                 and any(plain[1:]) and starts_lower
                 and not any("colspan" in a for _, a, _ in tags)):
+            # the page marker that rode BETWEEN the fragments must move
+            # INSIDE the merged cell at its seam: left between </tr> and
+            # </tbody> it gets foster-parented out of the table by the HTML
+            # parser and its gutter label renders at the table TOP
+            # (Table 3.10.A p.114, owner-spotted)
+            seam_marker = ""
+            if last_row_of_table:
+                # only when leaving it WOULD foster-parent (no row follows);
+                # a marker before a surviving <tr> is already tucked into
+                # that row's first cell by the renderer (canon placement)
+                for j in range(last_row_idx + 1, len(out_parts)):
+                    mks = re.findall(r"<!--\s*p\.\d+\s*-->", out_parts[j])
+                    if mks:
+                        seam_marker += "".join(mks)
+                        out_parts[j] = re.sub(r"<!--\s*p\.\d+\s*-->", "", out_parts[j])
             cells = []
             for (pg, pa, pc), (_, _, cc) in zip(prev_tags, tags):
                 if not _cell_sq(cc):
@@ -823,9 +839,10 @@ def merge_continuation_rows(html: str) -> str:
                 a2 = prev_c if prev_c.endswith("</p>") else f"<p>{prev_c}</p>"
                 b2 = cur if cur.startswith("<p>") else f"<p>{cur}</p>"
                 if seam_flows:
-                    joined = a2[:-4] + " " + b2[3:]
+                    joined = a2[:-4] + seam_marker + " " + b2[3:]
                 else:
-                    joined = a2 + b2
+                    joined = a2 + seam_marker + b2
+                seam_marker = ""   # first joined cell carries the marker
                 cells.append((pg, pa, joined))
             out_parts[last_row_idx] = "<tr>" + "".join(
                 f"<{g}{a}>{c}</{g}>" for g, a, c in cells) + "</tr>"

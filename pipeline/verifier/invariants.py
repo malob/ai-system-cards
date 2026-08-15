@@ -551,7 +551,10 @@ def tb2_cell_order(sections_text, oracle_pages, page_range, toc_pages) -> list[d
                     continue
                 cell = m.group(2)
                 if "<!-- p." in cell:
-                    continue   # marker mid-cell: page-split cell
+                    # marker mid-cell: skip the split cell, but ADVANCE the
+                    # page tracker so later cells attribute correctly
+                    tcur = max(int(n) for n in re.findall(r"<!--\s*p\.(\d+)\s*-->", cell))
+                    continue
                 sq = _sq(cell)
                 if len(sq) < 14 or not re.search(r"[A-Za-z]{4}", sq):
                     continue
