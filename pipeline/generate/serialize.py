@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1] / "verifier"))
+import norm  # noqa: E402
 from assemble import BULLETS, LIST_MARKER, block_text_and_marks  # noqa: E402
 
 
@@ -26,6 +27,8 @@ SYNTAX = {
     # ORPHAN footnote ref (oracle-tagged source artifact): superscript digits
     # with no def to point at — raw HTML like <u>/<span>
     "sup": ("<sup>", "</sup>"),
+    # subscript spans (math indices, risk-report §2.6) — raw HTML
+    "sub": ("<sub>", "</sub>"),
 }
 
 
@@ -91,8 +94,8 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
             o, c = SYNTAX[kind]
             # raw-HTML marks (placeholder/underline/highlight/sup) sit
             # OUTERMOST: a span tag inside backticks renders literally
-            r_open = 2 if kind in ("placeholder", "underline", "highlight", "sup") else 0
-            r_close = -1 if kind in ("placeholder", "underline", "highlight", "sup") else 1
+            r_open = 2 if kind in ("placeholder", "underline", "highlight", "sup", "sub") else 0
+            r_close = -1 if kind in ("placeholder", "underline", "highlight", "sup", "sub") else 1
             ops.append((a, 1, b, r_open, lambda t, a=a, o=o: t[:a] + o + t[a:]))
             ops.append((b, 2, a, r_close, lambda t, b=b, c=c: t[:b] + c + t[b:]))
     if escape_literals:
@@ -149,7 +152,7 @@ def _code_raw(lines) -> str:
 
 
 def _hyphen_join(text: str) -> str:
-    text = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", text)  # A1; keep suspended compounds ("single- and")
+    text = norm.join_wrap_hyphens(text)  # A1 (shared with the oracle side)
     text = text.replace("​", "").replace("­", "")  # zero-width, soft hyphen
     return re.sub(r"[ \t]{2,}", " ", text).strip()   # collapse layout double-spaces (A2)
 
@@ -290,9 +293,15 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             # 3 spaces inside quotes: enough to nest under an ordered parent
             # ('1. ' is 3 chars), still short of indented-code territory
             indent = ("   " if q else "    ") * blk.get("level", 0)
-            m = re.match(r"^[‌ ]*(\d{1,2})[.)]​?\s*", body)
-            if m:  # ordered item: keep the number, real space after it
-                out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + body[m.end():] + "\n")
+            m = re.match(r"^[‌ ]*(?:\*\*)?(\d{1,2})[.)](\*\*)?​?\s*", body)
+            if m:  # ordered item: keep the number, real space after it.
+                # Bold-marker tolerance (risk-report pp.136-138 '**1. It is
+                # difficult…**'): a bold pair around the marker alone drops
+                # (a bold bare number is meaningless); bold running into the
+                # text re-opens after the marker, staying balanced.
+                boldopen = ("**" if (m.group(2) is None
+                                     and body.lstrip("‌ ").startswith("**")) else "")
+                out.append(f"{q}{indent}{m.group(1)}. " + inline_marker + boldopen + body[m.end():] + "\n")
             else:
                 body = re.sub(r"^(\**)[●•◦▪‣○■□​‌ ]+", r"\1", body.lstrip("●•◦▪‣○■□​‌ "))
                 # Word-style lone-'o' marker (p.104): regex, not lstrip — a
@@ -309,11 +318,21 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 # restore the space, gated on the RAW line's marker signature
                 raw0 = blk["lines"][0]["text"] if blk.get("lines") else ""
                 if re.match(r"^\s*[a-z][.)]\u200b", raw0):
-                    body = re.sub(r"^(\**[a-z][.)])(?=\S)", r"\1 ", body)
-                    # lettered markers are SUB-items by definition in this
-                    # card; a page break resets the tier baseline and dropped
-                    # one to level 0 (p.66 item 2b)
-                    if blk.get("level", 0) == 0:
+                    # insert the marker space without splitting an emphasis
+                    # pair: '\**' backtracking half-consumed a closing '**'
+                    # and left '**c.* *' / '**c. **' (literal asterisks,
+                    # p.42). Longest-first alternation + an already-spaced
+                    # guard keep every form intact.
+                    if not re.match(r"^\**[a-z][.)]\**\s", body):
+                        body = re.sub(r"^(\*\*[a-z][.)]\*\*|\*\*[a-z][.)]|[a-z][.)])",
+                                      r"\1 ", body, count=1)
+                    # lettered markers are SUB-items when a list is open
+                    # (fable p.66 item 2b: a page break reset the tier
+                    # baseline and dropped one to level 0) — but a lettered
+                    # list directly under a PARAGRAPH (risk-report p.9
+                    # 'We address both: a)/b)') is level 0: parentless
+                    # indent renders as an indented code block
+                    if blk.get("level", 0) == 0 and last_type == "item":
                         indent = "   " if q else "    "
                 # a page marker BEFORE a lettered marker ('- <!-- p.44 -->a. On…')
                 # makes remark parse the whole line as one raw-HTML block, which
@@ -367,7 +386,10 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             # continuation lines of a wrapped item stay in its segment
             def _item_lead(l):
                 t = l["text"].lstrip()
-                return bool(LIST_MARKER.match(t)) or t[:1] in BULLETS
+                # typed 'N. ' lines (no ZWSP — the §2.24 'Provide a brief
+                # summary of: 1./2./3.' rows) are enumerated lines too
+                return (bool(LIST_MARKER.match(t)) or t[:1] in BULLETS
+                        or bool(re.match(r"\d{1,2}[.)][\s​]+\S", t)))
             item_brks = {i for i in range(1, len(blk["lines"]))
                          if _item_lead(blk["lines"][i])}
             brks = sorted(set(blk.get("breaks", [])) | set(geo) | item_brks)
@@ -419,26 +441,42 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
             role = label_role or blk.get("role") or "assistant"
             # label keeps its source form (brackets and all): fidelity outranks
             # cosmetics, and stripping made the bold label vanish from S1's view
-            def _item_line(txt):
-                # marker → markdown item: ZWSPs are already gone (_hyphen_join)
-                mo = re.match(r"^(\d{1,2})[.)]\s*", txt)
+            def _item_line(txt, indent=""):
+                # marker → markdown item: ZWSPs are already gone
+                # (_hyphen_join). Bold-marker tolerance: '**1.** text' (bold
+                # marker only) and '**1. text…**' (bold runs into the text)
+                # both yield an ordered item with balanced emphasis.
+                mo = re.match(r"^(?:\*\*)?(\d{1,2})[.)](\*\*)?\s*", txt)
                 if mo:
-                    return f"{mo.group(1)}. " + txt[mo.end():]
-                return "- " + re.sub(r"^(\**)[●•◦▪‣○■□‌ ]+", r"\1",
-                                     txt.lstrip("●•◦▪‣○■□‌ "))
+                    rest = txt[mo.end():]
+                    lead = f"{indent}{mo.group(1)}. "
+                    if mo.group(2) is None and txt.startswith("**"):
+                        return lead + "**" + rest, True
+                    return lead + rest, True
+                return (indent + "- " + re.sub(r"^(\**)[●•◦▪‣○■□‌ ]+", r"\1",
+                                               txt.lstrip("●•◦▪‣○■□‌ ")), False)
             body = _hyphen_join(_apply_marks(text, marks, escape_literals=True)).strip()
+            in_ordered = last_item = False
             if seg_item[0] and body:
-                body = _item_line(body)
+                body, in_ordered = _item_line(body)
+                last_item = True
             for k, (tt, mm) in enumerate(seg_bodies[1:], start=1):
                 txt = _hyphen_join(_apply_marks(tt, mm, escape_literals=True)).strip()
                 if not txt:
                     continue
                 if seg_item[k]:
-                    txt = _item_line(txt)
-                # consecutive items stay tight (a blank line makes the whole
-                # list loose in CommonMark); anything else keeps the
-                # paragraph break
-                body += ("\n" if (seg_item[k] and seg_item[k - 1]) else "\n\n") + txt
+                    # bullets directly under an ordered enumeration nest
+                    # beneath it (the §2.24 rubric: '1. Broad…' then its ●
+                    # criteria) — 4-space indent continues the 'N. ' item
+                    txt, is_ord = _item_line(txt, indent="    " if (in_ordered and not re.match(r"^\**\d{1,2}[.)]", txt)) else "")
+                    in_ordered = is_ord or (in_ordered and not is_ord)
+                    # consecutive items stay tight (a blank line makes the
+                    # whole list loose in CommonMark)
+                    body += ("\n" if last_item else "\n\n") + txt
+                    last_item = True
+                else:
+                    body += "\n\n" + txt
+                    in_ordered = last_item = False
             if blk.get("code_lines"):  # displaced code box merged into this turn
                 # the box may continue on the next page (code_cont, stitched):
                 # each segment's marks come from ITS OWN page's pills/links

@@ -78,7 +78,7 @@ Misalignment might emerge in a number of ways, with varying degrees of detectabi
 
 >    - a. **Pretraining misalignment:** misaligned behavior learned solely in pretraining is not sufficiently downweighted during post-training, allowing it to be elicited in the final model. For example, we believe that this mechanism is the root cause of agentic blackmail in Claude models.
 >    - b. **Proxy misalignment:** misaligned behavior occurs via accidental misgeneralization from biased or unbalanced data, where each datum may appear individually benign, but contributes to misaligned generalization in aggregate. Examples include the difficulty of calibrating behaviors like refusals, which requires refusal and compliance training data to be diverse and properly balanced to achieve correct generalization; the inductive backdoors and other results described in [Betley et al, 2025](https://arxiv.org/abs/2512.09742); and post-training processes that might reward long-horizon planning and deep consequentialist reasoning, which could (in theory) generalize to convergent instrumental power-seeking in deployment even if the model was only ever rewarded for benign outcomes during training.
->    - **c. ** **Deceptive alignment:** the model is engaging in undetectable misaligned reasoning and intentionally producing benign-seeming data.
+>    - **c.** **Deceptive alignment:** the model is engaging in undetectable misaligned reasoning and intentionally producing benign-seeming data.
 
 Were direct or emergent misalignment to occur, we would expect to see detectable signs in either the design of training environments or the training data itself.
 
@@ -322,7 +322,7 @@ This claim is a conjunction of the below sub-claims:
 
 **Claim 5.3.1: The main irreversible threats are likely to be persistent rogue internal deployment and self-exfiltration resulting in autonomous operation.**
 
-See [Claim 7](#212-claim-6-catastrophic-harm-from-unknown-pervasive-misalignment-is-somewhat-likely-to-be-mitigated) for justification.
+See [Claim 7](#213-claim-7-threat-modeling-is-sufficient) for justification.
 
 <!-- p.61 -->
 
@@ -346,7 +346,9 @@ Our terms of service do not permit third parties to use our tools to develop com
 
 It is possible that a model could use simple cues to behave differently when used by different model developers, and this might be easy enough that the model could avoid making this reasoning legible during monitored usage at Anthropic. Nonetheless, we think the reduced scale of usage still mitigates risk by reducing the number of opportunities for causing harm.
 
-**Claim 5.4.2: Catastrophic harm from external usage is somewhat likely to be mitigated.** We expect that frontier model developers will use models more widely and grant them more power and affordances than other users, though we don’t have direct evidence to support this. We expect users in other high-stakes applications (e.g. governments) to be more conservative in general with model adoption, to use them in narrower and more circumscribed applications. Also, we expect them to apply their own monitoring and oversight mechanisms, though it isn’t clear how effective these are likely to be.
+**Claim 5.4.2: Catastrophic harm from external usage is somewhat likely to be mitigated.**
+
+We expect that frontier model developers will use models more widely and grant them more power and affordances than other users, though we don’t have direct evidence to support this. We expect users in other high-stakes applications (e.g. governments) to be more conservative in general with model adoption, to use them in narrower and more circumscribed applications. Also, we expect them to apply their own monitoring and oversight mechanisms, though it isn’t clear how effective these are likely to be.
 
 We expect that if a model attempted to cause “internal usage” harms at Anthropic (e.g. undermining internal safety research) during usage external to Anthropic, they would be likely to get caught (e.g. by security monitoring) at least some of the time before causing irreversible damages. If we detected such activities, we expect that we would be able to respond in ways that likely mitigate future harms.
 

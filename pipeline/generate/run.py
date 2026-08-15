@@ -348,6 +348,8 @@ def main():
 
     heading_anchors = []  # (page, y, slug) in document order
     num2slug: dict[str, str] = {}  # '8.17.6' -> its heading slug
+    claim2slug: dict[str, str] = {}  # '7' -> slug of the 'Claim 7: …' heading
+    title2slug: dict[str, str | None] = {}  # squashed title -> slug (None = collision)
 
     def slugify(text):
         s = re.sub(r"[^\w\s-]", "", text.lower()).strip()
@@ -398,6 +400,18 @@ def main():
                 mnum = re.match(r"(\d+(?:\.\d+)*)[.\s]", htext + " ")
                 if mnum:
                     num2slug.setdefault(mnum.group(1), slugify(htext))
+                # text-addressable headings: 'Claim N…:' leads (risk-report §2
+                # links say '[Claim 7]' with dest coords that land on the
+                # neighboring claim) and unique bare titles ('specific
+                # pathways' → 2.2.1). Colliding titles poison their key.
+                mc = re.search(r"\bClaim\s+(\d+(?:\.\d+)*):", htext)
+                if mc:
+                    claim2slug.setdefault(mc.group(1), slugify(htext))
+                title = htext[min(mnum.end(), len(htext)):] if mnum else htext
+                tkey = re.sub(r"[^a-z0-9]", "", title.lower())
+                if tkey:
+                    title2slug[tkey] = (None if tkey in title2slug
+                                        else slugify(htext))
         # re-tier nested lists over the whole section: a page that holds only
         # sub-bullets (a list continued across a page break, UK AISI p.215→216)
         # tiered them to level 0 in isolation; the full block list has the
@@ -445,29 +459,66 @@ def main():
             return on_page[0][1]
         before = [s for pg, hy, s in heading_anchors if pg <= n]
         return before[-1] if before else ""
+    # EXTENDED text-based link resolution (Appendix/Claim/unique-title/pooled)
+    # is a per-card grammar knob in the style manifest (D16: scoped idioms):
+    # the certified cards keep the original geometry + Section-number
+    # resolution byte-for-byte; the risk report opts in (its Claim 6/7 links
+    # land swapped by dest coords, 'Appendix 6.4' resolves to 6.3, and split
+    # link halves diverge).
+    extended_res = bool(re.search(
+        r"^\s*link_text_resolution:\s*extended",
+        (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
+
+    def text_resolution(plain):
+        # anchors that NAME their target ('Section 8.17.6') resolve exactly —
+        # the PDF's dest coordinates are sloppy in both directions (13/28
+        # landed on a neighboring section by geometry on the first card)
+        numpat = (r"(?:Section|§|Appendix)\s*(\d+(?:\.\d+)*)" if extended_res
+                  else r"(?:Section|§)\s*(\d+(?:\.\d+)*)")
+        mnum = (re.search(numpat, plain)
+                or re.fullmatch(r"(\d+(?:\.\d+)+)\.?", plain.strip()))
+        if mnum and mnum.group(1).rstrip(".") in num2slug:
+            return num2slug[mnum.group(1).rstrip(".")]
+        if not extended_res:
+            return None
+        mc = re.search(r"\bClaim\s+(\d+(?:\.\d+)*)", plain)
+        if mc and mc.group(1) in claim2slug:
+            return claim2slug[mc.group(1)]
+        tkey = re.sub(r"[^a-z0-9]", "", plain.lower())
+        return title2slug.get(tkey) or None
+
+    # pooled per-destination resolution: a line-wrapped link arrives as TWO
+    # annots ('Section' + '3.6') sharing one dest — when any anchor bearing a
+    # dest resolves by text, every anchor with that dest inherits it (the
+    # p.114 split link pointed its halves at different sections). Never for
+    # page 0: every unresolvable dest shares the (0,-1) sentinel and pooling
+    # them would stamp one target on all of them.
+    pooled = {}
+    if extended_res:
+        for name, _ in written:
+            md0 = (OUT / name).read_text()
+            for mm in re.finditer(r"\[([^\]]*)\]\(DEST:(\d+):(-?\d+)\)", md0):
+                r = text_resolution(mm.group(1))
+                if r and mm.group(2) != "0":
+                    pooled.setdefault((mm.group(2), mm.group(3)), r)
+            for mm in re.finditer(r'<a href="DEST:(\d+):(-?\d+)">(.*?)</a>', md0, flags=re.S):
+                r = text_resolution(re.sub(r"<[^>]+>", "", mm.group(3)))
+                if r and mm.group(1) != "0":
+                    pooled.setdefault((mm.group(1), mm.group(2)), r)
+
     def resolve_link(m):
         text, pg, y = m.group(1), int(m.group(2)), int(m.group(3))
-        # anchors that NAME their target ('Section 8.17.6') resolve exactly
-        # by heading number — the PDF's dest coordinates are sloppy in both
-        # directions (13/28 landed on a neighboring section by geometry)
-        # 'Section 8.17.6' / '§ 8.17.6', or a bare-number anchor text '3.1.2'
-        # (the § often sits OUTSIDE the link: '§[3.1.2](…)') — the number is a
-        # more reliable target than the sloppy dest coordinates
-        mnum = (re.search(r"(?:Section|§)\s*(\d+(?:\.\d+)*)", text)
-                or re.fullmatch(r"(\d+(?:\.\d+)+)\.?", text.strip()))
-        if mnum and mnum.group(1).rstrip(".") in num2slug:
-            return f"[{text}](#{num2slug[mnum.group(1).rstrip('.')]})"
-        return f"[{text}](#{anchor_for(pg, y)})"
+        slug = (text_resolution(text) or pooled.get((m.group(2), m.group(3)))
+                or anchor_for(pg, y))
+        return f"[{text}](#{slug})"
     def resolve_html(m):
         # goto links injected into table HTML (tables._inject_links) carry the
         # same DEST placeholder as body links — resolve with the same rules
         pg, y, text = int(m.group(1)), int(m.group(2)), m.group(3)
         plain = re.sub(r"<[^>]+>", "", text)
-        mnum = (re.search(r"(?:Section|§)\s*(\d+(?:\.\d+)*)", plain)
-                or re.fullmatch(r"(\d+(?:\.\d+)+)\.?", plain.strip()))
-        if mnum and mnum.group(1).rstrip(".") in num2slug:
-            return f'<a href="#{num2slug[mnum.group(1).rstrip(".")]}">{text}</a>'
-        return f'<a href="#{anchor_for(pg, y)}">{text}</a>'
+        slug = (text_resolution(plain) or pooled.get((m.group(1), m.group(2)))
+                or anchor_for(pg, y))
+        return f'<a href="#{slug}">{text}</a>'
 
     for name, _ in written:
         f = OUT / name

@@ -94,8 +94,10 @@ export function siteMarkdown(vendor, slug, assetBase) {
   md = lines
     .map((line, i) => {
       if (isTableLine(line))
+        // consume an enclosing literal <sup> pair (tables serialize refs as
+        // '<sup>[^N]</sup>') so the shim doesn't nest sup inside sup
         line = line.replace(
-          /\[\^(\d+)\]/g,
+          /(?:<sup>)?\[\^(\d+)\](?:<\/sup>)?/g,
           '<sup class="fn-html"><a href="#user-content-fn-$1">$1</a></sup>',
         );
       const ids = shims.get(i);

@@ -42,6 +42,23 @@ def normalize(text: str, calibration: bool = False) -> str:
 
 BULLET_GLYPHS = "●•◦▪‣○"
 
+# End-of-line hyphenation join (A1), the OUTPUT-side transform shared by the
+# serializer and the oracle's body-text projection so T1 sees both sides
+# identically. 'informa- tion' → 'information'; suspended compounds keep
+# their hyphen via the and/or/to lookahead ('single- and multi-'); and a
+# wrap INSIDE a suspended-compound family keeps the hyphen too — 'Opus- and
+# Sonnet- class models' must join to 'Sonnet-class', not 'Sonnetclass'
+# (risk-report p.181).
+A1_HYPHEN = re.compile(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])")
+
+
+def join_wrap_hyphens(text: str) -> str:
+    def _sub(m):
+        if re.search(r"\w- (?:and|or|to)\b", text[max(0, m.start() - 40):m.start()]):
+            return m.group(1) + "-"
+        return m.group(1)
+    return A1_HYPHEN.sub(_sub, text)
+
 # Google Docs exports mark list markers with a zero-width space after the
 # glyph/number ("●​Text", "1.​Text") — the shared mechanical signature used by
 # both the generator (assemble) and the ST structural invariant.

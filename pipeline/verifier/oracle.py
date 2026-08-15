@@ -17,6 +17,8 @@ from pathlib import Path
 
 import fitz
 
+import norm
+
 BOLD, ITALIC, SUPER = 16, 2, 1
 BODY_SIZE = 11.0  # this card's body font size
 
@@ -244,9 +246,10 @@ def page_body_text(p: dict) -> str:
             buf += (" " if gap > 1.0 else "") + cur["text"]
         rendered.append(buf)
     text = " ".join(rendered)
-    # join end-of-line hyphenations: "self- verifying" -> "self-verifying"
-    text = re.sub(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])", r"\1", text)  # keep suspended compounds
-    return text
+    # join end-of-line hyphenations (A1, shared with the serializer so both
+    # T1 sides transform identically — incl. the suspended-compound family
+    # exception, risk-report p.181)
+    return norm.join_wrap_hyphens(text)
 
 
 def page_footnotes(p: dict) -> str:

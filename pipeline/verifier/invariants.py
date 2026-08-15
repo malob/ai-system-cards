@@ -233,7 +233,12 @@ def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozen
         want = Counter()
         exacts = {}
         for run in runs:
-            t = key(run["text"].strip(".,;: "))
+            # a bold LIST MARKER ('1.​' with the ZWSP signature) is a typed
+            # conversion — the serializer extracts it as the ordered-item
+            # marker (risk-report pp.136-138), so the run is keyed on the
+            # text after it, like headings and turn labels consume bolds
+            rt = re.sub(r"^\s*\d{1,2}[.)]​\s*", "", run["text"])
+            t = key(rt.strip(".,;: "))
             if len(t) >= 6:
                 want[t] += 1
                 exacts.setdefault(t, run)

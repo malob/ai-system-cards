@@ -50,6 +50,9 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _dedup_cascaded_cells(html)
             html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
+            # AFTER rotation: the pp.78/80 label-cell split (an extra cell
+            # per row) is produced by the earlier repairs, not raw docling
+            html = _merge_overflow_cells(html, t["bbox"], oracle_page)
             html = _restyle_cells(html, t["bbox"], oracle_page)
             html = _restore_cell_glyphs(html, t["bbox"], oracle_page)
             html = _bold_cell_leads(html, t["bbox"], oracle_page)
@@ -63,6 +66,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             # AFTER demotion: a white-text header sub-row reads as a mixed row
             # (empty leads + labels) and _demote_data_th would revert it
             html = _promote_white_text_headers(html, t["bbox"], oracle_page)
+            html = _demote_black_text_th(html, t["bbox"], oracle_page)
             html = _debold_th(html)
         # hyphen-wrap join in cells the rebuild didn't touch (short label cells
         # like 'Self- knowledge'): keep the hyphen, drop only the wrap space
@@ -81,6 +85,201 @@ def _table_spans(oracle_page, bbox):
 
 def _split_cells(row: str) -> list[str]:
     return re.findall(r"<t[hd][^>]*>.*?</t[hd]>", row, re.S)
+
+
+def _reading_seq(spans: list) -> list:
+    """Table spans in READING order (visual rows top-to-bottom, then x).
+    x0-column chains can't reconstruct cells whose lines hold several spans
+    ('**Non-novel …production.** AI systems …' continues on the same line at
+    a new x0, risk-report p.155; 'See the' + linked 'Claude Opus 5 System
+    Card', p.183) — a consecutive run of the reading sequence can."""
+    return sorted((s for s in spans),
+                  key=lambda s: (round((s["bbox"][1] + s["bbox"][3]) / 8), s["bbox"][0]))
+
+
+def _column_regions(spans: list) -> list:
+    """Per-COLUMN reading sequences: spans bucketed by the column-edge
+    intervals (x0 clusters with ≥3 members), reading order inside each
+    bucket. A TALL cell whose lines mix x0s (a bold lead ending mid-line,
+    a link mid-sentence) is consecutive here but in neither an x0 chain
+    (mid-line x0s split it) nor the global reading order (other columns'
+    spans interleave row-wise)."""
+    cl: dict[float, list] = {}
+    for s in spans:
+        k = next((k for k in cl if abs(k - s["bbox"][0]) <= 2), s["bbox"][0])
+        cl.setdefault(k, []).append(s)
+
+    def _mid_line(mem):
+        # an "edge" whose every span directly continues another span on its
+        # own line (p.183: three aligned 'Claude ' spans after 'See the ')
+        # is an intra-cell wrap position, not a column start — keeping it
+        # would sever the cell's span run
+        for s in mem:
+            sb = s["bbox"]
+            # a true wrap position abuts its predecessor within a space
+            # width (~6pt); column gutters are wider (p.113's two-column
+            # table was swallowed whole by a 40pt window)
+            if not any(o is not s
+                       and sb[0] - 6 <= o["bbox"][2] <= sb[0] + 2
+                       and min(o["bbox"][3], sb[3]) - max(o["bbox"][1], sb[1]) > 2
+                       for o in spans):
+                return False
+        return True
+
+    edges = sorted(k for k, mem in cl.items() if len(mem) >= 3 and not _mid_line(mem))
+    if not edges:
+        return []
+    regions: list[list] = [[] for _ in edges]
+    for s in spans:
+        i = max((j for j, e in enumerate(edges) if s["bbox"][0] >= e - 2), default=0)
+        regions[i].append(s)
+    for r in regions:
+        r.sort(key=lambda s: (round((s["bbox"][1] + s["bbox"][3]) / 8), s["bbox"][0]))
+    return [r for r in regions if r]
+
+
+def _merge_overflow_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling splits a cell at an inline style boundary (the pp.78/80 label
+    cells with embedded links), yielding a row with MORE cells than the
+    table's modal width — and sometimes REORDERS the fragments. Merge an
+    adjacent overflow pair when the pair's combined char-MULTISET equals a
+    consecutive column-chain run's; the cell is rebuilt from the RUN in span
+    order, which also undoes the scramble."""
+    from collections import Counter
+    import html as _h
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    if len(rows) < 2:
+        return html
+    # the table's width authority is the HEADER row's colspan-aware logical
+    # width (rowspan-continuation rows are legitimately short and a
+    # plain-row modal undercounts — the opus sub-header regression);
+    # rowspan/colspan rows have their own arithmetic and are never
+    # candidates
+    modal = sum(int(m.group(1)) if m else 1
+                for m in (re.search(r'colspan="(\d+)"', tag)
+                          for tag in re.findall(r"<t[hd][^>]*>", rows[0])))
+    plain_rows = [r for r in rows if "rowspan" not in r and "colspan" not in r]
+    counts = {id(r): len(re.findall(r"<t[hd]", r)) for r in plain_rows}
+    if not any(n > modal for n in counts.values()):
+        return html
+    spans = [s for s in _table_spans(oracle_page, bbox) if s["text"].strip()]
+    by_x: dict[float, list] = {}
+    for s in spans:
+        key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 3), None)
+        by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    chains = [sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
+    # split cells with an embedded link mix x0s (p.78) — only the column
+    # region / reading order holds their true run
+    cols = chains + _column_regions(spans) + [_reading_seq(spans)]
+
+    def _complete(sq):
+        # a cell equal to a consecutive x0-CHAIN run is a whole cell of its
+        # own; adjacent whole cells are consecutive in reading order too, so
+        # without this gate the multiset test is tautological and merges
+        # ordinary neighbors (the opus 'Evaluation|Relevance' regression)
+        for col in chains:
+            for st in range(len(col)):
+                acc = ""
+                for j in range(st, len(col)):
+                    acc += _squash(col[j]["text"])
+                    if acc == sq:
+                        return True
+                    if len(acc) >= len(sq):
+                        break
+        return False
+
+    out = html
+    for r in plain_rows:
+        if counts[id(r)] <= modal:
+            continue
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        cells = [c for _, _, c in tags]
+        changed = False
+        while len(cells) > modal:
+            merged = False
+            for i in range(len(cells) - 1):
+                a_sq, b_sq = _cell_sq(cells[i]), _cell_sq(cells[i + 1])
+                # BOTH fragments non-empty: docling's empty grid cells are
+                # structure (the fable p.251 sub-header's blank leads), never
+                # split-cell halves — and at least one must be a FRAGMENT
+                # (no complete chain run of its own)
+                if not a_sq or not b_sq:
+                    continue
+                both_complete = _complete(a_sq) and _complete(b_sq)
+                pair = Counter(a_sq + b_sq)
+                target = sum(pair.values())
+                hit = None
+                for col in cols:
+                    for st in range(len(col)):
+                        acc: Counter = Counter()
+                        run = []
+                        for j in range(st, len(col)):
+                            acc += Counter(_squash(col[j]["text"]))
+                            run.append(col[j])
+                            if sum(acc.values()) >= target:
+                                break
+                        if acc == pair:
+                            hit = run
+                            break
+                    if hit:
+                        break
+                if hit and both_complete and "".join(
+                        _squash(s["text"]) for s in hit) == a_sq + b_sq:
+                    # two ADJACENT WHOLE cells are trivially a consecutive
+                    # reading-order run in cell order (the opus 'Evaluation|
+                    # Relevance' regression) — a real split proves itself by
+                    # a run whose ORDER differs (p.78: '…from | Treutlein
+                    # 2026 | (conversation)') or by a fragment half
+                    hit = None
+                if hit:
+                    cells[i:i + 2] = [_h.escape(
+                        _join_wrapped(s["text"] for s in hit), quote=False)]
+                    changed = merged = True
+                    break
+            if not merged:
+                break
+        if changed and len(cells) == modal:
+            rebuilt = "<tr>" + "".join(
+                f"<{tg}{a}>{c}</{tg}>"
+                for (tg, a, _), c in zip(tags[:len(cells)], cells)) + "</tr>"
+            out = out.replace(r, rebuilt, 1)
+    return out
+
+
+def _demote_black_text_th(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling tags a continuation chunk's leading DATA row all-<th> (the
+    §4.5/§6.6 model rows opening the p.131/p.183 chunks), which renders as a
+    header band mid-table. A header in this document family sits on a DARK
+    fill (white/cream text) — a continuation chunk carries no header at all,
+    so the gate is geometric: an all-th row whose band overlaps no dark box
+    and whose text matches no white span is data → td. Runs before
+    _debold_th so restyled <b> survives the demotion."""
+    def _lum(hexcol: str) -> float:
+        r, g, b = (int(hexcol[i:i + 2], 16) for i in (1, 3, 5))
+        return (0.299 * r + 0.587 * g + 0.114 * b) / 255
+    dark = [b["bbox"] for b in oracle_page.get("boxes", [])
+            if re.fullmatch(r"#[0-9a-f]{6}", b.get("color", ""))
+            and _lum(b["color"]) < 0.35]
+    whites = [_squash(s["text"]) for s in _table_spans(oracle_page, bbox)
+              if s["text"].strip() and s.get("color") in ("#ffffff", "#faf9f5")]
+    spans_xy = _row_spans_xy(oracle_page, bbox)
+    out = html
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        if "<td" in r or "<th" not in r:
+            continue
+        plain = [_cell_sq(c)
+                 for c in re.findall(r"<th[^>]*>(.*?)</th>", r, re.S)]
+        joined = "".join(plain)
+        if not joined or any(w and w in joined for w in whites):
+            continue
+        band = _row_band(plain, spans_xy)
+        if band is None:
+            continue   # can't locate the row — leave it alone
+        yc = (band[0] + band[1]) / 2
+        if any(bb[1] - 2 <= yc <= bb[3] + 2 for bb in dark):
+            continue   # sits on a dark header band
+        out = out.replace(r, r.replace("<th", "<td").replace("</th>", "</td>"), 1)
+    return out
 
 
 def _promote_split_rowspan(html: str) -> str:
@@ -189,9 +388,11 @@ def _bullet_breaks(html: str) -> str:
     bullets, then re-inserts uniformly."""
     def fix(m):
         c = m.group(3)
-        if c.count("•") >= 2:
-            c = re.sub(r"(?:<br\s*/?>)?\s*•\s*", "<br>• ", c.strip())
-            c = re.sub(r"^((?:<[^>]+>)*)<br>", r"\1", c)
+        for g in ("•", "●"):   # ● is the risk-report family's cell glyph
+            if c.count(g) >= 2:
+                c = re.sub(rf"(?:<br\s*/?>)?\s*{g}\s*", f"<br>{g} ", c.strip())
+                c = re.sub(r"^((?:<[^>]+>)*)<br>", r"\1", c)
+                break
         return f"<{m.group(1)}{m.group(2)}>{c}</{m.group(1)}>"
     return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", fix, html, flags=re.S)
 
@@ -258,11 +459,22 @@ def _bold_cell_leads(html: str, bbox: list, oracle_page: dict) -> str:
     <p> — is untouched."""
     spans = [s for s in _table_spans(oracle_page, bbox)
              if s["text"].strip() and s.get("zone") != "fnref"]
+    # docling cells can carry a stray fnref DIGIT the span side excludes
+    # ('Expert red-teaming 57', risk-report pp.125/128): matching tolerates
+    # the cell text with one trailing ref-digit occurrence removed
+    ref_digits = {s["text"].strip() for s in _table_spans(oracle_page, bbox)
+                  if s.get("zone") == "fnref"}
     by_x: dict[float, list] = {}
     for s in spans:
         key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 3), None)
         by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
     cols = [sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
+    # reading-order + column-region sequences join the candidate pool:
+    # cells whose bold lead ends mid-line (p.155) never equal an x0-chain
+    # run, and TALL such cells only appear consecutive within their column
+    # region
+    cols.append(_reading_seq(spans))
+    cols.extend(_column_regions(spans))
     out = html
     for m in re.finditer(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", html, re.S):
         c = m.group(3)
@@ -271,21 +483,38 @@ def _bold_cell_leads(html: str, bbox: list, oracle_page: dict) -> str:
         p2 = _cell_sq(c)
         if len(p2) < 8:
             continue
+        variants = {p2} | {p2[: -len(d)] for d in ref_digits
+                           if d and p2.endswith(d) and len(p2) > len(d) + 4}
+        # ref digits can also sit MID-cell, several of them ('…harm.78That
+        # is…team79could…', p.156): offer variants with each occurrence
+        # removed, and one with every ref digit removed
+        v_all = p2
+        for d in sorted(ref_digits, key=len, reverse=True):
+            if not d:
+                continue
+            for mm in re.finditer(rf"(?<![\d]){re.escape(d)}(?![\d])", p2):
+                variants.add(p2[:mm.start()] + p2[mm.start() + len(d):])
+            v_all = re.sub(rf"(?<![\d]){re.escape(d)}(?![\d])", "", v_all)
+        variants.add(v_all)
         for col in cols:
             for st in range(len(col)):
                 acc, run = "", []
                 for j in range(st, len(col)):
                     acc += _squash(col[j]["text"])
                     run.append(col[j])
-                    if len(acc) >= len(p2):
+                    if acc in variants or len(acc) >= len(p2):
                         break
-                if acc != p2 or not run[0].get("bold"):
+                if acc not in variants or not run[0].get("bold"):
                     continue
                 k = 0
                 while k < len(run) and run[k].get("bold"):
                     k += 1
-                if k == len(run):        # all-bold cell: not a lead transition
-                    break
+                if k == len(run) and acc == p2:
+                    break   # all-bold cell: not a lead transition (canon path)
+                # an all-bold cell matched via a DIGIT VARIANT is the
+                # bold+fnref class (pp.125/128): restyle's cell matching is
+                # defeated by the stray ref digit — wrap the bold text here,
+                # leaving the digit for _inject_fnrefs to absorb
                 lead_sq = _squash("".join(s["text"] for s in run[:k]))
                 # map lead_sq's length to a char cut in the raw cell text
                 cnt, i = 0, 0
@@ -298,6 +527,25 @@ def _bold_cell_leads(html: str, bbox: list, oracle_page: dict) -> str:
                 if i and _cell_sq(c[:i]) == lead_sq:
                     fixed = f"<{m.group(1)}{m.group(2)}><b>{c[:i]}</b>{c[i:]}</{m.group(1)}>"
                     out = out.replace(m.group(0), fixed, 1)
+                else:
+                    # HTML entities desync the raw-char count ('R&amp;D' is
+                    # five chars for the three-char span text, p.113): remap
+                    # on the DECODED text and re-escape the halves
+                    import html as _h
+                    cd = _h.unescape(c)
+                    cnt, i = 0, 0
+                    while i < len(cd) and cnt < len(lead_sq):
+                        if not cd[i].isspace():
+                            cnt += 1
+                        i += 1
+                    while i > 0 and cd[i - 1].isspace():
+                        i -= 1
+                    if i and _squash(cd[:i]).translate(_QUOTE_FOLD) == lead_sq:
+                        fixed = (f"<{m.group(1)}{m.group(2)}><b>"
+                                 + _h.escape(cd[:i], quote=False) + "</b>"
+                                 + _h.escape(cd[i:], quote=False)
+                                 + f"</{m.group(1)}>")
+                        out = out.replace(m.group(0), fixed, 1)
                 break
             else:
                 continue
@@ -482,7 +730,13 @@ def merge_continuation_rows(html: str) -> str:
                 cur = cc.strip()
                 prev_c = pc.rstrip()
                 cur_plain = re.sub(r"<[^>]+>", "", cur).strip()
-                seam_flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_plain))
+                prev_plain = re.sub(r"<[^>]+>", "", prev_c).strip()
+                # flows on a lowercase continuation OR when the previous side
+                # ends mid-sentence \u2014 'do not yet meet our | CB-2 threshold'
+                # (p.115\u2192116) starts uppercase and still flows
+                seam_flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_plain)
+                                  or (prev_plain and not re.search(
+                                      r"[.!?:;\u2026\"\u201d')\]]$", prev_plain)))
                 # normalize BOTH sides to <p>-wrapped form first (a flat side
                 # mixed with a block side renders spurious line breaks), then
                 # a flowing seam merges prev's last <p> with cur's first
@@ -652,11 +906,29 @@ def _inject_links(html: str, bbox: list, oracle_page: dict) -> str:
     is whitespace/tag-tolerant — clip-text anchors arrive space-mashed
     ('ProjectGlasswing') while docling cells keep the spaces — and stays
     inside ONE cell so a wrap can never straddle a td boundary."""
+    import html as _h
+
+    def _sq(s):
+        return re.sub(r"[^A-Za-z0-9]", "", s)
+
+    def _row_ctx(rect):
+        # squashed text left/right of the rect on its visual row — the
+        # disambiguator when the same anchor words appear in several cells
+        # (p.12 'relevant threat actors' lives in two rows of Table 1.2.C)
+        y0, y1 = rect[1], rect[3]
+        row = sorted((s for s in oracle_page["spans"]
+                      if min(s["bbox"][3], y1) - max(s["bbox"][1], y0) > 2),
+                     key=lambda s: s["bbox"][0])
+        pre = "".join(s["text"] for s in row if s["bbox"][2] <= rect[0] + 1)
+        post = "".join(s["text"] for s in row if s["bbox"][0] >= rect[2] - 1)
+        return _sq(pre), _sq(post)
+
     links = []
     for l in oracle_page["links"]["uri"] + oracle_page["links"]["goto"]:
-        rects = l.get("rects") or []
-        if not any(min(r[2], bbox[2]) - max(r[0], bbox[0]) > 1
-                   and min(r[3], bbox[3]) - max(r[1], bbox[1]) > 1 for r in rects):
+        rects = [r for r in (l.get("rects") or [])
+                 if min(r[2], bbox[2]) - max(r[0], bbox[0]) > 1
+                 and min(r[3], bbox[3]) - max(r[1], bbox[1]) > 1]
+        if not rects:
             continue
         chars = [c for c in (l.get("anchor") or "") if not c.isspace()]
         if len(chars) < 3:
@@ -678,28 +950,46 @@ def _inject_links(html: str, bbox: list, oracle_page: dict) -> str:
                        if len(text_all) % k == 0
                        and text_all == text_all[: len(text_all) // k] * k), 1)
         unit = text_all[: len(text_all) // n_inst]
-        pat = re.compile(sep.join(esc(c) for c in unit))
-        links.extend((pat, target) for _ in range(n_inst))
+        pre, _ = _row_ctx(rects[0])
+        _, post = _row_ctx(rects[-1])
+        links.append({"pat": re.compile(sep.join(esc(c) for c in unit)),
+                      "target": target, "sq": _sq(unit),
+                      "pre": pre[-10:], "post": post[:10], "n": n_inst})
     if not links:
         return html
-    placed: set = set()
-    out, pos = [], 0
-    for m in re.finditer(r"(<t[hd][^>]*>)(.*?)(</t[hd]>)", html, re.S):
-        out.append(html[pos:m.start()])
-        pos = m.end()
-        inner = m.group(2)
-        for i, (pat, target) in enumerate(links):
-            if i in placed:
-                continue
-            for mm in pat.finditer(inner):
-                before = inner[:mm.start()]
-                if before.count("<a ") > before.count("</a>"):
-                    continue   # already inside an anchor (duplicate anchors)
-                inner = (before + f'<a href="{target}">' + mm.group(0)
-                         + "</a>" + inner[mm.end():])
-                placed.add(i)
+
+    cells = list(re.finditer(r"(<t[hd][^>]*>)(.*?)(</t[hd]>)", html, re.S))
+    inners = [m.group(2) for m in cells]
+
+    def _cell_sq(i):
+        return _sq(_h.unescape(re.sub(r"<[^>]+>", "", inners[i])))
+
+    for lk in links:
+        # candidate cells containing the anchor; row context outranks bare
+        # containment so the link lands in ITS cell, not a lookalike
+        cands = [i for i in range(len(inners)) if lk["sq"] in _cell_sq(i)]
+        scored = sorted(
+            cands,
+            key=lambda i: (0 if ((lk["pre"] and lk["pre"] + lk["sq"] in _cell_sq(i))
+                                 or (lk["post"] and lk["sq"] + lk["post"] in _cell_sq(i)))
+                           else 1, i))
+        remaining = lk["n"]
+        for i in scored:
+            if remaining == 0:
                 break
-        out.append(m.group(1) + inner + m.group(3))
+            for mm in lk["pat"].finditer(inners[i]):
+                before = inners[i][:mm.start()]
+                if before.count("<a ") > before.count("</a>"):
+                    continue   # already inside an anchor
+                inners[i] = (before + f'<a href="{lk["target"]}">' + mm.group(0)
+                             + "</a>" + inners[i][mm.end():])
+                remaining -= 1
+                break
+    out, pos = [], 0
+    for i, m in enumerate(cells):
+        out.append(html[pos:m.start()])
+        out.append(m.group(1) + inners[i] + m.group(3))
+        pos = m.end()
     out.append(html[pos:])
     return "".join(out)
 
@@ -731,7 +1021,11 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
             rb = ru["bbox"]
             if (sb[3] - 2.5 <= rb[1] <= sb[3] + 5.0
                     and min(sb[2], rb[2]) - max(sb[0], rb[0]) > 0.5 * (sb[2] - sb[0])
-                    and (rb[2] - rb[0]) < (sb[2] - sb[0]) * 3 + 24):
+                    and (rb[2] - rb[0]) < (sb[2] - sb[0]) * 3 + 24
+                    # a rule overhanging the span >12pt on BOTH sides is a
+                    # CELL border under a dense row (the p.182 'Mythos
+                    # Preview' false underline), never a word underline
+                    and not (rb[0] < sb[0] - 12 and rb[2] > sb[2] + 12)):
                 # width guard: word underlines hug their word; a table-width
                 # row border under a TALL row false-fired ('2/14' on p.96)
                 return True
@@ -1419,6 +1713,28 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
     spans_xy = _row_spans_xy(oracle_page, bbox)
     all_cells = {_cell_sq(c)
                  for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", html, re.S)}
+    # OWNERSHIP: spans consumed by any cell's exact chain match may never be
+    # appended as another cell's "continuation" — the §6.6 damage class:
+    # 'Claude Opus 4.8' anchored onto its mid-sentence twin inside the
+    # Sonnet row's capability cell and swallowed that cell's tail; 'See
+    # the … System Card' fragments leaked across rows the same way.
+    owned: set[int] = set()
+    for sq in all_cells:
+        if not sq:
+            continue
+        # x0-chains, the reading-order sequence, AND column regions: a cell
+        # containing a link matches in reading order; a TALL one only
+        # within its column region
+        for col in cols + [_reading_seq(spans)] + _column_regions(spans):
+            for st in range(len(col)):
+                acc, run = "", []
+                for j in range(st, len(col)):
+                    acc += _squash(col[j]["text"])
+                    run.append(col[j])
+                    if len(acc) >= len(sq):
+                        break
+                if acc == sq:
+                    owned.update(id(s) for s in run)
     out = html
     for r in re.findall(r"<tr>.*?</tr>", html, re.S):
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
@@ -1455,6 +1771,7 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
                             k = j + 1
                             while (k < len(col)
                                    and col[k]["bbox"][1] - col[k - 1]["bbox"][3] < 9
+                                   and id(col[k]) not in owned
                                    and not any(col[k - 1]["bbox"][3] - 1 <= ry
                                                <= col[k]["bbox"][1] + 1
                                                for ry in rules_y)):
@@ -1490,7 +1807,7 @@ def _promote_white_text_headers(html: str, bbox: list, oracle_page: dict) -> str
         return html
     rows = re.findall(r"<tr>.*?</tr>", html, re.S)
     out = html
-    for r in rows[1:]:
+    for r in rows:   # incl. row 0 — docling tagged the p.115 header <td>
         cells = re.findall(r"<(t[dh])([^>]*)>(.*?)</t[hd]>", r, re.S)
         nonempty = [(tg, a, c) for tg, a, c in cells if re.sub(r"<[^>]+>", "", c).strip()]
         if not nonempty or not all(

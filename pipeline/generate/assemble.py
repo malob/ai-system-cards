@@ -140,6 +140,31 @@ def assign_list_levels(blocks: list[dict]) -> None:
                 x = round(blk["marker_x0"])
                 blk["level"] = next((i for i, t in enumerate(merged_tiers) if abs(x - t) <= 4), 0)
 
+    # orphan-indent normalization: a contiguous item run whose SHALLOWEST
+    # level is >0 (a sub-list under a prose lead-in — risk-report p.9
+    # 'a)/b)') serializes 4-space-indented with no parent item, which
+    # CommonMark reads as an indented code block. Shift each run so its
+    # minimum level is 0; relative nesting inside the run survives. Runs
+    # split at non-item blocks and at quote-flag changes.
+    run: list = []
+
+    def _flush_run():
+        if run:
+            m = min(b["level"] for b in run)
+            if m:
+                for b in run:
+                    b["level"] -= m
+        run.clear()
+
+    for b in blocks:
+        if b["type"] == "item":
+            if run and run[-1].get("quote", False) != b.get("quote", False):
+                _flush_run()
+            run.append(b)
+        else:
+            _flush_run()
+    _flush_run()
+
 
 MIN_BOX_H = 20.0  # a "box" shorter than ~1.3 line-heights is an inline
 # highlight strip riding under text (opus-5 p.137 cream constitution quotes),
@@ -540,8 +565,19 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                 # …' (opus-5 p.14) while its twin TM1 split fine
                 prev_body = [s for _, _, s in prev["segs"] if s["zone"] == "body"
                              and s["text"].strip("​‌‍﻿­ ")]
-                ends_bold_label = (prev_body and all(s["bold"] for s in prev_body)
-                                   and prev_short
+                # a FULL-WIDTH all-bold CLAIM lead is a standalone lead too:
+                # risk-report Claim leads that exactly fill their line hid
+                # the short-line signal (pp.35/52/62). Gated on the claim
+                # grammar — a full-width bold run-in that flows into its
+                # paragraph (opus-5 welfare p.223 'most common concern…')
+                # is typographically identical and must keep flowing.
+                prev_all_bold = bool(prev_body) and all(s["bold"] for s in prev_body)
+                claim_lead = bool(re.match(r"(?:Sub-?c|C)laim\s+\d", prev["text"].lstrip()))
+                ends_bold_label = (prev_all_bold
+                                   and (prev_short
+                                        or (claim_lead
+                                            and prev["text"].rstrip().endswith((".", ":", "?", "!"))
+                                            and line["text"].lstrip()[:1].isupper()))
                                    and line["segs"] and not line["segs"][0][2]["bold"])
                 same_para = (gap < max(4.0, 0.55 * line_h)
                              and not starts_bold_lead
@@ -748,6 +784,14 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                 else:
                     marks.append(("fnref", m_start, m_end, int(s["text"].strip())))
                 continue
+            # SUBSCRIPT: a tiny non-superscript span riding a body-size line
+            # (risk-report §2.6 math: R_total, P_K H_K U_K … — 6.6pt, no
+            # super flag, on 11pt lines). Rendered <sub>, stripped tag-only
+            # by the projection so tokens stay glued like the oracle's.
+            if (s["zone"] == "body" and s["size"] <= 7.5
+                    and not s.get("super") and t.strip()
+                    and line["size"] >= 10):
+                marks.append(("sub", m_start, m_end, None))
             if "Mono" in s.get("font", "") and s["zone"] == "body":
                 # monospace span = inline code (RobotoMono in this card) —
                 # but NOT an early-out: a mono span can also be bold and can

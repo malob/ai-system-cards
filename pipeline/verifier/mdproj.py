@@ -140,6 +140,9 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         return " "
     seg = RE_FIGSKIP.sub(figskip, seg)
     seg = re.sub(r"</?u>", "", seg)   # prose underline (caption legend words)
+    # subscripts strip TAG-ONLY (no space) so 'R<sub>total</sub>' tokenizes
+    # 'Rtotal', matching the oracle's glued span join
+    seg = re.sub(r"</?sub>", "", seg)
     seg = seg.replace("\\\n", " ")          # hard line breaks (mono example lines)
     # escaped literal markup -> sentinels BEFORE the markup strippers (the
     # italics regex was eating escaped pairs through their backslashes)

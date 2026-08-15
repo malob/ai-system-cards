@@ -53,3 +53,8 @@ fills:
 document:
   toc_pages: [2, 3, 4, 5, 6]     # site generates its own TOC; excluded
   page_number_footer: bottom-center bare integer, excluded
+  # extended internal-link resolution (Claim-number, Appendix-number,
+  # unique-heading-title, pooled split-link halves): this document's goto
+  # dest coordinates are sloppy enough to swap Claim 6/7 and land 'Appendix
+  # 6.4' on 6.3 (sweep round 1, D46)
+  link_text_resolution: extended
