@@ -1,21 +1,41 @@
 {
-  "_comment": "Owner-accepted residuals (H2 review 2026-06-10; pages remapped -1 for the June 11 PDF revision). Each entry silences exact (invariant, page) majors; anything new still fires. Class: drawn-element reading order \u2014 pill/legend text extracted at stream positions that differ from visual order; md follows VISUAL order, which is correct for a reader.",
+  "_comment": "Owner-accepted residuals (H2 review 2026-06-10; pages remapped -1 for the June 11 PDF revision). Each entry fingerprints the exact invariant+page+severity+detail payload; anything new still fires, and a full WORKTREE gate rejects stale entries. Class: drawn-element reading order \u2014 pill/legend text extracted at stream positions that differ from visual order; md follows VISUAL order, which is correct for a reader.",
   "accepted": [
     {
       "invariant": "T1",
-      "page": 37
+      "page": 37,
+      "severity": "major",
+      "detail": {
+        "op": "replace",
+        "missing_from_md": "Fabrication",
+        "extra_in_md": "Skipped cheap verification",
+        "n_tokens": 3
+      },
+      "fingerprint": "e94d8a4e508ae032e33cbb969be34c4ca585b19bc2bce82d66e664fd5f6cb117"
     },
     {
       "invariant": "T1",
-      "page": 43
+      "page": 37,
+      "severity": "major",
+      "detail": {
+        "op": "replace",
+        "missing_from_md": "Skipped cheap verification",
+        "extra_in_md": "Reckless action",
+        "n_tokens": 3
+      },
+      "fingerprint": "139696df72a0aec3a0e26e0e81c8ce56a0a88aa09bd8f7f7d38fab22da2c6700"
     },
     {
       "invariant": "T1",
-      "page": 55
-    },
-    {
-      "invariant": "T1",
-      "page": 56
+      "page": 43,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Research Research engineering Pure engineering Non R&D",
+        "extra_in_md": "",
+        "n_tokens": 7
+      },
+      "fingerprint": "ee9efd95554f02c936dc10d91818d16326431c7872360d5eb94f9c360c86d401"
     }
   ]
 }

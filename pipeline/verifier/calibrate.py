@@ -17,6 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import acceptance
 import cardcfg
 import invariants
 import mdproj
@@ -117,7 +118,27 @@ def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
                       sections_text=stexts)
 
 
-def main():
+def _apply_accepted(flags: list[dict], path: Path, *, require_all: bool):
+    """Return (remaining flags, matched count, config error message or None)."""
+    if not path.exists():
+        return flags, 0, None
+    try:
+        document = json.loads(path.read_text())
+        config = acceptance.parse_acceptances(document)
+        result = acceptance.apply_acceptances(flags, config)
+    except (OSError, json.JSONDecodeError, acceptance.AcceptanceConfigError) as exc:
+        return flags, 0, str(exc)
+
+    error = None
+    if require_all:
+        try:
+            acceptance.reject_stale(result)
+        except acceptance.AcceptanceConfigError as exc:
+            error = str(exc)
+    return result.flags, len(result.matched), error
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("ref", help="git ref for the markdown side, or WORKTREE")
     ap.add_argument("--sections", nargs="*", help="prefixes to limit to (e.g. 02a)")
@@ -125,7 +146,9 @@ def main():
     ap.add_argument("--samples", type=int, default=10)
     ap.add_argument("--only-pages", nargs="*", type=int,
                     help="restrict all checks to these source pages (for wave/partial runs)")
-    args = ap.parse_args()
+    ap.add_argument("--report-only", action="store_true",
+                    help="report unsuppressed majors without failing (acceptance config errors still fail)")
+    args = ap.parse_args(argv)
 
     pages = oracle.extract(CARD / "source.pdf", cache=cardcfg.ORACLE_CACHE)
     figures_map = _load_figures_map()
@@ -142,15 +165,18 @@ def main():
                        sections_text=stexts)
 
     acc_path = CARD / "accepted.json"
-    if acc_path.exists():
-        acc = {(a["invariant"], a["page"])
-               for a in json.loads(acc_path.read_text())["accepted"]}
-        n_acc = sum(1 for f in flags if f["severity"] == "major"
-                    and (f["invariant"], f["page"]) in acc)
-        flags = [f for f in flags if not (f["severity"] == "major"
-                                          and (f["invariant"], f["page"]) in acc)]
-        if n_acc:
-            print(f"({n_acc} owner-accepted major(s) suppressed — accepted.json)")
+    # A full current-card gate is also a check that every committed acceptance
+    # still describes an observed flag. Historical/section/page runs see only a
+    # slice of the document, so unmatched acceptances are expected there.
+    require_all_acceptances = (args.ref == "WORKTREE"
+                               and not args.sections and not args.only_pages)
+    flags, n_acc, acceptance_error = _apply_accepted(
+        flags, acc_path, require_all=require_all_acceptances)
+    if n_acc:
+        print(f"({n_acc} owner-accepted major(s) suppressed — accepted.json)")
+    if acceptance_error:
+        print(f"ERROR: invalid acceptance configuration at {acc_path}: {acceptance_error}",
+              file=sys.stderr)
     by_inv = Counter((f["invariant"], f["severity"]) for f in flags)
     print(f"\n=== verifier v0 @ {args.ref} — {len(sections)} sections ===")
     for (inv, sev), n in sorted(by_inv.items()):
@@ -167,7 +193,9 @@ def main():
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(flags, indent=1, ensure_ascii=False))
         print(f"\nwrote {args.json} ({len(flags)} flags)")
+    return acceptance.gate_exit_code(
+        flags, report_only=args.report_only, config_error=acceptance_error is not None)
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
