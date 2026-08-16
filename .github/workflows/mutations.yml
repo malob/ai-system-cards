@@ -42,7 +42,10 @@ jobs:
   mutations:
     name: Mutations (${{ matrix.card }})
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Fable's 25-class / 200-trial composite replay measured just over the old
+    # 30-minute hosted ceiling. Keep enough headroom for teardown/artifact upload
+    # without turning a hung worker into an unbounded job.
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
