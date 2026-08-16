@@ -8,9 +8,11 @@ Experiment 13 establishes that the project can retain a rich, deterministic Docl
 table proposal instead of flattening it immediately to HTML, that a small typed
 topology transform can make source-justified changes, and that one typed source-word
 assignment primitive can repair isolated cell-ownership errors across two document
-families. It does not establish that the typed representation simplifies the complete
-production repair pipeline, composes correctly across coupled topology and assignment
-defects, works portably, or should become canonical.
+families. A follow-up raw-rule origin/projection resolver now composes topology and
+word ownership for this fully ruled hard set. It does not establish that the typed
+representation simplifies the complete production repair pipeline, discovers grids
+independently, handles sparse/unruled or styled/linked tables, works portably, or
+should become canonical.
 
 Everything under this directory is experiment-only. Nothing in `pipeline/`,
 `cards/`, or `site/` imports it. The experiment changed no generated section,
@@ -21,7 +23,7 @@ canonical card content, site output, or release behavior.
 Can the table pipeline approach its largest repair boundary with fresh structure
 without discarding what the legacy implementation has learned?
 
-The experiment deliberately separates five questions:
+The experiment deliberately separates six questions:
 
 | Track | Question | Result |
 | --- | --- | --- |
@@ -29,7 +31,8 @@ The experiment deliberately separates five questions:
 | [Clean model](clean-model/README.md) | Can a small project-owned type preserve Docling's public grid and explicit provenance without copying the legacy HTML architecture? | Yes in shadow: an immutable, deterministic `TableCandidate` retains cells, spans, roles, geometry, tool fields, and caller-supplied source/tool identity. |
 | [Reproducibility](reproducibility/README.md) | Can the rich Docling proposal and its effective runtime be bound and replayed deterministically? | Yes for two offline runs of Fable source p.20 in one warm local environment after deterministic mini-PDF creation. Portability is unproved. |
 | [Topology slice](topology-slice/README.md) | Does one narrow typed repair become source-grounded and locally reviewable? | Yes for three merges on a six-page hard set, with one conservative false negative and no genuine real source-negative in that set. |
-| [Word alignment](word-alignment/README.md) | Can exact source words be projected to typed cells without inheriting Docling text ownership or the legacy HTML pass order? | Yes for isolated ownership errors: one source-bound rule made 43 cell-text changes across four tables and preserved three natural controls. Three coupled or surface-sensitive cases failed closed, so production composition remains unresolved. |
+| [Word alignment](word-alignment/README.md) | Can exact source words be projected to typed cells without inheriting Docling text ownership or the legacy HTML pass order? | Yes for isolated ownership errors: one source-bound rule made 43 cell-text changes across four tables and preserved three natural controls. Three coupled or surface-sensitive cases failed closed and motivated the origin/projection follow-up below. |
+| [Origin/projection](origin-projection/README.md) | Can raw PDF rules and word occurrences resolve coupled topology and ownership before comparing immutable extractor claims? | Yes for the fully ruled, candidate-located hard set: one order-independent resolver derived all 274 reviewed ranges, assigned all 790 words, and jointly resolved Opus p.56 table 1 and raw Fable p.95. Production adoption remains blocked. |
 
 This is a clean-model experiment, not a clean-slate evidence policy. The new
 representation was designed without translating the legacy repair functions; the
@@ -142,19 +145,57 @@ merely ordering topology and alignment passes: even after its adapter-gap payloa
 resolved, the lower `Model` cell remains Docling-observed rather than
 adapter-generated, so the topology rule still refuses it. A production design would
 need a typed origin/projection overlay that preserves source observations, candidate
-claims, and derived ownership separately. Do not add another ordered repair pass to
-encode that missing distinction.
+claims, and derived ownership separately. That was the next hypothesis tested below;
+an ordered repair pass was not added.
 
 This remains shadow-generator research. Accepted output was neither source truth nor
 label authority, and no alignment result is an independent verifier expectation.
 
+### One raw-rule projection resolves the coupled ruled cases
+
+The [origin/projection slice](origin-projection/README.md) replaces topology-then-text
+pass composition with one calculation over three immutable planes: raw PDF
+observations, typed extractor claims, and a derived source projection. It builds
+connected components from raw horizontal and vertical rule segments, then assigns
+source word **occurrences** by full-bbox containment before comparing either result
+with Docling's claims. Reviewed ranges appear only in tests; accepted or generated
+Markdown is never read.
+
+Across the same 10 table cases, the resolver mechanically derives all **274/274**
+reviewed ranges and assigns all **790/790** words exactly once. It jointly resolves
+the `Model` rowspan and `API, without a system prompt` ownership in Opus p.56 table 1,
+and resolves raw Fable p.95 without calling the earlier topology or alignment
+transforms. Fable p.20 and Risk pp.79–80 remain no-ops. Fable p.94 associates all 63
+words but blocks text materialization because flattening its styled superscript would
+lose source semantics. Risk p.115 is a source-only, fully bounded true blank; without
+a typed candidate it cannot make an extractor-origin claim.
+
+Every extractor claim and input `TableCandidate` remains immutable and byte-identical.
+The compact replay is also exact and implementation-bound:
+
+- replay SHA-256
+  `d255e733b26e9a811dbf629e72557c9b5b92a955a4709fd0d3d6c86bbc913b26`;
+- source-reopening evidence SHA-256
+  `37bdedacdaafdf77284c07ca39d88d350c40da89cb5cdec9b8a2634df1029a88`;
+- `origin_projection.py` SHA-256
+  `089cc0d355c9535778ee79457f8dc7e5242aa8a383d184df80d3956a1d9a8924`;
+  and
+- `build_replay.py` SHA-256
+  `7fb111dd1e00e42fb6420fe57dc1fbdd364c60b03d765bc5ef281e964dbb9b5d`.
+
+This closes the previous *ruled-set composition* question, not the production-grid
+question. The atomic grid envelope remains candidate-conditioned; there is still no
+natural absent-rule-but-keep-separate negative; sparse and unruled tables are out of
+scope; and style/link-aware serialization is not implemented. The result is a shadow
+generator proposal, not independent verifier authority.
+
 ## Proportionality
 
-The experiment scripts now total **6,618 Python lines**, including 2,449 in the
-word-alignment evidence, extractor, model, and tests. Much of that is defensive
-provenance discovery, artifact hashing, runtime introspection, replay validation, and
-fail-closed test scaffolding. That is acceptable for a bounded architecture probe; it
-is not a production implementation to port wholesale.
+The experiment scripts now total **8,957 Python lines**, including 2,339 in the new
+origin/projection model, evidence extraction, replay builder, and tests. Much of that
+is defensive provenance discovery, artifact hashing, runtime introspection, replay
+validation, and fail-closed test scaffolding. That is acceptable for a bounded
+architecture probe; it is not a production implementation to port wholesale.
 
 A production path should prefer:
 
@@ -174,19 +215,18 @@ Pause further phase-4 structural-authority integration. Pull the table
 extraction/grid shadow work forward, but keep it isolated from production until these
 questions are answered:
 
-1. **Genuine source-negative controls:** find natural tables where the same visual
-   preconditions nearly hold but the header must not merge. The alignment slice adds
-   natural no-ops but still found no natural missing-rule-but-keep-separate or
-   outer-edge word control.
-2. **Typed origin/projection composition:** represent raw source words, candidate
-   ownership, topology changes, and derived cell projection without another ordered
-   pass; explain the p.56-table-1 observed-empty boundary and keep p.94's styled
-   superscript outside assignment repair.
-3. **Locked portable replay:** rerun a representative hard set in a clean locked
-   environment and on a second platform with explicit CPU/device/thread policy.
-4. **Complexity and provenance comparison:** implement enough topology and alignment
-   to compare rule count, ordering dependencies, provenance, counterexamples, and
-   output differences against the legacy path before migrating anything.
+1. **Independent grid and negative coverage:** remove candidate-conditioned atomic
+   edges where possible, and find a natural absent-rule-but-keep-separate case before
+   widening the merge interpretation.
+2. **Table-family coverage:** test sparse and unruled tables; the current
+   connected-component result applies only to fully ruled, candidate-located tables.
+3. **Semantic serialization:** preserve and emit style, links, footnotes, and other
+   word-bound semantics; p.94 correctly blocks rather than flattening them today.
+4. **Portable extraction:** repeat under a locked environment on a second platform
+   and a genuinely different PDF producer.
+5. **Migration proof:** regenerate all three cards in shadow and demonstrate measured
+   net deletion of legacy decision logic, not merely equivalent new code and richer
+   provenance.
 
 Only then decide whether to migrate incrementally or retain HTML and refactor the
 legacy helpers locally. Manual, judgmentful new-document setup remains acceptable;
@@ -195,8 +235,9 @@ conversion experiment.
 
 ## Validation
 
-The five main suites contain **15 + 17 + 2 + 8 + 12 = 54 unit tests**. The independent
-source-evidence suite adds **5**, so **59 test methods pass overall**:
+The six main suites contain **15 + 17 + 2 + 8 + 12 + 12 = 66 unit tests**. The two
+source-reopening evidence suites add **5 + 10 = 15**, so **81 test methods pass
+overall**:
 
 ```sh
 uv run --python 3.12 python -m unittest discover \
@@ -217,26 +258,43 @@ PYTHONDONTWRITEBYTECODE=1 \
 PYTHONPATH=docs/experiments/13-table-candidate-shadow/clean-model:docs/experiments/13-table-candidate-shadow/topology-slice:docs/experiments/13-table-candidate-shadow/word-alignment \
 uv run --python 3.12 python -m unittest discover \
   -s docs/experiments/13-table-candidate-shadow/word-alignment -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 \
+uv run --python 3.12 python -m unittest discover \
+  -s docs/experiments/13-table-candidate-shadow/origin-projection \
+  -p 'test_origin_projection.py' -v
+PYTHONDONTWRITEBYTECODE=1 \
+PYTHONPATH=docs/experiments/13-table-candidate-shadow/clean-model:docs/experiments/13-table-candidate-shadow/word-alignment:docs/experiments/13-table-candidate-shadow/origin-projection/evidence \
+uv run --offline --python 3.12 --with 'pymupdf==1.28.2' \
+  python -m unittest discover \
+  -s docs/experiments/13-table-candidate-shadow/origin-projection/evidence \
+  -p 'test_*.py' -v
 
 uv run --python 3.12 python \
   docs/experiments/13-table-candidate-shadow/legacy-evidence/validate_manifest.py
 ```
 
-Result on 2026-08-16: all 54 main experiment unit tests and all five independent
-source-evidence tests passed. The separate legacy validator passed with `32 locators,
-13 canonical tables, 5 logical shadows`.
+Result on 2026-08-16: all 66 main experiment unit tests and all 15 independent
+source-reopening evidence tests passed. The separate legacy validator passed with
+`32 locators, 13 canonical tables, 5 logical shadows`. Rebuilding the compact
+origin/projection replay produced byte-identical output.
 
-Independent review scored the slice **10/12**: full credit for independence,
+Independent review scored the word-alignment slice **10/12**: full credit for independence,
 conservation/fail-closed behavior, natural controls, and provenance/determinism; one
 point each for locality/order-independence and proportionality/complexity. Its verdict
-was **commit the shadow milestone; do not adopt or migrate production**. The reduced
-scores reflect the unresolved coupled composition and lack of a demonstrated net
-legacy deletion, not a correctness blocker for retaining the experiment.
+was **commit the shadow milestone; do not adopt or migrate production**. At that
+stage, the reduced scores reflected unresolved coupled composition and the lack of a
+demonstrated net legacy deletion, not a correctness blocker for retaining the
+experiment.
+
+The origin/projection follow-up then closed that composition question for the fully
+ruled hard set and received an independent score of **9/12**. Its verdict is likewise
+**commit the shadow milestone: yes; production adoption: no**. The remaining points
+are load-bearing blockers listed above, not documentation polish.
 
 No hosted run, full release graph, production generation, canonical output
 comparison, or deployed-site validation is claimed by this experiment.
 
-## Current artifact file hashes
+## Current artifact and implementation hashes
 
 These are SHA-256 values of the checked-in file bytes at this milestone:
 
@@ -251,3 +309,7 @@ These are SHA-256 values of the checked-in file bytes at this milestone:
 | `topology-slice/artifacts/hard-set.json` | `329128c4c388d40cd687aabca61c0127e8167a3be511419494f15e5a3eaedfc6` |
 | `word-alignment/evidence/source-word-evidence.json` | `22e2fcb220cd29f03ee1b299c22e05f34759919812a13990a6e40682b20365cc` |
 | `word-alignment/artifacts/alignment-cases.json` | `c317522f77d91408bc71353695ad6afa490301dd39e7a3cf4d05643704f12e16` |
+| `origin-projection/artifacts/origin-projection-replay.json` | `d255e733b26e9a811dbf629e72557c9b5b92a955a4709fd0d3d6c86bbc913b26` |
+| `origin-projection/evidence/origin-projection-evidence.json` | `37bdedacdaafdf77284c07ca39d88d350c40da89cb5cdec9b8a2634df1029a88` |
+| `origin-projection/origin_projection.py` | `089cc0d355c9535778ee79457f8dc7e5242aa8a383d184df80d3956a1d9a8924` |
+| `origin-projection/build_replay.py` | `7fb111dd1e00e42fb6420fe57dc1fbdd364c60b03d765bc5ef281e964dbb9b5d` |

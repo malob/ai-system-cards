@@ -3,7 +3,7 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-16 (D59 typed word-alignment shadow result recorded). The
+**Last updated:** 2026-08-16 (D60 raw-rule origin/projection shadow result recorded). The
 phase-3 certification-docs baseline `5b752ae` was deployed; its final docs-only
 fast-release / Pages run
 [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)
@@ -121,17 +121,21 @@ counterexamples rather than code to port. It remains completely isolated from
   43 changes across four tables, preserved three natural controls, and failed closed
   on three coupled or surface-sensitive cases. Two-run extraction is deterministic
   across all 10 cases; the evidence and alignment artifacts are bound by exact hashes.
-- The important boundary is compositional: isolated ownership errors fit one local
-  typed primitive, but Opus p.56 table 1 still couples adapter-gap assignment with an
-  observed-empty topology claim. Adding an ordered pass would hide that distinction;
-  any production model needs a typed origin/projection overlay first. Raw Fable p.95
-  blocks, while topology-first p.95 is a verified no-op.
-- The five main experiment suites pass 54/54 tests, the independent source-evidence
-  suite passes 5/5, and the separate legacy validator passes 32 locators, 13 canonical
-  tables, and five logical shadows. Independent review scored the slice 10/12 and
-  approved retaining the shadow milestone while rejecting production adoption.
+- One raw-rule origin/projection resolver now composes those coupled defects for the
+  fully ruled hard set. It derives 274/274 reviewed ranges from connected rule
+  components, assigns 790/790 word occurrences by full-bbox containment, and jointly
+  resolves Opus p.56 table 1 and raw Fable p.95 without mutating extractor claims or
+  candidates.
+- Fable p.20 and Risk pp.79–80 remain no-ops; Fable p.94 associates all words but
+  blocks styled-token materialization; Risk p.115 is a source-only fully bounded true
+  blank with no extractor-origin claim. The grid is still candidate-conditioned, and
+  there is no natural absent-rule-but-keep-separate negative.
+- The six main experiment suites pass 66/66 tests, the two source-reopening evidence
+  suites pass 15/15, and the separate legacy validator passes 32 locators, 13
+  canonical tables, and five logical shadows. The latest independent review scored
+  the origin/projection slice 9/12: commit shadow yes, production no.
 
-This is not a production-model decision. The 6,618 lines of experiment Python are
+This is not a production-model decision. The 8,957 lines of experiment Python are
 mostly defensive provenance discovery, extraction, and validation; production must
 use an explicit locked artifact bundle and smaller adapter, and adoption must
 demonstrate net complexity reduction rather than move the legacy complexity.
@@ -205,9 +209,9 @@ and major-blocking independently.
   passed. The phase-4 alignment remains advisory and made no canonical-content or
   published-output change. Its observers are exercised by release tests, but their
   structural findings do not yet gate cards.
-- Experiment 13's 54 main local unit tests, five independent source-evidence tests,
-  and separate legacy validator pass. Those tests validate only the isolated
-  evidence/model/replay/topology/alignment work; no full
+- Experiment 13's 66 main local unit tests, 15 source-reopening evidence tests, and
+  separate legacy validator pass. Those tests validate only the isolated
+  evidence/model/replay/topology/alignment/origin-projection work; no full
   release, hosted, deployed, production, or card/site/output change is claimed for
   that experiment.
 
@@ -228,11 +232,11 @@ and major-blocking independently.
 
 ## Open / next
 
-- **Immediate table shadow:** design and test a typed origin/projection overlay for
-  coupled topology and assignment evidence without adding another ordered repair
-  pass; obtain the still-missing natural negative/outer-edge controls; replay the
-  representative hard set in a clean locked environment and on a second platform;
-  then compare net complexity and provenance with the legacy path before migration.
+- **Immediate table shadow:** remove or independently justify candidate-conditioned
+  grid edges; obtain a natural absent-rule-but-keep-separate negative; cover sparse
+  and unruled tables plus style/link-aware serialization; replay on a second platform
+  and different producer; then regenerate all cards and measure net legacy deletion
+  before migration.
 - **Paused phase 4:** retain the structural artifact and eleven replay candidates as
   advisory evidence. Resume integration only when its expected information gain
   outranks the table experiment; the original blocking criteria remain unchanged.
@@ -251,14 +255,15 @@ and major-blocking independently.
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D59),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D60),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). The immediate task is the
 shadow table extraction/grid program in
-[Experiment 13](experiments/13-table-candidate-shadow/README.md). Typed word-to-cell
-alignment has now repaired isolated ownership errors in shadow; next resolve the
-typed origin/projection boundary, natural controls, and locked portable replay—not
+[Experiment 13](experiments/13-table-candidate-shadow/README.md). Raw-rule
+origin/projection now composes topology and word ownership for the fully ruled hard
+set; next challenge its candidate-conditioned grid, natural-negative and sparse/
+unruled coverage, semantic serialization, portability, and net-deletion case—not
 production adoption or a whole-document IR migration. For a changed corpus,
 experiment 11 is the
 regression-sweep template: changed pages plus renderer controls, the PDF as sole

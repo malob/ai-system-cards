@@ -7,7 +7,8 @@ decision. Implementation and validation status live in [`state.md`](state.md). D
 records phase 3's local implementation evidence; D56 records its hosted certification
 and deployment; D57 records phase 4's advisory structural-authority spike; D58 records
 the table-candidate shadow milestone and sequencing change; D59 records the typed
-source-word assignment result and the remaining origin/projection boundary.
+source-word assignment result; D60 records the raw-rule origin/projection result and
+its production blockers.
 
 ## Bottom line
 
@@ -96,7 +97,7 @@ by a green phase-3 gate.
 | Source | The archived PDF is the sole content authority. |
 | Observation | Keep PyMuPDF as the primary born-digital observer. Record source hash, tool/schema version, and raw spans, links, geometry, drawings, and image facts. |
 | Interpretation | Store derived roles—body, heading, footnote, table, figure, exclusions—separately enough that they can be mutated and checked without changing raw observations. |
-| Table candidate | Treat pinned Docling output as a proposal. [Experiment 13](experiments/13-table-candidate-shadow/README.md) retains replayable legacy evidence and demonstrates a normalized shadow candidate with cells, spans, geometry, provenance, and source-word projection. Isolated ownership repairs fit one typed primitive; coupled topology/assignment evidence still needs an explicit typed origin/projection overlay. It is not production authority. |
+| Table candidate | Treat pinned Docling output as a proposal. [Experiment 13](experiments/13-table-candidate-shadow/README.md) retains replayable legacy evidence and demonstrates a normalized shadow candidate with cells, spans, geometry, provenance, source-word projection, and a raw-rule origin/projection overlay. That overlay composes topology and ownership for the fully ruled, candidate-located hard set; it is not production or verifier authority. |
 | Accepted prose | Keep tracked Markdown canonical for prose. |
 | Published projections | Treat HTML, `card.md`, per-section Markdown, `llms.txt`, anchors, search, and social output as separate claims that need projection-specific checks. L2 plus D55's P2/F3/V1 lane now bind links, source pages/figures, copied source bytes, event order, and authored raw-HTML visibility through the production HTML renderer; it is not yet an all-projection or computed-layout proof. |
 | Verification | Build expectations independently where correctness is load-bearing. Detector disagreement widens scrutiny; it never grants immunity from a general invariant. |
@@ -118,8 +119,9 @@ The review explicitly rejected these as present work:
 These remain distinct evidence packages, not permission to claim later production
 work complete. D58 pauses further phase-4 integration and pulls bounded phase-5/7
 table shadow work forward because it now has higher discriminating value; D59 keeps
-that work in shadow after the first source-word assignment result. A later
-refactor must not be used to delay a demonstrated smaller correctness repair.
+that work in shadow after the first source-word assignment result; D60 retains the
+ruled origin/projection result while rejecting production adoption. A later refactor
+must not be used to delay a demonstrated smaller correctness repair.
 
 | Phase | Work | Exit evidence |
 | ---: | --- | --- |
@@ -190,10 +192,16 @@ completed by merely choosing the opposite pass order because its adapter-gap pay
 and observed-empty topology claim have different origins. This identifies a missing
 typed origin/projection overlay, not a reason to add another ordered repair pass.
 
-This does not complete pinning, cold or cross-platform replay, natural negative
-coverage, composition semantics, independent verifier topology, or the production-grid
-decision. Phase 9 still owns all-projection/bootstrap, computed-browser-visibility,
-and different-producer evidence.
+The origin/projection follow-up implements that overlay for the fully ruled hard set.
+One connected-component plus full-bbox occurrence resolver derives all 274 reviewed
+ranges and assigns all 790 words, jointly resolving Opus p.56 table 1 and raw Fable
+p.95 while keeping candidates and claims immutable. Fable p.20 and Risk pp.79–80 are
+no-ops; p.94 blocks styled materialization; Risk p.115 remains source-only. The result
+closes ruled-set composition but not candidate-independent grid discovery, the missing
+natural absent-rule negative, sparse/unruled tables, semantic serialization, portable
+or different-producer replay, all-card regeneration, independent verifier topology,
+or measured net legacy deletion. Phase 9 still owns all-projection/bootstrap,
+computed-browser-visibility, and different-producer evidence.
 
 ## Experiments and kill criteria
 
@@ -258,12 +266,22 @@ need a typed origin/projection overlay; another ordered pass would encode the mi
 semantics as control flow. Independent review scored the slice 10/12 and approved the
 shadow milestone while explicitly rejecting production adoption or migration.
 
-**Next discrimination.** Add the still-missing natural missing-rule-but-keep-separate
-and outer-edge controls, design the origin/projection overlay, establish a clean
-locked cross-platform replay, and compare total complexity, composition semantics,
-and provenance with the legacy pipeline. The experiment remains defensive evidence
-scaffolding, not code to port wholesale; production should use a locked artifact
-bundle and smaller adapter. Kill adoption if the grid merely relocates complexity.
+The third shadow slice implements that overlay for the fully ruled hard set. One raw-
+rule connected-component resolver derives all 274 reviewed ranges, assigns all 790
+word occurrences, and jointly resolves Opus p.56 table 1 and raw Fable p.95 before
+comparing immutable extractor claims. Fable p.20 and Risk pp.79–80 remain no-ops;
+Fable p.94 blocks styled-token materialization; Risk p.115 remains a source-only true
+blank. Root replay passes 12/12, source reopening passes 10/10, and the compact replay
+rebuilds byte-identically. Independent review scored it 9/12: retain the shadow, do
+not adopt production.
+
+**Next discrimination.** Remove or independently justify the candidate-conditioned
+grid, add a natural absent-rule-but-keep-separate control, cover sparse and unruled
+tables plus style/link-aware serialization, and establish second-platform and
+different-producer replay. Before migration, regenerate every card and demonstrate
+measured net deletion of legacy decision logic. The experiment remains defensive
+evidence scaffolding, not code to port wholesale; kill adoption if the grid merely
+relocates complexity.
 
 ### X4 — different-producer probe
 

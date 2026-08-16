@@ -1228,3 +1228,47 @@ against the legacy path.
 This is shadow-generator research, not production or verifier authority. It changes
 no generator, canonical section, card, site, deployed output, or release behavior.
 No hosted run, production adoption, or output improvement is claimed.
+
+## D60 — raw-rule origin/projection composes the ruled hard set in shadow, not production (2026-08-16)
+
+Experiment 13's [origin/projection follow-up](experiments/13-table-candidate-shadow/origin-projection/README.md)
+tests the distinction identified by D59 without adding another topology-then-text
+pass. One generic resolver forms connected components from raw PDF horizontal and
+vertical rules, assigns raw PDF word occurrences by full-bbox containment, and only
+then compares that derived projection with immutable typed Docling claims. Reviewed
+ranges occur only in tests; accepted and generated Markdown are never inputs.
+
+**Evidence.** On the existing 10-case fully ruled hard set, the resolver derives
+274/274 reviewed cell ranges and assigns 790/790 source words exactly once. It jointly
+resolves Opus p.56 table 1's `Model` rowspan and `API, without a system prompt`
+ownership, and resolves raw Fable p.95 without calling the earlier topology or word-
+alignment transforms. Fable p.20 and Risk pp.79–80 remain no-ops. Fable p.94 assigns
+all words but blocks text materialization because its styled superscript cannot be
+flattened losslessly. Risk p.115 is a source-only, fully bounded true blank; no typed
+candidate exists there, so extractor origin remains explicitly unknown. Every input
+candidate and observed/adapter-gap claim remains unchanged.
+
+The root suite passes 12/12 and the pinned PyMuPDF source-reopening evidence suite
+passes 10/10. The compact replay rebuilds byte-identically at SHA-256
+`d255e733b26e9a811dbf629e72557c9b5b92a955a4709fd0d3d6c86bbc913b26`;
+source evidence is
+`37bdedacdaafdf77284c07ca39d88d350c40da89cb5cdec9b8a2634df1029a88`,
+the model is
+`089cc0d355c9535778ee79457f8dc7e5242aa8a383d184df80d3956a1d9a8924`,
+and the replay builder is
+`7fb111dd1e00e42fb6420fe57dc1fbdd364c60b03d765bc5ef281e964dbb9b5d`.
+Experiment 13 now has 66 main tests plus 15 source-reopening evidence tests; the
+legacy validator remains separately clean.
+
+**Decision.** Independent review scored the follow-up 9/12: **commit the shadow
+milestone, yes; production adoption, no**. The ruled-set composition result is strong
+enough to retain. It does not authorize a production model because the grid envelope
+and atomic edges remain candidate-conditioned, the corpus has no natural absent-rule-
+but-keep-separate negative, sparse/unruled tables are untested, style/link-aware
+serialization is absent, second-platform and different-producer replay are absent,
+all-card regeneration has not been attempted, and no measured net legacy deletion has
+been demonstrated.
+
+This decision changes no production module, canonical section, card, site, release
+gate, deployed output, or website content. No hosted run, full release, output
+improvement, push, or deployment is claimed by this documentation closeout.

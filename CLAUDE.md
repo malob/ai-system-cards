@@ -34,12 +34,12 @@ document-instance patches (D38–D48). This proves one pipeline only within Anth
 Google-Docs-export family. Other vendors' PDFs (different producers and visual
 grammars) remain untested. Phase-4 structural-authority integration is paused. The
 immediate task is the shadow table extraction/grid program in
-`docs/experiments/13-table-candidate-shadow/`: typed word-to-cell alignment now repairs
-isolated ownership errors with one source-bound primitive, but coupled topology and
-assignment defects expose a missing typed origin/projection overlay. Design and test
-that boundary without adding another ordered repair pass; add the still-missing
-natural controls, establish locked cross-platform replay, and compare net complexity
-before any production adoption. A different producer, clean
+`docs/experiments/13-table-candidate-shadow/`: a raw-rule origin/projection overlay now
+composes topology and word ownership for the fully ruled hard set without mutating
+extractor claims. Challenge its candidate-conditioned grid, add the missing natural
+absent-rule negative and sparse/unruled coverage, preserve style/link semantics,
+establish second-platform and different-producer replay, and prove all-card net legacy
+deletion before any production adoption. A different producer, clean
 bootstrap, every projection, and computed-browser visibility remain later
 architectural tests, not implied current capability.
 
@@ -199,8 +199,11 @@ integration and pulls the isolated table-candidate experiment forward. D59 recor
 its typed source-word alignment slice: 10 cases on nine pages, 790 PDF words and 274
 reviewed cell labels; 43 changes across four tables, three natural no-ops, and three
 fail-closed cases under deterministic two-run replay and 17/17 new tests. It remains
-shadow research with no hosted, deployed, production, card-content, or site-output
-effect.
+shadow research. D60 records the raw-rule origin/projection follow-up: 274/274 ranges
+and 790/790 words derived across the ruled set, joint resolution of Opus p.56 table 1
+and raw Fable p.95, 12/12 root plus 10/10 source-reopening tests, and an independent
+9/12 verdict of commit shadow yes / production no. Neither slice has any hosted,
+deployed, production, card-content, or site-output effect.
 Classes use independent digest-derived RNG streams, so adding one cannot resample the
 others:
 
