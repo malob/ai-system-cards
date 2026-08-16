@@ -3,10 +3,14 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-16 (D56 phase 3 deployed and certified). The live site is
-HEAD `3d7b851` (phase-3 implementation `75fd8b9` plus the mutation-timeout follow-up).
-Hosted fast release, Pages deployment, and exact replay of all three strict mutation
-baselines succeeded for that tree.
+**Last updated:** 2026-08-16 (D57 phase-4 structural-authority spike recorded). The
+phase-3 certification-docs baseline `5b752ae` was deployed; its final docs-only
+fast-release / Pages run
+[31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)
+passed. Phase-3 implementation and mutation certification remain unchanged. Phase 4
+is experimental and advisory: no structural finding or alignment result gates card
+content, although its observer unit tests run in the existing fast-release graph. It
+caused no output change.
 
 ## Current card gates
 
@@ -77,6 +81,20 @@ uses an allowed skip. Exact asset synchronization also prevents stale files from
 surviving an incremental build. These are authority and release-safety changes, not
 content edits.
 
+## Phase-4 structural-authority spike
+
+Phase 4 is a structural-family experiment, not an ST2 threshold patch. It is testing
+source-only tag and geometry observations against an independently parsed final DOM
+across occurrence, containment, topology, quote, and table-local cases. PDF tags are
+proposals, not omission authority.
+
+The eleven tracked records are replay candidates rather than executable fixtures. No
+structural finding or alignment result gates card content; observer unit tests do run
+in the existing release graph. The spike changed no generation, canonical, or
+published content. See
+[Experiment 12](experiments/12-structure-authority/README.md) for the canonical
+evidence, provisional census, exit criteria, and final reduced-tree validation.
+
 ## Mutation evidence
 
 The mutation suite now runs the Python source/canonical gates and the production
@@ -104,7 +122,7 @@ P2, F3, L2, body-critical, and footnote-critical class is 8/8 on every card wher
 applies. The remaining misses are concentrated where the evidence says they are:
 ST1/ST2/ST3, L1 occurrence coverage, S1 bold coverage, and ordinary two-word swaps
 that T1 can detect while intentionally leaving advisory. Phase 4 therefore remains
-ST2 hardening rather than another representation rewrite.
+structural-family authority work rather than another representation rewrite.
 
 Mutation artifacts are strict schema-v2 envelopes bound to the card, seed,
 trials/class, complete class/invariant set, aggregate counts, and per-trial evidence.
@@ -139,6 +157,12 @@ and major-blocking independently.
   [31928741823](https://github.com/malob/ai-system-cards/actions/runs/31928741823)
   was cancelled solely when Fable exceeded the old 30-minute job timeout; raising
   that operational limit to 45 minutes allowed the unchanged baseline to complete.
+- The subsequent certification-documentation baseline `5b752ae` was deployed.
+  Its docs-only fast-release / Pages run
+  [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)
+  passed. The phase-4 alignment remains advisory and made no canonical-content or
+  published-output change. Its observers are exercised by release tests, but their
+  structural findings do not yet gate cards.
 
 ## Durable process invariants
 
@@ -157,8 +181,10 @@ and major-blocking independently.
 
 ## Open / next
 
-- **Phase 4:** harden ST2 using the 16 sweep findings, known mutation misses, and
-  nearest-negative controls.
+- **Phase 4:** test the source-only structural constraint artifact, global token-
+  interval matcher, and bbox-local geometry fallback; then require executable 11/11
+  historical replay candidates plus clean mutations/current/nearest-negative controls
+  before blocking.
 - **Later authority work:** pin/cold-replay extraction (phase 5), serialize the
   observation/annotation boundary (phase 6), independently test table topology and a
   persistent grid (phases 7–8), then exercise clean bootstrap, every projection,
@@ -171,10 +197,11 @@ and major-blocking independently.
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D56),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D57),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). The immediate task is
-phase 4, not a whole-document IR migration. For a changed corpus, experiment 11 is the
+phase-4 structural-family integration, not an ST2 threshold patch or whole-document
+IR migration. For a changed corpus, experiment 11 is the
 regression-sweep template: changed pages plus renderer controls, the PDF as sole
 authority, and prompts that ask rather than assert the expected answer.

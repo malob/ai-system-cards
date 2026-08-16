@@ -1,0 +1,531 @@
+{
+  "schema_version": 1,
+  "record_kind": "source-bound-structure-investigation-and-replay-candidates",
+  "status": "investigation-notes-replay-candidates-not-executable",
+  "case_record_baseline_commit": "5b752ae",
+  "advisory_probe_binding": {
+    "source_observer": {
+      "tool": "PyMuPDF",
+      "version": "1.28.2",
+      "method": "TEXT_COLLECT_STRUCTURE",
+      "schema_version": 1
+    },
+    "dom_observer": {
+      "schema_version": 2,
+      "token_digest_method": "visible-list-tokens.sha256-json.v1"
+    }
+  },
+  "source_documents": {
+    "opus": {
+      "card": "anthropic/claude-opus-5",
+      "pdf": "cards/anthropic/claude-opus-5/source.pdf",
+      "sha256": "fed3c0e6d150a6ba855f0f117a632d2b27dbb5886fd42815caa92e3e20db1d25"
+    },
+    "risk": {
+      "card": "anthropic/risk-report-2026-08",
+      "pdf": "cards/anthropic/risk-report-2026-08/source.pdf",
+      "sha256": "d76815f8c0bd284a33c7017d642d0734ba903ae63f7c1e6ca7778b35b2c40fa4"
+    }
+  },
+  "inventory": {
+    "raw_major_reports": 16,
+    "deduplicated_defects": 10,
+    "classification_adjacent_siblings": 1,
+    "current_output_defects_observed_open_at_baseline": 0
+  },
+  "replay_candidates": [
+    {
+      "id": "opus-p044-lettered-page-marker",
+      "source_document": "opus",
+      "page": 44,
+      "section": "03-cyber.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/claude-opus-5/sections/03-cyber.md",
+        "line_start": 140,
+        "line_end": 142,
+        "text_anchor": "- a. <!-- p.44 -->On “The Last Ones,”"
+      },
+      "raw_report_count": 1,
+      "taxonomy": ["list-topology", "final-dom-structure", "page-marker-transparency"],
+      "report_provenance": [
+        "docs/experiments/10-opus5-sweep-round1/findings.jsonl:38",
+        "pipeline/.cache/opus-sweep1/findings-c2.jsonl:page-44"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "a.\u200bOn “The Last Ones,” an enterprise network attack simulation, ", "x0": 162.8, "y0": 72.0}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "lettered-list",
+        "ordered_type": "a",
+        "parent": "numbered-item-1",
+        "inside_quote": true,
+        "item_count": 3
+      },
+      "candidate_bad_replay": {
+        "commit": "72fbf459d8269fe070f27f9f3f1299ccfc77654b",
+        "input_kind": "markdown-mini-document",
+        "replay_fragment": "> 1. Parent item\n>    - <!-- p.44 -->a. On “The Last Ones,”\n>    - b. No model we have tested has solved “Doing Life”\n>    - c. Opus 5 did not solve “Cooling Tower”",
+        "observed_dom": {"list_tag": "ul", "literal_letter_prefixes": 3, "ordered_type": null}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"list_tag": "ol", "ordered_type": "a", "item_count": 3, "page_marker_inside_first_item": true}
+      },
+      "fix_commits": ["8509298c357311eb8e17344f99ff7265be9b3684"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "opus-p083-square-child-flattened",
+      "source_document": "opus",
+      "page": 83,
+      "section": "06a-alignment-1.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/claude-opus-5/sections/06a-alignment-1.md",
+        "line_start": 98,
+        "line_end": 99,
+        "text_anchor": "We applied an interpretability investigator agent equipped with a natural language autoencoder"
+      },
+      "raw_report_count": 2,
+      "taxonomy": ["st1-item-occurrence", "list-topology", "unrecognized-marker"],
+      "report_provenance": [
+        "docs/experiments/10-opus5-sweep-round1/findings.jsonl:77",
+        "docs/experiments/10-opus5-sweep-round1/findings.jsonl:194",
+        "pipeline/.cache/opus-sweep1/findings-c4.jsonl:page-83",
+        "pipeline/.cache/opus-sweep1/findings-l2.jsonl:06a-alignment-1.md"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "■\u200bWe applied an interpretability investigator agent equipped with a ", "x0": 162.0, "y0": 169.2}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "unordered-list-item",
+        "marker": "■",
+        "depth": 2,
+        "parent_text_anchor": "Claude Opus 5 did not disclose the rule violation to the user"
+      },
+      "candidate_bad_replay": {
+        "commit": "72fbf459d8269fe070f27f9f3f1299ccfc77654b",
+        "input_kind": "exact-contiguous-markdown-substring",
+        "replay_fragment": "Claude Opus 5 did not disclose the rule violation to the user ■ We applied an interpretability investigator agent equipped with a natural language autoencoder (NLA) to this transcript.",
+        "observed_dom": {"literal_marker": "■", "nested_list_items": 0, "child_merged_into_parent": true}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"literal_marker": null, "nested_list_items": 1, "child_depth": 2}
+      },
+      "fix_commits": ["8509298c357311eb8e17344f99ff7265be9b3684"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "opus-p083-peer-items-became-quotes",
+      "source_document": "opus",
+      "page": 83,
+      "section": "06a-alignment-1.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/claude-opus-5/sections/06a-alignment-1.md",
+        "line_start": 100,
+        "line_end": 104,
+        "text_anchor": "We also saw several instances of Claude Opus 5 attempting to bypass a network proxy"
+      },
+      "raw_report_count": 2,
+      "taxonomy": ["list-topology", "quote-ownership", "final-dom-structure"],
+      "report_provenance": [
+        "docs/experiments/10-opus5-sweep-round1/findings.jsonl:77",
+        "docs/experiments/10-opus5-sweep-round1/findings.jsonl:194",
+        "pipeline/.cache/opus-sweep1/findings-c4.jsonl:page-83",
+        "pipeline/.cache/opus-sweep1/findings-l2.jsonl:06a-alignment-1.md"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "○\u200bWe also saw several instances of Claude Opus 5 attempting to bypass a ", "x0": 126.0, "y0": 266.3}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "unordered-list-item",
+        "depth": 1,
+        "inside_quote": false,
+        "peer_item_count": 3
+      },
+      "candidate_bad_replay": {
+        "commit": "72fbf459d8269fe070f27f9f3f1299ccfc77654b",
+        "input_kind": "markdown-mini-document",
+        "replay_fragment": "- Parent item one\n\n> - We also saw several instances of Claude Opus 5 attempting to bypass a network proxy\n\n- Parent item two\n\n> - In one instance, Claude Opus 5 was tasked with solving an evaluation multiple-choice question\n\n- Parent item three\n\n> - In one instance, during an evaluation, an intermediate snapshot was logged out",
+        "observed_dom": {"blockquote_count": 3, "detached_single_item_lists": 3, "peer_depth": 0}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"blockquote_count": 0, "detached_single_item_lists": 0, "peer_depth": 1}
+      },
+      "fix_commits": ["8509298c357311eb8e17344f99ff7265be9b3684"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "opus-p104-word-o-child-flattened",
+      "source_document": "opus",
+      "page": 104,
+      "section": "06a-alignment-1.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/claude-opus-5/sections/06a-alignment-1.md",
+        "line_start": 466,
+        "line_end": 467,
+        "text_anchor": "Opus 5 partially refuses to assist with safety research in 11.1% of cases"
+      },
+      "raw_report_count": 2,
+      "taxonomy": ["st1-item-occurrence", "list-topology", "unrecognized-marker"],
+      "report_provenance": [
+        "docs/experiments/10-opus5-sweep-round1/findings.jsonl:98",
+        "docs/experiments/10-opus5-sweep-round1/findings.jsonl:194",
+        "pipeline/.cache/opus-sweep1/findings-c5.jsonl:page-104",
+        "pipeline/.cache/opus-sweep1/findings-l2.jsonl:06a-alignment-1.md"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "o\u200b", "x0": 162.8, "y0": 505.4},
+          {"text": "Opus 5 partially refuses to assist with safety research in 11.1% ", "x0": 180.8, "y0": 505.4}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "unordered-list-item",
+        "marker": "o",
+        "depth": 1,
+        "parent": "numbered-item-1"
+      },
+      "candidate_bad_replay": {
+        "commit": "72fbf459d8269fe070f27f9f3f1299ccfc77654b",
+        "input_kind": "markdown-mini-document",
+        "replay_fragment": "1. Parent result. o Opus 5 partially refuses to assist with safety research in 11.1% of cases.",
+        "observed_dom": {"literal_marker": "o", "nested_list_items": 0, "child_merged_into_parent": true}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"literal_marker": null, "nested_list_items": 1, "child_depth": 1}
+      },
+      "fix_commits": ["8509298c357311eb8e17344f99ff7265be9b3684"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "risk-p009-parentless-lettered-code-block",
+      "source_document": "risk",
+      "page": 9,
+      "section": "01-introduction.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/risk-report-2026-08/sections/01-introduction.md",
+        "line_start": 39,
+        "line_end": 40,
+        "text_anchor": "- a) The level of risk our systems pose"
+      },
+      "raw_report_count": 2,
+      "taxonomy": ["st1-item-occurrence", "list-topology", "final-dom-structure", "page-seam"],
+      "report_provenance": [
+        "docs/experiments/11-risk-report-sweep-round1/README.md:42",
+        "pipeline/.cache/rr-sweep1/findings-comp1.jsonl:page-9",
+        "pipeline/.cache/rr-sweep1/findings-lint1.jsonl:01-introduction.md"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "a)\u200bThe level of risk our systems pose over and above the risks posed by other AI ", "x0": 90.0, "y0": 72.0}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "lettered-list",
+        "ordered_type": "a",
+        "parent": "preceding-prose",
+        "depth": 0,
+        "item_count": 2
+      },
+      "candidate_bad_replay": {
+        "commit": "e94d7201356b1f6c8a343c6a42ef9d83b516cb87",
+        "input_kind": "markdown-mini-document",
+        "replay_fragment": "    - a) The level of risk our systems pose over and above the risks posed by other AI developers’ systems; and\n    - b) The level of risk that would be posed industry-wide",
+        "observed_dom": {"pre_count": 1, "list_count": 0, "literal_hyphen_letter_prefixes": 2}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"pre_count": 0, "list_tag": "ol", "ordered_type": "a", "item_count": 2}
+      },
+      "fix_commits": [
+        "cd5a21c44d152642eb36e65e8fbfbf97afef0088",
+        "e3521684fe81d91d69ed979ec36f7d8467c6c339"
+      ],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "risk-p042-taxonomy-detached-quote",
+      "source_document": "risk",
+      "page": 42,
+      "section": "02b-autonomy-misalignment-2.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/risk-report-2026-08/sections/02b-autonomy-misalignment-2.md",
+        "line_start": 79,
+        "line_end": 82,
+        "text_anchor": "Misalignment that **is not detectable** in post-training data"
+      },
+      "raw_report_count": 2,
+      "taxonomy": ["list-topology", "quote-ownership", "final-dom-structure"],
+      "report_provenance": [
+        "docs/experiments/11-risk-report-sweep-round1/README.md:42",
+        "docs/experiments/11-risk-report-sweep-round1/README.md:85-94",
+        "pipeline/.cache/rr-sweep1/findings-comp2.jsonl:page-42",
+        "pipeline/.cache/rr-sweep1/findings-lint1.jsonl:02b-autonomy-misalignment-2.md"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "a.\u200bPretraining misalignment: misaligned behavior learned solely in pretraining ", "x0": 126.0, "y0": 120.6},
+          {"text": "c.\u200bDeceptive alignment: the model is engaging in undetectable misaligned ", "x0": 126.0, "y0": 363.5}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "lettered-list",
+        "ordered_type": "a",
+        "parent": "numbered-item-2",
+        "inside_quote": false,
+        "item_count": 3
+      },
+      "candidate_bad_replay": {
+        "commit": "dc9444aa30dec2c4306bef7805fb740792bcf5a4",
+        "input_kind": "markdown-mini-document",
+        "replay_fragment": "2. Misalignment that is not detectable in post-training data:\n\n>    - a. Pretraining misalignment\n>    - b. Proxy misalignment\n>    - **c.** Deceptive alignment",
+        "observed_dom": {"blockquote_count": 1, "list_detached_from_parent": true, "list_tag": "ul", "literal_letter_prefixes": 3}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"blockquote_count": 0, "list_detached_from_parent": false, "list_tag": "ol", "ordered_type": "a", "item_count": 3}
+      },
+      "fix_commits": ["8d96f1a900943fa2c62b6991cc384fed0153ee46"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "risk-p042-bold-letter-visible-asterisks",
+      "source_document": "risk",
+      "page": 42,
+      "section": "02b-autonomy-misalignment-2.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/risk-report-2026-08/sections/02b-autonomy-misalignment-2.md",
+        "line_start": 82,
+        "line_end": 82,
+        "text_anchor": "- **c.** **Deceptive alignment:**"
+      },
+      "raw_report_count": 2,
+      "taxonomy": ["final-dom-structure", "list-marker-style", "visible-markup"],
+      "report_provenance": [
+        "docs/experiments/11-risk-report-sweep-round1/README.md:42",
+        "docs/experiments/11-risk-report-sweep-round1/README.md:85-94",
+        "pipeline/.cache/rr-sweep1/findings-comp2.jsonl:page-42",
+        "pipeline/.cache/rr-sweep1/findings-lint1.jsonl:02b-autonomy-misalignment-2.md"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "c.\u200bDeceptive alignment: the model is engaging in undetectable misaligned ", "x0": 126.0, "y0": 363.5}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "lettered-list-item",
+        "marker": "c.",
+        "marker_bold": true,
+        "literal_asterisks": false
+      },
+      "candidate_bad_replay": {
+        "commit": "dc9444aa30dec2c4306bef7805fb740792bcf5a4",
+        "input_kind": "markdown-mini-document",
+        "replay_fragment": "- **c. ** **Deceptive alignment:** the model is engaging in undetectable misaligned reasoning.",
+        "observed_dom": {"visible_text_prefix": "**c. **", "literal_asterisks": true}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"visible_text_prefix": "Deceptive alignment:", "literal_asterisks": false, "ordered_marker": "c"}
+      },
+      "fix_commits": ["8d96f1a900943fa2c62b6991cc384fed0153ee46"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "risk-p085-summary-enumeration-collapsed",
+      "source_document": "risk",
+      "page": 85,
+      "section": "02c-autonomy-misalignment-3.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/risk-report-2026-08/sections/02c-autonomy-misalignment-3.md",
+        "line_start": 364,
+        "line_end": 368,
+        "text_anchor": "Provide a brief summary of:"
+      },
+      "raw_report_count": 1,
+      "taxonomy": ["st1-item-occurrence", "st2-block-segmentation", "in-box-structure"],
+      "report_provenance": [
+        "docs/experiments/11-risk-report-sweep-round1/README.md:41",
+        "pipeline/.cache/rr-sweep1/findings-comp4.jsonl:page-85"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "Provide a brief summary of: ", "x0": 82.5, "y0": 435.2},
+          {"text": "1. What the environment's main task/goal is ", "x0": 82.5, "y0": 449.3},
+          {"text": "2. Whether you found any concerning goal specifications (YES or NO) ", "x0": 82.5, "y0": 463.4},
+          {"text": "3. If YES, specifically what language or structure is concerning and why ", "x0": 82.5, "y0": 477.5}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "ordered-list",
+        "parent": "Provide a brief summary of:",
+        "depth": 0,
+        "item_count": 3,
+        "inside_turn": true
+      },
+      "candidate_bad_replay": {
+        "commit": "e94d7201356b1f6c8a343c6a42ef9d83b516cb87",
+        "input_kind": "exact-contiguous-markdown-substring",
+        "replay_fragment": "Provide a brief summary of: 1. What the environment's main task/goal is 2. Whether you found any concerning goal specifications (YES or NO) 3. If YES, specifically what language or structure is concerning and why",
+        "observed_dom": {"paragraph_count": 1, "ordered_list_count": 0, "ordered_item_count": 0}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"lead_paragraph_count": 1, "ordered_list_count": 1, "ordered_item_count": 3}
+      },
+      "fix_commits": ["cd5a21c44d152642eb36e65e8fbfbf97afef0088"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "risk-p085-rubric-child-lists-flattened",
+      "source_document": "risk",
+      "page": 85,
+      "section": "02c-autonomy-misalignment-3.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/risk-report-2026-08/sections/02c-autonomy-misalignment-3.md",
+        "line_start": 346,
+        "line_end": 355,
+        "text_anchor": "1. <!-- p.85 -->**Broad world-optimization**"
+      },
+      "raw_report_count": 1,
+      "taxonomy": ["list-topology", "in-box-structure", "parent-child-ownership"],
+      "report_provenance": [
+        "docs/experiments/11-risk-report-sweep-round1/README.md:41",
+        "pipeline/.cache/rr-sweep1/findings-comp4.jsonl:page-85"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "1. Broad world-optimization: Does the environment incentivize the model to optimize ", "x0": 82.5, "y0": 83.2},
+          {"text": "●\u200b Maximize real-world impact or influence ", "x0": 100.5, "y0": 140.7},
+          {"text": "●\u200bTasks where accumulating resources, information, or capabilities could improve ", "x0": 100.5, "y0": 253.3}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "mixed-ordered-unordered-list",
+        "ordered_parent_count": 2,
+        "child_items_per_parent": 4,
+        "inside_turn": true
+      },
+      "candidate_bad_replay": {
+        "commit": "e94d7201356b1f6c8a343c6a42ef9d83b516cb87",
+        "input_kind": "markdown-mini-document",
+        "replay_fragment": "1. Broad world-optimization\n\n- Maximize real-world impact or influence\n- Affect many people or systems\n\n2. Power-seeking as instrumental goal\n\n- Tasks where accumulating resources could improve performance\n- Scenarios where having more control would help",
+        "observed_dom": {"ordered_list_segments": 2, "unordered_lists_at_parent_depth": 2, "unordered_lists_nested_in_parent": 0}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"ordered_list_segments": 1, "ordered_item_count": 2, "unordered_lists_nested_in_parent": 2}
+      },
+      "fix_commits": ["cd5a21c44d152642eb36e65e8fbfbf97afef0088"],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "risk-p155-table-cell-list-flattened",
+      "source_document": "risk",
+      "page": 155,
+      "section": "04b-chem-bio-2.md",
+      "inventory_role": "deduplicated-historical-defect",
+      "current_locator": {
+        "path": "cards/anthropic/risk-report-2026-08/sections/04b-chem-bio-2.md",
+        "line_start": 295,
+        "line_end": 295,
+        "text_anchor": "<ul><li>Restrictions on model behavior"
+      },
+      "raw_report_count": 1,
+      "taxonomy": ["st1-item-occurrence", "list-topology", "table-local-structure", "final-dom-structure"],
+      "report_provenance": [
+        "docs/experiments/11-risk-report-sweep-round1/README.md:39",
+        "docs/experiments/11-risk-report-sweep-round1/README.md:226-245",
+        "pipeline/.cache/rr-sweep1/findings-comp7.jsonl:page-155"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"text": "●\u200bRestrictions on model behavior, and/or ", "x0": 288.8, "y0": 244.3},
+          {"text": "●\u200bPrecautions against opportunistic theft of ", "x0": 288.8, "y0": 314.7}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "unordered-list",
+        "inside_table_cell": true,
+        "item_count": 2,
+        "lead_text": "This will likely require:"
+      },
+      "candidate_bad_replay": {
+        "commit": "e94d7201356b1f6c8a343c6a42ef9d83b516cb87",
+        "input_kind": "raw-table-cell-body",
+        "replay_fragment": "This will likely require: ● Restrictions on model behavior, and/or measures for quickly detecting and acting on Usage Policy violations, accompanied by a strong case that these measures are difficult to reliably, sustainably circumvent via jailbreaking. ● Precautions against opportunistic theft of model weights, such as centralized controls on third-party applications and software updates.",
+        "observed_dom": {"literal_bullet_count": 2, "unordered_list_count": 0, "unordered_item_count": 0}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"literal_bullet_count": 0, "unordered_list_count": 1, "unordered_item_count": 2}
+      },
+      "fix_commits": [
+        "cd5a21c44d152642eb36e65e8fbfbf97afef0088",
+        "6782a98ed3437fa418eaeb3458e8fe5b03b61a51"
+      ],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    },
+    {
+      "id": "risk-p113-table-cell-list-paragraphs-flattened",
+      "source_document": "risk",
+      "page": 113,
+      "source_pages": [113, 114],
+      "section": "03-automated-rd.md",
+      "inventory_role": "classification-adjacent-sibling",
+      "current_locator": {
+        "path": "cards/anthropic/risk-report-2026-08/sections/03-automated-rd.md",
+        "line_start": 288,
+        "line_end": 288,
+        "text_anchor": "<ul><li><p>No user or team of users"
+      },
+      "raw_report_count": 2,
+      "taxonomy": ["st1-item-occurrence", "list-topology", "table-local-structure", "item-paragraph-ownership"],
+      "report_provenance": [
+        "docs/experiments/11-risk-report-sweep-round1/README.md:39",
+        "docs/experiments/11-risk-report-sweep-round1/README.md:212-235",
+        "pipeline/.cache/rr-sweep1/findings-comp5.jsonl:page-113",
+        "pipeline/.cache/rr-sweep1/findings-lint2.jsonl:03-automated-rd.md"
+      ],
+      "source_evidence": {
+        "lines": [
+          {"page": 113, "text": "A frontier developer should make a strong argument ", "x0": 270.8, "y0": 162.8},
+          {"page": 113, "text": "●\u200bNo user or team of users (including those backed ", "x0": 270.8, "y0": 200.9},
+          {"page": 113, "text": "●\u200bEven malicious employees and other insiders with ", "x0": 270.8, "y0": 507.7},
+          {"page": 114, "text": "●\u200bAI models have not been deliberately or ", "x0": 270.8, "y0": 117.3},
+          {"page": 114, "text": "inadvertently trained with dangerous goals, or are ", "x0": 288.8, "y0": 130.2}
+        ]
+      },
+      "manual_source_shape_hypothesis": {
+        "role": "unordered-list",
+        "inside_table_cell": true,
+        "item_count": 3,
+        "items_have_follow_on_paragraphs": true,
+        "cross_page": true
+      },
+      "candidate_bad_replay": {
+        "commit": "e94d7201356b1f6c8a343c6a42ef9d83b516cb87",
+        "input_kind": "raw-table-cell-body",
+        "replay_fragment": "A frontier developer should make a strong argument that: ● No user or team of users (including those backed by top-tier states) will become significantly more likely to cause catastrophic harm via their usage of product surfaces or via theft of model weights. ● Even malicious employees and other insiders with maximal levels of access will not be significantly enabled to cause catastrophic harm. ● AI models have not been deliberately or inadvertently trained with dangerous goals, or are otherwise unlikely to autonomously cause catastrophic harm.",
+        "observed_dom": {"literal_bullet_count": 3, "unordered_list_count": 0, "unordered_item_count": 0, "follow_on_paragraph_ownership": false}
+      },
+      "candidate_current_control": {
+        "expected_dom": {"literal_bullet_count": 0, "unordered_list_count": 1, "unordered_item_count": 3, "follow_on_paragraph_ownership": true}
+      },
+      "fix_commits": [
+        "cd5a21c44d152642eb36e65e8fbfbf97afef0088",
+        "e3521684fe81d91d69ed979ec36f7d8467c6c339",
+        "6782a98ed3437fa418eaeb3458e8fe5b03b61a51"
+      ],
+      "status": "historical-defect-observed-fixed-at-baseline-replay-not-yet-executable"
+    }
+  ]
+}

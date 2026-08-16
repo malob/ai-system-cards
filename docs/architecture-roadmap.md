@@ -5,7 +5,7 @@ The immutable review record is under
 [`architecture-review-exchange/`](architecture-review-exchange/); D51 records the
 decision. Implementation and validation status live in [`state.md`](state.md). D55
 records phase 3's local implementation evidence; D56 records its hosted certification
-and deployment.
+and deployment; D57 records phase 4's advisory structural-authority spike.
 
 ## Bottom line
 
@@ -65,7 +65,7 @@ have since closed them.
 | Semantic zoning | `oracle.py` mixes low-level observations with body/footnote/table interpretation. | Re-zoning body text as footnote text produced a correlated false green. |
 | Tables | Output Markdown determines table scope, which weakens T1 over each table page and its neighbors. | About a quarter of each document receives reduced scrutiny; table topology has no independent source model. |
 | Severity | Token count stands in for semantic importance. Mutation results report detection, not whether release blocks. | Changed numbers, negations, and many two-token deletions can remain nonblocking. |
-| Structure (ST2) | List/structure blocking recall is weak against known sweeps and mutations. | Token-preserving structural errors can pass. |
+| Structural family | Item occurrence, containment, list topology, final-DOM semantics, and table-local structure have incomplete independent authority. | Token-preserving parent/depth/type/quote/table errors can pass or be hidden by a shared interpretation. |
 | Replay | Docling candidates and extractor/model provenance are untracked or unpinned, and caches lack sufficient invalidation. | Warm replay does not prove that cold extraction reproduces the candidate. |
 | Projections | Browser/export reconstruction is not comprehensively verified. | A canonical artifact can be correct while a published projection is wrong. |
 
@@ -77,7 +77,8 @@ and projection loops named above, but only within its written scopes. Source-bou
 and F3 replace shared omission authority; RF1 plus output-side footnote closure catch
 the demonstrated F18 shape; table attribution no longer lowers T1 severity; and V1
 rejects browser-hidden authored raw HTML before rendering. This does **not** close
-ST2, table topology, extractor/cache replay, the broader observation/annotation split,
+the structural family, table topology, extractor/cache replay, the broader
+observation/annotation split,
 computed-CSS/viewport visibility, every non-HTML projection, clean bootstrap, or a
 different PDF producer. Those remain assigned to phases 4–9 rather than being implied
 by a green phase-3 gate.
@@ -117,7 +118,7 @@ correctness repair.
 | 1 | Repair portable table-footnote semantics. | Full-card and section exports preserve one/many references, stable later numbering, definitions, and backlinks under the supported Markdown interpretation. |
 | 2 | Implement L2 from PDF `/GoTo` destinations through source/canonical hash binding, accepted source heading identity, generated targets, and an independently parsed final DOM. | Known wrong destinations and declared source defects replay correctly before L2 becomes blocking; stale expectation artifacts fail closed. |
 | 3 | Close immediate authority loops: F18 mutation harness, dangling definitions, source-page disposition, independent figure inventory, table-zone T1 ≥3, critical-token severity, separate detection/blocking metrics, and production-normalization contract. | Every new blocker is source-adjudicated; true defects are fixed and residuals are exact or narrowly evidenced. |
-| 4 | Harden ST2 with the 16 sweep findings, missed mutations, and nearest-negative controls. | Useful blocking recall without noisy control failures. |
+| 4 | Test source-only occurrence/containment/topology constraints, bind them to global token intervals, compare the independently parsed final DOM, and test bbox-local geometry fallback for missing or disputed tags. | All 11 replay candidates are executable and caught, deterministic structural mutations are caught, and current output plus nearest-negative controls remain clean before blocking. |
 | 5 | Pin/version table extraction, track candidate provenance, correct cache keys, and add fast replay plus cold scheduled/release extraction lanes. | Warm replay is deterministic; cold drift is either reproducible or explicit. |
 | 6 | Split observations from annotations at a serialized schema/view boundary without changing output. | Byte-identical generation and identical verifier findings. |
 | 7 | Run independent verifier and generator table experiments across ruled, filled, short-rule, and whitespace tables. | Measured decision on whether a persistent typed grid improves repairs/provenance and whether independent topology reaches useful recall. |
@@ -129,8 +130,8 @@ It intentionally changes one Fable p.99 canonical line from a dead empty-fragmen
 link to plain text under R2; Opus and Risk Report sections remain byte-identical.
 Hosted fast-gate, Pages, and three-card mutation runs all passed for phase 2.
 
-Phase 3 is deployed and certified at HEAD `3d7b851` (implementation `75fd8b9`;
-D55/D56). Hosted fast-release / Pages run
+Phase 3 is deployed and certified (implementation `75fd8b9`; hosted implementation
+HEAD `3d7b851`; D55/D56). Hosted fast-release / Pages run
 [31929997079](https://github.com/malob/ai-system-cards/actions/runs/31929997079)
 and mutation run
 [31929996953](https://github.com/malob/ai-system-cards/actions/runs/31929996953)
@@ -144,8 +145,25 @@ source/final-DOM lane verifies 676 page markers, 263 rendered figures, and 267 e
 source raster assets. Twenty-two newly blocking, PDF-reviewed table-order residuals
 are exact accepted T1 findings (25 accepted majors total across the corpus), not broad
 table immunity. Strict mutation floors separately preserve detection, intended-major
-severity, and major-blocking behavior. Phase 4 (ST2) is next. Phase 5 still owns
-complete extractor/cache provenance, and phase 9 still owns all-projection/bootstrap,
+severity, and major-blocking behavior. Certification documentation then landed and
+was deployed as baseline `5b752ae`; its docs-only fast-release / Pages run
+[31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)
+passed.
+
+Phase 4's first spike is advisory, not production integration. It reframes ST2 as a
+structural family: source tag and geometry proposals must be compared with an
+independently parsed final DOM across occurrence, containment, topology, quote, and
+table-local cases. The eleven records are replay candidates, not executable fixtures;
+PDF tags or suspicious context never authorize omission. See
+[Experiment 12](experiments/12-structure-authority/README.md) for the canonical
+detailed evidence and exit criteria.
+
+No structural finding or alignment result gates card content; observer unit tests do
+run in the existing release graph. Canonical content and published output did not
+change. Phase 4 still requires an executable replay harness, deterministic mutations,
+and clean current plus nearest-negative controls before it can block or be called
+complete. Final reduced-tree validation is recorded in Experiment 12. Phase 5 still
+owns complete extractor/cache provenance, and phase 9 still owns all-projection/bootstrap,
 computed-browser-visibility, and different-producer evidence.
 
 ## Experiments and kill criteria

@@ -1112,3 +1112,22 @@ Phase 3 is therefore deployed and certified, not merely implemented locally. It
 changed verification authority and release behavior, not card content: canonical
 sections remained unchanged and the complete built site, including Pagefind, remained
 byte-identical to pre-phase-3 HEAD. Phase 4 ST2 hardening is next.
+
+## D57 — phase 4 is a structural-family experiment, not an ST2 threshold patch (2026-08-16)
+
+The first spike found that the structural problem is broader than ST2's current
+physical-line threshold and table exclusions. The historical reports span occurrence,
+containment, list topology, final-DOM parsing, quote ownership, and table-local
+structure. Phase 4 should therefore test source-only structural proposals against an
+independently parsed final DOM, using geometry only as separately testable evidence;
+fallible PDF tags or suspicious context may widen review but never authorize omission.
+
+The eleven tracked records remain investigation notes and replay candidates, not
+executable fixtures or an evidence floor. Phase 4 remains advisory: no structural
+finding or alignment result gates card content, although observer unit tests run in
+the existing release graph. The spike changed no generation, canonical content, or
+published output. It may block only after an executable harness catches all eleven
+historical candidates and deterministic structural mutations while current-output and
+nearest-negative controls stay clean. Detailed evidence, provisional counts,
+reproduction commands, and final reduced-tree validation live in
+[Experiment 12](experiments/12-structure-authority/README.md).
