@@ -836,3 +836,41 @@ fixes; the owner adjudicates true editorial choices and performs the final scrol
 This decision supersedes D1's artifact
 mechanism and the incompatible mechanisms in D2/D7/D9/D10/D14, not the goals of
 typed structure, source provenance, or layered verification that motivated them.
+
+## D51 — strengthen verification authority before changing the canonical representation (2026-08-15)
+
+Settled through the adversarial two-model review recorded in
+`docs/architecture-review-exchange/`; the operating synthesis and experiment kill
+criteria are in `docs/architecture-roadmap.md`.
+
+**Finding.** The three-card mechanical generator is deterministic, byte-reproducible
+under measured current inputs, free of executable card-slug branches, and adequately
+served by Markdown as its accepted prose artifact. The dominant measured risk is
+instead correlated verification authority: site and CI card inventories diverge;
+generator and verifier share TOC, figure, table-scope, and semantic-zoning inputs;
+internal destinations and some structural mutations do not block; table pages receive
+broad T1 demotion; and candidate extraction/projection replay is incomplete. The
+published portable-Markdown table-footnote path has one demonstrated defect. No
+source-content defect was demonstrated in canonical sections or main HTML; 19 hidden
+table-zone residuals remain unadjudicated.
+
+**Decision.** Close release-inventory and portable-projection defects first, then
+strengthen independent expectations and split raw observations from derived
+annotations before broad refactoring. Keep PyMuPDF as the versioned primary
+born-digital observer, Docling as a pinned table-structure candidate, and tracked
+Markdown canonical for prose. Use separate fast replay and cold extraction CI lanes.
+An ambiguous-construct inventory may be adjudicated and tracked, but detector
+disagreement widens scrutiny and never weakens a general invariant.
+
+Do not adopt a whole-document semantic IR, `DoclingDocument`, Pandoc, a producer
+plugin layer, or a general rule DSL now. A persistent typed table grid is conditional
+on independent verifier/generator experiments showing material topology,
+repair, or provenance benefit. A whole-document IR is reconsidered only after a
+measured non-table projection/bootstrap/provenance failure that cannot be gated at a
+narrower boundary; absent such a trigger it is rejected, not indefinitely deferred.
+
+Every future rule or architecture claim must demonstrate mechanism and accepted or
+rendered consequence, check redundant semantic channels, distinguish a blind spot
+from a present defect, and attempt to refute itself. Rules require positive and
+nearest-negative fixtures, blocking mutation evidence, visible fire counts, and
+full-corpus replay before their scope grows.

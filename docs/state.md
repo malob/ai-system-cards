@@ -3,11 +3,13 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-15 (maintainer hardening, local and not pushed). The three
-document editions are live; the published corpus commit is `6fed282`. The current
-local series makes verification and deployment fail closed, commits three-card
-mutation floors, and reconciles the operational docs. Per D13, none of this
-maintenance series has been pushed.
+**Last updated:** 2026-08-15 (maintainer hardening and settled architecture review,
+local and not pushed). The three document editions are live; the published corpus
+commit is `6fed282`. The current local series makes verification and deployment fail
+closed, commits three-card mutation floors, and reconciles the operational docs. D51
+and [architecture-roadmap.md](architecture-roadmap.md) record the separately
+authorized next hardening program. Per D13, none of this maintenance series has been
+pushed.
 
 ## Status
 
@@ -52,6 +54,26 @@ described below are newer local work and are not deployed.
 
 No generated `sections/*.md` changed during this maintenance work.
 
+## Architecture review settled; implementation authorized (D51)
+
+An adversarial two-model review found that the current representation is not the
+first thing to replace. The three-card generator is deterministic and genuinely
+shared; the leading measured weakness is correlated authority between generation and
+verification. One present published defect was demonstrated: portable Markdown does
+not preserve table-only footnote semantics correctly. No source-content defect was
+demonstrated in canonical sections or the main HTML. Nineteen table-zone T1 residuals
+of at least three tokens remain source-unadjudicated.
+
+The owner authorized the implementation phase on 2026-08-15. The settled order starts
+with dynamic coverage of every site-discoverable card and the portable-footnote
+repair, then L2 destination verification and the remaining authority loops. Broader
+representation work is evidence-gated: keep Markdown canonical for prose, keep
+PyMuPDF as the primary versioned observer, treat Docling as a pinned table candidate,
+and introduce no whole-document IR unless narrower bootstrap/projection/provenance
+experiments fail. Full phases, experiments, and kill criteria are in
+[architecture-roadmap.md](architecture-roadmap.md). Implementation results and
+validation evidence are not yet recorded in this snapshot.
+
 ## Validation evidence for this series
 
 - Fresh no-cache baseline: all three full gates at the counts above; all seam audits
@@ -86,9 +108,11 @@ No generated `sections/*.md` changed during this maintenance work.
 - **Review/push decision for the local maintenance series.** No technical blocker is
   known, but the new CI can only be proven on GitHub-hosted runners after a push. Do
   not push without the owner's explicit instruction.
-- **Next architectural experiment:** onboard a document from a different vendor/PDF
-  producer. Three Anthropic Google-Docs-export documents prove within-family reuse,
-  not cross-vendor generality.
+- **Architecture hardening program:** execute the ordered work in
+  [architecture-roadmap.md](architecture-roadmap.md), beginning with release-inventory
+  coverage and portable table-footnote semantics. A different vendor/PDF producer is
+  still the decisive later test of cross-family rule scope, not the immediate first
+  task.
 - **Nonblocking policy question:** whether the web edition should annotate an
   internal destination that is already unresolvable in the source PDF remains open
   in `spec-rules.md`.
@@ -97,7 +121,8 @@ No generated `sections/*.md` changed during this maintenance work.
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D50),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D51),
+[architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). For a changed corpus,
 experiment 11 is the regression-sweep template: changed pages plus renderer controls,
