@@ -3,30 +3,32 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-15 (D51 phase 2 implemented locally). The three document
-editions are live at published commit `685cba6`. That commit contains the maintainer
-hardening and D51 phases 0–1; its hosted gate and deployment succeeded. The current
-working tree adds source-first L2 destination verification and an independent final-DOM
-link lane. Per D13, the L2 work has not been pushed or deployed.
+**Last updated:** 2026-08-15 (D51 phase 2 deployed). The phase-2 implementation
+commit `ff9b6e3` is live. Its hosted fast release gate, Pages deployment, and all three
+slower mutation-sensitivity jobs succeeded; the follow-up below only reconciles the
+repository snapshot with that result.
 
 ## Status
 
-- **fable-5: live; local L2 gate clean.** 3 exact owner-accepted T1 majors; 0
+- **fable-5: live; L2 gate clean.** 3 exact owner-accepted T1 majors; 0
   unsuppressed majors; `L1 34` / `T1 44` minors; L2 108/108 exact authored
   destinations, including 1 printed-heading recovery; 1 additional source link is
   unresolvable and correctly remains plain; seam 0.
-- **opus-5: live; local L2 gate clean.** 0 majors; `T1 13` minors; L2 54/54 exact
+- **opus-5: live; L2 gate clean.** 0 majors; `T1 13` minors; L2 54/54 exact
   authored destinations; seam 0.
-- **risk-report-2026-08: live; local L2 gate clean.** 0 majors; `FN1 1` (declared
+- **risk-report-2026-08: live; L2 gate clean.** 0 majors; `FN1 1` (declared
   orphan-ref source defect, D45) / `T1 22` / `TB2 1` minors; L2 121/121 exact logical
   destinations over 123 authored occurrences; seam 0.
 
-`HEAD` and `origin/main` were both `685cba6` before the local L2 work began. GitHub
-Pages run [31917054001](https://github.com/malob/ai-system-cards/actions/runs/31917054001)
-completed successfully for that exact commit: hosted card discovery, all three
-parallel full-gate + seam jobs, verifier tests, site tests/build, Pages build, and
-deployment all passed. This closes D52's hosted dynamic-matrix uncertainty for phases
-0–1. It is not evidence that the newer L2 work has been hosted.
+GitHub Pages run
+[31919737114](https://github.com/malob/ai-system-cards/actions/runs/31919737114)
+completed successfully for `ff9b6e3`: hosted card discovery, all three parallel full
+gates, fresh L2 artifact comparisons, seam audits, 38 verifier tests, 11 site tests,
+the full-page link audit/build, and deployment all passed. Mutation run
+[31919737009](https://github.com/malob/ai-system-cards/actions/runs/31919737009)
+then passed the committed floor independently for Fable, Opus, and the Risk Report.
+Live smoke checks returned HTTP 200 for the home page, all three cards, `llms.txt`, and
+Fable's `card.md`; the repaired p.99 text is present and `href="#"` is absent.
 
 ## Maintainer hardening landed and deployed (D49/D50)
 
@@ -55,10 +57,11 @@ deployment all passed. This closes D52's hosted dynamic-matrix uncertainty for p
    compiler and inspection loop.
 
 The D49/D50 maintenance changed no generated `sections/*.md`. Phase 2 intentionally
-changes exactly one Fable p.99 canonical line: the publisher-broken `[#]` link becomes
-plain text under R2. Opus and Risk Report sections remain byte-identical.
+changes exactly one Fable p.99 canonical line: the publisher-broken internal link,
+previously serialized with an empty `(#)` target, becomes plain text under R2. Opus
+and Risk Report sections remain byte-identical.
 
-## Architecture review settled; phases 0–2 implemented (D51–D53)
+## Architecture review settled; phases 0–2 deployed (D51–D54)
 
 An adversarial two-model review found that the current representation is not the
 first thing to replace. The three-card generator is deterministic and genuinely
@@ -69,7 +72,7 @@ demonstrated in canonical sections or the main HTML. Phase 2 later exposed the
 canonical dead-link projection defect recorded above. Nineteen table-zone T1
 residuals of at least three tokens remain source-unadjudicated.
 
-The owner authorized the implementation phase on 2026-08-15. Phases 0 and 1 are now
+The owner authorized the implementation phase on 2026-08-15. Phases 0 and 1 are
 deployed:
 
 - **Every publishable card is gated.** Production and CI consume one dependency-free
@@ -80,7 +83,7 @@ deployed:
   later numbering, and give repeated refs distinct backlinks. The main HTML path is
   byte-identical and canonical sections did not change.
 
-Phase 2 is implemented locally:
+Phase 2 is also deployed:
 
 - **L2 checks destination identity, not merely link existence.** It independently
   derives source links and accepted headings from the PDF, pairs canonical occurrences
@@ -125,7 +128,8 @@ Full phases, experiments, and kill criteria are in
   replay is 27/27; source expectations cover 285/285 authored occurrences. The Python
   suite is 38/38 and site tests are 11/11. The built-page audit sees 1,716 ids and
   1,506 fragment links with zero findings. The L2 artifacts fail closed on source or
-  canonical hash drift.
+  canonical hash drift. Runs 31919737114 and 31919737009 prove the fast release path
+  and all three slower mutation floors on hosted runners for `ff9b6e3`.
 
 ## Durable process invariants
 
@@ -158,7 +162,7 @@ Full phases, experiments, and kill criteria are in
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D53),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D54),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). For a changed corpus,

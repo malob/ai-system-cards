@@ -950,8 +950,8 @@ wrong-target fixtures replay 27/27 as occurrence-tied L2 majors. Site tests pass
 the production-page audit observes 1,716 ids and 1,506 fragment links with zero
 findings. The Python verifier suite passes 38/38. R2 raises Fable's truthful L1 minor
 baseline from 31 to 34 and intentionally changes one p.99 canonical line by rendering
-the publisher-broken `[#]` link as plain text. Opus and Risk Report sections, the
-other full-gate residuals, and all three zero-seam results are unchanged.
+the publisher-broken empty-fragment link as plain text. Opus and Risk Report sections,
+the other full-gate residuals, and all three zero-seam results are unchanged.
 
 `mutate.py` now includes `repoint-link`: it preserves a valid internal link and points
 it to a different existing heading, so an existence-only audit stays green while L2
@@ -965,3 +965,27 @@ count remain CI-enforced.
 This implements D51 phase 2 locally. Phase 3 is next; the L2 source hash does not by
 itself complete extraction/cache provenance (phase 5), and the internal-link DOM lane
 does not complete the all-projection/bootstrap work in phase 9.
+
+## D54 — Phase 2 is deployed after hosted fast and mutation gates (2026-08-15)
+
+The owner authorized a direct push after the local and independent adversarial gates
+were clean. Implementation commit `ff9b6e3` reached `origin/main`. GitHub Pages run
+[31919737114](https://github.com/malob/ai-system-cards/actions/runs/31919737114)
+completed successfully: dynamic card discovery, 38 verifier tests, 11 site tests and
+the production/full-page link build, all three full verifier gates, tracked L2
+artifact byte comparisons, all three seam audits, Pages packaging, and deployment
+passed for that exact commit.
+
+The deliberately separate, slower mutation run
+[31919737009](https://github.com/malob/ai-system-cards/actions/runs/31919737009)
+also completed successfully for all three cards. This proves the committed Fable
+95/104, Opus 80/96, and Risk Report 77/96 floors—including `repoint-link` at 8/8
+each—on hosted runners. Live smoke checks returned HTTP 200 for the home page, every
+card page, `llms.txt`, and Fable's `card.md`; Fable's repaired p.99 sentence is present
+as plain text and no `href="#"` remains on the page.
+
+D51 phase 2 is therefore deployed, not merely implemented locally. Phase 3 is next.
+The mutation workflow remains intentionally separate from the faster Pages dependency
+chain, and current `/GoTo` coverage is proven for the Anthropic Google-Docs-export
+family; a different producer remains a later portability test rather than an implied
+current capability.

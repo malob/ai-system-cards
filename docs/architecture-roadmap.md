@@ -112,12 +112,12 @@ correctness repair.
 | 8 | Replace page-wide table immunity with source-bbox attribution and exact or narrow residual acceptances. | Table membership enables table checks but never disables general checks. |
 | 9 | Test clean bootstrap, every export/DOM projection, and a different producer. | Evidence either justifies a broader representation/producer boundary or rejects it. |
 
-Phases 0–1 are deployed at `685cba6`; phase 2 is implemented locally (D53) and has not
-been pushed. It intentionally changes one Fable p.99 canonical line from a dead `[#]`
-link to plain text under R2; Opus and Risk Report sections remain byte-identical. Phase
-3 is next. L2's source hash is narrower than phase 5's complete extractor/cache
-provenance, and its internal-link DOM lane does not complete phase 9's all-projection/
-bootstrap work.
+Phases 0–1 are deployed at `685cba6`; phase 2 is deployed at `ff9b6e3` (D53/D54).
+It intentionally changes one Fable p.99 canonical line from a dead empty-fragment
+link to plain text under R2; Opus and Risk Report sections remain byte-identical.
+Hosted fast-gate, Pages, and three-card mutation runs all passed. Phase 3 is next.
+L2's source hash is narrower than phase 5's complete extractor/cache provenance, and
+its internal-link DOM lane does not complete phase 9's all-projection/bootstrap work.
 
 ## Experiments and kill criteria
 
