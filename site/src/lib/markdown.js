@@ -10,8 +10,205 @@ import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import { visit, SKIP } from 'unist-util-visit';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join, basename } from 'node:path';
+import { parseFragment } from 'parse5';
+
+export const GENERATED_FNREF_ATTRIBUTE = 'data-site-generated';
+export const GENERATED_FNREF_VALUE = 'fnref-shim-v1';
+
+const SOURCE_FIGURE_SKIP_PATTERN = /^<!--\s*figure\s+(p\d{3,}-[1-9]\d*\.png)\s+skipped\s*:\s*(\S[\s\S]*?)\s*-->$/i;
+const FORBIDDEN_RAW_TAGS = new Set([
+  'audio', 'base', 'canvas', 'embed', 'iframe', 'link', 'listing', 'meta', 'noembed',
+  'noframes', 'noscript', 'object', 'picture', 'plaintext', 'script', 'source', 'style',
+  'template', 'textarea', 'title', 'track', 'video', 'xmp',
+]);
+// Elements whose authored child text is suppressed or reduced to control UI by
+// the HTML user-agent stylesheet. Active/fallback containers (canvas, media,
+// noscript, template, etc.) are separately forbidden above.
+const BROWSER_HIDDEN_RAW_TAGS = new Set(['datalist', 'option', 'optgroup', 'rp', 'select']);
+const BROWSER_HIDDEN_RAW_CLASSES = new Set(['fnref-shim', 'sidenote']);
+const SOURCE_RAW_CLASSES = new Set(['hl', 'ph']);
+const MECHANICAL_RAW_CLASSES = new Set(['fn-html', 'fnref-shim', 'pagemark']);
+// Raw-HTML vocabulary observed in canonical source sections, plus explicitly
+// supported semantic containers whose visibility is checked below. Markdown
+// handles ordinary structure; raw HTML exists mainly for complex source tables
+// and documented inline transcription spans. New tags/attributes require a
+// semantic review instead of inheriting legacy browser presentation behavior
+// such as font[color] or table[bgcolor].
+const AUTHORED_RAW_ATTRIBUTES = new Map([
+  ['a', new Set(['href'])],
+  ['b', new Set()],
+  ['br', new Set()],
+  ['details', new Set(['open'])],
+  ['dialog', new Set(['open'])],
+  ['i', new Set()],
+  ['li', new Set()],
+  ['p', new Set()],
+  ['pre', new Set()],
+  ['rb', new Set()],
+  ['rt', new Set()],
+  ['rtc', new Set()],
+  ['ruby', new Set()],
+  ['small', new Set()],
+  ['span', new Set(['aria-hidden', 'class'])],
+  ['sub', new Set()],
+  ['sup', new Set()],
+  ['table', new Set()],
+  ['tbody', new Set()],
+  ['td', new Set(['colspan', 'rowspan'])],
+  ['th', new Set(['colspan', 'rowspan'])],
+  ['tr', new Set()],
+  ['u', new Set()],
+  ['ul', new Set()],
+]);
+
+export class AuthoredHtmlPolicyError extends Error {
+  constructor(finding) {
+    super('Authored HTML cannot hide semantic content');
+    this.name = 'AuthoredHtmlPolicyError';
+    this.code = 'BROWSER_HIDDEN_AUTHORED_CONTENT';
+    this.finding = finding;
+  }
+}
+
+function activeJavascriptUrl(value) {
+  return /^[\u0000-\u0020]*javascript:/i.test(
+    value.replace(/[\u0009\u000a\u000d]/g, ''),
+  );
+}
+
+function hiddenMechanism(tagName, attrs, classNames, mechanicalFnref) {
+  if (mechanicalFnref) return null;
+  if (Object.hasOwn(attrs, 'hidden')) return 'hidden-attribute';
+  if (Object.hasOwn(attrs, 'inert')) return 'inert-attribute';
+  if (attrs['aria-hidden']?.trim().toLowerCase() === 'true') return 'aria-hidden';
+  if (Object.hasOwn(attrs, 'popover')) return 'closed-popover';
+  if (tagName === 'details' && !Object.hasOwn(attrs, 'open')) return 'closed-details';
+  if (tagName === 'dialog' && !Object.hasOwn(attrs, 'open')) return 'closed-dialog';
+  if (BROWSER_HIDDEN_RAW_TAGS.has(tagName)) return `browser-hidden-${tagName}`;
+  if (tagName === 'input' && attrs.type?.trim().toLowerCase() === 'hidden') {
+    return 'hidden-input';
+  }
+  const hiddenClass = classNames.find((className) => BROWSER_HIDDEN_RAW_CLASSES.has(className));
+  if (hiddenClass && !(hiddenClass === 'fnref-shim' && mechanicalFnref)) {
+    return `site-hidden-class:${hiddenClass}`;
+  }
+  return null;
+}
+
+function inspectRawHtml(value, {
+  allowMechanical = false,
+  allowHiddenForAudit = false,
+} = {}) {
+  const exactComment = /^\s*<!--[\s\S]*-->\s*$/.test(value);
+  if (!exactComment && /<\/?article\b/i.test(value)) {
+    throw new Error('Authored HTML cannot cross the article boundary');
+  }
+  let foundMechanicalFnref = false;
+  const walk = (rawNode) => {
+    if (rawNode.tagName) {
+      const attrs = Object.fromEntries(
+        (rawNode.attrs ?? []).map(({ name, value: attributeValue }) => [name, attributeValue]),
+      );
+      const classNames = (attrs.class ?? '').split(/\s+/).filter(Boolean);
+      const generatedFnref = allowMechanical
+        && rawNode.tagName === 'span'
+        && attrs.class === 'fnref-shim'
+        && attrs[GENERATED_FNREF_ATTRIBUTE] === GENERATED_FNREF_VALUE
+        && Object.keys(attrs).length === 2;
+      // Portable Markdown is a public string artifact created by portableBody,
+      // so it retains its historical exact hidden shim shape. Production site
+      // input is provenance-gated before transformation; this compatibility
+      // shape is therefore never a way for authored card Markdown to enter.
+      const portableFnref = allowMechanical
+        && rawNode.tagName === 'span'
+        && attrs.class === 'fnref-shim'
+        && Object.hasOwn(attrs, 'hidden')
+        && Object.keys(attrs).length === 2;
+      const mechanicalFnref = generatedFnref || portableFnref;
+      foundMechanicalFnref ||= generatedFnref;
+      if (
+        classNames.includes('source-figure-skip')
+        || Object.hasOwn(attrs, 'data-figure')
+        || Object.hasOwn(attrs, 'data-reason-sha256')
+      ) {
+        throw new Error('Authored HTML contains active or reserved projection markup');
+      }
+      if (
+        rawNode.namespaceURI !== 'http://www.w3.org/1999/xhtml'
+        || FORBIDDEN_RAW_TAGS.has(rawNode.tagName)
+        || Object.keys(attrs).some((name) => /^on/i.test(name))
+        || Object.hasOwn(attrs, 'background')
+        || Object.hasOwn(attrs, 'poster')
+        || (rawNode.tagName === 'input' && attrs.type?.trim().toLowerCase() === 'image')
+        || Object.entries(attrs).some(([name, attributeValue]) => (
+          ['action', 'formaction', 'href', 'src', 'xlink:href'].includes(name)
+          && activeJavascriptUrl(attributeValue)
+        ))
+      ) {
+        throw new Error('Authored HTML contains active or reserved projection markup');
+      }
+      const mechanism = hiddenMechanism(rawNode.tagName, attrs, classNames, mechanicalFnref);
+      if (mechanism && !allowHiddenForAudit) {
+        throw new AuthoredHtmlPolicyError({
+          kind: 'browser-hidden-authored-content',
+          mechanism,
+          tagName: rawNode.tagName,
+        });
+      }
+      if (!allowMechanical) {
+        const allowedAttributes = AUTHORED_RAW_ATTRIBUTES.get(rawNode.tagName);
+        const unsupportedAttribute = allowedAttributes
+          ? Object.keys(attrs).find((name) => !allowedAttributes.has(name))
+          : null;
+        const unsupportedClass = classNames.find((className) => !SOURCE_RAW_CLASSES.has(className));
+        if (!allowedAttributes || unsupportedAttribute || unsupportedClass) {
+          throw new AuthoredHtmlPolicyError({
+            kind: 'browser-hidden-authored-content',
+            mechanism: !allowedAttributes
+              ? `untrusted-presentation-tag:${rawNode.tagName}`
+              : unsupportedAttribute
+                ? `untrusted-presentation-attribute:${rawNode.tagName}.${unsupportedAttribute}`
+                : `untrusted-presentation-class:${unsupportedClass}`,
+            tagName: rawNode.tagName,
+          });
+        }
+      }
+      const allowedClasses = allowMechanical
+        ? new Set([...SOURCE_RAW_CLASSES, ...MECHANICAL_RAW_CLASSES])
+        : SOURCE_RAW_CLASSES;
+      if (
+        (!allowHiddenForAudit && classNames.some((className) => !allowedClasses.has(className)))
+        || (Object.hasOwn(attrs, GENERATED_FNREF_ATTRIBUTE) && !mechanicalFnref)
+        || (Object.hasOwn(attrs, 'style') && !allowHiddenForAudit)
+      ) {
+        throw new Error('Authored HTML contains active or reserved projection markup');
+      }
+    }
+    for (const child of rawNode.childNodes ?? []) walk(child);
+    if (rawNode.content) walk(rawNode.content);
+  };
+  walk(parseFragment(value));
+  return { foundMechanicalFnref };
+}
+
+/** Fail before site transforms can make authored raw HTML indistinguishable. */
+export function assertSafeAuthoredMarkdown(markdown) {
+  if (typeof markdown !== 'string') throw new TypeError('markdown must be a string');
+  const tree = unified().use(remarkParse).use(remarkGfm).parse(markdown);
+  visit(tree, 'html', (node) => {
+    try {
+      inspectRawHtml(node.value ?? '');
+    } catch (error) {
+      if (error instanceof AuthoredHtmlPolicyError && node.position?.start?.offset !== undefined) {
+        error.finding.offset = node.position.start.offset;
+      }
+      throw error;
+    }
+  });
+}
 
 // PNG IHDR: width/height as big-endian u32 at offsets 16/20
 function pngSize(path) {
@@ -62,6 +259,40 @@ function remarkBoxes() {
         data: { hName: 'div', hProperties: { className: ['box-label'] } },
         children: [{ type: 'text', value: label }],
       });
+    });
+  };
+}
+
+// Turn a real Markdown HTML-comment node documenting an authorized raster
+// omission into immutable final-DOM evidence. Code/fence contents are not HTML
+// nodes, so comment-looking examples cannot forge a sentinel. The independent
+// built-page audit binds both filename and normalized reason digest to the
+// source-inventory allow-skip entry.
+function remarkSourceFigureSkips({ allowHiddenAuthoredHtmlForAudit = false } = {}) {
+  return (tree) => {
+    visit(tree, 'html', (node) => {
+      const match = SOURCE_FIGURE_SKIP_PATTERN.exec(node.value ?? '');
+      if (match) {
+        const filename = match[1];
+        const reason = match[2].trim();
+        const page = Number(/^p(\d+)-/.exec(filename)[1]);
+        const digest = createHash('sha256').update(reason).digest('hex');
+        node.value = (
+          `<span hidden class="source-figure-skip" data-figure="${filename}" data-page="p.${page}" `
+          + `data-reason-sha256="${digest}"></span>`
+        );
+        return;
+      }
+      const { foundMechanicalFnref } = inspectRawHtml(node.value ?? '', {
+        allowMechanical: true,
+        allowHiddenForAudit: allowHiddenAuthoredHtmlForAudit,
+      });
+      if (foundMechanicalFnref) {
+        node.value = node.value.replace(
+          ` ${GENERATED_FNREF_ATTRIBUTE}="${GENERATED_FNREF_VALUE}"`,
+          '',
+        );
+      }
     });
   };
 }
@@ -416,6 +647,9 @@ export async function renderCard(markdown, opts = {}) {
     .use(remarkChips, chips)
     .use(remarkLetterLists)
     .use(remarkBoxes)
+    .use(remarkSourceFigureSkips, {
+      allowHiddenAuthoredHtmlForAudit: opts.allowHiddenAuthoredHtmlForAudit === true,
+    })
     .use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: 'Footnotes' })
     .use(rehypeRaw)
     .use(rehypeSmartQuotes)

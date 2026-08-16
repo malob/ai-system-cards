@@ -2,9 +2,10 @@
 
 The spine of v2 (charter principle 1): every way the output can be wrong is mapped
 to the mechanism that catches it. Invariant IDs are stable and referenced from
-experiments, code, and the decision log. The oracle for all mechanical checks is
-the structure-aware extraction (brief §4.1); where the extractor is the weak link,
-that's noted, and the bake-off (experiment 02) is what firms it up.
+experiments, code, and the decision log. The archived PDF is the content authority;
+PyMuPDF/docling observations, generator annotations, canonical Markdown, and rendered
+DOM are distinct claims with distinct scopes. Where an observer is the weak link,
+that boundary is stated rather than promoted to source truth.
 
 This file is both a defect-catcher catalog and an implementation ledger. The
 invariant descriptions state the intended ownership boundary; **Calibration status**
@@ -39,6 +40,10 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
    a pass-through. S2 reads the manifest's chip colors/labels; broader signal
    closure is census- and inspection-owned because N1 did not ship. Nothing about
    a specific vendor's idioms is hardcoded in the invariants.
+7. **A weaker acceptance file cannot override a stronger authority.** Generic exact
+   `accepted.json` entries are forbidden for L2, P2, F3, RF1, and V1. P2/F3/RF1
+   exceptions, where meaningful, live only in exact source-hash/tool/schema-bound
+   inventory or disposition files; L2 and V1 permit no generic exception.
 
 ## Invariants
 
@@ -50,12 +55,17 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
   real failure mode even though the one cataloged instance, CA-01, was later
   retracted). Projection-known fields that are legitimately not source text
   (figure alt text, slugs/ids) are excluded by construct, not an arbitrary text
-  allowlist.
+  allowlist. Every difference of at least three tokens is major. A one- or two-token
+  difference is also major when its local ordered semantic atoms change a number,
+  date, unit/currency, negation, or quantified comparator. Full text SHA-256 and token
+  counts bind each opcode; readable samples may be truncated but acceptance identity
+  cannot be.
 - **T2 — Order.** T1 is sequence-sensitive (alignment diff, not set membership):
   reading order is compared with the oracle's. A paired same-text insertion/deletion
-  within ±2 pages becomes a minor displacement; where extraction order is unreliable,
-  all T1 differences on the table spill set (each table-attributed page plus adjacent
-  pages) are also minors. TB2 plus the inspection sweeps own those residuals.
+  within ±2 pages becomes a minor displacement only when the complete digest and token
+  count agree. Table attribution is retained as diagnostic `zone: table` metadata but
+  no longer lowers severity: a table page cannot make arbitrary source/output loss
+  harmless. TB2 plus the inspection sweeps remain independent table-local backstops.
 
 ### L — Links (gates)
 
@@ -134,17 +144,49 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
 - **F1 — Figure-count coverage.** Per-page extracted-figure counts are compared
   with markdown image counts plus declared `figure ... skipped` comments; a pure
   ±1-page count shift is a minor. The gate does not compare image identity,
-  bbox/reading-order placement, or alt text; those remain inspection-owned.
+  bbox/reading-order placement, or alt text. It remains a useful legacy projection
+  check but is no longer the source authority.
 - **F2 — Captions (inspection-owned today).** Caption text and styling are covered
   by T1/S1; association with the right figure is checked in the page sweeps.
+- **F3 — Source raster identity and final projection.** A fresh, PDF-hash- and
+  observer-bound source inventory observes every raw raster occurrence directly and
+  checks `figures-map.json` plus every local PNG's filename, dimensions, decoded pixel
+  identity, alpha/soft-mask status, and file hash. Every occurrence is required by
+  default; duplicate draws and allowed skips require exact reviewed observations in
+  `source-inventory.json`. The tracked `source-projection.json` carries required
+  figure identity/order and accepted-skip reason digests into the production renderer.
+  The HTML5-normalized article must contain each required visible figure exactly once,
+  under the correct source-page context and in exact interleaved event order; copied
+  build assets must have the exact source-bound bytes, with no missing or extra files.
+  Missing/stale/malformed inventory, map, asset, artifact, sentinel, or DOM evidence is
+  major. Alt text, caption association, vector artwork, and visual layout remain
+  outside F3.
 
 ### FN — Footnotes (gates)
 
 - **FN1 — References and bodies.** The gate compares document-wide reference
   counts, requires each markdown reference to have a definition in its section,
-  and compares body text per footnote number. Body-text mismatches are advisory
-  minors until oracle boundaries harden; superscript positions are not compared.
-  Declared source-orphan references are reported as minors.
+  rejects each definition with no reference in that same independently publishable
+  section, and compares body text per footnote number. The section-local dangling-
+  definition major is an output-side structural check that does not consult semantic
+  source zones; it closes the demonstrated F18 correlated false green. Ordinary body-
+  text mismatches remain advisory minors until oracle boundaries harden, but changed
+  numbers, dates, units/currencies, negations, or quantified comparators are major.
+  Declared source-orphan references are reported as minors by the legacy lane.
+
+### RF — Raw-PDF footnotes (gates)
+
+- **RF1 — Occurrence-bound raw reference/definition authority.** A separate observer
+  reopens `source.pdf` without importing `oracle.py` or generator `zone`/`fn`
+  annotations. It observes numeric superscript reference glyphs and smaller,
+  left-margin numeric definition markers in a contiguous bottom-of-page small-type
+  region, then binds source and canonical occurrences one-to-one by section, number,
+  page proximity, order, and concrete source bbox. Definitions and normalized body
+  text are bidirectional requirements; duplicate, missing, ambiguous, stale, or
+  mismatched evidence is major. Exact exclusions require a disposition bound to the
+  PDF SHA-256, observer schema, PyMuPDF version, and source occurrence. Scope is
+  intentionally narrow: numeric superscripts with numeric definitions beginning on
+  the same or adjacent page are covered; symbol/letter markers and endnotes are not.
 
 ### P — Provenance (gates)
 
@@ -153,6 +195,17 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
   serialized markers are majors. The current gate does not reject unexpected
   markers, compare marker order, or treat a marker that repeats an implicit section
   start as a duplicate. Page-local checks provide the practical attribution backstop.
+- **P2 — Source-page disposition and final-DOM event identity.** A fresh PDF
+  observation requires every page by default. Cover/TOC/blank exclusions exist only
+  in a checked-in `source-inventory.json` bound to the source SHA-256, PyMuPDF version,
+  observer schema, exact page observation, and written reason. Generator `toc_pages`
+  is merely a claim checked against that authority. The hash-bound source-projection
+  artifact then requires every content page marker exactly once, in source order and
+  in the exact interleaved page/figure event stream of the HTML5-normalized built
+  article. Unexpected, excluded, duplicated, reordered, malformed, or missing markers
+  and stale/malformed authority are majors. P2 complements rather than deletes P1;
+  P1 remains useful on partial/historical projections where the full source-to-DOM
+  graph is unavailable.
 
 ### SC — Schema and projection (pre-build design target)
 
@@ -160,9 +213,12 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
   transient block dictionaries feed the markdown serializer directly.
 - **SC2 — Projection health.** The clean Astro/Pagefind production build exercises
   HTML, `card.md`, and `llms.txt`. L2 mechanically checks internal-link fidelity in
-  serialized article HTML and the complete rendered-page fragment graph; other
-  projection semantics remain in export tests and the sweep layer rather than a named
-  `SC2` Python invariant.
+  serialized article HTML and the complete rendered-page fragment graph. P2/F3 verify
+  source-bound page/figure identity, order, and copied source bytes in the same built
+  HTML. V1 rejects browser-hidden authored raw HTML before renderer transforms. Other
+  portable-export semantics remain in export tests and the sweep layer rather than a
+  named `SC2` Python invariant; search/social output, computed browser layout, and
+  every projection mutation remain phase 9 work.
 
 ### N — Semantic judgment (pre-build design target; replaced in practice)
 
@@ -177,12 +233,26 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
   not used in the built converter; the rulebook-driven agent sweeps and owner
   adjudication now own these calls.
 
-### V — Visual (pre-build advisor target; not shipped)
+### V — Browser visibility (gate at the authored-HTML boundary)
 
-- **V1 — Page-level visual diff.** The planned automated advisor would compare each
-  rendered page region against the PDF page image and enumerate discrepancies. It
-  did not ship as a standing tool; independent page/markdown/DOM sweeps and the
-  owner scroll are the implemented visual layer.
+- **V1 — Authored semantic content may not use browser-hidden raw HTML.** Before
+  renderer transforms can make provenance ambiguous, the production Markdown parser
+  examines authored HTML with HTML5 fragment parsing. It rejects `hidden`, `inert`,
+  `aria-hidden=true`, closed popovers/details/dialogs, hidden input/control containers,
+  browser-hidden control elements, and the site's hidden semantic classes unless an
+  exact renderer-generated footnote shim is in the trusted transform lane. Active or
+  reserved markup, event handlers, inline style, JavaScript URLs, article-boundary
+  crossing, and forged source-projection sentinels are rejected separately. The
+  mutation worker converts the structured `browser-hidden-authored-content` finding
+  into a blocking V1 result while continuing the DOM audit over the same supplied
+  bytes. Generic acceptance is forbidden. This is not computed CSS or visual layout:
+  responsive stylesheets, clipping, occlusion, stacking, and viewport-specific
+  visibility remain phase 9 plus the independent sweeps/owner scroll.
+
+The old pre-build plan also called its unshipped automated page-image diff “V1.” D55
+supersedes that unused design label with the executable visibility contract above.
+No standing pixel-diff judge shipped; page/Markdown/DOM sweeps and the owner scroll
+remain the visual-comparison layer.
 
 ### H — Human (the bounded remainder)
 
@@ -205,14 +275,18 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
 | A5 | drop list bullet glyphs from token streams  | list structure is checked separately by ST |
 
 Explicitly **not** normalized: quote style (curly stays curly — FL-05 is solved by
-fidelity, not render patching), dashes, unicode beyond NFC. Mojibake (CA-02) must
-fail T1.
+fidelity, not render patching), non-breaking hyphens, dashes, and unicode beyond NFC.
+NBSP participates only as ordinary A2 Unicode whitespace; it is not a hidden
+calibration fold. Historical defect replay may opt into its old quote/hyphen folds,
+but the production gate may not. Mojibake (CA-02) must fail T1.
 
 ## Exclusion list (v0)
 
 - Running headers/footers and bare page numbers (derived per-card; derivation
   checked for cross-page consistency).
-- PDF TOC pages (the site generates its own TOC) — declared per card in metadata.
+- PDF cover/TOC/blank pages (the site generates its own TOC) — exact observations and
+  reasons in the source-hash/tool/schema-bound `source-inventory.json`. Per-card
+  metadata is only a checked claim and cannot authorize an exclusion by itself.
 - Raster-internal chart text remains pixels in the retained image and therefore has
   no PDF text-layer spans to compare. Text-layer overlays are not excluded merely
   because they overlap an image bbox; vector-chart furniture remains an oracle/
@@ -222,9 +296,9 @@ fail T1.
 
 | defect          | caught by         | defect    | caught by      |
 |-----------------|-------------------|-----------|----------------|
-| PM-01…05        | P1 (limited scope) + sweeps | FL-04     | S1             |
-| PM-06           | L2 final-DOM audit; P1 marker subset | FL-05 | T1 (no-normalize rule) |
-| PM-07           | build + sweeps    | FL-06     | build + sweeps |
+| PM-01…05        | P2 final-DOM event stream; P1 partial backstop + sweeps | FL-04 | S1 |
+| PM-06           | L2/P2 final-DOM audits | FL-05 | T1 (no-normalize rule) |
+| PM-07           | V1 + build + sweeps | FL-06 | build + sweeps |
 | FL-01           | L1 + L2 canonical/final-DOM gates | CA-01  | retracted (exp 04); T1 stays bidirectional |
 | FL-02           | S2, S3            | CA-02     | T1             |
 | FL-03           | sweeps + H1        | RN-01/02  | build + sweeps |
@@ -232,7 +306,7 @@ fail T1.
 
 ## Calibration status
 
-Current as of 2026-08-15 (D49/D50/D53). Historical v0 calibration evidence remains in
+Current as of 2026-08-15 (D49/D50/D53/D55). Historical v0 calibration evidence remains in
 [experiment 04](experiments/04-verifier-calibration/README.md); current mutation
 artifacts and per-class counts are in
 [experiment 05](experiments/05-mutation-testing/README.md).
@@ -240,35 +314,50 @@ artifacts and per-class counts are in
 - **Executable mechanical checks:** T1/T2, L1 (document-wide source URI
   occurrence coverage + GoTo anchor-text/source-defect coverage), L2 (exact
   source→canonical destination identity plus hash-bound final-DOM projection), S1,
-  S2/S3, ST1/ST2/ST3, TB2, P1, F1, and FN1.
+  S2/S3, ST1/ST2/ST3, TB2, P1/P2, F1/F3, FN1/RF1, and V1.
   `calibrate.py WORKTREE` exits 1 on any unsuppressed major. That unfiltered current
   form also rejects malformed, duplicate, non-major, fingerprint-mismatched, or stale
   owner acceptances with exit 2. Partial/historical runs validate configuration but
   do not require out-of-scope acceptances to appear. `--report-only` relaxes majors
-  only.
-- **Current full-gate baselines:** Fable suppresses 3 exact owner-accepted T1
-  majors and reports `L1 34` / `T1 44` minors; Opus reports `T1 13`; the Risk
-  Report reports `FN1 1` / `T1 22` / `TB2 1`. All have 0 unsuppressed majors and
-  seam 0. L2 has zero majors at 108 Fable and 54 Opus authored destinations, plus
-  121 Risk Report logical destinations over 123 authored occurrences; all 285
-  authored occurrences have source expectations. The full operational record lives
-  in `CLAUDE.md` and `state.md`.
-- **Mutation floors (8/class, seed 5):** Fable 95/104 across 13 eligible classes;
-  Opus 80/96 and Risk Report 77/96 across 12 each (`flatten-chip` not applicable).
-  The L2 `repoint-link` class is 8/8 on all three cards. Exact class set, invariant,
-  sample count, and non-decreasing caught count are CI-enforced. Each class has its
-  own seed-derived deterministic RNG, so adding a class cannot resample the others.
-  Details are retained as evidence but excluded from the floor because source edits
-  can still move a deterministic sample without changing recall.
-- **Advisory/inspection boundaries:** T1 differences on the table spill set, FN1
-  body differences, and seam-merged TB2 findings can be minors. S1 and ST skip that
-  same whole-page spill set. L1 still does not bind individual `/URI` occurrences to
-  source anchors/pages; L2 owns internal `/GoTo` occurrence/target identity and final
-  DOM integrity. S1 does not check italics; F1 is count-only; P1 is presence/duplicate-
-  marker coverage rather than a complete provenance proof. TB1/F2 and broader visual
-  semantics remain inspection-owned; the sweep and owner scroll layers are mandatory
-  backstops, not optional polish.
+  only. Generic acceptance rejects L2/P2/F3/RF1/V1 entries before matching.
+- **Current full-gate baselines:** Fable suppresses 20 exact accepted T1 majors—3
+  historical owner-adjudicated visual-order findings plus 17 maintainer/source-
+  adjudicated table-order findings under the owner's broad authorization—and reports
+  `L1 34` / `T1 28` minors; Opus suppresses 4 maintainer/source-adjudicated exact T1
+  majors and reports `T1 9`; the Risk Report suppresses 1 such exact T1 major and
+  reports `FN1 1` /
+  `T1 21` / `TB2 1`. All have 0 unsuppressed majors and seam 0. The 22 new
+  acceptances are PDF-reviewed table-order projection residuals exposed by removing
+  blanket demotion; the three older Fable findings retain their prior visual-order
+  adjudication. L2 remains clean at 108 Fable and 54 Opus authored destinations, plus
+  121 Risk Report logical destinations over 123 authored occurrences. P2/F3 require
+  309 pages/151 figures for Fable, 187/98 for Opus, and 180/14 for Risk: the built DOM
+  totals 676 page markers and 263 rendered figures, while the copied asset set contains
+  267 exact source rasters. RF1 is clean at raw ref/definition counts 76/76, 36/36,
+  and 93/92 respectively; Risk's difference is the one exact p.126 source-artifact
+  disposition.
+- **Mutation floors (8/class, seed 5):** strict schema-v2 artifacts record four
+  separate signals. Fable's 25 classes / 200 trials yield 191 detected, 184
+  intended-major, and 185 major-blocked. Opus and Risk have 24 classes / 192 trials
+  each (`flatten-chip` inapplicable): Opus 176/168/171 and Risk 173/166/171. Across
+  584 trials the totals are 540 detected, 518 intended-major, and 527 major-blocked;
+  all 527 also exit nonzero. Detection, intended-major, and major-blocking counts are
+  independently non-decreasing floors; gate-blocked is diagnostic because an
+  acceptance-configuration error also stops release. The complete schema binds card,
+  seed, trials/class, class set, invariant, aggregates, and per-trial evidence, with no
+  legacy fallback or baseline-overwriting output. V1/P2/F3/L2 and every critical
+  T1/FN1 class are 8/8 wherever eligible.
+- **Advisory/inspection boundaries:** ordinary one- and two-token T1 differences and
+  noncritical FN1 body differences can remain minors; seam-merged TB2 findings can be
+  advisory. T1 table attribution no longer changes severity, but S1 and ST still skip
+  the table spill set. L1 still does not bind individual `/URI` occurrences to source
+  anchors/pages; L2 owns internal `/GoTo` occurrence/target identity. S1 does not check
+  italics; F1 remains count-only; P1 remains partial coverage. RF1 does not cover
+  symbol/letter footnotes or endnotes. F3 does not prove caption/alt/layout fidelity.
+  V1 does not compute stylesheet/viewport visibility. TB1/F2, broader visual
+  semantics, every-projection bootstrap, and computed layout remain sweep/owner or
+  later-phase work; those backstops are mandatory, not optional polish.
 - **Pre-build mechanisms not shipped:** canonical JSON + SC1, N-version N1, and an
-  automated V1 judge. The mechanical compiler, production build, independent
-  source-first L2/final-DOM lane, rulebook sweeps, regression controls, and owner scroll
-  are the built substitutes.
+  automated page-image judge. The mechanical compiler, production build, independent
+  source-first L2/P2/F3/RF1/V1 lanes, rulebook sweeps, regression controls, and owner
+  scroll are the built substitutes.

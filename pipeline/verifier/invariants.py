@@ -1,10 +1,13 @@
 """Gate invariants (verification contract IDs). Each check returns a list of
-flag dicts: {invariant, page, severity, detail}. Severity: 'major' (≥3 tokens or
-a whole link/figure), 'minor' (1–2 tokens, punctuation-scale)."""
+flag dicts: {invariant, page, severity, detail}. Severity is consequence-aware:
+whole constructs, differences of at least three tokens, and critical semantic
+atoms are major; ordinary one- and two-token residuals remain minor."""
 
 import difflib
+import hashlib
 import re
 
+import critical_tokens
 import norm
 import oracle
 
@@ -16,17 +19,19 @@ def _flag(inv, page, severity, detail):
 def t1_text(md_tokens, oracle_pages, page_range, toc_pages, table_pages=frozenset()) -> list[dict]:
     """Bidirectional, order-sensitive token-stream equality (T1/T2), run over
     the whole document at once (sections share boundary pages). Ops on pages
-    containing tables are tagged 'table-zone' and demoted to minor: cell
-    *presence* is still caught here, but traversal order belongs to TB1."""
+    containing tables are tagged ``zone: table`` but keep the ordinary severity
+    floor. One- and two-token changes to numbers, dates, units, negations, or
+    comparators are also major; token count alone cannot express consequence."""
     md_toks = [t for t, _ in md_tokens]
-    md_pages = [p for _, p in md_tokens]
-
     o_toks, o_pages = [], []
     for pno in page_range:
         if pno in toc_pages or pno > len(oracle_pages):
             continue
         text = oracle.page_body_text(oracle_pages[pno - 1])
-        for tok in norm.tokens(text, calibration=True):
+        # The release gate follows the production normalization contract.
+        # Historical v1 calibration folds (curly quotes, NBSP, non-breaking
+        # hyphens) must not make current source/output drift invisible.
+        for tok in norm.tokens(text, calibration=False):
             o_toks.append(tok)
             o_pages.append(pno)
 
@@ -40,10 +45,32 @@ def t1_text(md_tokens, oracle_pages, page_range, toc_pages, table_pages=frozense
         extra = " ".join(md_toks[j1:j2])
         n = max(i2 - i1, j2 - j1)
         sev = "major" if n >= 3 else "minor"
-        detail = {"op": op, "missing_from_md": missing[:160], "extra_in_md": extra[:160], "n_tokens": n}
+        # Samples stay bounded for readable reports, but exact acceptance and
+        # mutation identity bind the complete untruncated opcode. Without the
+        # digests, two long table residuals sharing their first 160 characters
+        # received the same acceptance fingerprint.
+        detail = {
+            "op": op,
+            "missing_from_md": missing[:160],
+            "extra_in_md": extra[:160],
+            "n_tokens": n,
+            "missing_n_tokens": i2 - i1,
+            "extra_n_tokens": j2 - j1,
+            "missing_sha256": hashlib.sha256(missing.encode("utf-8")).hexdigest(),
+            "extra_sha256": hashlib.sha256(extra.encode("utf-8")).hexdigest(),
+        }
+        if n < 3:
+            critical = critical_tokens.opcode_classes(
+                o_toks, md_toks, i1, i2, j1, j2)
+            if critical:
+                sev = "major"
+                detail["critical_classes"] = critical
         if page in table_pages:
             detail["zone"] = "table"
-            sev = "minor"
+            # Table attribution explains likely reading-order noise; it does
+            # not make arbitrarily large content differences harmless. Keep
+            # the ordinary >=3-token major floor until bbox-level table
+            # attribution can replace the current page +/-1 spill set.
         flags.append(_flag("T1", page, sev, detail))
     return flags
 
@@ -62,9 +89,15 @@ def pair_displacements(flags: list[dict]) -> list[dict]:
     used = set()
     for ins in inserts:
         text = ins["detail"]["extra_in_md"]
+        text_sha256 = ins["detail"].get("extra_sha256")
+        text_n_tokens = ins["detail"].get("extra_n_tokens")
         match = next(
             (i for i, d in enumerate(deletes)
-             if i not in used and d["detail"]["missing_from_md"] == text
+             if i not in used
+             and text_sha256 is not None
+             and text_n_tokens is not None
+             and d["detail"].get("missing_sha256") == text_sha256
+             and d["detail"].get("missing_n_tokens") == text_n_tokens
              and abs(d["page"] - ins["page"]) <= 2),
             None,
         )
@@ -74,7 +107,10 @@ def pair_displacements(flags: list[dict]) -> list[dict]:
             used.add(match)
             rest.append(_flag("T1", ins["page"], "minor",
                               {"op": "displaced", "text": text[:120],
-                               "from_page": deletes[match]["page"], "zone": "T2-displacement"}))
+                               "text_sha256": text_sha256,
+                               "n_tokens": text_n_tokens,
+                               "from_page": deletes[match]["page"],
+                               "zone": "T2-displacement"}))
     rest.extend(d for i, d in enumerate(deletes) if i not in used)
     return rest
 
@@ -274,7 +310,7 @@ def s2_chips(md_chips, oracle_pages, page_range, chip_colors, registry) -> list[
 
     md_by_page: dict[int, Counter] = {}
     for label, pg in md_chips:
-        md_by_page.setdefault(pg, Counter())[norm.squash(label)] += 1
+        md_by_page.setdefault(pg, Counter())[norm.squash(label, calibration=True)] += 1
 
     flags = []
     for pno in page_range:
@@ -285,7 +321,7 @@ def s2_chips(md_chips, oracle_pages, page_range, chip_colors, registry) -> list[
         want_counts = Counter()
         for pill in oracle_pages[pno - 1].get("pills", []):
             if pill["color"] in chip_colors:
-                want_counts[norm.squash(pill["text"])] += 1
+                want_counts[norm.squash(pill["text"], calibration=True)] += 1
         if not want_counts:
             continue
         # strict same-page counts: ±1 windows sum so much on chip-dense pages
@@ -301,7 +337,7 @@ def s2_chips(md_chips, oracle_pages, page_range, chip_colors, registry) -> list[
                 c.get(label, 0)
                 for c in (
                     Counter(
-                        norm.squash(pill["text"])
+                        norm.squash(pill["text"], calibration=True)
                         for pill in oracle_pages[p - 1].get("pills", [])
                         if pill["color"] in chip_colors
                     )
@@ -351,11 +387,11 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
     md_items_by_page, md_blocks_by_page, md_heads_by_page = {}, {}, {}
     for sec in sections:
         for t, pg in sec.items:
-            md_items_by_page.setdefault(pg, []).append(norm.squash(t))
+            md_items_by_page.setdefault(pg, []).append(norm.squash(t, calibration=True))
         for t, pg in sec.block_starts:
-            md_blocks_by_page.setdefault(pg, []).append(norm.squash(t))
+            md_blocks_by_page.setdefault(pg, []).append(norm.squash(t, calibration=True))
         for t, pg in sec.headings:
-            md_heads_by_page.setdefault(pg, []).append(norm.squash(t))
+            md_heads_by_page.setdefault(pg, []).append(norm.squash(t, calibration=True))
 
     flags = []
     for pno in page_range:
@@ -384,8 +420,10 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
         # Matching is mutual-prefix with FULL line squashes: a complete short
         # line ('Results', a chip row) is a legitimate block start even though
         # it is shorter than the key (truncated line-starts false-flagged).
-        line_starts_full = [norm.squash(l["text"]) for l in lines]
-        page_blob = norm.squash(" ".join(l["text"] for l in lines))
+        line_starts_full = [
+            norm.squash(l["text"], calibration=True) for l in lines]
+        page_blob = norm.squash(
+            " ".join(l["text"] for l in lines), calibration=True)
         for b in md_blocks_by_page.get(pno, []):
             key = b[:24]
             if len(key) < 14:
@@ -431,7 +469,7 @@ def st_structure(sections, oracle_pages, page_range, toc_pages, table_pages=froz
             groups.append(cur)
         heads = [h for p in (pno - 1, pno, pno + 1) for h in md_heads_by_page.get(p, [])]
         for g in groups:
-            gsq = norm.squash(g["text"])
+            gsq = norm.squash(g["text"], calibration=True)
             if len(gsq) < 4:
                 continue
             # exact match only: prefix tolerance let split headings pass
@@ -642,11 +680,33 @@ def fn1_footnotes(sections, oracle_pages, page_range, toc_pages) -> list[dict]:
             continue
         if n not in md_defs:
             flags.append(_flag("FN1", fn_page[n], "major", {"kind": "body-without-def", "n": n}))
-        elif norm.squash(md_defs[n]).replace("*", "") != norm.squash(t).replace("*", ""):
+        elif (norm.squash(md_defs[n], calibration=False).replace("*", "")
+              != norm.squash(t, calibration=False).replace("*", "")):
             # ADVISORY (minor) until the oracle's footnote-boundary detection
             # is hardened: stacked footnotes can glue (n=16/17 on p.114 — md
-            # verified correct there). Promote to major once boundaries hold.
-            flags.append(_flag("FN1", fn_page[n], "minor",
-                               {"kind": "body-text-mismatch", "n": n,
-                                "oracle": t.strip()[:80], "md": md_defs[n][:80]}))
+            # verified correct there). Semantic-critical local changes are
+            # still major: a boundary caveat cannot make a changed number or
+            # deleted negation safe.
+            oracle_tokens = norm.tokens(t, calibration=False)
+            md_tokens = norm.tokens(md_defs[n], calibration=False)
+            critical = critical_tokens.changed_classes(
+                oracle_tokens, md_tokens)
+            severity = "major" if critical else "minor"
+            oracle_text = t.strip()
+            md_text = md_defs[n].strip()
+            detail = {
+                "kind": "body-text-mismatch",
+                "n": n,
+                "oracle": oracle_text[:80],
+                "md": md_text[:80],
+                "oracle_n_tokens": len(oracle_tokens),
+                "md_n_tokens": len(md_tokens),
+                "oracle_sha256": hashlib.sha256(
+                    oracle_text.encode("utf-8")).hexdigest(),
+                "md_sha256": hashlib.sha256(
+                    md_text.encode("utf-8")).hexdigest(),
+            }
+            if critical:
+                detail["critical_classes"] = critical
+            flags.append(_flag("FN1", fn_page[n], severity, detail))
     return flags

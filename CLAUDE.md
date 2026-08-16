@@ -32,25 +32,29 @@ pipeline. Per-document config supplies manifest roles, section stubs, and narrow
 scoped grammar knobs; generalization fixes live as classes in `pipeline/`, never as
 document-instance patches (D38–D48). This proves one pipeline only within Anthropic's
 Google-Docs-export family. Other vendors' PDFs (different producers and visual
-grammars) remain untested; a different vendor is the next architectural test.
+grammars) remain untested. The immediate next task is phase 4 ST2 hardening; a
+different producer, clean bootstrap, every projection, and computed-browser
+visibility are phase 9 architectural tests, not implied current capability.
 
 ## How a document is produced
 
 The conversion is **mechanical — no LLM transcribes or edits the content** — so
 fidelity is reproducible and checkable. Four stages:
 
-1. **Extract** ground truth from the PDF: a PyMuPDF "oracle" (text spans with style
-   flags, links, footnotes, highlight/chip fills, geometry, per-page renders) + docling
-   for table structure → `cards/<vendor>/<slug>/extracted/`.
+1. **Observe** the PDF: PyMuPDF facts (text spans with style flags, links, raw
+   footnotes, highlight/chip fills, geometry, raster occurrences, per-page renders) +
+   docling table candidates → `cards/<vendor>/<slug>/extracted/`. The PDF is source
+   truth; these are pinned, fallible observations.
 2. **Assemble** (`pipeline/generate/`): a block compiler builds the document from those
    facts and serializes to `sections/*.md`.
-3. **Verify** (`pipeline/verifier/`): independent invariant gates (text tokens, link
-   coverage and exact internal destinations, bold/chip styling, block structure,
-   tables, figures, footnotes, page markers) compare output to source observations;
-   unsuppressed majors fail, while typed minors route attention. L2 binds its source and
-   canonical expectations by SHA-256 and carries them into an independently parsed
-   final-DOM check. Each invariant's scope is explicit, historically calibrated, and
-   mutation-tested.
+3. **Verify** (`pipeline/verifier/`): independent invariant gates compare output to
+   source observations. L2 binds exact internal destinations; P2/F3 independently bind
+   every source page/raster and carry exact page/figure/event/asset expectations into
+   the rendered DOM; RF1 checks a narrow raw-PDF footnote lane without generator/oracle
+   zoning; V1 prevents authored raw HTML from hiding semantic content. Consequence-
+   aware T1/FN1 severity blocks critical numbers, dates, units/currencies, negations,
+   and comparators even at one or two tokens. Unsuppressed majors fail; typed minors
+   route attention. Every scope is explicit and mutation-tested.
 4. **Render** (`site/`): Astro stitches `sections/*.md`, makes page markers into PDF
    deep links, footnotes into sidenotes, per-page OG images, md exports (`card.md`,
    one `.md` per top-level section, `llms.txt` index — all with provenance headers);
@@ -62,15 +66,20 @@ Core, run every regen:
 
 | Module | Role |
 | --- | --- |
-| `verifier/oracle.py` | extract ground-truth facts from the PDF (the "oracle") |
+| `verifier/oracle.py` | legacy structured PyMuPDF observations (the historical "oracle") |
 | `generate/assemble.py` | oracle facts → typed blocks |
 | `generate/tables.py` | table reconstruction (docling structure + oracle geometry) |
 | `generate/serialize.py` | typed blocks → `sections/*.md` |
 | `generate/run.py` | orchestrates assemble → `sections/` |
-| `verifier/{invariants,mdproj,norm}.py` | the gates · md→facts projection · text normalization |
+| `verifier/{invariants,mdproj,norm}.py` | canonical gates · md→facts projection · production text normalization |
 | `verifier/l2_links.py` | source-first `/GoTo` occurrence → exact accepted-heading target |
+| `verifier/source_inventory.py` | PDF-first page/raster authority (P2/F3) + deterministic final-DOM artifact |
+| `verifier/raw_footnotes.py` | zoning-independent numeric footnote occurrence/body authority (RF1) |
+| `verifier/{dangling_footnotes,critical_tokens}.py` | output footnote closure · consequence-aware T1/FN1 atoms |
 | `verifier/calibrate.py` | run the gates (sections vs oracle) |
-| `site/src/lib/{l2-artifact,article-dom}.js` | hash-bind L2 artifacts · audit serialized/final DOM links |
+| `site/src/lib/{l2-artifact,article-dom,source-projection}.js` | strict artifacts · serialized/final DOM link/page/figure/asset audits |
+| `site/src/lib/markdown.js` | production renderer + authored-raw-HTML V1 policy |
+| `pipeline/verify_release.py` | one pinned local fast-release graph over every discovered card + site build |
 
 Not per-regen: `generate/extract_figures.py` (PDF figure images → `assets/figures/` +
 `extracted/figures-map.json`; run once when onboarding a document), `verifier/mutate.py`
@@ -96,17 +105,34 @@ env CARD=anthropic/risk-report-2026-08 uv run --with pymupdf python pipeline/gen
 env CARD=anthropic/risk-report-2026-08 uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
 ```
 
+Full generation now prints the pinned, corpus-wide handoff below. After the site
+lockfile is installed, this is the preferred fast release command: it discovers the
+same cards the site can publish, runs all verifier tests, gates/artifact comparisons
+and seams in parallel, then runs the production renderer tests and clean build.
+
+```sh
+uv run --python 3.12 --with 'pymupdf==1.28.2' python pipeline/verify_release.py
+```
+
 All three gates pass at **0 unsuppressed majors**, and each has a 0-seam baseline.
-Fable also has 3 owner-accepted T1 majors, each matched by the complete finding
-fingerprint in `accepted.json`; a new finding on the same page is not covered, and a
-stale acceptance makes a full `WORKTREE` gate fail. Typed minor baselines are
-fable-5 `L1 34` / `T1 44`; opus-5 `T1 13`; and risk-report-2026-08 `FN1 1`
-(declared orphan-ref source defect, D45) / `T1 22` / `TB2 1` (seam-cell advisor).
+Fable has 20 exact accepted T1 majors: 3 historical owner-adjudicated visual-order
+findings and 17 maintainer/source-adjudicated table-order findings under broad owner
+authorization. Opus has 4 maintainer/source-adjudicated exact T1 findings; Risk has 1.
+The 22 new findings were exposed by removing blanket table demotion, not by changing
+card content. A new finding on the same page is not covered, and a stale acceptance
+makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 28`;
+opus-5 `T1 9`; and risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
+D45) / `T1 21` / `TB2 1` (seam-cell advisor).
 L2 is clean at 108 Fable and 54 Opus authored destinations, plus 121 Risk Report
 logical destinations over 123 authored occurrences; source expectations cover all
 285 authored occurrences. Fable's three additional L1 minors are publisher-broken
 named destinations, reported even when one uniquely printed heading can be recovered
 under R2.
+P2/F3 source authority requires 309 pages/151 rendered figures for Fable, 187/98 for
+Opus, and 180/14 for Risk. The built audit totals 676 page markers, 263 rendered
+figures, and 267 exact copied raster assets, with 0 findings. RF1 is clean at raw
+reference/definition counts 76/76, 36/36, and 93/92; Risk's difference is the exact,
+source-hash-bound disposition for the publisher's stray p.126 superscript 18.
 These are measured residuals, not permission to ignore drift; re-baseline here only
 after an owner-approved fix batch moves them. `calibrate.py` takes a git ref, the
 literal `WORKTREE` (the current sections), or an absolute sections directory.
@@ -114,19 +140,24 @@ Unsuppressed majors exit 1; malformed/stale acceptance configuration exits 2.
 `--report-only` is the explicit diagnostic escape hatch for majors and never masks
 acceptance-configuration errors (D49).
 
+Generic `accepted.json` entries are deliberately invalid for L2, P2, F3, RF1, and
+V1. P2/F3/RF1 exceptions must use their exact source-bound authority, and L2/V1 allow
+no generic exception.
+
 L2 runs only on a complete document graph. After a source or canonical-section change,
 regenerate the tracked, hash-bound expectation artifact as part of the full gate:
 
 ```sh
 env CARD=anthropic/claude-fable-5 uv run --python 3.12 --with pymupdf==1.28.2 \
   python pipeline/verifier/calibrate.py WORKTREE \
-  --l2-json cards/anthropic/claude-fable-5/l2-links.json
+  --l2-json cards/anthropic/claude-fable-5/l2-links.json \
+  --source-projection-json cards/anthropic/claude-fable-5/source-projection.json
 ```
 
-CI regenerates the artifact to a temporary path and requires byte identity with the
-tracked file. Site tests independently recompute the source, aggregate canonical, and
-per-section hashes before trusting any expected target; stale or incomplete artifacts
-fail closed.
+CI regenerates both artifacts to temporary paths and requires byte identity with the
+tracked files. Site tests independently recompute source, inventory, figure-map,
+aggregate canonical, and per-section hashes before trusting any expected target or
+event stream; stale, malformed, or incomplete artifacts fail closed.
 
 **Regression scope is the target plus every non-target certified document.** For the
 current corpus, a shared-pipeline change therefore requires regenerating and gating
@@ -139,9 +170,16 @@ code/inputs or document canon changed, run the seeded mutation suite for the tar
 and every certified document; 8 trials per class is the current default/calibration
 size. The `repoint-link` class preserves a live internal link but changes it to a
 different existing heading; L2 must catch what existence-only audits cannot. Current
-seed-5 floors are Fable 95/104 (91.3%, 13 classes), Opus 80/96 (83.3%, 12 classes),
-and Risk Report 77/96 (80.2%, 12 classes); `repoint-link` is 8/8 on each. Mutation
-classes use independent digest-derived RNG streams, so adding one cannot resample the
+seed-5 schema-v2 floors separate detection, intended-major severity, and actual major
+blocking. Fable's 25 classes / 200 trials are 191 / 184 / 185; Opus's 24 / 192 are
+176 / 168 / 171; Risk's 24 / 192 are 173 / 166 / 171 (`flatten-chip` is inapplicable
+on the latter two). Across 584 trials the totals are 540 detected, 518 intended-major,
+and 527 major-blocked. V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
+eligible; misses concentrate in ST1/ST2/ST3, L1, S1, and ordinary advisory word swaps.
+The strict artifacts combine independent per-class runs with the final hide-image/V1
+refresh. One exact final-tree 584-trial replay is pending the hosted post-push mutation
+workflow and is not claimed as local evidence.
+Classes use independent digest-derived RNG streams, so adding one cannot resample the
 others:
 
 ```sh
@@ -157,14 +195,14 @@ Build and serve the site:
 
 ```sh
 cd site && pnpm install && pnpm dev   # local dev (search needs a production build)
-pnpm test                             # exports, inventory, hash-bound article-DOM L2
-pnpm build && pnpm preview            # dist/ + full-page link audit + Pagefind index
+pnpm test                             # exports, inventory, raw-HTML policy, L2/P2/F3 DOM
+pnpm build && pnpm preview            # dist/ + link/page/figure/asset audit + Pagefind
 ```
 
 `.github/workflows/verify.yml` derives its card matrix from the same repository
 inventory the site publishes, then runs the unit suite, every discovered card's full
-gate + tracked-L2-artifact freshness check + seam audit, the export/inventory/hash-bound
-article-DOM tests, and a clean site build with a full-page fragment-graph audit directly
+gate + tracked L2/source-projection freshness checks + seam audit, the export/inventory/
+hash-bound article-DOM tests, and a clean site build with link/page/figure/asset audits directly
 on pull requests and non-main branch pushes. A synthetic-fourth-card test prevents
 site/CI inventory drift. On `main`, the Pages workflow calls that same workflow and
 will not build/deploy until it passes. Mutation sensitivity is a separate baseline-
@@ -187,32 +225,46 @@ documents is:
    role from the fixed vocabulary (D39) — verify ambiguous ones against page renders,
    never guess. Same hex, different card, different role is NORMAL (D39). Set
    `document: toc_pages` (the PDF's own contents pages). No chips → `chips: {}`.
-3. Extract ground truth: oracle (auto-cached per-document on first run), page renders
+3. Extract candidate observations: oracle (auto-cached per-document on first run), page renders
    (`pdftoppm -png -r 150 source.pdf extracted/pages/p`), figures (`pdfimages -p -png`
    + `extract_figures.py` — note the `-p`), docling tables (`tables.py <pages>` with
    candidate pages from a rule-line scan; chart-page false positives are harmless —
-   docling returns 0 tables).
-4. Create `sections/*.md` stubs from the PDF's bookmark TOC: one file per top-level
+   docling returns 0 tables). These are claims about the PDF, not self-authorizing
+   truth.
+4. **Establish source authority.** Observe every page and raw raster with
+   `source_inventory.py`; review cover/TOC/blank and duplicate-draw proposals against
+   the PDF; commit an exact `source-inventory.json` bound to the source SHA-256,
+   PyMuPDF version, observer schema, and repeated observation. Every occurrence is
+   required by default. Do not copy `toc_pages` or `figures-map.json` into exclusions:
+   the gate challenges those generator claims. If RF1 finds a genuine publisher
+   artifact, add only the exact source occurrence to
+   `source-footnote-dispositions.json`; never widen RF1 to keep the gate green.
+5. Create `sections/*.md` stubs from the PDF's bookmark TOC: one file per top-level
    section, `<!-- source: source.pdf pages AAA-BBB -->` headers, split >40pp sections
    at page-top subsection boundaries. Non-overlapping ranges when sections start on
    fresh pages (the shared-page machinery only engages for mid-page boundaries).
-5. Run assemble + gates (`CARD=… run.py --all` / `calibrate.py WORKTREE`), iterate to
-   0 majors, and generate the card's `l2-links.json`. L2 must bind every source
+6. Run assemble + the card diagnostic (`CARD=… run.py --all` /
+   `calibrate.py WORKTREE`), iterate to 0 unsuppressed majors, and generate both
+   `l2-links.json` and `source-projection.json`. L2 must bind every source
    `/GoTo` occurrence to an exact accepted heading or a declared R2 source defect; its
-   source/canonical hashes must match current bytes. Fix CLASSES in `pipeline/`, never
-   instances. After every fix, regenerate and gate the target plus every non-target
-   certified document; inspect every diff, and require non-target byte identity unless
-   a PDF-verified canon improvement was explicitly approved.
-6. Run the seam audit. If verifier code/inputs or document canon changed, run the
-   8-trial, seed-5 mutation suite across the target and every certified document.
-   Then run the two agent sweeps (rulebook template:
+   source/canonical hashes must match current bytes. P2/F3 must bind every source page,
+   raw raster, disposition, map/asset claim, and ordered final-DOM event. Fix CLASSES
+   in `pipeline/`, never instances. After every fix, regenerate and gate the target
+   plus every non-target certified document; inspect every diff, and require non-target
+   byte identity unless a PDF-verified canon improvement was explicitly approved.
+7. Run the pinned corpus-wide `pipeline/verify_release.py`; it owns all card gates,
+   artifact freshness, seams, site tests, and the clean build. If verifier/renderer
+   code, source authority, or document canon changed, run the strict 8-trial, seed-5
+   schema-v2 mutation suite across every certified document. Then run the two agent
+   sweeps (rulebook template:
    `docs/experiments/09-round-g/rulebook.md`) to convergence.
-7. Run `pnpm test`, then build the site (`cd site && pnpm build`). The hash-bound
-   article-DOM lane must preserve every authored occurrence/expected target, and the
-   full rendered page must have a closed, unique fragment graph. Then verify the
-   document page, sidenotes, turns, exported markdown, and search in the production
-   preview.
-8. **Owner scroll pass before certification.** The sweep stack verifies per-page
+8. Verify the production preview: the hash-bound article-DOM lane must preserve every
+   authored link/target and source-bound page/figure event; copied source PDF/PNG bytes
+   must be exact; the full page must have a closed, unique fragment graph. Check the
+   document page, sidenotes, turns, exported Markdown, search, and responsive behavior.
+   V1 rejects authored raw HTML with known browser-hidden semantics, but computed CSS,
+   clipping/occlusion, and viewport visibility still require this inspection.
+9. **Owner scroll pass before certification.** The sweep stack verifies per-page
    CONTENT; it is demonstrably weak on visual-layout classes — cross-element
    overlap (page-marker smear), intra-cell typography tiers, bubble scoping,
    seam artifacts. Every current document has completed this gate; the opus-5
@@ -240,6 +292,9 @@ documents is:
   regen → `git diff` the output → confirm the expected change AND scan for
   unexpected ones (regression catch) → preview-check if renderer-visible →
   commit pipeline + output together. Never hand-edit generated files.
+- **Do not weaken source authority with generic acceptance.** `accepted.json` may not
+  contain L2, P2, F3, RF1, or V1. Use an exact source-bound inventory/disposition only
+  where that invariant defines one; L2 and V1 permit no generic exception.
 - **Never rewrite the verifier calibration corpus** — the pre-fix git refs (`f60899a`,
   `fb483fb`) and the retired `tools/` / old `sections/` (removed in D28, intact in git
   history); the gates calibrate against those refs (D5). The *working-tree*

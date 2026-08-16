@@ -1,17 +1,42 @@
-# Experiment 05 — mutation testing (D6): per-class verifier recall
+# Experiment 05 — mutation testing (D6): detection, severity, and release recall
 
-**Question.** When a defect is *known* to exist (because we injected it), does
-the verifier catch it? This turns "calibrated on history" into a number and
-covers the censorship gap in the v1 corpus (D5/D6).
+**Question.** When a defect is *known* to exist because we injected it, does the
+intended verifier notice it, classify it as release-worthy, and actually stop the
+production gate? Keeping those questions separate prevents a warning, unrelated major,
+or stale acceptance from masquerading as proof that the intended defense works.
 
-**Method.** [mutate.py](../../../pipeline/verifier/mutate.py) injects one
-synthetic defect into a temporary copy of the current sections, runs the full
-invariant suite, and counts a catch iff a flag of the expected invariant appears
-that was not in the unmutated baseline. The current calibration is 8
-mutations/class with seed 5. Each class has a deterministic, digest-derived RNG
-stream, so adding or reordering a class cannot resample the others. The original
-Fable-only record remains
-[results.json](results.json); the enforceable current baselines are:
+## Method
+
+[mutate.py](../../../pipeline/verifier/mutate.py) injects one synthetic defect into a
+temporary copy of the current canonical sections. Each trial then sends the **same
+exact mutated section bytes** through two authority lanes:
+
+1. the Python source/canonical gates, including L2, P2/F3 source inventory, FN1/RF1,
+   production normalization, exact acceptances, and consequence-aware severity; and
+2. a persistent Node worker running the production Markdown transform, HTML renderer,
+   raw-authored-HTML policy, and HTML5-normalized page/figure DOM audit in memory.
+
+The worker never rereads `WORKTREE` for a trial. The unmutated composite result must
+first pass the real release acceptance semantics; otherwise the run stops rather than
+crediting every mutation with a pre-existing failure.
+
+Four signals are recorded independently:
+
+- **detected** — the intended invariant emitted a new full-fingerprint finding;
+- **intended-major** — at least one such intended finding is major;
+- **major-blocked** — after applying exact acceptances, an unsuppressed major remains;
+- **gate-blocked** — the production gate exits nonzero. This includes acceptance-
+  configuration failures, so it is diagnostic rather than a detector-recall floor.
+
+The calibration is eight trials/class at seed 5. Each class has a digest-derived RNG
+stream, so adding/reordering a class cannot resample the others. The current strict
+schema-v2 artifact binds `card_id`, seed, trials/class, complete class/invariant set,
+all four aggregates, and every trial's evidence. It has no legacy fallback. Baseline
+validation happens before mutations or output writes; `--json` may not resolve to the
+baseline and defaults to an explicit temporary result path.
+
+The original Fable-only historical record remains [results.json](results.json). The
+enforceable schema-v2 baselines are:
 
 - [Fable 5](results-anthropic-claude-fable-5.json)
 - [Opus 5](results-anthropic-claude-opus-5.json)
@@ -24,30 +49,63 @@ env CARD=anthropic/claude-fable-5 uv run --python 3.12 --with pymupdf==1.28.2 \
   --json /tmp/mutation-anthropic-claude-fable-5.json
 ```
 
-With `--baseline`, the command exits nonzero if an expected class disappears,
-an unbaselined class appears, its invariant or sample count changes, or its caught
-count falls. Improvements pass. Per-site details remain evidence rather than the
-gate because an otherwise harmless source edit can move a seeded sample.
+With `--baseline`, removed/new classes, changed invariants, card/seed/sample drift,
+malformed aggregate/detail evidence, or a decrease in **detected**,
+**intended-major**, or **major-blocked** fails. Improved recall passes. Per-site sample
+movement remains evidence rather than a floor because a legitimate source edit can
+move a deterministic sampling site.
 
 ## Current three-document baselines (2026-08-15)
 
-| document | eligible classes | caught | recall | not applicable |
-| --- | ---: | ---: | ---: | --- |
-| Claude Fable 5 & Claude Mythos 5 | 13 | 95/104 | 91.3% | — |
-| Claude Opus 5 | 12 | 80/96 | 83.3% | `flatten-chip` |
-| Risk Report: August 2026 | 12 | 77/96 | 80.2% | `flatten-chip` |
+| document | eligible classes | trials | detected | intended-major | major-blocked | gate-blocked | not applicable |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Claude Fable 5 & Claude Mythos 5 | 25 | 200 | 191 (95.5%) | 184 (92.0%) | 185 (92.5%) | 185 (92.5%) | — |
+| Claude Opus 5 | 24 | 192 | 176 (91.7%) | 168 (87.5%) | 171 (89.1%) | 171 (89.1%) | `flatten-chip` |
+| Risk Report: August 2026 | 24 | 192 | 173 (90.1%) | 166 (86.5%) | 171 (89.1%) | 171 (89.1%) | `flatten-chip` |
+| **Total** | — | **584** | **540 (92.5%)** | **518 (88.7%)** | **527 (90.2%)** | **527 (90.2%)** | — |
 
-These are floors, not a claim of universal defect recall. The weakest measured
-classes are structural splits and S1 bold removal; the agent inspection layers
-remain their explicit backstop. The scoped/weekly GitHub Actions mutation workflow
-runs all three baselines independently of the fast per-change verifier gate.
+These artifacts combine independent per-class runs with the final hide-image/V1
+refresh and pass the strict schema-v2 validator. One exact 584-trial replay against
+the final tree has **not** run locally; that independent proof is assigned to the
+hosted mutation workflow after push.
 
-The current artifacts add `repoint-link`, which changes an internal link to a
-different existing heading without breaking the fragment graph. Existence-only link
-audits therefore remain green, while the source-bound L2 expectation must catch the
-wrong destination; recall is 8/8 on every card. The artifacts were intentionally
-rebaselined once when per-class RNG streams landed. Future class insertion no longer
-changes another class's sampled sites.
+The 25 possible classes cover:
+
+- ST1/ST2/ST3 list and heading structure;
+- L1 dropped URI links and L2 wrong-but-existing internal destinations;
+- T1 deletion, duplication, ordinary word order, and critical
+  number/date/unit/currency/negation/comparator changes;
+- FN1 dropped definitions and critical footnote value/negation changes;
+- S1 bold loss and S2 chip flattening;
+- V1 browser-hidden authored prose;
+- F3 missing, wrong-path, hidden, and reordered figures; and
+- P2 duplicated and missing page markers.
+
+Every V1, P2, F3, L2, body-critical, and footnote-critical class is detected,
+classified major, and major-blocking in all 8/8 trials on every eligible card.
+`repoint-link` still proves the important distinction: the fragment graph remains
+valid while only the independent source destination identity catches the wrong
+heading. Page/figure classes now measure P2/F3 through the real renderer rather than
+the narrower legacy P1/F1 projections.
+
+The misses are localized rather than averaged away:
+
+| class | Fable detected / intended-major / blocked | Opus | Risk Report |
+| --- | --- | --- | --- |
+| `split-item` (ST2) | 3 / 3 / 3 | 3 / 3 / 3 | 3 / 3 / 3 |
+| `item-to-paragraph` (ST1) | 6 / 6 / 6 | 4 / 4 / 4 | 4 / 4 / 4 |
+| `split-heading` (ST3) | 8 / 8 / 8 | 6 / 6 / 8 | 4 / 4 / 8 |
+| `drop-link` (L1) | 8 / 8 / 8 | 5 / 5 / 5 | 7 / 7 / 7 |
+| `swap-words` (ordinary T1) | 7 / 0 / 1 | 8 / 0 / 1 | 7 / 0 / 1 |
+| `drop-bold` (S1) | 7 / 7 / 7 | 6 / 6 / 6 | 4 / 4 / 4 |
+
+For `split-heading`, a different production major can stop release even when ST3
+itself misses; that is useful defense-in-depth but correctly does not inflate
+intended-major recall. Ordinary two-word swaps are usually detected but remain below
+the consequence-aware major threshold. Phase 4 owns ST2 hardening; L1/S1 and the
+other structural gaps remain explicit sweep/control obligations. These totals are
+floors, not a claim of universal defect recall. The scoped/weekly GitHub Actions
+workflow runs all three baselines separately from the fast release gate.
 
 ## Original Fable calibration (historical)
 
@@ -93,8 +151,11 @@ written, owned boundary, not a mystery.**
 ## Conclusion
 
 The initial experiment established the method and forced concrete L1/FN1/S2
-repairs. The three current, per-document artifacts turn that measurement into a
-checked floor: structural invariants remain strongest, while the documented
-structural/style blind spots remain assigned to the inspection layers. Re-run the
-suite after every verifier extension or source/canon change; a drop below a
-committed floor is a gate failure, not an observation to overlook.
+repairs. The current composite experiment adds the missing distinction between
+detection, severity, and actual release behavior and proves the new source/final-DOM
+and critical-value defenses at 8/8 wherever eligible. It also says where the system
+is still weak: list/block structure and bold/link occurrence coverage, not page,
+figure, destination, visibility-policy, or critical-token projection. Re-run all
+three strict artifacts after every verifier, renderer, source-authority, or canonical
+change; a fall in any committed detection/intended-major/major-blocking floor is a
+gate failure, not an observation to overlook.

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "observer_schema_version": 2,
+  "pymupdf_version": "1.28.2",
+  "source_sha256": "fed3c0e6d150a6ba855f0f117a632d2b27dbb5886fd42815caa92e3e20db1d25",
+  "page_exclusions": [
+    {
+      "page": 1,
+      "kind": "cover",
+      "reason": "reviewed PDF title and artwork cover; no archive body content",
+      "observation": {
+        "page": 1,
+        "word_count": 9,
+        "text_chars": 47,
+        "internal_links": 0,
+        "uri_links": 1,
+        "drawing_count": 2,
+        "raster_count": 1
+      }
+    },
+    {
+      "page": 5,
+      "kind": "toc",
+      "reason": "reviewed PDF table-of-contents page",
+      "observation": {
+        "page": 5,
+        "word_count": 210,
+        "text_chars": 1143,
+        "internal_links": 37,
+        "uri_links": 0,
+        "drawing_count": 1,
+        "raster_count": 0
+      }
+    },
+    {
+      "page": 6,
+      "kind": "toc",
+      "reason": "reviewed PDF table-of-contents page",
+      "observation": {
+        "page": 6,
+        "word_count": 192,
+        "text_chars": 1124,
+        "internal_links": 37,
+        "uri_links": 0,
+        "drawing_count": 1,
+        "raster_count": 0
+      }
+    },
+    {
+      "page": 7,
+      "kind": "toc",
+      "reason": "reviewed PDF table-of-contents page",
+      "observation": {
+        "page": 7,
+        "word_count": 208,
+        "text_chars": 1237,
+        "internal_links": 37,
+        "uri_links": 0,
+        "drawing_count": 1,
+        "raster_count": 0
+      }
+    },
+    {
+      "page": 8,
+      "kind": "toc",
+      "reason": "reviewed PDF table-of-contents page",
+      "observation": {
+        "page": 8,
+        "word_count": 180,
+        "text_chars": 1114,
+        "internal_links": 37,
+        "uri_links": 0,
+        "drawing_count": 1,
+        "raster_count": 0
+      }
+    },
+    {
+      "page": 9,
+      "kind": "toc",
+      "reason": "reviewed PDF table-of-contents page",
+      "observation": {
+        "page": 9,
+        "word_count": 128,
+        "text_chars": 787,
+        "internal_links": 31,
+        "uri_links": 0,
+        "drawing_count": 1,
+        "raster_count": 0
+      }
+    }
+  ],
+  "figure_exclusions": []
+}

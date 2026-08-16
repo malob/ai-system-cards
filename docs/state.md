@@ -3,169 +3,171 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-15 (D51 phase 2 deployed). The phase-2 implementation
-commit `ff9b6e3` is live. Its hosted fast release gate, Pages deployment, and all three
-slower mutation-sensitivity jobs succeeded; the follow-up below only reconciles the
-repository snapshot with that result.
+**Last updated:** 2026-08-15 (D55 phase 3 implemented; fast release validated locally;
+not yet pushed or deployed). The live site is still phase 2 commit `ff9b6e3`, whose hosted
+fast release, Pages deployment, and three mutation jobs succeeded. Everything below
+headed “phase 3” describes the current local worktree only.
 
-## Status
+## Current card gates
 
-- **fable-5: live; L2 gate clean.** 3 exact owner-accepted T1 majors; 0
-  unsuppressed majors; `L1 34` / `T1 44` minors; L2 108/108 exact authored
-  destinations, including 1 printed-heading recovery; 1 additional source link is
-  unresolvable and correctly remains plain; seam 0.
-- **opus-5: live; L2 gate clean.** 0 majors; `T1 13` minors; L2 54/54 exact
-  authored destinations; seam 0.
-- **risk-report-2026-08: live; L2 gate clean.** 0 majors; `FN1 1` (declared
-  orphan-ref source defect, D45) / `T1 22` / `TB2 1` minors; L2 121/121 exact logical
-  destinations over 123 authored occurrences; seam 0.
+- **fable-5:** 20 exact accepted T1 majors (3 prior visual-order adjudications +
+  17 newly surfaced table-order residuals), 0 unsuppressed majors; `L1 34` / `T1 28`
+  minors; L2 108/108 exact authored destinations; P2/F3/RF1/V1 clean; 309 required
+  content pages and 151 required rendered figures; seam 0.
+- **opus-5:** 4 exact accepted table-order T1 majors, 0 unsuppressed majors; `T1 9`
+  minors; L2 54/54 exact authored destinations; P2/F3/RF1/V1 clean; 187 required
+  content pages and 98 required rendered figures; seam 0.
+- **risk-report-2026-08:** 1 exact accepted table-order T1 major, 0 unsuppressed
+  majors; `FN1 1` (declared publisher orphan-ref artifact) / `T1 21` / `TB2 1`
+  minors; L2 121/121 logical destinations over 123 authored occurrences;
+  P2/F3/RF1/V1 clean; 180 required content pages and 14 required rendered figures;
+  seam 0.
 
-GitHub Pages run
-[31919737114](https://github.com/malob/ai-system-cards/actions/runs/31919737114)
-completed successfully for `ff9b6e3`: hosted card discovery, all three parallel full
-gates, fresh L2 artifact comparisons, seam audits, 38 verifier tests, 11 site tests,
-the full-page link audit/build, and deployment all passed. Mutation run
-[31919737009](https://github.com/malob/ai-system-cards/actions/runs/31919737009)
-then passed the committed floor independently for Fable, Opus, and the Risk Report.
-Live smoke checks returned HTTP 200 for the home page, all three cards, `llms.txt`, and
-Fable's `card.md`; the repaired p.99 text is present and `href="#"` is absent.
+The 25 accepted majors are exact full-finding fingerprints, not broad permissions.
+All 22 new entries were checked against the PDFs and are reading-order/projection
+residuals on table-attributed pages, not missing or invented canonical content.
+Fable p.316's one-token `None` remains a critical-negation major before its exact
+acceptance. The acceptance files now state their rationale. L2, P2, F3, RF1, and V1
+cannot be waived through generic `accepted.json`; their stronger source/projection
+authority either supplies an exact disposition or permits no exception.
 
-## Maintainer hardening landed and deployed (D49/D50)
+## What phase 3 changed
 
-1. **Verifier is an enforceable gate.** `calibrate.py` exits 1 for unsuppressed
-   majors and 2 for invalid acceptance configuration. `--report-only` is explicit.
-   Fable's old `(invariant,page)` allowances were migrated to fingerprints of the
-   complete finding; two stale entries were removed and the two distinct p.37
-   findings are separate.
-2. **Gate behavior is tested.** The current 38-test verifier suite covers exact
-   matching, stale/duplicate/invalid acceptance rejection, exit semantics,
-   mutation-floor comparisons, the generator's same-card/full-vs-partial verifier
-   handoff, and L2 source/destination behavior. An isolated duplicate page-marker
-   probe produced `P1 major 1` and exit 1; `--report-only` changed only that exit to 0.
-3. **CI covers the real release path.** The reusable fast workflow runs unit tests,
-   all three full gates + seam audits, and a clean site build. The Pages workflow
-   depends on it; a verifier failure skips build and deployment. Pages/OIDC write
-   permissions are confined to the final deploy job. `actionlint` 1.7.12 and YAML
-   parsing report no workflow errors.
-4. **Mutation recall has committed floors.** At 8 trials/class, seed 5: Fable
-   95/104 (91.3%), Opus 80/96 (83.3%), Risk Report 77/96 (80.2%). `repoint-link` is
-   8/8 on every card. The slower workflow runs on relevant changes, weekly, and
-   manually; class/invariant/sample drift or a caught-count regression fails it.
-5. **Repository truth is reconciled.** README/CLAUDE now describe all three
-   documents and the within-family limit. D50 and the charter supersede the unbuilt
-   pre-build JSON/LLM mechanisms in D1/D2/D7/D9/D10/D14 with the shipped mechanical
-   compiler and inspection loop.
+Phase 3 repaired the general verification shape behind several apparent one-off
+failures: generation and verification could inherit the same wrong exclusion or
+semantic classification. The release graph now separates three questions:
 
-The D49/D50 maintenance changed no generated `sections/*.md`. Phase 2 intentionally
-changes exactly one Fable p.99 canonical line: the publisher-broken internal link,
-previously serialized with an empty `(#)` target, becomes plain text under R2. Opus
-and Risk Report sections remain byte-identical.
+1. **What does the archived PDF contain?** `source_inventory.py` independently
+   observes every page and raw raster occurrence. Every occurrence is required unless
+   a checked-in, PDF-hash/tool/schema/observation-bound `source-inventory.json`
+   explicitly dispositions it. Generator TOC settings and `figures-map.json` are
+   checked claims, never omission authority.
+2. **Did canonical Markdown preserve the source facts?** The existing text, link,
+   structure, table, footnote, and style gates now run alongside P2/F3 and RF1. Table
+   attribution no longer demotes arbitrary T1 differences, and one- or two-token
+   changes to numbers, dates, units/currencies, negations, and quantified comparators
+   are major. Full digests bind long findings and displacement matching.
+3. **Did the actual published projection preserve them?** A deterministic
+   `source-projection.json` carries source-bound page/figure expectations into the
+   production Markdown renderer and an HTML5-normalized DOM audit. The audit checks
+   exact page/figure/accepted-skip order and identity, plus the copied source PDF and
+   PNG bytes. Across all cards it sees 676 page markers, 263 rendered figures, and
+   267 exact source raster assets, with 0 findings.
 
-## Architecture review settled; phases 0–2 deployed (D51–D54)
+The F18 replay fixture proves why the split matters: reclassifying body spans and
+moving the same prose into a dangling footnote definition can make the old body
+streams agree on the same wrong omission. A section-local definition without a
+reference is now an independent FN1 major. RF1 additionally reopens the PDF without
+the generator/oracle zoning model and binds raw numeric superscript references and
+small bottom-region numeric definitions to canonical occurrences and bodies. It
+observes 76 references/76 definitions for Fable, 36/36 for Opus, and 93/92 for the
+Risk Report. The latter is clean only because the publisher's stray p.126 superscript
+18 has one exact source-hash-bound disposition. RF1 deliberately does not claim
+symbol/letter footnotes or endnotes.
 
-An adversarial two-model review found that the current representation is not the
-first thing to replace. The three-card generator is deterministic and genuinely
-shared; the leading measured weakness is correlated authority between generation and
-verification. At review time, the demonstrated published defect was portable
-Markdown's mishandling of table-only footnotes, and no source-content defect was
-demonstrated in canonical sections or the main HTML. Phase 2 later exposed the
-canonical dead-link projection defect recorded above. Nineteen table-zone T1
-residuals of at least three tokens remain source-unadjudicated.
+V1 closes another projection loophole before rendering: authored raw HTML may not
+hide semantic content via browser-hidden elements/attributes, closed controls, or the
+site's hidden classes. Active/reserved markup and inline style are rejected as well.
+This is a static authored-HTML policy, not a computed-browser-layout oracle; hidden
+content caused by CSS stylesheets, responsive breakpoints, clipping, occlusion, or a
+particular viewport remains phase 9 work.
 
-The owner authorized the implementation phase on 2026-08-15. Phases 0 and 1 are
-deployed:
+The final-DOM lane supports reason-bound figure-skip sentinels, but no current card
+uses an allowed skip. Exact asset synchronization also prevents stale files from
+surviving an incremental build. These are authority and release-safety changes, not
+content edits.
 
-- **Every publishable card is gated.** Production and CI consume one dependency-free
-  card inventory; a synthetic fourth card automatically enters the parallel full-gate
-  matrix, while no-meta/nonexistent directories do not. The inventory cannot be empty.
-- **Portable table footnotes work under the supported GFM projection.** Full-card and
-  section exports turn raw-table refs into live anchors, retain definitions, preserve
-  later numbering, and give repeated refs distinct backlinks. The main HTML path is
-  byte-identical and canonical sections did not change.
+## Mutation evidence
 
-Phase 2 is also deployed:
+The mutation suite now runs the Python source/canonical gates and the production
+JavaScript transform/render/DOM audit over the same exact mutated section bytes. It
+keeps four distinct signals rather than calling every printed warning a successful
+release test:
 
-- **L2 checks destination identity, not merely link existence.** It independently
-  derives source links and accepted headings from the PDF, pairs canonical occurrences
-  without their destinations, and emits exact target expectations. All three cards
-  have zero L2 majors, and 27/27 known historical wrong targets replay as blocking L2
-  findings.
-- **Expectations are byte-bound and projection-checked.** Each tracked artifact binds
-  the exact source PDF and canonical section set by SHA-256. CI regenerates it; the
-  site independently recomputes those hashes, parses serialized HTML using HTML5
-  tree-building, and requires all 285 authored fragment links and source expectations
-  to survive without insertion, deletion, reordering, or repointing.
-- **R2 is explicit.** A publisher-broken named destination remains an L1 source-defect
-  minor. A uniquely printed heading identity may be recovered and L2-verified;
-  otherwise the anchor is plain text, never an empty `#` link.
+- **detected:** the intended invariant emitted a new exact finding;
+- **intended-major:** that intended finding had blocking severity;
+- **major-blocked:** after exact acceptances, at least one unsuppressed major remained;
+- **gate-blocked:** the production command exited nonzero, including configuration
+  failures, so this last signal is diagnostic rather than detector recall.
 
-Next is phase 3's remaining authority loops. Broader representation work stays
-evidence-gated: keep Markdown canonical for prose, keep PyMuPDF as the primary
-versioned observer, treat Docling as a pinned table candidate, and introduce no
-whole-document IR unless narrower bootstrap/projection/provenance experiments fail.
-Full phases, experiments, and kill criteria are in
-[architecture-roadmap.md](architecture-roadmap.md).
+At eight trials/class and seed 5:
 
-## Validation evidence for this series
+| card | eligible classes | trials | detected | intended-major | major-blocked | gate-blocked |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Fable | 25 | 200 | 191 (95.5%) | 184 (92.0%) | 185 (92.5%) | 185 (92.5%) |
+| Opus | 24 | 192 | 176 (91.7%) | 168 (87.5%) | 171 (89.1%) | 171 (89.1%) |
+| Risk Report | 24 | 192 | 173 (90.1%) | 166 (86.5%) | 171 (89.1%) | 171 (89.1%) |
+| **Total** | — | **584** | **540 (92.5%)** | **518 (88.7%)** | **527 (90.2%)** | **527 (90.2%)** |
 
-- Fresh no-cache baseline: all three full gates at the counts above; all seam audits
-  0. Python 3.12 / uv 0.12.1 / PyMuPDF 1.28.2.
-- Mutation artifacts regenerated from current sections with a deterministic RNG per
-  class: Fable 95/104 (91.3%, 13 classes), Opus 80/96 (83.3%, 12 classes), and Risk
-  Report 77/96 (80.2%, 12 classes). `repoint-link` is 8/8 on each card. This one-time
-  rebaseline prevents future class insertion from resampling unrelated classes.
-- Clean site install/build: local Node 24.18.1 / pnpm 11.20.0 (CI pins Node 22 /
-  pnpm 11), 599 Pagefind records and all routes generated.
-- Workflows: all parse, `actionlint` clean, dependency chain independently reviewed;
-  deployment cannot reach the Pages job after a failed reusable verifier job.
-- D51 phases 0–1: shared inventory tests 2/2; portable export tests 3/3; synthetic
-  repeated backlinks and actual full-card/section fixtures pass; all built exports
-  have 0 unresolved raw-table footnote refs; site production build remains 599
-  Pagefind records. Run 31917054001 proved the dynamic matrix and deploy dependency on
-  hosted runners.
-- D51 phase 2: source-first L2 is clean at 108 Fable, 54 Opus, and 121 Risk Report
-  logical destinations (123 authored Risk Report occurrences); historical wrong-target
-  replay is 27/27; source expectations cover 285/285 authored occurrences. The Python
-  suite is 38/38 and site tests are 11/11. The built-page audit sees 1,716 ids and
-  1,506 fragment links with zero findings. The L2 artifacts fail closed on source or
-  canonical hash drift. Runs 31919737114 and 31919737009 prove the fast release path
-  and all three slower mutation floors on hosted runners for `ff9b6e3`.
+`flatten-chip` is the only inapplicable class on Opus and the Risk Report. Every V1,
+P2, F3, L2, body-critical, and footnote-critical class is 8/8 on every card where it
+applies. The remaining misses are concentrated where the evidence says they are:
+ST1/ST2/ST3, L1 occurrence coverage, S1 bold coverage, and ordinary two-word swaps
+that T1 can detect while intentionally leaving advisory. Phase 4 therefore remains
+ST2 hardening rather than another representation rewrite.
+
+Mutation artifacts are strict schema-v2 envelopes bound to the card, seed,
+trials/class, complete class/invariant set, aggregate counts, and per-trial evidence.
+There is no legacy-baseline fallback. Output defaults to a temporary file and may not
+resolve to the baseline path. The committed floors cover detection, intended-major,
+and major-blocking independently.
+
+## Validation and output effect
+
+- The pinned local fast release command passed: shared card inventory, 147 Python
+  verifier tests, all three gates, exact L2 and source-projection artifact comparisons,
+  all three zero-seam audits, 31 site tests, and a clean production build.
+- The built audit found 1,716 ids, 1,506 fragment links, 676 required page markers,
+  263 rendered figures, and 267 copied raster assets, with 0 findings and all source
+  PDF/PNG hashes matching.
+- All three strict mutation baselines were regenerated from 584 trials and validated
+  against the schema-v2 evidence contract. Exact final-tree replay of every trial is
+  pending the hosted mutation jobs after push.
+- `git diff -- cards/*/*/sections` is empty. No canonical card content changed.
+- A clean 995-file `site/dist`, including Pagefind output, is byte-identical to
+  pre-change HEAD.
+  The published page content and search index therefore do not change in this phase.
+- Full generation now hands off to the pinned, corpus-wide
+  `pipeline/verify_release.py` command; partial generation remains an explicitly
+  non-release diagnostic.
+- Nothing in D55 has been pushed or deployed yet. Do not describe the live site as
+  phase 3 until the hosted fast and mutation workflows and Pages deployment succeed.
 
 ## Durable process invariants
 
-- The PDF is the sole content truth. Reproduce publisher errors; do not silently
-  correct them.
+- The PDF is the sole content truth. PyMuPDF is a pinned, fallible observer; reproduce
+  publisher errors rather than silently proofreading them.
 - Capture is mechanical. Agents inspect and report; they do not transcribe or polish
   publisher text.
 - Fix classes in `pipeline/`, never instances or generated sections. Regenerate,
-  inspect the exact output diff, preview visible changes, run gate + seam, then
-  re-sweep affected pages and controls.
-- A shared-pipeline change covers the target plus every non-target certified
-  document. Byte identity catches unintended movement; approved PDF-evidenced canon
-  improvements may move a baseline only with a regression sweep.
-- Mechanical majors gate within each invariant's documented scope;
-  probabilistic/vision checks advise. The owner scroll remains mandatory because it
-  catches layout classes disjoint from page sweeps.
+  inspect the exact output diff, preview visible changes, run the corpus-wide gate,
+  then re-sweep affected pages and controls.
+- A shared-pipeline change covers the target plus every non-target certified card.
+- Mechanical majors gate within their written scope; probabilistic/visual checks
+  advise. The owner scroll remains mandatory for layout classes outside those scopes.
+- Generic acceptance cannot weaken a source-bound or final-projection authority.
 - Commit early and append decisions. Never push without an explicit owner request.
 
-## Open — owner attention needed
+## Open / next
 
-- **Architecture hardening program:** continue the ordered work in
-  [architecture-roadmap.md](architecture-roadmap.md) at phase 3. A different
-  vendor/PDF producer is still the decisive later test of cross-family rule scope, not
-  the immediate next task.
-- **Nonblocking R2 presentation question:** recovery-vs-plain-text behavior is settled;
-  only whether the web edition should visibly annotate a source-unresolvable internal
-  destination remains open in `spec-rules.md`.
+- **Phase 4:** harden ST2 using the 16 sweep findings, known mutation misses, and
+  nearest-negative controls.
+- **Later authority work:** pin/cold-replay extraction (phase 5), serialize the
+  observation/annotation boundary (phase 6), independently test table topology and a
+  persistent grid (phases 7–8), then exercise clean bootstrap, every projection,
+  computed browser visibility, and a different PDF producer (phase 9).
+- **Nonblocking R2 presentation question:** whether the web edition visibly annotates
+  a source-unresolvable internal destination remains open; recovery/plain-text
+  behavior is already settled.
 
 ## Cold-start capsule
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D54),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D55),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
-[verification-methodology.md](verification-methodology.md). For a changed corpus,
-experiment 11 is the regression-sweep template: changed pages plus renderer controls,
-the PDF as sole authority, and prompts that ask rather than assert the expected
-answer.
+[verification-methodology.md](verification-methodology.md). The immediate task is
+phase 4, not a whole-document IR migration. For a changed corpus, experiment 11 is the
+regression-sweep template: changed pages plus renderer controls, the PDF as sole
+authority, and prompts that ask rather than assert the expected answer.

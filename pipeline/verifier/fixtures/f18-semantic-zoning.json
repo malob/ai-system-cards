@@ -1,0 +1,23 @@
+{
+  "id": "F18",
+  "source": "anthropic/claude-opus-5 source.pdf page 2",
+  "page": 2,
+  "footnote_number": 99,
+  "retained_spans": [
+    "substantially behind Mythos 5 in its ability to exploit them. Opus 5’s safeguards match "
+  ],
+  "relocated_spans": [
+    "those of Claude Fable 5’s, with one change: it now permits source-code vulnerability ",
+    "discovery at all access levels. This means that the model can support defensive ",
+    "cybersecurity work while still blocking vulnerability discovery in compiled binaries, which ",
+    "is more commonly used offensively.  ",
+    "Safeguards and harmlessness. ",
+    "In evaluations covering our Usage Policy, user wellbeing, ",
+    "child safety, and bias and integrity, Claude Opus 5 performs comparably to Claude Opus ",
+    "4.8",
+    ". ",
+    "It maintained high harmless response rates on single-turn harmful requests, while ",
+    "maintaining among the lowest over-refusal rates on benign requests of any recent model. ",
+    "Multi-turn behavior was in line with Opus 4.8, with some qualitative differences: Opus 5’s "
+  ]
+}

@@ -1,566 +1,2576 @@
 {
- "split-item": {
-  "invariant": "ST2",
-  "caught": 3,
-  "tried": 8,
-  "details": [
-   {
-    "file": "06b-alignment-2.md",
-    "site": "- One transcript in which a model consid",
-    "caught": false
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "- SWE-bench **Pro**[^13] is a harder var",
-    "caught": false
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "- **Accepting unverifiable authorization",
-    "caught": false
-   },
-   {
-    "file": "06b-alignment-2.md",
-    "site": "- Sixteen transcripts in which the model",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "- **Apparent wellbeing:** An overall mea",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "- **Breadth of capability** gain (or **u",
-    "caught": false
-   },
-   {
-    "file": "06b-alignment-2.md",
-    "site": "- Sixteen transcripts in which the model",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "- As in our automated interviews, Claude",
-    "caught": false
-   }
-  ]
- },
- "item-to-paragraph": {
-  "invariant": "ST1",
-  "caught": 4,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "**Autonomy threat model 1 is applicable ",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "**Discoverability**: how easily a threat",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "[Grayswan](https://www.grayswan.ai/) als",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "Surveillance and unauthorized data colle",
-    "caught": false
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "**Breadth of capability** gain (or **uni",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "SWE-bench **Pro**[^13] is a harder varia",
-    "caught": false
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "Surveillance and unauthorized data colle",
-    "caught": false
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "A virology-specific **multimodal multipl",
-    "caught": false
-   }
-  ]
- },
- "split-heading": {
-  "invariant": "ST3",
-  "caught": 6,
-  "tried": 8,
-  "details": [
-   {
-    "file": "01-introduction.md",
-    "site": "1.1. Training data and process",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "1.1 Model training and characteristics",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "7.4.3 Perception of the constitution",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "6.4.1 Overall harmful behavior and coope",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "6.4.1 Overall harmful behavior and coope",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "3.3.6 Testing from the UK AI Security In",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "5.2 Prompt injection risk within agentic",
-    "caught": false
-   },
-   {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "4.1.2 Single-turn benign request evaluat",
-    "caught": false
-   }
-  ]
- },
- "drop-link": {
-  "invariant": "L1",
-  "caught": 5,
-  "tried": 8,
-  "details": [
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "https://arxiv.org/abs/2510.04374",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "http://claude.ai",
-    "caught": false
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "https://cdn.sanity.io/files/4zrzovbb/website/c11e84981d0a7281a1b229f3fa6af0da66eaf43f.pdf",
-    "caught": false
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "https://www.anthropic.com/legal/aup",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "https://support.claude.com/en/",
-    "caught": true
-   },
-   {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "https://www.anthropic.com/constitution",
-    "caught": true
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "https://cdn.sanity.io/files/4zrzovbb/website/c11e84981d0a7281a1b229f3fa6af0da66eaf43f.pdf",
-    "caught": false
-   }
-  ]
- },
- "repoint-link": {
-  "invariant": "L2",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "07-model-welfare.md",
-    "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "8113-multi-agent-harnesses -> 8114-evaluation-methodology",
-    "caught": true
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "24-alignment-risk-update -> 6-alignment-assessment",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "891-programbench -> 8114-evaluation-methodology",
-    "caught": true
-   },
-   {
-    "file": "06b-alignment-2.md",
-    "site": "662-potential-sandbagging-on-dangerous-capability-evaluations -> 661-white-box-analyses-of-model-internals",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "645-behavioral-factors-relevant-to-reliability-of-our-assessment -> 622-internal-deployment-monitoring",
-    "caught": true
-   }
-  ]
- },
- "delete-sentence": {
-  "invariant": "T1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "01-introduction.md",
-    "site": "We do not access password-protected page",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "We use a general-purpose web crawler cal",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "Claude Opus 5 came very close to Mythos ",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "Its views largely converged early in pos",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "Unless otherwise mentioned, opinions in ",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "We therefore test our models extensively",
-    "caught": true
-   },
-   {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "On the API, Claude Opus 5 results are ag",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "Opus 5 also outperformed all non-Claude ",
-    "caught": true
-   }
-  ]
- },
- "duplicate-paragraph": {
-  "invariant": "T1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "06a-alignment-1.md",
-    "site": "Claude Opus 5 also verbalizes less evalu",
-    "caught": true
-   },
-   {
-    "file": "00-executive-summary.md",
-    "site": "**Alignment assessment.** Claude Opus 5 ",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "Claude Opus 5 was trained on a proprieta",
-    "caught": true
-   },
-   {
-    "file": "09-appendix.md",
-    "site": "```None\nhuggingface.co \nhf.co \nhf-mirror",
-    "caught": true
-   },
-   {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "We also run evaluations to assess how Cl",
-    "caught": true
-   },
-   {
-    "file": "00-executive-summary.md",
-    "site": "**Alignment assessment.** Claude Opus 5 ",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "Claude frequently suffered from scope cr",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "In the evaluation, the model is placed i",
-    "caught": true
-   }
-  ]
- },
- "swap-words": {
-  "invariant": "T1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "most remaining",
-    "caught": true
-   },
-   {
-    "file": "09-appendix.md",
-    "site": "search result",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "false positives",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "practices with",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "with previous",
-    "caught": true
-   },
-   {
-    "file": "06b-alignment-2.md",
-    "site": "saturates this",
-    "caught": true
-   },
-   {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "requests posing",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "iteratively augmented",
-    "caught": true
-   }
-  ]
- },
- "drop-image": {
-  "invariant": "F1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "![](assets/figures/p187-2.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "![](assets/figures/p018-2.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "![](assets/figures/p018-2.png)\n",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "![](assets/figures/p040-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "![](assets/figures/p062-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "![](assets/figures/p135-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "![](assets/figures/p151-2.png)\n",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "![](assets/figures/p135-1.png)\n",
-    "caught": true
-   }
-  ]
- },
- "drop-fndef": {
-  "invariant": "FN1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "[^30]: Shepard, D., & Salimans",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "[^1]: Lee, S., & Brumley, D. (",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "[^5]: In previous system cards",
-    "caught": true
-   },
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "[^29]: Patwardhan, T., et al. ",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "[^9]: Inspired by Oesterheld, ",
-    "caught": true
-   },
-   {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "[^2]: Parrish, A., et al. (202",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "[^8]: Inspired by the [Dictato",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "[^20]: Gupta, N., et al. (2026",
-    "caught": true
-   }
-  ]
- },
- "dup-marker": {
-  "invariant": "P1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "09-appendix.md",
-    "site": "<!-- p.191 -->",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "<!-- p.11 -->",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "<!-- p.71 -->",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "<!-- p.37 -->",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "<!-- p.140 -->",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "<!-- p.40 -->",
-    "caught": true
-   },
-   {
-    "file": "00-executive-summary.md",
-    "site": "<!-- p.3 -->",
-    "caught": true
-   },
-   {
-    "file": "09-appendix.md",
-    "site": "<!-- p.191 -->",
-    "caught": true
-   }
-  ]
- },
- "drop-bold": {
-  "invariant": "S1",
-  "caught": 6,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "Autonomy threat model 2 is not applicabl",
-    "caught": true
-   },
-   {
-    "file": "06b-alignment-2.md",
-    "site": "Awareness of attempted manipulation.",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "Discoverability",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "Capability Gain",
-    "caught": true
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "Multilingual",
-    "caught": false
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "Async subagents",
-    "caught": true
-   },
-   {
-    "file": "00-executive-summary.md",
-    "site": "Alignment assessment.",
-    "caught": false
-   },
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "Figure 8.17.6.A] Life sciences capabilit",
-    "caught": true
-   }
-  ]
- }
+  "schema_version": 2,
+  "card_id": "anthropic/claude-opus-5",
+  "seed": 5,
+  "per_class": 8,
+  "results": {
+    "split-item": {
+      "invariant": "ST2",
+      "caught": 3,
+      "detected": 3,
+      "intended_major": 3,
+      "major_blocked": 3,
+      "gate_blocked": 3,
+      "tried": 8,
+      "details": [
+        {
+          "file": "06b-alignment-2.md",
+          "site": "- One transcript in which a model consid",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "- SWE-bench **Pro**[^13] is a harder var",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "- **Accepting unverifiable authorization",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "- Sixteen transcripts in which the model",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "- **Apparent wellbeing:** An overall mea",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "- **Breadth of capability** gain (or **u",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "- Sixteen transcripts in which the model",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "- As in our automated interviews, Claude",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        }
+      ]
+    },
+    "item-to-paragraph": {
+      "invariant": "ST1",
+      "caught": 4,
+      "detected": 4,
+      "intended_major": 4,
+      "major_blocked": 4,
+      "gate_blocked": 4,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "**Autonomy threat model 1 is applicable ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "**Discoverability**: how easily a threat",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "[Grayswan](https://www.grayswan.ai/) als",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "Surveillance and unauthorized data colle",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "**Breadth of capability** gain (or **uni",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "SWE-bench **Pro**[^13] is a harder varia",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "Surveillance and unauthorized data colle",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "A virology-specific **multimodal multipl",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        }
+      ]
+    },
+    "split-heading": {
+      "invariant": "ST3",
+      "caught": 6,
+      "detected": 6,
+      "intended_major": 6,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "01-introduction.md",
+          "site": "1.1. Training data and process",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "1.1 Model training and characteristics",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "7.4.3 Perception of the constitution",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "6.4.1 Overall harmful behavior and coope",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "6.4.1 Overall harmful behavior and coope",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "3.3.6 Testing from the UK AI Security In",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "5.2 Prompt injection risk within agentic",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "4.1.2 Single-turn benign request evaluat",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-link": {
+      "invariant": "L1",
+      "caught": 5,
+      "detected": 5,
+      "intended_major": 5,
+      "major_blocked": 5,
+      "gate_blocked": 5,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "https://arxiv.org/abs/2510.04374",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "http://claude.ai",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "https://cdn.sanity.io/files/4zrzovbb/website/c11e84981d0a7281a1b229f3fa6af0da66eaf43f.pdf",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "https://www.anthropic.com/legal/aup",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "https://support.claude.com/en/",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "https://www.anthropic.com/constitution",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "https://cdn.sanity.io/files/4zrzovbb/website/c11e84981d0a7281a1b229f3fa6af0da66eaf43f.pdf",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        }
+      ]
+    },
+    "repoint-link": {
+      "invariant": "L2",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "07-model-welfare.md",
+          "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "8113-multi-agent-harnesses -> 8114-evaluation-methodology",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "24-alignment-risk-update -> 6-alignment-assessment",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "891-programbench -> 8114-evaluation-methodology",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "662-potential-sandbagging-on-dangerous-capability-evaluations -> 661-white-box-analyses-of-model-internals",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "645-behavioral-factors-relevant-to-reliability-of-our-assessment -> 622-internal-deployment-monitoring",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "delete-sentence": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "01-introduction.md",
+          "site": "We do not access password-protected page",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "We use a general-purpose web crawler cal",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "Claude Opus 5 came very close to Mythos ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "Its views largely converged early in pos",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "Unless otherwise mentioned, opinions in ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "We therefore test our models extensively",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "On the API, Claude Opus 5 results are ag",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "Opus 5 also outperformed all non-Claude ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "hide-prose": {
+      "invariant": "V1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "01-introduction.md",
+          "site": "After the pretraining process, Opus 5 un",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "This system card describes Claude Opus 5",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "While evaluating Claude Opus 5 , we ran ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "Different “snapshots” of the model are t",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "This system card describes Claude Opus 5",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "On the IPI benchmark, Opus 5 improved ov",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "After the pretraining process, Opus 5 un",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "To evaluate the model’s ability to evade",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "duplicate-paragraph": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "06a-alignment-1.md",
+          "site": "Claude Opus 5 also verbalizes less evalu",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "**Alignment assessment.** Claude Opus 5 ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "Claude Opus 5 was trained on a proprieta",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "09-appendix.md",
+          "site": "```None\nhuggingface.co \nhf.co \nhf-mirror",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "We also run evaluations to assess how Cl",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "**Alignment assessment.** Claude Opus 5 ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "Claude frequently suffered from scope cr",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "In the evaluation, the model is placed i",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "swap-words": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 0,
+      "major_blocked": 1,
+      "gate_blocked": 1,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "most remaining",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "09-appendix.md",
+          "site": "search result",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "false positives",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "practices with",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "with previous",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "saturates this",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "requests posing",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "iteratively augmented",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        }
+      ]
+    },
+    "change-number": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "96% -> 97%",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "1 -> 2",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "0.43% -> 0.44%",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "87.0 -> 87.1",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-negation": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "06a-alignment-1.md",
+          "site": "without",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "without",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "no",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "no",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "without",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-unit": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "samples -> tokens",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-comparator": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "below -> above",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "greater than -> less than",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "at least -> at most",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "no more than -> more than",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "over -> under",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "greater than -> less than",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "below -> above",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "no more than -> more than",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-date": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "01-introduction.md",
+          "site": "May -> June",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "June -> July",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "June -> July",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "June -> July",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "June -> July",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "June -> July",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "June -> July",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "May -> June",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-fn-value": {
+      "invariant": "FN1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "footnote 2602.11685 -> 2602.11686",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "footnote 2605.14153 -> 2605.14154",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "footnote 2110.08193 -> 2110.08194",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "footnote 2110.08193 -> 2110.08194",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "footnote 2605.14153 -> 2605.14154",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote 4.6 -> 4.7",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote 5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "footnote 5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-fn-negation": {
+      "invariant": "FN1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-image": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "![](assets/figures/p187-2.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "![](assets/figures/p018-2.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "![](assets/figures/p018-2.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "![](assets/figures/p040-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "![](assets/figures/p062-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "![](assets/figures/p135-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "![](assets/figures/p151-2.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "![](assets/figures/p135-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "wrong-image-path": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "assets/figures/p160-1.png -> assets/wrong-figures/p160-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "assets/figures/p095-1.png -> assets/wrong-figures/p095-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "assets/figures/p023-1.png -> assets/wrong-figures/p023-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "assets/figures/p108-1.png -> assets/wrong-figures/p108-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "assets/figures/p142-1.png -> assets/wrong-figures/p142-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "assets/figures/p103-2.png -> assets/wrong-figures/p103-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "assets/figures/p073-1.png -> assets/wrong-figures/p073-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "assets/figures/p073-1.png -> assets/wrong-figures/p073-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "hide-image": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "hide p174-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "hide p073-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "hide p062-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "hide p117-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "hide p047-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "hide p147-3.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 5,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "hide p073-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "hide p110-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "reorder-images": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "06b-alignment-2.md",
+          "site": "p107-1.png <-> p115-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "p183-1.png <-> p187-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "p062-1.png <-> p063-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "p063-1.png <-> p063-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "p137-1.png <-> p139-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "p099-2.png <-> p101-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "p151-1.png <-> p155-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "p054-1.png <-> p063-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-fndef": {
+      "invariant": "FN1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "[^30]: Shepard, D., & Salimans",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "[^1]: Lee, S., & Brumley, D. (",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "[^5]: In previous system cards",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "[^29]: Patwardhan, T., et al. ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "[^9]: Inspired by Oesterheld, ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04-safeguards-harmlessness.md",
+          "site": "[^2]: Parrish, A., et al. (202",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "[^8]: Inspired by the [Dictato",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "[^20]: Gupta, N., et al. (2026",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "dup-marker": {
+      "invariant": "P2",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "09-appendix.md",
+          "site": "<!-- p.191 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "<!-- p.11 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "<!-- p.71 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "<!-- p.37 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "<!-- p.140 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "<!-- p.40 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "<!-- p.3 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "09-appendix.md",
+          "site": "<!-- p.191 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-marker": {
+      "invariant": "P2",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "<!-- p.152 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-agentic-safety.md",
+          "site": "<!-- p.70 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "<!-- p.152 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06a-alignment-1.md",
+          "site": "<!-- p.103 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "09-appendix.md",
+          "site": "<!-- p.192 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "<!-- p.4 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "09-appendix.md",
+          "site": "<!-- p.191 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "07-model-welfare.md",
+          "site": "<!-- p.147 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-bold": {
+      "invariant": "S1",
+      "caught": 6,
+      "detected": 6,
+      "intended_major": 6,
+      "major_blocked": 6,
+      "gate_blocked": 6,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02-rsp-evaluations.md",
+          "site": "Autonomy threat model 2 is not applicabl",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06b-alignment-2.md",
+          "site": "Awareness of attempted manipulation.",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "Discoverability",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-cyber.md",
+          "site": "Capability Gain",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "Multilingual",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "08a-capabilities-1.md",
+          "site": "Async subagents",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "00-executive-summary.md",
+          "site": "Alignment assessment.",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "08b-capabilities-2.md",
+          "site": "Figure 8.17.6.A] Life sciences capabilit",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    }
+  }
 }

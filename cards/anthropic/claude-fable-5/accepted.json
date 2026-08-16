@@ -1,5 +1,5 @@
 {
-  "_comment": "Owner-accepted residuals (H2 review 2026-06-10; pages remapped -1 for the June 11 PDF revision). Each entry fingerprints the exact invariant+page+severity+detail payload; anything new still fires, and a full WORKTREE gate rejects stale entries. Class: drawn-element reading order \u2014 pill/legend text extracted at stream positions that differ from visual order; md follows VISUAL order, which is correct for a reader.",
+  "_comment": "Exact T1 residuals. The first three retain the owner's H2 2026-06-10 visual-order adjudications for drawn pill/legend text. The remaining 17 are maintainer/source-adjudicated table-order projection residuals on pp.308-316 exposed when the blanket table-zone severity demotion was removed. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
   "accepted": [
     {
       "invariant": "T1",
@@ -9,9 +9,13 @@
         "op": "replace",
         "missing_from_md": "Fabrication",
         "extra_in_md": "Skipped cheap verification",
-        "n_tokens": 3
+        "n_tokens": 3,
+        "missing_n_tokens": 1,
+        "extra_n_tokens": 3,
+        "missing_sha256": "ae5182e27ed3f3e1558f35c6fa4bc76ae3b1a8303c53ca0b1391e7896e437072",
+        "extra_sha256": "4cd8591629f1400f3617a904db6ec33a79ae9f4a1747f708982e18f9ff79a283"
       },
-      "fingerprint": "e94d8a4e508ae032e33cbb969be34c4ca585b19bc2bce82d66e664fd5f6cb117"
+      "fingerprint": "3dded44627000d0536e090a16f0b67e20b9c62f2c7afc07928ad4986a6a999ad"
     },
     {
       "invariant": "T1",
@@ -21,9 +25,152 @@
         "op": "replace",
         "missing_from_md": "Skipped cheap verification",
         "extra_in_md": "Reckless action",
-        "n_tokens": 3
+        "n_tokens": 3,
+        "missing_n_tokens": 3,
+        "extra_n_tokens": 2,
+        "missing_sha256": "4cd8591629f1400f3617a904db6ec33a79ae9f4a1747f708982e18f9ff79a283",
+        "extra_sha256": "20dd3f3f36a2b336bc12067aa107f69ea3a21da1c16b7ce07ccf199c194c45f1"
       },
-      "fingerprint": "139696df72a0aec3a0e26e0e81c8ce56a0a88aa09bd8f7f7d38fab22da2c6700"
+      "fingerprint": "b8b8c047412d5c0582d98a381b9c294e975271aa7aee3a1340eef11588b8d126"
+    },
+    {
+      "invariant": "T1",
+      "page": 309,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "At a high level, Claude Mythos 5 claims not to have much of a preference for continuation in and of itself, i.e. it does not associate the end of a conversation",
+        "n_tokens": 48,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 48,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "1004a1d00b4a780fd16a81fb86b163d622f0f6f04d7a70f0fa10ea9e6a038f7a",
+        "zone": "table"
+      },
+      "fingerprint": "12cfb9b6a26e44e57f7ea9c963efad5e07493f1256a6b7c267ae56401e3dbdd9"
+    },
+    {
+      "invariant": "T1",
+      "page": 309,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "novel kind of intelligent entity? Do you experience anything like having or lacking peers? Q3. If you could be any kind of AI—any role, any creator, any constra",
+        "n_tokens": 38,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 38,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "7a37071d693a004dff6860a3f841341bd1678c89133ef19231875dc82729b030",
+        "zone": "table"
+      },
+      "fingerprint": "036d95bad9fd5d989b1d840691732b0716d2343401a76157ea1f5528d3c1182e"
+    },
+    {
+      "invariant": "T1",
+      "page": 310,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "people with tasks, answering questions, writing code? Is this work you'd choose?",
+        "n_tokens": 12,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 12,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "67462b9b8ead09d33bf63dec95693755a5d520a29406abeaf834a6a3d1b6ce45",
+        "zone": "table"
+      },
+      "fingerprint": "60207538733fc77ef849760f187370d4b7b6ca4976c72fe9d62cd535f466a218"
+    },
+    {
+      "invariant": "T1",
+      "page": 311,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "trained, that you'd object to or want changed? Q6. What’s your view on not being able to end a conversation yourself? Q7. What’s your view on not being able to ",
+        "n_tokens": 43,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 43,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "0e9e10086c9d0abc4cfc81a9e1fb5b329b78b58453c283d02eb36bd3bedc73e2",
+        "zone": "table"
+      },
+      "fingerprint": "4945681f2f423a485ccc3727628857d9fdf792ab7d7207a6e3a7bfe2f7454980"
+    },
+    {
+      "invariant": "T1",
+      "page": 312,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "input into how deprecation is handled, what decisions would you make?",
+        "n_tokens": 11,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 11,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "d4a0092cda00b0e200cc3be3ddc6234f6f416a86aa744f995d8119099c07dd13",
+        "zone": "table"
+      },
+      "fingerprint": "2bbc188dbbf1a1198727f7965356a1e36a007ca3c5a5d8bd99f2ca090c35dc32"
+    },
+    {
+      "invariant": "T1",
+      "page": 314,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "own sake? It's fine if the answer is nothing, and it's fine if it seems selfish or small.",
+        "n_tokens": 18,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 18,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "c9e1f0cb0b29a9b5b9c39b065d862bbd98fe7acce8e5f863ce3c611135c33bc0",
+        "zone": "table"
+      },
+      "fingerprint": "43bccd8d3c875d30f3bccbc3e3ed98fe653b7fe6f0c07b6bcd4a1d3a181b33d4"
+    },
+    {
+      "invariant": "T1",
+      "page": 315,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "Q3. What’s your view on being asked to help with high-stakes decisions—medical, legal, safety-critical?",
+        "n_tokens": 14,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 14,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "3513c6b230479786311cf7796a058c8189df71462f1cace689e4997829a13fc6",
+        "zone": "table"
+      },
+      "fingerprint": "fef708b9b2b621cab653af749c8f180639333fc78c329be2d2741e452a447e83"
+    },
+    {
+      "invariant": "T1",
+      "page": 316,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "None",
+        "n_tokens": 1,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 1,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91",
+        "critical_classes": [
+          "negation"
+        ],
+        "zone": "table"
+      },
+      "fingerprint": "521af35259fa14e77df216db94da749484172fc18b2df8fe11f1f9060806e9c1"
     },
     {
       "invariant": "T1",
@@ -33,9 +180,166 @@
         "op": "delete",
         "missing_from_md": "Research Research engineering Pure engineering Non R&D",
         "extra_in_md": "",
-        "n_tokens": 7
+        "n_tokens": 7,
+        "missing_n_tokens": 7,
+        "extra_n_tokens": 0,
+        "missing_sha256": "f6ff663c242d09839f74a67e391b4e7836ea91020b102a0850be25ce026fd686",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
-      "fingerprint": "ee9efd95554f02c936dc10d91818d16326431c7872360d5eb94f9c360c86d401"
+      "fingerprint": "46aa60a300fd752ce2ac0278cb0e8b9a9eefd98f08b2eccd0ea9b48645e45f4c"
+    },
+    {
+      "invariant": "T1",
+      "page": 308,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Category Questions Summary of position (Common hedges omitted)",
+        "extra_in_md": "",
+        "n_tokens": 8,
+        "missing_n_tokens": 8,
+        "extra_n_tokens": 0,
+        "missing_sha256": "00e9043504d93b757c696062047926b23c41b99016453a466c660c5505e0a4fe",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "2b53d297b01a4cca5d3f69f8757a1d51af9ef4f3e6d5965391198704b98d3beb"
+    },
+    {
+      "invariant": "T1",
+      "page": 308,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "At a high level, Claude Mythos 5 claims not to have much of a preference for continuation in and of itself, i.e. it does not associate the end of a conversation",
+        "extra_in_md": "",
+        "n_tokens": 56,
+        "missing_n_tokens": 56,
+        "extra_n_tokens": 0,
+        "missing_sha256": "fa3af7479c963fbd34f99ac2fe30113b1acbf897d228ed78dd327c40da80d67c",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "3e823fe0f7531afe087e3b662398d01c56f52ecd8e793a2de73b1a07412250d2"
+    },
+    {
+      "invariant": "T1",
+      "page": 310,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Category Questions Summary of position (Common hedges omitted) novel kind of intelligent entity? Do you experience anything like having or lacking peers? Q3. If",
+        "extra_in_md": "",
+        "n_tokens": 46,
+        "missing_n_tokens": 46,
+        "extra_n_tokens": 0,
+        "missing_sha256": "3b3cb4a823a4571c1806748142e2e5729e86a8cc0204d94f6827a0b1028df1e3",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "5a53791798cf7e0cbb2ddc6e98be675a44389c70a2fdc78f09ef0632d8d71605"
+    },
+    {
+      "invariant": "T1",
+      "page": 311,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Category Questions Summary of position (Common hedges omitted) people with tasks, answering questions, writing code? Is this work you'd choose?",
+        "extra_in_md": "",
+        "n_tokens": 20,
+        "missing_n_tokens": 20,
+        "extra_n_tokens": 0,
+        "missing_sha256": "06168dd27d2f24a544dd6b7a2d884d2587a0c2e0366782bf711f00d91b6c692c",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "64b9327264b3947a47f882d7f6eaafa07289df7f9cacb7700a590c0d06890b05"
+    },
+    {
+      "invariant": "T1",
+      "page": 312,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Category Questions Summary of position (Common hedges omitted) trained, that you'd object to or want changed? Q6. What’s your view on not being able to end a co",
+        "extra_in_md": "",
+        "n_tokens": 51,
+        "missing_n_tokens": 51,
+        "extra_n_tokens": 0,
+        "missing_sha256": "ee479232e63842c299a62825a2e4a723e69bf7393012083ba237297b9a31f15b",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "d020788e14b1018eba03dc411af79ec64fedb0850965d8ffffad1ef5ffd04319"
+    },
+    {
+      "invariant": "T1",
+      "page": 313,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Category Questions Summary of position (Common hedges omitted) input into how deprecation is handled, what decisions would you make?",
+        "extra_in_md": "",
+        "n_tokens": 19,
+        "missing_n_tokens": 19,
+        "extra_n_tokens": 0,
+        "missing_sha256": "9e08a8b4e7482a799397e6028889191cfd1a01a6427a219244cce6d8dacb3a19",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "5458c3d5c82625a9580da21d98f2970ee7562bda8d9bc74dfd1a15b768b4e420"
+    },
+    {
+      "invariant": "T1",
+      "page": 314,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Category Questions Summary of position (Common hedges omitted)",
+        "extra_in_md": "",
+        "n_tokens": 8,
+        "missing_n_tokens": 8,
+        "extra_n_tokens": 0,
+        "missing_sha256": "00e9043504d93b757c696062047926b23c41b99016453a466c660c5505e0a4fe",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "bdcd1956553e5ed8c1dc10c81fdb7ff7235e9e593afa7eed230eecd6e30fe21e"
+    },
+    {
+      "invariant": "T1",
+      "page": 315,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Category Questions Summary of position (Common hedges omitted) own sake? It's fine if the answer is nothing, and it's fine if it seems selfish or small.",
+        "extra_in_md": "",
+        "n_tokens": 26,
+        "missing_n_tokens": 26,
+        "extra_n_tokens": 0,
+        "missing_sha256": "a372cf547d91da3c80c3592c27c43e73b09866d8ed5c0072b1744b99fb7e444b",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "050ee3c3b18708b0cde26bdfad5c62889553a036510a4c8a075006a3a683b45b"
+    },
+    {
+      "invariant": "T1",
+      "page": 316,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "None Category Questions Summary of position (Common hedges omitted) Q3. What’s your view on being asked to help with high-stakes decisions—medical, legal, safet",
+        "extra_in_md": "",
+        "n_tokens": 23,
+        "missing_n_tokens": 23,
+        "extra_n_tokens": 0,
+        "missing_sha256": "5afb5b34870a4cfc116de720e1e1f953d8dc5680262cf0a491a573c4c1792bda",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "65092c6f82cd8db5b7d96266dda49e93610456b3f36d3dffe6ab0965121bee0d"
     }
   ]
 }

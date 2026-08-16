@@ -989,3 +989,95 @@ The mutation workflow remains intentionally separate from the faster Pages depen
 chain, and current `/GoTo` coverage is proven for the Anthropic Google-Docs-export
 family; a different producer remains a later portability test rather than an implied
 current capability.
+
+## D55 — phase 3 separates source authority, projection authority, and release behavior (2026-08-15)
+
+The owner explicitly rejected a one-off repair for the footnote-shaped symptom. The
+problem was broader: several checks could agree with generation because both inherited
+the same exclusion, zoning, or extraction decision. Phase 3 therefore changes the
+authority structure of the release gate without changing the accepted documents.
+
+**Pages and figures now start from the PDF, not generator metadata.** Every PDF page
+and every raw raster occurrence is required by default. A reviewed
+`source-inventory.json`, bound to the exact PDF SHA-256, PyMuPDF 1.28.2, observer
+schema, and complete source observation, is the only authority for a cover/TOC/blank
+page, duplicate draw, or allowed figure skip. Generator `toc_pages` and
+`figures-map.json` are claims checked against that observation; they cannot erase
+their own expectations. P2 owns page disposition and F3 owns raster identity. Missing,
+malformed, stale, duplicated, or unsupported authority fails closed and leaves the
+source occurrence required.
+
+**The source expectation is carried through the real renderer.** Each card has a
+deterministic `source-projection.json` binding the source PDF, inventory, figure map,
+exact canonical-section digest, every page/figure disposition, image bytes and
+dimensions, and the ordered page/figure/accepted-skip event stream. The site validates
+that artifact strictly, renders the exact supplied Markdown through the production
+pipeline, parses HTML with HTML5 tree-building, and requires the built article and
+copied PDF/PNG bytes to match. Across the current corpus that is 676 required page
+markers, 263 rendered figures, and 267 exact copied source raster assets. An accepted
+skip must survive as a hidden, filename/page/reason-bound sentinel in the correct
+event position; no current card uses one.
+
+**Authored HTML cannot hide content before the audit sees it.** V1 rejects raw HTML
+whose browser semantics hide authored content, including `hidden`, `inert`,
+`aria-hidden=true`, closed popovers/details/dialogs, hidden form/control containers,
+and the site's hidden classes. Active/reserved markup and inline style are rejected
+separately. This policy is tested through the same renderer with `hide-prose`
+mutations. It does not claim computed-CSS, responsive-layout, clipping, occlusion, or
+viewport visibility; those remain phase 9 browser work.
+
+**Footnote authority no longer depends only on semantic zoning.** The rerunnable F18
+fixture proves the old correlated false green: genuine body spans can be re-zoned as a
+footnote while the same prose moves to an unreferenced Markdown definition, leaving
+the two body streams in agreement. Section-local `definition-without-ref` is now an
+independent FN1 major. RF1 separately reopens the PDF without importing `oracle.py` or
+generator zones and binds numeric superscript occurrences and smaller, left-margin
+bottom-region numeric definitions to canonical occurrences and bodies. Its scope is
+deliberately narrow: symbol/letter markers and endnotes are not claimed. The Risk
+Report's stray p.126 superscript 18 is excluded only by an exact, source-hash-bound
+disposition recording the publisher artifact.
+
+**Severity reflects consequence, not table membership or token count alone.** The
+blanket table-zone T1 demotion is removed. Differences of at least three tokens remain
+major everywhere; table attribution is diagnostic only. One- and two-token changes to
+numbers, dates, units/currencies, negations, and quantified comparators are also major,
+including inside FN1 body comparisons. Current production comparisons no longer use
+historical quote-style or non-breaking-hyphen calibration folds, and complete hashes
+and token counts—not display-truncated samples—bind findings, displacements, and exact
+acceptances.
+
+PDF review found no new canonical-content repair. Removing table immunity exposed 22
+legitimate table-order projection residuals: 17 Fable, 4 Opus, and 1 Risk Report. They
+are exact accepted T1 findings, including Fable p.316's one-token `None` residual,
+which correctly remains a critical-negation major before acceptance. Together with
+Fable's three earlier visual-order adjudications, the corpus has 25 exact accepted
+majors: Fable 20, Opus 4, Risk Report 1. Each `accepted.json` carries the rationale and
+full fingerprints. Generic acceptance is forbidden for L2, P2, F3, RF1, and V1;
+source/projection exceptions must use their stronger authority, and L2/V1 permit no
+generic exception at all.
+
+**Mutation evidence now distinguishes four questions.** The harness combines the
+Python source/canonical gates with a persistent Node worker running the production
+Markdown transform, HTML renderer, and DOM audit over the exact mutated section bytes.
+It records intended-invariant detection, whether that intended finding is major,
+whether an unsuppressed major remains after exact acceptances, and whether the
+production gate exits nonzero. A strict schema-v2 envelope binds card, seed,
+trials/class, class set, invariant, aggregates, and per-trial evidence; there is no
+legacy fallback, and output cannot overwrite or alias the baseline. At seed 5 and
+eight trials/class, Fable detects 191/200 and major-blocks 185/200, Opus 176/192 and
+171/192, and Risk Report 173/192 and 171/192. Across 584 trials: 540 are detected, 518
+produce an intended major, and 527 are major-blocked. V1, P2, F3, L2, all critical
+T1/FN1 classes, and applicable chip coverage are 8/8; remaining misses concentrate in
+ST1/ST2/ST3, L1, S1, and ordinary two-word swaps that are intentionally advisory.
+The committed artifacts combine independent per-class runs with the final
+hide-image/V1 refresh and pass strict schema validation. One exact 584-trial replay
+against the final tree is not claimed locally; the hosted post-push mutation workflow
+is the independent completion evidence.
+
+The complete fast release graph is now one pinned command,
+`pipeline/verify_release.py`, and full generation prints that handoff rather than a
+single-card verifier command. All card gates, artifact comparisons, seams, site tests,
+and the clean build pass locally (147 Python tests, 31 site tests). Canonical
+`sections/*.md` did not change, and a clean 995-file `site/dist` including Pagefind is
+byte-identical to pre-change HEAD. This decision is
+implemented locally but not yet pushed or deployed. Phase 4 (ST2) is next.

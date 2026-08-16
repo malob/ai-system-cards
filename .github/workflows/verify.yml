@@ -66,13 +66,17 @@ jobs:
           uv run --python 3.12 --with 'pymupdf==1.28.2'
           python pipeline/verifier/calibrate.py WORKTREE
           --l2-json /tmp/l2-links.json
+          --source-projection-json /tmp/source-projection.json
       - name: Confirm tracked L2 expectations are fresh
         run: cmp /tmp/l2-links.json "cards/${CARD}/l2-links.json"
+      - name: Confirm tracked source projection is fresh
+        run: cmp /tmp/source-projection.json "cards/${CARD}/source-projection.json"
       - name: Audit table seams
         run: python3 pipeline/audit_table_seams.py
 
   site-build:
     name: Clean site build
+    needs: [card-inventory, verifier-unit-tests, card-gates]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

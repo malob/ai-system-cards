@@ -10,9 +10,9 @@ just the section they need), and an `llms.txt` index of all of it.
 
 **Site:** https://malob.github.io/ai-system-cards/
 
-The conversion is **mechanical — no LLM transcribes or edits the content.** A PyMuPDF
-"oracle" plus docling extract ground truth from the PDF; a block compiler assembles
-faithful markdown; independent invariant gates verify it against the oracle (text,
+The conversion is **mechanical — no LLM transcribes or edits the content.** PyMuPDF
+and docling record structured observations from the source PDF; a block compiler assembles
+faithful markdown; independent invariant gates verify it against the source observations (text,
 links, styling, structure, tables, figures, footnotes, page markers); and an Astro
 site renders it to static HTML with PDF deep links, sidenote footnotes, per-page
 social-preview images, and search.

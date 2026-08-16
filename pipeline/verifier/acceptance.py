@@ -1,8 +1,13 @@
-"""Exact, fail-closed handling for owner-accepted verifier findings.
+"""Exact, fail-closed handling for adjudicated verifier findings.
 
 An acceptance identifies one complete flag by a canonical SHA-256 fingerprint.
 The helper is deliberately independent of card selection and filesystem state so
 its matching and validation semantics can be tested in isolation.
+
+Source- and final-projection findings are deliberately outside this generic
+authority. Their exception mechanisms must preserve the stronger provenance of
+the authority that issued them; ``accepted.json`` cannot act as a parallel,
+less-bound escape hatch.
 """
 
 from __future__ import annotations
@@ -10,12 +15,19 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from typing import Any, Mapping, Sequence
-
+from typing import Any
 
 _ENTRY_KEYS = frozenset({"fingerprint", "invariant", "page", "severity", "detail"})
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_NON_GENERIC_ACCEPTANCE_GUIDANCE = {
+    "P2": "use source-inventory.json",
+    "F3": "use source-inventory.json",
+    "RF1": "use source-footnote-dispositions.json",
+    "L2": "no generic exception is permitted for source/link projection authority",
+    "V1": "no generic exception is permitted for final-rendered-DOM visibility authority",
+}
 
 
 class AcceptanceConfigError(ValueError):
@@ -78,11 +90,23 @@ def flag_fingerprint(flag: Mapping[str, Any]) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _reject_non_generic_acceptance(
+    payload: Mapping[str, Any], where: str
+) -> None:
+    invariant = payload.get("invariant")
+    guidance = _NON_GENERIC_ACCEPTANCE_GUIDANCE.get(invariant)
+    if guidance is not None:
+        raise AcceptanceConfigError(
+            f"{where} cannot accept {invariant} findings; {guidance}"
+        )
+
+
 def acceptance_entry(flag: Mapping[str, Any]) -> dict[str, Any]:
     """Build the strict accepted.json entry for an observed major flag."""
     payload = canonical_flag(flag)
     if payload["severity"] != "major":
         raise AcceptanceConfigError("only major flags may be accepted")
+    _reject_non_generic_acceptance(payload, "accepted.json")
     return {**payload, "fingerprint": flag_fingerprint(payload)}
 
 
@@ -112,6 +136,7 @@ def parse_acceptances(document: Any) -> AcceptanceConfig:
         payload = canonical_flag(entry)
         if payload["severity"] != "major":
             raise AcceptanceConfigError(f"{where} accepts a non-major flag")
+        _reject_non_generic_acceptance(payload, where)
         expected = flag_fingerprint(payload)
         if fingerprint != expected:
             raise AcceptanceConfigError(
@@ -125,6 +150,11 @@ def parse_acceptances(document: Any) -> AcceptanceConfig:
 
 def apply_acceptances(flags: Sequence[dict], config: AcceptanceConfig) -> AcceptanceResult:
     """Suppress at most one exact major flag per configured fingerprint."""
+    # AcceptanceConfig is normally created by parse_acceptances. Keep this
+    # boundary fail-closed even if an in-process caller constructs it directly.
+    for payload in config.by_fingerprint.values():
+        _reject_non_generic_acceptance(payload, "acceptance config")
+
     unmatched = set(config.by_fingerprint)
     matched: list[str] = []
     remaining: list[dict] = []

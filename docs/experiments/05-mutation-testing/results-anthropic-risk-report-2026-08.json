@@ -1,566 +1,2576 @@
 {
- "split-item": {
-  "invariant": "ST2",
-  "caught": 3,
-  "tried": 8,
-  "details": [
-   {
-    "file": "06-appendices.md",
-    "site": "- Our Safeguards research helps us under",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "- Updated the first stage offline monito",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "- *Perform systematic alignment assessme",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "- \u201cMeta-RL: tamper other episodes\u201d shows",
-    "caught": false
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "- \u201cMeta-RL: tamper other episodes\u201d shows",
-    "caught": false
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "- We already perform extensive alignment",
-    "caught": false
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "- **Coverage:** For our deployment of Fa",
-    "caught": false
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "- Evaluations that have a baseline of ex",
-    "caught": false
-   }
-  ]
- },
- "item-to-paragraph": {
-  "invariant": "ST1",
-  "caught": 4,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "We believe that the potential magnitude ",
-    "caught": false
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "We [published](https://www.anthropic.com",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "A post-hoc analysis suggested moderate 1",
-    "caught": false
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "Exploiting unintended information leakag",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "*Broad world-optimization:* Does the env",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "For each such attempt, the baseline odds",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "If AI models were incapable of reliably ",
-    "caught": false
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "Model 2, which is somewhat more capable ",
-    "caught": false
-   }
-  ]
- },
- "split-heading": {
-  "invariant": "ST3",
-  "caught": 4,
-  "tried": 8,
-  "details": [
-   {
-    "file": "01-introduction.md",
-    "site": "1.3.3 Coverage dates of risk reports",
-    "caught": false
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "1.2 Executive summary of findings",
-    "caught": false
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "5.3 Benefits from Anthropic\u2019s operating ",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "4.4.3 CB-2 evidence for Mythos Preview, ",
-    "caught": false
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "4.4.3 CB-2 evidence for Mythos Preview, ",
-    "caught": false
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "2.8 Claim 2: Expected harm from known mi",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "3.5.1 AECI capability trajectory",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "2.16.3 Evaluation awareness may be more ",
-    "caught": true
-   }
-  ]
- },
- "drop-link": {
-  "invariant": "L1",
-  "caught": 7,
-  "tried": 8,
-  "details": [
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "https://ifp.org/weighing-the-cost-of-the-pandemic/",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "https://arxiv.org/abs/2512.09742",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf",
-    "caught": false
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "https://www.lesswrong.com/posts/WewsByywWNhX9rtwi/current-ais-seem-pretty-misaligned-to-me",
-    "caught": true
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "https://www.anthropic.com/system-cards",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "https://anthropic.com/rsp/roadmap",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "https://www.anthropic.com/system-cards",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "https://metr.org/blog/2026-05-19-frontier-risk-report",
-    "caught": true
-   }
-  ]
- },
- "repoint-link": {
-  "invariant": "L2",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "221-specific-pathways -> 2-autonomy-threat-model-1-misalignment-in-high-stakes-settings",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "294-claim-34-the-presence-of-unknown-severe-pervasive-misalignment-is-unlikely-given-our-alignment-assessment -> 217-considerations-outside-the-scope-of-this-section",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "44-current-state-of-model-capabilities -> 458-changes-to-our-risk-mitigations-since-our-last-risk-report",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "462-risks-from-the-cb-2-threat-model -> 4582-incidents-related-to-our-classifiers-and-access-controls",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "221-specific-pathways -> 213-claim-7-threat-modeling-is-sufficient",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "22314-other-forms-of-asynchronous-monitoring -> 213-claim-7-threat-modeling-is-sufficient",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "462-risks-from-the-cb-2-threat-model -> 4532-notes-on-jailbreak-methods-that-remain-viable-on-at-least-some-models-in-some-cases",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "27-claim-1-models-are-unlikely-to-have-strong-covert-capabilities -> 214-claim-8-risk-from-deliberately-engineered-misalignment-is-low",
-    "caught": true
-   }
-  ]
- },
- "delete-sentence": {
-  "invariant": "T1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "Bars are per-task mean stealth rates ove",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "We think this is an important risk to tr",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "Misaligned computation need not be obser",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "We are including it here because we beli",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "We do not believe our models meet either",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "We'd like this to be an accurate summary",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "We rolled out a fix to first-party traff",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "We believe that it is very unlikely that",
-    "caught": true
-   }
-  ]
- },
- "duplicate-paragraph": {
-  "invariant": "T1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "Our assessment of low risk above is a de",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "Our previous (and first) Risk Report was",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "In this section we assess the risk that ",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "If a model had severe pervasive misalign",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "We pay up to $35,000 per novel universal",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "For our deployment of Fable 5, our most ",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "To further inform this assessment, we co",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "Some of our claims assume that models\u2019 a",
-    "caught": true
-   }
-  ]
- },
- "swap-words": {
-  "invariant": "T1",
-  "caught": 7,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "instill misalignment",
-    "caught": false
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "currently acts",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "have redacted",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "terms used",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "national security",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "detect even",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "believe could",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "capable than",
-    "caught": true
-   }
-  ]
- },
- "drop-image": {
-  "invariant": "F1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "05-cross-cutting.md",
-    "site": "![](assets/figures/p161-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "![](assets/figures/p088-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "![](assets/figures/p088-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "![](assets/figures/p031-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "![](assets/figures/p092-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "![](assets/figures/p092-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "![](assets/figures/p092-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "![](assets/figures/p092-1.png)\n",
-    "caught": true
-   }
-  ]
- },
- "drop-fndef": {
-  "invariant": "FN1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "05-cross-cutting.md",
-    "site": "[^82]: We overall evaluate thi",
-    "caught": true
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "[^88]: Including that it highl",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "[^44]: Over at least three mod",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "[^75]: Note that we expect it ",
-    "caught": true
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "[^83]: Though less so for prev",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "[^7]: For example, a program w",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "[^61]: In order to validate th",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "[^50]: Righetti, L. (2025). Du",
-    "caught": true
-   }
-  ]
- },
- "dup-marker": {
-  "invariant": "P1",
-  "caught": 8,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "<!-- p.67 -->",
-    "caught": true
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "<!-- p.168 -->",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "<!-- p.71 -->",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "<!-- p.34 -->",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "<!-- p.88 -->",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "<!-- p.37 -->",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "<!-- p.95 -->",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "<!-- p.176 -->",
-    "caught": true
-   }
-  ]
- },
- "drop-bold": {
-  "invariant": "S1",
-  "caught": 4,
-  "tried": 8,
-  "details": [
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "Claim 3",
-    "caught": false
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "Role of AI:",
-    "caught": false
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "Deceptive alignment:",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "Emergent misalignment",
-    "caught": false
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "Restricted session lengths for privilege",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "A note on framing",
-    "caught": true
-   },
-   {
-    "file": "01-introduction.md",
-    "site": "July 15, 2026",
-    "caught": false
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "Small portions of some completions not s",
-    "caught": true
-   }
-  ]
- }
+  "schema_version": 2,
+  "card_id": "anthropic/risk-report-2026-08",
+  "seed": 5,
+  "per_class": 8,
+  "results": {
+    "split-item": {
+      "invariant": "ST2",
+      "caught": 3,
+      "detected": 3,
+      "intended_major": 3,
+      "major_blocked": 3,
+      "gate_blocked": 3,
+      "tried": 8,
+      "details": [
+        {
+          "file": "06-appendices.md",
+          "site": "- Our Safeguards research helps us under",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "- Updated the first stage offline monito",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "- *Perform systematic alignment assessme",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "- “Meta-RL: tamper other episodes” shows",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "- “Meta-RL: tamper other episodes” shows",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "- We already perform extensive alignment",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "- **Coverage:** For our deployment of Fa",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "- Evaluations that have a baseline of ex",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        }
+      ]
+    },
+    "item-to-paragraph": {
+      "invariant": "ST1",
+      "caught": 4,
+      "detected": 4,
+      "intended_major": 4,
+      "major_blocked": 4,
+      "gate_blocked": 4,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "We believe that the potential magnitude ",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "We [published](https://www.anthropic.com",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "A post-hoc analysis suggested moderate 1",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "Exploiting unintended information leakag",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "*Broad world-optimization:* Does the env",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "For each such attempt, the baseline odds",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "If AI models were incapable of reliably ",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "Model 2, which is somewhat more capable ",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        }
+      ]
+    },
+    "split-heading": {
+      "invariant": "ST3",
+      "caught": 4,
+      "detected": 4,
+      "intended_major": 4,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "01-introduction.md",
+          "site": "1.3.3 Coverage dates of risk reports",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "1.2 Executive summary of findings",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "5.3 Benefits from Anthropic’s operating ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "4.4.3 CB-2 evidence for Mythos Preview, ",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "4.4.3 CB-2 evidence for Mythos Preview, ",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "2.8 Claim 2: Expected harm from known mi",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "3.5.1 AECI capability trajectory",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "2.16.3 Evaluation awareness may be more ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-link": {
+      "invariant": "L1",
+      "caught": 7,
+      "detected": 7,
+      "intended_major": 7,
+      "major_blocked": 7,
+      "gate_blocked": 7,
+      "tried": 8,
+      "details": [
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "https://ifp.org/weighing-the-cost-of-the-pandemic/",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "https://arxiv.org/abs/2512.09742",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "https://www.lesswrong.com/posts/WewsByywWNhX9rtwi/current-ais-seem-pretty-misaligned-to-me",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "https://www.anthropic.com/system-cards",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "https://anthropic.com/rsp/roadmap",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "https://www.anthropic.com/system-cards",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "https://metr.org/blog/2026-05-19-frontier-risk-report",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "repoint-link": {
+      "invariant": "L2",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "221-specific-pathways -> 2-autonomy-threat-model-1-misalignment-in-high-stakes-settings",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "294-claim-34-the-presence-of-unknown-severe-pervasive-misalignment-is-unlikely-given-our-alignment-assessment -> 217-considerations-outside-the-scope-of-this-section",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "44-current-state-of-model-capabilities -> 458-changes-to-our-risk-mitigations-since-our-last-risk-report",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "462-risks-from-the-cb-2-threat-model -> 4582-incidents-related-to-our-classifiers-and-access-controls",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "221-specific-pathways -> 213-claim-7-threat-modeling-is-sufficient",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "22314-other-forms-of-asynchronous-monitoring -> 213-claim-7-threat-modeling-is-sufficient",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "462-risks-from-the-cb-2-threat-model -> 4532-notes-on-jailbreak-methods-that-remain-viable-on-at-least-some-models-in-some-cases",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "27-claim-1-models-are-unlikely-to-have-strong-covert-capabilities -> 214-claim-8-risk-from-deliberately-engineered-misalignment-is-low",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "delete-sentence": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "Bars are per-task mean stealth rates ove",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "We think this is an important risk to tr",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "Misaligned computation need not be obser",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "We are including it here because we beli",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "We do not believe our models meet either",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "We'd like this to be an accurate summary",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "We rolled out a fix to first-party traff",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "We believe that it is very unlikely that",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "hide-prose": {
+      "invariant": "V1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "In the following sections, we present ou",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "Our [system cards](https://www.anthropic",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "Since our last Risk Report, we discovere",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "There is significant evidence that model",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "We discuss the distinction between these",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "We expect that in order to get substanti",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "If the alignment assessment covered the ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "This intervention had a minor bug which ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "duplicate-paragraph": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "Our assessment of low risk above is a de",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "Our previous (and first) Risk Report was",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "In this section we assess the risk that ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "If a model had severe pervasive misalign",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "We pay up to $35,000 per novel universal",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "For our deployment of Fable 5, our most ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "To further inform this assessment, we co",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "Some of our claims assume that models’ a",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "swap-words": {
+      "invariant": "T1",
+      "caught": 7,
+      "detected": 7,
+      "intended_major": 0,
+      "major_blocked": 1,
+      "gate_blocked": 1,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "instill misalignment",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "currently acts",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "have redacted",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "terms used",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "national security",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "detect even",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "believe could",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "capable than",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        }
+      ]
+    },
+    "change-number": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "03-automated-rd.md",
+          "site": "80% -> 81%",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "2 -> 3",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "3 -> 4",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "4.5.1 -> 4.5.2",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "4.1 -> 4.2",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-negation": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "no",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "without",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "no",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-unit": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "tokens -> parameters",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "months -> years",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "sample -> token",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "months -> years",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "tokens -> parameters",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "days -> hours",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "$ -> €",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-comparator": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "05-cross-cutting.md",
+          "site": "fewer than -> more than",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "more than -> less than",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "at least -> at most",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "at least -> at most",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "at least -> at most",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "at least -> at most",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "at least -> at most",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "at least -> at most",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-date": {
+      "invariant": "T1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "August -> September",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "February -> March",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "May -> June",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "December -> January",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "April -> May",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "July -> August",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "July -> August",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "January -> February",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "change-fn-value": {
+      "invariant": "FN1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "footnote 25 -> 26",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "footnote 2026 -> 2027",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "footnote 5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "footnote 5 -> 6",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "footnote 19 -> 10",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "footnote 81 -> 82",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "footnote 19 -> 10",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "footnote 3 -> 4",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-fn-negation": {
+      "invariant": "FN1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "footnote no",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "footnote without",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "footnote not",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "footnote no",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "footnote no",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "footnote without",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-image": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "05-cross-cutting.md",
+          "site": "![](assets/figures/p161-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "![](assets/figures/p088-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "![](assets/figures/p088-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "![](assets/figures/p031-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "![](assets/figures/p092-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "![](assets/figures/p092-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "![](assets/figures/p092-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "![](assets/figures/p092-1.png)\n",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "wrong-image-path": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "05-cross-cutting.md",
+          "site": "assets/figures/p162-1.png -> assets/wrong-figures/p162-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "assets/figures/p088-1.png -> assets/wrong-figures/p088-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "assets/figures/p162-1.png -> assets/wrong-figures/p162-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "assets/figures/p092-1.png -> assets/wrong-figures/p092-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "assets/figures/p102-1.png -> assets/wrong-figures/p102-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "assets/figures/p092-1.png -> assets/wrong-figures/p092-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "assets/figures/p089-1.png -> assets/wrong-figures/p089-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "assets/figures/p034-1.png -> assets/wrong-figures/p034-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "hide-image": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "hide p089-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "hide p031-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "hide p090-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "hide p033-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "hide p162-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "hide p089-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "hide p102-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "hide p161-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 3,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "reorder-images": {
+      "invariant": "F3",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "03-automated-rd.md",
+          "site": "p100-1.png <-> p102-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "p100-1.png <-> p102-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "p088-1.png <-> p092-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "p100-1.png <-> p102-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "p161-2.png <-> p162-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "p161-1.png <-> p162-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "p100-1.png <-> p102-1.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 4,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "p161-1.png <-> p161-2.png",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-fndef": {
+      "invariant": "FN1",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "05-cross-cutting.md",
+          "site": "[^82]: We overall evaluate thi",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "[^88]: Including that it highl",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "[^44]: Over at least three mod",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04b-chem-bio-2.md",
+          "site": "[^75]: Note that we expect it ",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "[^83]: Though less so for prev",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "[^7]: For example, a program w",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "[^61]: In order to validate th",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "[^50]: Righetti, L. (2025). Du",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "dup-marker": {
+      "invariant": "P2",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "<!-- p.67 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "05-cross-cutting.md",
+          "site": "<!-- p.168 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "<!-- p.71 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "<!-- p.34 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "<!-- p.88 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "<!-- p.37 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "<!-- p.95 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "<!-- p.176 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-marker": {
+      "invariant": "P2",
+      "caught": 8,
+      "detected": 8,
+      "intended_major": 8,
+      "major_blocked": 8,
+      "gate_blocked": 8,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "<!-- p.63 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "04a-chem-bio-1.md",
+          "site": "<!-- p.119 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "<!-- p.49 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "<!-- p.94 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "<!-- p.186 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "<!-- p.52 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "<!-- p.77 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "<!-- p.66 -->",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 2,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    },
+    "drop-bold": {
+      "invariant": "S1",
+      "caught": 4,
+      "detected": 4,
+      "intended_major": 4,
+      "major_blocked": 4,
+      "gate_blocked": 4,
+      "tried": 8,
+      "details": [
+        {
+          "file": "02a-autonomy-misalignment-1.md",
+          "site": "Claim 3",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "03-automated-rd.md",
+          "site": "Role of AI:",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "Deceptive alignment:",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02b-autonomy-misalignment-2.md",
+          "site": "Emergent misalignment",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "Restricted session lengths for privilege",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "02c-autonomy-misalignment-3.md",
+          "site": "A note on framing",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        },
+        {
+          "file": "01-introduction.md",
+          "site": "July 15, 2026",
+          "caught": false,
+          "detected": false,
+          "intended_new_flags": 0,
+          "intended_major": false,
+          "major_blocked": false,
+          "gate_blocked": false,
+          "gate_exit": 0,
+          "gate_reason": "none"
+        },
+        {
+          "file": "06-appendices.md",
+          "site": "Small portions of some completions not s",
+          "caught": true,
+          "detected": true,
+          "intended_new_flags": 1,
+          "intended_major": true,
+          "major_blocked": true,
+          "gate_blocked": true,
+          "gate_exit": 1,
+          "gate_reason": "major"
+        }
+      ]
+    }
+  }
 }

@@ -9,6 +9,14 @@ on:
       - .github/workflows/mutations.yml
       - pipeline/verifier/**
       - pipeline/cardcfg.py
+      - site/package.json
+      - site/pnpm-lock.yaml
+      - site/scripts/mutation-source-projection-worker.mjs
+      - site/src/lib/card-inventory.js
+      - site/src/lib/cards.js
+      - site/src/lib/l2-artifact.js
+      - site/src/lib/markdown.js
+      - site/src/lib/source-projection.js
       - cards/**
       - docs/experiments/05-mutation-testing/results-*.json
   push:
@@ -16,6 +24,14 @@ on:
       - .github/workflows/mutations.yml
       - pipeline/verifier/**
       - pipeline/cardcfg.py
+      - site/package.json
+      - site/pnpm-lock.yaml
+      - site/scripts/mutation-source-projection-worker.mjs
+      - site/src/lib/card-inventory.js
+      - site/src/lib/cards.js
+      - site/src/lib/l2-artifact.js
+      - site/src/lib/markdown.js
+      - site/src/lib/source-projection.js
       - cards/**
       - docs/experiments/05-mutation-testing/results-*.json
 
@@ -44,6 +60,17 @@ jobs:
       CARD: ${{ matrix.card }}
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - name: Install final-DOM verifier dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: site
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"

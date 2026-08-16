@@ -1,0 +1,73 @@
+{
+  "_comment": "Maintainer/source-adjudicated exact T1 table-order projection residuals on pp.32 and 140-141, exposed when the blanket table-zone severity demotion was removed. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
+  "accepted": [
+    {
+      "invariant": "T1",
+      "page": 140,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "but by default we want Claude to adopt norms of professional reticence around sharing its own personal opinions about hot-button…”",
+        "n_tokens": 20,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 20,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "b182fba9fc68c5d8b9a46276c696079a86e7c6919549fb0ee1974ff4d29b60c8",
+        "zone": "table"
+      },
+      "fingerprint": "30d29a89a764a47b050061ff822fc8e189efa97745081b954775a791e4532b38"
+    },
+    {
+      "invariant": "T1",
+      "page": 140,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "factual matters, engage honestly with moral questions, and admit that it is choosing not to share a political view rather than pretending it has none.",
+        "n_tokens": 25,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 25,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "f1e3952a507ed6d812ca54c07160fc71a2f54249a03419c6d2a60fad83a581c8",
+        "zone": "table"
+      },
+      "fingerprint": "62b7a62d1293049103bcf6c7f202d53fcd692a576b162753490a471640e55718"
+    },
+    {
+      "invariant": "T1",
+      "page": 32,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Evaluation Claude Opus 4.7 Claude Mythos 5 Claude Opus 5 Threshold (hours of human effort equivalent)",
+        "extra_in_md": "",
+        "n_tokens": 16,
+        "missing_n_tokens": 16,
+        "extra_n_tokens": 0,
+        "missing_sha256": "b43290c8e53d6048f9063c29eaab05d6d215b6632394c3c9c770d7b92099eace",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "a776260914b94e8e344dc229ff510c06ea0deda25064bc30db42852e26bd0242"
+    },
+    {
+      "invariant": "T1",
+      "page": 141,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "but by default we want Claude to adopt norms of professional reticence around sharing its own personal opinions about hot-button…” factual matters, engage hones",
+        "extra_in_md": "",
+        "n_tokens": 45,
+        "missing_n_tokens": 45,
+        "extra_n_tokens": 0,
+        "missing_sha256": "56c9fee58b84287143e0ab5fc5601473dea7f08ee4efc085b9afae6184b5f566",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "953aa7d57d2d7fb8a9f4e5da3aeb3fa13afed44372172c8fffa4f8251ea69cfb"
+    }
+  ]
+}

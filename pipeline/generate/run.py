@@ -100,20 +100,26 @@ def resolve_destination_placeholders(
 
 
 def verifier_command(*, full: bool, section_prefixes: list[str]) -> str:
-    """Shell-safe verifier handoff for this process's selected card.
+    """Shell-safe verifier handoff for this process's generated scope.
 
-    A full generation must run the literal WORKTREE gate: passing section
-    prefixes would intentionally disable document-wide P1 and stale-acceptance
-    checks. Partial generation keeps the absolute-directory + prefix form.
+    A full generation must run the complete release graph, including every
+    card's source artifacts and the final rendered-DOM/asset audit. Partial
+    generation is diagnostic and keeps the selected-card absolute-directory +
+    prefix form, which intentionally disables document-wide release checks.
     """
-    command = [
-        "env", f"CARD={cardcfg.CARD_ID}", "uv", "run", "--with", "pymupdf",
-        "python", "pipeline/verifier/calibrate.py",
-    ]
     if full:
-        command.append("WORKTREE")
-    else:
-        command.extend([str(OUT), "--sections", *section_prefixes])
+        command = [
+            "uv", "run", "--python", "3.12", "--with", "pymupdf==1.28.2",
+            "python", "pipeline/verify_release.py",
+        ]
+        return shlex.join(command)
+
+    command = [
+        "env", f"CARD={cardcfg.CARD_ID}", "uv", "run", "--python", "3.12",
+        "--with", "pymupdf==1.28.2", "python",
+        "pipeline/verifier/calibrate.py", str(OUT), "--sections",
+        *section_prefixes,
+    ]
     return shlex.join(command)
 
 
@@ -136,7 +142,8 @@ def first_headings() -> dict:
     for p in sorted((CARD / "sections").glob("*.md")):
         for line in p.read_text().splitlines():
             if line.startswith("#"):
-                out[p.name] = norm.squash(line.lstrip("# "))[:40]
+                out[p.name] = norm.squash(
+                    line.lstrip("# "), calibration=True)[:40]
                 break
     return out
 
@@ -145,7 +152,8 @@ def heading_index(blocks: list, head_key: str):
     import norm
     for i, blk in enumerate(blocks):
         if blk["type"] == "heading":
-            t = norm.squash(" ".join(l["text"] for l in blk["lines"]))
+            t = norm.squash(
+                " ".join(l["text"] for l in blk["lines"]), calibration=True)
             if t.startswith(head_key[:24]) or head_key.startswith(t[:24]):
                 return i
     return None

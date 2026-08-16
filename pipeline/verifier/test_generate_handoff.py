@@ -14,14 +14,19 @@ SPEC.loader.exec_module(generate_run)
 
 
 class GenerateHandoffTests(unittest.TestCase):
-    def test_full_generation_handoff_preserves_card_and_runs_full_gate(self):
+    def test_full_generation_handoff_runs_complete_release_graph(self):
         command = generate_run.verifier_command(full=True, section_prefixes=["00", "01"])
-        self.assertIn(f"CARD={generate_run.cardcfg.CARD_ID}", command)
-        self.assertTrue(command.endswith("calibrate.py WORKTREE"))
+        self.assertEqual(
+            command,
+            "uv run --python 3.12 --with pymupdf==1.28.2 "
+            "python pipeline/verify_release.py",
+        )
         self.assertNotIn("--sections", command)
 
     def test_partial_generation_handoff_keeps_section_scope(self):
         command = generate_run.verifier_command(full=False, section_prefixes=["02a", "02b"])
+        self.assertIn(f"CARD={generate_run.cardcfg.CARD_ID}", command)
+        self.assertIn("--python 3.12 --with pymupdf==1.28.2", command)
         self.assertIn(str(generate_run.OUT), command)
         self.assertIn("--sections 02a 02b", command)
 

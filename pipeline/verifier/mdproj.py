@@ -58,6 +58,7 @@ class Section:
     images: dict = field(default_factory=dict)        # page -> count
     markers: list = field(default_factory=list)       # pages in order of appearance
     fn_defs: dict = field(default_factory=dict)       # n -> text
+    fn_def_pages: dict = field(default_factory=dict)  # n -> source page
     fn_refs: list = field(default_factory=list)       # [(n, page)]
     table_pages: set = field(default_factory=set)     # pages containing tables
     fig_skips: dict = field(default_factory=dict)     # page -> [(file, reason)]
@@ -110,13 +111,22 @@ def _table_to_text(m: re.Match, sec: "Section", page: int) -> str:
         atext = re.sub(r"<[^>]+>", " ", am.group("body"))
         sec.links.append((_strip_sentinels(atext), am.group("href"), link_page))
 
-    def sup(sm):  # footnote refs inside tables, e.g. <sup>[^11]</sup>; a
-        # bracket-less <sup>N</sup> is an ORPHAN ref (source artifact), not
-        # a footnote reference — [11](#fn) is the v1 calibration-era form
-        for d in re.findall(r"\[\^?(\d+)\]", sm.group(1)):
-            sec.fn_refs.append((int(d), page))
-        return " "
-    t = RE_SUP.sub(sup, t)
+    # Footnote refs need the same running sentinel page as links.  Assigning
+    # every ref to the table's first page loses occurrence identity in tables
+    # spanning a source-page boundary.
+    sup_page = page
+    sup_event = re.compile(
+        r"XQPAGEQX(?P<page>\d+)XQX|<sup>(?P<body>.*?)</sup>", re.S | re.I
+    )
+    for sm in sup_event.finditer(t):
+        if sm.group("page"):
+            sup_page = int(sm.group("page"))
+            continue
+        # A bracket-less <sup>N</sup> is an ORPHAN source artifact, not a
+        # footnote reference; [11](#fn) is the calibration-era form.
+        for digit in re.findall(r"\[\^?(\d+)\]", sm.group("body")):
+            sec.fn_refs.append((int(digit), sup_page))
+    t = RE_SUP.sub(" ", t)
     t = t.replace("<br>", " ").replace("<br/>", " ").replace("<br />", " ")
     t = RE_TAG.sub(" ", t)
     return t
@@ -175,7 +185,9 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         body_text = RE_LINK.sub(lambda l: l.group(1), body)
         body_text = RE_AUTOLINK.sub(r"\1", body_text)
         body_text = re.sub(r"(?m)^\s*[-*+][ \t]+", " ", body_text)  # list markers in defs
-        sec.fn_defs[int(m.group(1))] = _strip_sentinels(body_text)
+        n = int(m.group(1))
+        sec.fn_defs[n] = _strip_sentinels(body_text)
+        sec.fn_def_pages[n] = pg(m)
         return " "
     seg = RE_FNDEF.sub(fndef, seg)
 
@@ -311,7 +323,9 @@ def project(name: str, text: str) -> Section:
     cleaned = _clean_segment(text, sec, start)
 
     page = start
-    for tok in norm.tokens(cleaned, calibration=True):
+    # Current canonical Markdown is checked under the production allowlist.
+    # Calibration-only folds are reserved for explicit historical studies.
+    for tok in norm.tokens(cleaned, calibration=False):
         sm = RE_SENTINEL.fullmatch(tok)
         if sm:
             page = int(sm.group(1))

@@ -4,6 +4,11 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import YAML from 'yaml';
 import { CARDS_ROOT, listCardDirectories } from './card-inventory.js';
+import {
+  assertSafeAuthoredMarkdown,
+  GENERATED_FNREF_ATTRIBUTE,
+  GENERATED_FNREF_VALUE,
+} from './markdown.js';
 
 export function listCards() {
   const cards = listCardDirectories().map(({ vendor, slug, metaPath }) => ({
@@ -18,6 +23,7 @@ export function listCards() {
 // Sections dir is env-overridable so v2 pipeline output can be previewed
 // without touching the shipped content (e.g. SECTIONS_DIR=sections).
 const SECTIONS_DIR = process.env.SECTIONS_DIR || 'sections';
+const SOURCE_FIGURE_SKIP_COMMENT = /^<!--\s*figure\s+p\d{3,}-[1-9]\d*\.png\s+skipped\s*:\s*\S[\s\S]*?\s*-->$/i;
 
 // Raw stitched markdown, exactly as transcribed (page markers and all).
 export function stitchedMarkdown(vendor, slug) {
@@ -117,8 +123,10 @@ function linkRawTableFootnotes(md, { portable = false } = {}) {
       if (!ids) return line;
       const orderedIds = portable ? ids : [...ids].sort((a, b) => a - b);
       const refs = orderedIds.map((id) => `[^${id}]`).join('');
-      const hidden = portable ? ' hidden' : '';
-      return `${line}\n\n<span class="fnref-shim"${hidden}>${refs}</span>\n`;
+      const generated = portable
+        ? ' hidden'
+        : ` ${GENERATED_FNREF_ATTRIBUTE}="${GENERATED_FNREF_VALUE}"`;
+      return `${line}\n\n<span class="fnref-shim"${generated}>${refs}</span>\n`;
     })
     .join('\n');
 }
@@ -127,8 +135,11 @@ function linkRawTableFootnotes(md, { portable = false } = {}) {
 // anchors, leftover comments are stripped, image paths point at synced public
 // assets, and footnote refs inside raw-HTML table cells become real links
 // (remark-gfm cannot parse [^N] inside raw HTML).
-export function siteMarkdown(vendor, slug, assetBase) {
-  let md = stitchedMarkdown(vendor, slug);
+export function siteMarkdownFromText(rawMarkdown, assetBase, options = {}) {
+  if (typeof rawMarkdown !== 'string') throw new TypeError('rawMarkdown must be a string');
+  if (typeof assetBase !== 'string' || !assetBase) throw new TypeError('assetBase must be a string');
+  if (options.allowUnsafeAuthoredHtmlForAudit !== true) assertSafeAuthoredMarkdown(rawMarkdown);
+  let md = rawMarkdown;
   const pagemark = (n) =>
     `<a class="pagemark" id="p-${n}" href="${assetBase}/source.pdf#page=${n}" ` +
     `title="Page ${n} of the source PDF" aria-label="Page ${n} of the source PDF" ` +
@@ -148,9 +159,20 @@ export function siteMarkdown(vendor, slug, assetBase) {
     (_, n, cell) => `</tr><tr>${cell}${pagemark(n)}`,
   );
   md = md.replace(/<!--\s*p\.(\d+)\s*-->/g, (_, n) => pagemark(n));
-  md = md.replace(/<!--[\s\S]*?-->/g, '');
+  // Preserve exact, standalone source-figure skip evidence for the HAST
+  // renderer. All other authored comments disappear from the web projection.
+  // A lookalike inside a fenced/code block remains code in the Markdown AST
+  // and therefore cannot become a skip sentinel.
+  md = md.replace(
+    /<!--[\s\S]*?-->/g,
+    (comment) => (SOURCE_FIGURE_SKIP_COMMENT.test(comment) ? comment : ''),
+  );
   md = md.replace(/\]\(assets\/figures\//g, `](${assetBase}/figures/`);
-  return linkRawTableFootnotes(md);
+  return linkRawTableFootnotes(md, options);
+}
+
+export function siteMarkdown(vendor, slug, assetBase) {
+  return siteMarkdownFromText(stitchedMarkdown(vendor, slug), assetBase);
 }
 
 // Top-level section groups: consecutive section files form one group until a

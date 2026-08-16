@@ -19,10 +19,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import acceptance
 import cardcfg
+import dangling_footnotes
 import invariants
 import l2_links
 import mdproj
 import oracle
+import raw_footnotes
+import source_inventory
 
 REPO = cardcfg.REPO
 CARD = cardcfg.CARD
@@ -36,7 +39,8 @@ def _full_l2_enabled(section_prefixes=None, only_pages=None) -> bool:
 
 
 def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
-               sections_text=None, l2_flags=None) -> list[dict]:
+               sections_text=None, l2_flags=None,
+               source_inventory_flags=None, raw_footnote_flags=None) -> list[dict]:
     # global streams — sections share boundary pages, so compare the whole doc.
     # Page 1 is a declared exclusion (cover art + title typography; trivially
     # eyeballable, no body text). p.2 is the changelog — verified like any page.
@@ -58,10 +62,14 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
     # chip vocabulary from the style manifest (label -> fill hex)
     import re as _re
     mtext = (CARD / "style-manifest.yaml").read_text()
-    chips_block = _re.search(r"^chips:\n((?:  .+\n)+)", mtext, _re.M)
+    chips_block = _re.search(r"^chips:\n((?:  .+\n)+)", mtext, _re.MULTILINE)
     chip_colors, registry = {}, set()
     if chips_block:
-        for m in _re.finditer(r"^  (.+?):\s+\"(#[0-9a-f]{6})\"", chips_block.group(1), _re.M):
+        for m in _re.finditer(
+            r"^  (.+?):\s+\"(#[0-9a-f]{6})\"",
+            chips_block.group(1),
+            _re.MULTILINE,
+        ):
             chip_colors[m.group(2)] = m.group(1).strip()
             registry.add(m.group(1).strip())
 
@@ -72,14 +80,23 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
     flags += invariants.t1_text(md_tokens, pages, page_range, TOC_PAGES, table_pages)
     flags += invariants.l1_links(md_links, pages, page_range, TOC_PAGES, table_pages)
     flags += invariants.fn1_footnotes(sections, pages, page_range, TOC_PAGES)
+    # Independent output-side closure: a definition with no reference is not a
+    # usable footnote.  This catches F18 even when the shared source/body zoning
+    # interpretation wrongly removes the same prose from both T1 projections.
+    flags += dangling_footnotes.check(sections)
     flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages)
     flags += invariants.s2_chips(md_chips, pages, page_range, chip_colors, registry)
     flags += invariants.st_structure(sections, pages, page_range, TOC_PAGES, table_pages)
     if l2_flags:
         flags += list(l2_flags)
+    if source_inventory_flags:
+        flags += list(source_inventory_flags)
+    if raw_footnote_flags:
+        flags += list(raw_footnote_flags)
     if sections_text:
         # TB2 (owner-requested): table-cell ORDER integrity — a scrambled
-        # cell is invisible to T1's table-zone demotion but md-detectable
+        # cell can preserve T1's page-wide token sequence but remain visible
+        # in the table's own cell projection.
         flags += [f for f in invariants.tb2_cell_order(sections_text, pages,
                                                        page_range, TOC_PAGES)
                   if only_pages is None or f["page"] in only_pages]
@@ -110,9 +127,93 @@ def _load_figures_map() -> dict:
     return figures_map
 
 
-def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
+def _source_inventory_report() -> source_inventory.SourceInventoryReport:
+    """Build independent page/figure expectations from the archived PDF.
+
+    The raw generator figure map is passed only as a claim to challenge.  Do not
+    use ``_load_figures_map`` here: that helper has already applied the
+    generator-compatible duplicate-draw collapse this lane exists to verify.
+    """
+    raw_figure_map = json.loads(
+        (CARD / "extracted/figures-map.json").read_text())
+    return source_inventory.verify(
+        CARD / "source.pdf",
+        inventory=CARD / "source-inventory.json",
+        claimed_toc_pages=TOC_PAGES,
+        claimed_figure_map=raw_figure_map,
+        figure_dir=CARD / "assets/figures",
+    )
+
+
+def _source_projection_artifact(
+    canonical_sections_sha256: str,
+) -> source_inventory.SourceProjectionArtifact:
+    """Build the portable source -> final-DOM authority artifact.
+
+    The canonical digest is produced by L2's exact filename/UTF-8 framing.  It
+    is deliberately opaque here: source inventory must never parse Markdown.
+    """
+    return source_inventory.build_projection_artifact(
+        CARD / "source.pdf",
+        card_id=cardcfg.CARD_ID,
+        inventory_path=CARD / "source-inventory.json",
+        claimed_toc_pages=TOC_PAGES,
+        figure_map_path=CARD / "extracted/figures-map.json",
+        figure_dir=CARD / "assets/figures",
+        canonical_sections_sha256=canonical_sections_sha256,
+    )
+
+
+def _raw_footnote_flags(sections_text) -> list[dict]:
+    """Run source-bound footnote authority with optional exact dispositions."""
+    path = CARD / "source-footnote-dispositions.json"
+    dispositions = None
+    if path.exists():
+        try:
+            dispositions = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError) as exc:
+            return [{
+                "invariant": "RF1",
+                "page": 0,
+                "severity": "major",
+                "detail": {
+                    "kind": "invalid-disposition-document",
+                    "path": str(path),
+                    "problem": str(exc),
+                },
+            }]
+    return raw_footnotes.verify(
+        CARD / "source.pdf", sections_text, dispositions=dispositions)
+
+
+def _collect_source_inventory_flags(
+    section_prefixes=None,
+    prevalidated_source_inventory_flags: list[dict] | tuple[dict, ...] | None = None,
+) -> list[dict] | None:
+    """Return source-static flags, optionally reusing a validated result.
+
+    Production callers omit the override and re-observe the PDF/map/assets on
+    every gate. Mutation trials change only supplied section text, so their
+    driver may validate this independent source lane once and reuse its exact
+    immutable flags. Explicit ``[]`` is meaningful and must not trigger a
+    second observation.
+    """
+    if not _full_l2_enabled(section_prefixes):
+        return None
+    if prevalidated_source_inventory_flags is not None:
+        return list(prevalidated_source_inventory_flags)
+    return list(_source_inventory_report().flags)
+
+
+def collect_flags(ref: str, section_prefixes=None, *,
+                  prevalidated_source_inventory_flags=None) -> list[dict]:
     """Run all implemented invariants over the markdown at `ref` (git ref,
-    WORKTREE, or an absolute dir). Returns the flag list."""
+    WORKTREE, or an absolute dir). Returns the flag list.
+
+    ``prevalidated_source_inventory_flags`` is for repeated section-only
+    mutation trials. The normal production default always observes source
+    authority afresh.
+    """
     pages = oracle.extract(CARD / "source.pdf", cache=cardcfg.ORACLE_CACHE)
     figures_map = _load_figures_map()
 
@@ -126,9 +227,15 @@ def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
     # page-filtered diagnostics deliberately do not run it.
     l2_report = (l2_links.verify(CARD / "source.pdf", stexts, TOC_PAGES)
                  if _full_l2_enabled(section_prefixes) else None)
+    inventory_flags = _collect_source_inventory_flags(
+        section_prefixes, prevalidated_source_inventory_flags)
+    rf1_flags = (_raw_footnote_flags(stexts)
+                 if _full_l2_enabled(section_prefixes) else None)
     return _flags_for(sections, pages, figures_map, bool(section_prefixes),
                       sections_text=stexts,
-                      l2_flags=l2_report.flags if l2_report else None)
+                      l2_flags=l2_report.flags if l2_report else None,
+                      source_inventory_flags=inventory_flags,
+                      raw_footnote_flags=rf1_flags)
 
 
 def _apply_accepted(flags: list[dict], path: Path, *, require_all: bool):
@@ -158,6 +265,11 @@ def main(argv=None):
     ap.add_argument("--json", type=Path)
     ap.add_argument("--l2-json", type=Path,
                     help="write the deterministic source/canonical L2 expectation artifact")
+    ap.add_argument(
+        "--source-projection-json",
+        type=Path,
+        help="write deterministic source authority for the final-DOM projection audit",
+    )
     ap.add_argument("--samples", type=int, default=10)
     ap.add_argument("--only-pages", nargs="*", type=int,
                     help="restrict all checks to these source pages (for wave/partial runs)")
@@ -178,10 +290,19 @@ def main(argv=None):
     l2_report = None
     if _full_l2_enabled(args.sections, args.only_pages):
         l2_report = l2_links.verify(CARD / "source.pdf", stexts, TOC_PAGES)
+    inventory_report = None
+    if _full_l2_enabled(args.sections, args.only_pages):
+        inventory_report = _source_inventory_report()
+    rf1_flags = None
+    if _full_l2_enabled(args.sections, args.only_pages):
+        rf1_flags = _raw_footnote_flags(stexts)
     flags = _flags_for(sections, pages, figures_map, bool(args.sections),
                        only_pages=set(args.only_pages) if args.only_pages else None,
                        sections_text=stexts,
-                       l2_flags=l2_report.flags if l2_report else None)
+                       l2_flags=l2_report.flags if l2_report else None,
+                       source_inventory_flags=(inventory_report.flags
+                                               if inventory_report else None),
+                       raw_footnote_flags=rf1_flags)
 
     acc_path = CARD / "accepted.json"
     # A full current-card gate is also a check that every committed acceptance
@@ -192,7 +313,7 @@ def main(argv=None):
     flags, n_acc, acceptance_error = _apply_accepted(
         flags, acc_path, require_all=require_all_acceptances)
     if n_acc:
-        print(f"({n_acc} owner-accepted major(s) suppressed — accepted.json)")
+        print(f"({n_acc} exact accepted major(s) suppressed — accepted.json)")
     if acceptance_error:
         print(f"ERROR: invalid acceptance configuration at {acc_path}: {acceptance_error}",
               file=sys.stderr)
@@ -205,10 +326,17 @@ def main(argv=None):
               f"{s['printed_heading_recoveries']} printed-heading recovery; "
               f"{s['unresolvable_source_links']} source-unresolvable; "
               f"{s['major_findings']} major")
+    if inventory_report:
+        s = inventory_report.stats
+        print("  SRC inventory  "
+              f"{s['content_pages']} required content pages; "
+              f"{s['required_output_figures']} required rendered figures; "
+              f"{len(inventory_report.flags)} major")
     for (inv, sev), n in sorted(by_inv.items()):
         print(f"{inv:>4} {sev:<6} {n}")
 
-    for inv in ("T1", "L1", "L2", "S1", "S2", "S3", "ST1", "ST2", "ST3", "P1", "F1", "FN1"):
+    for inv in ("T1", "L1", "L2", "S1", "S2", "S3", "ST1", "ST2", "ST3",
+                "P1", "P2", "F1", "F3", "FN1", "RF1"):
         sample = [f for f in flags if f["invariant"] == inv and f["severity"] == "major"][: args.samples]
         if sample:
             print(f"\n--- {inv} major samples ---")
@@ -226,8 +354,36 @@ def main(argv=None):
         args.l2_json.parent.mkdir(parents=True, exist_ok=True)
         args.l2_json.write_text(l2_report.to_json() + "\n")
         print(f"wrote {args.l2_json} ({len(l2_report.expected_links)} expectations)")
+    projection_error = False
+    if args.source_projection_json:
+        if l2_report is None:
+            print(
+                "ERROR: --source-projection-json requires a full unfiltered gate",
+                file=sys.stderr,
+            )
+            projection_error = True
+        else:
+            try:
+                artifact = _source_projection_artifact(
+                    l2_report.canonical_sections_sha256
+                )
+            except source_inventory.ProjectionArtifactError as error:
+                print(f"ERROR: could not issue source projection: {error}", file=sys.stderr)
+                projection_error = True
+            else:
+                args.source_projection_json.parent.mkdir(
+                    parents=True, exist_ok=True
+                )
+                args.source_projection_json.write_text(artifact.to_json() + "\n")
+                print(
+                    f"wrote {args.source_projection_json} "
+                    f"({len(artifact.as_dict()['events'])} DOM events)"
+                )
     return acceptance.gate_exit_code(
-        flags, report_only=args.report_only, config_error=acceptance_error is not None)
+        flags,
+        report_only=args.report_only,
+        config_error=acceptance_error is not None or projection_error,
+    )
 
 
 if __name__ == "__main__":

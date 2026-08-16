@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "observer_schema_version": 1,
+  "pymupdf_version": "1.28.2",
+  "source_sha256": "d76815f8c0bd284a33c7017d642d0734ba903ae63f7c1e6ca7778b35b2c40fa4",
+  "excluded_references": [
+    {
+      "source_id": "p126:ref18@99.8,286.1",
+      "reason": "Source table artifact: the PDF prints superscript 18 after the word trial, but no local footnote 18 definition exists; canonical output preserves it as plain <sup>18</sup>, not a footnote link."
+    }
+  ],
+  "excluded_definitions": []
+}

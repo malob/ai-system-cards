@@ -23,8 +23,7 @@ WRAP_HYPHEN = re.compile(r"(\w)-\s+(?=[a-z])")
 CALIBRATION_FOLDS = {
     "“": '"', "”": '"',          # curly double quotes
     "‘": "'", "’": "'",          # curly single quotes
-    "‑": "-",                          # non-breaking hyphen
-    " ": " ",                          # nbsp
+    "‑": "-",                     # non-breaking hyphen
 }
 
 
@@ -82,16 +81,20 @@ import re as _re
 LIST_MARKER = _re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists (a. b. c.)
 
 
-def squash(text: str, calibration: bool = True) -> str:
+def squash(text: str, calibration: bool = False) -> str:
     """Space-free token-normalized key — immune to span-join glue, wrapping,
-    and bullet glyphs. The comparison form for S1/FN1-style text matching."""
+    and bullet glyphs. Production-safe by default; callers that deliberately
+    isolate structure from already-gated glyph differences must opt in to the
+    historical calibration folds explicitly."""
     return "".join(tokens(text, calibration))
 
 
 def tokens(text: str, calibration: bool = False) -> list[str]:
     """Whitespace-insensitive token stream (A2). Bullet glyphs are layout
     artifacts (list structure is checked by ST invariants), dropped (A5) —
-    including when glued to the following word."""
+    including when glued to the following word. Python's Unicode-aware split
+    makes NBSP an ordinary A2 whitespace run in production; it is not a hidden
+    calibration-only character fold."""
     out = []
     for t in normalize(text, calibration).split():
         t = t.lstrip(BULLET_GLYPHS)

@@ -1,0 +1,22 @@
+{
+  "_comment": "Maintainer/source-adjudicated exact T1 table-order projection residual on p.156, exposed when the blanket table-zone severity demotion was removed. Full token counts and SHA-256 digests bind the accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
+  "accepted": [
+    {
+      "invariant": "T1",
+      "page": 156,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "Capability or usage threshold Substantive standards for model developers",
+        "extra_in_md": "",
+        "n_tokens": 9,
+        "missing_n_tokens": 9,
+        "extra_n_tokens": 0,
+        "missing_sha256": "65eabb3d5b3bf5825526f690ff787352b24e1e1f8430f8633e3a5fc840bdf0d1",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "60143d5c470ee2be655f99638161b18333f0074bf0dae476bf1012f9cb64523a"
+    }
+  ]
+}

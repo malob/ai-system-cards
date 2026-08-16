@@ -3,7 +3,9 @@
 Settled 2026-08-15 after an adversarial two-model review of the shipped pipeline.
 The immutable review record is under
 [`architecture-review-exchange/`](architecture-review-exchange/); D51 records the
-decision. Implementation and validation status live in [`state.md`](state.md).
+decision. Implementation and validation status live in [`state.md`](state.md). D55
+records phase 3's locally validated authority repair; it has not yet been pushed or
+deployed.
 
 ## Bottom line
 
@@ -70,6 +72,16 @@ have since closed them.
 These are measured weaknesses, not a claim that every possible failure is present in
 the published corpus.
 
+D55 closes the immediate page, figure, semantic-zoning, table-severity, critical-token,
+and projection loops named above, but only within its written scopes. Source-bound P2
+and F3 replace shared omission authority; RF1 plus output-side footnote closure catch
+the demonstrated F18 shape; table attribution no longer lowers T1 severity; and V1
+rejects browser-hidden authored raw HTML before rendering. This does **not** close
+ST2, table topology, extractor/cache replay, the broader observation/annotation split,
+computed-CSS/viewport visibility, every non-HTML projection, clean bootstrap, or a
+different PDF producer. Those remain assigned to phases 4–9 rather than being implied
+by a green phase-3 gate.
+
 ## Settled architecture
 
 | Layer | Settled role |
@@ -79,7 +91,7 @@ the published corpus.
 | Interpretation | Store derived roles—body, heading, footnote, table, figure, exclusions—separately enough that they can be mutated and checked without changing raw observations. |
 | Table candidate | Treat pinned Docling output as a proposal. Retain a replayable legacy artifact immediately; test a normalized candidate with cells, spans, geometry, and provenance. |
 | Accepted prose | Keep tracked Markdown canonical for prose. |
-| Published projections | Treat HTML, `card.md`, per-section Markdown, `llms.txt`, anchors, search, and social output as separate claims that need projection-specific checks. |
+| Published projections | Treat HTML, `card.md`, per-section Markdown, `llms.txt`, anchors, search, and social output as separate claims that need projection-specific checks. L2 plus D55's P2/F3/V1 lane now bind links, source pages/figures, copied source bytes, event order, and authored raw-HTML visibility through the production HTML renderer; it is not yet an all-projection or computed-layout proof. |
 | Verification | Build expectations independently where correctness is load-bearing. Detector disagreement widens scrutiny; it never grants immunity from a general invariant. |
 
 The review explicitly rejected these as present work:
@@ -115,9 +127,20 @@ correctness repair.
 Phases 0–1 are deployed at `685cba6`; phase 2 is deployed at `ff9b6e3` (D53/D54).
 It intentionally changes one Fable p.99 canonical line from a dead empty-fragment
 link to plain text under R2; Opus and Risk Report sections remain byte-identical.
-Hosted fast-gate, Pages, and three-card mutation runs all passed. Phase 3 is next.
-L2's source hash is narrower than phase 5's complete extractor/cache provenance, and
-its internal-link DOM lane does not complete phase 9's all-projection/bootstrap work.
+Hosted fast-gate, Pages, and three-card mutation runs all passed for phase 2.
+
+Phase 3 implementation and its fast release graph are complete and validated
+**locally** (D55), not yet pushed or deployed; exact final-tree replay of all mutation
+floors remains pending on the hosted post-push jobs. It
+changes no canonical `sections/*.md`; a clean `site/dist`, including Pagefind, is
+byte-identical to pre-change HEAD. The source/final-DOM lane verifies 676 page markers,
+263 rendered figures, and 267 exact source raster assets. Twenty-two newly blocking,
+PDF-reviewed table-order residuals are exact accepted T1 findings (25 accepted majors
+total across the corpus), not broad table immunity. Strict schema-v2 mutation floors
+cover 584 trials and separately preserve detection, intended-major severity, and
+major-blocking behavior. Phase 4 (ST2) is next. Phase 5 still owns complete
+extractor/cache provenance, and phase 9 still owns all-projection/bootstrap,
+computed-browser-visibility, and different-producer evidence.
 
 ## Experiments and kill criteria
 
@@ -134,6 +157,16 @@ authority mutation, and first measure which annotation assumptions actually vary
 Map T1 operations to source table bboxes; inspect all 19 known ≥3-token residuals and
 all critical one-token residuals. Compare page-wide demotion, bbox attribution, and
 exact/narrow acceptance.
+
+**Phase-3 result.** The page-wide severity demotion was rejected and removed. Every
+ordinary difference of at least three tokens now remains major; critical one- and
+two-token changes remain major as well. PDF adjudication produced 22 exact new T1
+acceptances—17 Fable, 4 Opus, 1 Risk Report—including Fable p.316's one-token critical
+`None` residual. Full text digests/token counts prevent display truncation from
+colliding, rationale is explicit, and clean pinned replay is stable. This completes
+the immediate severity/adjudication question without pretending that a page-level
+`zone: table` tag is bbox attribution. Phase 8 still owns that narrower provenance
+and the removal of remaining whole-page table spill assumptions from other checks.
 
 **Kill exact acceptance:** if legitimate fingerprints churn under clean replay or a
 harmless version change, identify a narrow structural residual class. Do not raise a
@@ -162,6 +195,9 @@ grammar; do not widen a global heuristic to absorb the new PDF.
 
 Generate from stubs without reading prior accepted structure, then mutate list,
 heading, figure, footnote, link, and table reconstruction in each published projection.
+For HTML, include computed stylesheet behavior, responsive breakpoints, clipping,
+occlusion, and representative browser viewports; D55's authored-raw-HTML V1 policy is
+an important input gate, not a substitute for that browser evidence.
 
 **Reopen a whole-document IR only for** systematic non-table projection loss,
 inability to bootstrap without prior Markdown, repeated encoding of the same semantics
@@ -190,6 +226,12 @@ blocking result against the PDF, fix genuine defects, exact-accept only evidence
 source/extraction residuals, regression-sweep controls, then land the check, repair,
 acceptance, regenerated output, and certification evidence together. A truthful red
 gate must not be tuned away merely to keep the release branch green.
+
+Generic acceptance is not an escape hatch for source-bound or final-projection
+authority. L2, P2, F3, RF1, and V1 are denied in `accepted.json`; where an exception is
+meaningful it must live in the exact, source-bound authority that owns it, and L2/V1
+permit no generic exception. This keeps a weaker fingerprint file from silently
+overriding the boundary phase 3 was built to establish.
 
 ## Source record
 
