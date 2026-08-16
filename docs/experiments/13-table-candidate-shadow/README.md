@@ -9,9 +9,11 @@ table proposal instead of flattening it immediately to HTML, that a small typed
 topology transform can make source-justified changes, and that one typed source-word
 assignment primitive can repair isolated cell-ownership errors across two document
 families. A follow-up raw-rule origin/projection resolver now composes topology and
-word ownership for this fully ruled hard set. It does not establish that the typed
-representation simplifies the complete production repair pipeline, discovers grids
-independently, handles sparse/unruled or styled/linked tables, works portably, or
+word ownership for this fully ruled hard set. A subsequent candidate-free census
+finds all 98 ruled regions in the current PDFs, but independent review killed its
+parallel model rather than retaining another shadow implementation. The experiment
+does not establish that a typed representation simplifies the complete production
+repair pipeline, handles sparse/unruled or styled/linked tables, works portably, or
 should become canonical.
 
 Everything under this directory is experiment-only. Nothing in `pipeline/`,
@@ -23,7 +25,7 @@ canonical card content, site output, or release behavior.
 Can the table pipeline approach its largest repair boundary with fresh structure
 without discarding what the legacy implementation has learned?
 
-The experiment deliberately separates six questions:
+The experiment deliberately separates seven questions:
 
 | Track | Question | Result |
 | --- | --- | --- |
@@ -33,6 +35,7 @@ The experiment deliberately separates six questions:
 | [Topology slice](topology-slice/README.md) | Does one narrow typed repair become source-grounded and locally reviewable? | Yes for three merges on a six-page hard set, with one conservative false negative and no genuine real source-negative in that set. |
 | [Word alignment](word-alignment/README.md) | Can exact source words be projected to typed cells without inheriting Docling text ownership or the legacy HTML pass order? | Yes for isolated ownership errors: one source-bound rule made 43 cell-text changes across four tables and preserved three natural controls. Three coupled or surface-sensitive cases failed closed and motivated the origin/projection follow-up below. |
 | [Origin/projection](origin-projection/README.md) | Can raw PDF rules and word occurrences resolve coupled topology and ownership before comparing immutable extractor claims? | Yes for the fully ruled, candidate-located hard set: one order-independent resolver derived all 274 reviewed ranges, assigned all 790 words, and jointly resolved Opus p.56 table 1 and raw Fable p.95. Production adoption remains blocked. |
+| [Grid-discovery census](grid-discovery/README.md) | Can the archived PDFs reveal ruled regions without Docling candidates or accepted output? | Yes for this ruled Google Docs/Skia family: 98 regions and 13,607 words across 696 pages, with 77 one-cell controls. The 7/12 model replay was killed because sparse/unruled positives, an absent-rule-but-separate negative, another producer/platform, and a net complexity win are missing. |
 
 This is a clean-model experiment, not a clean-slate evidence policy. The new
 representation was designed without translating the legacy repair functions; the
@@ -189,13 +192,46 @@ natural absent-rule-but-keep-separate negative; sparse and unruled tables are ou
 scope; and style/link-aware serialization is not implemented. The result is a shadow
 generator proposal, not independent verifier authority.
 
+### The candidate-free census survives; its model does not
+
+The [grid-discovery follow-up](grid-discovery/README.md) reopened all three source
+PDFs without reading Docling candidates, accepted Markdown, legacy HTML, reviewed
+cell labels, or case-specific IDs. Across 696 pages, pinned PyMuPDF `lines_strict`
+proposals plus a distinct PyMuPDF-derived raw-`l`-segment graph identify all 98
+multi-cell ruled regions, retain 77 one-cell vector boxes as natural controls, and
+assign all 13,607 overlapping source-word occurrences exactly once. These are two
+representations from one observer library, not independent parsers. The source plane
+measures 1,774 outer and 3,326 present internal atomic boundary slots. Geometry
+remains a ruled-region claim rather than table-role authority; two such grids are
+publisher-captioned figures.
+
+That census is worth retaining, but the parallel model is not. The corpus has no
+natural sparse or unruled table positive and no natural absent-rule-but-keep-separate
+negative. All three PDFs belong to the same Google Docs/Skia producer family and were
+replayed on one platform. Actual source separator deletion or grid-connecting strokes
+can make both PyMuPDF-derived representations agree on a wrong coarsened or fused
+topology; failing closed avoids output corruption but cannot reconstruct the missing
+truth.
+
+Independent review therefore scored the slice **7/12** and returned **KILL as a
+model/replay milestone; neither commit shadow nor adopt production**. Retain only the
+source census evidence, tests, artifacts, and compact decision note. The full
+pre-reduction slice added 3,319 Python lines and about 2.9 MB with zero production
+deletion and no output effect. After the killed model/replay files were removed, the
+retained evidence boundary is 1,662 Python lines and about 2.8 MB.
+
 ## Proportionality
 
-The experiment scripts now total **8,957 Python lines**, including 2,339 in the new
-origin/projection model, evidence extraction, replay builder, and tests. Much of that
-is defensive provenance discovery, artifact hashing, runtime introspection, replay
-validation, and fail-closed test scaffolding. That is acceptable for a bounded
-architecture probe; it is not a production implementation to port wholesale.
+The six retained implementation slices preceding the candidate-free census total
+**8,957 Python lines**, including 2,339 in the origin/projection model, evidence
+extraction, replay builder, and tests. Much of that is defensive provenance discovery,
+artifact hashing, runtime introspection, replay validation, and fail-closed test
+scaffolding. The candidate-free follow-up reinforced the proportionality limit: even
+strong corpus evidence did not justify retaining its model/replay branch. These are
+bounded architecture probes, not production implementations to port wholesale.
+The retained 1,662-line census extractor/test boundary brings Experiment 13's Python
+evidence and model corpus to 10,619 lines; that accounting reinforces rather than
+weakens the requirement for net deletion before production migration.
 
 A production path should prefer:
 
@@ -211,15 +247,16 @@ layer without making the repairs more local and legible is failure, not progress
 
 ## Decision and next discriminating work
 
-Pause further phase-4 structural-authority integration. Pull the table
-extraction/grid shadow work forward, but keep it isolated from production until these
-questions are answered:
+Pause further phase-4 structural-authority integration, but also stop elaborating the
+candidate-free grid model on this corpus. Retain the source census as evidence and do
+not resume model work until the first two gaps below are represented by natural
+source cases:
 
-1. **Independent grid and negative coverage:** remove candidate-conditioned atomic
-   edges where possible, and find a natural absent-rule-but-keep-separate case before
-   widening the merge interpretation.
-2. **Table-family coverage:** test sparse and unruled tables; the current
-   connected-component result applies only to fully ruled, candidate-located tables.
+1. **Independent grid and negative coverage:** bind a natural
+   absent-rule-but-keep-separate case before widening any merge interpretation.
+2. **Table-family coverage:** obtain sparse and unruled positives from a genuinely
+   different PDF producer; the retained census covers one fully ruled producer
+   family.
 3. **Semantic serialization:** preserve and emit style, links, footnotes, and other
    word-bound semantics; p.94 correctly blocks rather than flattening them today.
 4. **Portable extraction:** repeat under a locked environment on a second platform
@@ -228,16 +265,18 @@ questions are answered:
    net deletion of legacy decision logic, not merely equivalent new code and richer
    provenance.
 
-Only then decide whether to migrate incrementally or retain HTML and refactor the
-legacy helpers locally. Manual, judgmentful new-document setup remains acceptable;
-separating the section plan from generated Markdown is useful but secondary to this
-conversion experiment.
+Only then test the smallest source-only detector and decide whether to migrate
+incrementally. If it cannot demonstrate a compact fail-closed rule plus measured net
+legacy deletion, retain HTML and refactor the legacy helpers locally. Manual,
+judgmentful new-document setup remains acceptable; separating the section plan from
+generated Markdown is useful but secondary to this conversion experiment.
 
 ## Validation
 
-The six main suites contain **15 + 17 + 2 + 8 + 12 + 12 = 66 unit tests**. The two
-source-reopening evidence suites add **5 + 10 = 15**, so **81 test methods pass
-overall**:
+The six retained model suites contain **15 + 17 + 2 + 8 + 12 + 12 = 66 unit
+tests**. The three retained source-reopening evidence suites add **5 + 10 + 9 =
+24**, so **90 retained test methods pass overall**. The rejected grid model's 23
+synthetic tests are deliberately not counted as a retained milestone:
 
 ```sh
 uv run --python 3.12 python -m unittest discover \
@@ -268,15 +307,21 @@ uv run --offline --python 3.12 --with 'pymupdf==1.28.2' \
   python -m unittest discover \
   -s docs/experiments/13-table-candidate-shadow/origin-projection/evidence \
   -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 \
+uv run --offline --python 3.12 --with 'pymupdf==1.28.2' \
+  python -m unittest discover \
+  -s docs/experiments/13-table-candidate-shadow/grid-discovery/evidence \
+  -p 'test_*.py' -v
 
 uv run --python 3.12 python \
   docs/experiments/13-table-candidate-shadow/legacy-evidence/validate_manifest.py
 ```
 
-Result on 2026-08-16: all 66 main experiment unit tests and all 15 independent
+Result on 2026-08-16: all 66 retained model tests and all 24 independent
 source-reopening evidence tests passed. The separate legacy validator passed with
 `32 locators, 13 canonical tables, 5 logical shadows`. Rebuilding the compact
-origin/projection replay produced byte-identical output.
+origin/projection replay and the retained candidate-free source evidence produced
+byte-identical outputs.
 
 Independent review scored the word-alignment slice **10/12**: full credit for independence,
 conservation/fail-closed behavior, natural controls, and provenance/determinism; one
@@ -290,6 +335,11 @@ The origin/projection follow-up then closed that composition question for the fu
 ruled hard set and received an independent score of **9/12**. Its verdict is likewise
 **commit the shadow milestone: yes; production adoption: no**. The remaining points
 are load-bearing blockers listed above, not documentation polish.
+
+The subsequent candidate-free census received **7/12**. Its verdict differs:
+**retain the evidence boundary, but kill the parallel model/replay slice**. That is a
+failed implementation hypothesis with a useful source census, not a third shadow
+model milestone.
 
 No hosted run, full release graph, production generation, canonical output
 comparison, or deployed-site validation is claimed by this experiment.

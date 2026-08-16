@@ -3,7 +3,7 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-16 (D60 raw-rule origin/projection shadow result recorded). The
+**Last updated:** 2026-08-16 (D61 candidate-free census retained; grid model killed). The
 phase-3 certification-docs baseline `5b752ae` was deployed; its final docs-only
 fast-release / Pages run
 [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)
@@ -130,15 +130,27 @@ counterexamples rather than code to port. It remains completely isolated from
   blocks styled-token materialization; Risk p.115 is a source-only fully bounded true
   blank with no extractor-origin claim. The grid is still candidate-conditioned, and
   there is no natural absent-rule-but-keep-separate negative.
-- The six main experiment suites pass 66/66 tests, the two source-reopening evidence
-  suites pass 15/15, and the separate legacy validator passes 32 locators, 13
-  canonical tables, and five logical shadows. The latest independent review scored
-  the origin/projection slice 9/12: commit shadow yes, production no.
+- The preceding six model suites pass 66/66 tests, their two source-reopening
+  evidence suites pass 15/15, and the separate legacy validator passes 32 locators,
+  13 canonical tables, and five logical shadows. Independent review scored the
+  origin/projection slice 9/12: commit shadow yes, production no.
+- A candidate-free source census then inspected all 696 pages and recorded 98
+  multi-cell ruled regions, 77 one-cell controls, 13,607 uniquely owned source words,
+  and exact coverage for 1,774 outer plus 3,326 present internal boundary slots. Its
+  retained live evidence suite passes 9/9.
+- Independent review scored that complete follow-up 7/12 and killed the parallel
+  model/replay slice. The corpus has no sparse/unruled positive or natural
+  absent-rule-but-separate negative, all three PDFs are from the same Google
+  Docs/Skia producer family, and the full pre-reduction 3,319-line slice demonstrated
+  no net production deletion. The killed model/replay files were removed; only its
+  1,662-line source census evidence boundary is retained.
 
-This is not a production-model decision. The 8,957 lines of experiment Python are
-mostly defensive provenance discovery, extraction, and validation; production must
-use an explicit locked artifact bundle and smaller adapter, and adoption must
-demonstrate net complexity reduction rather than move the legacy complexity.
+This is not a production-model decision. The retained experiment corpus now has
+10,619 Python lines: 8,957 from the preceding model/evidence slices plus the
+candidate-free census's 1,662-line extractor/test boundary. It is mostly defensive
+provenance discovery, extraction, and validation; production must use an explicit
+locked artifact bundle and smaller adapter, and adoption must demonstrate net
+complexity reduction rather than move the legacy complexity.
 
 ## Mutation evidence
 
@@ -209,11 +221,12 @@ and major-blocking independently.
   passed. The phase-4 alignment remains advisory and made no canonical-content or
   published-output change. Its observers are exercised by release tests, but their
   structural findings do not yet gate cards.
-- Experiment 13's 66 main local unit tests, 15 source-reopening evidence tests, and
-  separate legacy validator pass. Those tests validate only the isolated
+- Experiment 13's 66 retained local model tests, 24 source-reopening evidence tests,
+  and separate legacy validator pass. Those tests validate only the isolated
   evidence/model/replay/topology/alignment/origin-projection work; no full
   release, hosted, deployed, production, or card/site/output change is claimed for
-  that experiment.
+  that experiment. The candidate-free census's parallel model and its 23 synthetic
+  tests were rejected rather than counted as another retained milestone.
 
 ## Durable process invariants
 
@@ -232,11 +245,12 @@ and major-blocking independently.
 
 ## Open / next
 
-- **Immediate table shadow:** remove or independently justify candidate-conditioned
-  grid edges; obtain a natural absent-rule-but-keep-separate negative; cover sparse
-  and unruled tables plus style/link-aware serialization; replay on a second platform
-  and different producer; then regenerate all cards and measure net legacy deletion
-  before migration.
+- **Immediate table evidence:** stop elaborating the candidate-free model on this
+  corpus. First bind sparse/unruled positives and a natural
+  absent-rule-but-keep-separate negative from a genuinely different PDF producer;
+  then test the smallest source-only rule on a second platform. Resume migration work
+  only if it can also preserve style/link semantics and demonstrate net legacy
+  deletion; otherwise keep HTML and refactor the legacy helpers locally.
 - **Paused phase 4:** retain the structural artifact and eleven replay candidates as
   advisory evidence. Resume integration only when its expected information gain
   outranks the table experiment; the original blocking criteria remain unchanged.
@@ -255,16 +269,15 @@ and major-blocking independently.
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D60),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D61),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
-[verification-methodology.md](verification-methodology.md). The immediate task is the
-shadow table extraction/grid program in
-[Experiment 13](experiments/13-table-candidate-shadow/README.md). Raw-rule
-origin/projection now composes topology and word ownership for the fully ruled hard
-set; next challenge its candidate-conditioned grid, natural-negative and sparse/
-unruled coverage, semantic serialization, portability, and net-deletion case—not
-production adoption or a whole-document IR migration. For a changed corpus,
+[verification-methodology.md](verification-methodology.md). D61 retains Experiment
+13's candidate-free ruled census but kills its parallel model/replay slice. The next
+table task is evidence acquisition, not more implementation on the same corpus: bind
+sparse/unruled positives and an absent-rule-but-separate negative from a genuinely
+different producer, then test the smallest rule on a second platform and require net
+legacy deletion before migration. For a changed corpus,
 experiment 11 is the
 regression-sweep template: changed pages plus renderer controls, the PDF as sole
 authority, and prompts that ask rather than assert the expected answer.

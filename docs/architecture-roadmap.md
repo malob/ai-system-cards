@@ -8,7 +8,8 @@ records phase 3's local implementation evidence; D56 records its hosted certific
 and deployment; D57 records phase 4's advisory structural-authority spike; D58 records
 the table-candidate shadow milestone and sequencing change; D59 records the typed
 source-word assignment result; D60 records the raw-rule origin/projection result and
-its production blockers.
+its production blockers; D61 retains the candidate-free ruled census while killing
+its parallel grid model.
 
 ## Bottom line
 
@@ -97,7 +98,7 @@ by a green phase-3 gate.
 | Source | The archived PDF is the sole content authority. |
 | Observation | Keep PyMuPDF as the primary born-digital observer. Record source hash, tool/schema version, and raw spans, links, geometry, drawings, and image facts. |
 | Interpretation | Store derived roles—body, heading, footnote, table, figure, exclusions—separately enough that they can be mutated and checked without changing raw observations. |
-| Table candidate | Treat pinned Docling output as a proposal. [Experiment 13](experiments/13-table-candidate-shadow/README.md) retains replayable legacy evidence and demonstrates a normalized shadow candidate with cells, spans, geometry, provenance, source-word projection, and a raw-rule origin/projection overlay. That overlay composes topology and ownership for the fully ruled, candidate-located hard set; it is not production or verifier authority. |
+| Table candidate | Treat pinned Docling output as a proposal. [Experiment 13](experiments/13-table-candidate-shadow/README.md) retains replayable legacy evidence and demonstrates a normalized shadow candidate with cells, spans, geometry, provenance, source-word projection, and a raw-rule origin/projection overlay. A later candidate-free census covers the current ruled producer family, but its model was killed. None of these results is production or verifier authority. |
 | Accepted prose | Keep tracked Markdown canonical for prose. |
 | Published projections | Treat HTML, `card.md`, per-section Markdown, `llms.txt`, anchors, search, and social output as separate claims that need projection-specific checks. L2 plus D55's P2/F3/V1 lane now bind links, source pages/figures, copied source bytes, event order, and authored raw-HTML visibility through the production HTML renderer; it is not yet an all-projection or computed-layout proof. |
 | Verification | Build expectations independently where correctness is load-bearing. Detector disagreement widens scrutiny; it never grants immunity from a general invariant. |
@@ -120,8 +121,9 @@ These remain distinct evidence packages, not permission to claim later productio
 work complete. D58 pauses further phase-4 integration and pulls bounded phase-5/7
 table shadow work forward because it now has higher discriminating value; D59 keeps
 that work in shadow after the first source-word assignment result; D60 retains the
-ruled origin/projection result while rejecting production adoption. A later refactor
-must not be used to delay a demonstrated smaller correctness repair.
+ruled origin/projection result while rejecting production adoption; D61 stops the
+candidate-free model after retaining its source census. A later refactor must not be
+used to delay a demonstrated smaller correctness repair.
 
 | Phase | Work | Exit evidence |
 | ---: | --- | --- |
@@ -203,6 +205,21 @@ or different-producer replay, all-card regeneration, independent verifier topolo
 or measured net legacy deletion. Phase 9 still owns all-projection/bootstrap,
 computed-browser-visibility, and different-producer evidence.
 
+The next follow-up obtained useful candidate-free evidence but failed its model gate.
+Across all 696 pages, pinned PyMuPDF ruled-region proposals plus a distinct
+PyMuPDF-derived raw-rule graph record 98 multi-cell regions, 77 one-cell controls,
+13,607 uniquely owned source words, and coverage for 1,774 outer plus 3,326 present
+internal atomic boundary slots. They are two representations from one observer
+library, not independent parsers.
+
+Independent review scored the full slice 7/12 and killed the model/replay milestone:
+there is no sparse/unruled positive or absent-rule-but-separate negative, all PDFs
+share the Google Docs/Skia producer family, one platform was exercised, source
+separator/connector mutations can fool both representations together, and the full
+pre-reduction 3,319-line slice produced no net legacy deletion. The killed model and
+replay files were removed; D61 retains only the 1,662-line evidence boundary and stops
+implementation on this corpus.
+
 ## Experiments and kill criteria
 
 ### X1 — observation/annotation split
@@ -275,13 +292,23 @@ blank. Root replay passes 12/12, source reopening passes 10/10, and the compact 
 rebuilds byte-identically. Independent review scored it 9/12: retain the shadow, do
 not adopt production.
 
-**Next discrimination.** Remove or independently justify the candidate-conditioned
-grid, add a natural absent-rule-but-keep-separate control, cover sparse and unruled
-tables plus style/link-aware serialization, and establish second-platform and
-different-producer replay. Before migration, regenerate every card and demonstrate
-measured net deletion of legacy decision logic. The experiment remains defensive
-evidence scaffolding, not code to port wholesale; kill adoption if the grid merely
-relocates complexity.
+**Candidate-free census and kill.** A source-only scan then records all 98 ruled
+regions and 13,607 owned words across the 696-page corpus without reading Docling
+candidates or accepted output. It also retains 77 one-cell controls and exact coverage
+for 1,774 outer plus 3,326 present internal boundary slots. That proves useful census
+coverage for this ruled family, not a model worth retaining. Independent review
+scored the full slice 7/12 and killed the model/replay milestone because it lacks
+sparse/unruled positives, an absent-rule-but-separate negative, another producer and
+platform, shared-observer mutation robustness, and a net complexity win. Only the
+source evidence boundary survives.
+
+**Next discrimination.** Stop model work on this corpus. First bind natural
+sparse/unruled positives and an absent-rule-but-keep-separate negative from a
+genuinely different producer; then test the smallest source-only rule on a second
+platform. Before migration, preserve style/link semantics, regenerate every card,
+and demonstrate measured net deletion of legacy decision logic. If those conditions
+do not support a compact fail-closed model, keep HTML and refactor the legacy helpers
+locally.
 
 ### X4 — different-producer probe
 

@@ -1272,3 +1272,53 @@ been demonstrated.
 This decision changes no production module, canonical section, card, site, release
 gate, deployed output, or website content. No hosted run, full release, output
 improvement, push, or deployment is claimed by this documentation closeout.
+
+## D61 — retain the candidate-free ruled census; kill its grid model (2026-08-16)
+
+Experiment 13's [grid-discovery follow-up](experiments/13-table-candidate-shadow/grid-discovery/README.md)
+reopened all three archived PDFs without consulting Docling candidates, accepted
+Markdown, legacy HTML, reviewed cell labels, or case-specific IDs. Pinned PyMuPDF
+`find_tables(strategy="lines_strict", use_layout=False)` proposals were checked
+against a distinct PyMuPDF-derived graph of raw stroked `l` segments, with source
+observations frozen before a physically separate review manifest. These are two
+representations from one observer library, not independent parsers.
+
+**Evidence.** Across 696 pages, the source-only census records 98 multi-cell ruled
+regions (40 Fable, 27 Opus, 31 Risk Report), 77 one-cell vector boxes as natural
+controls, and 13,607 overlapping source-word occurrences with exactly one cell owner.
+It measures exact rule coverage for 1,774 outer and 3,326 present internal atomic
+boundary slots. The geometry claim is deliberately only `ruled region`: two observed
+grids are publisher-captioned figures rather than tables. The retained source
+artifact SHA-256 is
+`1775484321573f10691ccd246c21599b197f8f34e2e64e623e0886a77e97e8a1`; its bound
+review manifest SHA-256 is
+`4b2c064dc8608ebf25948daa9cfe926dd811d28c6ab29bcc3ed7012211c40818`.
+
+The evidence is complete only for the observed ruled family. There is no natural
+sparse or unruled table positive and no natural absent-rule-but-keep-separate
+negative. All three inputs are from the same Google Docs/Skia producer family and
+were replayed on one platform. A real source separator deletion or connector can make
+both PyMuPDF-derived representations agree on a coarsened or fused topology. Refusing
+materialization is safe, but does not reconstruct the missing truth.
+
+**Decision.** Independent review scored the full slice **7/12**: 2/2 source
+independence; 1/2 current-corpus completeness and natural-negative/sparse safety; 1/1
+immutable source/review planes; 1/1 deterministic hash-bound label-free replay; 1/2
+mutation robustness; 0/1 portability/different producer; 1/1 word conservation and
+fail-closed materialization; and 0/2 proportionality/net legacy deletion. The verdict
+is **KILL as a model/replay milestone; neither commit shadow nor adopt production**.
+The full pre-reduction slice added 3,319 Python lines and about 2.9 MB while deleting
+no production code and changing no output. The killed model/replay files were
+removed; the retained evidence boundary is 1,662 Python lines and about 2.8 MB.
+
+Retain only the source census evidence extractor, its tests and artifacts, the
+evidence README, and the compact decision note. Do not commit the model, synthetic
+tests, replay builder, or replay artifact. Before any replacement model, obtain a
+different-producer corpus containing sparse/unruled positives and a natural
+absent-rule-but-separate negative, then test the smallest source-only rule against
+them. If it cannot demonstrate fail-closed behavior and measured net legacy deletion,
+keep HTML and refactor the legacy table helpers locally.
+
+This decision changes no production module, canonical section, card, site, release
+gate, deployed output, or website content. No push, hosted run, deployment, or output
+improvement is claimed.
