@@ -1131,3 +1131,49 @@ historical candidates and deterministic structural mutations while current-outpu
 nearest-negative controls stay clean. Detailed evidence, provisional counts,
 reproduction commands, and final reduced-tree validation live in
 [Experiment 12](experiments/12-structure-authority/README.md).
+
+## D58 — retain rich table candidates in shadow before changing production (2026-08-16)
+
+The owner asked that the table architecture be approached with fresh eyes while the
+existing 2,557-line repair pipeline is used as evidence rather than a design template.
+[Experiment 13](experiments/13-table-candidate-shadow/README.md) ran four isolated
+tracks: a hash-bound legacy counterexample corpus, a dependency-free immutable
+`TableCandidate`, a runtime/provenance replay probe, and one typed topology vertical
+slice. Nothing under the experiment is imported by production, and no generator,
+canonical section, card, site, or release behavior changed.
+
+**Evidence.** A rich Docling `TableData` proposal can be serialized without first
+flattening it to HTML. Two offline runs on Fable source p.20 produced identical
+deterministic mini-PDF bytes, rich candidate bytes, and complete
+source/tool/config/model/schema-bound envelopes in the same warm local runtime. This
+is feasibility evidence, not cross-platform or cold locked replay. The legacy corpus
+binds 29 unique raw candidates, 32 manifest references, 13 accepted canonical tables,
+and five logical multipage shadows. Across all 98 current cache candidates,
+`merge_fragment_rows` and `dedup_cascaded_cells` are inert; they require recovered
+historical raw positives or retirement rather than automatic porting.
+
+The typed slice covered six source pages and seven tables. One pure, narrowly scoped
+missing-rule transform made three PDF-supported header merges. It conservatively
+refused a fourth supported span because Docling misassigned `API,` into the lower
+cell. No genuine real source-negative occurred in that six-page set, and the geometry
+path is conditioned on Docling's candidate bbox and grid. The result is therefore
+shadow-generator evidence, not an independent verifier authority or a production
+repair model. All 42 experiment unit tests (15 clean-model, 17 reproducibility, 2
+legacy-evidence, 8 topology) and the separate 32-locator/13-canonical/5-logical legacy
+validator pass.
+
+**Decision.** Pause further phase-4 structural-authority integration and pull the
+table extraction/grid shadow experiment forward. Do not adopt a production typed
+grid yet. Next obtain genuine source-negative controls, test a typed PyMuPDF
+word-to-cell alignment slice, establish clean locked cross-platform replay, and then
+compare transform count, order dependence, provenance, and total complexity with the
+legacy path. Adopt only if the representation materially reduces net production
+complexity or makes repairs and their boundaries demonstrably more local and
+reviewable; merely relocating complexity is a failed experiment.
+
+The experiment's 4,169 Python lines are largely defensive provenance probing and
+validation scaffolding. They are appropriate evidence machinery, not an
+implementation to port wholesale. Production should use an explicit locked
+package/model artifact bundle and a smaller adapter. Manual setup that records real
+document-specific judgment remains acceptable; separating section-plan input from
+generated Markdown is useful cleanup but secondary to the measured table work.

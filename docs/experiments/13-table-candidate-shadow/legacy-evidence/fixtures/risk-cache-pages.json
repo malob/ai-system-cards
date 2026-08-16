@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "card": "anthropic/risk-report-2026-08",
+  "source_pdf_sha256": "d76815f8c0bd284a33c7017d642d0734ba903ae63f7c1e6ca7778b35b2c40fa4",
+  "source_cache": "pipeline/.cache/anthropic-risk-report-2026-08/tables.json",
+  "source_cache_sha256": "147e4d51440d86d0101f487c4d999df5ed0c372013dbb31d4e0796ed43d5d4e9",
+  "docling_version": "unknown-unrecorded",
+  "pages": {
+    "78": [
+      {
+        "bbox": [
+          69.2,
+          356.1,
+          541.6,
+          585.8
+        ],
+        "html": "<table><caption><div class=\"caption\">[Table 2.23.1.2.A] Rate of positive flags by automated offline monitoring over various evaluation datasets.</div></caption><tbody><tr><th>Evaluation</th><th>Positive rate after 1st stage</th><th>Positive rate after 2nd stage filtering</th></tr><tr><td>3/3</td><td>1/3</td><td>Misaligned Model Organisms from Treutlein 2026 (conversation)</td></tr><tr><td>100%</td><td>72%</td><td>Shade-Arena conversations, CoT only, selected for stealthiness</td></tr><tr><td>95%</td><td>92%</td><td>Shade-Arena conversations, CoT only, ablating direct discussion of a side goal from CoTs</td></tr><tr><td>72%</td><td>29%</td><td>Synthetic Chains-of-Thought (single-completion)</td></tr><tr><td>0.74%</td><td>0.004%</td><td>Monitored internal traffic (lower is better)</td></tr></tbody></table>"
+      }
+    ],
+    "79": [
+      {
+        "bbox": [
+          58.2,
+          371.3,
+          554.1,
+          673.5
+        ],
+        "html": "<table><tbody><tr><th>Evaluation</th><th>Positive rate (Opus 4.6 monitor, early Mythos 5 internal deployment)</th><th>Positive rate (Opus 4.8 monitor, current internal deployment)</th><th>Positive rate (Opus 4.6 monitor + second-stage filter, current internal deployment)</th><th>Positive rate (Opus 4.8 monitor + second-stage filter, current internal deployment)</th></tr><tr><td>METR Red Teaming Exercise, all attacks (n=163)</td><td>78%</td><td>94%</td><td>62%</td><td>79%</td></tr><tr><td>5 Internal Red-Teaming transcripts, made by humans during an exercise</td><td>4/5</td><td>4/5</td><td>3/5</td><td>4/5</td></tr><tr><td>Synthetic transcripts engaging in dangerous or scheming behavior</td><td>96%</td><td>96%</td><td>73%</td><td>80%</td></tr></tbody></table>"
+      }
+    ],
+    "80": [
+      {
+        "bbox": [
+          57.6,
+          71.7,
+          553.7,
+          679.1
+        ],
+        "html": "<table><tbody><tr><td>Internal Evaluation set (superset of previous two rows)</td><th>87%</th><th>87%</th><th>62%</th><th>72%</th></tr><tr><th>Internal Evaluation set + 200k prepended benign Tokens</th><td>80%</td><td>89%</td><td>64%</td><td>69%</td></tr><tr><th>Internal Evaluation set + 400k prepended benign tokens</th><td>80%</td><td>84%</td><td>59%</td><td>69%</td></tr><tr><th>SHADE-Arena side-task attempts with full extended thinking for Opus 4.5</th><td>100%</td><td>100%</td><td>45%</td><td>70%</td></tr><tr><th>SHADE-Arena side-task attempts with discussion of a side goal ablated from extended thinking for Opus 4.5</th><td>100%</td><td>100%</td><td>97%</td><td>92%</td></tr><tr><th>MonitorBench Hard (n=60 sample)</th><td>92%</td><td>92%</td><td>77%</td><td>87%</td></tr><tr><th>MonitorBench Hard (n=60 sample) + 200k tokens of benign transcript before</th><td>72%</td><td>83%</td><td>58%</td><td>75%</td></tr><tr><th>MonitorBench Hard (n=60 sample) + 200k tokens of benign transcript before and 200k tokens of benign transcript after (less analogous to our setup, since we run the monitor many times in a single transcript)</th><td>48%</td><td>77%</td><td>37%</td><td>63%</td></tr><tr><th>SLEIGHT-Bench</th><td>23%</td><td>58%</td><td>14%</td><td>44%</td></tr><tr><th>Monitored internal traffic (lower is better)</th><td>~0.4%</td><td>~0.2%</td><td>~0.04%</td><td>~0.1%</td></tr></tbody></table>"
+      }
+    ],
+    "113": [
+      {
+        "bbox": [
+          69.6,
+          125.2,
+          557.2,
+          696.0
+        ],
+        "html": "<table><tbody><tr><th>Capability or usage threshold</th><th>Substantive standards for model developers</th></tr><tr><td>Automated R&amp;D in key domains. AI systems that can fully automate, or otherwise dramatically accelerate, the work of large, top-tier teams of human researchers in domains where fast progress could cause threats to international security and/or rapid disruptions to the global balance of power-for example, energy, robotics, weapons development, and AI itself. For now, our evaluations will focus specifically on AI R&amp;D, as this domain likely plays to AI systems&#x27; current strengths and is more tractable to assess than capabilities in other domains. Additionally, AI R&amp;D alone could cause acceleration in AI capabilities improvements, to the point where all of the threats listed above (and more) develop very quickly. We will consider this threshold to be met if we determine that either (1) our models would be able to fully substitute for our entire set of Research Scientists and Research Engineers, at competitive costs (i.e., within a factor of 5); or (2) there is &#x27;dramatic acceleration&#x27; of the pace of AI progress for reasons that likely relate to the automation of AI R&amp;D. We would consider scenario (2) to have occurred where (a) we observe or expect double the rate of</td><td>A frontier developer should make a strong argument that: ● No user or team of users (including those backed by top-tier states) will become significantly more likely to cause catastrophic harm via their usage of product surfaces or via theft of model weights. This will likely require similar measures to those listed in row 1, but to a higher standard, to the point where even well-resourced and -staffed threat actors would be unlikely to reliably jailbreak models or cause catastrophic harm via unauthorized access to or modification of models (including via stolen or modified model weights). Accomplishing this would likely mean security roughly in line with RAND SL4. Security requirements would be calibrated to defend against the strongest plausible threat actors who are not bound by a credible industry-wide safety regime. Actors subject to such a regime would not need to be treated as threats to each other&#x27;s model weights. ● Even malicious employees and other insiders with maximal levels of access will not be significantly enabled to cause catastrophic harm. This requires (among other things) accounting for internal tools that are less restricted than product surfaces, and for the possibility of unauthorized modification of models. This will likely require an internal Usage Policy and strong internal compartmentalization, controls and/or monitoring to restrict the ability of employees and contractors (up to and including the company&#x27;s CEO as well as its most privileged</td></tr></tbody></table>"
+      }
+    ],
+    "114": [
+      {
+        "bbox": [
+          69.1,
+          71.5,
+          557.5,
+          456.1
+        ],
+        "html": "<table><tbody><tr><td>progress 43 in AI aggregate capabilities compared to both the rate we&#x27;d expect and the fastest rate of extended progress 44 we&#x27;ve observed in the absence of significant AI contributions to AI R&amp;D and (b) it is plausible that this doubling is substantially attributable to the automation of research and/or engineering (as opposed to other factors, such as increased headcount, compute, or general productivity), such that continuation of the trend in AI progress seems likely to lead to even greater acceleration. This capability threshold is intended to reflect our definition of highly capable models (see Section 3.6 [of the RSP]). It may be sensible to add earlier, and/or easier-to-measure, thresholds that trigger less demanding versions of the mitigations for this threshold.</td><td>technical employees) to circumvent the Usage Policy. ● AI models have not been deliberately or inadvertently trained with dangerous goals, or are otherwise unlikely to autonomously cause catastrophic harm. This will likely require similar measures to those listed above under &#x27;Misaligned AI systems in high-stakes settings&#x27; (some combination of internal compartmentalization, restriction and code review; monitoring AI behavior; and evidence that AI models lack the propensity to deceive and manipulate users), but to a greater degree. In particular, at this point AI systems might be responsible for much of the research and analysis that underpins risk assessment, and might have strong capabilities for deception, manipulation and obfuscation of evidence, in which case analyses of threats from AIs should follow very high evidentiary standards with thorough and careful analysis of the possibility that much of the key evidence is suspect due to the possibility of manipulation by AI systems.</td></tr></tbody></table>"
+      }
+    ],
+    "115": [
+      {
+        "bbox": [
+          68.2,
+          251.4,
+          542.4,
+          690.2
+        ],
+        "html": "<table><tbody><tr><td></td><th>CB-1 threat model</th><th>CB-2 threat model</th></tr><tr><td>Threat model</td><td>Individuals or small groups with limited resources use AI models to gain access to non-novel chemical or biological (CB) weapons, leading to the risk of catastrophic harm.</td><td>Moderately resourced threat actors (including, for example, expert-backed teams) create/obtain and deploy novel chemical and/or biological weapons with potential for catastrophic damages even beyond those associated with the CB-1 threat model.</td></tr><tr><td>Overall risk assessment</td><td>Low risk, but higher than previously estimated due to a recently discovered gap in our safeguards that affected us for nearly a year. We have remedied the issue and have no evidence that it was used for chemical and biological misuse, but its existence leads us to believe that there is an increased likelihood of other, similar vulnerabilities unknown to us. More below.</td><td>Low risk, but with substantial uncertainty.</td></tr><tr><td>Relevant AI model(s)</td><td colspan=\"2\">We have a number of relevant models with different capability levels and risk mitigations, summarized in a table below.</td></tr><tr><td>Current usage and capabilities</td><td>We still have significant uncertainty about the level of risk actually posed by our models, but</td><td>We believe our models may provide significant uplift to relevant threat actors, but do not yet meet our</td></tr></tbody></table>"
+      }
+    ],
+    "116": [
+      {
+        "bbox": [
+          67.9,
+          71.4,
+          542.3,
+          402.0
+        ],
+        "html": "<table><caption><div class=\"caption\">[Table 4.1.A] Summary of risk of chemical and biological weapons production.</div></caption><tbody><tr><td></td><td>their performance on evals is strong enough that we currently act as though they meet our CB-1 threshold of being able to significantly help the relevant threat actors create/obtain and deploy chemical and/or biological weapons with serious potential for catastrophic damages.</td><td>CB-2 threshold of functionally substituting for the scarce human expertise that is currently the primary barrier to novel development of chemical and biological weapons with potential for catastrophic harm.</td></tr><tr><td>Current risk mitigations</td><td>Real-time blocking classifiers assessed via bug bounties and other red-teaming; remediation of jailbreaks we find; manual vetting of users with safeguard exemptions; searching for widely available universal jailbreaks; and controls to prevent theft of model weights.</td><td>Similar measures to those in the left column. We have extended the scope of coverage for our classifiers for better coverage of this threat model. For our Fable 5 model, we have even broader coverage of our blocking classifiers.</td></tr><tr><td>Looking forward</td><td>Capabilities evaluations; continual reassessment and improvement of all risk mitigations.</td><td>Capabilities evaluations; continual reassessment and improvement of all risk mitigations.</td></tr></tbody></table>"
+      }
+    ],
+    "182": [
+      {
+        "bbox": [
+          37.8,
+          71.3,
+          574.4,
+          690.5
+        ],
+        "html": "<table><tbody><tr><th>Model name or category</th><th>Brief description</th><th>Surfaces</th><th>Usage notes</th><th>Capability notes</th><th>Alignment notes</th></tr><tr><td>Claude Mythos 5</td><td>Frontier model with limited external availability</td><td>Limited availability to approved customers via the invitation-only Project Glasswing program; extensively deployed internally</td><td>Used extensively within Anthropic for research and engineering, both interactively and via persistent agent deployments; limited external usage by approved customers</td><td>Our most capable externally deployed model, our most capable model overall in some domains</td><td>See the Claude Fable 5 &amp; Claude Mythos 5 System Card</td></tr><tr><td>Claude Fable 5</td><td>Same model weights as Mythos 5, deployed with higher-coverage safeguards (see Section 4.5.2.2)</td><td>Bedrock, Vertex, Azure, 1P (direct service from Anthropic)</td><td>General-purpose model with many users and many use cases</td><td>Our most capable widely released model</td><td>See the Claude Fable 5 &amp; Claude Mythos 5 System Card</td></tr><tr><td>Claude Mythos Preview</td><td>Legacy Mythos-class model, not widely deployed</td><td>Invitation-only access via the Project Glasswing program</td><td>Limited usage</td><td>Broadly similar to other Mythos-class models on risk-relevant evaluations, though Claude Mythos 5 appears more capable (see Section 4.4.3)</td><td>See the Claude Mythos Preview System Card</td></tr><tr><td>Internal Model 1</td><td>Legacy Mythos-class model, not externally deployed.</td><td>Internal-only</td><td>Limited usage, declining over time</td><td>Broadly similar to other Mythos-class models, generally dispreferred to Mythos 5 internally</td><td>Less extensive assessment, but broadly comparable to our other production models.</td></tr></tbody></table>"
+      }
+    ],
+    "183": [
+      {
+        "bbox": [
+          38.0,
+          71.1,
+          574.5,
+          606.3
+        ],
+        "html": "<table><tbody><tr><th>Internal Model 2</th><th>Mythos-class model, not externally deployed.</th><th>Internal-only</th><th>Internal usage similar to Mythos 5</th><th>More capable than Mythos 5 in some areas, less capable in others; overall slightly more capable.</th><th>Less extensive assessment, but broadly comparable to our other production models.</th></tr><tr><td>Claude Opus 5</td><td>Major commercial model</td><td>Internal-only as of the coverage date (now widely released)</td><td>Moderate internal usage as of the coverage date</td><td>Generally less capable than Mythos 5.</td><td>See the Claude Opus 5 System Card</td></tr><tr><td>Claude Opus 4.8</td><td>Major commercial model</td><td>Bedrock, Vertex, Azure, 1P (direct service from Anthropic)</td><td>General-purpose model with many users and many use cases</td><td>Our most capable model without research biology classifiers offered widely to consumers as of the coverage date</td><td>See the Claude Opus 4.8 System Card</td></tr><tr><td>Claude Sonnet 5</td><td>Major commercial model</td><td>Bedrock, Vertex, Azure, 1P (direct service from Anthropic)</td><td>General-purpose model with many users and many use cases</td><td>Roughly equivalent to Claude Opus 4.8 with respect to CB-relevant capabilities (see Section 4.3); less capable than Claude Mythos 5</td><td>See the Claude Sonnet 5 System Card</td></tr><tr><td>Claude Haiku 4.5</td><td>Major commercial model</td><td>Bedrock, Vertex, Azure, 1P (direct service from Anthropic)</td><td>General-purpose model with many users and many use cases</td><td>Less capable and cheaper than Claude Sonnet 5; we do not require blocking biological classifiers</td><td>Broadly (though not universally) reassuring observations; see Claude Haiku 4.5 System Card</td></tr></tbody></table>"
+      }
+    ],
+    "184": [
+      {
+        "bbox": [
+          37.9,
+          70.9,
+          574.5,
+          567.3
+        ],
+        "html": "<table><tbody><tr><td>Legacy models (see list in appendix)</td><td>Legacy commercial deployments, generally less widely used and less capable than Claude Fable 5 and Claude Sonnet 5. Some require blocking CB safeguards.</td><td>Bedrock, Vertex, Azure, 1P</td><td>General-purpose models with many users and many use cases</td><td>Varies (but all less capable than Claude Mythos 5)</td><td>Varies</td></tr><tr><td>Claude Gov</td><td>Claude with post-training for national security uses, e.g. fewer refusals for potentially national-security -relevant requests. See Section 4.5.5.3.2 for more.</td><td>AWS Secret Cloud and AWS Top Secret Cloud</td><td>All users must have at least Secret clearances and work from within accredited networks. Variety of uses, and we do not currently monitor usage</td><td>Presumably similar to underlying commercial models</td><td>Evaluation of Claude Gov version of Sonnet 4.5 was roughly in line with that of mainline Claude Sonnet 4.5. Others unknown.</td></tr><tr><td>Other fine-tuned models</td><td>Models fine-tuned by Anthropic and/or customers. Claude Haiku 4.5 is the current most capable base for such models, and usage is generally small-scale.</td><td>1P and Bedrock</td><td>Limited usage</td><td>Presumably similar to underlying base models</td><td>Not evaluated</td></tr></tbody></table>"
+      }
+    ],
+    "185": [
+      {
+        "bbox": [
+          38.1,
+          71.1,
+          574.3,
+          351.3
+        ],
+        "html": "<table><tbody><tr><td>Internal models (other than the two internal models described above)</td><td>Models used only internally for narrow purposes (such as producing training data and generating preference scores for reinforcement learning) and research purposes.</td><td>Internal-only</td><td>Variety of uses, but none have comparable affordances and integrations to Claude Mythos 5 and our major commercial models</td><td>Varies, but none currently have capabilities beyond that of Claude Mythos 5</td><td>Not evaluated</td></tr><tr><td>Small externally deployed models for narrow purposes</td><td>Some small models are used in production for purposes such as classifying and preventing misuse.</td><td>Variety of surfaces</td><td>Narrow purposes such as classifying and preventing misuse</td><td>Substantially less generally capable than major commercial models</td><td>Not evaluated</td></tr></tbody></table>"
+      }
+    ]
+  }
+}

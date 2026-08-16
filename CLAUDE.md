@@ -32,9 +32,13 @@ pipeline. Per-document config supplies manifest roles, section stubs, and narrow
 scoped grammar knobs; generalization fixes live as classes in `pipeline/`, never as
 document-instance patches (D38–D48). This proves one pipeline only within Anthropic's
 Google-Docs-export family. Other vendors' PDFs (different producers and visual
-grammars) remain untested. The immediate next task is phase 4 ST2 hardening; a
-different producer, clean bootstrap, every projection, and computed-browser
-visibility are phase 9 architectural tests, not implied current capability.
+grammars) remain untested. Phase-4 structural-authority integration is paused. The
+immediate task is the shadow table extraction/grid program in
+`docs/experiments/13-table-candidate-shadow/`: add genuine source-negative controls,
+test typed word-to-cell alignment, establish locked cross-platform replay, and compare
+net complexity before any production adoption. A different producer, clean
+bootstrap, every projection, and computed-browser visibility remain later
+architectural tests, not implied current capability.
 
 ## How a document is produced
 
@@ -187,7 +191,9 @@ was cancelled only because Fable exceeded the old 30-minute timeout; the 45-minu
 follow-up completed the unchanged floor. Hosted fast-release / Pages run
 [31929997079](https://github.com/malob/ai-system-cards/actions/runs/31929997079)
 also succeeded for `3d7b851`, so phase 3 is deployed and certified. Canonical sections
-and the byte-identical built site did not change; phase 4 ST2 hardening is next.
+and the byte-identical built site did not change. D58 pauses further phase-4
+integration and pulls the isolated table-candidate experiment forward; that newer
+experiment has no hosted, deployed, production, card-content, or site-output effect.
 Classes use independent digest-derived RNG streams, so adding one cannot resample the
 others:
 
@@ -224,6 +230,13 @@ push without explicit owner request (D13).
 The site picks up any new system card or safety report under
 `cards/<vendor>/<slug>/` automatically. The procedure proven across the three current
 documents is:
+
+Manual setup is acceptable when it records genuine document-specific judgment, such
+as visual roles or editorial section boundaries. Automate derived observations and
+make reviewed inputs explicit; do not optimize away a small setup step without
+measured conversion leverage. The current section stubs mix reviewed plan input with
+generated output. Separating that plan is useful secondary cleanup, not the immediate
+table task and not a mandate to automate editorial decisions.
 
 1. Create `cards/<vendor>/<slug>/` with `source.pdf` and a `meta.yaml` (copy the
    existing field shape; `source_pages` is read by the pipeline). That `meta.yaml`

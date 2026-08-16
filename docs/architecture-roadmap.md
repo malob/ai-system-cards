@@ -5,7 +5,8 @@ The immutable review record is under
 [`architecture-review-exchange/`](architecture-review-exchange/); D51 records the
 decision. Implementation and validation status live in [`state.md`](state.md). D55
 records phase 3's local implementation evidence; D56 records its hosted certification
-and deployment; D57 records phase 4's advisory structural-authority spike.
+and deployment; D57 records phase 4's advisory structural-authority spike; D58 records
+the table-candidate shadow milestone and sequencing change.
 
 ## Bottom line
 
@@ -23,6 +24,10 @@ The program is therefore:
 4. use focused experiments to decide whether tables need a typed internal grid; and
 5. reconsider a whole-document semantic IR only if narrower seams fail under measured
    cross-producer or cross-projection pressure.
+
+Manual setup is not itself a failure when it records genuine document-specific
+judgment. Automate derived observations and make reviewed plans explicit, but measure
+conversion leverage before spending effort eliminating a small setup step.
 
 ## What the review established
 
@@ -90,7 +95,7 @@ by a green phase-3 gate.
 | Source | The archived PDF is the sole content authority. |
 | Observation | Keep PyMuPDF as the primary born-digital observer. Record source hash, tool/schema version, and raw spans, links, geometry, drawings, and image facts. |
 | Interpretation | Store derived roles—body, heading, footnote, table, figure, exclusions—separately enough that they can be mutated and checked without changing raw observations. |
-| Table candidate | Treat pinned Docling output as a proposal. Retain a replayable legacy artifact immediately; test a normalized candidate with cells, spans, geometry, and provenance. |
+| Table candidate | Treat pinned Docling output as a proposal. [Experiment 13](experiments/13-table-candidate-shadow/README.md) retains replayable legacy evidence and demonstrates a normalized shadow candidate with cells, spans, geometry, and provenance; it is not production authority. |
 | Accepted prose | Keep tracked Markdown canonical for prose. |
 | Published projections | Treat HTML, `card.md`, per-section Markdown, `llms.txt`, anchors, search, and social output as separate claims that need projection-specific checks. L2 plus D55's P2/F3/V1 lane now bind links, source pages/figures, copied source bytes, event order, and authored raw-HTML visibility through the production HTML renderer; it is not yet an all-projection or computed-layout proof. |
 | Verification | Build expectations independently where correctness is load-bearing. Detector disagreement widens scrutiny; it never grants immunity from a general invariant. |
@@ -109,8 +114,10 @@ The review explicitly rejected these as present work:
 
 ## Ordered implementation program
 
-Each phase earns the next. A later refactor must not be used to delay a smaller
-correctness repair.
+These remain distinct evidence packages, not permission to claim later production
+work complete. D58 pauses further phase-4 integration and pulls bounded phase-5/7
+table shadow work forward because it now has higher discriminating value. A later
+refactor must not be used to delay a demonstrated smaller correctness repair.
 
 | Phase | Work | Exit evidence |
 | ---: | --- | --- |
@@ -162,9 +169,18 @@ No structural finding or alignment result gates card content; observer unit test
 run in the existing release graph. Canonical content and published output did not
 change. Phase 4 still requires an executable replay harness, deterministic mutations,
 and clean current plus nearest-negative controls before it can block or be called
-complete. Final reduced-tree validation is recorded in Experiment 12. Phase 5 still
-owns complete extractor/cache provenance, and phase 9 still owns all-projection/bootstrap,
-computed-browser-visibility, and different-producer evidence.
+complete. Final reduced-tree validation is recorded in Experiment 12. D58 pauses
+further integration rather than weakening those exit criteria.
+
+Experiment 13 pulls a bounded table-candidate slice of phases 5 and 7 forward. A rich
+Docling proposal and complete runtime envelope replayed deterministically twice for
+Fable p.20 in one warm local environment; a clean typed model and six-page topology
+slice remain shadow-only. The slice made three source-supported merges, conservatively
+missed one because of upstream word assignment, found no genuine real source-negative,
+and is conditioned on Docling's table candidate. This does not complete pinning, cold
+or cross-platform replay, independent verifier topology, or the production-grid
+decision. Phase 9 still owns all-projection/bootstrap, computed-browser-visibility,
+and different-producer evidence.
 
 ## Experiments and kill criteria
 
@@ -207,6 +223,23 @@ repair/provenance or both sides independently demonstrate a need for the same ex
 cell model. If verifier topology works without shared generator structure and a grid
 does not improve repair, keep HTML canonical for tables and refactor locally.
 
+**First generator-shadow result.** [Experiment 13](experiments/13-table-candidate-shadow/README.md)
+proves that the rich Docling proposal can be retained in a deterministic immutable
+candidate without first flattening to HTML. Its legacy corpus binds 29 candidates,
+32 references, 13 canonical tables, and five logical shadows; two legacy passes are
+currently inert across all 98 cached candidates. One typed rule made three
+source-justified header merges over six hard pages and exposed one conservative false
+negative from a misassigned `API,` cell. There was no genuine real source-negative in
+the set, and the source geometry remains candidate-conditioned. The result earns
+continued shadow work, not production adoption.
+
+**Next discrimination.** Add natural source-negative controls, test typed
+word-to-cell alignment, establish a clean locked cross-platform replay, and compare
+total complexity, transform ordering, and provenance with the legacy pipeline. The
+4,169-line experiment is defensive evidence scaffolding, not code to port wholesale;
+production should use a locked artifact bundle and smaller adapter. Kill adoption if
+the grid merely relocates complexity.
+
 ### X4 — different-producer probe
 
 Test low-level observations separately from body-size, list, footnote-region,
@@ -222,6 +255,11 @@ heading, figure, footnote, link, and table reconstruction in each published proj
 For HTML, include computed stylesheet behavior, responsive breakpoints, clipping,
 occlusion, and representative browser viewports; D55's authored-raw-HTML V1 policy is
 an important input gate, not a substitute for that browser evidence.
+
+Judgmentful onboarding remains acceptable. The narrower cleanup is to separate the
+reviewed section plan from generated Markdown so inputs and outputs are explicit; it
+is secondary to the current table experiment, not a mandate to automate editorial
+section decisions.
 
 **Reopen a whole-document IR only for** systematic non-table projection loss,
 inability to bootstrap without prior Markdown, repeated encoding of the same semantics

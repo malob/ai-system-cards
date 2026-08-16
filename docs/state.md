@@ -3,14 +3,15 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-16 (D57 phase-4 structural-authority spike recorded). The
+**Last updated:** 2026-08-16 (D58 table-candidate shadow milestone recorded). The
 phase-3 certification-docs baseline `5b752ae` was deployed; its final docs-only
 fast-release / Pages run
 [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)
 passed. Phase-3 implementation and mutation certification remain unchanged. Phase 4
 is experimental and advisory: no structural finding or alignment result gates card
-content, although its observer unit tests run in the existing fast-release graph. It
-caused no output change.
+content, although its observer unit tests run in the existing fast-release graph.
+Further phase-4 integration is paused while the table extraction/grid experiment is
+pulled forward in shadow. Neither experiment caused a production or output change.
 
 ## Current card gates
 
@@ -81,7 +82,7 @@ uses an allowed skip. Exact asset synchronization also prevents stale files from
 surviving an incremental build. These are authority and release-safety changes, not
 content edits.
 
-## Phase-4 structural-authority spike
+## Phase-4 structural-authority spike (paused)
 
 Phase 4 is a structural-family experiment, not an ST2 threshold patch. It is testing
 source-only tag and geometry observations against an independently parsed final DOM
@@ -94,6 +95,34 @@ in the existing release graph. The spike changed no generation, canonical, or
 published content. See
 [Experiment 12](experiments/12-structure-authority/README.md) for the canonical
 evidence, provisional census, exit criteria, and final reduced-tree validation.
+
+## Table-candidate shadow milestone
+
+[Experiment 13](experiments/13-table-candidate-shadow/README.md) approaches tables
+with a fresh typed representation while treating the legacy pipeline as a source of
+counterexamples rather than code to port. It remains completely isolated from
+`pipeline/`, `cards/`, and `site/`.
+
+- A rich Docling candidate plus complete runtime/source/config/model/schema envelope
+  replayed deterministically for two offline same-machine runs of Fable p.20 after
+  deterministic mini-PDF creation. This is warm, runtime-bound feasibility evidence,
+  not cold or cross-platform reproducibility.
+- The legacy evidence slice binds 29 raw candidates, 32 manifest references, 13
+  canonical accepted tables, and five logical multipage shadows. Two production
+  passes are inert across all 98 current cached candidates and should not be ported
+  without recovered historical positives.
+- A typed six-page/seven-table topology slice made three source-justified header
+  merges. It conservatively missed a fourth because Docling misassigned `API,` to the
+  lower cell. No genuine real source-negative occurred in the hard set, and its PDF
+  geometry remains conditioned on Docling's candidate bbox/grid, so it is not
+  independent verification authority.
+- The four experiment suites pass 42/42 tests, and the separate legacy validator
+  passes 32 locators, 13 canonical tables, and five logical shadows.
+
+This is not a production-model decision. The 4,169 lines of experiment Python are
+mostly defensive provenance discovery and validation; production must use an
+explicit locked artifact bundle and smaller adapter, and adoption must demonstrate
+net complexity reduction rather than move the legacy complexity.
 
 ## Mutation evidence
 
@@ -121,8 +150,9 @@ At eight trials/class and seed 5:
 P2, F3, L2, body-critical, and footnote-critical class is 8/8 on every card where it
 applies. The remaining misses are concentrated where the evidence says they are:
 ST1/ST2/ST3, L1 occurrence coverage, S1 bold coverage, and ordinary two-word swaps
-that T1 can detect while intentionally leaving advisory. Phase 4 therefore remains
-structural-family authority work rather than another representation rewrite.
+that T1 can detect while intentionally leaving advisory. Phase 4 remains advisory
+structural-family authority work, but further integration is paused while the
+separate table representation question is tested in shadow.
 
 Mutation artifacts are strict schema-v2 envelopes bound to the card, seed,
 trials/class, complete class/invariant set, aggregate counts, and per-trial evidence.
@@ -163,6 +193,9 @@ and major-blocking independently.
   passed. The phase-4 alignment remains advisory and made no canonical-content or
   published-output change. Its observers are exercised by release tests, but their
   structural findings do not yet gate cards.
+- Experiment 13's 42 local unit tests and separate legacy validator pass. Those tests
+  validate only the isolated evidence/model/replay/topology work; no full release,
+  hosted, deployed, or output-improvement evidence is claimed for that experiment.
 
 ## Durable process invariants
 
@@ -181,14 +214,20 @@ and major-blocking independently.
 
 ## Open / next
 
-- **Phase 4:** test the source-only structural constraint artifact, global token-
-  interval matcher, and bbox-local geometry fallback; then require executable 11/11
-  historical replay candidates plus clean mutations/current/nearest-negative controls
-  before blocking.
-- **Later authority work:** pin/cold-replay extraction (phase 5), serialize the
-  observation/annotation boundary (phase 6), independently test table topology and a
-  persistent grid (phases 7–8), then exercise clean bootstrap, every projection,
-  computed browser visibility, and a different PDF producer (phase 9).
+- **Immediate table shadow:** obtain genuine source-negative controls, test a typed
+  PyMuPDF word-to-cell alignment slice, replay a representative hard set in a clean
+  locked environment and on a second platform, then compare complexity and provenance
+  with the legacy path before any production migration.
+- **Paused phase 4:** retain the structural artifact and eleven replay candidates as
+  advisory evidence. Resume integration only when its expected information gain
+  outranks the table experiment; the original blocking criteria remain unchanged.
+- **Later authority work:** complete extraction/cache provenance and cold replay,
+  serialize the broader observation/annotation boundary, remove remaining table-scope
+  immunity, then exercise every projection, computed browser visibility, and a
+  different PDF producer.
+- **Secondary cleanup:** separate section-plan input from generated Markdown. Manual
+  setup that records genuine document-specific judgment remains acceptable and is not
+  the current automation target.
 - **Nonblocking R2 presentation question:** whether the web edition visibly annotates
   a source-unresolvable internal destination remains open; recovery/plain-text
   behavior is already settled.
@@ -197,11 +236,14 @@ and major-blocking independently.
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D57),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D58),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
-[verification-methodology.md](verification-methodology.md). The immediate task is
-phase-4 structural-family integration, not an ST2 threshold patch or whole-document
-IR migration. For a changed corpus, experiment 11 is the
+[verification-methodology.md](verification-methodology.md). The immediate task is the
+shadow table extraction/grid program in
+[Experiment 13](experiments/13-table-candidate-shadow/README.md), beginning with
+genuine source-negative controls, typed word-to-cell alignment, and locked portable
+replay—not production adoption or a whole-document IR migration. For a changed corpus,
+experiment 11 is the
 regression-sweep template: changed pages plus renderer controls, the PDF as sole
 authority, and prompts that ask rather than assert the expected answer.

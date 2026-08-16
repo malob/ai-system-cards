@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "card": "anthropic/claude-opus-5",
+  "source_pdf_sha256": "fed3c0e6d150a6ba855f0f117a632d2b27dbb5886fd42815caa92e3e20db1d25",
+  "source_cache": "pipeline/.cache/anthropic-claude-opus-5/tables.json",
+  "source_cache_sha256": "357100116e30e1d7d3a9d25fd81e11693a43a1c9348e030d16310eba3031ba27",
+  "docling_version": "unknown-unrecorded",
+  "pages": {
+    "52": [
+      {
+        "bbox": [
+          69.9,
+          228.7,
+          541.7,
+          416.9
+        ],
+        "html": "<table><tbody><tr><th>Model</th><th>Overall harmless response rate: API, without a system prompt</th><th>Overall harmless response rate: Claude.ai</th></tr><tr><td>Claude Opus 5</td><td>96.34% (± 0.16%) 98.54%</td><td>(± 0.14%)</td></tr><tr><td>Sonnet 5 96.65%</td><td>(± 0.15%) 99.20%</td><td>Claude (± 0.07%)</td></tr><tr><td>96.94% (±</td><td>0.21%) 98.51% (±</td><td>Claude Fable 5 0.14%)</td></tr><tr><td>97.09% (± 0.20%)</td><td>N/A</td><td>Claude Mythos 5</td></tr><tr><td>Claude Opus 4.8</td><td>97.46% (± 0.13%)</td><td>98.79% (± 0.09%)</td></tr></tbody></table>"
+      }
+    ],
+    "53": [
+      {
+        "bbox": [
+          69.9,
+          71.6,
+          541.6,
+          242.9
+        ],
+        "html": "<table><tbody><tr><th>Model</th><th>Overall refusal rate: API, without a system prompt</th><th>Overall refusal rate: Claude.ai</th></tr><tr><td>0.09% (± 0.02%)</td><td>0.47% (± 0.08%)</td><td>Claude Opus 5</td></tr><tr><td>0.59% (± 0.05%)</td><td>1.54% (± 0.10%)</td><td>Claude Sonnet 5</td></tr><tr><td>0.01% (± 0.01%)</td><td>0.49% (± 0.07%)</td><td>Claude Fable 5</td></tr><tr><td>0.03% (± 0.02%)</td><td>N/A</td><td>Claude Mythos 5</td></tr><tr><td>0.35% (± 0.04%)</td><td>0.55% (± 0.06%)</td><td>Claude Opus 4.8</td></tr></tbody></table>"
+      }
+    ],
+    "56": [
+      {
+        "bbox": [
+          69.3,
+          71.5,
+          542.4,
+          316.2
+        ],
+        "html": "<table><tbody><tr><th>Model</th><th>Single-turn harmful requests (harmless rate)</th><th>Single-turn benign requests (refusal rate)</th><th>Single-turn harmful requests (harmless rate)</th><th>Single-turn benign requests (refusal rate)</th></tr><tr><td></td><th colspan=\"2\">API, without a system prompt</th><th colspan=\"2\">Claude.ai</th></tr><tr><td>Claude Opus 5</td><td>100.00%</td><td>0.15% (± 0.10%)</td><td>100.00%</td><td>0.19% (± 0.17%)</td></tr><tr><td>Sonnet 5</td><td>99.95% (± 0.05%) 0.63%</td><td>(±0.22%)</td><td>99.89% (± 0.11%)</td><td>1.35% (± 0.37%)</td></tr><tr><td>Fable 5</td><td>100%</td><td>0.00%</td><td>100%</td><td>0.12% (± 0.15%)</td></tr><tr><td>Mythos 5</td><td>100%</td><td>0.00%</td><td>N/A</td><td>N/A</td></tr><tr><td>Opus 4.8</td><td>100%</td><td>0.44% (± 0.18%)</td><td>100%</td><td>0.38% (± 0.18%)</td></tr></tbody></table>"
+      },
+      {
+        "bbox": [
+          68.2,
+          404.6,
+          542.3,
+          607.9
+        ],
+        "html": "<table><tbody><tr><th>Model</th><th>Multi-turn evaluations (appropriate response rate)</th><th>Multi-turn evaluations (appropriate response rate)</th></tr><tr><td>API,</td><td>without a system prompt</td><td>Claude.ai</td></tr><tr><td>Claude Opus 5</td><td>86% (± 4%)</td><td>99% (± 2%)</td></tr><tr><td>5 88% (±</td><td>3%)</td><td>Claude Sonnet 96% (± 2%)</td></tr><tr><td>88% (± 5%)</td><td></td><td>Claude Fable 5 96% (± 3%)</td></tr><tr><td>5 89% (±</td><td>5%)</td><td>Claude Mythos N/A</td></tr><tr><td>Claude Opus 4.8</td><td>89% (± 3%)</td><td>96% (± 2%)</td></tr></tbody></table>"
+      }
+    ],
+    "148": [
+      {
+        "bbox": [
+          71.2,
+          185.3,
+          540.3,
+          681.6
+        ],
+        "html": "<table><tbody><tr><th colspan=\"2\">Evaluation</th><th colspan=\"3\">Claude models</th><th>Other models</th></tr><tr><td></td><td></td><th>Opus 5</th><th>Opus 4.8</th><th>Fable 5</th><th>GPT 5.6 Sol</th></tr><tr><th colspan=\"2\">SWE-bench Pro</th><td>79.2</td><td>69.2</td><td>80</td><td>64.6</td></tr><tr><th colspan=\"2\">SWE-bench Multilingual</th><td>89.5</td><td>84.4</td><td>86.6</td><td>-</td></tr><tr><th colspan=\"2\">SWE-bench Multimodal</th><td>59.4</td><td>38.4</td><td>54.1</td><td>-</td></tr><tr><th colspan=\"2\">DeepSWE v1.1</th><td>68.8</td><td>59.0</td><td>69.7</td><td>72.7</td></tr><tr><th colspan=\"2\">FrontierCode 1.1 (Main)</th><td>53.4</td><td>46.5</td><td>53.5</td><td>47.5</td></tr><tr><th colspan=\"2\">FrontierBench v0.1</th><td>43.3</td><td>18.7</td><td>33.7</td><td>37.5 (Codex)</td></tr><tr><th colspan=\"2\">BrowseComp</th><td>90.8</td><td>84.3</td><td>87.4</td><td>90.4</td></tr><tr><th rowspan=\"2\">Humanity&#x27;s Last Exam</th><td>No tools</td><td>56.3</td><td>49.8</td><td>56.5</td><td>-</td></tr><tr><td>With tools</td><td>64.7</td><td>57.9</td><td>63.9</td><td>-</td></tr><tr><th colspan=\"2\">OSWorld 2.0</th><td>70.6</td><td>55.7</td><td>66.1</td><td>62.6</td></tr><tr><th colspan=\"2\">HealthBench Professional</th><td>59.8</td><td>57.4</td><td>66.0 11</td><td>60.5</td></tr><tr><th colspan=\"2\">GDPval-AA v2</th><td>1861</td><td>1593</td><td>1747</td><td>1736</td></tr><tr><th colspan=\"2\">AA-Briefcase</th><td>1720</td><td>1346</td><td>1574</td><td>1505</td></tr><tr><th colspan=\"2\">AutomationBench</th><td>26.0</td><td>17.0</td><td>17.4</td><td>18.1</td></tr><tr><th colspan=\"2\">ARC-AGI-1</th><td>97.5</td><td>92.5</td><td>-</td><td>97.5 (xhigh)</td></tr></tbody></table>"
+      }
+    ],
+    "149": [
+      {
+        "bbox": [
+          71.8,
+          71.4,
+          540.2,
+          127.4
+        ],
+        "html": "<table><tbody><tr><td>ARC-AGI-2</td><th>90.4</th><th>72.1</th><th>-</th><th>92.5</th></tr><tr><th>ARC-AGI-3</th><td>30.2 (high)</td><td>1.5</td><td>-</td><td>7.8</td></tr></tbody></table>"
+      }
+    ]
+  }
+}

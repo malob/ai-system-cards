@@ -1,0 +1,2042 @@
+{
+  "schema_version": 1,
+  "purpose": "Legacy evidence corpus for a clean-model table-candidate shadow experiment. Legacy implementation is evidence, not a design template.",
+  "capture": {
+    "git_commit": "4842ab1b8b90e55f22faf9fd728fc02b0f8a4a36",
+    "tables_py_sha256": "b2d9e74c01551bbf72bac071233b5a2c8c8ecc4d74ba1a21c5c343e2b6a34f27",
+    "run_py_sha256": "9a9d593404b7a58a5f7aaf112f157acac360d77a4950509d05a3532bbdab467a",
+    "warning": "The source table caches contain no Docling package/model/config metadata; docling_version is therefore unknown, not inferred from unrelated bake-off records."
+  },
+  "sources": {
+    "anthropic/claude-fable-5": {
+      "source_pdf": "cards/anthropic/claude-fable-5/source.pdf",
+      "source_pdf_sha256": "c29ffa55ecefab591916dfdefc5ba3fd4e07c27cbef96ca3c05f7601aaebd033",
+      "source_cache": "pipeline/.cache/anthropic-claude-fable-5/tables.json",
+      "source_cache_sha256": "db181a57f7b9ab6675d9eed5f84a74bcad75a6100f0f7ba6242494301f72a314",
+      "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+      "fixture_sha256": "3e002799554adae2f11a43c227d1b3dac5476663b7255bc9892905bb4e51327b",
+      "oracle_cache_sha256": "684f1e54b3534769c4a3baf7834c8b8440002262e6a5e56f2999dfa02f5e1514"
+    },
+    "anthropic/claude-opus-5": {
+      "source_pdf": "cards/anthropic/claude-opus-5/source.pdf",
+      "source_pdf_sha256": "fed3c0e6d150a6ba855f0f117a632d2b27dbb5886fd42815caa92e3e20db1d25",
+      "source_cache": "pipeline/.cache/anthropic-claude-opus-5/tables.json",
+      "source_cache_sha256": "357100116e30e1d7d3a9d25fd81e11693a43a1c9348e030d16310eba3031ba27",
+      "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/opus-cache-pages.json",
+      "fixture_sha256": "8752257c06c45e25ee366ce2d33e1748684f523bf66766cee0fa57e9c1ce8562",
+      "oracle_cache_sha256": "cb1beda6cfc32cd92f3db7ab0c159a50c59b867fd79ffca0d3e6416edfd3118f"
+    },
+    "anthropic/risk-report-2026-08": {
+      "source_pdf": "cards/anthropic/risk-report-2026-08/source.pdf",
+      "source_pdf_sha256": "d76815f8c0bd284a33c7017d642d0734ba903ae63f7c1e6ca7778b35b2c40fa4",
+      "source_cache": "pipeline/.cache/anthropic-risk-report-2026-08/tables.json",
+      "source_cache_sha256": "147e4d51440d86d0101f487c4d999df5ed0c372013dbb31d4e0796ed43d5d4e9",
+      "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+      "fixture_sha256": "d5c7de9c8c85939e11aecea9364911e6b5f62cbdb395a9fe37758ba79f8e354a",
+      "oracle_cache_sha256": "ab09e6cb2b90208438c3d082b1359ced4a73fbbe4f70d35ddf5579033af4b907"
+    }
+  },
+  "cases": [
+    {
+      "id": "fable-rowspan-header-p95",
+      "card": "anthropic/claude-fable-5",
+      "why_selected": "A filled-rectangle, short-rule six-column table where Docling inconsistently encodes sibling label groups and the legacy pipeline repairs rowspans, covered subrows, white header text, and inline score styling.",
+      "strata": [
+        "filled-rectangle",
+        "short-rule",
+        "rowspan",
+        "colspan",
+        "header-continuation",
+        "inline-bold-underline"
+      ],
+      "candidates": [
+        {
+          "page": 95,
+          "table_index": 0,
+          "bbox": [
+            69.2,
+            242.4,
+            541.8,
+            510.1
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "ec8dfeab4ea30f2f918a586ee5d2f77d6da17aacc2f2d4e34ff2b7d1e7c4837b",
+          "raw_html_sha256": "3c45e47368c37c9c96ceeb4818f0cbc77cd9f577385575ed811a9bcc3521e6ea",
+          "postprocess_sha256": "078b789025131e543d28f0f398d298ddc8308b24920cb508db06ec5c2e223f6a",
+          "raw_shape": {
+            "bytes": 919,
+            "rows": 8,
+            "cells": 44,
+            "rowspans": 1,
+            "colspans": 3,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 1027,
+            "rows": 8,
+            "cells": 43,
+            "rowspans": 2,
+            "colspans": 3,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 5,
+            "horizontal_rule_ink_pt": 131,
+            "nonwhite_filled_rectangles": 5
+          },
+          "changed_passes": [
+            "demote_data_th:pre",
+            "promote_split_rowspan",
+            "normalize_rowspan_subrows:pre",
+            "restyle_cells",
+            "promote_white_text_headers",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        }
+      ],
+      "accepted_outputs": [
+        {
+          "file": "cards/anthropic/claude-fable-5/sections/05-agentic-safety.md",
+          "table_index": 4,
+          "caption": "5.2.2.2.A",
+          "source_pages": [
+            95
+          ],
+          "line_start": 155,
+          "line_end": 164,
+          "table_sha256": "82e24558e7cde6ccb3731ea3ede9effdd610748d009952597298b504f30fbed4"
+        }
+      ],
+      "load_bearing_transforms": [
+        "promote_split_rowspan",
+        "normalize_rowspan_subrows",
+        "promote_white_text_headers",
+        "restyle_cells"
+      ],
+      "nearest_negative_controls": [
+        {
+          "relationship": "Same six-column prompt-injection grammar; split-rowspan promotion must not fire.",
+          "candidates": [
+            {
+              "page": 94,
+              "table_index": 0,
+              "bbox": [
+                69.4,
+                71.4,
+                541.7,
+                342.5
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+              "raw_entry_sha256": "e8903a5a4dbda55692e83da1f653991a0adae916ec1a5f9c379520821f472d12",
+              "raw_html_sha256": "b17447eca181d7c8844800e1fd2496f3aa76f2f311ad7a0d301aa4aa99bc6030",
+              "postprocess_sha256": "ddc12233364c7b848804a7c4d93331fd73525441a86f2910757b253282480348",
+              "raw_shape": {
+                "bytes": 934,
+                "rows": 8,
+                "cells": 43,
+                "rowspans": 2,
+                "colspans": 3,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 1045,
+                "rows": 8,
+                "cells": 43,
+                "rowspans": 2,
+                "colspans": 3,
+                "links": 0,
+                "fnrefs": 1,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 4,
+                "horizontal_rule_ink_pt": 112,
+                "nonwhite_filled_rectangles": 5
+              },
+              "changed_passes": [
+                "demote_data_th:pre",
+                "normalize_rowspan_subrows:pre",
+                "restyle_cells",
+                "inject_fnrefs",
+                "promote_white_text_headers",
+                "debold_th"
+              ],
+              "mirrors_current_get_tables": true
+            }
+          ],
+          "accepted": {
+            "file": "cards/anthropic/claude-fable-5/sections/05-agentic-safety.md",
+            "table_index": 3,
+            "caption": "5.2.2.1.A",
+            "source_pages": [
+              94
+            ],
+            "line_start": 132,
+            "line_end": 141,
+            "table_sha256": "954a95fa24fcb097044ecd2c6e3080b53babd8fbc264ba35688736b36d347690"
+          }
+        }
+      ],
+      "history": [
+        {
+          "commit": "3a191b9",
+          "transform": "promote_split_rowspan"
+        },
+        {
+          "commit": "cbf3293",
+          "transform": "normalize_rowspan_subrows"
+        },
+        {
+          "commit": "754476d",
+          "transform": "promote_white_text_headers"
+        }
+      ]
+    },
+    {
+      "id": "fable-welfare-megatable-307-316",
+      "card": "anthropic/claude-fable-5",
+      "why_selected": "A ten-page sparse/unruled logical table exercising lost-line extension, paragraph recovery, glyph/style recovery, and continuation-row coalescence at every page seam.",
+      "strata": [
+        "sparse-unruled-body",
+        "truncated-cell",
+        "multi-page-continuation",
+        "paragraphs",
+        "glyph-restoration",
+        "inline-styling"
+      ],
+      "candidates": [
+        {
+          "page": 307,
+          "table_index": 0,
+          "bbox": [
+            70.9,
+            142.8,
+            545.5,
+            701.2
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "5b815564f93f19f9b793fb6d629ac1370ea6f126687eba80509f0beac0857161",
+          "raw_html_sha256": "686e99c9d311647c1392d344bc349ea3e1ed3f156d48409ed58a7694b7aa6715",
+          "postprocess_sha256": "beb053854d067151d9cd39a2145ed46c125280ba75e91cf838871836bd8db134",
+          "raw_shape": {
+            "bytes": 2020,
+            "rows": 2,
+            "cells": 6,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2021,
+            "rows": 2,
+            "cells": 6,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th",
+            "join_hyphen_wraps"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 308,
+          "table_index": 0,
+          "bbox": [
+            71,
+            71.8,
+            546.3,
+            717.3
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "957d72e7d6c39fbe5875fc529dacc4d01e81628ecdee929adbf72c01c2461050",
+          "raw_html_sha256": "3f0d6ac101cbe660ed0a92e5a563df214bda0401d5cfb09124dfa998d9295308",
+          "postprocess_sha256": "7d700016b1ad9289a9c9745e3f52fefe1dcc79b742a3b1208a51f5b38035b5c5",
+          "raw_shape": {
+            "bytes": 2127,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2169,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 309,
+          "table_index": 0,
+          "bbox": [
+            71.1,
+            72.4,
+            545.4,
+            705.5
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "a0341624dadb545b59d276a598419ecf3d8e3732cc8ea41464a6df0c2b3a041e",
+          "raw_html_sha256": "71e9cc0e9c5a8c429aa540f7f5a0e37b6ee050d55dda86348fe015e69f22cc4d",
+          "postprocess_sha256": "37aef34fc2801cedda77b848ce797e21e9c4a2485dea52791d12342aa462abe5",
+          "raw_shape": {
+            "bytes": 2099,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2151,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "extend_truncated_cells",
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 310,
+          "table_index": 0,
+          "bbox": [
+            70.9,
+            72.2,
+            546.1,
+            705.2
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "4f6f01065418741986a5bec3dc9e7cf1c29ad46ef43c34fdd1a560d33d2dc420",
+          "raw_html_sha256": "517babed9858800990f096cf743a1494d67a6e3c83083e2685ade536aecd71da",
+          "postprocess_sha256": "fddd20939e021ed0aa36ff56155533405dfdbdff17068f44d3e372843a5fdbe8",
+          "raw_shape": {
+            "bytes": 2143,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2201,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 311,
+          "table_index": 0,
+          "bbox": [
+            71,
+            72.4,
+            546.2,
+            705.2
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "5d0ce9d8a8c0106b30674d675c88cdbb109d5a525f718d49e00a13288d5e38bf",
+          "raw_html_sha256": "f1a2156484ed1df8a524fb00f95e4422691b3c44c858c89c100b0459c85b6d94",
+          "postprocess_sha256": "8a0571a55ef95ef96717d55faa511099c65eb3588c2c7f767f4300736c47465d",
+          "raw_shape": {
+            "bytes": 2212,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2235,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "repair_rotation",
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 312,
+          "table_index": 0,
+          "bbox": [
+            71,
+            71.8,
+            546,
+            705.6
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "fce7899fcdd3cbd7efdc9127e1e5ccb486bbce3fe130483ca7a92715dfb2411c",
+          "raw_html_sha256": "a5a70413f4347676f5320597cf82726af52c387724d9cb5e870899bb0b9d64c4",
+          "postprocess_sha256": "e1d1ebc7a37b97aac6cec18a9b890a151c25a063d93107ee0f01387e44f8bd86",
+          "raw_shape": {
+            "bytes": 1961,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 1986,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "repair_rotation",
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "cell_blank_lines",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 313,
+          "table_index": 0,
+          "bbox": [
+            70.7,
+            72.4,
+            546,
+            717.6
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "e75a890cc814d066e779d53c71b6408ffa7de6fd97ba7109b1509e75ee3a7bff",
+          "raw_html_sha256": "f48875450a8f52fd7614fa35f9a704ba4af02a25e46d4f4843ca7ed492ef64d8",
+          "postprocess_sha256": "ad536165f88a75d60b70b03d3563134d117f8f9883f600fa9f6b3343525aba18",
+          "raw_shape": {
+            "bytes": 2250,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2286,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "repair_rotation",
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 314,
+          "table_index": 0,
+          "bbox": [
+            70.9,
+            72.3,
+            546.2,
+            717.5
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "5ada877b81798f2c554101e029f8e6ce4d318be05b5c0be94be52348ddd5722b",
+          "raw_html_sha256": "b3b0fad1adf3037d540e953dfbfa1b845eca471609a415235cea40dd8004dfcf",
+          "postprocess_sha256": "348012ab8c13d922f6b7aaec29e7656e830655e68ff03f73d1db358eeac39fdb",
+          "raw_shape": {
+            "bytes": 2137,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2178,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 315,
+          "table_index": 0,
+          "bbox": [
+            70.9,
+            72.1,
+            546.1,
+            717.7
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "46ab383266ae827d230a9df7674bd4a2080b397124cb217dae3c9a05b8b006ce",
+          "raw_html_sha256": "1e5a27153993f308d016d5a0a986082d76e8b643a53c851bf9aa5dca33592d33",
+          "postprocess_sha256": "6f7bc58c25e3b323231d5fe81f328d52a2c5a1000cabde6d9f324c51f4ccd658",
+          "raw_shape": {
+            "bytes": 2221,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2261,
+            "rows": 4,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "repair_rotation",
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 316,
+          "table_index": 0,
+          "bbox": [
+            71,
+            71.6,
+            546,
+            445.8
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+          "raw_entry_sha256": "97906968582d4a497575e9a01793bffb9ec64a895f5b8b03dd1531c37f1902b2",
+          "raw_html_sha256": "422079158ab1df983eaa361e0a753bcc61df6c9f1a4a7df11c4840fa17e3d641",
+          "postprocess_sha256": "d05525cd31f13bcf36e2931afec9aba96bb4c7ee81d66984f6de9b85451fc21d",
+          "raw_shape": {
+            "bytes": 1174,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 1180,
+            "rows": 3,
+            "cells": 9,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 2
+          },
+          "changed_passes": [
+            "restyle_cells",
+            "split_cell_paragraphs",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        }
+      ],
+      "accepted_outputs": [
+        {
+          "file": "cards/anthropic/claude-fable-5/sections/09-appendix.md",
+          "table_index": 0,
+          "caption": "9.1.A",
+          "source_pages": [
+            307,
+            308,
+            309,
+            310,
+            311,
+            312,
+            313,
+            314,
+            315,
+            316
+          ],
+          "line_start": 9,
+          "line_end": 16,
+          "table_sha256": "21b34bc99447081c7b3ad3a764a2ebebc2417f6742b4190d7e3571adb4b06af0"
+        }
+      ],
+      "logical_shadow": {
+        "postprocess_sha256": "437fa3b679aca09d87c98244be8fbeab037a4d4c5bc2c0cb72b71b67487972a9",
+        "bytes": 19364,
+        "rows": 15,
+        "page_seams": 9,
+        "continuation_row_merge_changed_all_seams": true,
+        "cell_lists_changed": false
+      },
+      "load_bearing_transforms": [
+        "extend_truncated_cells",
+        "split_cell_paragraphs",
+        "restore_cell_glyphs",
+        "repair_rotation",
+        "merge_continuation_rows"
+      ],
+      "nearest_negative_controls": [
+        {
+          "relationship": "Adjacent fragments in the same logical table; extension must not fire on already-complete cells.",
+          "candidates": [
+            {
+              "page": 308,
+              "table_index": 0,
+              "bbox": [
+                71,
+                71.8,
+                546.3,
+                717.3
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+              "raw_entry_sha256": "957d72e7d6c39fbe5875fc529dacc4d01e81628ecdee929adbf72c01c2461050",
+              "raw_html_sha256": "3f0d6ac101cbe660ed0a92e5a563df214bda0401d5cfb09124dfa998d9295308",
+              "postprocess_sha256": "7d700016b1ad9289a9c9745e3f52fefe1dcc79b742a3b1208a51f5b38035b5c5",
+              "raw_shape": {
+                "bytes": 2127,
+                "rows": 4,
+                "cells": 12,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 2169,
+                "rows": 4,
+                "cells": 12,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 0,
+                "horizontal_rule_ink_pt": 0,
+                "nonwhite_filled_rectangles": 2
+              },
+              "changed_passes": [
+                "restyle_cells",
+                "restore_cell_glyphs",
+                "split_cell_paragraphs",
+                "debold_th"
+              ],
+              "mirrors_current_get_tables": true
+            },
+            {
+              "page": 310,
+              "table_index": 0,
+              "bbox": [
+                70.9,
+                72.2,
+                546.1,
+                705.2
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+              "raw_entry_sha256": "4f6f01065418741986a5bec3dc9e7cf1c29ad46ef43c34fdd1a560d33d2dc420",
+              "raw_html_sha256": "517babed9858800990f096cf743a1494d67a6e3c83083e2685ade536aecd71da",
+              "postprocess_sha256": "fddd20939e021ed0aa36ff56155533405dfdbdff17068f44d3e372843a5fdbe8",
+              "raw_shape": {
+                "bytes": 2143,
+                "rows": 3,
+                "cells": 9,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 2201,
+                "rows": 3,
+                "cells": 9,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 0,
+                "horizontal_rule_ink_pt": 0,
+                "nonwhite_filled_rectangles": 2
+              },
+              "changed_passes": [
+                "restyle_cells",
+                "restore_cell_glyphs",
+                "split_cell_paragraphs",
+                "debold_th"
+              ],
+              "mirrors_current_get_tables": true
+            }
+          ]
+        }
+      ],
+      "history": [
+        {
+          "commit": "d644456",
+          "transform": "extend_truncated_cells"
+        },
+        {
+          "commit": "797d9e1",
+          "transform": "split_cell_paragraphs and merge_continuation_rows"
+        },
+        {
+          "commit": "8776f15",
+          "transform": "first-cell continuation merge"
+        },
+        {
+          "commit": "43141f8",
+          "transform": "restore_cell_glyphs"
+        }
+      ]
+    },
+    {
+      "id": "opus-numeric-resegmentation",
+      "card": "anthropic/claude-opus-5",
+      "why_selected": "Two compact numeric-table failures isolate adjacent-cell misjoins and a glued-value-plus-empty-cell split while retaining row-rotation and styling pressure.",
+      "strata": [
+        "short-rule",
+        "filled-rectangle",
+        "glued-cell",
+        "split-cell",
+        "misjoined-cells",
+        "rotation",
+        "inline-bold-underline"
+      ],
+      "candidates": [
+        {
+          "page": 52,
+          "table_index": 0,
+          "bbox": [
+            69.9,
+            228.7,
+            541.7,
+            416.9
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/opus-cache-pages.json",
+          "raw_entry_sha256": "f33f8dffb3b07d1cdf0797b95c56519c67f4c978ec168ca713af4327480af8b0",
+          "raw_html_sha256": "f6de309853d00a1d27031be12f65c773318b4fe9ba93b2e46e7bc27376c21b9f",
+          "postprocess_sha256": "6f0b558d08fc561caafccaacb39b03b7a9e29db5fd82b78325790f97d9a5d594",
+          "raw_shape": {
+            "bytes": 580,
+            "rows": 6,
+            "cells": 18,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 643,
+            "rows": 6,
+            "cells": 18,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 2,
+            "horizontal_rule_ink_pt": 172,
+            "nonwhite_filled_rectangles": 3
+          },
+          "changed_passes": [
+            "resplit_misjoined_cells",
+            "repair_rotation",
+            "restyle_cells",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 56,
+          "table_index": 1,
+          "bbox": [
+            68.2,
+            404.6,
+            542.3,
+            607.9
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/opus-cache-pages.json",
+          "raw_entry_sha256": "60a170e2f1f46dcac75920e9f8d5ba54802c9497c2b368821e189f1b8c6f86d7",
+          "raw_html_sha256": "a9519fc9ce4c44a8c0f9e1c82074ead3ca7fb2d76b1271ac8701121840d6ae95",
+          "postprocess_sha256": "0b5bf862975db813ea2bc0d22ace4b99069e1c9c72e8d73c66d1801f0fb83926",
+          "raw_shape": {
+            "bytes": 598,
+            "rows": 7,
+            "cells": 21,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 725,
+            "rows": 7,
+            "cells": 21,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 5,
+            "horizontal_rule_ink_pt": 280,
+            "nonwhite_filled_rectangles": 3
+          },
+          "changed_passes": [
+            "split_glued_cells",
+            "repair_rotation",
+            "restyle_cells",
+            "promote_white_text_headers",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        }
+      ],
+      "accepted_outputs": [
+        {
+          "file": "cards/anthropic/claude-opus-5/sections/04-safeguards-harmlessness.md",
+          "table_index": 0,
+          "caption": "4.1.1.A",
+          "source_pages": [
+            52
+          ],
+          "line_start": 23,
+          "line_end": 30,
+          "table_sha256": "c4954f241b8e5f0f9314f81fe03f64355976a9173fc9001289153f5acaec1ff1"
+        },
+        {
+          "file": "cards/anthropic/claude-opus-5/sections/04-safeguards-harmlessness.md",
+          "table_index": 3,
+          "caption": "4.2.B",
+          "source_pages": [
+            56
+          ],
+          "line_start": 107,
+          "line_end": 115,
+          "table_sha256": "3d19570e282cf057ddcdfdc41f0dd57432f03c3f5e5131096454c5cc50cb7c23"
+        }
+      ],
+      "load_bearing_transforms": [
+        "resplit_misjoined_cells",
+        "split_glued_cells",
+        "repair_rotation",
+        "restyle_cells"
+      ],
+      "nearest_negative_controls": [
+        {
+          "relationship": "Adjacent table in the same family: rotation still fires, but misjoin resplitting must not.",
+          "candidates": [
+            {
+              "page": 53,
+              "table_index": 0,
+              "bbox": [
+                69.9,
+                71.6,
+                541.6,
+                242.9
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/opus-cache-pages.json",
+              "raw_entry_sha256": "f2bad63a69a178c1c132bd7f01a8090214d916cdef13f7d370f042477df64173",
+              "raw_html_sha256": "8018a9103a11b40c523f8dbf42b07e70e3bc0e0950a724ceb79c3e910fc3cc68",
+              "postprocess_sha256": "301b82671592dba4d4c7066f1dde83197c07d80d4328cec802b957f599af1bb4",
+              "raw_shape": {
+                "bytes": 551,
+                "rows": 6,
+                "cells": 18,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 614,
+                "rows": 6,
+                "cells": 18,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 2,
+                "horizontal_rule_ink_pt": 161,
+                "nonwhite_filled_rectangles": 3
+              },
+              "changed_passes": [
+                "repair_rotation",
+                "restyle_cells",
+                "debold_th"
+              ],
+              "mirrors_current_get_tables": true
+            }
+          ],
+          "accepted": {
+            "file": "cards/anthropic/claude-opus-5/sections/04-safeguards-harmlessness.md",
+            "table_index": 1,
+            "caption": "4.1.2.A",
+            "source_pages": [
+              53
+            ],
+            "line_start": 44,
+            "line_end": 51,
+            "table_sha256": "92ffec07bcfed91d795644f8a67f5f5e2aaec45b37dc28ba472cfd309257ed5c"
+          }
+        },
+        {
+          "relationship": "First table on the exact same PDF page; split_glued_cells must not fire while the second table does.",
+          "candidates": [
+            {
+              "page": 56,
+              "table_index": 0,
+              "bbox": [
+                69.3,
+                71.5,
+                542.4,
+                316.2
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/opus-cache-pages.json",
+              "raw_entry_sha256": "ace4dc211f6d9fb0d0f9354ea605549380dc4f2c76f7e1582081579b6ef93814",
+              "raw_html_sha256": "160a857a999f059f106476e99e45880486f41076e2fdde98f4c9bdaad849a6fa",
+              "postprocess_sha256": "527361c63163d7b7722fe64bcae1283c4e36e9f9c7dc7d021e0789b2f46c3cd8",
+              "raw_shape": {
+                "bytes": 867,
+                "rows": 7,
+                "cells": 33,
+                "rowspans": 0,
+                "colspans": 2,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 1072,
+                "rows": 7,
+                "cells": 33,
+                "rowspans": 0,
+                "colspans": 2,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 4,
+                "horizontal_rule_ink_pt": 321,
+                "nonwhite_filled_rectangles": 0
+              },
+              "changed_passes": [
+                "demote_data_th:pre",
+                "resplit_misjoined_cells",
+                "restyle_cells",
+                "promote_white_text_headers",
+                "debold_th"
+              ],
+              "mirrors_current_get_tables": true
+            }
+          ],
+          "accepted": {
+            "file": "cards/anthropic/claude-opus-5/sections/04-safeguards-harmlessness.md",
+            "table_index": 2,
+            "caption": "4.2.A",
+            "source_pages": [
+              56
+            ],
+            "line_start": 93,
+            "line_end": 101,
+            "table_sha256": "360b353ce521f1899c92a8d23ad17bc54d9358b9cd92cc0a8363fd1886dd59e1"
+          }
+        }
+      ],
+      "history": [
+        {
+          "commit": "597d8c3",
+          "transform": "resplit_misjoined_cells and geometric row rebuild"
+        },
+        {
+          "commit": "e65327b",
+          "transform": "split_glued_cells and restyle_cells"
+        },
+        {
+          "commit": "790db50",
+          "transform": "repair_rotation"
+        }
+      ]
+    },
+    {
+      "id": "risk-overflow-and-links-78-80",
+      "card": "anthropic/risk-report-2026-08",
+      "why_selected": "Linked label cells split at inline-style boundaries create surplus cells on pages 78 and 80; page 79 in the same family is an immediate non-overflow control.",
+      "strata": [
+        "short-rule",
+        "filled-rectangle",
+        "overflow-cell",
+        "rotation",
+        "in-cell-link",
+        "inline-styling"
+      ],
+      "candidates": [
+        {
+          "page": 78,
+          "table_index": 0,
+          "bbox": [
+            69.2,
+            356.1,
+            541.6,
+            585.8
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "b777edd58ccdce37f1f430433a46b5964c9f236a55e58faa5cdaf231ba94f721",
+          "raw_html_sha256": "906a10c1300aa075dc52c9d1d4491bdbb6e0b25072fb1828b04c0bf8cda2dd89",
+          "postprocess_sha256": "512e39657e97a767c0325053a948b448a62af018e6d4bace8f691683c27c7633",
+          "raw_shape": {
+            "bytes": 815,
+            "rows": 6,
+            "cells": 18,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 773,
+            "rows": 6,
+            "cells": 18,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 1,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 1,
+            "horizontal_rule_ink_pt": 78,
+            "nonwhite_filled_rectangles": 6
+          },
+          "changed_passes": [
+            "strip_caption",
+            "repair_rotation",
+            "merge_overflow_cells",
+            "restyle_cells",
+            "inject_links",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 80,
+          "table_index": 0,
+          "bbox": [
+            57.6,
+            71.7,
+            553.7,
+            679.1
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "449c3a4771ac0737a49dda3a0f83b52dcbacfc21a3d5b42f3f61d376a2cc6297",
+          "raw_html_sha256": "1ca8b610fdd5a339fb11223df5b98ae3394aedf7333bb6a7c04f3e8b4b84d26b",
+          "postprocess_sha256": "6956ecc8f7181a7bdb544cdad50cecc3beae207d302c4f5e4f94a2e89a43d674",
+          "raw_shape": {
+            "bytes": 1409,
+            "rows": 10,
+            "cells": 50,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 1596,
+            "rows": 10,
+            "cells": 50,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 2,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 2,
+            "horizontal_rule_ink_pt": 160,
+            "nonwhite_filled_rectangles": 9
+          },
+          "changed_passes": [
+            "demote_data_th:pre",
+            "repair_rotation",
+            "merge_overflow_cells",
+            "restyle_cells",
+            "inject_links",
+            "demote_data_th:post",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        }
+      ],
+      "accepted_outputs": [
+        {
+          "file": "cards/anthropic/risk-report-2026-08/sections/02c-autonomy-misalignment-3.md",
+          "table_index": 0,
+          "caption": "2.23.1.2.A",
+          "source_pages": [
+            78
+          ],
+          "line_start": 232,
+          "line_end": 239,
+          "table_sha256": "fbef328a5b73e607ae4c37bbb1032b45f9d81f85841d2afe81f11467111e71f1"
+        },
+        {
+          "file": "cards/anthropic/risk-report-2026-08/sections/02c-autonomy-misalignment-3.md",
+          "table_index": 1,
+          "caption": "2.23.1.2.B",
+          "source_pages": [
+            79,
+            80
+          ],
+          "line_start": 249,
+          "line_end": 263,
+          "table_sha256": "ce6500acbf5298cbf15abfa5784bead67380e32ddeb5dd65282cae85fb125ea8"
+        }
+      ],
+      "load_bearing_transforms": [
+        "repair_rotation",
+        "merge_overflow_cells",
+        "inject_links",
+        "restyle_cells"
+      ],
+      "nearest_negative_controls": [
+        {
+          "relationship": "Previous fragment of the page-79/80 logical table; merge_overflow_cells must not fire.",
+          "candidates": [
+            {
+              "page": 79,
+              "table_index": 0,
+              "bbox": [
+                58.2,
+                371.3,
+                554.1,
+                673.5
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+              "raw_entry_sha256": "8f7c2569a1088af7afebe2f21c48d44b65c215ba26dbbedcc009d6f4ef532d90",
+              "raw_html_sha256": "a778f7533d50b45e170e70234cf8689665b63e80b78d1b367de43f1d342b56e4",
+              "postprocess_sha256": "3ed3456caaf802688e53df249d7168d20da6128b05090ccc9e31eeb8b1fa0bad",
+              "raw_shape": {
+                "bytes": 766,
+                "rows": 4,
+                "cells": 20,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 787,
+                "rows": 4,
+                "cells": 20,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 0,
+                "horizontal_rule_ink_pt": 0,
+                "nonwhite_filled_rectangles": 4
+              },
+              "changed_passes": [
+                "restyle_cells",
+                "debold_th"
+              ],
+              "mirrors_current_get_tables": true
+            }
+          ]
+        }
+      ],
+      "history": [
+        {
+          "commit": "cd5a21c",
+          "transform": "merge_overflow_cells and table link hardening"
+        },
+        {
+          "commit": "ef9f5fe",
+          "transform": "same-row y-band guard for overflow merge"
+        },
+        {
+          "commit": "3c64da5",
+          "transform": "inject_links"
+        }
+      ]
+    },
+    {
+      "id": "risk-table-3-10a-113-114",
+      "card": "anthropic/risk-report-2026-08",
+      "why_selected": "The densest semantic case: one logical row crosses a page seam and contains real lists, follow-on paragraphs, links, footnotes, bold/italic runs, and a deep-link page marker.",
+      "strata": [
+        "sparse-unruled-body",
+        "multi-page-continuation",
+        "row-coalescence",
+        "real-lists",
+        "paragraphs",
+        "links",
+        "footnotes",
+        "bold",
+        "italics"
+      ],
+      "candidates": [
+        {
+          "page": 113,
+          "table_index": 0,
+          "bbox": [
+            69.6,
+            125.2,
+            557.2,
+            696
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "a432fdb13038d008ddc2942a4cb0d8818da12562d5fb747777312d36908088e4",
+          "raw_html_sha256": "2d05419abe83b7eb528034491cd9f27fdcb1de9637591f251c0585d63482285d",
+          "postprocess_sha256": "1c8fe6bf1d2b01105487efaac977f55012ed3ae91b999ecbba76c735e0cf0e12",
+          "raw_shape": {
+            "bytes": 2869,
+            "rows": 2,
+            "cells": 4,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2926,
+            "rows": 2,
+            "cells": 4,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 1
+          },
+          "changed_passes": [
+            "restyle_cells",
+            "restore_cell_glyphs",
+            "bold_cell_leads",
+            "cell_blank_lines",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 114,
+          "table_index": 0,
+          "bbox": [
+            69.1,
+            71.5,
+            557.5,
+            456.1
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "756c243c9c2ad10c2f2d32899ee18ca3541648183cc71e278de08bd8cbbb51a0",
+          "raw_html_sha256": "868151222b14d7310d5cec92ac8cd1a15e0c353cfa6dda20d7322edd127dbc5a",
+          "postprocess_sha256": "2fe6fa6c4e4f7f032cb292d432f83179768252bc3ed8c9d9f3ed0c46344664aa",
+          "raw_shape": {
+            "bytes": 1861,
+            "rows": 1,
+            "cells": 2,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 1971,
+            "rows": 1,
+            "cells": 2,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 2,
+            "fnrefs": 2,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 2,
+            "horizontal_rule_ink_pt": 54,
+            "nonwhite_filled_rectangles": 0
+          },
+          "changed_passes": [
+            "inject_fnrefs",
+            "inject_links",
+            "cell_blank_lines"
+          ],
+          "mirrors_current_get_tables": true
+        }
+      ],
+      "accepted_outputs": [
+        {
+          "file": "cards/anthropic/risk-report-2026-08/sections/03-automated-rd.md",
+          "table_index": 1,
+          "caption": "3.10.A",
+          "source_pages": [
+            113,
+            114
+          ],
+          "line_start": 286,
+          "line_end": 289,
+          "table_sha256": "f101a46b3642290876b700f748d4a1aaf4bd141774b2d162321b17c29e6b0475"
+        }
+      ],
+      "logical_shadow": {
+        "postprocess_sha256": "ed62a7b79b5746aa0acdc378118af4a1664600656905957ec998f0bad47538f4",
+        "bytes": 4886,
+        "rows": 2,
+        "continuation_row_merge_changed": true,
+        "cell_lists_changed": true,
+        "ul_count": 1,
+        "li_count": 3
+      },
+      "load_bearing_transforms": [
+        "merge_continuation_rows",
+        "cell_lists",
+        "cell_blank_lines",
+        "restore_cell_glyphs",
+        "bold_cell_leads",
+        "inject_fnrefs",
+        "inject_links"
+      ],
+      "nearest_negative_controls": [
+        {
+          "relationship": "A similarly sparse two-page table whose row also coalesces at the seam, but contains no source list; cell_lists must remain a no-op.",
+          "candidates": [
+            {
+              "page": 115,
+              "table_index": 0,
+              "bbox": [
+                68.2,
+                251.4,
+                542.4,
+                690.2
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+              "raw_entry_sha256": "3c20908975b44a59c6301f2169c258ae022f88f2db2f4da6f8d37e00a6b24f45",
+              "raw_html_sha256": "b7b4330763cc0b97abdb60d483035f80c7fc2d4a72e5b182bf0917eb539059ff",
+              "postprocess_sha256": "4815fec8163ea6302af05dcd38198578b9e223c958044acbd10c2f141d5ac945",
+              "raw_shape": {
+                "bytes": 1477,
+                "rows": 5,
+                "cells": 14,
+                "rowspans": 0,
+                "colspans": 1,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 1559,
+                "rows": 5,
+                "cells": 14,
+                "rowspans": 0,
+                "colspans": 1,
+                "links": 2,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 2,
+                "horizontal_rule_ink_pt": 62,
+                "nonwhite_filled_rectangles": 0
+              },
+              "changed_passes": [
+                "demote_data_th:pre",
+                "repair_rotation",
+                "restyle_cells",
+                "inject_links",
+                "promote_white_text_headers",
+                "debold_th",
+                "close_link_punctuation"
+              ],
+              "mirrors_current_get_tables": true
+            },
+            {
+              "page": 116,
+              "table_index": 0,
+              "bbox": [
+                67.9,
+                71.4,
+                542.3,
+                402
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+              "raw_entry_sha256": "aa1cda9e78572d16542430a763b66c7b5d3202d21741a093cc84e0a5289d1451",
+              "raw_html_sha256": "d12c0f9f34311848bc352b411dfb73684211ab15f7bcc8b370e5ff01b9649fce",
+              "postprocess_sha256": "cb96bd61365f68f8970fbfa6c228f49ac38a341d71fb678d2d5ecd83ea4f8838",
+              "raw_shape": {
+                "bytes": 1453,
+                "rows": 3,
+                "cells": 9,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 1345,
+                "rows": 3,
+                "cells": 9,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 0,
+                "horizontal_rule_ink_pt": 0,
+                "nonwhite_filled_rectangles": 0
+              },
+              "changed_passes": [
+                "strip_caption",
+                "restyle_cells"
+              ],
+              "mirrors_current_get_tables": true
+            }
+          ],
+          "accepted": {
+            "file": "cards/anthropic/risk-report-2026-08/sections/04a-chem-bio-1.md",
+            "table_index": 0,
+            "caption": "4.1.A",
+            "source_pages": [
+              115,
+              116
+            ],
+            "line_start": 11,
+            "line_end": 18,
+          "table_sha256": "482c2ec480517929a8a5e1aa75131b877c8cb5b48a48a0e53648925f9a694e0a"
+          },
+          "logical_shadow": {
+            "postprocess_sha256": "1770c0b9f9b32f3893603e9015dc4df31404e3aacd2539efe53f54849cc9fff7",
+            "continuation_row_merge_changed": true,
+            "cell_lists_changed": false
+          }
+        }
+      ],
+      "history": [
+        {
+          "commit": "c3d046c",
+          "transform": "cell paragraph recovery for Table 3.10.A"
+        },
+        {
+          "commit": "2eee70e",
+          "transform": "in-cell italics fallback"
+        },
+        {
+          "commit": "e0d4d34",
+          "transform": "seam marker placement inside merged cell"
+        },
+        {
+          "commit": "6782a98",
+          "transform": "cell_lists"
+        },
+        {
+          "commit": "3c64da5",
+          "transform": "inject_links"
+        }
+      ]
+    },
+    {
+      "id": "risk-ruled-table-6-6a-182-185",
+      "card": "anthropic/risk-report-2026-08",
+      "why_selected": "The strongest ruled-table case and a critical negative: an earlier truncated-cell heuristic leaked text across these dense rows; the current ownership guard must keep extension inert while preserving labels and links.",
+      "strata": [
+        "strongly-ruled",
+        "multi-page-concatenation",
+        "links",
+        "bold-labels",
+        "header-demotion",
+        "negative-truncation-control"
+      ],
+      "candidates": [
+        {
+          "page": 182,
+          "table_index": 0,
+          "bbox": [
+            37.8,
+            71.3,
+            574.4,
+            690.5
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "ceec7bcfc80b92eae237626198f164d7cc4d7cce78342d0728850bfc558b6f59",
+          "raw_html_sha256": "e960024fac83ef903e695032568bc5efb0b48e914bbcbdc29832e1a368d9cebd",
+          "postprocess_sha256": "7c4fed91427a9d97fd84e07718d55c6a2d536a8ed1fd0d1dc3883bce488086ac",
+          "raw_shape": {
+            "bytes": 1851,
+            "rows": 5,
+            "cells": 30,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2146,
+            "rows": 5,
+            "cells": 30,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 5,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 13,
+            "horizontal_rule_ink_pt": 781,
+            "nonwhite_filled_rectangles": 0
+          },
+          "changed_passes": [
+            "repair_rotation",
+            "restyle_cells",
+            "bold_label_cells",
+            "inject_links",
+            "debold_th",
+            "close_link_punctuation"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 183,
+          "table_index": 0,
+          "bbox": [
+            38,
+            71.1,
+            574.5,
+            606.3
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "839e1725adea80aff857cf4789a0dd741f132e4869bf3dc76d779a298e446454",
+          "raw_html_sha256": "e8ffdcc6a2d4955dd690d4e5406528d502e19bb72160953118b855782616452c",
+          "postprocess_sha256": "485ba9f4e62a11be5cfc2ef02d41569db11f4f6ac5fbd22aaf72f15006facac3",
+          "raw_shape": {
+            "bytes": 1792,
+            "rows": 5,
+            "cells": 30,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 2146,
+            "rows": 5,
+            "cells": 30,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 5,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 13,
+            "horizontal_rule_ink_pt": 629,
+            "nonwhite_filled_rectangles": 0
+          },
+          "changed_passes": [
+            "repair_rotation",
+            "restyle_cells",
+            "bold_label_cells",
+            "inject_links",
+            "demote_black_text_th",
+            "close_link_punctuation"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 184,
+          "table_index": 0,
+          "bbox": [
+            37.9,
+            70.9,
+            574.5,
+            567.3
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "2a21d4fbfb968a27978703d7620b4d7a7a2cccc0c8fe92c0e3632f126126e266",
+          "raw_html_sha256": "dd9368700f10f800ae34d0a811c13f999e7d78a30a2d2c2fb0e72adc6c87e302",
+          "postprocess_sha256": "3f3958ea89d71652144c8070f98821fff0084f7b6765a5707bb1ce925d1e5a32",
+          "raw_shape": {
+            "bytes": 1330,
+            "rows": 3,
+            "cells": 18,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 1404,
+            "rows": 3,
+            "cells": 18,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 2,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 2,
+            "horizontal_rule_ink_pt": 130,
+            "nonwhite_filled_rectangles": 0
+          },
+          "changed_passes": [
+            "restyle_cells",
+            "bold_label_cells",
+            "inject_links",
+            "join_hyphen_wraps"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 185,
+          "table_index": 0,
+          "bbox": [
+            38.1,
+            71.1,
+            574.3,
+            351.3
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/risk-cache-pages.json",
+          "raw_entry_sha256": "eb8b4d50e4af660990d845efdf6b732206438b099a24efad0b4a270acddf8b0d",
+          "raw_html_sha256": "dd908c57de7ce2b63e8e2a68549c0e7c1bc2542a5e974f2f5a09a9191e035421",
+          "postprocess_sha256": "cb2b90a0d29c83274d8dc8bd71d55a2fd802a8d5294f482f089e7bde54d50b8e",
+          "raw_shape": {
+            "bytes": 912,
+            "rows": 2,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 926,
+            "rows": 2,
+            "cells": 12,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 0
+          },
+          "changed_passes": [
+            "restyle_cells"
+          ],
+          "mirrors_current_get_tables": true
+        }
+      ],
+      "accepted_outputs": [
+        {
+          "file": "cards/anthropic/risk-report-2026-08/sections/06-appendices.md",
+          "table_index": 0,
+          "caption": "6.6.A",
+          "source_pages": [
+            182,
+            183,
+            184,
+            185
+          ],
+          "line_start": 110,
+          "line_end": 123,
+          "table_sha256": "04635d7a514339cc35841b0491a2457e36d3cec2d3db7a81a88fcdface9da433"
+        }
+      ],
+      "logical_shadow": {
+        "postprocess_sha256": "35623f0e6a3524210085f6ff15de63db7931a710f61149975d036505423e9379",
+        "bytes": 6574,
+        "rows": 15,
+        "continuation_row_merge_changed": false,
+        "cell_lists_changed": false
+      },
+      "load_bearing_transforms": [
+        "repair_rotation",
+        "bold_label_cells",
+        "inject_links",
+        "demote_black_text_th"
+      ],
+      "explicitly_inert_regression_transform": "extend_truncated_cells",
+      "nearest_negative_controls": [
+        {
+          "relationship": "Negative control is this case itself for extension; no page may fire extend_truncated_cells. The nearest positive is the page-309 fragment in the welfare mega-table.",
+          "candidates": [
+            {
+              "page": 309,
+              "table_index": 0,
+              "bbox": [
+                71.1,
+                72.4,
+                545.4,
+                705.5
+              ],
+              "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/fable-cache-pages.json",
+              "raw_entry_sha256": "a0341624dadb545b59d276a598419ecf3d8e3732cc8ea41464a6df0c2b3a041e",
+              "raw_html_sha256": "71e9cc0e9c5a8c429aa540f7f5a0e37b6ee050d55dda86348fe015e69f22cc4d",
+              "postprocess_sha256": "37aef34fc2801cedda77b848ce797e21e9c4a2485dea52791d12342aa462abe5",
+              "raw_shape": {
+                "bytes": 2099,
+                "rows": 3,
+                "cells": 9,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "postprocess_shape": {
+                "bytes": 2151,
+                "rows": 3,
+                "cells": 9,
+                "rowspans": 0,
+                "colspans": 0,
+                "links": 0,
+                "fnrefs": 0,
+                "lists": 0
+              },
+              "drawing_evidence": {
+                "horizontal_rules": 0,
+                "horizontal_rule_ink_pt": 0,
+                "nonwhite_filled_rectangles": 2
+              },
+              "changed_passes": [
+                "extend_truncated_cells",
+                "restyle_cells",
+                "restore_cell_glyphs",
+                "split_cell_paragraphs",
+                "debold_th"
+              ],
+              "mirrors_current_get_tables": true
+            }
+          ]
+        }
+      ],
+      "history": [
+        {
+          "commit": "cd5a21c",
+          "transform": "span-ownership guard after the pages 182-185 cascade failure"
+        },
+        {
+          "commit": "ef9f5fe",
+          "transform": "overflow y-band regression guard"
+        },
+        {
+          "commit": "3c64da5",
+          "transform": "inject_links"
+        }
+      ]
+    }
+  ],
+  "auxiliary_controls": [
+    {
+      "id": "opus-capability-seam-148-149",
+      "purpose": "Cross-page concatenation control: fragments merge, but no logical row should coalesce across the seam.",
+      "candidates": [
+        {
+          "page": 148,
+          "table_index": 0,
+          "bbox": [
+            71.2,
+            185.3,
+            540.3,
+            681.6
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/opus-cache-pages.json",
+          "raw_entry_sha256": "33b434d1411527f78eee49d522c9e0269c55c2d163f0cf71cd0ba6914111f92f",
+          "raw_html_sha256": "f4007a1e23135b70c1e5ca1252c3156875e91b96343b810ab3d23629fe4c26bf",
+          "postprocess_sha256": "1ca5ab90cbf702b13c502b906d1e76515303b4f2c05b9093df65b2f24083b734",
+          "raw_shape": {
+            "bytes": 1693,
+            "rows": 17,
+            "cells": 85,
+            "rowspans": 1,
+            "colspans": 15,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 1876,
+            "rows": 17,
+            "cells": 85,
+            "rowspans": 1,
+            "colspans": 15,
+            "links": 0,
+            "fnrefs": 1,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 1,
+            "horizontal_rule_ink_pt": 246,
+            "nonwhite_filled_rectangles": 4
+          },
+          "changed_passes": [
+            "demote_data_th:pre",
+            "fix_wrapped_header_cells",
+            "restyle_cells",
+            "inject_fnrefs",
+            "normalize_rowspan_subrows:post",
+            "promote_white_text_headers",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        },
+        {
+          "page": 149,
+          "table_index": 0,
+          "bbox": [
+            71.8,
+            71.4,
+            540.2,
+            127.4
+          ],
+          "fixture": "docs/experiments/13-table-candidate-shadow/legacy-evidence/fixtures/opus-cache-pages.json",
+          "raw_entry_sha256": "b2fbc541243eb0af5d1a8ac060a95d9d719a7672c6f0c623b07240a1f520dbd9",
+          "raw_html_sha256": "58c9c5985af027241c462f87d703778cd18afa301b4cabd6a5d7297df8425b4d",
+          "postprocess_sha256": "bae8ca9eec773b53525e2d0181ef3a0a419ec978192ea24b3f2940b9e4fa6827",
+          "raw_shape": {
+            "bytes": 187,
+            "rows": 2,
+            "cells": 10,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "postprocess_shape": {
+            "bytes": 223,
+            "rows": 2,
+            "cells": 10,
+            "rowspans": 0,
+            "colspans": 0,
+            "links": 0,
+            "fnrefs": 0,
+            "lists": 0
+          },
+          "drawing_evidence": {
+            "horizontal_rules": 0,
+            "horizontal_rule_ink_pt": 0,
+            "nonwhite_filled_rectangles": 0
+          },
+          "changed_passes": [
+            "demote_data_th:pre",
+            "restyle_cells",
+            "debold_th"
+          ],
+          "mirrors_current_get_tables": true
+        }
+      ],
+      "accepted": {
+        "file": "cards/anthropic/claude-opus-5/sections/08a-capabilities-1.md",
+        "table_index": 0,
+        "caption": "8.1.A",
+        "source_pages": [
+          148,
+          149
+        ],
+        "line_start": 11,
+        "line_end": 30,
+        "table_sha256": "d06013c2597747212b79b342ea147d80b3ba73f23012e825db5b8f0f5ab91936"
+      },
+      "logical_shadow": {
+        "postprocess_sha256": "52d9384932ec4c1165fccba2eea8433d6f54d7c20be85db67551e37f2abf12f7",
+        "continuation_row_merge_changed": false,
+        "cell_lists_changed": false
+      }
+    }
+  ],
+  "replay": {
+    "docling_regeneration_required": false,
+    "reason": "Every selected raw Docling HTML candidate and bbox is copied into a committed fixture slice.",
+    "exact_per_page_postprocessing": "Replayable when the matching oracle cache is present, or after regenerating PyMuPDF observations from the committed source PDF. No Docling call is required.",
+    "exact_accepted_output": "Canonical table hashes and line locators are independently validated. Later run.py link-target resolution and serialization explain why logical-shadow HTML hashes are not asserted equal to canonical table hashes.",
+    "limitation": "The snapshots preserve only the already-flattened bbox plus HTML because that is all the legacy cache retained. They cannot reconstruct the richer Docling TableData that production discarded."
+  },
+  "observed_dead_or_historical_only_passes": {
+    "current_snapshot_no_change": [
+      "merge_fragment_rows",
+      "dedup_cascaded_cells"
+    ],
+    "corpus_wide_candidates_checked": {
+      "anthropic/claude-fable-5": 40,
+      "anthropic/claude-opus-5": 27,
+      "anthropic/risk-report-2026-08": 31
+    },
+    "interpretation": "These passes have historical motivations but no selected or corpus-wide current cached candidate changed under them. They must not be blindly ported; recover a historical raw counterexample or delete/retire them after broader proof."
+  }
+}
