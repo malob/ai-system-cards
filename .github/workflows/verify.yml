@@ -11,6 +11,22 @@ permissions:
   contents: read
 
 jobs:
+  card-inventory:
+    name: Discover site cards
+    runs-on: ubuntu-latest
+    outputs:
+      cards: ${{ steps.inventory.outputs.cards }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Test card inventory
+        run: node --test site/scripts/card-inventory.test.mjs
+      - name: Build verifier matrix
+        id: inventory
+        run: printf 'cards=%s\n' "$(node site/scripts/card-matrix.mjs)" >> "$GITHUB_OUTPUT"
+
   verifier-unit-tests:
     name: Verifier unit tests
     runs-on: ubuntu-latest
@@ -29,14 +45,12 @@ jobs:
 
   card-gates:
     name: Gate (${{ matrix.card }})
+    needs: card-inventory
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        card:
-          - anthropic/claude-fable-5
-          - anthropic/claude-opus-5
-          - anthropic/risk-report-2026-08
+        card: ${{ fromJSON(needs.card-inventory.outputs.cards) }}
     env:
       CARD: ${{ matrix.card }}
     steps:
@@ -68,6 +82,8 @@ jobs:
           cache: pnpm
           cache-dependency-path: site/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
+        working-directory: site
+      - run: pnpm test
         working-directory: site
       - run: pnpm build
         working-directory: site

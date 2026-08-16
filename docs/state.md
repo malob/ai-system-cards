@@ -3,13 +3,13 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-15 (maintainer hardening and settled architecture review,
-local and not pushed). The three document editions are live; the published corpus
-commit is `6fed282`. The current local series makes verification and deployment fail
-closed, commits three-card mutation floors, and reconciles the operational docs. D51
-and [architecture-roadmap.md](architecture-roadmap.md) record the separately
-authorized next hardening program. Per D13, none of this maintenance series has been
-pushed.
+**Last updated:** 2026-08-15 (maintainer hardening plus D51 phases 0–1, local and not
+pushed). The three document editions are live; the published corpus commit is
+`6fed282`. The current local series makes verification and deployment fail closed,
+commits three-card mutation floors, reconciles the operational docs, records the
+settled architecture review, dynamically gates every site-discoverable card, and
+repairs portable table-footnote semantics. Per D13, none of this maintenance series
+has been pushed.
 
 ## Status
 
@@ -54,7 +54,7 @@ described below are newer local work and are not deployed.
 
 No generated `sections/*.md` changed during this maintenance work.
 
-## Architecture review settled; implementation authorized (D51)
+## Architecture review settled; phases 0–1 complete locally (D51/D52)
 
 An adversarial two-model review found that the current representation is not the
 first thing to replace. The three-card generator is deterministic and genuinely
@@ -64,15 +64,23 @@ not preserve table-only footnote semantics correctly. No source-content defect w
 demonstrated in canonical sections or the main HTML. Nineteen table-zone T1 residuals
 of at least three tokens remain source-unadjudicated.
 
-The owner authorized the implementation phase on 2026-08-15. The settled order starts
-with dynamic coverage of every site-discoverable card and the portable-footnote
-repair, then L2 destination verification and the remaining authority loops. Broader
-representation work is evidence-gated: keep Markdown canonical for prose, keep
-PyMuPDF as the primary versioned observer, treat Docling as a pinned table candidate,
-and introduce no whole-document IR unless narrower bootstrap/projection/provenance
-experiments fail. Full phases, experiments, and kill criteria are in
-[architecture-roadmap.md](architecture-roadmap.md). Implementation results and
-validation evidence are not yet recorded in this snapshot.
+The owner authorized the implementation phase on 2026-08-15. Phases 0 and 1 are now
+complete locally:
+
+- **Every publishable card is gated.** Production and CI consume one dependency-free
+  card inventory; a synthetic fourth card automatically enters the parallel full-gate
+  matrix, while no-meta/nonexistent directories do not. The inventory cannot be empty.
+- **Portable table footnotes work under the supported GFM projection.** Full-card and
+  section exports turn raw-table refs into live anchors, retain definitions, preserve
+  later numbering, and give repeated refs distinct backlinks. The main HTML path is
+  byte-identical and canonical sections did not change.
+
+Next is phase 2, L2 destination verification, followed by the remaining authority
+loops. Broader representation work stays evidence-gated: keep Markdown canonical for
+prose, keep PyMuPDF as the primary versioned observer, treat Docling as a pinned table
+candidate, and introduce no whole-document IR unless narrower bootstrap/projection/
+provenance experiments fail. Full phases, experiments, and kill criteria are in
+[architecture-roadmap.md](architecture-roadmap.md).
 
 ## Validation evidence for this series
 
@@ -85,6 +93,12 @@ validation evidence are not yet recorded in this snapshot.
   pnpm 11), 599 Pagefind records and all routes generated.
 - Workflows: all parse, `actionlint` clean, dependency chain independently reviewed;
   deployment cannot reach the Pages job after a failed reusable verifier job.
+- D51 phases 0–1: shared inventory tests 2/2; portable export tests 3/3; synthetic
+  repeated backlinks and actual full-card/section fixtures pass; all built exports
+  have 0 unresolved raw-table footnote refs; site production build remains 599
+  Pagefind records. The workflow's dynamic matrix and new test step pass local YAML +
+  `actionlint` validation. All 15 verifier tests, three full gates, and three seam
+  audits remain at the certified baselines above.
 
 ## Durable process invariants
 
@@ -108,11 +122,10 @@ validation evidence are not yet recorded in this snapshot.
 - **Review/push decision for the local maintenance series.** No technical blocker is
   known, but the new CI can only be proven on GitHub-hosted runners after a push. Do
   not push without the owner's explicit instruction.
-- **Architecture hardening program:** execute the ordered work in
-  [architecture-roadmap.md](architecture-roadmap.md), beginning with release-inventory
-  coverage and portable table-footnote semantics. A different vendor/PDF producer is
-  still the decisive later test of cross-family rule scope, not the immediate first
-  task.
+- **Architecture hardening program:** continue the ordered work in
+  [architecture-roadmap.md](architecture-roadmap.md) at phase 2 (L2 destination
+  verification). A different vendor/PDF producer is still the decisive later test of
+  cross-family rule scope, not the immediate next task.
 - **Nonblocking policy question:** whether the web edition should annotate an
   internal destination that is already unresolvable in the source PDF remains open
   in `spec-rules.md`.

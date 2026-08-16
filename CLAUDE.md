@@ -128,16 +128,19 @@ Build and serve the site:
 
 ```sh
 cd site && pnpm install && pnpm dev   # local dev (search needs a production build)
+pnpm test                             # export semantics + shared card inventory
 pnpm build && pnpm preview            # dist/ + Pagefind index
 ```
 
-`.github/workflows/verify.yml` runs the unit suite, all three full gates + seam
-audits, and a clean site build directly on pull requests and non-main branch pushes.
-On `main`, the Pages workflow calls that same workflow and will not build/deploy
-until it passes. Mutation sensitivity is a separate relevant-change push/pull-request,
-weekly, and manual workflow because it is intentionally slower. Pushing to `main`
-deploys to GitHub Pages via Actions — never push without explicit owner request
-(D13).
+`.github/workflows/verify.yml` derives its card matrix from the same repository
+inventory the site publishes, then runs the unit suite, every discovered card's full
+gate + seam audit, the export/inventory tests, and a clean site build directly on pull
+requests and non-main branch pushes. A synthetic-fourth-card test prevents site/CI
+inventory drift. On `main`, the Pages workflow calls that same workflow and will not
+build/deploy until it passes. Mutation sensitivity is a separate baseline-aware
+relevant-change push/pull-request, weekly, and manual workflow because it is
+intentionally slower. Pushing to `main` deploys to GitHub Pages via Actions — never
+push without explicit owner request (D13).
 
 ## Adding (or generalizing for) a document
 
@@ -146,7 +149,9 @@ The site picks up any new system card or safety report under
 documents is:
 
 1. Create `cards/<vendor>/<slug>/` with `source.pdf` and a `meta.yaml` (copy the
-   existing field shape; `source_pages` is read by the pipeline).
+   existing field shape; `source_pages` is read by the pipeline). That `meta.yaml`
+   makes the card discoverable by both the site and the full-gate CI matrix; never add
+   a separate workflow literal.
 2. **Census the signals** (pymupdf probe over all pages: text colors, fill colors,
    fonts, per-page counts) and author `style-manifest.yaml`: every recurring hex gets a
    role from the fixed vocabulary (D39) — verify ambiguous ones against page renders,

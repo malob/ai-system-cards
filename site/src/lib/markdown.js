@@ -430,7 +430,7 @@ export async function renderCard(markdown, opts = {}) {
   // it the id) is the unique backref target — a display:none target makes
   // the ↩ backlink dead
   const html = String(file).replace(
-    /<span class="fnref-shim">[\s\S]*?<\/span>/g,
+    /<span class="fnref-shim"(?:\s[^>]*)?>[\s\S]*?<\/span>/g,
     (seg) => seg.replace(/\s?id="user-content-fnref[^"]*"/g, ''),
   );
   return { html, toc };

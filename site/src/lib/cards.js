@@ -1,22 +1,16 @@
 // Load system cards from the repo's cards/ directory: metadata, stitched
 // markdown (with site-specific preprocessing), and per-card asset URLs.
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 import YAML from 'yaml';
-
-const CARDS_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', 'cards');
+import { CARDS_ROOT, listCardDirectories } from './card-inventory.js';
 
 export function listCards() {
-  const cards = [];
-  for (const vendor of readdirSync(CARDS_ROOT)) {
-    const vendorDir = join(CARDS_ROOT, vendor);
-    for (const slug of readdirSync(vendorDir)) {
-      const metaPath = join(vendorDir, slug, 'meta.yaml');
-      if (!existsSync(metaPath)) continue;
-      cards.push({ vendor, slug, meta: YAML.parse(readFileSync(metaPath, 'utf8')) });
-    }
-  }
+  const cards = listCardDirectories().map(({ vendor, slug, metaPath }) => ({
+    vendor,
+    slug,
+    meta: YAML.parse(readFileSync(metaPath, 'utf8')),
+  }));
   cards.sort((a, b) => String(b.meta.release_date).localeCompare(String(a.meta.release_date)));
   return cards;
 }
@@ -33,6 +27,100 @@ export function stitchedMarkdown(vendor, slug) {
     .sort()
     .map((f) => readFileSync(join(dir, f), 'utf8').trim())
     .join('\n\n');
+}
+
+// GFM does not parse footnote references inside a raw-HTML table. Bridge those
+// references to real HTML links and place parseable shim references immediately
+// after the table so the definitions survive Markdown rendering.
+//
+// The site mode preserves the shipped HTML behavior: only a table-only
+// footnote's first ref owns the backlink target, and one shim keeps its
+// definition alive. Portable exports need a little more: every table occurrence
+// gets a hidden shim, so repeated refs receive distinct backlinks and the
+// renderer numbers later prose footnotes as if it had parsed the table refs at
+// their document positions.
+function linkRawTableFootnotes(md, { portable = false } = {}) {
+  const lines = md.split('\n');
+  const isTableLine = (line) => /<t[dh][ >]/.test(line);
+  const proseRefs = new Set();
+  const tableRefs = [];
+  const refsByLine = new Map();
+  const refCounts = new Map();
+  const displayNumbers = new Map();
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const tableLine = isTableLine(lines[i]);
+    for (const match of lines[i].matchAll(/\[\^(\d+)\](?!:)/g)) {
+      const id = match[1];
+      if (!displayNumbers.has(id)) displayNumbers.set(id, displayNumbers.size + 1);
+      const refIndex = (refCounts.get(id) ?? 0) + 1;
+      refCounts.set(id, refIndex);
+      if (tableLine) {
+        const ref = { id, line: i, refIndex };
+        tableRefs.push(ref);
+        if (!refsByLine.has(i)) refsByLine.set(i, []);
+        refsByLine.get(i).push(ref);
+      } else {
+        proseRefs.add(id);
+      }
+    }
+  }
+
+  const tableEnd = (start) => {
+    let at = start;
+    while (at < lines.length - 1 && !lines[at].includes('</table>')) at += 1;
+    return at;
+  };
+  const shims = new Map(); // closing-table line -> ids to parse after it
+  const firstTableRef = new Map();
+  for (const ref of tableRefs) {
+    if (!firstTableRef.has(ref.id)) firstTableRef.set(ref.id, ref);
+    if (!portable && (proseRefs.has(ref.id) || firstTableRef.get(ref.id) !== ref)) continue;
+    const at = tableEnd(ref.line);
+    if (!shims.has(at)) shims.set(at, []);
+    shims.get(at).push(ref.id);
+  }
+
+  const claimedIds = new Set();
+  return lines
+    .map((sourceLine, i) => {
+      let line = sourceLine;
+      if (isTableLine(line)) {
+        const refs = refsByLine.get(i) ?? [];
+        let cursor = 0;
+        // Consume an enclosing literal <sup> pair so the replacement does not
+        // nest one superscript inside another.
+        line = line.replace(
+          /(?:<sup>)?\[\^(\d+)\](?:<\/sup>)?/g,
+          (_, id) => {
+            const ref = refs[cursor++];
+            if (portable) {
+              const suffix = ref.refIndex === 1 ? '' : `-${ref.refIndex}`;
+              const label = displayNumbers.get(id);
+              return (
+                `<sup class="fn-html"><a id="user-content-fnref-${id}${suffix}" ` +
+                `href="#user-content-fn-${id}">${label}</a></sup>`
+              );
+            }
+            const first = firstTableRef.get(id)?.line === i && !proseRefs.has(id)
+              && !claimedIds.has(id);
+            if (first) claimedIds.add(id);
+            const anchorId = first ? ` id="user-content-fnref-${id}"` : '';
+            return (
+              `<sup class="fn-html"><a${anchorId} ` +
+              `href="#user-content-fn-${id}">${id}</a></sup>`
+            );
+          },
+        );
+      }
+      const ids = shims.get(i);
+      if (!ids) return line;
+      const orderedIds = portable ? ids : [...ids].sort((a, b) => a - b);
+      const refs = orderedIds.map((id) => `[^${id}]`).join('');
+      const hidden = portable ? ' hidden' : '';
+      return `${line}\n\n<span class="fnref-shim"${hidden}>${refs}</span>\n`;
+    })
+    .join('\n');
 }
 
 // Markdown prepared for the HTML pipeline: page markers become PDF deep-link
@@ -62,63 +150,7 @@ export function siteMarkdown(vendor, slug, assetBase) {
   md = md.replace(/<!--\s*p\.(\d+)\s*-->/g, (_, n) => pagemark(n));
   md = md.replace(/<!--[\s\S]*?-->/g, '');
   md = md.replace(/\]\(assets\/figures\//g, `](${assetBase}/figures/`);
-  // A footnote whose only refs sit inside raw-HTML table cells is invisible
-  // to remark-gfm: its def is dropped (body lost, dead fn-html links) and
-  // every later footnote renumbers away from the PDF. A hidden shim ref
-  // right after the table keeps the def alive, and because the shim sits at
-  // the table's document position, the whole list numbers 1:1 with the PDF.
-  const lines = md.split('\n');
-  const isTableLine = (l) => /<t[dh][ >]/.test(l);
-  const proseRefs = new Set();
-  const tableRefs = new Map(); // id -> line index of first in-table ref
-  lines.forEach((line, i) => {
-    for (const m of line.matchAll(/\[\^(\d+)\](?!:)/g)) {
-      if (isTableLine(line)) {
-        if (!tableRefs.has(m[1])) tableRefs.set(m[1], i);
-      } else {
-        proseRefs.add(m[1]);
-      }
-    }
-  });
-  const shims = new Map(); // line index -> ids needing a shim there
-  const claimedIds = new Set(); // fn ids whose visible table ref got the anchor
-  for (const [id, i] of tableRefs) {
-    if (proseRefs.has(id)) continue;
-    // anchor AFTER the table's closing line: tables serialize one <tr> per
-    // line, so the ref's own line is mid-table and a shim there would sit
-    // between rows, inside the raw HTML
-    let at = i;
-    while (at < lines.length - 1 && !lines[at].includes('</table>')) at++;
-    if (!shims.has(at)) shims.set(at, []);
-    shims.get(at).push(id);
-  }
-  md = lines
-    .map((line, i) => {
-      if (isTableLine(line))
-        // consume an enclosing literal <sup> pair (tables serialize refs as
-        // '<sup>[^N]</sup>') so the shim doesn't nest sup inside sup.
-        // The FIRST table ref of a shim-kept footnote carries the GFM ref
-        // id: the backref ↩ otherwise targets the display:none shim, which
-        // browsers refuse to scroll to (owner-reported dead backlinks on
-        // table-only footnotes). The shim's duplicate ids are stripped
-        // after render.
-        line = line.replace(
-          /(?:<sup>)?\[\^(\d+)\](?:<\/sup>)?/g,
-          (_, n) => {
-            const first = tableRefs.get(n) === i && !proseRefs.has(n)
-              && !claimedIds.has(n);
-            if (first) claimedIds.add(n);
-            const id = first ? ` id="user-content-fnref-${n}"` : '';
-            return `<sup class="fn-html"><a${id} href="#user-content-fn-${n}">${n}</a></sup>`;
-          },
-        );
-      const ids = shims.get(i);
-      if (!ids) return line;
-      const refs = ids.sort((a, b) => a - b).map((n) => `[^${n}]`).join('');
-      return `${line}\n\n<span class="fnref-shim">${refs}</span>\n`;
-    })
-    .join('\n');
-  return md;
+  return linkRawTableFootnotes(md);
 }
 
 // Top-level section groups: consecutive section files form one group until a
@@ -149,14 +181,15 @@ export function sectionGroups(vendor, slug) {
   return groups.map(({ parts, ...g }) => ({ ...g, md: parts.join('\n\n') }));
 }
 
-function portableBody(md, absoluteAssetBase) {
-  return md
+export function portableBody(md, absoluteAssetBase) {
+  const body = md
     .replace(/<!--\s*source: [^>]*-->\n?/g, '')
     .replace(/\]\(assets\/figures\//g, `](${absoluteAssetBase}/figures/`)
     // the document's own leading H1 + date line, when a card carries one —
     // the export header below supplies both
     .replace(/^(\s*(<!--[^>]*-->\s*)*)# .*\n+(?:\*?[A-Z][a-z]+ \d{1,2}, \d{4}\*?\n+)?/, '$1')
     .trim();
+  return linkRawTableFootnotes(body, { portable: true });
 }
 
 // word-wrap for raw-md readability (blockquote soft-wraps don't affect

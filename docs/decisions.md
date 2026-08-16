@@ -874,3 +874,37 @@ rendered consequence, check redundant semantic channels, distinguish a blind spo
 from a present defect, and attempt to refute itself. Rules require positive and
 nearest-negative fixtures, blocking mutation evidence, visible fire counts, and
 full-corpus replay before their scope grows.
+
+## D52 — site discovery is gate discovery; portable table footnotes are a tested projection (2026-08-15)
+
+The owner authorized the first D51 hardening package. Its two leading findings are
+closed locally without changing canonical `sections/*.md` or the main HTML edition.
+
+**Release inventory (F34).** The site and fast verifier workflow no longer maintain
+separate card lists. Dependency-free `site/src/lib/card-inventory.js` is the shared
+repository discovery primitive: production `listCards()` consumes it, and
+`site/scripts/card-matrix.mjs` emits the Actions JSON matrix. The workflow refuses an
+empty inventory and fans every discovered `cards/<vendor>/<slug>/meta.yaml` out to one
+full gate + seam job. A test creates a synthetic fourth card and proves it appears
+automatically while no-meta/nonexistent directories do not. Adding another workflow
+literal is specifically rejected: it would repair one instance while preserving the
+authority split. The slower mutation workflow remains baseline-explicit because a new
+card has no accepted mutation floor until onboarding establishes one.
+
+**Portable table footnotes (F36).** GFM does not parse `[^N]` inside raw-HTML table
+cells. The existing HTML projection already bridged those references; portable
+full-card and section exports now use the same table scan in portable mode. Visible
+table references become explicit anchors, and standard-hidden GFM shim references
+immediately after the table keep definitions, document-order numbering, and distinct
+repeated-reference backlinks alive under the supported renderer. The HTML mode is
+behavior-preserving. Tests cover a synthetic repeated table-only reference followed
+by prose, an actual Fable full-card + standalone-section export, and every current
+card/section export; all built exports contain no unresolved `<sup>[^N]</sup>` table
+reference.
+
+The reusable verifier workflow runs these site tests before its production build.
+Local evidence: inventory tests 2/2, export tests 3/3, production build 599 Pagefind
+records, Action syntax/YAML clean, all 15 verifier unit tests pass, all three full
+gates remain at their certified counts, and all seam audits remain zero. This closes
+D51 phases 0 and 1 locally. Hosted dynamic-matrix execution remains unproven until an
+owner-authorized push; D13 is unchanged.
