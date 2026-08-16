@@ -3,7 +3,7 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-16 (D58 table-candidate shadow milestone recorded). The
+**Last updated:** 2026-08-16 (D59 typed word-alignment shadow result recorded). The
 phase-3 certification-docs baseline `5b752ae` was deployed; its final docs-only
 fast-release / Pages run
 [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)
@@ -116,13 +116,25 @@ counterexamples rather than code to port. It remains completely isolated from
   lower cell. No genuine real source-negative occurred in the hard set, and its PDF
   geometry remains conditioned on Docling's candidate bbox/grid, so it is not
   independent verification authority.
-- The four experiment suites pass 42/42 tests, and the separate legacy validator
-  passes 32 locators, 13 canonical tables, and five logical shadows.
+- A source-bound typed word-to-cell slice covers 10 cases on nine pages, 790 PDF
+  words, and 274 reviewed cell labels. One all-or-nothing assignment primitive made
+  43 changes across four tables, preserved three natural controls, and failed closed
+  on three coupled or surface-sensitive cases. Two-run extraction is deterministic
+  across all 10 cases; the evidence and alignment artifacts are bound by exact hashes.
+- The important boundary is compositional: isolated ownership errors fit one local
+  typed primitive, but Opus p.56 table 1 still couples adapter-gap assignment with an
+  observed-empty topology claim. Adding an ordered pass would hide that distinction;
+  any production model needs a typed origin/projection overlay first. Raw Fable p.95
+  blocks, while topology-first p.95 is a verified no-op.
+- The five main experiment suites pass 54/54 tests, the independent source-evidence
+  suite passes 5/5, and the separate legacy validator passes 32 locators, 13 canonical
+  tables, and five logical shadows. Independent review scored the slice 10/12 and
+  approved retaining the shadow milestone while rejecting production adoption.
 
-This is not a production-model decision. The 4,169 lines of experiment Python are
-mostly defensive provenance discovery and validation; production must use an
-explicit locked artifact bundle and smaller adapter, and adoption must demonstrate
-net complexity reduction rather than move the legacy complexity.
+This is not a production-model decision. The 6,618 lines of experiment Python are
+mostly defensive provenance discovery, extraction, and validation; production must
+use an explicit locked artifact bundle and smaller adapter, and adoption must
+demonstrate net complexity reduction rather than move the legacy complexity.
 
 ## Mutation evidence
 
@@ -193,9 +205,11 @@ and major-blocking independently.
   passed. The phase-4 alignment remains advisory and made no canonical-content or
   published-output change. Its observers are exercised by release tests, but their
   structural findings do not yet gate cards.
-- Experiment 13's 42 local unit tests and separate legacy validator pass. Those tests
-  validate only the isolated evidence/model/replay/topology work; no full release,
-  hosted, deployed, or output-improvement evidence is claimed for that experiment.
+- Experiment 13's 54 main local unit tests, five independent source-evidence tests,
+  and separate legacy validator pass. Those tests validate only the isolated
+  evidence/model/replay/topology/alignment work; no full
+  release, hosted, deployed, production, or card/site/output change is claimed for
+  that experiment.
 
 ## Durable process invariants
 
@@ -214,10 +228,11 @@ and major-blocking independently.
 
 ## Open / next
 
-- **Immediate table shadow:** obtain genuine source-negative controls, test a typed
-  PyMuPDF word-to-cell alignment slice, replay a representative hard set in a clean
-  locked environment and on a second platform, then compare complexity and provenance
-  with the legacy path before any production migration.
+- **Immediate table shadow:** design and test a typed origin/projection overlay for
+  coupled topology and assignment evidence without adding another ordered repair
+  pass; obtain the still-missing natural negative/outer-edge controls; replay the
+  representative hard set in a clean locked environment and on a second platform;
+  then compare net complexity and provenance with the legacy path before migration.
 - **Paused phase 4:** retain the structural artifact and eleven replay candidates as
   advisory evidence. Resume integration only when its expected information gain
   outranks the table experiment; the original blocking criteria remain unchanged.
@@ -236,14 +251,15 @@ and major-blocking independently.
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D58),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D59),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). The immediate task is the
 shadow table extraction/grid program in
-[Experiment 13](experiments/13-table-candidate-shadow/README.md), beginning with
-genuine source-negative controls, typed word-to-cell alignment, and locked portable
-replay—not production adoption or a whole-document IR migration. For a changed corpus,
+[Experiment 13](experiments/13-table-candidate-shadow/README.md). Typed word-to-cell
+alignment has now repaired isolated ownership errors in shadow; next resolve the
+typed origin/projection boundary, natural controls, and locked portable replay—not
+production adoption or a whole-document IR migration. For a changed corpus,
 experiment 11 is the
 regression-sweep template: changed pages plus renderer controls, the PDF as sole
 authority, and prompts that ask rather than assert the expected answer.

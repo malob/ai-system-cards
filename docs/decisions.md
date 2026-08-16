@@ -1177,3 +1177,54 @@ implementation to port wholesale. Production should use an explicit locked
 package/model artifact bundle and a smaller adapter. Manual setup that records real
 document-specific judgment remains acceptable; separating section-plan input from
 generated Markdown is useful cleanup but secondary to the measured table work.
+
+## D59 — keep typed source-word assignment in shadow; model origin before composition (2026-08-16)
+
+Experiment 13's [word-alignment slice](experiments/13-table-candidate-shadow/word-alignment/README.md)
+tests exact PyMuPDF words and grid geometry against the clean typed table candidate
+without consulting accepted output as truth or importing the legacy HTML pass order.
+The source-bound evidence covers 10 cases on nine pages, 790 PDF words, and 274
+human-reviewed cell labels. Two fresh offline extraction runs produced identical
+bytes for all 10 cases; all five source-evidence tests and all 12 alignment/replay
+tests pass. The final 448,460-byte evidence artifact
+SHA-256 is `22e2fcb220cd29f03ee1b299c22e05f34759919812a13990a6e40682b20365cc`;
+the 138,187-byte alignment artifact SHA-256 is
+`c317522f77d91408bc71353695ad6afa490301dd39e7a3cf4d05643704f12e16`.
+
+**Evidence.** One all-or-nothing source-word assignment primitive makes 43
+cell-text changes across four tables: Opus p.52 (11), Opus p.53 (15), Opus p.56
+table 0 (2), and Risk p.78 (15). Risk pp.79-80 and Fable p.20 are natural
+byte-identical no-ops. Opus p.56 table 1 fails closed because three `88% (± 5%)`
+words land in an adapter gap; Fable p.94 fails closed because styled superscript text
+and the candidate have different token inventories; raw Fable p.95 fails closed on
+two atomic-cell ambiguities. After the already-proven topology transform merges the
+two p.95 spans, alignment is a clean no-op and its reviewed associations exactly
+match. Across the raw cases the 274 labels establish compatible reviewed ranges, not
+exact reproduction of every spanning range.
+
+The model therefore demonstrates a local simplification, not a complete pipeline.
+Isolated word-ownership errors fit one typed, source-bound primitive. Coupled topology
+and assignment defects do not reduce to pass order: even if a future resolver clears
+p.56 table 1's adapter-gap payload, the lower `Model` cell remains Docling-observed
+rather than adapter-generated, so the current topology rule still refuses the merge.
+That distinction belongs in a typed origin/projection overlay preserving source
+observations, candidate claims, and derived ownership separately. Do not encode the
+missing semantics as another ordered repair pass.
+
+**Decision.** Independent review scored the slice 10/12: 2/2 each for independence,
+conservation/fail-closed behavior, natural controls, and provenance/determinism; 1/2
+each for locality/order-independence and proportionality/complexity. Its verdict is
+**commit the shadow milestone; do not adopt or migrate production**. Retain the
+primitive in shadow and do not adopt a production typed grid yet. The model is 652
+physical lines (580 nonblank), with roughly 252 physical lines in its two
+decision-bearing functions: smaller than the roughly 660-line legacy
+alignment core as decision logic, but not yet a demonstrated net complexity win once
+the typed/provenance envelope and unresolved composition are counted. Next obtain the
+missing natural missing-rule-but-keep-separate and outer-edge controls, test the typed
+origin/projection boundary, establish clean locked second-platform replay, regenerate
+all three cards in a later migration proof, and compare net deletions and provenance
+against the legacy path.
+
+This is shadow-generator research, not production or verifier authority. It changes
+no generator, canonical section, card, site, deployed output, or release behavior.
+No hosted run, production adoption, or output improvement is claimed.

@@ -34,9 +34,12 @@ document-instance patches (D38–D48). This proves one pipeline only within Anth
 Google-Docs-export family. Other vendors' PDFs (different producers and visual
 grammars) remain untested. Phase-4 structural-authority integration is paused. The
 immediate task is the shadow table extraction/grid program in
-`docs/experiments/13-table-candidate-shadow/`: add genuine source-negative controls,
-test typed word-to-cell alignment, establish locked cross-platform replay, and compare
-net complexity before any production adoption. A different producer, clean
+`docs/experiments/13-table-candidate-shadow/`: typed word-to-cell alignment now repairs
+isolated ownership errors with one source-bound primitive, but coupled topology and
+assignment defects expose a missing typed origin/projection overlay. Design and test
+that boundary without adding another ordered repair pass; add the still-missing
+natural controls, establish locked cross-platform replay, and compare net complexity
+before any production adoption. A different producer, clean
 bootstrap, every projection, and computed-browser visibility remain later
 architectural tests, not implied current capability.
 
@@ -192,8 +195,12 @@ follow-up completed the unchanged floor. Hosted fast-release / Pages run
 [31929997079](https://github.com/malob/ai-system-cards/actions/runs/31929997079)
 also succeeded for `3d7b851`, so phase 3 is deployed and certified. Canonical sections
 and the byte-identical built site did not change. D58 pauses further phase-4
-integration and pulls the isolated table-candidate experiment forward; that newer
-experiment has no hosted, deployed, production, card-content, or site-output effect.
+integration and pulls the isolated table-candidate experiment forward. D59 records
+its typed source-word alignment slice: 10 cases on nine pages, 790 PDF words and 274
+reviewed cell labels; 43 changes across four tables, three natural no-ops, and three
+fail-closed cases under deterministic two-run replay and 17/17 new tests. It remains
+shadow research with no hosted, deployed, production, card-content, or site-output
+effect.
 Classes use independent digest-derived RNG streams, so adding one cannot resample the
 others:
 

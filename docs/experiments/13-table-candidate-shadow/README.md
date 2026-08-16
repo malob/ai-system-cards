@@ -5,10 +5,12 @@
 **Continue the table work in shadow; do not adopt this model in production yet.**
 
 Experiment 13 establishes that the project can retain a rich, deterministic Docling
-table proposal instead of flattening it immediately to HTML, and that a small typed
-topology transform can make source-justified changes. It does not establish that the
-typed representation simplifies the complete production repair pipeline, works
-portably, or should become canonical.
+table proposal instead of flattening it immediately to HTML, that a small typed
+topology transform can make source-justified changes, and that one typed source-word
+assignment primitive can repair isolated cell-ownership errors across two document
+families. It does not establish that the typed representation simplifies the complete
+production repair pipeline, composes correctly across coupled topology and assignment
+defects, works portably, or should become canonical.
 
 Everything under this directory is experiment-only. Nothing in `pipeline/`,
 `cards/`, or `site/` imports it. The experiment changed no generated section,
@@ -19,7 +21,7 @@ canonical card content, site output, or release behavior.
 Can the table pipeline approach its largest repair boundary with fresh structure
 without discarding what the legacy implementation has learned?
 
-The experiment deliberately separates four questions:
+The experiment deliberately separates five questions:
 
 | Track | Question | Result |
 | --- | --- | --- |
@@ -27,6 +29,7 @@ The experiment deliberately separates four questions:
 | [Clean model](clean-model/README.md) | Can a small project-owned type preserve Docling's public grid and explicit provenance without copying the legacy HTML architecture? | Yes in shadow: an immutable, deterministic `TableCandidate` retains cells, spans, roles, geometry, tool fields, and caller-supplied source/tool identity. |
 | [Reproducibility](reproducibility/README.md) | Can the rich Docling proposal and its effective runtime be bound and replayed deterministically? | Yes for two offline runs of Fable source p.20 in one warm local environment after deterministic mini-PDF creation. Portability is unproved. |
 | [Topology slice](topology-slice/README.md) | Does one narrow typed repair become source-grounded and locally reviewable? | Yes for three merges on a six-page hard set, with one conservative false negative and no genuine real source-negative in that set. |
+| [Word alignment](word-alignment/README.md) | Can exact source words be projected to typed cells without inheriting Docling text ownership or the legacy HTML pass order? | Yes for isolated ownership errors: one source-bound rule made 43 cell-text changes across four tables and preserved three natural controls. Three coupled or surface-sensitive cases failed closed, so production composition remains unresolved. |
 
 This is a clean-model experiment, not a clean-slate evidence policy. The new
 representation was designed without translating the legacy repair functions; the
@@ -115,9 +118,40 @@ Accepted HTML was used as a migration baseline, never as source truth. Some acce
 headers retain explicit empty cells where the PDF supports a semantic span; that
 difference still requires renderer and migration review.
 
+### Typed source-word assignment repairs isolated ownership, not composition
+
+The [word-alignment slice](word-alignment/README.md) projects every positive-area
+PyMuPDF word/grid overlap into the typed candidate while ignoring Docling cell text
+and cell boxes as assignment authority. Its source-bound evidence covers 10 cases on
+nine pages, 790 PDF words, and 274 reviewed cell labels. Two fresh offline extraction
+runs produced identical bytes for all 10 cases; the five source-evidence tests and 12
+alignment/replay tests pass.
+
+One all-or-nothing primitive made 43 source-justified cell-text changes: 11 on Opus
+p.52, 15 on Opus p.53, two on Opus p.56 table 0, and 15 on Risk p.78. Risk pp.79-80
+and Fable p.20 are natural byte-identical no-ops. The rule fails closed on Opus p.56
+table 1 because three words land in an adapter gap, on Fable p.94 because the source
+and proposal tokenize styled superscript text differently, and on raw Fable p.95
+because two words cross atomic cell boundaries. Applying the already-proven topology
+merges first makes p.95 a no-op and exactly matches its reviewed associations; that
+confirms the topology result rather than creating another alignment repair.
+
+The coupled cases are the important architecture result. A single typed assignment
+primitive localizes isolated ownership errors, but p.56 table 1 cannot be completed by
+merely ordering topology and alignment passes: even after its adapter-gap payload is
+resolved, the lower `Model` cell remains Docling-observed rather than
+adapter-generated, so the topology rule still refuses it. A production design would
+need a typed origin/projection overlay that preserves source observations, candidate
+claims, and derived ownership separately. Do not add another ordered repair pass to
+encode that missing distinction.
+
+This remains shadow-generator research. Accepted output was neither source truth nor
+label authority, and no alignment result is an independent verifier expectation.
+
 ## Proportionality
 
-The experiment scripts total **4,169 Python lines**. Much of that is defensive
+The experiment scripts now total **6,618 Python lines**, including 2,449 in the
+word-alignment evidence, extractor, model, and tests. Much of that is defensive
 provenance discovery, artifact hashing, runtime introspection, replay validation, and
 fail-closed test scaffolding. That is acceptable for a bounded architecture probe; it
 is not a production implementation to port wholesale.
@@ -141,10 +175,13 @@ extraction/grid shadow work forward, but keep it isolated from production until 
 questions are answered:
 
 1. **Genuine source-negative controls:** find natural tables where the same visual
-   preconditions nearly hold but the header must not merge.
-2. **Typed word-to-cell alignment:** test whether exact PyMuPDF words and geometry can
-   repair the demonstrated p.52, p.56, and p.78 assignments without importing the
-   legacy HTML pass order.
+   preconditions nearly hold but the header must not merge. The alignment slice adds
+   natural no-ops but still found no natural missing-rule-but-keep-separate or
+   outer-edge word control.
+2. **Typed origin/projection composition:** represent raw source words, candidate
+   ownership, topology changes, and derived cell projection without another ordered
+   pass; explain the p.56-table-1 observed-empty boundary and keep p.94's styled
+   superscript outside assignment repair.
 3. **Locked portable replay:** rerun a representative hard set in a clean locked
    environment and on a second platform with explicit CPU/device/thread policy.
 4. **Complexity and provenance comparison:** implement enough topology and alignment
@@ -158,7 +195,8 @@ conversion experiment.
 
 ## Validation
 
-The four suites contain **15 + 17 + 2 + 8 = 42 unit tests**:
+The five main suites contain **15 + 17 + 2 + 8 + 12 = 54 unit tests**. The independent
+source-evidence suite adds **5**, so **59 test methods pass overall**:
 
 ```sh
 uv run --python 3.12 python -m unittest discover \
@@ -171,13 +209,29 @@ PYTHONDONTWRITEBYTECODE=1 \
 PYTHONPATH=docs/experiments/13-table-candidate-shadow/clean-model \
 uv run --python 3.12 python -m unittest discover \
   -s docs/experiments/13-table-candidate-shadow/topology-slice -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 \
+uv run --offline --python 3.12 --with 'pymupdf==1.28.2' \
+  python -m unittest discover \
+  -s docs/experiments/13-table-candidate-shadow/word-alignment/evidence -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 \
+PYTHONPATH=docs/experiments/13-table-candidate-shadow/clean-model:docs/experiments/13-table-candidate-shadow/topology-slice:docs/experiments/13-table-candidate-shadow/word-alignment \
+uv run --python 3.12 python -m unittest discover \
+  -s docs/experiments/13-table-candidate-shadow/word-alignment -p 'test_*.py' -v
 
 uv run --python 3.12 python \
   docs/experiments/13-table-candidate-shadow/legacy-evidence/validate_manifest.py
 ```
 
-Result on 2026-08-16: all 42 unit tests passed. The separate legacy validator passed
-with `32 locators, 13 canonical tables, 5 logical shadows`.
+Result on 2026-08-16: all 54 main experiment unit tests and all five independent
+source-evidence tests passed. The separate legacy validator passed with `32 locators,
+13 canonical tables, 5 logical shadows`.
+
+Independent review scored the slice **10/12**: full credit for independence,
+conservation/fail-closed behavior, natural controls, and provenance/determinism; one
+point each for locality/order-independence and proportionality/complexity. Its verdict
+was **commit the shadow milestone; do not adopt or migrate production**. The reduced
+scores reflect the unresolved coupled composition and lack of a demonstrated net
+legacy deletion, not a correctness blocker for retaining the experiment.
 
 No hosted run, full release graph, production generation, canonical output
 comparison, or deployed-site validation is claimed by this experiment.
@@ -195,3 +249,5 @@ These are SHA-256 values of the checked-in file bytes at this milestone:
 | `reproducibility/probe-result-p20.json` | `b079d332849235bced5f5f46dfc0b5f311babc9a577255d8fab2dcffefca3e1c` |
 | `reproducibility/probe-result-summary.json` | `4b47f66a5be1638fe8fab2d0f5137bd41931e15e23c4d09c37e905fccbbbe8d1` |
 | `topology-slice/artifacts/hard-set.json` | `329128c4c388d40cd687aabca61c0127e8167a3be511419494f15e5a3eaedfc6` |
+| `word-alignment/evidence/source-word-evidence.json` | `22e2fcb220cd29f03ee1b299c22e05f34759919812a13990a6e40682b20365cc` |
+| `word-alignment/artifacts/alignment-cases.json` | `c317522f77d91408bc71353695ad6afa490301dd39e7a3cf4d05643704f12e16` |

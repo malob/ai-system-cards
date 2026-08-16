@@ -6,7 +6,8 @@ The immutable review record is under
 decision. Implementation and validation status live in [`state.md`](state.md). D55
 records phase 3's local implementation evidence; D56 records its hosted certification
 and deployment; D57 records phase 4's advisory structural-authority spike; D58 records
-the table-candidate shadow milestone and sequencing change.
+the table-candidate shadow milestone and sequencing change; D59 records the typed
+source-word assignment result and the remaining origin/projection boundary.
 
 ## Bottom line
 
@@ -95,7 +96,7 @@ by a green phase-3 gate.
 | Source | The archived PDF is the sole content authority. |
 | Observation | Keep PyMuPDF as the primary born-digital observer. Record source hash, tool/schema version, and raw spans, links, geometry, drawings, and image facts. |
 | Interpretation | Store derived roles—body, heading, footnote, table, figure, exclusions—separately enough that they can be mutated and checked without changing raw observations. |
-| Table candidate | Treat pinned Docling output as a proposal. [Experiment 13](experiments/13-table-candidate-shadow/README.md) retains replayable legacy evidence and demonstrates a normalized shadow candidate with cells, spans, geometry, and provenance; it is not production authority. |
+| Table candidate | Treat pinned Docling output as a proposal. [Experiment 13](experiments/13-table-candidate-shadow/README.md) retains replayable legacy evidence and demonstrates a normalized shadow candidate with cells, spans, geometry, provenance, and source-word projection. Isolated ownership repairs fit one typed primitive; coupled topology/assignment evidence still needs an explicit typed origin/projection overlay. It is not production authority. |
 | Accepted prose | Keep tracked Markdown canonical for prose. |
 | Published projections | Treat HTML, `card.md`, per-section Markdown, `llms.txt`, anchors, search, and social output as separate claims that need projection-specific checks. L2 plus D55's P2/F3/V1 lane now bind links, source pages/figures, copied source bytes, event order, and authored raw-HTML visibility through the production HTML renderer; it is not yet an all-projection or computed-layout proof. |
 | Verification | Build expectations independently where correctness is load-bearing. Detector disagreement widens scrutiny; it never grants immunity from a general invariant. |
@@ -116,7 +117,8 @@ The review explicitly rejected these as present work:
 
 These remain distinct evidence packages, not permission to claim later production
 work complete. D58 pauses further phase-4 integration and pulls bounded phase-5/7
-table shadow work forward because it now has higher discriminating value. A later
+table shadow work forward because it now has higher discriminating value; D59 keeps
+that work in shadow after the first source-word assignment result. A later
 refactor must not be used to delay a demonstrated smaller correctness repair.
 
 | Phase | Work | Exit evidence |
@@ -177,8 +179,19 @@ Docling proposal and complete runtime envelope replayed deterministically twice 
 Fable p.20 in one warm local environment; a clean typed model and six-page topology
 slice remain shadow-only. The slice made three source-supported merges, conservatively
 missed one because of upstream word assignment, found no genuine real source-negative,
-and is conditioned on Docling's table candidate. This does not complete pinning, cold
-or cross-platform replay, independent verifier topology, or the production-grid
+and is conditioned on Docling's table candidate.
+
+The follow-up source-word slice covers 10 cases on nine pages, 790 PDF words, and 274
+reviewed cell labels. One source-bound, all-or-nothing primitive made 43 cell-text
+changes across four tables and preserved three natural controls. It blocked on three
+coupled or surface-sensitive cases. Raw Fable p.95 blocks on atomic topology; after
+the existing topology transform it is a clean no-op. Opus p.56 table 1 cannot be
+completed by merely choosing the opposite pass order because its adapter-gap payload
+and observed-empty topology claim have different origins. This identifies a missing
+typed origin/projection overlay, not a reason to add another ordered repair pass.
+
+This does not complete pinning, cold or cross-platform replay, natural negative
+coverage, composition semantics, independent verifier topology, or the production-grid
 decision. Phase 9 still owns all-projection/bootstrap, computed-browser-visibility,
 and different-producer evidence.
 
@@ -233,12 +246,24 @@ negative from a misassigned `API,` cell. There was no genuine real source-negati
 the set, and the source geometry remains candidate-conditioned. The result earns
 continued shadow work, not production adoption.
 
-**Next discrimination.** Add natural source-negative controls, test typed
-word-to-cell alignment, establish a clean locked cross-platform replay, and compare
-total complexity, transform ordering, and provenance with the legacy pipeline. The
-4,169-line experiment is defensive evidence scaffolding, not code to port wholesale;
-production should use a locked artifact bundle and smaller adapter. Kill adoption if
-the grid merely relocates complexity.
+**Second generator-shadow result.** Typed source-word assignment is a useful local
+primitive. Across 10 source-bound cases it makes 43 changes on four tables, preserves
+three natural no-ops, and fails closed on three cases; two fresh extraction runs are
+byte-identical, five source-evidence tests pass, and 12/12 alignment tests pass. Its
+790 words and 274 reviewed cell labels are evidence of assignment compatibility, not
+accepted-output authority or an independent verifier. Raw p.95 blocks while
+topology-first p.95 becomes a no-op. The
+p.56-table-1 adapter-gap and observed-empty interaction shows that coupled defects
+need a typed origin/projection overlay; another ordered pass would encode the missing
+semantics as control flow. Independent review scored the slice 10/12 and approved the
+shadow milestone while explicitly rejecting production adoption or migration.
+
+**Next discrimination.** Add the still-missing natural missing-rule-but-keep-separate
+and outer-edge controls, design the origin/projection overlay, establish a clean
+locked cross-platform replay, and compare total complexity, composition semantics,
+and provenance with the legacy pipeline. The experiment remains defensive evidence
+scaffolding, not code to port wholesale; production should use a locked artifact
+bundle and smaller adapter. Kill adoption if the grid merely relocates complexity.
 
 ### X4 — different-producer probe
 
