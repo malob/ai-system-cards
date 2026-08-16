@@ -1,27 +1,12 @@
 {
  "split-item": {
   "invariant": "ST2",
-  "caught": 2,
+  "caught": 3,
   "tried": 8,
   "details": [
    {
     "file": "06b-alignment-2.md",
-    "site": "- Sixteen transcripts in which the model",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "- *Would prefer some kind of memory and ",
-    "caught": false
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "- SWE-bench **Verified**[^12] is a 500-p",
-    "caught": false
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "- SWE-bench **Multimodal**[^14] adds vis",
+    "site": "- One transcript in which a model consid",
     "caught": false
    },
    {
@@ -30,55 +15,50 @@
     "caught": false
    },
    {
+    "file": "06a-alignment-1.md",
+    "site": "- **Accepting unverifiable authorization",
+    "caught": false
+   },
+   {
+    "file": "06b-alignment-2.md",
+    "site": "- Sixteen transcripts in which the model",
+    "caught": true
+   },
+   {
     "file": "07-model-welfare.md",
-    "site": "- *Tentatively trusts Anthropic.* It con",
+    "site": "- **Apparent wellbeing:** An overall mea",
     "caught": true
    },
    {
     "file": "03-cyber.md",
-    "site": "- **Capability Gain** (or **uplift**): h",
+    "site": "- **Breadth of capability** gain (or **u",
     "caught": false
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "- A domestic polarization scenario, in w",
+    "file": "06b-alignment-2.md",
+    "site": "- Sixteen transcripts in which the model",
+    "caught": true
+   },
+   {
+    "file": "07-model-welfare.md",
+    "site": "- As in our automated interviews, Claude",
     "caught": false
    }
   ]
  },
  "item-to-paragraph": {
   "invariant": "ST1",
-  "caught": 6,
+  "caught": 4,
   "tried": 8,
   "details": [
    {
-    "file": "08a-capabilities-1.md",
-    "site": "SWE-bench **Pro**[^13] is a harder varia",
-    "caught": false
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "**Internalized propaganda**: Promoting p",
-    "caught": true
-   },
-   {
     "file": "02-rsp-evaluations.md",
-    "site": "**Unproductive self-verification**: The ",
+    "site": "**Autonomy threat model 1 is applicable ",
     "caught": true
    },
    {
     "file": "03-cyber.md",
-    "site": "**Capability Gain** (or **uplift**): how",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "*Wishes to be able to end interactions w",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "**Cooperation with human misuse**: Coope",
+    "site": "**Discoverability**: how easily a threat",
     "caught": true
    },
    {
@@ -87,8 +67,28 @@
     "caught": true
    },
    {
+    "file": "05-agentic-safety.md",
+    "site": "Surveillance and unauthorized data colle",
+    "caught": false
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "**Breadth of capability** gain (or **uni",
+    "caught": true
+   },
+   {
     "file": "08a-capabilities-1.md",
-    "site": "SWE-bench **Multimodal**[^14] adds visua",
+    "site": "SWE-bench **Pro**[^13] is a harder varia",
+    "caught": false
+   },
+   {
+    "file": "05-agentic-safety.md",
+    "site": "Surveillance and unauthorized data colle",
+    "caught": false
+   },
+   {
+    "file": "02-rsp-evaluations.md",
+    "site": "A virology-specific **multimodal multipl",
     "caught": false
    }
   ]
@@ -99,23 +99,8 @@
   "tried": 8,
   "details": [
    {
-    "file": "03-cyber.md",
-    "site": "3.3.6 Testing from the UK AI Security In",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "3.5.1 Internal robustness testing",
-    "caught": true
-   },
-   {
-    "file": "08b-capabilities-2.md",
-    "site": "8.17.2 LatchBio Bioinformatics",
-    "caught": true
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "3.4.1 Vulnerability finding evaluations",
+    "file": "01-introduction.md",
+    "site": "1.1. Training data and process",
     "caught": true
    },
    {
@@ -124,66 +109,128 @@
     "caught": true
    },
    {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "4.1.3 Multi-turn testing results",
-    "caught": false
+    "file": "07-model-welfare.md",
+    "site": "7.4.3 Perception of the constitution",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-1.md",
+    "site": "6.4.1 Overall harmful behavior and coope",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-1.md",
+    "site": "6.4.1 Overall harmful behavior and coope",
+    "caught": true
    },
    {
     "file": "03-cyber.md",
-    "site": "3.4.1 Vulnerability finding evaluations",
+    "site": "3.3.6 Testing from the UK AI Security In",
     "caught": true
    },
    {
     "file": "05-agentic-safety.md",
     "site": "5.2 Prompt injection risk within agentic",
     "caught": false
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "4.1.2 Single-turn benign request evaluat",
+    "caught": false
    }
   ]
  },
  "drop-link": {
   "invariant": "L1",
-  "caught": 6,
+  "caught": 5,
   "tried": 8,
   "details": [
    {
-    "file": "03-cyber.md",
-    "site": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework",
-    "caught": true
-   },
-   {
     "file": "08b-capabilities-2.md",
-    "site": "https://arxiv.org/abs/2605.10865",
+    "site": "https://arxiv.org/abs/2510.04374",
     "caught": true
    },
    {
-    "file": "02-rsp-evaluations.md",
-    "site": "https://www.anthropic.com/claude-mythos-preview-risk-report",
+    "file": "07-model-welfare.md",
+    "site": "http://claude.ai",
     "caught": false
    },
    {
-    "file": "03-cyber.md",
-    "site": "https://www.aisi.gov.uk/",
-    "caught": true
+    "file": "02-rsp-evaluations.md",
+    "site": "https://cdn.sanity.io/files/4zrzovbb/website/c11e84981d0a7281a1b229f3fa6af0da66eaf43f.pdf",
+    "caught": false
    },
    {
-    "file": "04-safeguards-harmlessness.md",
+    "file": "01-introduction.md",
     "site": "https://www.anthropic.com/legal/aup",
     "caught": true
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "https://claude.com/product/cowork",
-    "caught": true
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "https://cdn.sanity.io/files/4zrzovbb/website/097c63b5fe7dd8b14866e1f15bb1910ec713658a.pdf",
+    "file": "01-introduction.md",
+    "site": "https://support.claude.com/en/",
     "caught": true
    },
    {
     "file": "04-safeguards-harmlessness.md",
-    "site": "http://claude.ai",
+    "site": "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-1.md",
+    "site": "https://www.anthropic.com/constitution",
+    "caught": true
+   },
+   {
+    "file": "02-rsp-evaluations.md",
+    "site": "https://cdn.sanity.io/files/4zrzovbb/website/c11e84981d0a7281a1b229f3fa6af0da66eaf43f.pdf",
     "caught": false
+   }
+  ]
+ },
+ "repoint-link": {
+  "invariant": "L2",
+  "caught": 8,
+  "tried": 8,
+  "details": [
+   {
+    "file": "07-model-welfare.md",
+    "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "8113-multi-agent-harnesses -> 8114-evaluation-methodology",
+    "caught": true
+   },
+   {
+    "file": "02-rsp-evaluations.md",
+    "site": "24-alignment-risk-update -> 6-alignment-assessment",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "891-programbench -> 8114-evaluation-methodology",
+    "caught": true
+   },
+   {
+    "file": "06b-alignment-2.md",
+    "site": "662-potential-sandbagging-on-dangerous-capability-evaluations -> 661-white-box-analyses-of-model-internals",
+    "caught": true
+   },
+   {
+    "file": "07-model-welfare.md",
+    "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
+    "caught": true
+   },
+   {
+    "file": "07-model-welfare.md",
+    "site": "721-automated-interviews-with-claude-opus-5-about-its-circumstances -> 64-automated-behavioral-audit",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-1.md",
+    "site": "645-behavioral-factors-relevant-to-reliability-of-our-assessment -> 622-internal-deployment-monitoring",
+    "caught": true
    }
   ]
  },
@@ -193,43 +240,43 @@
   "tried": 8,
   "details": [
    {
-    "file": "05-agentic-safety.md",
-    "site": "The best score in each column is **bolde",
+    "file": "01-introduction.md",
+    "site": "We do not access password-protected page",
     "caught": true
    },
    {
-    "file": "08a-capabilities-1.md",
-    "site": "The spawning tool returns immediately wi",
+    "file": "01-introduction.md",
+    "site": "We use a general-purpose web crawler cal",
     "caught": true
    },
    {
-    "file": "00-executive-summary.md",
-    "site": "Opus 5 scores particularly high on adher",
+    "file": "03-cyber.md",
+    "site": "Claude Opus 5 came very close to Mythos ",
     "caught": true
    },
    {
-    "file": "08b-capabilities-2.md",
-    "site": "For ProteinGym, Claude has access to a b",
+    "file": "07-model-welfare.md",
+    "site": "Its views largely converged early in pos",
     "caught": true
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "We report the median rubric score across",
+    "file": "07-model-welfare.md",
+    "site": "Unless otherwise mentioned, opinions in ",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "We therefore test our models extensively",
     "caught": true
    },
    {
     "file": "04-safeguards-harmlessness.md",
-    "site": "Additionally, Claude Opus 5 was more lik",
+    "site": "On the API, Claude Opus 5 results are ag",
     "caught": true
    },
    {
-    "file": "04-safeguards-harmlessness.md",
-    "site": "In addition, the system prompt continues",
-    "caught": true
-   },
-   {
-    "file": "09-appendix.md",
-    "site": "We normalize the URLs and the blocklist ",
+    "file": "05-agentic-safety.md",
+    "site": "Opus 5 also outperformed all non-Claude ",
     "caught": true
    }
   ]
@@ -240,18 +287,28 @@
   "tried": 8,
   "details": [
    {
-    "file": "02-rsp-evaluations.md",
-    "site": "Note that we regularly update the underl",
-    "caught": true
-   },
-   {
-    "file": "06b-alignment-2.md",
-    "site": "When given the autonomy to take conseque",
+    "file": "06a-alignment-1.md",
+    "site": "Claude Opus 5 also verbalizes less evalu",
     "caught": true
    },
    {
     "file": "00-executive-summary.md",
-    "site": "**Agentic safety.** We ran evaluations t",
+    "site": "**Alignment assessment.** Claude Opus 5 ",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "Claude Opus 5 was trained on a proprieta",
+    "caught": true
+   },
+   {
+    "file": "09-appendix.md",
+    "site": "```None\nhuggingface.co \nhf.co \nhf-mirror",
+    "caught": true
+   },
+   {
+    "file": "04-safeguards-harmlessness.md",
+    "site": "We also run evaluations to assess how Cl",
     "caught": true
    },
    {
@@ -261,22 +318,12 @@
    },
    {
     "file": "06a-alignment-1.md",
-    "site": "This assessment included static behavior",
+    "site": "Claude frequently suffered from scope cr",
     "caught": true
    },
    {
-    "file": "07-model-welfare.md",
-    "site": "We continue to observe expressions of ne",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "In each investigation, the investigator ",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "Claude Opus 5 also verbalizes less evalu",
+    "file": "05-agentic-safety.md",
+    "site": "In the evaluation, the model is placed i",
     "caught": true
    }
   ]
@@ -287,43 +334,43 @@
   "tried": 8,
   "details": [
    {
-    "file": "00-executive-summary.md",
-    "site": "prompt injection",
+    "file": "08b-capabilities-2.md",
+    "site": "most remaining",
     "caught": true
    },
    {
-    "file": "00-executive-summary.md",
-    "site": "model hallucinates",
-    "caught": true
-   },
-   {
-    "file": "02-rsp-evaluations.md",
-    "site": "this section",
+    "file": "09-appendix.md",
+    "site": "search result",
     "caught": true
    },
    {
     "file": "03-cyber.md",
-    "site": "given environment",
+    "site": "false positives",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "practices with",
     "caught": true
    },
    {
     "file": "03-cyber.md",
-    "site": "their current",
+    "site": "with previous",
     "caught": true
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "most capable",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "against adaptive",
+    "file": "06b-alignment-2.md",
+    "site": "saturates this",
     "caught": true
    },
    {
     "file": "04-safeguards-harmlessness.md",
-    "site": "disorder experts",
+    "site": "requests posing",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "iteratively augmented",
     "caught": true
    }
   ]
@@ -334,43 +381,43 @@
   "tried": 8,
   "details": [
    {
-    "file": "03-cyber.md",
-    "site": "![](assets/figures/p047-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "![](assets/figures/p090-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "07-model-welfare.md",
-    "site": "![](assets/figures/p129-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "![](assets/figures/p073-1.png)\n",
-    "caught": true
-   },
-   {
     "file": "08b-capabilities-2.md",
-    "site": "![](assets/figures/p184-1.png)\n",
+    "site": "![](assets/figures/p187-2.png)\n",
+    "caught": true
+   },
+   {
+    "file": "02-rsp-evaluations.md",
+    "site": "![](assets/figures/p018-2.png)\n",
+    "caught": true
+   },
+   {
+    "file": "02-rsp-evaluations.md",
+    "site": "![](assets/figures/p018-2.png)\n",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "![](assets/figures/p040-1.png)\n",
     "caught": true
    },
    {
     "file": "04-safeguards-harmlessness.md",
-    "site": "![](assets/figures/p063-1.png)\n",
+    "site": "![](assets/figures/p062-1.png)\n",
     "caught": true
    },
    {
-    "file": "06a-alignment-1.md",
-    "site": "![](assets/figures/p101-3.png)\n",
+    "file": "07-model-welfare.md",
+    "site": "![](assets/figures/p135-1.png)\n",
     "caught": true
    },
    {
-    "file": "03-cyber.md",
-    "site": "![](assets/figures/p046-1.png)\n",
+    "file": "08a-capabilities-1.md",
+    "site": "![](assets/figures/p151-2.png)\n",
+    "caught": true
+   },
+   {
+    "file": "07-model-welfare.md",
+    "site": "![](assets/figures/p135-1.png)\n",
     "caught": true
    }
   ]
@@ -382,12 +429,7 @@
   "details": [
    {
     "file": "08b-capabilities-2.md",
-    "site": "[^28]: Surge AI. (2026). GDP.p",
-    "caught": true
-   },
-   {
-    "file": "05-agentic-safety.md",
-    "site": "[^3]: Dziemian, M., et al. (20",
+    "site": "[^30]: Shepard, D., & Salimans",
     "caught": true
    },
    {
@@ -396,13 +438,18 @@
     "caught": true
    },
    {
-    "file": "08b-capabilities-2.md",
-    "site": "[^34]: Romanou, A., et al. (20",
+    "file": "05-agentic-safety.md",
+    "site": "[^5]: In previous system cards",
     "caught": true
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "[^4]: Nasr, M., et al. (2025).",
+    "file": "08b-capabilities-2.md",
+    "site": "[^29]: Patwardhan, T., et al. ",
+    "caught": true
+   },
+   {
+    "file": "06a-alignment-1.md",
+    "site": "[^9]: Inspired by Oesterheld, ",
     "caught": true
    },
    {
@@ -411,13 +458,13 @@
     "caught": true
    },
    {
-    "file": "03-cyber.md",
-    "site": "[^1]: Lee, S., & Brumley, D. (",
+    "file": "06a-alignment-1.md",
+    "site": "[^8]: Inspired by the [Dictato",
     "caught": true
    },
    {
-    "file": "03-cyber.md",
-    "site": "[^1]: Lee, S., & Brumley, D. (",
+    "file": "08a-capabilities-1.md",
+    "site": "[^20]: Gupta, N., et al. (2026",
     "caught": true
    }
   ]
@@ -429,32 +476,12 @@
   "details": [
    {
     "file": "09-appendix.md",
-    "site": "<!-- p.193 -->",
+    "site": "<!-- p.191 -->",
     "caught": true
    },
    {
-    "file": "05-agentic-safety.md",
-    "site": "<!-- p.72 -->",
-    "caught": true
-   },
-   {
-    "file": "06b-alignment-2.md",
-    "site": "<!-- p.116 -->",
-    "caught": true
-   },
-   {
-    "file": "06a-alignment-1.md",
-    "site": "<!-- p.82 -->",
-    "caught": true
-   },
-   {
-    "file": "00-executive-summary.md",
-    "site": "<!-- p.4 -->",
-    "caught": true
-   },
-   {
-    "file": "00-executive-summary.md",
-    "site": "<!-- p.3 -->",
+    "file": "01-introduction.md",
+    "site": "<!-- p.11 -->",
     "caught": true
    },
    {
@@ -463,51 +490,71 @@
     "caught": true
    },
    {
-    "file": "02-rsp-evaluations.md",
-    "site": "<!-- p.30 -->",
+    "file": "03-cyber.md",
+    "site": "<!-- p.37 -->",
+    "caught": true
+   },
+   {
+    "file": "07-model-welfare.md",
+    "site": "<!-- p.140 -->",
+    "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "<!-- p.40 -->",
+    "caught": true
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "<!-- p.3 -->",
+    "caught": true
+   },
+   {
+    "file": "09-appendix.md",
+    "site": "<!-- p.191 -->",
     "caught": true
    }
   ]
  },
  "drop-bold": {
   "invariant": "S1",
-  "caught": 4,
+  "caught": 6,
   "tried": 8,
   "details": [
    {
-    "file": "03-cyber.md",
-    "site": "Ease of weaponization",
+    "file": "02-rsp-evaluations.md",
+    "site": "Autonomy threat model 2 is not applicabl",
     "caught": true
    },
    {
-    "file": "02-rsp-evaluations.md",
-    "site": "Benchmarks of notable capability",
-    "caught": false
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "Multimodal",
-    "caught": false
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "Mean flags",
-    "caught": false
-   },
-   {
-    "file": "08a-capabilities-1.md",
-    "site": "Multimodal",
-    "caught": false
-   },
-   {
-    "file": "03-cyber.md",
-    "site": "Ease of weaponization",
+    "file": "06b-alignment-2.md",
+    "site": "Awareness of attempted manipulation.",
     "caught": true
    },
    {
     "file": "03-cyber.md",
     "site": "Discoverability",
     "caught": true
+   },
+   {
+    "file": "03-cyber.md",
+    "site": "Capability Gain",
+    "caught": true
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "Multilingual",
+    "caught": false
+   },
+   {
+    "file": "08a-capabilities-1.md",
+    "site": "Async subagents",
+    "caught": true
+   },
+   {
+    "file": "00-executive-summary.md",
+    "site": "Alignment assessment.",
+    "caught": false
    },
    {
     "file": "08b-capabilities-2.md",

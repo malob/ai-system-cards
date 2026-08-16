@@ -908,3 +908,60 @@ records, Action syntax/YAML clean, all 15 verifier unit tests pass, all three fu
 gates remain at their certified counts, and all seam audits remain zero. This closes
 D51 phases 0 and 1 locally. Hosted dynamic-matrix execution remains unproven until an
 owner-authorized push; D13 is unchanged.
+
+## D53 — L2 binds source destinations to canonical and final-DOM targets (2026-08-15)
+
+D52's hosted uncertainty is closed. Commit `685cba6` reached `origin/main`, and Pages
+run [31917054001](https://github.com/malob/ai-system-cards/actions/runs/31917054001)
+completed the shared inventory, all three parallel full-gate + seam jobs, verifier
+tests, site tests/build, and deployment for that exact commit. That run proves phases
+0 and 1 on hosted runners; the L2 work below is newer local work and is neither pushed
+nor deployed.
+
+**Source-first destination authority.** L2 reopens and hashes the archived
+`source.pdf`, reads `/GoTo` annotations directly, accepts source heading identities
+from the PDF outline plus printed heading geometry, and pairs source and canonical
+link occurrences without consulting their destinations. It does not import generator
+resolution or slug code. Each tracked `l2-links.json` binds its zero-flag expectation
+set to the exact source SHA-256, aggregate canonical-sections SHA-256, and every
+section SHA-256. The fast gate regenerates and byte-compares that artifact; the site
+loader independently recomputes the hashes and fails closed on missing, stale,
+wrong-card, nonzero-flag, or incomplete artifacts.
+
+**R2 is settled.** A broken source named destination remains an L1
+`source-defect-unresolvable-dest` minor whether or not recovery is possible. The web
+edition may recover it only when the printed anchor uniquely identifies one accepted
+source heading, and L2 verifies that identity. Otherwise the anchor is plain text;
+`href="#"` is never an acceptable destination. Whether to add a visible *sic*-style
+annotation remains a separate, nonblocking D17 presentation question.
+
+**Projection authority.** The site parses serialized article HTML with HTML5
+tree-building rather than inspecting the Markdown/HAST producer tree. It checks every
+canonical authored fragment link in body and relocated-footnote lanes, every
+source-derived expected target, and the complete rendered-page fragment graph for
+missing, inserted, reordered, repointed, empty, malformed, dead, ambiguous, or
+duplicate targets/ids. A synthetic wrong-but-existing target proves that the
+source-derived expectation catches what existence-only link audits cannot.
+
+**Evidence.** All three source-first gates have zero L2 majors: Fable has 108 authored
+destinations, Opus 54, and the Risk Report 121 logical / 123 authored occurrences.
+All 285 authored occurrences have source expectations. Twenty-seven known historical
+wrong-target fixtures replay 27/27 as occurrence-tied L2 majors. Site tests pass 11/11;
+the production-page audit observes 1,716 ids and 1,506 fragment links with zero
+findings. The Python verifier suite passes 38/38. R2 raises Fable's truthful L1 minor
+baseline from 31 to 34 and intentionally changes one p.99 canonical line by rendering
+the publisher-broken `[#]` link as plain text. Opus and Risk Report sections, the
+other full-gate residuals, and all three zero-seam results are unchanged.
+
+`mutate.py` now includes `repoint-link`: it preserves a valid internal link and points
+it to a different existing heading, so an existence-only audit stays green while L2
+must block. It scores 8/8 on every card. The regenerated seed-5, eight-trial floors are
+Fable 95/104 (91.3%, 13 classes), Opus 80/96 (83.3%, 12 classes), and Risk Report
+77/96 (80.2%, 12 classes). This is a one-time baseline shift to a separate,
+digest-derived RNG stream per class; adding a future class can no longer resample
+unrelated classes. Class identity, invariant, sample count, and non-decreasing caught
+count remain CI-enforced.
+
+This implements D51 phase 2 locally. Phase 3 is next; the L2 source hash does not by
+itself complete extraction/cache provenance (phase 5), and the internal-link DOM lane
+does not complete the all-projection/bootstrap work in phase 9.

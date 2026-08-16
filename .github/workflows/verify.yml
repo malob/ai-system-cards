@@ -65,6 +65,9 @@ jobs:
         run: >-
           uv run --python 3.12 --with 'pymupdf==1.28.2'
           python pipeline/verifier/calibrate.py WORKTREE
+          --l2-json /tmp/l2-links.json
+      - name: Confirm tracked L2 expectations are fresh
+        run: cmp /tmp/l2-links.json "cards/${CARD}/l2-links.json"
       - name: Audit table seams
         run: python3 pipeline/audit_table_seams.py
 

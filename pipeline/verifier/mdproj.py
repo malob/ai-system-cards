@@ -94,10 +94,21 @@ def _table_to_text(m: re.Match, sec: "Section", page: int) -> str:
     t = m.group(0)
 
     # links injected into cells (tables._inject_links) — collect before the
-    # tag strip erases them; L1 counts these like body links
-    for am in re.finditer(r'<a href="([^"]+)"[^>]*>(.*?)</a>', t, re.S):
-        atext = re.sub(r"<[^>]+>", " ", am.group(2))
-        sec.links.append((_strip_sentinels(atext), am.group(1), page))
+    # tag strip erases them; L1 counts these like body links.  A raw table can
+    # span several source pages and carries page sentinels inside its HTML, so
+    # attribute each anchor to the most recent sentinel rather than assigning
+    # every link to the page on which the table began.
+    link_page = page
+    table_event = re.compile(
+        r"XQPAGEQX(?P<page>\d+)XQX|"
+        r'<a href="(?P<href>[^"]+)"[^>]*>(?P<body>.*?)</a>', re.S
+    )
+    for am in table_event.finditer(t):
+        if am.group("page"):
+            link_page = int(am.group("page"))
+            continue
+        atext = re.sub(r"<[^>]+>", " ", am.group("body"))
+        sec.links.append((_strip_sentinels(atext), am.group("href"), link_page))
 
     def sup(sm):  # footnote refs inside tables, e.g. <sup>[^11]</sup>; a
         # bracket-less <sup>N</sup> is an ORPHAN ref (source artifact), not

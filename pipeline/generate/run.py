@@ -35,6 +35,69 @@ SEED = [3, 19, 20, 26, 39, 40, 41, 42, 43, 44, 74, 95, 100, 107, 118, 139,
         235, 236, 252, 253, 309, 310, 311, 318, 319]
 TOC = cardcfg.TOC_PAGES
 
+DEST_MARKDOWN_RE = re.compile(r"\[([^\]]*)\]\(DEST:(\d+):(-?\d+)\)")
+DEST_HTML_RE = re.compile(
+    r'<a href="DEST:(\d+):(-?\d+)">(.*?)</a>', re.S)
+
+
+class DestinationResolutionError(ValueError):
+    """A PDF destination could not be represented by a truthful web link."""
+
+
+def resolve_destination_placeholders(
+        md: str, *, anchor_for, text_resolution, pooled: dict) -> str:
+    """Resolve internal PDF destinations without manufacturing ``href="#"``.
+
+    Page zero is the sentinel for a broken named destination. Its visible text
+    is retained as prose unless that text independently identifies one unique
+    heading. For real page destinations, absence of any heading is an
+    invariant failure: writing an empty fragment would create a misleading
+    jump to the top of the document. Any placeholder missed by the deliberately
+    narrow Markdown/HTML parsers also fails closed before the section is
+    written.
+    """
+    def resolve_link(match):
+        text, pg_text, y_text = match.group(1), match.group(2), match.group(3)
+        pg, y = int(pg_text), int(y_text)
+        # The pool only serves SHORT fragments of a wrapped link; a full
+        # anchor phrase keeps its own geometry (p.121).
+        pooled_hit = (pooled.get((pg_text, y_text))
+                      if len(text.split()) <= 2 else None)
+        explicit = text_resolution(text) or pooled_hit
+        if pg == 0 and not explicit:
+            return text
+        slug = explicit or anchor_for(pg, y)
+        if not slug:
+            raise DestinationResolutionError(
+                f"destination page {pg} has no heading anchor for {text!r}")
+        return f"[{text}](#{slug})"
+
+    def resolve_html(match):
+        # Goto links injected into table HTML carry the same placeholder as
+        # body links, so they follow exactly the same resolution policy.
+        pg_text, y_text, text = match.group(1), match.group(2), match.group(3)
+        pg, y = int(pg_text), int(y_text)
+        plain = re.sub(r"<[^>]+>", "", text)
+        pooled_hit = (pooled.get((pg_text, y_text))
+                      if len(plain.split()) <= 2 else None)
+        explicit = text_resolution(plain) or pooled_hit
+        if pg == 0 and not explicit:
+            return text
+        slug = explicit or anchor_for(pg, y)
+        if not slug:
+            raise DestinationResolutionError(
+                f"destination page {pg} has no heading anchor for {plain!r}")
+        return f'<a href="#{slug}">{text}</a>'
+
+    resolved = DEST_MARKDOWN_RE.sub(resolve_link, md)
+    resolved = DEST_HTML_RE.sub(resolve_html, resolved)
+    if "DEST:" in resolved:
+        at = resolved.index("DEST:")
+        context = resolved[max(0, at - 40):at + 80].replace("\n", "\\n")
+        raise DestinationResolutionError(
+            f"unresolved destination placeholder remains near {context!r}")
+    return resolved
+
 
 def verifier_command(*, full: bool, section_prefixes: list[str]) -> str:
     """Shell-safe verifier handoff for this process's selected card.
@@ -575,7 +638,7 @@ def main():
     if extended_res:
         for name, _ in written:
             md0 = (OUT / name).read_text()
-            for mm in re.finditer(r"\[([^\]]*)\]\(DEST:(\d+):(-?\d+)\)", md0):
+            for mm in DEST_MARKDOWN_RE.finditer(md0):
                 # pooling exists for a WRAPPED link arriving as two annots
                 # ('Section' + '3.6'), so only short fragments seed the pool:
                 # a full anchor phrase sharing a dest with a section-numbered
@@ -587,36 +650,16 @@ def main():
                 r = text_resolution(mm.group(1))
                 if r and mm.group(2) != "0":
                     pooled.setdefault((mm.group(2), mm.group(3)), r)
-            for mm in re.finditer(r'<a href="DEST:(\d+):(-?\d+)">(.*?)</a>', md0, flags=re.S):
+            for mm in DEST_HTML_RE.finditer(md0):
                 r = text_resolution(re.sub(r"<[^>]+>", "", mm.group(3)))
                 if r and mm.group(1) != "0":
                     pooled.setdefault((mm.group(1), mm.group(2)), r)
 
-    def resolve_link(m):
-        text, pg, y = m.group(1), int(m.group(2)), int(m.group(3))
-        # the pool only serves SHORT fragments of a wrapped link; a full
-        # anchor phrase keeps its own geometry (p.121)
-        pooled_hit = (pooled.get((m.group(2), m.group(3)))
-                      if len(text.split()) <= 2 else None)
-        slug = text_resolution(text) or pooled_hit or anchor_for(pg, y)
-        return f"[{text}](#{slug})"
-    def resolve_html(m):
-        # goto links injected into table HTML (tables._inject_links) carry the
-        # same DEST placeholder as body links — resolve with the same rules
-        pg, y, text = int(m.group(1)), int(m.group(2)), m.group(3)
-        plain = re.sub(r"<[^>]+>", "", text)
-        pooled_hit = (pooled.get((m.group(1), m.group(2)))
-                      if len(plain.split()) <= 2 else None)
-        slug = text_resolution(plain) or pooled_hit or anchor_for(pg, y)
-        return f'<a href="#{slug}">{text}</a>'
-
     for name, _ in written:
         f = OUT / name
-        md = f.read_text()
-        md = re.sub(r"\[([^\]]*)\]\(DEST:(\d+):(-?\d+)\)", resolve_link, md)
-        md = re.sub(r"\(DEST:0(?::-?\d+)?\)", "(#)", md)
-        md = re.sub(r'<a href="DEST:(\d+):(-?\d+)">(.*?)</a>', resolve_html, md, flags=re.S)
-        md = re.sub(r'href="DEST:0(?::-?\d+)?"', 'href="#"', md)
+        md = resolve_destination_placeholders(
+            f.read_text(), anchor_for=anchor_for,
+            text_resolution=text_resolution, pooled=pooled)
         f.write_text(md)
 
     all_pages = sorted({p for _, sel in written for p in sel})

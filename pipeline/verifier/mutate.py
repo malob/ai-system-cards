@@ -9,6 +9,7 @@ invariant that was NOT in the unmutated baseline (matched on invariant+detail).
 """
 
 import argparse
+import hashlib
 import json
 import random
 import re
@@ -22,6 +23,7 @@ import calibrate  # noqa: E402
 
 SECTIONS = calibrate.CARD / "sections"
 RE_LINK = re.compile(r"\[([^\]^][^\]]*)\]\((https?://[^)]+)\)")
+RE_INTERNAL_LINK = re.compile(r"\[([^\]^][^\]]*)\]\(#([^)]+)\)")
 RE_CHIP = re.compile(r":chip\[([^\]]+)\]")
 RE_SENT = re.compile(r"(?<=[.!?] )([A-Z][^.!?\n]{40,180}[.!?]) ")
 RE_IMG = re.compile(r"^!\[[^\]]*\]\([^)]+\)\s*$", re.M)
@@ -29,6 +31,18 @@ RE_FNDEF = re.compile(r"^\[\^\d+\]:.*$", re.M)
 RE_MARKER = re.compile(r"<!-- p\.\d+ -->")
 RE_BOLDLEAD = re.compile(r"\*\*([A-Z][^*]{6,60})\*\*")
 RE_WORDPAIR = re.compile(r"(?<= )([a-z]{4,12}) ([a-z]{4,12})(?= )")
+
+
+def class_rng(seed: int, kind: str) -> random.Random:
+    """A deterministic stream whose samples do not depend on class order.
+
+    A single shared RNG made adding one mutation class silently resample every
+    class after it, turning unrelated baseline movement into apparent detector
+    movement.  The explicit digest is stable across processes and Python hash
+    randomization.
+    """
+    material = f"mutation-v1\0{seed}\0{kind}".encode()
+    return random.Random(int.from_bytes(hashlib.sha256(material).digest()[:16], "big"))
 
 
 def mutations(kind: str, text: str, rng: random.Random):
@@ -61,6 +75,20 @@ def mutations(kind: str, text: str, rng: random.Random):
     if kind == "drop-link":
         m = pick(list(RE_LINK.finditer(text)))
         return (text[: m.start()] + m.group(1) + text[m.end():], m.group(2)) if m else None
+    if kind == "repoint-link":
+        # Keep the link present and point it at a DIFFERENT, already-existing
+        # target from the same section. An existence-only link audit passes
+        # this mutation; L2 must bind the occurrence to its PDF destination.
+        links = list(RE_INTERNAL_LINK.finditer(text))
+        candidates = [m for m in links if any(n.group(2) != m.group(2) for n in links)]
+        m = pick(candidates)
+        if not m:
+            return None
+        alternatives = sorted({n.group(2) for n in links if n.group(2) != m.group(2)})
+        wrong = rng.choice(alternatives)
+        replacement = f"[{m.group(1)}](#{wrong})"
+        note = f"{m.group(2)} -> {wrong}"
+        return text[: m.start()] + replacement + text[m.end():], note
     if kind == "flatten-chip":
         m = pick(list(RE_CHIP.finditer(text)))
         return (text[: m.start()] + f"**{m.group(1)}**" + text[m.end():], m.group(1)) if m else None
@@ -104,6 +132,7 @@ CLASSES = {
     "item-to-paragraph": "ST1",
     "split-heading": "ST3",
     "drop-link": "L1",
+    "repoint-link": "L2",
     "flatten-chip": "S2",
     "delete-sentence": "T1",
     "duplicate-paragraph": "T1",
@@ -169,8 +198,6 @@ def main():
         help="committed results JSON; fail if class coverage/sample count changes or recall drops",
     )
     args = ap.parse_args()
-    rng = random.Random(args.seed)
-
     files = {p.name: p.read_text() for p in sorted(SECTIONS.glob("*.md"))}
     baseline = flag_keys(calibrate.collect_flags("WORKTREE"))
     print(f"baseline flags: {len(baseline)}")
@@ -179,6 +206,7 @@ def main():
     for kind, inv in CLASSES.items():
         if args.classes and kind not in args.classes:
             continue
+        rng = class_rng(args.seed, kind)
         caught = tried = 0
         details = []
         eligible = [n for n, t in files.items() if mutations(kind, t, random.Random(0)) is not None]

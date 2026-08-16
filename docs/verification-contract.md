@@ -64,13 +64,26 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
   matching markdown targets. For `/GoTo`, it requires each normalized source anchor
   text to occur among the markdown link texts. This is source→output coverage, not
   per-page/bidirectional link equality: it does not reject output-only links, bind a
-  URI occurrence to its source anchor/page, or verify a GoTo link's output target.
-  (FL-01: v1 silently dropped all 111 internal links.)
-- **L2 — Destination resolution.** Every internal link resolves to an existing
-  anchor in the output; every anchor id is unique (also covers PM-06). The current
-  generator resolves destinations mechanically, but exact output-anchor/destination
-  resolution is covered by the site/link audit rather than a separately emitted
-  `L2` verifier flag.
+  URI occurrence to its source anchor/page, or by itself verify a GoTo link's output
+  target. A source-unresolvable named destination is always the L1 minor
+  `source-defect-unresolvable-dest`, whether L2 can recover a unique printed heading
+  identity or the output correctly leaves it plain (R2). (FL-01: v1 silently dropped
+  all 111 internal links.)
+- **L2 — Destination identity and projection.** The full-graph gate independently
+  reopens and hashes `source.pdf`, reads `/GoTo` annotations, accepts source heading
+  identities from the PDF outline plus printed heading geometry, and pairs source and
+  canonical link occurrences without consulting their destinations. Every paired
+  occurrence must name the exact accepted heading—not merely an existing anchor—and
+  missing/unexplained links, unresolved or ambiguous destinations, dead targets, and
+  wrong existing targets are majors. Partial/page-filtered runs omit L2 because they
+  do not contain the complete graph. A tracked zero-flag artifact binds the source
+  SHA-256, aggregate and per-file canonical Markdown hashes, canonical authored links,
+  and source-derived expected targets. CI regenerates it byte-for-byte. The site then
+  recomputes those hashes and independently parses serialized HTML with HTML5
+  tree-building; every authored body/relocated-footnote link and expectation must
+  survive, and every rendered id/fragment target must be present, nonempty, valid, and
+  unique (also covers PM-06). Artifact drift or incomplete expectation coverage fails
+  closed (D53).
 
 ### S — Styling (gates, extractor-dependent)
 
@@ -146,8 +159,10 @@ directly, with independent agent sweeps for the non-mechanical layer (D50).
 - **SC1 — Model validity.** The planned canonical JSON tree/schema did not ship;
   transient block dictionaries feed the markdown serializer directly.
 - **SC2 — Projection health.** The clean Astro/Pagefind production build exercises
-  HTML, `card.md`, and `llms.txt`; structural link/DOM inspection remains in the
-  sweep layer rather than a named `SC2` Python invariant.
+  HTML, `card.md`, and `llms.txt`. L2 mechanically checks internal-link fidelity in
+  serialized article HTML and the complete rendered-page fragment graph; other
+  projection semantics remain in export tests and the sweep layer rather than a named
+  `SC2` Python invariant.
 
 ### N — Semantic judgment (pre-build design target; replaced in practice)
 
@@ -208,44 +223,52 @@ fail T1.
 | defect          | caught by         | defect    | caught by      |
 |-----------------|-------------------|-----------|----------------|
 | PM-01…05        | P1 (limited scope) + sweeps | FL-04     | S1             |
-| PM-06           | site/link audit; P1 marker subset | FL-05 | T1 (no-normalize rule) |
+| PM-06           | L2 final-DOM audit; P1 marker subset | FL-05 | T1 (no-normalize rule) |
 | PM-07           | build + sweeps    | FL-06     | build + sweeps |
-| FL-01           | L1 + site/link audit | CA-01  | retracted (exp 04); T1 stays bidirectional |
+| FL-01           | L1 + L2 canonical/final-DOM gates | CA-01  | retracted (exp 04); T1 stays bidirectional |
 | FL-02           | S2, S3            | CA-02     | T1             |
 | FL-03           | sweeps + H1        | RN-01/02  | build + sweeps |
 | PR-01…03        | process: D4/D25/D47 (gated class-fix loop) |  |                |
 
 ## Calibration status
 
-Current as of 2026-08-15 (D49/D50). Historical v0 calibration evidence remains in
+Current as of 2026-08-15 (D49/D50/D53). Historical v0 calibration evidence remains in
 [experiment 04](experiments/04-verifier-calibration/README.md); current mutation
 artifacts and per-class counts are in
 [experiment 05](experiments/05-mutation-testing/README.md).
 
 - **Executable mechanical checks:** T1/T2, L1 (document-wide source URI
-  occurrence coverage + GoTo anchor-text coverage), S1, S2/S3, ST1/ST2/ST3, TB2,
-  P1, F1, and FN1.
+  occurrence coverage + GoTo anchor-text/source-defect coverage), L2 (exact
+  source→canonical destination identity plus hash-bound final-DOM projection), S1,
+  S2/S3, ST1/ST2/ST3, TB2, P1, F1, and FN1.
   `calibrate.py WORKTREE` exits 1 on any unsuppressed major. That unfiltered current
   form also rejects malformed, duplicate, non-major, fingerprint-mismatched, or stale
   owner acceptances with exit 2. Partial/historical runs validate configuration but
   do not require out-of-scope acceptances to appear. `--report-only` relaxes majors
   only.
 - **Current full-gate baselines:** Fable suppresses 3 exact owner-accepted T1
-  majors and reports `L1 31` / `T1 44` minors; Opus reports `T1 13`; the Risk
+  majors and reports `L1 34` / `T1 44` minors; Opus reports `T1 13`; the Risk
   Report reports `FN1 1` / `T1 22` / `TB2 1`. All have 0 unsuppressed majors and
-  seam 0. The full operational record lives in `CLAUDE.md` and `state.md`.
-- **Mutation floors (8/class, seed 5):** Fable 86/96 across 12 eligible classes;
-  Opus 72/88 and Risk Report 74/88 across 11 each (`flatten-chip` not applicable).
-  Exact class set, invariant, sample count, and non-decreasing caught count are CI
-  enforced. Details are retained as evidence but excluded from the floor because
-  source edits can move a deterministic sample without changing recall.
+  seam 0. L2 has zero majors at 108 Fable and 54 Opus authored destinations, plus
+  121 Risk Report logical destinations over 123 authored occurrences; all 285
+  authored occurrences have source expectations. The full operational record lives
+  in `CLAUDE.md` and `state.md`.
+- **Mutation floors (8/class, seed 5):** Fable 95/104 across 13 eligible classes;
+  Opus 80/96 and Risk Report 77/96 across 12 each (`flatten-chip` not applicable).
+  The L2 `repoint-link` class is 8/8 on all three cards. Exact class set, invariant,
+  sample count, and non-decreasing caught count are CI-enforced. Each class has its
+  own seed-derived deterministic RNG, so adding a class cannot resample the others.
+  Details are retained as evidence but excluded from the floor because source edits
+  can still move a deterministic sample without changing recall.
 - **Advisory/inspection boundaries:** T1 differences on the table spill set, FN1
   body differences, and seam-merged TB2 findings can be minors. S1 and ST skip that
-  same whole-page spill set. L1 does not check output-only links or GoTo destinations;
-  S1 does not check italics; F1 is count-only; P1 is presence/duplicate-marker
-  coverage rather than a complete provenance proof. TB1/F2 and exact output-anchor/
-  visual semantics remain inspection-owned; the sweep and owner scroll layers are
-  mandatory backstops, not optional polish.
+  same whole-page spill set. L1 still does not bind individual `/URI` occurrences to
+  source anchors/pages; L2 owns internal `/GoTo` occurrence/target identity and final
+  DOM integrity. S1 does not check italics; F1 is count-only; P1 is presence/duplicate-
+  marker coverage rather than a complete provenance proof. TB1/F2 and broader visual
+  semantics remain inspection-owned; the sweep and owner scroll layers are mandatory
+  backstops, not optional polish.
 - **Pre-build mechanisms not shipped:** canonical JSON + SC1, N-version N1, and an
   automated V1 judge. The mechanical compiler, production build, independent
-  rulebook sweeps, regression controls, and owner scroll are the built substitutes.
+  source-first L2/final-DOM lane, rulebook sweeps, regression controls, and owner scroll
+  are the built substitutes.

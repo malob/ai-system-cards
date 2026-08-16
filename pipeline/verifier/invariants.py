@@ -121,15 +121,19 @@ def l1_links(md_links, oracle_pages, page_range, toc_pages, table_pages=frozense
             anchor = norm.normalize(l["anchor"], True).strip().strip("'\"().,;:§[] ")
             if len(anchor) < 3:
                 continue
+            if l.get("unresolvable"):
+                # Report the SOURCE defect whether the output leaves the
+                # anchor plain or L2 can recover a unique heading identity
+                # from printed text (R2). Recovery must not make a broken PDF
+                # named destination disappear from the evidence record.
+                flags.append(_flag("L1", pno, "minor",
+                                   {"kind": "source-defect-unresolvable-dest",
+                                    "anchor": anchor[:80], "name": l.get("name", "")}))
+                continue
             if anchor not in md_link_text:
-                if l.get("unresolvable"):
-                    # the SOURCE PDF's named destination doesn't resolve — a
-                    # source-document defect; md cannot link to nowhere
-                    flags.append(_flag("L1", pno, "minor",
-                                       {"kind": "source-defect-unresolvable-dest",
-                                        "anchor": anchor[:80], "name": l.get("name", "")}))
-                else:
-                    flags.append(_flag("L1", pno, "major", {"kind": "goto", "anchor": anchor[:80], "dest_page": l["dest_page"]}))
+                flags.append(_flag("L1", pno, "major",
+                                   {"kind": "goto", "anchor": anchor[:80],
+                                    "dest_page": l["dest_page"]}))
     return flags
 
 

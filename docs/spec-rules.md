@@ -16,11 +16,20 @@ Verifier: L1 classifies these as the minor `auto-link` class, never missing
 links. (Decided on the Fable 5 card, 2026-06-10 conversation; applies to any
 Google-Docs-exported PDF.)
 
-## R2 — Unresolvable internal destinations stay plain text (PROPOSED, default in effect)
+## R2 — A broken named destination needs an independently recoverable identity (decided 2026-08-15)
 
-When the source PDF's own named destination doesn't resolve (e.g. the
-`h.6c8a0mx55isl` links on p.100 — a Google Docs export defect), the output
-cannot link to nowhere: render the anchor as plain text. Verifier: L1 class
-`source-defect-unresolvable-dest` (minor, reported). Open question for the
-owner, non-blocking: whether the canonical web edition should *annotate* such
-source defects (a discreet sic-style note) — D17 presentation territory.
+When the source PDF's own named destination does not resolve, the output must
+never emit an empty `href="#"`. If the anchor printed in the source uniquely
+identifies exactly one accepted source heading — for example the literal
+section number `6.5.4.3` — the web edition may recover that link mechanically,
+and L2 must verify the recovered identity. Otherwise render the anchor as plain
+text. In both cases L1 reports the publisher's broken destination as the minor
+`source-defect-unresolvable-dest` class; a recovery is not permission to hide
+the source defect.
+
+This supersedes the proposed all-plain-text wording: it keeps the defensible
+plain-text outcome for prose anchors such as Fable's broken
+`h.6c8a0mx55isl` link while making the already-mechanical, unambiguous
+`6.5.4.3` recovery an explicit rule rather than an accidental exception.
+Whether to add a visible *sic*-style annotation remains a separate D17
+presentation question.

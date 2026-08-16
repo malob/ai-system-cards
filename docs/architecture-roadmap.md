@@ -103,7 +103,7 @@ correctness repair.
 | ---: | --- | --- |
 | 0 | Derive the deployment gate inventory from the same validated repository inventory the site can publish. | A synthetic fourth card changes CI coverage automatically; every discoverable card has exactly one full gate and seam result. |
 | 1 | Repair portable table-footnote semantics. | Full-card and section exports preserve one/many references, stable later numbering, definitions, and backlinks under the supported Markdown interpretation. |
-| 2 | Implement L2 from PDF `/GoTo` destinations through accepted source identity, generated targets, and final DOM anchors. | Known wrong destinations and declared source defects replay correctly before L2 becomes blocking. |
+| 2 | Implement L2 from PDF `/GoTo` destinations through source/canonical hash binding, accepted source heading identity, generated targets, and an independently parsed final DOM. | Known wrong destinations and declared source defects replay correctly before L2 becomes blocking; stale expectation artifacts fail closed. |
 | 3 | Close immediate authority loops: F18 mutation harness, dangling definitions, source-page disposition, independent figure inventory, table-zone T1 ≥3, critical-token severity, separate detection/blocking metrics, and production-normalization contract. | Every new blocker is source-adjudicated; true defects are fixed and residuals are exact or narrowly evidenced. |
 | 4 | Harden ST2 with the 16 sweep findings, missed mutations, and nearest-negative controls. | Useful blocking recall without noisy control failures. |
 | 5 | Pin/version table extraction, track candidate provenance, correct cache keys, and add fast replay plus cold scheduled/release extraction lanes. | Warm replay is deterministic; cold drift is either reproducible or explicit. |
@@ -111,6 +111,13 @@ correctness repair.
 | 7 | Run independent verifier and generator table experiments across ruled, filled, short-rule, and whitespace tables. | Measured decision on whether a persistent typed grid improves repairs/provenance and whether independent topology reaches useful recall. |
 | 8 | Replace page-wide table immunity with source-bbox attribution and exact or narrow residual acceptances. | Table membership enables table checks but never disables general checks. |
 | 9 | Test clean bootstrap, every export/DOM projection, and a different producer. | Evidence either justifies a broader representation/producer boundary or rejects it. |
+
+Phases 0–1 are deployed at `685cba6`; phase 2 is implemented locally (D53) and has not
+been pushed. It intentionally changes one Fable p.99 canonical line from a dead `[#]`
+link to plain text under R2; Opus and Risk Report sections remain byte-identical. Phase
+3 is next. L2's source hash is narrower than phase 5's complete extractor/cache
+provenance, and its internal-link DOM lane does not complete phase 9's all-projection/
+bootstrap work.
 
 ## Experiments and kill criteria
 

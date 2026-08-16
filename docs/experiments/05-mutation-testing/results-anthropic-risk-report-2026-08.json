@@ -1,76 +1,56 @@
 {
  "split-item": {
   "invariant": "ST2",
-  "caught": 5,
+  "caught": 3,
   "tried": 8,
   "details": [
-   {
-    "file": "03-automated-rd.md",
-    "site": "- *Develop our internal red-teaming of o",
-    "caught": true
-   },
    {
     "file": "06-appendices.md",
     "site": "- Our Safeguards research helps us under",
     "caught": true
    },
    {
-    "file": "05-cross-cutting.md",
-    "site": "- General acceleration of AI capabilitie",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "- Updated the first stage offline monito",
     "caught": true
    },
    {
-    "file": "01-introduction.md",
-    "site": "- b) The level of risk that would be pos",
+    "file": "03-automated-rd.md",
+    "site": "- *Perform systematic alignment assessme",
+    "caught": true
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "- \u201cMeta-RL: tamper other episodes\u201d shows",
     "caught": false
    },
    {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "- Many of our arguments rely on models l",
-    "caught": true
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "- General acceleration of AI capabilitie",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "- We currently do meet the right column\u2019",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "- \u201cMeta-RL: tamper other episodes\u201d shows",
     "caught": false
    },
    {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "- We also believe that prioritizing this",
+    "file": "03-automated-rd.md",
+    "site": "- We already perform extensive alignment",
+    "caught": false
+   },
+   {
+    "file": "04a-chem-bio-1.md",
+    "site": "- **Coverage:** For our deployment of Fa",
+    "caught": false
+   },
+   {
+    "file": "04a-chem-bio-1.md",
+    "site": "- Evaluations that have a baseline of ex",
     "caught": false
    }
   ]
  },
  "item-to-paragraph": {
   "invariant": "ST1",
-  "caught": 5,
+  "caught": 4,
   "tried": 8,
   "details": [
-   {
-    "file": "01-introduction.md",
-    "site": "b) The level of risk that would be posed",
-    "caught": false
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "We are not confident that this policy wo",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "Unusual prompt elements that might cause",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "We also use offline monitoring for routi",
-    "caught": true
-   },
    {
     "file": "02a-autonomy-misalignment-1.md",
     "site": "We believe that the potential magnitude ",
@@ -78,111 +58,178 @@
    },
    {
     "file": "05-cross-cutting.md",
-    "site": "**Volume:** The attacker must be able to",
+    "site": "We [published](https://www.anthropic.com",
+    "caught": true
+   },
+   {
+    "file": "04a-chem-bio-1.md",
+    "site": "A post-hoc analysis suggested moderate 1",
+    "caught": false
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "Exploiting unintended information leakag",
     "caught": true
    },
    {
     "file": "02b-autonomy-misalignment-2.md",
-    "site": "Mythos 5 used domain fronting to bypass ",
+    "site": "*Broad world-optimization:* Does the env",
     "caught": true
    },
    {
+    "file": "04a-chem-bio-1.md",
+    "site": "For each such attempt, the baseline odds",
+    "caught": true
+   },
+   {
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "If AI models were incapable of reliably ",
+    "caught": false
+   },
+   {
     "file": "01-introduction.md",
-    "site": "b) The level of risk that would be posed",
+    "site": "Model 2, which is somewhat more capable ",
     "caught": false
    }
   ]
  },
  "split-heading": {
   "invariant": "ST3",
-  "caught": 5,
+  "caught": 4,
   "tried": 8,
   "details": [
    {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "2.17 Considerations outside the scope of",
-    "caught": true
+    "file": "01-introduction.md",
+    "site": "1.3.3 Coverage dates of risk reports",
+    "caught": false
    },
    {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "2.10 Claim 4: Expected harm from unknown",
+    "file": "01-introduction.md",
+    "site": "1.2 Executive summary of findings",
+    "caught": false
+   },
+   {
+    "file": "05-cross-cutting.md",
+    "site": "5.3 Benefits from Anthropic\u2019s operating ",
     "caught": true
    },
    {
     "file": "04a-chem-bio-1.md",
-    "site": "4.4.1 Notes on how we weigh evidence",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "6.6.1 List of all Claude models, sorted ",
+    "site": "4.4.3 CB-2 evidence for Mythos Preview, ",
     "caught": false
    },
    {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "2.17 Considerations outside the scope of",
-    "caught": true
+    "file": "04a-chem-bio-1.md",
+    "site": "4.4.3 CB-2 evidence for Mythos Preview, ",
+    "caught": false
    },
    {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "2.23.1.1 Automated offline monitoring ov",
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "2.8 Claim 2: Expected harm from known mi",
     "caught": true
    },
    {
     "file": "03-automated-rd.md",
-    "site": "3 Autonomy threat model 2: Risks from au",
-    "caught": false
+    "site": "3.5.1 AECI capability trajectory",
+    "caught": true
    },
    {
-    "file": "04a-chem-bio-1.md",
-    "site": "4.4.4 CB-2 evidence for Opus 4.8 and oth",
-    "caught": false
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "2.16.3 Evaluation awareness may be more ",
+    "caught": true
    }
   ]
  },
  "drop-link": {
   "invariant": "L1",
-  "caught": 8,
+  "caught": 7,
   "tried": 8,
   "details": [
    {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "https://anthropic.com/claude-mythos-5-system-card",
-    "caught": true
-   },
-   {
     "file": "04a-chem-bio-1.md",
-    "site": "https://www-cdn.anthropic.com/097c63b5fe7dd8b14866e1f15bb1910ec713658a.pdf",
+    "site": "https://ifp.org/weighing-the-cost-of-the-pandemic/",
+    "caught": true
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "https://arxiv.org/abs/2512.09742",
+    "caught": true
+   },
+   {
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf",
+    "caught": false
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "https://www.lesswrong.com/posts/WewsByywWNhX9rtwi/current-ais-seem-pretty-misaligned-to-me",
+    "caught": true
+   },
+   {
+    "file": "05-cross-cutting.md",
+    "site": "https://www.anthropic.com/system-cards",
+    "caught": true
+   },
+   {
+    "file": "06-appendices.md",
+    "site": "https://anthropic.com/rsp/roadmap",
     "caught": true
    },
    {
     "file": "01-introduction.md",
-    "site": "https://metr.org/blog/2026-05-08-rd-section-anthropic-risk-report-feb-2026-review/",
+    "site": "https://www.anthropic.com/system-cards",
+    "caught": true
+   },
+   {
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "https://metr.org/blog/2026-05-19-frontier-risk-report",
+    "caught": true
+   }
+  ]
+ },
+ "repoint-link": {
+  "invariant": "L2",
+  "caught": 8,
+  "tried": 8,
+  "details": [
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "221-specific-pathways -> 2-autonomy-threat-model-1-misalignment-in-high-stakes-settings",
+    "caught": true
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "294-claim-34-the-presence-of-unknown-severe-pervasive-misalignment-is-unlikely-given-our-alignment-assessment -> 217-considerations-outside-the-scope-of-this-section",
+    "caught": true
+   },
+   {
+    "file": "06-appendices.md",
+    "site": "44-current-state-of-model-capabilities -> 458-changes-to-our-risk-mitigations-since-our-last-risk-report",
+    "caught": true
+   },
+   {
+    "file": "04b-chem-bio-2.md",
+    "site": "462-risks-from-the-cb-2-threat-model -> 4582-incidents-related-to-our-classifiers-and-access-controls",
+    "caught": true
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "221-specific-pathways -> 213-claim-7-threat-modeling-is-sufficient",
+    "caught": true
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "22314-other-forms-of-asynchronous-monitoring -> 213-claim-7-threat-modeling-is-sufficient",
     "caught": true
    },
    {
     "file": "04a-chem-bio-1.md",
-    "site": "https://forecastingresearch.org/research/llm-enabled-biorisk",
+    "site": "462-risks-from-the-cb-2-threat-model -> 4532-notes-on-jailbreak-methods-that-remain-viable-on-at-least-some-models-in-some-cases",
     "caught": true
    },
    {
-    "file": "03-automated-rd.md",
-    "site": "https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "https://www.anthropic.com/claude-mythos-preview-system-card",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "https://arxiv.org/pdf/2602.16703",
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "27-claim-1-models-are-unlikely-to-have-strong-covert-capabilities -> 214-claim-8-risk-from-deliberately-engineered-misalignment-is-low",
     "caught": true
    }
   ]
@@ -193,23 +240,23 @@
   "tried": 8,
   "details": [
    {
-    "file": "05-cross-cutting.md",
-    "site": "This is particularly true for offensive ",
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "Bars are per-task mean stealth rates ove",
     "caught": true
    },
    {
     "file": "02b-autonomy-misalignment-2.md",
-    "site": "These behaviors do not appear to be inte",
+    "site": "We think this is an important risk to tr",
     "caught": true
    },
    {
-    "file": "03-automated-rd.md",
-    "site": "Under human control, such acceleration c",
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "Misaligned computation need not be obser",
     "caught": true
    },
    {
-    "file": "04a-chem-bio-1.md",
-    "site": "While these classifiers are less robust ",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "We are including it here because we beli",
     "caught": true
    },
    {
@@ -218,65 +265,65 @@
     "caught": true
    },
    {
-    "file": "04b-chem-bio-2.md",
-    "site": "It is available only to users with US Se",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "We'd like this to be an accurate summary",
     "caught": true
    },
    {
-    "file": "04b-chem-bio-2.md",
-    "site": "First, some of them entailed temporary g",
+    "file": "06-appendices.md",
+    "site": "We rolled out a fix to first-party traff",
     "caught": true
    },
    {
     "file": "01-introduction.md",
-    "site": "While there could be enormous benefits, ",
+    "site": "We believe that it is very unlikely that",
     "caught": true
    }
   ]
  },
  "duplicate-paragraph": {
   "invariant": "T1",
-  "caught": 5,
+  "caught": 8,
   "tried": 8,
   "details": [
    {
+    "file": "04b-chem-bio-2.md",
+    "site": "Our assessment of low risk above is a de",
+    "caught": true
+   },
+   {
     "file": "01-introduction.md",
-    "site": "[^7]: For example, a program with millio",
-    "caught": false
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "When appropriate, we expect that such in",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "We are not aware of straightforward oppo",
-    "caught": true
-   },
-   {
-    "file": "02c-autonomy-misalignment-3.md",
-    "site": "We believe that these other forms of asy",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "[^59]: Our previous risk report used \u201cAS",
-    "caught": false
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "[^61]: In order to validate this extensi",
-    "caught": false
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "Several interviewees raised autonomous d",
+    "site": "Our previous (and first) Risk Report was",
     "caught": true
    },
    {
     "file": "02a-autonomy-misalignment-1.md",
-    "site": "Figures 6.5.4.5.A and 6.5.4.5.B in the [",
+    "site": "In this section we assess the risk that ",
+    "caught": true
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "If a model had severe pervasive misalign",
+    "caught": true
+   },
+   {
+    "file": "04b-chem-bio-2.md",
+    "site": "We pay up to $35,000 per novel universal",
+    "caught": true
+   },
+   {
+    "file": "04a-chem-bio-1.md",
+    "site": "For our deployment of Fable 5, our most ",
+    "caught": true
+   },
+   {
+    "file": "03-automated-rd.md",
+    "site": "To further inform this assessment, we co",
+    "caught": true
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "Some of our claims assume that models\u2019 a",
     "caught": true
    }
   ]
@@ -287,43 +334,43 @@
   "tried": 8,
   "details": [
    {
-    "file": "04a-chem-bio-1.md",
-    "site": "biological scenarios",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "instill misalignment",
+    "caught": false
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "currently acts",
     "caught": true
    },
    {
-    "file": "01-introduction.md",
-    "site": "this threat",
+    "file": "04b-chem-bio-2.md",
+    "site": "have redacted",
     "caught": true
    },
    {
     "file": "02a-autonomy-misalignment-1.md",
-    "site": "arguments supports",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "monetized health",
-    "caught": false
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "expect that",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "evaluations conducted",
+    "site": "terms used",
     "caught": true
    },
    {
     "file": "06-appendices.md",
-    "site": "established frameworks",
+    "site": "national security",
+    "caught": true
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "detect even",
     "caught": true
    },
    {
     "file": "03-automated-rd.md",
-    "site": "interviewee noting",
+    "site": "believe could",
+    "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "capable than",
     "caught": true
    }
   ]
@@ -334,18 +381,13 @@
   "tried": 8,
   "details": [
    {
-    "file": "03-automated-rd.md",
-    "site": "![](assets/figures/p100-1.png)\n",
+    "file": "05-cross-cutting.md",
+    "site": "![](assets/figures/p161-1.png)\n",
     "caught": true
    },
    {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "![](assets/figures/p031-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "![](assets/figures/p102-1.png)\n",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "![](assets/figures/p088-1.png)\n",
     "caught": true
    },
    {
@@ -355,22 +397,27 @@
    },
    {
     "file": "02a-autonomy-misalignment-1.md",
-    "site": "![](assets/figures/p034-1.png)\n",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
     "site": "![](assets/figures/p031-1.png)\n",
     "caught": true
    },
    {
-    "file": "03-automated-rd.md",
-    "site": "![](assets/figures/p102-1.png)\n",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "![](assets/figures/p092-1.png)\n",
     "caught": true
    },
    {
-    "file": "05-cross-cutting.md",
-    "site": "![](assets/figures/p162-2.png)\n",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "![](assets/figures/p092-1.png)\n",
+    "caught": true
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "![](assets/figures/p092-1.png)\n",
+    "caught": true
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "![](assets/figures/p092-1.png)\n",
     "caught": true
    }
   ]
@@ -381,43 +428,43 @@
   "tried": 8,
   "details": [
    {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "[^20]: Some content redacted h",
+    "file": "05-cross-cutting.md",
+    "site": "[^82]: We overall evaluate thi",
     "caught": true
    },
    {
-    "file": "01-introduction.md",
-    "site": "[^8]: E.g., in a world with ac",
+    "file": "05-cross-cutting.md",
+    "site": "[^88]: Including that it highl",
     "caught": true
    },
    {
-    "file": "04a-chem-bio-1.md",
-    "site": "[^51]: We don\u2019t believe this f",
-    "caught": true
-   },
-   {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "[^22]: Some content redacted h",
+    "file": "03-automated-rd.md",
+    "site": "[^44]: Over at least three mod",
     "caught": true
    },
    {
     "file": "04b-chem-bio-2.md",
-    "site": "[^65]: Some content redacted h",
+    "site": "[^75]: Note that we expect it ",
     "caught": true
    },
    {
-    "file": "02b-autonomy-misalignment-2.md",
-    "site": "[^26]: Though even without una",
-    "caught": true
-   },
-   {
-    "file": "04a-chem-bio-1.md",
-    "site": "[^49]: \u201cBy 2024, it is estimat",
+    "file": "05-cross-cutting.md",
+    "site": "[^83]: Though less so for prev",
     "caught": true
    },
    {
     "file": "01-introduction.md",
     "site": "[^7]: For example, a program w",
+    "caught": true
+   },
+   {
+    "file": "04a-chem-bio-1.md",
+    "site": "[^61]: In order to validate th",
+    "caught": true
+   },
+   {
+    "file": "04a-chem-bio-1.md",
+    "site": "[^50]: Righetti, L. (2025). Du",
     "caught": true
    }
   ]
@@ -428,18 +475,8 @@
   "tried": 8,
   "details": [
    {
-    "file": "03-automated-rd.md",
-    "site": "<!-- p.97 -->",
-    "caught": true
-   },
-   {
-    "file": "05-cross-cutting.md",
-    "site": "<!-- p.163 -->",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "<!-- p.182 -->",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "<!-- p.67 -->",
     "caught": true
    },
    {
@@ -448,71 +485,81 @@
     "caught": true
    },
    {
-    "file": "05-cross-cutting.md",
-    "site": "<!-- p.166 -->",
-    "caught": true
-   },
-   {
-    "file": "03-automated-rd.md",
-    "site": "<!-- p.108 -->",
-    "caught": true
-   },
-   {
-    "file": "04b-chem-bio-2.md",
-    "site": "<!-- p.139 -->",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "<!-- p.71 -->",
     "caught": true
    },
    {
     "file": "02a-autonomy-misalignment-1.md",
-    "site": "<!-- p.29 -->",
+    "site": "<!-- p.34 -->",
+    "caught": true
+   },
+   {
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "<!-- p.88 -->",
+    "caught": true
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "<!-- p.37 -->",
+    "caught": true
+   },
+   {
+    "file": "03-automated-rd.md",
+    "site": "<!-- p.95 -->",
+    "caught": true
+   },
+   {
+    "file": "06-appendices.md",
+    "site": "<!-- p.176 -->",
     "caught": true
    }
   ]
  },
  "drop-bold": {
   "invariant": "S1",
-  "caught": 7,
+  "caught": 4,
   "tried": 8,
   "details": [
    {
-    "file": "06-appendices.md",
-    "site": "Binary allowlisting:",
-    "caught": true
+    "file": "02a-autonomy-misalignment-1.md",
+    "site": "Claim 3",
+    "caught": false
    },
    {
-    "file": "05-cross-cutting.md",
-    "site": "Robust safeguards.",
+    "file": "03-automated-rd.md",
+    "site": "Role of AI:",
+    "caught": false
+   },
+   {
+    "file": "02b-autonomy-misalignment-2.md",
+    "site": "Deceptive alignment:",
     "caught": true
    },
    {
     "file": "02b-autonomy-misalignment-2.md",
-    "site": "Direct misalignment:",
+    "site": "Emergent misalignment",
+    "caught": false
+   },
+   {
+    "file": "06-appendices.md",
+    "site": "Restricted session lengths for privilege",
     "caught": true
    },
    {
-    "file": "05-cross-cutting.md",
-    "site": "Policy proposals and positioning:",
+    "file": "02c-autonomy-misalignment-3.md",
+    "site": "A note on framing",
     "caught": true
+   },
+   {
+    "file": "01-introduction.md",
+    "site": "July 15, 2026",
+    "caught": false
    },
    {
     "file": "06-appendices.md",
     "site": "Small portions of some completions not s",
     "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "Image data not shown to part of our clas",
-    "caught": true
-   },
-   {
-    "file": "06-appendices.md",
-    "site": "Cloud storage restrictions:",
-    "caught": true
-   },
-   {
-    "file": "02a-autonomy-misalignment-1.md",
-    "site": "Claim 8",
-    "caught": false
    }
   ]
  }

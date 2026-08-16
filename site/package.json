@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test src/lib/cards.test.js",
+    "test": "node --test src/lib/*.test.js",
     "predev": "node scripts/sync-assets.mjs",
     "dev": "astro dev",
     "prebuild": "node scripts/sync-assets.mjs",
-    "build": "astro build && node scripts/pagefind-index.mjs",
+    "build": "astro build && node scripts/audit-built-links.mjs && node scripts/pagefind-index.mjs",
     "preview": "astro preview"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
   "devDependencies": {
     "@fontsource/fraunces": "^5.2.9",
     "@resvg/resvg-js": "^2.6.2",
+    "parse5": "^7.3.0",
     "satori": "^0.26.0"
   }
 }

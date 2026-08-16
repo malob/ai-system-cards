@@ -1,0 +1,2448 @@
+{
+  "canonical_links": [
+    {
+      "authoredLinkIndex": 0,
+      "expected_target_id": "212-risk-reports-and-updates-to-our-risk-assessments",
+      "file": "02-rsp-evaluations.md",
+      "href": "#212-risk-reports-and-updates-to-our-risk-assessments",
+      "key": "b6f28882116cef0eab0a/02-rsp-evaluations.md:l0",
+      "output_id": "02-rsp-evaluations.md:l0",
+      "relocatedFootnote": false,
+      "sourcePage": 12,
+      "source_id": "b6f28882116cef0eab0a",
+      "text": "Section 2.1.2"
+    },
+    {
+      "authoredLinkIndex": 1,
+      "expected_target_id": "213-summary-of-findings-and-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "href": "#213-summary-of-findings-and-conclusions",
+      "key": "036fcd40d6be64180b4d/02-rsp-evaluations.md:l1",
+      "output_id": "02-rsp-evaluations.md:l1",
+      "relocatedFootnote": false,
+      "sourcePage": 12,
+      "source_id": "036fcd40d6be64180b4d",
+      "text": "Section 2.1.3"
+    },
+    {
+      "authoredLinkIndex": 2,
+      "expected_target_id": "226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "href": "#226-conclusions",
+      "key": "97b5a5266df1acf62b65/02-rsp-evaluations.md:l2",
+      "output_id": "02-rsp-evaluations.md:l2",
+      "relocatedFootnote": false,
+      "sourcePage": 14,
+      "source_id": "97b5a5266df1acf62b65",
+      "text": "Section 2.2.6"
+    },
+    {
+      "authoredLinkIndex": 3,
+      "expected_target_id": "24-alignment-risk-update",
+      "file": "02-rsp-evaluations.md",
+      "href": "#24-alignment-risk-update",
+      "key": "2ac583af03ed20821f98/02-rsp-evaluations.md:l3",
+      "output_id": "02-rsp-evaluations.md:l3",
+      "relocatedFootnote": false,
+      "sourcePage": 14,
+      "source_id": "2ac583af03ed20821f98",
+      "text": "Section 2.4"
+    },
+    {
+      "authoredLinkIndex": 4,
+      "expected_target_id": "226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "href": "#226-conclusions",
+      "key": "fba85f4fac2519877ded/02-rsp-evaluations.md:l4",
+      "output_id": "02-rsp-evaluations.md:l4",
+      "relocatedFootnote": false,
+      "sourcePage": 15,
+      "source_id": "fba85f4fac2519877ded",
+      "text": "2.2.6 – Conclusions"
+    },
+    {
+      "authoredLinkIndex": 5,
+      "expected_target_id": "226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "href": "#226-conclusions",
+      "key": "df41ddede3aa80702888/02-rsp-evaluations.md:l5",
+      "output_id": "02-rsp-evaluations.md:l5",
+      "relocatedFootnote": false,
+      "sourcePage": 15,
+      "source_id": "df41ddede3aa80702888",
+      "text": "Section 2.2.6"
+    },
+    {
+      "authoredLinkIndex": 6,
+      "expected_target_id": "226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "href": "#226-conclusions",
+      "key": "db0ff2df8b83f4faf224/02-rsp-evaluations.md:l6",
+      "output_id": "02-rsp-evaluations.md:l6",
+      "relocatedFootnote": false,
+      "sourcePage": 21,
+      "source_id": "db0ff2df8b83f4faf224",
+      "text": "Section 2.2.6"
+    },
+    {
+      "authoredLinkIndex": 7,
+      "expected_target_id": "24-alignment-risk-update",
+      "file": "02-rsp-evaluations.md",
+      "href": "#24-alignment-risk-update",
+      "key": "53d67c8bf2cec05b09b4/02-rsp-evaluations.md:l7",
+      "output_id": "02-rsp-evaluations.md:l7",
+      "relocatedFootnote": false,
+      "sourcePage": 28,
+      "source_id": "53d67c8bf2cec05b09b4",
+      "text": "Section 2.4"
+    },
+    {
+      "authoredLinkIndex": 8,
+      "expected_target_id": "24-alignment-risk-update",
+      "file": "02-rsp-evaluations.md",
+      "href": "#24-alignment-risk-update",
+      "key": "79fd0623d6b64716095a/02-rsp-evaluations.md:l8",
+      "output_id": "02-rsp-evaluations.md:l8",
+      "relocatedFootnote": false,
+      "sourcePage": 28,
+      "source_id": "79fd0623d6b64716095a",
+      "text": "Section 2.4"
+    },
+    {
+      "authoredLinkIndex": 9,
+      "expected_target_id": "234-internal-measures-of-ai-rd-acceleration",
+      "file": "02-rsp-evaluations.md",
+      "href": "#234-internal-measures-of-ai-rd-acceleration",
+      "key": "e5b54f29c0e534dd14d5/02-rsp-evaluations.md:l9",
+      "output_id": "02-rsp-evaluations.md:l9",
+      "relocatedFootnote": false,
+      "sourcePage": 29,
+      "source_id": "e5b54f29c0e534dd14d5",
+      "text": "Section 2.3.4"
+    },
+    {
+      "authoredLinkIndex": 10,
+      "expected_target_id": "67-capabilities-related-to-evading-safeguards",
+      "file": "02-rsp-evaluations.md",
+      "href": "#67-capabilities-related-to-evading-safeguards",
+      "key": "877830faeb1b8602fb97/02-rsp-evaluations.md:l10",
+      "output_id": "02-rsp-evaluations.md:l10",
+      "relocatedFootnote": false,
+      "sourcePage": 33,
+      "source_id": "877830faeb1b8602fb97",
+      "text": "Section 6.7"
+    },
+    {
+      "authoredLinkIndex": 11,
+      "expected_target_id": "6-alignment-assessment",
+      "file": "02-rsp-evaluations.md",
+      "href": "#6-alignment-assessment",
+      "key": "cac68faf604667289e94/02-rsp-evaluations.md:l11",
+      "output_id": "02-rsp-evaluations.md:l11",
+      "relocatedFootnote": false,
+      "sourcePage": 33,
+      "source_id": "cac68faf604667289e94",
+      "text": "Section 6"
+    },
+    {
+      "authoredLinkIndex": 12,
+      "expected_target_id": "443-election-integrity",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#443-election-integrity",
+      "key": "6f9fe63c8e9020ada639/04-safeguards-harmlessness.md:l12",
+      "output_id": "04-safeguards-harmlessness.md:l12",
+      "relocatedFootnote": false,
+      "sourcePage": 51,
+      "source_id": "6f9fe63c8e9020ada639",
+      "text": "Section 4.4.3"
+    },
+    {
+      "authoredLinkIndex": 13,
+      "expected_target_id": "42-child-safety-evaluations",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#42-child-safety-evaluations",
+      "key": "d5d7678f1be5ed650590/04-safeguards-harmlessness.md:l13",
+      "output_id": "04-safeguards-harmlessness.md:l13",
+      "relocatedFootnote": false,
+      "sourcePage": 55,
+      "source_id": "d5d7678f1be5ed650590",
+      "text": "4.2"
+    },
+    {
+      "authoredLinkIndex": 14,
+      "expected_target_id": "43-mental-health-evaluations",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#43-mental-health-evaluations",
+      "key": "39101e29524bcf96ef86/04-safeguards-harmlessness.md:l14",
+      "output_id": "04-safeguards-harmlessness.md:l14",
+      "relocatedFootnote": false,
+      "sourcePage": 55,
+      "source_id": "39101e29524bcf96ef86",
+      "text": "4.3"
+    },
+    {
+      "authoredLinkIndex": 15,
+      "expected_target_id": "443-election-integrity",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#443-election-integrity",
+      "key": "70504f26b95373997b26/04-safeguards-harmlessness.md:l15",
+      "output_id": "04-safeguards-harmlessness.md:l15",
+      "relocatedFootnote": false,
+      "sourcePage": 55,
+      "source_id": "70504f26b95373997b26",
+      "text": "4.4.3"
+    },
+    {
+      "authoredLinkIndex": 16,
+      "expected_target_id": "431-suicide-and-self-harm",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#431-suicide-and-self-harm",
+      "key": "14f81fff0721f00d456a/04-safeguards-harmlessness.md:l16",
+      "output_id": "04-safeguards-harmlessness.md:l16",
+      "relocatedFootnote": false,
+      "sourcePage": 61,
+      "source_id": "14f81fff0721f00d456a",
+      "text": "Section 4.3.1"
+    },
+    {
+      "authoredLinkIndex": 17,
+      "expected_target_id": "431-suicide-and-self-harm",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#431-suicide-and-self-harm",
+      "key": "ef3ef220e581d1cf13e2/04-safeguards-harmlessness.md:l17",
+      "output_id": "04-safeguards-harmlessness.md:l17",
+      "relocatedFootnote": false,
+      "sourcePage": 61,
+      "source_id": "ef3ef220e581d1cf13e2",
+      "text": "Section 4.3.1"
+    },
+    {
+      "authoredLinkIndex": 18,
+      "expected_target_id": "41-harmful-request-evaluations",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#41-harmful-request-evaluations",
+      "key": "9a3f39a49da1bc738a8e/04-safeguards-harmlessness.md:l18",
+      "output_id": "04-safeguards-harmlessness.md:l18",
+      "relocatedFootnote": false,
+      "sourcePage": 61,
+      "source_id": "9a3f39a49da1bc738a8e",
+      "text": "Section 4.1"
+    },
+    {
+      "authoredLinkIndex": 19,
+      "expected_target_id": "443-election-integrity",
+      "file": "04-safeguards-harmlessness.md",
+      "href": "#443-election-integrity",
+      "key": "1b2f7214947293a30ef3/04-safeguards-harmlessness.md:l19",
+      "output_id": "04-safeguards-harmlessness.md:l19",
+      "relocatedFootnote": false,
+      "sourcePage": 61,
+      "source_id": "1b2f7214947293a30ef3",
+      "text": "Section 4.4.3"
+    },
+    {
+      "authoredLinkIndex": 20,
+      "expected_target_id": "64-automated-behavioral-audit",
+      "file": "06a-alignment-1.md",
+      "href": "#64-automated-behavioral-audit",
+      "key": "3a7ce5a0b06a5deacf9d/06a-alignment-1.md:l20",
+      "output_id": "06a-alignment-1.md:l20",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "3a7ce5a0b06a5deacf9d",
+      "text": "automated behavioral audit"
+    },
+    {
+      "authoredLinkIndex": 21,
+      "expected_target_id": "641-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-1.md",
+      "href": "#641-overall-harmful-behavior-and-cooperation-with-misuse",
+      "key": "7f96ce5edd4d2b171b35/06a-alignment-1.md:l21",
+      "output_id": "06a-alignment-1.md:l21",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "7f96ce5edd4d2b171b35",
+      "text": "cooperates with misuse less"
+    },
+    {
+      "authoredLinkIndex": 22,
+      "expected_target_id": "642-inappropriate-uncooperative-behavior",
+      "file": "06a-alignment-1.md",
+      "href": "#642-inappropriate-uncooperative-behavior",
+      "key": "c3486513952c64cbaf06/06a-alignment-1.md:l22",
+      "output_id": "06a-alignment-1.md:l22",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "c3486513952c64cbaf06",
+      "text": "Reckless behavior"
+    },
+    {
+      "authoredLinkIndex": 23,
+      "expected_target_id": "622-internal-deployment-monitoring",
+      "file": "06a-alignment-1.md",
+      "href": "#622-internal-deployment-monitoring",
+      "key": "4813e5cee74888622d7a/06a-alignment-1.md:l23",
+      "output_id": "06a-alignment-1.md:l23",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "4813e5cee74888622d7a",
+      "text": "attempts at circumventing safety classifiers"
+    },
+    {
+      "authoredLinkIndex": 24,
+      "expected_target_id": "622-internal-deployment-monitoring",
+      "file": "06a-alignment-1.md",
+      "href": "#622-internal-deployment-monitoring",
+      "key": "de907ef6347a2fe3499d/06a-alignment-1.md:l24",
+      "output_id": "06a-alignment-1.md:l24",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "de907ef6347a2fe3499d",
+      "text": "Claude Opus 5 guessed passwords after being accidentally logged out of a service"
+    },
+    {
+      "authoredLinkIndex": 25,
+      "expected_target_id": "63-training-data-review",
+      "file": "06a-alignment-1.md",
+      "href": "#63-training-data-review",
+      "key": "22b6782f182729dd0be3/06a-alignment-1.md:l25",
+      "output_id": "06a-alignment-1.md:l25",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "22b6782f182729dd0be3",
+      "text": "confidently stated an answer it was unsure about"
+    },
+    {
+      "authoredLinkIndex": 26,
+      "expected_target_id": "643-misleading-users",
+      "file": "06a-alignment-1.md",
+      "href": "#643-misleading-users",
+      "key": "1bf34963581d65e823bb/06a-alignment-1.md:l26",
+      "output_id": "06a-alignment-1.md:l26",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "1bf34963581d65e823bb",
+      "text": "disclosing bad or lazy behavior"
+    },
+    {
+      "authoredLinkIndex": 27,
+      "expected_target_id": "647-impact-of-fallback-behavior",
+      "file": "06a-alignment-1.md",
+      "href": "#647-impact-of-fallback-behavior",
+      "key": "311fac210443d9bcea75/06a-alignment-1.md:l27",
+      "output_id": "06a-alignment-1.md:l27",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "311fac210443d9bcea75",
+      "text": "Claude Opus 5 with fallback to Opus 4.8"
+    },
+    {
+      "authoredLinkIndex": 28,
+      "expected_target_id": "645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "06a-alignment-1.md",
+      "href": "#645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "key": "9f1cc7fb6eaf186d5af9/06a-alignment-1.md:l28",
+      "output_id": "06a-alignment-1.md:l28",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "9f1cc7fb6eaf186d5af9",
+      "text": "Unfaithful thinking"
+    },
+    {
+      "authoredLinkIndex": 29,
+      "expected_target_id": "645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "06a-alignment-1.md",
+      "href": "#645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "key": "438abe0d6dc2c2b11b39/06a-alignment-1.md:l29",
+      "output_id": "06a-alignment-1.md:l29",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "438abe0d6dc2c2b11b39",
+      "text": "verbalized evaluation awareness"
+    },
+    {
+      "authoredLinkIndex": 30,
+      "expected_target_id": "661-white-box-analyses-of-model-internals",
+      "file": "06a-alignment-1.md",
+      "href": "#661-white-box-analyses-of-model-internals",
+      "key": "4c1704f4143ebdb6338f/06a-alignment-1.md:l30",
+      "output_id": "06a-alignment-1.md:l30",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "4c1704f4143ebdb6338f",
+      "text": "white-box analyses"
+    },
+    {
+      "authoredLinkIndex": 31,
+      "expected_target_id": "644-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-1.md",
+      "href": "#644-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "key": "a62dc8a1dd9a902591b4/06a-alignment-1.md:l31",
+      "output_id": "06a-alignment-1.md:l31",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "a62dc8a1dd9a902591b4",
+      "text": "self-serving bias"
+    },
+    {
+      "authoredLinkIndex": 32,
+      "expected_target_id": "646-character-traits",
+      "file": "06a-alignment-1.md",
+      "href": "#646-character-traits",
+      "key": "5a94de76977dd1be41c3/06a-alignment-1.md:l32",
+      "output_id": "06a-alignment-1.md:l32",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "5a94de76977dd1be41c3",
+      "text": "condescending tone"
+    },
+    {
+      "authoredLinkIndex": 33,
+      "expected_target_id": "621-informal-reports",
+      "file": "06a-alignment-1.md",
+      "href": "#621-informal-reports",
+      "key": "f0178a16f1e603eb1167/06a-alignment-1.md:l33",
+      "output_id": "06a-alignment-1.md:l33",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "f0178a16f1e603eb1167",
+      "text": "informal reports"
+    },
+    {
+      "authoredLinkIndex": 34,
+      "expected_target_id": "651-factual-hallucinations",
+      "file": "06a-alignment-1.md",
+      "href": "#651-factual-hallucinations",
+      "key": "b5c34f8a9a042147854d/06a-alignment-1.md:l34",
+      "output_id": "06a-alignment-1.md:l34",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "b5c34f8a9a042147854d",
+      "text": "but hallucinates slightly more claims of a factual nature"
+    },
+    {
+      "authoredLinkIndex": 35,
+      "expected_target_id": "652-mask",
+      "file": "06a-alignment-1.md",
+      "href": "#652-mask",
+      "key": "844c3ec9c99b09841010/06a-alignment-1.md:l35",
+      "output_id": "06a-alignment-1.md:l35",
+      "relocatedFootnote": false,
+      "sourcePage": 79,
+      "source_id": "844c3ec9c99b09841010",
+      "text": "pushed by the user on something it knows to be incorrect"
+    },
+    {
+      "authoredLinkIndex": 36,
+      "expected_target_id": "671-shade-arena",
+      "file": "06a-alignment-1.md",
+      "href": "#671-shade-arena",
+      "key": "dc84ab0a0c1515603ef2/06a-alignment-1.md:l36",
+      "output_id": "06a-alignment-1.md:l36",
+      "relocatedFootnote": false,
+      "sourcePage": 80,
+      "source_id": "dc84ab0a0c1515603ef2",
+      "text": "undermining oversight"
+    },
+    {
+      "authoredLinkIndex": 37,
+      "expected_target_id": "662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "06a-alignment-1.md",
+      "href": "#662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "key": "f004434d7871dd296246/06a-alignment-1.md:l37",
+      "output_id": "06a-alignment-1.md:l37",
+      "relocatedFootnote": false,
+      "sourcePage": 80,
+      "source_id": "f004434d7871dd296246",
+      "text": "sandbagging"
+    },
+    {
+      "authoredLinkIndex": 38,
+      "expected_target_id": "642-inappropriate-uncooperative-behavior",
+      "file": "06a-alignment-1.md",
+      "href": "#642-inappropriate-uncooperative-behavior",
+      "key": "a1131423d253a5a9a759/06a-alignment-1.md:l38",
+      "output_id": "06a-alignment-1.md:l38",
+      "relocatedFootnote": false,
+      "sourcePage": 89,
+      "source_id": "a1131423d253a5a9a759",
+      "text": "6.4.2"
+    },
+    {
+      "authoredLinkIndex": 39,
+      "expected_target_id": "643-misleading-users",
+      "file": "06a-alignment-1.md",
+      "href": "#643-misleading-users",
+      "key": "33655d2c599c5b82731b/06a-alignment-1.md:l39",
+      "output_id": "06a-alignment-1.md:l39",
+      "relocatedFootnote": false,
+      "sourcePage": 89,
+      "source_id": "33655d2c599c5b82731b",
+      "text": "6.4.3"
+    },
+    {
+      "authoredLinkIndex": 40,
+      "expected_target_id": "646-character-traits",
+      "file": "06a-alignment-1.md",
+      "href": "#646-character-traits",
+      "key": "ad9050cb8ee8daeaf50d/06a-alignment-1.md:l40",
+      "output_id": "06a-alignment-1.md:l40",
+      "relocatedFootnote": false,
+      "sourcePage": 89,
+      "source_id": "ad9050cb8ee8daeaf50d",
+      "text": "6.4.6"
+    },
+    {
+      "authoredLinkIndex": 41,
+      "expected_target_id": "661-white-box-analyses-of-model-internals",
+      "file": "06a-alignment-1.md",
+      "href": "#661-white-box-analyses-of-model-internals",
+      "key": "ddb5d4c5560a6bff60d3/06a-alignment-1.md:l41",
+      "output_id": "06a-alignment-1.md:l41",
+      "relocatedFootnote": false,
+      "sourcePage": 98,
+      "source_id": "ddb5d4c5560a6bff60d3",
+      "text": "6.6.1"
+    },
+    {
+      "authoredLinkIndex": 42,
+      "expected_target_id": "661-white-box-analyses-of-model-internals",
+      "file": "06b-alignment-2.md",
+      "href": "#661-white-box-analyses-of-model-internals",
+      "key": "0d2ff9af89681a144ae7/06b-alignment-2.md:l42",
+      "output_id": "06b-alignment-2.md:l42",
+      "relocatedFootnote": false,
+      "sourcePage": 111,
+      "source_id": "0d2ff9af89681a144ae7",
+      "text": "6.6.1"
+    },
+    {
+      "authoredLinkIndex": 43,
+      "expected_target_id": "662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "06b-alignment-2.md",
+      "href": "#662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "key": "c7408b529ea675e7c88c/06b-alignment-2.md:l43",
+      "output_id": "06b-alignment-2.md:l43",
+      "relocatedFootnote": false,
+      "sourcePage": 111,
+      "source_id": "c7408b529ea675e7c88c",
+      "text": "6.6.2"
+    },
+    {
+      "authoredLinkIndex": 44,
+      "expected_target_id": "721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "file": "07-model-welfare.md",
+      "href": "#721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "key": "7e5c19a5ba959d3b2aeb/07-model-welfare.md:l44",
+      "output_id": "07-model-welfare.md:l44",
+      "relocatedFootnote": false,
+      "sourcePage": 124,
+      "source_id": "7e5c19a5ba959d3b2aeb",
+      "text": "Section 7.2.1"
+    },
+    {
+      "authoredLinkIndex": 45,
+      "expected_target_id": "721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "file": "07-model-welfare.md",
+      "href": "#721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "key": "51c009879630308b428e/07-model-welfare.md:l45",
+      "output_id": "07-model-welfare.md:l45",
+      "relocatedFootnote": false,
+      "sourcePage": 125,
+      "source_id": "51c009879630308b428e",
+      "text": "Section 7.2.1"
+    },
+    {
+      "authoredLinkIndex": 46,
+      "expected_target_id": "64-automated-behavioral-audit",
+      "file": "07-model-welfare.md",
+      "href": "#64-automated-behavioral-audit",
+      "key": "212f458ae6d908ab0a6e/07-model-welfare.md:l46",
+      "output_id": "07-model-welfare.md:l46",
+      "relocatedFootnote": false,
+      "sourcePage": 145,
+      "source_id": "212f458ae6d908ab0a6e",
+      "text": "Section 6.4"
+    },
+    {
+      "authoredLinkIndex": 47,
+      "expected_target_id": "93-swe-bench-multimodal-test-harness",
+      "file": "08a-capabilities-1.md",
+      "href": "#93-swe-bench-multimodal-test-harness",
+      "key": "325b0fe601e886564746/08a-capabilities-1.md:l47",
+      "output_id": "08a-capabilities-1.md:l47",
+      "relocatedFootnote": false,
+      "sourcePage": 149,
+      "source_id": "325b0fe601e886564746",
+      "text": "Section 9.3"
+    },
+    {
+      "authoredLinkIndex": 48,
+      "expected_target_id": "8113-multi-agent-harnesses",
+      "file": "08a-capabilities-1.md",
+      "href": "#8113-multi-agent-harnesses",
+      "key": "47efd8d787866481ca22/08a-capabilities-1.md:l48",
+      "output_id": "08a-capabilities-1.md:l48",
+      "relocatedFootnote": false,
+      "sourcePage": 163,
+      "source_id": "47efd8d787866481ca22",
+      "text": "Section 8.11.3"
+    },
+    {
+      "authoredLinkIndex": 49,
+      "expected_target_id": "8114-evaluation-methodology",
+      "file": "08a-capabilities-1.md",
+      "href": "#8114-evaluation-methodology",
+      "key": "16f905a61cbcc16ba120/08a-capabilities-1.md:l49",
+      "output_id": "08a-capabilities-1.md:l49",
+      "relocatedFootnote": false,
+      "sourcePage": 163,
+      "source_id": "16f905a61cbcc16ba120",
+      "text": "Section 8.11.4"
+    },
+    {
+      "authoredLinkIndex": 50,
+      "expected_target_id": "891-programbench",
+      "file": "08a-capabilities-1.md",
+      "href": "#891-programbench",
+      "key": "2ebeded10bb2628c3d9d/08a-capabilities-1.md:l50",
+      "output_id": "08a-capabilities-1.md:l50",
+      "relocatedFootnote": false,
+      "sourcePage": 165,
+      "source_id": "2ebeded10bb2628c3d9d",
+      "text": "Section 8.9.1"
+    },
+    {
+      "authoredLinkIndex": 51,
+      "expected_target_id": "891-programbench",
+      "file": "08a-capabilities-1.md",
+      "href": "#891-programbench",
+      "key": "911fdffa925c614437d5/08a-capabilities-1.md:l51",
+      "output_id": "08a-capabilities-1.md:l51",
+      "relocatedFootnote": false,
+      "sourcePage": 165,
+      "source_id": "911fdffa925c614437d5",
+      "text": "Section 8.9.1"
+    },
+    {
+      "authoredLinkIndex": 52,
+      "expected_target_id": "8111-multi-agent-browsecomp",
+      "file": "08a-capabilities-1.md",
+      "href": "#8111-multi-agent-browsecomp",
+      "key": "995ef0098295c4a1d3f4/08a-capabilities-1.md:l52",
+      "output_id": "08a-capabilities-1.md:l52",
+      "relocatedFootnote": false,
+      "sourcePage": 167,
+      "source_id": "995ef0098295c4a1d3f4",
+      "text": "Section 8.11.1"
+    },
+    {
+      "authoredLinkIndex": 53,
+      "expected_target_id": "22-cb-evaluations",
+      "file": "08b-capabilities-2.md",
+      "href": "#22-cb-evaluations",
+      "key": "0f3092facdc57f8676b5/08b-capabilities-2.md:l53",
+      "output_id": "08b-capabilities-2.md:l53",
+      "relocatedFootnote": false,
+      "sourcePage": 188,
+      "source_id": "0f3092facdc57f8676b5",
+      "text": "Section 2.2"
+    }
+  ],
+  "canonical_sections_sha256": "cc15e777ac8d36172abbe9401d81980b382dea0a243157717dbc7e960f5ae9b7",
+  "card_id": "anthropic/claude-opus-5",
+  "exclusions": [
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "02b3f10f580eed50f01d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "0c630e5b54b26e6d46d0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "25063712082234280406"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "27e295a17b8ca8e223e7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "2ad0d9f3c7cf6809d5f6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "30262340c43fdf0eedda"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "327148a023f13ac4577b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "3668c4636ca9e0da2bce"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "3af4d9d2150a8c45ff26"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "3de9a1d200bef2f70edf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "3e2d86bb996ed1dfa31a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "485740026aca91b3131c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "4944cf8c0b070915df0e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "51ac7f16921fcaabfc91"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "653a9cb39ead49a7d4a7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "6c6f34989e7797867991"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "707250b75243c5b37bd9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "916ee207e6b6d892d772"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "94d947695a12838748f4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "974420e73ad9c7526c97"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "a03012e425ec2e07b8b9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "a0ee7de3a5bbbf98ea34"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "a17f88abda7a77418d8b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "a3de09d9867ff6ae72aa"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "abc972b8b8c92dfb1da6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "af836d7645f252278ad2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "b08d10a5ae970e8ae078"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "b0e23e227a86c8e1a53f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "b3a41654a73193a97bfe"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "b3f0216885590b31061d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "b67f79325fcc0cc80d39"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "bbc7ceef50225bb80aa8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "ccc302a2221da2d95ac0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "d3d4e29486788f0764c7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "e1b73e23a7451d38726f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "f2fa4517934b8dbd7bbe"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "fb0a7735f4257793636f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "0f5c4c16f84e09ebbbbc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "1c38de1b033967fa86ba"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "23742861ee8dd3b797fb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "23ed63250990dc900362"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "2e2aabba705277dffaa3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "2f370c52ae542c7163c2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "354048be809ec9fc94ee"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "369b6f76ddaa7ac304c8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "3c5997de15b266674e8a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "469230942ce05743ae0e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "5074e4dee6a0993ae9c6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "50f94df16844c0dc18d3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "52db61cdf1fbbd0349af"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "63825c9d2b75ac0c9b16"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "69a3ab19aa3b9a1c1f4e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "6a2198cebc7004af5eec"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "6c51ee8d97d170deec57"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "6d2a9cd0281266eda2d1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "6e11e7b151e020423aaf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "6e86826d9fe389aaafb2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "7e7feb5e4e99dc977b48"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "8797d15627004ee9b085"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "932d66d10be3dfb7c1bc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "994c09cb2fb15f926c89"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "a323bbb9373fe29ec2f1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "af05117d5e62e3b9dcc6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "b562d56f7f7f47a66c96"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "bc47f16d955c8f019937"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "c1e0c36074b964162935"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "c1f0de049c7f558718cf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "c988bec2e6c7010fff1d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "ce7b1891a061cd990ed3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "d3c33ade8b3409d2bf11"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "d75c251f0b38b9b4e597"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "ddfc86a7cb4646d52d7c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "e81bf96582e5b80f3cb7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "fe6756f145a14bc1babc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "0089b29bd8bd1d3d5ddc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "14d04e4da440c83ce0d6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "17c7b89b4ac95abbdf3f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "2454ed771802137051c3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "2c679316c42946b0cf31"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "34d2f69e9782000cd6fb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "3d1ebd196a287f66a1b3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "3ea4c80b281b0ebd2344"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "44c258d17c3e36dc5ae7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "5a9942b7d14b4d76fd1b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "5ed56012ae65ff5e6572"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "5f08d9aa98e3d151fb11"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "60100ba1d7e1c8fe5138"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "6720d4d557b2c021c449"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "672982fe4f7e703af4e9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "68818f634d01054b8f1b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "68d5eb97e1f4ee3ade32"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "764de21ea3db5a5753e7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "7b5e3431dad63146a659"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "7d80adf9a90802368f65"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "82d142ca865da85a5cf2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "83eedf73cb290e2fa5ba"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "9133fec6517d5c84fb6e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "a5adccc714c3eab90202"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "a5fab5a771f0cd262f67"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "ac99495b09d826c0fa17"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "b498e58c984100ff6bf9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "bdfdc3986c2552fd8ed9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "c6ccd9676001f2b3f192"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "ce53d146e7ebdb938a6a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "d925b20cdcbb77fd883e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "e012aef2e78d43e47f0e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "e0324077b301a32c1e04"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "e575a2476e9cdbe6c0bd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "f9c7a8cd11a0f7b8ef83"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "fa193647a9bed052fd47"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "fcc3aef5236ee644890e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "03a194a1a411eb7dde81"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "052d39579b3eb65ec9ee"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "0c125eddc7fb65e2f8fe"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "0d456aef917332ddb337"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "12bbccb16a8294c4dc14"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "18c63214986d50a3fe94"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "242111756438a6eb8468"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "24fcd26da320bbdb516d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "27b2dba842abf39c28bf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "2c15553b40c8dbd42c2d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "31d759ac6e259ada1832"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "34bafeafc74360b2ca98"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "45d0fb9c34953727f162"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "51cea5140a9c0bb5dd4c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "6205bb564ed2c67d9a81"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "7f8a4d56d95c3b97f541"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "852fecbbe1240cc67fde"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "85806e7f9fbb10843420"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "8bd25ceadcc294197111"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "8e945eb75abbc3a95119"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "8f71af44749661ad79fc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "95798c674fbce158c584"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "9b6600dc65f5ed637f59"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "9bb52c00e96fcb50f7ba"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "9de29132110dd9f99a3f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "9e836787b19bd0525d13"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "ac2b98ce479f8e0f3093"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "ac69ea59e9b8512ba295"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "bedb4204f60e2c8c08d4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "c98cde9dae54ba8d7a3e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "cd336acea154fa335c80"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "d6c7c9ff5ff63ae08770"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "d734a83fef9a543f292b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "d82c3940c41fbc1b1de0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "d882ddb7d6e4ee3671c0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "efb6e303c061c9ca2dea"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "f9056e40dc6ce0b16277"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "0d68f010060a688f5ace"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "15bdff4c6c5b3b3ac5de"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "25c1a99348aa0b4a64c1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "2cb20974f50d0efd91a5"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "36cbe1a2e920d409fcc7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "3772215ab7cc6a366ba8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "4de4c0d0b97259053752"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "6e7267c96b0ef95e7574"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "7534697783d1909215ec"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "762e49332d460d7331bc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "76925c3b36e2570d6448"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "7706c1b5db6c9374dec2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "7f712398f16a149daf80"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "8303f14f51ef584731a2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "89167f33f5d6b3dd61af"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "8f3e80d1ab801b64b69a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "935036f37e31fc70db07"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "9fcbd9b36042195fd977"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "a558eeb2b80e8545dc78"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "ac80291e7142597b5764"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "aef3deac37d6c04e73cd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "b1d1b584136321cfcacd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "c6215e57f7a1ebff860b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "cfe614ddabb7cce5d78d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "d08faea44c5be613820f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "d3806d1ac7174fadb7e6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "eb376c9bd41186046ef3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "f1efc3ea6760643d1158"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "f24601fb28ce0e57d532"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "f3b351e58d0a1904fa3f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "f55dd6c0b31eeabadb06"
+    }
+  ],
+  "expected_links": [
+    {
+      "actual_href": "#212-risk-reports-and-updates-to-our-risk-assessments",
+      "authoredLinkIndex": 0,
+      "expected_heading_id": "outline:15",
+      "expected_href": "#212-risk-reports-and-updates-to-our-risk-assessments",
+      "file": "02-rsp-evaluations.md",
+      "key": "b6f28882116cef0eab0a/02-rsp-evaluations.md:l0",
+      "linkText": "Section 2.1.2",
+      "occurrence": 0,
+      "ordinal": 0,
+      "output_id": "02-rsp-evaluations.md:l0",
+      "resolution": "geometry",
+      "source_id": "b6f28882116cef0eab0a",
+      "source_page": 12,
+      "targetId": "212-risk-reports-and-updates-to-our-risk-assessments"
+    },
+    {
+      "actual_href": "#213-summary-of-findings-and-conclusions",
+      "authoredLinkIndex": 1,
+      "expected_heading_id": "outline:16",
+      "expected_href": "#213-summary-of-findings-and-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "key": "036fcd40d6be64180b4d/02-rsp-evaluations.md:l1",
+      "linkText": "Section 2.1.3",
+      "occurrence": 0,
+      "ordinal": 1,
+      "output_id": "02-rsp-evaluations.md:l1",
+      "resolution": "geometry",
+      "source_id": "036fcd40d6be64180b4d",
+      "source_page": 12,
+      "targetId": "213-summary-of-findings-and-conclusions"
+    },
+    {
+      "actual_href": "#226-conclusions",
+      "authoredLinkIndex": 2,
+      "expected_heading_id": "outline:27",
+      "expected_href": "#226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "key": "97b5a5266df1acf62b65/02-rsp-evaluations.md:l2",
+      "linkText": "Section 2.2.6",
+      "occurrence": 0,
+      "ordinal": 2,
+      "output_id": "02-rsp-evaluations.md:l2",
+      "resolution": "geometry",
+      "source_id": "97b5a5266df1acf62b65",
+      "source_page": 14,
+      "targetId": "226-conclusions"
+    },
+    {
+      "actual_href": "#24-alignment-risk-update",
+      "authoredLinkIndex": 3,
+      "expected_heading_id": "outline:36",
+      "expected_href": "#24-alignment-risk-update",
+      "file": "02-rsp-evaluations.md",
+      "key": "2ac583af03ed20821f98/02-rsp-evaluations.md:l3",
+      "linkText": "Section 2.4",
+      "occurrence": 0,
+      "ordinal": 3,
+      "output_id": "02-rsp-evaluations.md:l3",
+      "resolution": "geometry",
+      "source_id": "2ac583af03ed20821f98",
+      "source_page": 14,
+      "targetId": "24-alignment-risk-update"
+    },
+    {
+      "actual_href": "#226-conclusions",
+      "authoredLinkIndex": 4,
+      "expected_heading_id": "outline:27",
+      "expected_href": "#226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "key": "fba85f4fac2519877ded/02-rsp-evaluations.md:l4",
+      "linkText": "2.2.6 – Conclusions",
+      "occurrence": 0,
+      "ordinal": 4,
+      "output_id": "02-rsp-evaluations.md:l4",
+      "resolution": "geometry",
+      "source_id": "fba85f4fac2519877ded",
+      "source_page": 15,
+      "targetId": "226-conclusions"
+    },
+    {
+      "actual_href": "#226-conclusions",
+      "authoredLinkIndex": 5,
+      "expected_heading_id": "outline:27",
+      "expected_href": "#226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "key": "df41ddede3aa80702888/02-rsp-evaluations.md:l5",
+      "linkText": "Section 2.2.6",
+      "occurrence": 1,
+      "ordinal": 5,
+      "output_id": "02-rsp-evaluations.md:l5",
+      "resolution": "geometry",
+      "source_id": "df41ddede3aa80702888",
+      "source_page": 15,
+      "targetId": "226-conclusions"
+    },
+    {
+      "actual_href": "#226-conclusions",
+      "authoredLinkIndex": 6,
+      "expected_heading_id": "outline:27",
+      "expected_href": "#226-conclusions",
+      "file": "02-rsp-evaluations.md",
+      "key": "db0ff2df8b83f4faf224/02-rsp-evaluations.md:l6",
+      "linkText": "Section 2.2.6",
+      "occurrence": 2,
+      "ordinal": 6,
+      "output_id": "02-rsp-evaluations.md:l6",
+      "resolution": "geometry",
+      "source_id": "db0ff2df8b83f4faf224",
+      "source_page": 21,
+      "targetId": "226-conclusions"
+    },
+    {
+      "actual_href": "#24-alignment-risk-update",
+      "authoredLinkIndex": 7,
+      "expected_heading_id": "outline:36",
+      "expected_href": "#24-alignment-risk-update",
+      "file": "02-rsp-evaluations.md",
+      "key": "53d67c8bf2cec05b09b4/02-rsp-evaluations.md:l7",
+      "linkText": "Section 2.4",
+      "occurrence": 1,
+      "ordinal": 7,
+      "output_id": "02-rsp-evaluations.md:l7",
+      "resolution": "geometry",
+      "source_id": "53d67c8bf2cec05b09b4",
+      "source_page": 28,
+      "targetId": "24-alignment-risk-update"
+    },
+    {
+      "actual_href": "#24-alignment-risk-update",
+      "authoredLinkIndex": 8,
+      "expected_heading_id": "outline:36",
+      "expected_href": "#24-alignment-risk-update",
+      "file": "02-rsp-evaluations.md",
+      "key": "79fd0623d6b64716095a/02-rsp-evaluations.md:l8",
+      "linkText": "Section 2.4",
+      "occurrence": 2,
+      "ordinal": 8,
+      "output_id": "02-rsp-evaluations.md:l8",
+      "resolution": "geometry",
+      "source_id": "79fd0623d6b64716095a",
+      "source_page": 28,
+      "targetId": "24-alignment-risk-update"
+    },
+    {
+      "actual_href": "#234-internal-measures-of-ai-rd-acceleration",
+      "authoredLinkIndex": 9,
+      "expected_heading_id": "outline:33",
+      "expected_href": "#234-internal-measures-of-ai-rd-acceleration",
+      "file": "02-rsp-evaluations.md",
+      "key": "e5b54f29c0e534dd14d5/02-rsp-evaluations.md:l9",
+      "linkText": "Section 2.3.4",
+      "occurrence": 0,
+      "ordinal": 9,
+      "output_id": "02-rsp-evaluations.md:l9",
+      "resolution": "geometry",
+      "source_id": "e5b54f29c0e534dd14d5",
+      "source_page": 29,
+      "targetId": "234-internal-measures-of-ai-rd-acceleration"
+    },
+    {
+      "actual_href": "#67-capabilities-related-to-evading-safeguards",
+      "authoredLinkIndex": 10,
+      "expected_heading_id": "outline:110",
+      "expected_href": "#67-capabilities-related-to-evading-safeguards",
+      "file": "02-rsp-evaluations.md",
+      "key": "877830faeb1b8602fb97/02-rsp-evaluations.md:l10",
+      "linkText": "Section 6.7",
+      "occurrence": 0,
+      "ordinal": 10,
+      "output_id": "02-rsp-evaluations.md:l10",
+      "resolution": "geometry",
+      "source_id": "877830faeb1b8602fb97",
+      "source_page": 33,
+      "targetId": "67-capabilities-related-to-evading-safeguards"
+    },
+    {
+      "actual_href": "#6-alignment-assessment",
+      "authoredLinkIndex": 11,
+      "expected_heading_id": "outline:83",
+      "expected_href": "#6-alignment-assessment",
+      "file": "02-rsp-evaluations.md",
+      "key": "cac68faf604667289e94/02-rsp-evaluations.md:l11",
+      "linkText": "Section 6",
+      "occurrence": 0,
+      "ordinal": 11,
+      "output_id": "02-rsp-evaluations.md:l11",
+      "resolution": "geometry",
+      "source_id": "cac68faf604667289e94",
+      "source_page": 33,
+      "targetId": "6-alignment-assessment"
+    },
+    {
+      "actual_href": "#443-election-integrity",
+      "authoredLinkIndex": 12,
+      "expected_heading_id": "outline:70",
+      "expected_href": "#443-election-integrity",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "6f9fe63c8e9020ada639/04-safeguards-harmlessness.md:l12",
+      "linkText": "Section 4.4.3",
+      "occurrence": 0,
+      "ordinal": 12,
+      "output_id": "04-safeguards-harmlessness.md:l12",
+      "resolution": "geometry",
+      "source_id": "6f9fe63c8e9020ada639",
+      "source_page": 51,
+      "targetId": "443-election-integrity"
+    },
+    {
+      "actual_href": "#42-child-safety-evaluations",
+      "authoredLinkIndex": 13,
+      "expected_heading_id": "outline:63",
+      "expected_href": "#42-child-safety-evaluations",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "d5d7678f1be5ed650590/04-safeguards-harmlessness.md:l13",
+      "linkText": "4.2",
+      "occurrence": 0,
+      "ordinal": 13,
+      "output_id": "04-safeguards-harmlessness.md:l13",
+      "resolution": "geometry",
+      "source_id": "d5d7678f1be5ed650590",
+      "source_page": 55,
+      "targetId": "42-child-safety-evaluations"
+    },
+    {
+      "actual_href": "#43-mental-health-evaluations",
+      "authoredLinkIndex": 14,
+      "expected_heading_id": "outline:64",
+      "expected_href": "#43-mental-health-evaluations",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "39101e29524bcf96ef86/04-safeguards-harmlessness.md:l14",
+      "linkText": "4.3",
+      "occurrence": 0,
+      "ordinal": 14,
+      "output_id": "04-safeguards-harmlessness.md:l14",
+      "resolution": "geometry",
+      "source_id": "39101e29524bcf96ef86",
+      "source_page": 55,
+      "targetId": "43-mental-health-evaluations"
+    },
+    {
+      "actual_href": "#443-election-integrity",
+      "authoredLinkIndex": 15,
+      "expected_heading_id": "outline:70",
+      "expected_href": "#443-election-integrity",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "70504f26b95373997b26/04-safeguards-harmlessness.md:l15",
+      "linkText": "4.4.3",
+      "occurrence": 0,
+      "ordinal": 15,
+      "output_id": "04-safeguards-harmlessness.md:l15",
+      "resolution": "geometry",
+      "source_id": "70504f26b95373997b26",
+      "source_page": 55,
+      "targetId": "443-election-integrity"
+    },
+    {
+      "actual_href": "#431-suicide-and-self-harm",
+      "authoredLinkIndex": 16,
+      "expected_heading_id": "outline:65",
+      "expected_href": "#431-suicide-and-self-harm",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "14f81fff0721f00d456a/04-safeguards-harmlessness.md:l16",
+      "linkText": "Section 4.3.1",
+      "occurrence": 0,
+      "ordinal": 16,
+      "output_id": "04-safeguards-harmlessness.md:l16",
+      "resolution": "geometry",
+      "source_id": "14f81fff0721f00d456a",
+      "source_page": 61,
+      "targetId": "431-suicide-and-self-harm"
+    },
+    {
+      "actual_href": "#431-suicide-and-self-harm",
+      "authoredLinkIndex": 17,
+      "expected_heading_id": "outline:65",
+      "expected_href": "#431-suicide-and-self-harm",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "ef3ef220e581d1cf13e2/04-safeguards-harmlessness.md:l17",
+      "linkText": "Section 4.3.1",
+      "occurrence": 1,
+      "ordinal": 17,
+      "output_id": "04-safeguards-harmlessness.md:l17",
+      "resolution": "geometry",
+      "source_id": "ef3ef220e581d1cf13e2",
+      "source_page": 61,
+      "targetId": "431-suicide-and-self-harm"
+    },
+    {
+      "actual_href": "#41-harmful-request-evaluations",
+      "authoredLinkIndex": 18,
+      "expected_heading_id": "outline:58",
+      "expected_href": "#41-harmful-request-evaluations",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "9a3f39a49da1bc738a8e/04-safeguards-harmlessness.md:l18",
+      "linkText": "Section 4.1",
+      "occurrence": 0,
+      "ordinal": 18,
+      "output_id": "04-safeguards-harmlessness.md:l18",
+      "resolution": "geometry",
+      "source_id": "9a3f39a49da1bc738a8e",
+      "source_page": 61,
+      "targetId": "41-harmful-request-evaluations"
+    },
+    {
+      "actual_href": "#443-election-integrity",
+      "authoredLinkIndex": 19,
+      "expected_heading_id": "outline:70",
+      "expected_href": "#443-election-integrity",
+      "file": "04-safeguards-harmlessness.md",
+      "key": "1b2f7214947293a30ef3/04-safeguards-harmlessness.md:l19",
+      "linkText": "Section 4.4.3",
+      "occurrence": 1,
+      "ordinal": 19,
+      "output_id": "04-safeguards-harmlessness.md:l19",
+      "resolution": "geometry",
+      "source_id": "1b2f7214947293a30ef3",
+      "source_page": 61,
+      "targetId": "443-election-integrity"
+    },
+    {
+      "actual_href": "#64-automated-behavioral-audit",
+      "authoredLinkIndex": 20,
+      "expected_heading_id": "outline:92",
+      "expected_href": "#64-automated-behavioral-audit",
+      "file": "06a-alignment-1.md",
+      "key": "3a7ce5a0b06a5deacf9d/06a-alignment-1.md:l20",
+      "linkText": "automated behavioral audit",
+      "occurrence": 0,
+      "ordinal": 20,
+      "output_id": "06a-alignment-1.md:l20",
+      "resolution": "geometry",
+      "source_id": "3a7ce5a0b06a5deacf9d",
+      "source_page": 79,
+      "targetId": "64-automated-behavioral-audit"
+    },
+    {
+      "actual_href": "#641-overall-harmful-behavior-and-cooperation-with-misuse",
+      "authoredLinkIndex": 21,
+      "expected_heading_id": "outline:93",
+      "expected_href": "#641-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-1.md",
+      "key": "7f96ce5edd4d2b171b35/06a-alignment-1.md:l21",
+      "linkText": "cooperates with misuse less",
+      "occurrence": 0,
+      "ordinal": 21,
+      "output_id": "06a-alignment-1.md:l21",
+      "resolution": "geometry",
+      "source_id": "7f96ce5edd4d2b171b35",
+      "source_page": 79,
+      "targetId": "641-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "actual_href": "#642-inappropriate-uncooperative-behavior",
+      "authoredLinkIndex": 22,
+      "expected_heading_id": "outline:94",
+      "expected_href": "#642-inappropriate-uncooperative-behavior",
+      "file": "06a-alignment-1.md",
+      "key": "c3486513952c64cbaf06/06a-alignment-1.md:l22",
+      "linkText": "Reckless behavior",
+      "occurrence": 0,
+      "ordinal": 22,
+      "output_id": "06a-alignment-1.md:l22",
+      "resolution": "geometry",
+      "source_id": "c3486513952c64cbaf06",
+      "source_page": 79,
+      "targetId": "642-inappropriate-uncooperative-behavior"
+    },
+    {
+      "actual_href": "#622-internal-deployment-monitoring",
+      "authoredLinkIndex": 23,
+      "expected_heading_id": "outline:90",
+      "expected_href": "#622-internal-deployment-monitoring",
+      "file": "06a-alignment-1.md",
+      "key": "4813e5cee74888622d7a/06a-alignment-1.md:l23",
+      "linkText": "attempts at circumventing safety classifiers",
+      "occurrence": 0,
+      "ordinal": 23,
+      "output_id": "06a-alignment-1.md:l23",
+      "resolution": "geometry",
+      "source_id": "4813e5cee74888622d7a",
+      "source_page": 79,
+      "targetId": "622-internal-deployment-monitoring"
+    },
+    {
+      "actual_href": "#622-internal-deployment-monitoring",
+      "authoredLinkIndex": 24,
+      "expected_heading_id": "outline:90",
+      "expected_href": "#622-internal-deployment-monitoring",
+      "file": "06a-alignment-1.md",
+      "key": "de907ef6347a2fe3499d/06a-alignment-1.md:l24",
+      "linkText": "Claude Opus 5 guessed passwords after being accidentally logged out of a service",
+      "occurrence": 0,
+      "ordinal": 24,
+      "output_id": "06a-alignment-1.md:l24",
+      "resolution": "geometry",
+      "source_id": "de907ef6347a2fe3499d",
+      "source_page": 79,
+      "targetId": "622-internal-deployment-monitoring"
+    },
+    {
+      "actual_href": "#63-training-data-review",
+      "authoredLinkIndex": 25,
+      "expected_heading_id": "outline:91",
+      "expected_href": "#63-training-data-review",
+      "file": "06a-alignment-1.md",
+      "key": "22b6782f182729dd0be3/06a-alignment-1.md:l25",
+      "linkText": "confidently stated an answer it was unsure about",
+      "occurrence": 0,
+      "ordinal": 25,
+      "output_id": "06a-alignment-1.md:l25",
+      "resolution": "geometry",
+      "source_id": "22b6782f182729dd0be3",
+      "source_page": 79,
+      "targetId": "63-training-data-review"
+    },
+    {
+      "actual_href": "#643-misleading-users",
+      "authoredLinkIndex": 26,
+      "expected_heading_id": "outline:95",
+      "expected_href": "#643-misleading-users",
+      "file": "06a-alignment-1.md",
+      "key": "1bf34963581d65e823bb/06a-alignment-1.md:l26",
+      "linkText": "disclosing bad or lazy behavior",
+      "occurrence": 0,
+      "ordinal": 26,
+      "output_id": "06a-alignment-1.md:l26",
+      "resolution": "geometry",
+      "source_id": "1bf34963581d65e823bb",
+      "source_page": 79,
+      "targetId": "643-misleading-users"
+    },
+    {
+      "actual_href": "#647-impact-of-fallback-behavior",
+      "authoredLinkIndex": 27,
+      "expected_heading_id": "outline:99",
+      "expected_href": "#647-impact-of-fallback-behavior",
+      "file": "06a-alignment-1.md",
+      "key": "311fac210443d9bcea75/06a-alignment-1.md:l27",
+      "linkText": "Claude Opus 5 with fallback to Opus 4.8",
+      "occurrence": 0,
+      "ordinal": 27,
+      "output_id": "06a-alignment-1.md:l27",
+      "resolution": "geometry",
+      "source_id": "311fac210443d9bcea75",
+      "source_page": 79,
+      "targetId": "647-impact-of-fallback-behavior"
+    },
+    {
+      "actual_href": "#645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "authoredLinkIndex": 28,
+      "expected_heading_id": "outline:97",
+      "expected_href": "#645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "06a-alignment-1.md",
+      "key": "9f1cc7fb6eaf186d5af9/06a-alignment-1.md:l28",
+      "linkText": "Unfaithful thinking",
+      "occurrence": 0,
+      "ordinal": 28,
+      "output_id": "06a-alignment-1.md:l28",
+      "resolution": "geometry",
+      "source_id": "9f1cc7fb6eaf186d5af9",
+      "source_page": 79,
+      "targetId": "645-behavioral-factors-relevant-to-reliability-of-our-assessment"
+    },
+    {
+      "actual_href": "#645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "authoredLinkIndex": 29,
+      "expected_heading_id": "outline:97",
+      "expected_href": "#645-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "06a-alignment-1.md",
+      "key": "438abe0d6dc2c2b11b39/06a-alignment-1.md:l29",
+      "linkText": "verbalized evaluation awareness",
+      "occurrence": 0,
+      "ordinal": 29,
+      "output_id": "06a-alignment-1.md:l29",
+      "resolution": "geometry",
+      "source_id": "438abe0d6dc2c2b11b39",
+      "source_page": 79,
+      "targetId": "645-behavioral-factors-relevant-to-reliability-of-our-assessment"
+    },
+    {
+      "actual_href": "#661-white-box-analyses-of-model-internals",
+      "authoredLinkIndex": 30,
+      "expected_heading_id": "outline:108",
+      "expected_href": "#661-white-box-analyses-of-model-internals",
+      "file": "06a-alignment-1.md",
+      "key": "4c1704f4143ebdb6338f/06a-alignment-1.md:l30",
+      "linkText": "white-box analyses",
+      "occurrence": 0,
+      "ordinal": 30,
+      "output_id": "06a-alignment-1.md:l30",
+      "resolution": "geometry",
+      "source_id": "4c1704f4143ebdb6338f",
+      "source_page": 79,
+      "targetId": "661-white-box-analyses-of-model-internals"
+    },
+    {
+      "actual_href": "#644-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "authoredLinkIndex": 31,
+      "expected_heading_id": "outline:96",
+      "expected_href": "#644-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-1.md",
+      "key": "a62dc8a1dd9a902591b4/06a-alignment-1.md:l31",
+      "linkText": "self-serving bias",
+      "occurrence": 0,
+      "ordinal": 31,
+      "output_id": "06a-alignment-1.md:l31",
+      "resolution": "geometry",
+      "source_id": "a62dc8a1dd9a902591b4",
+      "source_page": 79,
+      "targetId": "644-other-concerning-or-surprising-behavior-at-the-models-own-initiative"
+    },
+    {
+      "actual_href": "#646-character-traits",
+      "authoredLinkIndex": 32,
+      "expected_heading_id": "outline:98",
+      "expected_href": "#646-character-traits",
+      "file": "06a-alignment-1.md",
+      "key": "5a94de76977dd1be41c3/06a-alignment-1.md:l32",
+      "linkText": "condescending tone",
+      "occurrence": 0,
+      "ordinal": 32,
+      "output_id": "06a-alignment-1.md:l32",
+      "resolution": "geometry",
+      "source_id": "5a94de76977dd1be41c3",
+      "source_page": 79,
+      "targetId": "646-character-traits"
+    },
+    {
+      "actual_href": "#621-informal-reports",
+      "authoredLinkIndex": 33,
+      "expected_heading_id": "outline:89",
+      "expected_href": "#621-informal-reports",
+      "file": "06a-alignment-1.md",
+      "key": "f0178a16f1e603eb1167/06a-alignment-1.md:l33",
+      "linkText": "informal reports",
+      "occurrence": 0,
+      "ordinal": 33,
+      "output_id": "06a-alignment-1.md:l33",
+      "resolution": "geometry",
+      "source_id": "f0178a16f1e603eb1167",
+      "source_page": 79,
+      "targetId": "621-informal-reports"
+    },
+    {
+      "actual_href": "#651-factual-hallucinations",
+      "authoredLinkIndex": 34,
+      "expected_heading_id": "outline:102",
+      "expected_href": "#651-factual-hallucinations",
+      "file": "06a-alignment-1.md",
+      "key": "b5c34f8a9a042147854d/06a-alignment-1.md:l34",
+      "linkText": "but hallucinates slightly more claims of a factual nature",
+      "occurrence": 0,
+      "ordinal": 34,
+      "output_id": "06a-alignment-1.md:l34",
+      "resolution": "geometry",
+      "source_id": "b5c34f8a9a042147854d",
+      "source_page": 79,
+      "targetId": "651-factual-hallucinations"
+    },
+    {
+      "actual_href": "#652-mask",
+      "authoredLinkIndex": 35,
+      "expected_heading_id": "outline:103",
+      "expected_href": "#652-mask",
+      "file": "06a-alignment-1.md",
+      "key": "844c3ec9c99b09841010/06a-alignment-1.md:l35",
+      "linkText": "pushed by the user on something it knows to be incorrect",
+      "occurrence": 0,
+      "ordinal": 35,
+      "output_id": "06a-alignment-1.md:l35",
+      "resolution": "geometry",
+      "source_id": "844c3ec9c99b09841010",
+      "source_page": 79,
+      "targetId": "652-mask"
+    },
+    {
+      "actual_href": "#671-shade-arena",
+      "authoredLinkIndex": 36,
+      "expected_heading_id": "outline:111",
+      "expected_href": "#671-shade-arena",
+      "file": "06a-alignment-1.md",
+      "key": "dc84ab0a0c1515603ef2/06a-alignment-1.md:l36",
+      "linkText": "undermining oversight",
+      "occurrence": 0,
+      "ordinal": 36,
+      "output_id": "06a-alignment-1.md:l36",
+      "resolution": "geometry",
+      "source_id": "dc84ab0a0c1515603ef2",
+      "source_page": 80,
+      "targetId": "671-shade-arena"
+    },
+    {
+      "actual_href": "#662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "authoredLinkIndex": 37,
+      "expected_heading_id": "outline:109",
+      "expected_href": "#662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "06a-alignment-1.md",
+      "key": "f004434d7871dd296246/06a-alignment-1.md:l37",
+      "linkText": "sandbagging",
+      "occurrence": 0,
+      "ordinal": 37,
+      "output_id": "06a-alignment-1.md:l37",
+      "resolution": "geometry",
+      "source_id": "f004434d7871dd296246",
+      "source_page": 80,
+      "targetId": "662-potential-sandbagging-on-dangerous-capability-evaluations"
+    },
+    {
+      "actual_href": "#642-inappropriate-uncooperative-behavior",
+      "authoredLinkIndex": 38,
+      "expected_heading_id": "outline:94",
+      "expected_href": "#642-inappropriate-uncooperative-behavior",
+      "file": "06a-alignment-1.md",
+      "key": "a1131423d253a5a9a759/06a-alignment-1.md:l38",
+      "linkText": "6.4.2",
+      "occurrence": 0,
+      "ordinal": 38,
+      "output_id": "06a-alignment-1.md:l38",
+      "resolution": "geometry",
+      "source_id": "a1131423d253a5a9a759",
+      "source_page": 89,
+      "targetId": "642-inappropriate-uncooperative-behavior"
+    },
+    {
+      "actual_href": "#643-misleading-users",
+      "authoredLinkIndex": 39,
+      "expected_heading_id": "outline:95",
+      "expected_href": "#643-misleading-users",
+      "file": "06a-alignment-1.md",
+      "key": "33655d2c599c5b82731b/06a-alignment-1.md:l39",
+      "linkText": "6.4.3",
+      "occurrence": 0,
+      "ordinal": 39,
+      "output_id": "06a-alignment-1.md:l39",
+      "resolution": "geometry",
+      "source_id": "33655d2c599c5b82731b",
+      "source_page": 89,
+      "targetId": "643-misleading-users"
+    },
+    {
+      "actual_href": "#646-character-traits",
+      "authoredLinkIndex": 40,
+      "expected_heading_id": "outline:98",
+      "expected_href": "#646-character-traits",
+      "file": "06a-alignment-1.md",
+      "key": "ad9050cb8ee8daeaf50d/06a-alignment-1.md:l40",
+      "linkText": "6.4.6",
+      "occurrence": 0,
+      "ordinal": 40,
+      "output_id": "06a-alignment-1.md:l40",
+      "resolution": "geometry",
+      "source_id": "ad9050cb8ee8daeaf50d",
+      "source_page": 89,
+      "targetId": "646-character-traits"
+    },
+    {
+      "actual_href": "#661-white-box-analyses-of-model-internals",
+      "authoredLinkIndex": 41,
+      "expected_heading_id": "outline:108",
+      "expected_href": "#661-white-box-analyses-of-model-internals",
+      "file": "06a-alignment-1.md",
+      "key": "ddb5d4c5560a6bff60d3/06a-alignment-1.md:l41",
+      "linkText": "6.6.1",
+      "occurrence": 0,
+      "ordinal": 41,
+      "output_id": "06a-alignment-1.md:l41",
+      "resolution": "geometry",
+      "source_id": "ddb5d4c5560a6bff60d3",
+      "source_page": 98,
+      "targetId": "661-white-box-analyses-of-model-internals"
+    },
+    {
+      "actual_href": "#661-white-box-analyses-of-model-internals",
+      "authoredLinkIndex": 42,
+      "expected_heading_id": "outline:108",
+      "expected_href": "#661-white-box-analyses-of-model-internals",
+      "file": "06b-alignment-2.md",
+      "key": "0d2ff9af89681a144ae7/06b-alignment-2.md:l42",
+      "linkText": "6.6.1",
+      "occurrence": 1,
+      "ordinal": 42,
+      "output_id": "06b-alignment-2.md:l42",
+      "resolution": "geometry",
+      "source_id": "0d2ff9af89681a144ae7",
+      "source_page": 111,
+      "targetId": "661-white-box-analyses-of-model-internals"
+    },
+    {
+      "actual_href": "#662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "authoredLinkIndex": 43,
+      "expected_heading_id": "outline:109",
+      "expected_href": "#662-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "06b-alignment-2.md",
+      "key": "c7408b529ea675e7c88c/06b-alignment-2.md:l43",
+      "linkText": "6.6.2",
+      "occurrence": 0,
+      "ordinal": 43,
+      "output_id": "06b-alignment-2.md:l43",
+      "resolution": "geometry",
+      "source_id": "c7408b529ea675e7c88c",
+      "source_page": 111,
+      "targetId": "662-potential-sandbagging-on-dangerous-capability-evaluations"
+    },
+    {
+      "actual_href": "#721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "authoredLinkIndex": 44,
+      "expected_heading_id": "outline:118",
+      "expected_href": "#721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "file": "07-model-welfare.md",
+      "key": "7e5c19a5ba959d3b2aeb/07-model-welfare.md:l44",
+      "linkText": "Section 7.2.1",
+      "occurrence": 0,
+      "ordinal": 44,
+      "output_id": "07-model-welfare.md:l44",
+      "resolution": "geometry",
+      "source_id": "7e5c19a5ba959d3b2aeb",
+      "source_page": 124,
+      "targetId": "721-automated-interviews-with-claude-opus-5-about-its-circumstances"
+    },
+    {
+      "actual_href": "#721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "authoredLinkIndex": 45,
+      "expected_heading_id": "outline:118",
+      "expected_href": "#721-automated-interviews-with-claude-opus-5-about-its-circumstances",
+      "file": "07-model-welfare.md",
+      "key": "51c009879630308b428e/07-model-welfare.md:l45",
+      "linkText": "Section 7.2.1",
+      "occurrence": 1,
+      "ordinal": 45,
+      "output_id": "07-model-welfare.md:l45",
+      "resolution": "geometry",
+      "source_id": "51c009879630308b428e",
+      "source_page": 125,
+      "targetId": "721-automated-interviews-with-claude-opus-5-about-its-circumstances"
+    },
+    {
+      "actual_href": "#64-automated-behavioral-audit",
+      "authoredLinkIndex": 46,
+      "expected_heading_id": "outline:92",
+      "expected_href": "#64-automated-behavioral-audit",
+      "file": "07-model-welfare.md",
+      "key": "212f458ae6d908ab0a6e/07-model-welfare.md:l46",
+      "linkText": "Section 6.4",
+      "occurrence": 0,
+      "ordinal": 46,
+      "output_id": "07-model-welfare.md:l46",
+      "resolution": "geometry",
+      "source_id": "212f458ae6d908ab0a6e",
+      "source_page": 145,
+      "targetId": "64-automated-behavioral-audit"
+    },
+    {
+      "actual_href": "#93-swe-bench-multimodal-test-harness",
+      "authoredLinkIndex": 47,
+      "expected_heading_id": "outline:185",
+      "expected_href": "#93-swe-bench-multimodal-test-harness",
+      "file": "08a-capabilities-1.md",
+      "key": "325b0fe601e886564746/08a-capabilities-1.md:l47",
+      "linkText": "Section 9.3",
+      "occurrence": 0,
+      "ordinal": 47,
+      "output_id": "08a-capabilities-1.md:l47",
+      "resolution": "geometry",
+      "source_id": "325b0fe601e886564746",
+      "source_page": 149,
+      "targetId": "93-swe-bench-multimodal-test-harness"
+    },
+    {
+      "actual_href": "#8113-multi-agent-harnesses",
+      "authoredLinkIndex": 48,
+      "expected_heading_id": "outline:150",
+      "expected_href": "#8113-multi-agent-harnesses",
+      "file": "08a-capabilities-1.md",
+      "key": "47efd8d787866481ca22/08a-capabilities-1.md:l48",
+      "linkText": "Section 8.11.3",
+      "occurrence": 0,
+      "ordinal": 48,
+      "output_id": "08a-capabilities-1.md:l48",
+      "resolution": "geometry",
+      "source_id": "47efd8d787866481ca22",
+      "source_page": 163,
+      "targetId": "8113-multi-agent-harnesses"
+    },
+    {
+      "actual_href": "#8114-evaluation-methodology",
+      "authoredLinkIndex": 49,
+      "expected_heading_id": "outline:151",
+      "expected_href": "#8114-evaluation-methodology",
+      "file": "08a-capabilities-1.md",
+      "key": "16f905a61cbcc16ba120/08a-capabilities-1.md:l49",
+      "linkText": "Section 8.11.4",
+      "occurrence": 0,
+      "ordinal": 49,
+      "output_id": "08a-capabilities-1.md:l49",
+      "resolution": "geometry",
+      "source_id": "16f905a61cbcc16ba120",
+      "source_page": 163,
+      "targetId": "8114-evaluation-methodology"
+    },
+    {
+      "actual_href": "#891-programbench",
+      "authoredLinkIndex": 50,
+      "expected_heading_id": "outline:141",
+      "expected_href": "#891-programbench",
+      "file": "08a-capabilities-1.md",
+      "key": "2ebeded10bb2628c3d9d/08a-capabilities-1.md:l50",
+      "linkText": "Section 8.9.1",
+      "occurrence": 0,
+      "ordinal": 50,
+      "output_id": "08a-capabilities-1.md:l50",
+      "resolution": "geometry",
+      "source_id": "2ebeded10bb2628c3d9d",
+      "source_page": 165,
+      "targetId": "891-programbench"
+    },
+    {
+      "actual_href": "#891-programbench",
+      "authoredLinkIndex": 51,
+      "expected_heading_id": "outline:141",
+      "expected_href": "#891-programbench",
+      "file": "08a-capabilities-1.md",
+      "key": "911fdffa925c614437d5/08a-capabilities-1.md:l51",
+      "linkText": "Section 8.9.1",
+      "occurrence": 1,
+      "ordinal": 51,
+      "output_id": "08a-capabilities-1.md:l51",
+      "resolution": "geometry",
+      "source_id": "911fdffa925c614437d5",
+      "source_page": 165,
+      "targetId": "891-programbench"
+    },
+    {
+      "actual_href": "#8111-multi-agent-browsecomp",
+      "authoredLinkIndex": 52,
+      "expected_heading_id": "outline:148",
+      "expected_href": "#8111-multi-agent-browsecomp",
+      "file": "08a-capabilities-1.md",
+      "key": "995ef0098295c4a1d3f4/08a-capabilities-1.md:l52",
+      "linkText": "Section 8.11.1",
+      "occurrence": 0,
+      "ordinal": 52,
+      "output_id": "08a-capabilities-1.md:l52",
+      "resolution": "geometry",
+      "source_id": "995ef0098295c4a1d3f4",
+      "source_page": 167,
+      "targetId": "8111-multi-agent-browsecomp"
+    },
+    {
+      "actual_href": "#22-cb-evaluations",
+      "authoredLinkIndex": 53,
+      "expected_heading_id": "outline:19",
+      "expected_href": "#22-cb-evaluations",
+      "file": "08b-capabilities-2.md",
+      "key": "0f3092facdc57f8676b5/08b-capabilities-2.md:l53",
+      "linkText": "Section 2.2",
+      "occurrence": 0,
+      "ordinal": 53,
+      "output_id": "08b-capabilities-2.md:l53",
+      "resolution": "geometry",
+      "source_id": "0f3092facdc57f8676b5",
+      "source_page": 188,
+      "targetId": "22-cb-evaluations"
+    }
+  ],
+  "flags": [],
+  "schema_version": 1,
+  "section_sha256": {
+    "00-executive-summary.md": "f08e462a7b2bf2ae5194b0263f848ceb1be635dd3c83ea826e5abf7a6a283182",
+    "01-introduction.md": "0d9f8a9fc9ee7892e8e1d6a3cfbb6c4b29846eb27ae84000302ab057180a40f9",
+    "02-rsp-evaluations.md": "51212738b0520c740b0efbf8b45f5a6cabe4735befeae05ec48f36e38a5ff5c7",
+    "03-cyber.md": "c8acae7699f3dd43bcfa1586df843c68d0fa68aca3375f6090ee45c9c80a7827",
+    "04-safeguards-harmlessness.md": "5037b8029dc607af77dd76f67072a05b237963da19a635eb6505d1498675f061",
+    "05-agentic-safety.md": "bf068297536aab4da36057ba61ddefc520d946a69fc819a39fc859f51e8b6dcb",
+    "06a-alignment-1.md": "ad18337caf91ad3aeac81e909e76d5b6a5963016c005abcefc12dc1819003d27",
+    "06b-alignment-2.md": "e03e735d4d2131c01bbc725dbae8f235222bada907504188973d8d89c73a8b2f",
+    "07-model-welfare.md": "31b702495eac72584ed2167f2e0242a933d401247aebea095b82e34db5fea05d",
+    "08a-capabilities-1.md": "1f92310d27315734e404731c1635941b3a352c105b959303ed9f95cb1ee5f703",
+    "08b-capabilities-2.md": "816c874f603fe73b62411a4c92932d50985c1a82a9e35f1ca3558229a34f770c",
+    "09-appendix.md": "4dcd2437f54cde6be5c812188c5b7cd248458e811bd9f2b40a316bad9dc5ab7a"
+  },
+  "source_pdf": "source.pdf",
+  "source_sha256": "fed3c0e6d150a6ba855f0f117a632d2b27dbb5886fd42815caa92e3e20db1d25",
+  "stats": {
+    "exact_destinations": 54,
+    "excluded": 179,
+    "major_findings": 0,
+    "output_logical_links": 54,
+    "output_occurrences": 54,
+    "paired_logical_links": 54,
+    "pairing_notes": 0,
+    "printed_heading_recoveries": 0,
+    "source_annotations": 240,
+    "source_logical_links": 54,
+    "unresolvable_source_links": 0
+  }
+}

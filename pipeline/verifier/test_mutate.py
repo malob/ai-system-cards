@@ -19,6 +19,26 @@ def result(caught=7, tried=8, invariant="T1"):
 
 
 class MutationBaselineTests(unittest.TestCase):
+    def test_class_rng_is_independent_of_other_class_sampling(self):
+        first = mutate.class_rng(5, "repoint-link")
+        expected = [first.random() for _ in range(3)]
+        unrelated = mutate.class_rng(5, "drop-link")
+        for _ in range(100):
+            unrelated.random()
+        second = mutate.class_rng(5, "repoint-link")
+        actual = [second.random() for _ in range(3)]
+        self.assertEqual(expected, actual)
+        self.assertNotEqual(expected[0], mutate.class_rng(5, "drop-link").random())
+
+    def test_repoint_link_uses_a_different_existing_target(self):
+        source = "[first](#one) and [second](#two)"
+        changed, note = mutate.mutations("repoint-link", source, mutate.random.Random(5))
+        self.assertNotEqual(source, changed)
+        self.assertIn(" -> ", note)
+        targets = [target for _, target in mutate.RE_INTERNAL_LINK.findall(changed)]
+        self.assertTrue(set(targets).issubset({"one", "two"}))
+        self.assertEqual(1, len(set(targets)))
+
     def test_equal_result_holds(self):
         self.assertEqual([], mutate.baseline_regressions({"drop": result()}, {"drop": result()}))
 

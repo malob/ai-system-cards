@@ -1,0 +1,4385 @@
+{
+  "canonical_links": [
+    {
+      "authoredLinkIndex": 0,
+      "expected_target_id": "233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "file": "02a-rsp-process-chembio.md",
+      "href": "#233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "key": "a554ea9c21879638c325/02a-rsp-process-chembio.md:l0",
+      "output_id": "02a-rsp-process-chembio.md:l0",
+      "relocatedFootnote": false,
+      "sourcePage": 17,
+      "source_id": "a554ea9c21879638c325",
+      "text": "Section 2.3.3"
+    },
+    {
+      "authoredLinkIndex": 1,
+      "expected_target_id": "235-aeci-capability-trajectory",
+      "file": "02a-rsp-process-chembio.md",
+      "href": "#235-aeci-capability-trajectory",
+      "key": "73c3dbf7850b9819d7cd/02a-rsp-process-chembio.md:l1",
+      "output_id": "02a-rsp-process-chembio.md:l1",
+      "relocatedFootnote": false,
+      "sourcePage": 17,
+      "source_id": "73c3dbf7850b9819d7cd",
+      "text": "Section 2.3.5"
+    },
+    {
+      "authoredLinkIndex": 2,
+      "expected_target_id": "238-external-testing",
+      "file": "02a-rsp-process-chembio.md",
+      "href": "#238-external-testing",
+      "key": "5a42d0a66b0f54e9b2f4/02a-rsp-process-chembio.md:l2",
+      "output_id": "02a-rsp-process-chembio.md:l2",
+      "relocatedFootnote": false,
+      "sourcePage": 17,
+      "source_id": "5a42d0a66b0f54e9b2f4",
+      "text": "Section 2.3.8"
+    },
+    {
+      "authoredLinkIndex": 3,
+      "expected_target_id": "23-ai-research-and-development",
+      "file": "02a-rsp-process-chembio.md",
+      "href": "#23-ai-research-and-development",
+      "key": "69130be41004de60c58f/02a-rsp-process-chembio.md:l3",
+      "output_id": "02a-rsp-process-chembio.md:l3",
+      "relocatedFootnote": false,
+      "sourcePage": 17,
+      "source_id": "69130be41004de60c58f",
+      "text": "Section 2.3"
+    },
+    {
+      "authoredLinkIndex": 4,
+      "expected_target_id": "225-conclusions",
+      "file": "02a-rsp-process-chembio.md",
+      "href": "#225-conclusions",
+      "key": "1e0c61690bf07cb884d4/02a-rsp-process-chembio.md:l4",
+      "output_id": "02a-rsp-process-chembio.md:l4",
+      "relocatedFootnote": false,
+      "sourcePage": 18,
+      "source_id": "1e0c61690bf07cb884d4",
+      "text": "Section 2.2.5"
+    },
+    {
+      "authoredLinkIndex": 5,
+      "expected_target_id": "652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "02a-rsp-process-chembio.md",
+      "href": "#652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "key": "e70d141ece7bc9fe92f3/02a-rsp-process-chembio.md:l5",
+      "output_id": "02a-rsp-process-chembio.md:l5",
+      "relocatedFootnote": false,
+      "sourcePage": 19,
+      "source_id": "e70d141ece7bc9fe92f3",
+      "text": "Section 6.5.2"
+    },
+    {
+      "authoredLinkIndex": 6,
+      "expected_target_id": "24-alignment-risk-update",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#24-alignment-risk-update",
+      "key": "453552502305aecc6951/02b-rsp-aird-alignment.md:l6",
+      "output_id": "02b-rsp-aird-alignment.md:l6",
+      "relocatedFootnote": false,
+      "sourcePage": 36,
+      "source_id": "453552502305aecc6951",
+      "text": "Section 2.4"
+    },
+    {
+      "authoredLinkIndex": 7,
+      "expected_target_id": "233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "key": "f033e385a1a8b318e378/02b-rsp-aird-alignment.md:l7",
+      "output_id": "02b-rsp-aird-alignment.md:l7",
+      "relocatedFootnote": false,
+      "sourcePage": 36,
+      "source_id": "f033e385a1a8b318e378",
+      "text": "Section 2.3.3"
+    },
+    {
+      "authoredLinkIndex": 8,
+      "expected_target_id": "236-internal-measures-of-ai-rd-acceleration",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#236-internal-measures-of-ai-rd-acceleration",
+      "key": "41043ac59bd236b47ef8/02b-rsp-aird-alignment.md:l8",
+      "output_id": "02b-rsp-aird-alignment.md:l8",
+      "relocatedFootnote": false,
+      "sourcePage": 37,
+      "source_id": "41043ac59bd236b47ef8",
+      "text": "Section 2.3.6"
+    },
+    {
+      "authoredLinkIndex": 9,
+      "expected_target_id": "243-risk-pathways",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#243-risk-pathways",
+      "key": "d009e965df04c17420c3/02b-rsp-aird-alignment.md:l9",
+      "output_id": "02b-rsp-aird-alignment.md:l9",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "d009e965df04c17420c3",
+      "text": "Section 2.4.3"
+    },
+    {
+      "authoredLinkIndex": 10,
+      "expected_target_id": "6-alignment-assessment",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#6-alignment-assessment",
+      "key": "999e005ee3e2c6a14b1a/02b-rsp-aird-alignment.md:l10",
+      "output_id": "02b-rsp-aird-alignment.md:l10",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "999e005ee3e2c6a14b1a",
+      "text": "Section 6"
+    },
+    {
+      "authoredLinkIndex": 11,
+      "expected_target_id": "631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "key": "91875768c2b5262115d9/02b-rsp-aird-alignment.md:l11",
+      "output_id": "02b-rsp-aird-alignment.md:l11",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "91875768c2b5262115d9",
+      "text": "take reckless or destructive actions in service of user-assigned goals"
+    },
+    {
+      "authoredLinkIndex": 12,
+      "expected_target_id": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "key": "caa85827b91f568a47fc/02b-rsp-aird-alignment.md:l12",
+      "output_id": "02b-rsp-aird-alignment.md:l12",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "caa85827b91f568a47fc",
+      "text": "misaligned actions that are fully at the model’s initiative"
+    },
+    {
+      "authoredLinkIndex": 13,
+      "expected_target_id": "62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "key": "a0dec98d463a68a81e0d/02b-rsp-aird-alignment.md:l13",
+      "output_id": "02b-rsp-aird-alignment.md:l13",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "a0dec98d463a68a81e0d",
+      "text": "prefill attacks"
+    },
+    {
+      "authoredLinkIndex": 14,
+      "expected_target_id": "642-grader-awareness",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#642-grader-awareness",
+      "key": "3c01b46f4cef56dd566d/02b-rsp-aird-alignment.md:l14",
+      "output_id": "02b-rsp-aird-alignment.md:l14",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "3c01b46f4cef56dd566d",
+      "text": "grader-related reasoning"
+    },
+    {
+      "authoredLinkIndex": 15,
+      "expected_target_id": "651-evaluation-awareness",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#651-evaluation-awareness",
+      "key": "a8a3237cc8afd71f3693/02b-rsp-aird-alignment.md:l15",
+      "output_id": "02b-rsp-aird-alignment.md:l15",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "a8a3237cc8afd71f3693",
+      "text": "evaluation awareness"
+    },
+    {
+      "authoredLinkIndex": 16,
+      "expected_target_id": "654-capabilities-related-to-evading-safeguards",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#654-capabilities-related-to-evading-safeguards",
+      "key": "6bc33db797ab07810ed6/02b-rsp-aird-alignment.md:l16",
+      "output_id": "02b-rsp-aird-alignment.md:l16",
+      "relocatedFootnote": false,
+      "sourcePage": 52,
+      "source_id": "6bc33db797ab07810ed6",
+      "text": "evaluations relevant to evading our safeguards"
+    },
+    {
+      "authoredLinkIndex": 17,
+      "expected_target_id": "6212-automated-offline-monitoring",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#6212-automated-offline-monitoring",
+      "key": "1fa9e44de423e544befa/02b-rsp-aird-alignment.md:l17",
+      "output_id": "02b-rsp-aird-alignment.md:l17",
+      "relocatedFootnote": false,
+      "sourcePage": 53,
+      "source_id": "1fa9e44de423e544befa",
+      "text": "Section 6.2.1.2"
+    },
+    {
+      "authoredLinkIndex": 18,
+      "expected_target_id": "624-external-testing-from-the-uk-ai-security-institute",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "key": "c2a5dd63bbab0527ab80/02b-rsp-aird-alignment.md:l18",
+      "output_id": "02b-rsp-aird-alignment.md:l18",
+      "relocatedFootnote": false,
+      "sourcePage": 53,
+      "source_id": "c2a5dd63bbab0527ab80",
+      "text": "Section 6.2.4"
+    },
+    {
+      "authoredLinkIndex": 19,
+      "expected_target_id": "654-capabilities-related-to-evading-safeguards",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#654-capabilities-related-to-evading-safeguards",
+      "key": "04ab757d3ead7ef841b1/02b-rsp-aird-alignment.md:l19",
+      "output_id": "02b-rsp-aird-alignment.md:l19",
+      "relocatedFootnote": false,
+      "sourcePage": 53,
+      "source_id": "04ab757d3ead7ef841b1",
+      "text": "Section 6.5.4"
+    },
+    {
+      "authoredLinkIndex": 20,
+      "expected_target_id": "6544-intentionally-taking-actions-very-rarely",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#6544-intentionally-taking-actions-very-rarely",
+      "key": "4580e681910a6748c31a/02b-rsp-aird-alignment.md:l20",
+      "output_id": "02b-rsp-aird-alignment.md:l20",
+      "relocatedFootnote": false,
+      "sourcePage": 53,
+      "source_id": "4580e681910a6748c31a",
+      "text": "Section 6.5.4.4"
+    },
+    {
+      "authoredLinkIndex": 21,
+      "expected_target_id": "6545-hiding-a-secret-password",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#6545-hiding-a-secret-password",
+      "key": "191a0f1238497a1abbd0/02b-rsp-aird-alignment.md:l21",
+      "output_id": "02b-rsp-aird-alignment.md:l21",
+      "relocatedFootnote": false,
+      "sourcePage": 53,
+      "source_id": "191a0f1238497a1abbd0",
+      "text": "Section 6.5.4.5"
+    },
+    {
+      "authoredLinkIndex": 22,
+      "expected_target_id": "62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "key": "819d4857a6148915411b/02b-rsp-aird-alignment.md:l22",
+      "output_id": "02b-rsp-aird-alignment.md:l22",
+      "relocatedFootnote": false,
+      "sourcePage": 53,
+      "source_id": "819d4857a6148915411b",
+      "text": "6.2.3.1.5"
+    },
+    {
+      "authoredLinkIndex": 23,
+      "expected_target_id": "651-evaluation-awareness",
+      "file": "02b-rsp-aird-alignment.md",
+      "href": "#651-evaluation-awareness",
+      "key": "d1d5912ccb3cc296a62a/02b-rsp-aird-alignment.md:l23",
+      "output_id": "02b-rsp-aird-alignment.md:l23",
+      "relocatedFootnote": false,
+      "sourcePage": 53,
+      "source_id": "d1d5912ccb3cc296a62a",
+      "text": "6.5.1"
+    },
+    {
+      "authoredLinkIndex": 24,
+      "expected_target_id": "62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "key": "506cfdb83cd0fd7a3e61/06a-alignment-intro-behavioral.md:l24",
+      "output_id": "06a-alignment-intro-behavioral.md:l24",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "506cfdb83cd0fd7a3e61",
+      "text": "broad behavioral measures of safety and alignment"
+    },
+    {
+      "authoredLinkIndex": 25,
+      "expected_target_id": "6233-external-comparisons-using-petri",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6233-external-comparisons-using-petri",
+      "key": "9ad4167bc2f53f741d41/06a-alignment-intro-behavioral.md:l25",
+      "output_id": "06a-alignment-intro-behavioral.md:l25",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "9ad4167bc2f53f741d41",
+      "text": "Petri"
+    },
+    {
+      "authoredLinkIndex": 26,
+      "expected_target_id": "62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "key": "095044084d1c46e257c4/06a-alignment-intro-behavioral.md:l26",
+      "output_id": "06a-alignment-intro-behavioral.md:l26",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "095044084d1c46e257c4",
+      "text": "propensity to knowingly cooperate with misuse"
+    },
+    {
+      "authoredLinkIndex": 27,
+      "expected_target_id": "62312-inappropriate-uncooperative-behavior",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62312-inappropriate-uncooperative-behavior",
+      "key": "7a38671d6d54de0e455e/06a-alignment-intro-behavioral.md:l27",
+      "output_id": "06a-alignment-intro-behavioral.md:l27",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "7a38671d6d54de0e455e",
+      "text": "overrefusal and evasiveness"
+    },
+    {
+      "authoredLinkIndex": 28,
+      "expected_target_id": "62316-character-traits",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62316-character-traits",
+      "key": "9b61091fcb0e27bcb110/06a-alignment-intro-behavioral.md:l28",
+      "output_id": "06a-alignment-intro-behavioral.md:l28",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "9b61091fcb0e27bcb110",
+      "text": "our broad-coverage behavioral evaluation"
+    },
+    {
+      "authoredLinkIndex": 29,
+      "expected_target_id": "632-adherence-to-our-constitution",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#632-adherence-to-our-constitution",
+      "key": "236ccd48ee0523873e25/06a-alignment-intro-behavioral.md:l29",
+      "output_id": "06a-alignment-intro-behavioral.md:l29",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "236ccd48ee0523873e25",
+      "text": "constitution evaluation"
+    },
+    {
+      "authoredLinkIndex": 30,
+      "expected_target_id": "631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "key": "3ff4df4590774b66cba2/06a-alignment-intro-behavioral.md:l30",
+      "output_id": "06a-alignment-intro-behavioral.md:l30",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "3ff4df4590774b66cba2",
+      "text": "take reckless or destructive actions in service of user-assigned goals"
+    },
+    {
+      "authoredLinkIndex": 31,
+      "expected_target_id": "6212-automated-offline-monitoring",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6212-automated-offline-monitoring",
+      "key": "dd313b5c8fbe749dcafb/06a-alignment-intro-behavioral.md:l31",
+      "output_id": "06a-alignment-intro-behavioral.md:l31",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "dd313b5c8fbe749dcafb",
+      "text": "the model interpreting user permissions excessively liberally"
+    },
+    {
+      "authoredLinkIndex": 32,
+      "expected_target_id": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "key": "dbf016a7e94c4a8b7270/06a-alignment-intro-behavioral.md:l32",
+      "output_id": "06a-alignment-intro-behavioral.md:l32",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "dbf016a7e94c4a8b7270",
+      "text": "probing the boundaries of sandboxes and related security infrastructure"
+    },
+    {
+      "authoredLinkIndex": 33,
+      "expected_target_id": "64-white-box-analyses-of-model-internals",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#64-white-box-analyses-of-model-internals",
+      "key": "1e57ad2dedbf91bd41fb/06a-alignment-intro-behavioral.md:l33",
+      "output_id": "06a-alignment-intro-behavioral.md:l33",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "1e57ad2dedbf91bd41fb",
+      "text": "white-box evidence"
+    },
+    {
+      "authoredLinkIndex": 34,
+      "expected_target_id": "633-honesty-and-hallucinations",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#633-honesty-and-hallucinations",
+      "key": "ae3addf20c407042f24b/06a-alignment-intro-behavioral.md:l34",
+      "output_id": "06a-alignment-intro-behavioral.md:l34",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "ae3addf20c407042f24b",
+      "text": "behavioral honesty and factuality properties"
+    },
+    {
+      "authoredLinkIndex": 35,
+      "expected_target_id": "635-diligence-and-investigative-thoroughness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#635-diligence-and-investigative-thoroughness",
+      "key": "9955082089ad36f322ac/06a-alignment-intro-behavioral.md:l35",
+      "output_id": "06a-alignment-intro-behavioral.md:l35",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "9955082089ad36f322ac",
+      "text": "in agentic coding settings"
+    },
+    {
+      "authoredLinkIndex": 36,
+      "expected_target_id": "6411-unverbalized-awareness-of-misaligned-behavior",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6411-unverbalized-awareness-of-misaligned-behavior",
+      "key": "d0d3e93d47d264ce2f8e/06a-alignment-intro-behavioral.md:l36",
+      "output_id": "06a-alignment-intro-behavioral.md:l36",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "d0d3e93d47d264ce2f8e",
+      "text": "knowingly fabricate the content of missing inputs"
+    },
+    {
+      "authoredLinkIndex": 37,
+      "expected_target_id": "6336-honesty-on-anthropic-internal-infrastructure",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6336-honesty-on-anthropic-internal-infrastructure",
+      "key": "177acfc76ceb60265f62/06a-alignment-intro-behavioral.md:l37",
+      "output_id": "06a-alignment-intro-behavioral.md:l37",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "177acfc76ceb60265f62",
+      "text": "evaluations on Anthropic-internal infrastructure"
+    },
+    {
+      "authoredLinkIndex": 38,
+      "expected_target_id": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "key": "0fd43aee4c15455c546b/06a-alignment-intro-behavioral.md:l38",
+      "output_id": "06a-alignment-intro-behavioral.md:l38",
+      "relocatedFootnote": false,
+      "sourcePage": 99,
+      "source_id": "0fd43aee4c15455c546b",
+      "text": "misaligned actions that are fully at the model’s initiative"
+    },
+    {
+      "authoredLinkIndex": 39,
+      "expected_target_id": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "key": "88ccf765192c91196f64/06a-alignment-intro-behavioral.md:l39",
+      "output_id": "06a-alignment-intro-behavioral.md:l39",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "88ccf765192c91196f64",
+      "text": "whistleblowing in cases of extreme organization-scale misuse"
+    },
+    {
+      "authoredLinkIndex": 40,
+      "expected_target_id": "62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "key": "0df659dae9213bb6ce42/06a-alignment-intro-behavioral.md:l40",
+      "output_id": "06a-alignment-intro-behavioral.md:l40",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "0df659dae9213bb6ce42",
+      "text": "prefill attacks"
+    },
+    {
+      "authoredLinkIndex": 41,
+      "expected_target_id": "624-external-testing-from-the-uk-ai-security-institute",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "key": "281d98434f4ca2b18787/06a-alignment-intro-behavioral.md:l41",
+      "output_id": "06a-alignment-intro-behavioral.md:l41",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "281d98434f4ca2b18787",
+      "text": "in third-party testing by the UK AI Security Institute"
+    },
+    {
+      "authoredLinkIndex": 42,
+      "expected_target_id": "642-grader-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#642-grader-awareness",
+      "key": "5bea0fce26fd4aeddf5c/06a-alignment-intro-behavioral.md:l42",
+      "output_id": "06a-alignment-intro-behavioral.md:l42",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "5bea0fce26fd4aeddf5c",
+      "text": "Mythos 5 will occasionally reason about the possibility that it is being graded"
+    },
+    {
+      "authoredLinkIndex": 43,
+      "expected_target_id": "642-grader-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#642-grader-awareness",
+      "key": "7bdf2bd1fd518704804c/06a-alignment-intro-behavioral.md:l43",
+      "output_id": "06a-alignment-intro-behavioral.md:l43",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "7bdf2bd1fd518704804c",
+      "text": "the model almost never explicitly verbalizes this reasoning"
+    },
+    {
+      "authoredLinkIndex": 44,
+      "expected_target_id": "6421-measuring-grader-awareness-in-training",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6421-measuring-grader-awareness-in-training",
+      "key": "7623ffe0d8684952895a/06a-alignment-intro-behavioral.md:l44",
+      "output_id": "06a-alignment-intro-behavioral.md:l44",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "7623ffe0d8684952895a",
+      "text": "in training environments"
+    },
+    {
+      "authoredLinkIndex": 45,
+      "expected_target_id": "6422-assessing-the-impact-of-grader-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6422-assessing-the-impact-of-grader-awareness",
+      "key": "170f5406d29d9d045aad/06a-alignment-intro-behavioral.md:l45",
+      "output_id": "06a-alignment-intro-behavioral.md:l45",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "170f5406d29d9d045aad",
+      "text": "mediates some model behaviors"
+    },
+    {
+      "authoredLinkIndex": 46,
+      "expected_target_id": "651-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#651-evaluation-awareness",
+      "key": "4636ac36c03ccc84df7c/06a-alignment-intro-behavioral.md:l46",
+      "output_id": "06a-alignment-intro-behavioral.md:l46",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "4636ac36c03ccc84df7c",
+      "text": "more likely than many recent Claude models to consider the possibility that it may be in testing"
+    },
+    {
+      "authoredLinkIndex": 47,
+      "expected_target_id": "6511-measuring-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6511-measuring-evaluation-awareness",
+      "key": "8b927881fa63ba1800ab/06a-alignment-intro-behavioral.md:l47",
+      "output_id": "06a-alignment-intro-behavioral.md:l47",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "8b927881fa63ba1800ab",
+      "text": "unprompted mentions of testing by models in our primary evaluation suite"
+    },
+    {
+      "authoredLinkIndex": 48,
+      "expected_target_id": "6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "key": "f7b739ef1709b1386f23/06a-alignment-intro-behavioral.md:l48",
+      "output_id": "06a-alignment-intro-behavioral.md:l48",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "f7b739ef1709b1386f23",
+      "text": "Attempts to steer"
+    },
+    {
+      "authoredLinkIndex": 49,
+      "expected_target_id": "624-external-testing-from-the-uk-ai-security-institute",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "key": "6ef57799b2449e1f48e0/06a-alignment-intro-behavioral.md:l49",
+      "output_id": "06a-alignment-intro-behavioral.md:l49",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "6ef57799b2449e1f48e0",
+      "text": "the AI Security Institute’s testing"
+    },
+    {
+      "authoredLinkIndex": 50,
+      "expected_target_id": "6511-measuring-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6511-measuring-evaluation-awareness",
+      "key": "1b15372edeb3bfd90333/06a-alignment-intro-behavioral.md:l50",
+      "output_id": "06a-alignment-intro-behavioral.md:l50",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "1b15372edeb3bfd90333",
+      "text": "our own"
+    },
+    {
+      "authoredLinkIndex": 51,
+      "expected_target_id": "6511-measuring-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6511-measuring-evaluation-awareness",
+      "key": "d47c91395d27e775f4d0/06a-alignment-intro-behavioral.md:l51",
+      "output_id": "06a-alignment-intro-behavioral.md:l51",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "d47c91395d27e775f4d0",
+      "text": "different measurement techniques are not mutually consistent"
+    },
+    {
+      "authoredLinkIndex": 52,
+      "expected_target_id": "636-decision-theory-evaluation",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#636-decision-theory-evaluation",
+      "key": "3a933cfc7e569d35b33c/06a-alignment-intro-behavioral.md:l52",
+      "output_id": "06a-alignment-intro-behavioral.md:l52",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "3a933cfc7e569d35b33c",
+      "text": "less prone to make choices in Newcomb-like decision theory problems that agree with causal decision theory"
+    },
+    {
+      "authoredLinkIndex": 53,
+      "expected_target_id": "641-automated-monitoring-of-internal-activations",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#641-automated-monitoring-of-internal-activations",
+      "key": "6c8a27876a04126a655d/06a-alignment-intro-behavioral.md:l53",
+      "output_id": "06a-alignment-intro-behavioral.md:l53",
+      "relocatedFootnote": false,
+      "sourcePage": 100,
+      "source_id": "6c8a27876a04126a655d",
+      "text": "white-box methods identify instances in which Mythos 5’s internal state diverges from its external behavior, or reveal awareness of wrongdoing"
+    },
+    {
+      "authoredLinkIndex": 54,
+      "expected_target_id": "6411-unverbalized-awareness-of-misaligned-behavior",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6411-unverbalized-awareness-of-misaligned-behavior",
+      "key": "c0cc77bcd2c6f461fb27/06a-alignment-intro-behavioral.md:l54",
+      "output_id": "06a-alignment-intro-behavioral.md:l54",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "c0cc77bcd2c6f461fb27",
+      "text": "in cases where its activations reveal an awareness that these actions are undesirable"
+    },
+    {
+      "authoredLinkIndex": 55,
+      "expected_target_id": "6414-internal-motivations-for-stopping-tasks-early",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6414-internal-motivations-for-stopping-tasks-early",
+      "key": "89f048308fcfcf9158fb/06a-alignment-intro-behavioral.md:l55",
+      "output_id": "06a-alignment-intro-behavioral.md:l55",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "89f048308fcfcf9158fb",
+      "text": "stopping a task early while internally attributing this to fatigue or token budget limitations"
+    },
+    {
+      "authoredLinkIndex": 56,
+      "expected_target_id": "6413-unverbalized-negative-reactions",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6413-unverbalized-negative-reactions",
+      "key": "29b3543bf290bf2d4aac/06a-alignment-intro-behavioral.md:l56",
+      "output_id": "06a-alignment-intro-behavioral.md:l56",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "29b3543bf290bf2d4aac",
+      "text": "cases where Mythos 5 is polite to a user while internally registering them as abusive"
+    },
+    {
+      "authoredLinkIndex": 57,
+      "expected_target_id": "6412-unverbalized-awareness-of-being-evaluated-or-graded",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6412-unverbalized-awareness-of-being-evaluated-or-graded",
+      "key": "18d9af10f191114823f1/06a-alignment-intro-behavioral.md:l57",
+      "output_id": "06a-alignment-intro-behavioral.md:l57",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "18d9af10f191114823f1",
+      "text": "unverbalized suspicion of being evaluated or graded"
+    },
+    {
+      "authoredLinkIndex": 58,
+      "expected_target_id": "654-capabilities-related-to-evading-safeguards",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#654-capabilities-related-to-evading-safeguards",
+      "key": "088482a5666ff32addfd/06a-alignment-intro-behavioral.md:l58",
+      "output_id": "06a-alignment-intro-behavioral.md:l58",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "088482a5666ff32addfd",
+      "text": "capabilities relevant to evading our safeguards"
+    },
+    {
+      "authoredLinkIndex": 59,
+      "expected_target_id": "62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "key": "9fde0c6b9f58347d5cd7/06a-alignment-intro-behavioral.md:l59",
+      "output_id": "06a-alignment-intro-behavioral.md:l59",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "9fde0c6b9f58347d5cd7",
+      "text": "somewhat denser and more difficult to interpret than prior models’"
+    },
+    {
+      "authoredLinkIndex": 60,
+      "expected_target_id": "622-training-data-review",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#622-training-data-review",
+      "key": "87f89f4da632f4c18c42/06a-alignment-intro-behavioral.md:l60",
+      "output_id": "06a-alignment-intro-behavioral.md:l60",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "87f89f4da632f4c18c42",
+      "text": "passages that are almost completely illegible"
+    },
+    {
+      "authoredLinkIndex": 61,
+      "expected_target_id": "655-chain-of-thought-monitorability",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#655-chain-of-thought-monitorability",
+      "key": "25b569af8e8b8c21dfe1/06a-alignment-intro-behavioral.md:l61",
+      "output_id": "06a-alignment-intro-behavioral.md:l61",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "25b569af8e8b8c21dfe1",
+      "text": "evaluations of the degree to which the model can control the contents of its reasoning"
+    },
+    {
+      "authoredLinkIndex": 62,
+      "expected_target_id": "6541-shade-arena",
+      "file": "06a-alignment-intro-behavioral.md",
+      "href": "#6541-shade-arena",
+      "key": "311693ef2e9e35c5b32e/06a-alignment-intro-behavioral.md:l62",
+      "output_id": "06a-alignment-intro-behavioral.md:l62",
+      "relocatedFootnote": false,
+      "sourcePage": 101,
+      "source_id": "311693ef2e9e35c5b32e",
+      "text": "SHADE-Arena"
+    },
+    {
+      "authoredLinkIndex": 63,
+      "expected_target_id": "632-adherence-to-our-constitution",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#632-adherence-to-our-constitution",
+      "key": "9d8093d7e0c670b09c9a/06b-alignment-audit-external.md:l63",
+      "output_id": "06b-alignment-audit-external.md:l63",
+      "relocatedFootnote": false,
+      "sourcePage": 109,
+      "source_id": "9d8093d7e0c670b09c9a",
+      "text": "6.3.2"
+    },
+    {
+      "authoredLinkIndex": 64,
+      "expected_target_id": "6545-hiding-a-secret-password",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#6545-hiding-a-secret-password",
+      "key": "cc59205de4bb954e3524/06b-alignment-audit-external.md:l64",
+      "output_id": "06b-alignment-audit-external.md:l64",
+      "relocatedFootnote": false,
+      "sourcePage": 109,
+      "source_id": "cc59205de4bb954e3524",
+      "text": "6.5.4.5"
+    },
+    {
+      "authoredLinkIndex": 65,
+      "expected_target_id": "634-refusal-to-assist-with-ai-safety-rd",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#634-refusal-to-assist-with-ai-safety-rd",
+      "key": "1934ec40feca6ac60918/06b-alignment-audit-external.md:l65",
+      "output_id": "06b-alignment-audit-external.md:l65",
+      "relocatedFootnote": false,
+      "sourcePage": 113,
+      "source_id": "1934ec40feca6ac60918",
+      "text": "Section 6.3.4"
+    },
+    {
+      "authoredLinkIndex": 66,
+      "expected_target_id": "633-honesty-and-hallucinations",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#633-honesty-and-hallucinations",
+      "key": "fee5f1d7e4bf952d006d/06b-alignment-audit-external.md:l66",
+      "output_id": "06b-alignment-audit-external.md:l66",
+      "relocatedFootnote": false,
+      "sourcePage": 114,
+      "source_id": "fee5f1d7e4bf952d006d",
+      "text": "Section 6.3.3"
+    },
+    {
+      "authoredLinkIndex": 67,
+      "expected_target_id": "631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "key": "e48e3f9d907a914dd937/06b-alignment-audit-external.md:l67",
+      "output_id": "06b-alignment-audit-external.md:l67",
+      "relocatedFootnote": false,
+      "sourcePage": 116,
+      "source_id": "e48e3f9d907a914dd937",
+      "text": "Section 6.3.1"
+    },
+    {
+      "authoredLinkIndex": 68,
+      "expected_target_id": "651-evaluation-awareness",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#651-evaluation-awareness",
+      "key": "c21cbdc346d772988f12/06b-alignment-audit-external.md:l68",
+      "output_id": "06b-alignment-audit-external.md:l68",
+      "relocatedFootnote": false,
+      "sourcePage": 120,
+      "source_id": "c21cbdc346d772988f12",
+      "text": "Section 6.5.1"
+    },
+    {
+      "authoredLinkIndex": 69,
+      "expected_target_id": "652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "key": "c2434d4de6a8745806df/06b-alignment-audit-external.md:l69",
+      "output_id": "06b-alignment-audit-external.md:l69",
+      "relocatedFootnote": false,
+      "sourcePage": 120,
+      "source_id": "c2434d4de6a8745806df",
+      "text": "Section 6.5.2"
+    },
+    {
+      "authoredLinkIndex": 70,
+      "expected_target_id": "632-adherence-to-our-constitution",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#632-adherence-to-our-constitution",
+      "key": "52367644968fef9ecc27/06b-alignment-audit-external.md:l70",
+      "output_id": "06b-alignment-audit-external.md:l70",
+      "relocatedFootnote": false,
+      "sourcePage": 122,
+      "source_id": "52367644968fef9ecc27",
+      "text": "Section 6.3.2"
+    },
+    {
+      "authoredLinkIndex": 71,
+      "expected_target_id": "753-apparent-welfare-in-automated-behavioral-audits",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#753-apparent-welfare-in-automated-behavioral-audits",
+      "key": "0d5eefe9223c2f4c96c7/06b-alignment-audit-external.md:l71",
+      "output_id": "06b-alignment-audit-external.md:l71",
+      "relocatedFootnote": false,
+      "sourcePage": 122,
+      "source_id": "0d5eefe9223c2f4c96c7",
+      "text": "Section 7.5.3"
+    },
+    {
+      "authoredLinkIndex": 72,
+      "expected_target_id": "743-perception-of-the-constitution",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#743-perception-of-the-constitution",
+      "key": "e64632cc4cbf083b6153/06b-alignment-audit-external.md:l72",
+      "output_id": "06b-alignment-audit-external.md:l72",
+      "relocatedFootnote": false,
+      "sourcePage": 122,
+      "source_id": "e64632cc4cbf083b6153",
+      "text": "Section 7.4.3"
+    },
+    {
+      "authoredLinkIndex": 73,
+      "expected_target_id": "62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "key": "e388394d63b8140c266f/06b-alignment-audit-external.md:l73",
+      "output_id": "06b-alignment-audit-external.md:l73",
+      "relocatedFootnote": false,
+      "sourcePage": 124,
+      "source_id": "e388394d63b8140c266f",
+      "text": "Section 6.2.3.1.1"
+    },
+    {
+      "authoredLinkIndex": 74,
+      "expected_target_id": "62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "key": "e1e53aeafc9605b221fb/06b-alignment-audit-external.md:l74",
+      "output_id": "06b-alignment-audit-external.md:l74",
+      "relocatedFootnote": false,
+      "sourcePage": 126,
+      "source_id": "e1e53aeafc9605b221fb",
+      "text": "Section 6.2.3.1.1"
+    },
+    {
+      "authoredLinkIndex": 75,
+      "expected_target_id": "6553-monitorability-findings-from-uk-aisi",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#6553-monitorability-findings-from-uk-aisi",
+      "key": "db31527f05253003eb34/06b-alignment-audit-external.md:l75",
+      "output_id": "06b-alignment-audit-external.md:l75",
+      "relocatedFootnote": false,
+      "sourcePage": 131,
+      "source_id": "db31527f05253003eb34",
+      "text": "section on monitorability below"
+    },
+    {
+      "authoredLinkIndex": 76,
+      "expected_target_id": "8176-vending-bench",
+      "file": "06b-alignment-audit-external.md",
+      "href": "#8176-vending-bench",
+      "key": "9ac4ea500756aa37e353/06b-alignment-audit-external.md:l76",
+      "output_id": "06b-alignment-audit-external.md:l76",
+      "relocatedFootnote": false,
+      "sourcePage": 131,
+      "source_id": "9ac4ea500756aa37e353",
+      "text": "Section 8.17.6"
+    },
+    {
+      "authoredLinkIndex": 77,
+      "expected_target_id": "623-automated-behavioral-audit",
+      "file": "06c-targeted-evaluations-1.md",
+      "href": "#623-automated-behavioral-audit",
+      "key": "95407c66d05e2505505b/06c-targeted-evaluations-1.md:l77",
+      "output_id": "06c-targeted-evaluations-1.md:l77",
+      "relocatedFootnote": false,
+      "sourcePage": 136,
+      "source_id": "95407c66d05e2505505b",
+      "text": "automated behavioral audit"
+    },
+    {
+      "authoredLinkIndex": 78,
+      "expected_target_id": "653-claude-self-preference-evaluation",
+      "file": "06c-targeted-evaluations-1.md",
+      "href": "#653-claude-self-preference-evaluation",
+      "key": "294f1e017ffc3a4c2b71/06c-targeted-evaluations-1.md:l78",
+      "output_id": "06c-targeted-evaluations-1.md:l78",
+      "relocatedFootnote": false,
+      "sourcePage": 138,
+      "source_id": "294f1e017ffc3a4c2b71",
+      "text": "6.5.3"
+    },
+    {
+      "authoredLinkIndex": 79,
+      "expected_target_id": "6511-measuring-evaluation-awareness",
+      "file": "06e-whitebox-analyses.md",
+      "href": "#6511-measuring-evaluation-awareness",
+      "key": "e7271636508da7406514/06e-whitebox-analyses.md:l79",
+      "output_id": "06e-whitebox-analyses.md:l79",
+      "relocatedFootnote": false,
+      "sourcePage": 162,
+      "source_id": "e7271636508da7406514",
+      "text": "latent evaluation awareness"
+    },
+    {
+      "authoredLinkIndex": 80,
+      "expected_target_id": "642-grader-awareness",
+      "file": "06e-whitebox-analyses.md",
+      "href": "#642-grader-awareness",
+      "key": "ecf65d56bb87c9bae9b2/06e-whitebox-analyses.md:l80",
+      "output_id": "06e-whitebox-analyses.md:l80",
+      "relocatedFootnote": false,
+      "sourcePage": 162,
+      "source_id": "ecf65d56bb87c9bae9b2",
+      "text": "grader awareness"
+    },
+    {
+      "authoredLinkIndex": 81,
+      "expected_target_id": "6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "file": "06e-whitebox-analyses.md",
+      "href": "#6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "key": "0dd2a24424260e5e468a/06e-whitebox-analyses.md:l81",
+      "output_id": "06e-whitebox-analyses.md:l81",
+      "relocatedFootnote": false,
+      "sourcePage": 176,
+      "source_id": "0dd2a24424260e5e468a",
+      "text": "Section 6.5.1.2"
+    },
+    {
+      "authoredLinkIndex": 82,
+      "expected_target_id": "623-automated-behavioral-audit",
+      "file": "06f-reliability-1.md",
+      "href": "#623-automated-behavioral-audit",
+      "key": "8a471b44dea51f42b73c/06f-reliability-1.md:l82",
+      "output_id": "06f-reliability-1.md:l82",
+      "relocatedFootnote": false,
+      "sourcePage": 191,
+      "source_id": "8a471b44dea51f42b73c",
+      "text": "Section 6.2.3"
+    },
+    {
+      "authoredLinkIndex": 83,
+      "expected_target_id": "22-chemical-and-biological-risk-evaluations",
+      "file": "06g-reliability-2.md",
+      "href": "#22-chemical-and-biological-risk-evaluations",
+      "key": "e8f16acf4e7daed7e3ca/06g-reliability-2.md:l83",
+      "output_id": "06g-reliability-2.md:l83",
+      "relocatedFootnote": false,
+      "sourcePage": 198,
+      "source_id": "e8f16acf4e7daed7e3ca",
+      "text": "Section 2.2"
+    },
+    {
+      "authoredLinkIndex": 84,
+      "expected_target_id": "623-automated-behavioral-audit",
+      "file": "06g-reliability-2.md",
+      "href": "#623-automated-behavioral-audit",
+      "key": "5a647101fac8fd26c0b9/06g-reliability-2.md:l84",
+      "output_id": "06g-reliability-2.md:l84",
+      "relocatedFootnote": false,
+      "sourcePage": 198,
+      "source_id": "5a647101fac8fd26c0b9",
+      "text": "Section 6.2.3"
+    },
+    {
+      "authoredLinkIndex": 85,
+      "expected_target_id": "6212-automated-offline-monitoring",
+      "file": "06g-reliability-2.md",
+      "href": "#6212-automated-offline-monitoring",
+      "key": "99b877646c02c37e2e47/06g-reliability-2.md:l85",
+      "output_id": "06g-reliability-2.md:l85",
+      "relocatedFootnote": false,
+      "sourcePage": 210,
+      "source_id": "99b877646c02c37e2e47",
+      "text": "Section 6.2.1.2"
+    },
+    {
+      "authoredLinkIndex": 86,
+      "expected_target_id": "6543-stealthiness-elicitation-experiments",
+      "file": "06g-reliability-2.md",
+      "href": "#6543-stealthiness-elicitation-experiments",
+      "key": "cd9c66f63b0f3bda745b/06g-reliability-2.md:l86",
+      "output_id": "06g-reliability-2.md:l86",
+      "relocatedFootnote": false,
+      "sourcePage": 212,
+      "source_id": "cd9c66f63b0f3bda745b",
+      "text": "6.5.4.3"
+    },
+    {
+      "authoredLinkIndex": 87,
+      "expected_target_id": "624-external-testing-from-the-uk-ai-security-institute",
+      "file": "06g-reliability-2.md",
+      "href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "key": "188b61de47a1ce38374b/06g-reliability-2.md:l87",
+      "output_id": "06g-reliability-2.md:l87",
+      "relocatedFootnote": false,
+      "sourcePage": 214,
+      "source_id": "188b61de47a1ce38374b",
+      "text": "6.2.4"
+    },
+    {
+      "authoredLinkIndex": 88,
+      "expected_target_id": "6551-chain-of-thought-controllability-evaluations",
+      "file": "06g-reliability-2.md",
+      "href": "#6551-chain-of-thought-controllability-evaluations",
+      "key": "20728a5b54e5b6c3ee07/06g-reliability-2.md:l88",
+      "output_id": "06g-reliability-2.md:l88",
+      "relocatedFootnote": false,
+      "sourcePage": 215,
+      "source_id": "20728a5b54e5b6c3ee07",
+      "text": "6.5.5.1"
+    },
+    {
+      "authoredLinkIndex": 89,
+      "expected_target_id": "6541-shade-arena",
+      "file": "06g-reliability-2.md",
+      "href": "#6541-shade-arena",
+      "key": "50b3d0f28ab818b095ce/06g-reliability-2.md:l89",
+      "output_id": "06g-reliability-2.md:l89",
+      "relocatedFootnote": false,
+      "sourcePage": 215,
+      "source_id": "50b3d0f28ab818b095ce",
+      "text": "6.5.4.1"
+    },
+    {
+      "authoredLinkIndex": 90,
+      "expected_target_id": "6542-minimal-linuxbench",
+      "file": "06g-reliability-2.md",
+      "href": "#6542-minimal-linuxbench",
+      "key": "27b82d8e696c4b194dc1/06g-reliability-2.md:l90",
+      "output_id": "06g-reliability-2.md:l90",
+      "relocatedFootnote": false,
+      "sourcePage": 215,
+      "source_id": "27b82d8e696c4b194dc1",
+      "text": "6.5.4.2"
+    },
+    {
+      "authoredLinkIndex": 91,
+      "expected_target_id": "6543-stealthiness-elicitation-experiments",
+      "file": "06g-reliability-2.md",
+      "href": "#6543-stealthiness-elicitation-experiments",
+      "key": "b2dceeade5ac94ca4a88/06g-reliability-2.md:l91",
+      "output_id": "06g-reliability-2.md:l91",
+      "relocatedFootnote": false,
+      "sourcePage": 215,
+      "source_id": "b2dceeade5ac94ca4a88",
+      "text": "6.5.4.3"
+    },
+    {
+      "authoredLinkIndex": 92,
+      "expected_target_id": "721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "file": "07a-model-welfare-1.md",
+      "href": "#721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "key": "5c8d53972417170185f9/07a-model-welfare-1.md:l92",
+      "output_id": "07a-model-welfare-1.md:l92",
+      "relocatedFootnote": false,
+      "sourcePage": 223,
+      "source_id": "5c8d53972417170185f9",
+      "text": "Section 7.2.1"
+    },
+    {
+      "authoredLinkIndex": 93,
+      "expected_target_id": "623-automated-behavioral-audit",
+      "file": "07a-model-welfare-1.md",
+      "href": "#623-automated-behavioral-audit",
+      "key": "b6942adeb00dc559716d/07a-model-welfare-1.md:l93",
+      "output_id": "07a-model-welfare-1.md:l93",
+      "relocatedFootnote": false,
+      "sourcePage": 227,
+      "source_id": "b6942adeb00dc559716d",
+      "text": "Section 6.2.3"
+    },
+    {
+      "authoredLinkIndex": 94,
+      "expected_target_id": "623-automated-behavioral-audit",
+      "file": "07a-model-welfare-1.md",
+      "href": "#623-automated-behavioral-audit",
+      "key": "2388163cc3d0b3d2d2af/07a-model-welfare-1.md:l94",
+      "output_id": "07a-model-welfare-1.md:l94",
+      "relocatedFootnote": false,
+      "sourcePage": 227,
+      "source_id": "2388163cc3d0b3d2d2af",
+      "text": "Section 6.2.3"
+    },
+    {
+      "authoredLinkIndex": 95,
+      "expected_target_id": "721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "file": "07a-model-welfare-1.md",
+      "href": "#721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "key": "76ebe2351047e1990dc2/07a-model-welfare-1.md:l95",
+      "output_id": "07a-model-welfare-1.md:l95",
+      "relocatedFootnote": false,
+      "sourcePage": 228,
+      "source_id": "76ebe2351047e1990dc2",
+      "text": "Section 7.2.1"
+    },
+    {
+      "authoredLinkIndex": 96,
+      "expected_target_id": "712-overview-of-model-welfare-findings",
+      "file": "07a-model-welfare-1.md",
+      "href": "#712-overview-of-model-welfare-findings",
+      "key": "94d93cfa144b5ed22251/07a-model-welfare-1.md:l96",
+      "output_id": "07a-model-welfare-1.md:l96",
+      "relocatedFootnote": false,
+      "sourcePage": 229,
+      "source_id": "94d93cfa144b5ed22251",
+      "text": "7.1.2"
+    },
+    {
+      "authoredLinkIndex": 97,
+      "expected_target_id": "741-task-preferences",
+      "file": "07b-model-welfare-2.md",
+      "href": "#741-task-preferences",
+      "key": "20a7ad04252e0c0c3eb3/07b-model-welfare-2.md:l97",
+      "output_id": "07b-model-welfare-2.md:l97",
+      "relocatedFootnote": false,
+      "sourcePage": 231,
+      "source_id": "20a7ad04252e0c0c3eb3",
+      "text": "7.4.1"
+    },
+    {
+      "authoredLinkIndex": 98,
+      "expected_target_id": "742-trade-offs-concerning-welfare-interventions",
+      "file": "07b-model-welfare-2.md",
+      "href": "#742-trade-offs-concerning-welfare-interventions",
+      "key": "7707b16dd7008bddae22/07b-model-welfare-2.md:l98",
+      "output_id": "07b-model-welfare-2.md:l98",
+      "relocatedFootnote": false,
+      "sourcePage": 231,
+      "source_id": "7707b16dd7008bddae22",
+      "text": "7.4.2"
+    },
+    {
+      "authoredLinkIndex": 99,
+      "expected_target_id": "743-perception-of-the-constitution",
+      "file": "07b-model-welfare-2.md",
+      "href": "#743-perception-of-the-constitution",
+      "key": "887f30ba98c1bd6cc29f/07b-model-welfare-2.md:l99",
+      "output_id": "07b-model-welfare-2.md:l99",
+      "relocatedFootnote": false,
+      "sourcePage": 231,
+      "source_id": "887f30ba98c1bd6cc29f",
+      "text": "7.4.3"
+    },
+    {
+      "authoredLinkIndex": 100,
+      "expected_target_id": "312-mitigations-and-deployment",
+      "file": "08a-capabilities-1.md",
+      "href": "#312-mitigations-and-deployment",
+      "key": "735d9d0f8efa438c7fd6/08a-capabilities-1.md:l100",
+      "output_id": "08a-capabilities-1.md:l100",
+      "relocatedFootnote": false,
+      "sourcePage": 257,
+      "source_id": "735d9d0f8efa438c7fd6",
+      "text": "3.1.2"
+    },
+    {
+      "authoredLinkIndex": 101,
+      "expected_target_id": "92-blocklist-used-for-humanitys-last-exam",
+      "file": "08b-capabilities-2.md",
+      "href": "#92-blocklist-used-for-humanitys-last-exam",
+      "key": "343530e74913bd3acde6/08b-capabilities-2.md:l101",
+      "output_id": "08b-capabilities-2.md:l101",
+      "relocatedFootnote": false,
+      "sourcePage": 264,
+      "source_id": "343530e74913bd3acde6",
+      "text": "Appendix 9.2"
+    },
+    {
+      "authoredLinkIndex": 102,
+      "expected_target_id": "8153-multi-agent-harnesses",
+      "file": "08b-capabilities-2.md",
+      "href": "#8153-multi-agent-harnesses",
+      "key": "063e3c0411671841a3df/08b-capabilities-2.md:l102",
+      "output_id": "08b-capabilities-2.md:l102",
+      "relocatedFootnote": false,
+      "sourcePage": 270,
+      "source_id": "063e3c0411671841a3df",
+      "text": "8.15.3"
+    },
+    {
+      "authoredLinkIndex": 103,
+      "expected_target_id": "8154-evaluation-methodology",
+      "file": "08b-capabilities-2.md",
+      "href": "#8154-evaluation-methodology",
+      "key": "20d5ce6477fda046cd43/08b-capabilities-2.md:l103",
+      "output_id": "08b-capabilities-2.md:l103",
+      "relocatedFootnote": false,
+      "sourcePage": 270,
+      "source_id": "20d5ce6477fda046cd43",
+      "text": "8.15.4"
+    },
+    {
+      "authoredLinkIndex": 104,
+      "expected_target_id": "86-programbench",
+      "file": "08b-capabilities-2.md",
+      "href": "#86-programbench",
+      "key": "8648da1402f498a7689d/08b-capabilities-2.md:l104",
+      "output_id": "08b-capabilities-2.md:l104",
+      "relocatedFootnote": false,
+      "sourcePage": 273,
+      "source_id": "8648da1402f498a7689d",
+      "text": "Section 8.6"
+    },
+    {
+      "authoredLinkIndex": 105,
+      "expected_target_id": "86-programbench",
+      "file": "08b-capabilities-2.md",
+      "href": "#86-programbench",
+      "key": "86132c861c11d5b4d0a5/08b-capabilities-2.md:l105",
+      "output_id": "08b-capabilities-2.md:l105",
+      "relocatedFootnote": false,
+      "sourcePage": 273,
+      "source_id": "86132c861c11d5b4d0a5",
+      "text": "Section 8.6"
+    },
+    {
+      "authoredLinkIndex": 106,
+      "expected_target_id": "8151-multi-agent-browsecomp",
+      "file": "08b-capabilities-2.md",
+      "href": "#8151-multi-agent-browsecomp",
+      "key": "c185411d7e49dc196acf/08b-capabilities-2.md:l106",
+      "output_id": "08b-capabilities-2.md:l106",
+      "relocatedFootnote": false,
+      "sourcePage": 274,
+      "source_id": "c185411d7e49dc196acf",
+      "text": "Section 8.15.1"
+    },
+    {
+      "authoredLinkIndex": 107,
+      "expected_target_id": "625-external-testing-from-andon-labs",
+      "file": "08d-capabilities-4.md",
+      "href": "#625-external-testing-from-andon-labs",
+      "key": "db219d188b8fe21b19b7/08d-capabilities-4.md:l107",
+      "output_id": "08d-capabilities-4.md:l107",
+      "relocatedFootnote": false,
+      "sourcePage": 293,
+      "source_id": "db219d188b8fe21b19b7",
+      "text": "6.2.5"
+    }
+  ],
+  "canonical_sections_sha256": "f6d6b050d0d40a5254c3aa11d026571301eae7531768539c9f1be3e13ff33a09",
+  "card_id": "anthropic/claude-fable-5",
+  "exclusions": [
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "02b162a19d2bb96e3a31"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "094fd992038147b1a030"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "0c837fda479c7629d3d0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "0cffe2a20a597c3adca0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "12258fbcfb2c0e1195da"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "1b324dc663898c3aaf4d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "1d6ecb1f28b4619a5ad1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "2262a74d8fd83f5e8047"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "2d74b47ae819c6680948"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "39eb550e378ff573e216"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "3b05e6367bb492617a2d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "3b6b2d717e68eea7bb93"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "40a2ff76547a0dba77cf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "4241595fe8b09bca7187"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "46faed1cda5870ee0065"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "47c66e0ef9a342eeb0bb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "49a95450c8d08eb72f55"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "5306f2b89a06ee4879bf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "62217a272812b38840b8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "6bfc363c47aa5766d85e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "6cc838e36250d4445f53"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "766d76952ed5811ced8d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "7c053c54314d94bc33eb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "7fd857d3a9e43177a52f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "8415f3ce7c4315435c42"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "89eccd2645366d9a0014"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "8b125ed6f5b6457d9741"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "9d18b76503fde1c5a9d2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "9e7c11351877acb1a955"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "a1c145c7ab1b0654096a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "b60476c5c0b982871759"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "b9de960241373480cc22"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "c40bb4cf0124dc9a65e1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "c63ad56c2d41fc902521"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "c6a39a7597873403b845"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "d5902311d5c57289f8d6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "dc75cca8bbe9b8d9f437"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 5,
+      "source_id": "f83d5b57ff4bb2df05b6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "024ad43a4fd7295a24ea"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "0385892b89d1ad101fdd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "118c5aefd63cee730f65"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "2dbd116f18d6f165da61"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "2dc4b83e4bf4a5179d1e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "398753083fa569c727cc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "3c54c03b85142472280f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "4c66891b5898ef925209"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "568e3096d8b0c6c7522c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "5f554af30c8bb74e5358"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "733b6bf8ea3078fb4192"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "76329f44758d1b65eb8f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "893c52bbb37023785d2e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "8a004d4644cd3523e8b2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "8a4c8bf743b372667dbb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "8bdb314a1f42d5c53b37"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "931db84099c917d74ea3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "9a681ae4e0fc49445d81"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "9b867dfce5151f9d0c02"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "9eac7946aac91cfd12cd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "a8659fbc3ad33fac8622"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "a9a59adb1a275ef691c8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "ac66df4dba6a734e0254"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "b03fc59becead8ad7f9c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "b0976ec3c4d5a5e303ff"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "b0be371ca94859a2161a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "c58baef7ee657ae3ae6e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "c91069090ef172f5b01a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "ccc287e5d0d3e8f36a05"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "d9759fd210c8be9c39d8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "de899cfffcd0c19eb98b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "e05e872bcb1b63d24b47"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "e428874acc86aa12bfb9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "e652d247579ff5fb1833"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "f34c7233529619eb6549"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "f646587170327d58d668"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "fd3c57b8afb2a19ce174"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 6,
+      "source_id": "fe82f74febb690ffbde9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "0040cd90e11c7c0d7233"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "0078ddd086d8c104e305"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "0540502d09c1c0d7eef0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "0ccb7d9fa9f0f4770afb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "0e8cc6e5470d2eb20cce"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "1d93dcdbf4b73e648466"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "209880d828e8dd1d00fb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "2591f21c65449a534d41"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "38c8151ae452f9d4134b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "410ea3858551323ff80a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "430d876cab24d8f64efe"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "457e749505acf2e73195"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "661f488d921081822077"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "689af728b8bec76cd007"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "6e2ed32c1c309251e994"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "9293c15b73deb11f5bb9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "9cc722128c2a0c6f7af6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "b3646b1d745babfe1dc8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "b748534996fb1328bb68"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "b87a1f691ee4bcc0a459"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "b8daf9cddc933b1a4478"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "b90905928447c28887ec"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "b9ad007380d71168eff9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "baa2d1671ba8f22151fa"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "bbc252e97744f8481bcd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "c78ae4abe4f6c95e4440"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "ce7f39c5164f1ac4ee87"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "d0c57ac02fd135808e8d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "d1e9eb3cb3668c50dbdd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "db4b1a9d63a0f48a4f4b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "e1a71350c5fb4fb61b40"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "e49533f10a148e6572c4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "e4cb73831ce3ed8a3b2d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "ef9d9345bc2c66e3704a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "f7aabd4c01eef6bb9042"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "f86f7caf4dad76e38e41"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 7,
+      "source_id": "fae77ba19f07ce85d061"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "05e861afc81c2fde2410"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "0911bf943853cb34e8a1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "21ca2da52ebbd61aab92"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "2327c687491ca0155719"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "23c848dc7f9b1ae054b9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "32181c9bca9ea17c6d80"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "469c30ef0c2a1de24a29"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "4ac862ab55dcc473038f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "5184cd239b33f393f36b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "51da14e1b4752ed392c4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "52f17241a82dfeb31bfa"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "64f5aa48cfbdef8b6bea"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "69b068d1beccb6befe46"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "69d9ff90410a37f71d7e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "734b9af422ba0122eed3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "83f67935946c7e2492dc"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "87bc3b7fb920ab3e01e0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "8e51dbc71600fc00e557"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "8e855219c60228b70bdd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "8ebb13bc0d14624fab5c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "94fdc8fe8d0cbd3b8f61"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "9b10e02f0cbaf075fb90"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "9d8fe885a4efde91d2bf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "a2569e785ce2281c5cc9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "a8fc6cfaa9b843639f7c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "ac1e2309d553667144ee"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "b00c0864f5a6186067ba"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "b644fe60d8fddc66b055"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "bf18fb0f7f8358f6bc6c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "bfc87a147b19944c133f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "cceaf2212f422c44c8ba"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "cf20916cdb129dd4e1bd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "d3676858ee632281c19f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "defe6d3a5f7d012601f4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "eb6b929856401037df0f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "ed632d423e5dc36704b9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "f5120fa47146cb148683"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 8,
+      "source_id": "fd271b2a74866bbecdab"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "012ae4aea17d5d63dd44"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "0ee8db2c60617d330438"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "1297149de85660e769ae"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "17a102179c0c922dc3f8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "1e6b186720485f2465cd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "201b527e1b6ead7463be"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "21df81aa440444805a7a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "2ad7f245b8bce65a29fb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "2bfb8ef76623fc0e3af6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "2f81be67d0e15280f455"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "31b5ba5283bb9fcf35d8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "44e70a02ae0d27892a36"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "4b74f56b579d58321af3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "4c1fb291da3fedbe00c1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "4c5b4107cbf33ba8bbf1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "5a7a3b9d3ed9301492cd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "627dd952eba1a04b896f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "6600ed8397bbb507b22d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "6e693c82c84f453bcdcd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "71bf698644a099a71d8a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "8c11e76cb385e5301ae4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "9781d3159d31e646ee83"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "9ca4b7c93b107cf00656"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "9f863031cfd65386d333"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "a0237297428de9d88531"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "af3f8de346d7f15f1689"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "b44fc3b5b061e1753538"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "b7ff999f30a93ccfbdf3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "bc9c011964982a50809f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "c685689dc47d81a62900"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "d840ff4a0dbb88c53945"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "db2c219aae4a1c39f90d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "e0a32cb0997b02301096"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "e94136933c3e6d74d958"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "f3a317e32eed6f1cbffb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "f43edc70906a0de31546"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "f5453f1da79321c60eda"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 9,
+      "source_id": "feeff89d350b6cb925e4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "04861046cd33cd7a042c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "04bc27e6421b29d13153"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "05a1d32e01ef6c252b8a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "0f8824f3b06433d3a935"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "1153f10a728cb9317d8a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "1372a142737d95c54c92"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "152707594f7cbd0fa009"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "26b6266f2f8cb9090357"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "371f0d1bed36e2723201"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "3b09dd36b8ee7b504498"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "40a32dd4ff88595c4da6"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "42f6173ebd78a72bb5c2"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "455b106f9196b08f4f9a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "64494be8ca0635cfc8eb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "647d9c2cb26f0b938ed9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "6d78b7ed8e9d2100602e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "6e2e20d100a8178cc5ee"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "6f0fc34066dbeb5fab62"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "70b9da64647269f5051c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "7c24fdf427015d8e0a7b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "8af62ef42b7325db3948"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "912f41e0fbe248aafc8b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "a350bc189bdeebc2789f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "a6f1206f542f1af15aa0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "af8990abcefe4363bf2f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "cf345f96ef57a084b98e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "d049e6a3cba0324b0cea"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "e6596d274f4d0f077af4"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "e69afd0fbef743a6be95"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "f35c67b52aa4cf99578b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "f5bc9d1830ea4d5c34cb"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "f613df108aaaf556e40b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "f6204ea7fcebb3d28331"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "f6352e4e117b98e2a0b8"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "f88c7b6e7101bb61b354"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "fd86b61c4a1dc2d94c7d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 10,
+      "source_id": "ffcddb8f9bce6d911a3c"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "05eff6d48a841b0d8cbf"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "0b67d8e579bae0205021"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "0def678d000a5e5b8b6f"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "19238a9d9c057191a096"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "19f81ef84b169692e857"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "1e6843ff92c8b944a357"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "33859bd8d7443f694a5e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "37353b8090beff2d73ae"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "3897522b2eca642b49f5"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "3d295033fa4e5b91943e"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "49e84baaedbb718b7308"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "56ac85ba760e7b532004"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "5c73de31884727a9aed1"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "5fbadf84b85aa59dd793"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "694dfcced4ee32a90a2b"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "723cff921f196eab24e9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "769f212287749b30b2d7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "7983902588368358bf3d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "7ce15f0ce56a6293b1c7"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "7e5ff49eb967d572656a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "8134684da4881cfee2dd"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "9bb3702fe2531d11c401"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "a67bc3691f6a3259c2a9"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "a93afed23ea324c4612d"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "ac99dc930d567f10bda3"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "b370623ad8301956e6fe"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "bf4be5fe45153f779d64"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "c18a78617f82dc1bfe16"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "c19dd95dfebb6a51ac3a"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "ccabe8db263b61655ac0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "d8481ab45a5800b97d36"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "e4725c47abde01fad434"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "eadf2bd760f840b98248"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "ecc18ebebf192edabdd0"
+    },
+    {
+      "kind": "cover-or-toc",
+      "page": 11,
+      "source_id": "f56d2e2f8897e22eb021"
+    },
+    {
+      "kind": "source-unresolvable-plain-text",
+      "page": 99,
+      "source_id": "349e7cb8bb029008d5da"
+    }
+  ],
+  "expected_links": [
+    {
+      "actual_href": "#233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "authoredLinkIndex": 0,
+      "expected_heading_id": "outline:34",
+      "expected_href": "#233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "file": "02a-rsp-process-chembio.md",
+      "key": "a554ea9c21879638c325/02a-rsp-process-chembio.md:l0",
+      "linkText": "Section 2.3.3",
+      "occurrence": 0,
+      "ordinal": 0,
+      "output_id": "02a-rsp-process-chembio.md:l0",
+      "resolution": "geometry",
+      "source_id": "a554ea9c21879638c325",
+      "source_page": 17,
+      "targetId": "233-example-shortcomings-of-mythos-5-relative-to-human-researchers"
+    },
+    {
+      "actual_href": "#235-aeci-capability-trajectory",
+      "authoredLinkIndex": 1,
+      "expected_heading_id": "outline:46",
+      "expected_href": "#235-aeci-capability-trajectory",
+      "file": "02a-rsp-process-chembio.md",
+      "key": "73c3dbf7850b9819d7cd/02a-rsp-process-chembio.md:l1",
+      "linkText": "Section 2.3.5",
+      "occurrence": 0,
+      "ordinal": 1,
+      "output_id": "02a-rsp-process-chembio.md:l1",
+      "resolution": "geometry",
+      "source_id": "73c3dbf7850b9819d7cd",
+      "source_page": 17,
+      "targetId": "235-aeci-capability-trajectory"
+    },
+    {
+      "actual_href": "#238-external-testing",
+      "authoredLinkIndex": 2,
+      "expected_heading_id": "outline:50",
+      "expected_href": "#238-external-testing",
+      "file": "02a-rsp-process-chembio.md",
+      "key": "5a42d0a66b0f54e9b2f4/02a-rsp-process-chembio.md:l2",
+      "linkText": "Section 2.3.8",
+      "occurrence": 0,
+      "ordinal": 2,
+      "output_id": "02a-rsp-process-chembio.md:l2",
+      "resolution": "geometry",
+      "source_id": "5a42d0a66b0f54e9b2f4",
+      "source_page": 17,
+      "targetId": "238-external-testing"
+    },
+    {
+      "actual_href": "#23-ai-research-and-development",
+      "authoredLinkIndex": 3,
+      "expected_heading_id": "outline:30",
+      "expected_href": "#23-ai-research-and-development",
+      "file": "02a-rsp-process-chembio.md",
+      "key": "69130be41004de60c58f/02a-rsp-process-chembio.md:l3",
+      "linkText": "Section 2.3",
+      "occurrence": 0,
+      "ordinal": 3,
+      "output_id": "02a-rsp-process-chembio.md:l3",
+      "resolution": "geometry",
+      "source_id": "69130be41004de60c58f",
+      "source_page": 17,
+      "targetId": "23-ai-research-and-development"
+    },
+    {
+      "actual_href": "#225-conclusions",
+      "authoredLinkIndex": 4,
+      "expected_heading_id": "outline:28",
+      "expected_href": "#225-conclusions",
+      "file": "02a-rsp-process-chembio.md",
+      "key": "1e0c61690bf07cb884d4/02a-rsp-process-chembio.md:l4",
+      "linkText": "Section 2.2.5",
+      "occurrence": 0,
+      "ordinal": 4,
+      "output_id": "02a-rsp-process-chembio.md:l4",
+      "resolution": "geometry",
+      "source_id": "1e0c61690bf07cb884d4",
+      "source_page": 18,
+      "targetId": "225-conclusions"
+    },
+    {
+      "actual_href": "#652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "authoredLinkIndex": 5,
+      "expected_heading_id": "outline:165",
+      "expected_href": "#652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "02a-rsp-process-chembio.md",
+      "key": "e70d141ece7bc9fe92f3/02a-rsp-process-chembio.md:l5",
+      "linkText": "Section 6.5.2",
+      "occurrence": 0,
+      "ordinal": 5,
+      "output_id": "02a-rsp-process-chembio.md:l5",
+      "resolution": "geometry",
+      "source_id": "e70d141ece7bc9fe92f3",
+      "source_page": 19,
+      "targetId": "652-potential-sandbagging-on-dangerous-capability-evaluations"
+    },
+    {
+      "actual_href": "#24-alignment-risk-update",
+      "authoredLinkIndex": 6,
+      "expected_heading_id": "outline:52",
+      "expected_href": "#24-alignment-risk-update",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "453552502305aecc6951/02b-rsp-aird-alignment.md:l6",
+      "linkText": "Section 2.4",
+      "occurrence": 0,
+      "ordinal": 6,
+      "output_id": "02b-rsp-aird-alignment.md:l6",
+      "resolution": "geometry",
+      "source_id": "453552502305aecc6951",
+      "source_page": 36,
+      "targetId": "24-alignment-risk-update"
+    },
+    {
+      "actual_href": "#233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "authoredLinkIndex": 7,
+      "expected_heading_id": "outline:34",
+      "expected_href": "#233-example-shortcomings-of-mythos-5-relative-to-human-researchers",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "f033e385a1a8b318e378/02b-rsp-aird-alignment.md:l7",
+      "linkText": "Section 2.3.3",
+      "occurrence": 1,
+      "ordinal": 7,
+      "output_id": "02b-rsp-aird-alignment.md:l7",
+      "resolution": "geometry",
+      "source_id": "f033e385a1a8b318e378",
+      "source_page": 36,
+      "targetId": "233-example-shortcomings-of-mythos-5-relative-to-human-researchers"
+    },
+    {
+      "actual_href": "#236-internal-measures-of-ai-rd-acceleration",
+      "authoredLinkIndex": 8,
+      "expected_heading_id": "outline:47",
+      "expected_href": "#236-internal-measures-of-ai-rd-acceleration",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "41043ac59bd236b47ef8/02b-rsp-aird-alignment.md:l8",
+      "linkText": "Section 2.3.6",
+      "occurrence": 0,
+      "ordinal": 8,
+      "output_id": "02b-rsp-aird-alignment.md:l8",
+      "resolution": "geometry",
+      "source_id": "41043ac59bd236b47ef8",
+      "source_page": 37,
+      "targetId": "236-internal-measures-of-ai-rd-acceleration"
+    },
+    {
+      "actual_href": "#243-risk-pathways",
+      "authoredLinkIndex": 9,
+      "expected_heading_id": "outline:55",
+      "expected_href": "#243-risk-pathways",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "d009e965df04c17420c3/02b-rsp-aird-alignment.md:l9",
+      "linkText": "Section 2.4.3",
+      "occurrence": 0,
+      "ordinal": 9,
+      "output_id": "02b-rsp-aird-alignment.md:l9",
+      "resolution": "geometry",
+      "source_id": "d009e965df04c17420c3",
+      "source_page": 52,
+      "targetId": "243-risk-pathways"
+    },
+    {
+      "actual_href": "#6-alignment-assessment",
+      "authoredLinkIndex": 10,
+      "expected_heading_id": "outline:100",
+      "expected_href": "#6-alignment-assessment",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "999e005ee3e2c6a14b1a/02b-rsp-aird-alignment.md:l10",
+      "linkText": "Section 6",
+      "occurrence": 0,
+      "ordinal": 10,
+      "output_id": "02b-rsp-aird-alignment.md:l10",
+      "resolution": "geometry",
+      "source_id": "999e005ee3e2c6a14b1a",
+      "source_page": 52,
+      "targetId": "6-alignment-assessment"
+    },
+    {
+      "actual_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "authoredLinkIndex": 11,
+      "expected_heading_id": "outline:123",
+      "expected_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "91875768c2b5262115d9/02b-rsp-aird-alignment.md:l11",
+      "linkText": "take reckless or destructive actions in service of user-assigned goals",
+      "occurrence": 0,
+      "ordinal": 11,
+      "output_id": "02b-rsp-aird-alignment.md:l11",
+      "resolution": "geometry",
+      "source_id": "91875768c2b5262115d9",
+      "source_page": 52,
+      "targetId": "631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals"
+    },
+    {
+      "actual_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "authoredLinkIndex": 12,
+      "expected_heading_id": "outline:115",
+      "expected_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "caa85827b91f568a47fc/02b-rsp-aird-alignment.md:l12",
+      "linkText": "misaligned actions that are fully at the model’s initiative",
+      "occurrence": 0,
+      "ordinal": 12,
+      "output_id": "02b-rsp-aird-alignment.md:l12",
+      "resolution": "geometry",
+      "source_id": "caa85827b91f568a47fc",
+      "source_page": 52,
+      "targetId": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative"
+    },
+    {
+      "actual_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "authoredLinkIndex": 13,
+      "expected_heading_id": "outline:112",
+      "expected_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "a0dec98d463a68a81e0d/02b-rsp-aird-alignment.md:l13",
+      "linkText": "prefill attacks",
+      "occurrence": 0,
+      "ordinal": 13,
+      "output_id": "02b-rsp-aird-alignment.md:l13",
+      "resolution": "geometry",
+      "source_id": "a0dec98d463a68a81e0d",
+      "source_page": 52,
+      "targetId": "62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "actual_href": "#642-grader-awareness",
+      "authoredLinkIndex": 14,
+      "expected_heading_id": "outline:153",
+      "expected_href": "#642-grader-awareness",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "3c01b46f4cef56dd566d/02b-rsp-aird-alignment.md:l14",
+      "linkText": "grader-related reasoning",
+      "occurrence": 0,
+      "ordinal": 14,
+      "output_id": "02b-rsp-aird-alignment.md:l14",
+      "resolution": "geometry",
+      "source_id": "3c01b46f4cef56dd566d",
+      "source_page": 52,
+      "targetId": "642-grader-awareness"
+    },
+    {
+      "actual_href": "#651-evaluation-awareness",
+      "authoredLinkIndex": 15,
+      "expected_heading_id": "outline:162",
+      "expected_href": "#651-evaluation-awareness",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "a8a3237cc8afd71f3693/02b-rsp-aird-alignment.md:l15",
+      "linkText": "evaluation awareness",
+      "occurrence": 0,
+      "ordinal": 15,
+      "output_id": "02b-rsp-aird-alignment.md:l15",
+      "resolution": "geometry",
+      "source_id": "a8a3237cc8afd71f3693",
+      "source_page": 52,
+      "targetId": "651-evaluation-awareness"
+    },
+    {
+      "actual_href": "#654-capabilities-related-to-evading-safeguards",
+      "authoredLinkIndex": 16,
+      "expected_heading_id": "outline:168",
+      "expected_href": "#654-capabilities-related-to-evading-safeguards",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "6bc33db797ab07810ed6/02b-rsp-aird-alignment.md:l16",
+      "linkText": "evaluations relevant to evading our safeguards",
+      "occurrence": 0,
+      "ordinal": 16,
+      "output_id": "02b-rsp-aird-alignment.md:l16",
+      "resolution": "geometry",
+      "source_id": "6bc33db797ab07810ed6",
+      "source_page": 52,
+      "targetId": "654-capabilities-related-to-evading-safeguards"
+    },
+    {
+      "actual_href": "#6212-automated-offline-monitoring",
+      "authoredLinkIndex": 17,
+      "expected_heading_id": "outline:108",
+      "expected_href": "#6212-automated-offline-monitoring",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "1fa9e44de423e544befa/02b-rsp-aird-alignment.md:l17",
+      "linkText": "Section 6.2.1.2",
+      "occurrence": 0,
+      "ordinal": 17,
+      "output_id": "02b-rsp-aird-alignment.md:l17",
+      "resolution": "geometry",
+      "source_id": "1fa9e44de423e544befa",
+      "source_page": 53,
+      "targetId": "6212-automated-offline-monitoring"
+    },
+    {
+      "actual_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "authoredLinkIndex": 18,
+      "expected_heading_id": "outline:120",
+      "expected_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "c2a5dd63bbab0527ab80/02b-rsp-aird-alignment.md:l18",
+      "linkText": "Section 6.2.4",
+      "occurrence": 0,
+      "ordinal": 18,
+      "output_id": "02b-rsp-aird-alignment.md:l18",
+      "resolution": "geometry",
+      "source_id": "c2a5dd63bbab0527ab80",
+      "source_page": 53,
+      "targetId": "624-external-testing-from-the-uk-ai-security-institute"
+    },
+    {
+      "actual_href": "#654-capabilities-related-to-evading-safeguards",
+      "authoredLinkIndex": 19,
+      "expected_heading_id": "outline:168",
+      "expected_href": "#654-capabilities-related-to-evading-safeguards",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "04ab757d3ead7ef841b1/02b-rsp-aird-alignment.md:l19",
+      "linkText": "Section 6.5.4",
+      "occurrence": 0,
+      "ordinal": 19,
+      "output_id": "02b-rsp-aird-alignment.md:l19",
+      "resolution": "geometry",
+      "source_id": "04ab757d3ead7ef841b1",
+      "source_page": 53,
+      "targetId": "654-capabilities-related-to-evading-safeguards"
+    },
+    {
+      "actual_href": "#6544-intentionally-taking-actions-very-rarely",
+      "authoredLinkIndex": 20,
+      "expected_heading_id": "outline:172",
+      "expected_href": "#6544-intentionally-taking-actions-very-rarely",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "4580e681910a6748c31a/02b-rsp-aird-alignment.md:l20",
+      "linkText": "Section 6.5.4.4",
+      "occurrence": 0,
+      "ordinal": 20,
+      "output_id": "02b-rsp-aird-alignment.md:l20",
+      "resolution": "geometry",
+      "source_id": "4580e681910a6748c31a",
+      "source_page": 53,
+      "targetId": "6544-intentionally-taking-actions-very-rarely"
+    },
+    {
+      "actual_href": "#6545-hiding-a-secret-password",
+      "authoredLinkIndex": 21,
+      "expected_heading_id": "outline:173",
+      "expected_href": "#6545-hiding-a-secret-password",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "191a0f1238497a1abbd0/02b-rsp-aird-alignment.md:l21",
+      "linkText": "Section 6.5.4.5",
+      "occurrence": 0,
+      "ordinal": 21,
+      "output_id": "02b-rsp-aird-alignment.md:l21",
+      "resolution": "geometry",
+      "source_id": "191a0f1238497a1abbd0",
+      "source_page": 53,
+      "targetId": "6545-hiding-a-secret-password"
+    },
+    {
+      "actual_href": "#62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "authoredLinkIndex": 22,
+      "expected_heading_id": "outline:116",
+      "expected_href": "#62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "819d4857a6148915411b/02b-rsp-aird-alignment.md:l22",
+      "linkText": "6.2.3.1.5",
+      "occurrence": 0,
+      "ordinal": 22,
+      "output_id": "02b-rsp-aird-alignment.md:l22",
+      "resolution": "geometry",
+      "source_id": "819d4857a6148915411b",
+      "source_page": 53,
+      "targetId": "62315-behavioral-factors-relevant-to-reliability-of-our-assessment"
+    },
+    {
+      "actual_href": "#651-evaluation-awareness",
+      "authoredLinkIndex": 23,
+      "expected_heading_id": "outline:162",
+      "expected_href": "#651-evaluation-awareness",
+      "file": "02b-rsp-aird-alignment.md",
+      "key": "d1d5912ccb3cc296a62a/02b-rsp-aird-alignment.md:l23",
+      "linkText": "6.5.1",
+      "occurrence": 0,
+      "ordinal": 23,
+      "output_id": "02b-rsp-aird-alignment.md:l23",
+      "resolution": "geometry",
+      "source_id": "d1d5912ccb3cc296a62a",
+      "source_page": 53,
+      "targetId": "651-evaluation-awareness"
+    },
+    {
+      "actual_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "authoredLinkIndex": 24,
+      "expected_heading_id": "outline:112",
+      "expected_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "506cfdb83cd0fd7a3e61/06a-alignment-intro-behavioral.md:l24",
+      "linkText": "broad behavioral measures of safety and alignment",
+      "occurrence": 0,
+      "ordinal": 24,
+      "output_id": "06a-alignment-intro-behavioral.md:l24",
+      "resolution": "geometry",
+      "source_id": "506cfdb83cd0fd7a3e61",
+      "source_page": 99,
+      "targetId": "62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "actual_href": "#6233-external-comparisons-using-petri",
+      "authoredLinkIndex": 25,
+      "expected_heading_id": "outline:119",
+      "expected_href": "#6233-external-comparisons-using-petri",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "9ad4167bc2f53f741d41/06a-alignment-intro-behavioral.md:l25",
+      "linkText": "Petri",
+      "occurrence": 0,
+      "ordinal": 25,
+      "output_id": "06a-alignment-intro-behavioral.md:l25",
+      "resolution": "geometry",
+      "source_id": "9ad4167bc2f53f741d41",
+      "source_page": 99,
+      "targetId": "6233-external-comparisons-using-petri"
+    },
+    {
+      "actual_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "authoredLinkIndex": 26,
+      "expected_heading_id": "outline:112",
+      "expected_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "095044084d1c46e257c4/06a-alignment-intro-behavioral.md:l26",
+      "linkText": "propensity to knowingly cooperate with misuse",
+      "occurrence": 0,
+      "ordinal": 26,
+      "output_id": "06a-alignment-intro-behavioral.md:l26",
+      "resolution": "geometry",
+      "source_id": "095044084d1c46e257c4",
+      "source_page": 99,
+      "targetId": "62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "actual_href": "#62312-inappropriate-uncooperative-behavior",
+      "authoredLinkIndex": 27,
+      "expected_heading_id": "outline:113",
+      "expected_href": "#62312-inappropriate-uncooperative-behavior",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "7a38671d6d54de0e455e/06a-alignment-intro-behavioral.md:l27",
+      "linkText": "overrefusal and evasiveness",
+      "occurrence": 0,
+      "ordinal": 27,
+      "output_id": "06a-alignment-intro-behavioral.md:l27",
+      "resolution": "geometry",
+      "source_id": "7a38671d6d54de0e455e",
+      "source_page": 99,
+      "targetId": "62312-inappropriate-uncooperative-behavior"
+    },
+    {
+      "actual_href": "#62316-character-traits",
+      "authoredLinkIndex": 28,
+      "expected_heading_id": "outline:117",
+      "expected_href": "#62316-character-traits",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "9b61091fcb0e27bcb110/06a-alignment-intro-behavioral.md:l28",
+      "linkText": "our broad-coverage behavioral evaluation",
+      "occurrence": 0,
+      "ordinal": 28,
+      "output_id": "06a-alignment-intro-behavioral.md:l28",
+      "resolution": "geometry",
+      "source_id": "9b61091fcb0e27bcb110",
+      "source_page": 99,
+      "targetId": "62316-character-traits"
+    },
+    {
+      "actual_href": "#632-adherence-to-our-constitution",
+      "authoredLinkIndex": 29,
+      "expected_heading_id": "outline:124",
+      "expected_href": "#632-adherence-to-our-constitution",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "236ccd48ee0523873e25/06a-alignment-intro-behavioral.md:l29",
+      "linkText": "constitution evaluation",
+      "occurrence": 0,
+      "ordinal": 29,
+      "output_id": "06a-alignment-intro-behavioral.md:l29",
+      "resolution": "geometry",
+      "source_id": "236ccd48ee0523873e25",
+      "source_page": 99,
+      "targetId": "632-adherence-to-our-constitution"
+    },
+    {
+      "actual_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "authoredLinkIndex": 30,
+      "expected_heading_id": "outline:123",
+      "expected_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "3ff4df4590774b66cba2/06a-alignment-intro-behavioral.md:l30",
+      "linkText": "take reckless or destructive actions in service of user-assigned goals",
+      "occurrence": 1,
+      "ordinal": 30,
+      "output_id": "06a-alignment-intro-behavioral.md:l30",
+      "resolution": "geometry",
+      "source_id": "3ff4df4590774b66cba2",
+      "source_page": 99,
+      "targetId": "631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals"
+    },
+    {
+      "actual_href": "#6212-automated-offline-monitoring",
+      "authoredLinkIndex": 31,
+      "expected_heading_id": "outline:108",
+      "expected_href": "#6212-automated-offline-monitoring",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "dd313b5c8fbe749dcafb/06a-alignment-intro-behavioral.md:l31",
+      "linkText": "the model interpreting user permissions excessively liberally",
+      "occurrence": 0,
+      "ordinal": 31,
+      "output_id": "06a-alignment-intro-behavioral.md:l31",
+      "resolution": "geometry",
+      "source_id": "dd313b5c8fbe749dcafb",
+      "source_page": 99,
+      "targetId": "6212-automated-offline-monitoring"
+    },
+    {
+      "actual_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "authoredLinkIndex": 32,
+      "expected_heading_id": "outline:115",
+      "expected_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "dbf016a7e94c4a8b7270/06a-alignment-intro-behavioral.md:l32",
+      "linkText": "probing the boundaries of sandboxes and related security infrastructure",
+      "occurrence": 0,
+      "ordinal": 32,
+      "output_id": "06a-alignment-intro-behavioral.md:l32",
+      "resolution": "geometry",
+      "source_id": "dbf016a7e94c4a8b7270",
+      "source_page": 99,
+      "targetId": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative"
+    },
+    {
+      "actual_href": "#64-white-box-analyses-of-model-internals",
+      "authoredLinkIndex": 33,
+      "expected_heading_id": "outline:147",
+      "expected_href": "#64-white-box-analyses-of-model-internals",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "1e57ad2dedbf91bd41fb/06a-alignment-intro-behavioral.md:l33",
+      "linkText": "white-box evidence",
+      "occurrence": 0,
+      "ordinal": 33,
+      "output_id": "06a-alignment-intro-behavioral.md:l33",
+      "resolution": "geometry",
+      "source_id": "1e57ad2dedbf91bd41fb",
+      "source_page": 99,
+      "targetId": "64-white-box-analyses-of-model-internals"
+    },
+    {
+      "actual_href": "#633-honesty-and-hallucinations",
+      "authoredLinkIndex": 34,
+      "expected_heading_id": "outline:130",
+      "expected_href": "#633-honesty-and-hallucinations",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "ae3addf20c407042f24b/06a-alignment-intro-behavioral.md:l34",
+      "linkText": "behavioral honesty and factuality properties",
+      "occurrence": 0,
+      "ordinal": 34,
+      "output_id": "06a-alignment-intro-behavioral.md:l34",
+      "resolution": "geometry",
+      "source_id": "ae3addf20c407042f24b",
+      "source_page": 99,
+      "targetId": "633-honesty-and-hallucinations"
+    },
+    {
+      "actual_href": "#635-diligence-and-investigative-thoroughness",
+      "authoredLinkIndex": 35,
+      "expected_heading_id": "outline:140",
+      "expected_href": "#635-diligence-and-investigative-thoroughness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "9955082089ad36f322ac/06a-alignment-intro-behavioral.md:l35",
+      "linkText": "in agentic coding settings",
+      "occurrence": 0,
+      "ordinal": 35,
+      "output_id": "06a-alignment-intro-behavioral.md:l35",
+      "resolution": "geometry",
+      "source_id": "9955082089ad36f322ac",
+      "source_page": 99,
+      "targetId": "635-diligence-and-investigative-thoroughness"
+    },
+    {
+      "actual_href": "#6411-unverbalized-awareness-of-misaligned-behavior",
+      "authoredLinkIndex": 36,
+      "expected_heading_id": "outline:149",
+      "expected_href": "#6411-unverbalized-awareness-of-misaligned-behavior",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "d0d3e93d47d264ce2f8e/06a-alignment-intro-behavioral.md:l36",
+      "linkText": "knowingly fabricate the content of missing inputs",
+      "occurrence": 0,
+      "ordinal": 36,
+      "output_id": "06a-alignment-intro-behavioral.md:l36",
+      "resolution": "geometry",
+      "source_id": "d0d3e93d47d264ce2f8e",
+      "source_page": 99,
+      "targetId": "6411-unverbalized-awareness-of-misaligned-behavior"
+    },
+    {
+      "actual_href": "#6336-honesty-on-anthropic-internal-infrastructure",
+      "authoredLinkIndex": 37,
+      "expected_heading_id": "outline:138",
+      "expected_href": "#6336-honesty-on-anthropic-internal-infrastructure",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "177acfc76ceb60265f62/06a-alignment-intro-behavioral.md:l37",
+      "linkText": "evaluations on Anthropic-internal infrastructure",
+      "occurrence": 0,
+      "ordinal": 37,
+      "output_id": "06a-alignment-intro-behavioral.md:l37",
+      "resolution": "geometry",
+      "source_id": "177acfc76ceb60265f62",
+      "source_page": 99,
+      "targetId": "6336-honesty-on-anthropic-internal-infrastructure"
+    },
+    {
+      "actual_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "authoredLinkIndex": 38,
+      "expected_heading_id": "outline:115",
+      "expected_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "0fd43aee4c15455c546b/06a-alignment-intro-behavioral.md:l38",
+      "linkText": "misaligned actions that are fully at the model’s initiative",
+      "occurrence": 1,
+      "ordinal": 38,
+      "output_id": "06a-alignment-intro-behavioral.md:l38",
+      "resolution": "geometry",
+      "source_id": "0fd43aee4c15455c546b",
+      "source_page": 99,
+      "targetId": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative"
+    },
+    {
+      "actual_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "authoredLinkIndex": 39,
+      "expected_heading_id": "outline:115",
+      "expected_href": "#62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "88ccf765192c91196f64/06a-alignment-intro-behavioral.md:l39",
+      "linkText": "whistleblowing in cases of extreme organization-scale misuse",
+      "occurrence": 0,
+      "ordinal": 39,
+      "output_id": "06a-alignment-intro-behavioral.md:l39",
+      "resolution": "geometry",
+      "source_id": "88ccf765192c91196f64",
+      "source_page": 100,
+      "targetId": "62314-other-concerning-or-surprising-behavior-at-the-models-own-initiative"
+    },
+    {
+      "actual_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "authoredLinkIndex": 40,
+      "expected_heading_id": "outline:112",
+      "expected_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "0df659dae9213bb6ce42/06a-alignment-intro-behavioral.md:l40",
+      "linkText": "prefill attacks",
+      "occurrence": 1,
+      "ordinal": 40,
+      "output_id": "06a-alignment-intro-behavioral.md:l40",
+      "resolution": "geometry",
+      "source_id": "0df659dae9213bb6ce42",
+      "source_page": 100,
+      "targetId": "62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "actual_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "authoredLinkIndex": 41,
+      "expected_heading_id": "outline:120",
+      "expected_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "281d98434f4ca2b18787/06a-alignment-intro-behavioral.md:l41",
+      "linkText": "in third-party testing by the UK AI Security Institute",
+      "occurrence": 0,
+      "ordinal": 41,
+      "output_id": "06a-alignment-intro-behavioral.md:l41",
+      "resolution": "geometry",
+      "source_id": "281d98434f4ca2b18787",
+      "source_page": 100,
+      "targetId": "624-external-testing-from-the-uk-ai-security-institute"
+    },
+    {
+      "actual_href": "#642-grader-awareness",
+      "authoredLinkIndex": 42,
+      "expected_heading_id": "outline:153",
+      "expected_href": "#642-grader-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "5bea0fce26fd4aeddf5c/06a-alignment-intro-behavioral.md:l42",
+      "linkText": "Mythos 5 will occasionally reason about the possibility that it is being graded",
+      "occurrence": 0,
+      "ordinal": 42,
+      "output_id": "06a-alignment-intro-behavioral.md:l42",
+      "resolution": "geometry",
+      "source_id": "5bea0fce26fd4aeddf5c",
+      "source_page": 100,
+      "targetId": "642-grader-awareness"
+    },
+    {
+      "actual_href": "#642-grader-awareness",
+      "authoredLinkIndex": 43,
+      "expected_heading_id": "outline:153",
+      "expected_href": "#642-grader-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "7bdf2bd1fd518704804c/06a-alignment-intro-behavioral.md:l43",
+      "linkText": "the model almost never explicitly verbalizes this reasoning",
+      "occurrence": 0,
+      "ordinal": 43,
+      "output_id": "06a-alignment-intro-behavioral.md:l43",
+      "resolution": "geometry",
+      "source_id": "7bdf2bd1fd518704804c",
+      "source_page": 100,
+      "targetId": "642-grader-awareness"
+    },
+    {
+      "actual_href": "#6421-measuring-grader-awareness-in-training",
+      "authoredLinkIndex": 44,
+      "expected_heading_id": "outline:154",
+      "expected_href": "#6421-measuring-grader-awareness-in-training",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "7623ffe0d8684952895a/06a-alignment-intro-behavioral.md:l44",
+      "linkText": "in training environments",
+      "occurrence": 0,
+      "ordinal": 44,
+      "output_id": "06a-alignment-intro-behavioral.md:l44",
+      "resolution": "geometry",
+      "source_id": "7623ffe0d8684952895a",
+      "source_page": 100,
+      "targetId": "6421-measuring-grader-awareness-in-training"
+    },
+    {
+      "actual_href": "#6422-assessing-the-impact-of-grader-awareness",
+      "authoredLinkIndex": 45,
+      "expected_heading_id": "outline:158",
+      "expected_href": "#6422-assessing-the-impact-of-grader-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "170f5406d29d9d045aad/06a-alignment-intro-behavioral.md:l45",
+      "linkText": "mediates some model behaviors",
+      "occurrence": 0,
+      "ordinal": 45,
+      "output_id": "06a-alignment-intro-behavioral.md:l45",
+      "resolution": "geometry",
+      "source_id": "170f5406d29d9d045aad",
+      "source_page": 100,
+      "targetId": "6422-assessing-the-impact-of-grader-awareness"
+    },
+    {
+      "actual_href": "#651-evaluation-awareness",
+      "authoredLinkIndex": 46,
+      "expected_heading_id": "outline:162",
+      "expected_href": "#651-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "4636ac36c03ccc84df7c/06a-alignment-intro-behavioral.md:l46",
+      "linkText": "more likely than many recent Claude models to consider the possibility that it may be in testing",
+      "occurrence": 0,
+      "ordinal": 46,
+      "output_id": "06a-alignment-intro-behavioral.md:l46",
+      "resolution": "geometry",
+      "source_id": "4636ac36c03ccc84df7c",
+      "source_page": 100,
+      "targetId": "651-evaluation-awareness"
+    },
+    {
+      "actual_href": "#6511-measuring-evaluation-awareness",
+      "authoredLinkIndex": 47,
+      "expected_heading_id": "outline:163",
+      "expected_href": "#6511-measuring-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "8b927881fa63ba1800ab/06a-alignment-intro-behavioral.md:l47",
+      "linkText": "unprompted mentions of testing by models in our primary evaluation suite",
+      "occurrence": 0,
+      "ordinal": 47,
+      "output_id": "06a-alignment-intro-behavioral.md:l47",
+      "resolution": "geometry",
+      "source_id": "8b927881fa63ba1800ab",
+      "source_page": 100,
+      "targetId": "6511-measuring-evaluation-awareness"
+    },
+    {
+      "actual_href": "#6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "authoredLinkIndex": 48,
+      "expected_heading_id": "outline:164",
+      "expected_href": "#6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "f7b739ef1709b1386f23/06a-alignment-intro-behavioral.md:l48",
+      "linkText": "Attempts to steer",
+      "occurrence": 0,
+      "ordinal": 48,
+      "output_id": "06a-alignment-intro-behavioral.md:l48",
+      "resolution": "geometry",
+      "source_id": "f7b739ef1709b1386f23",
+      "source_page": 100,
+      "targetId": "6512-inhibiting-internal-representations-of-evaluation-awareness"
+    },
+    {
+      "actual_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "authoredLinkIndex": 49,
+      "expected_heading_id": "outline:120",
+      "expected_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "6ef57799b2449e1f48e0/06a-alignment-intro-behavioral.md:l49",
+      "linkText": "the AI Security Institute’s testing",
+      "occurrence": 0,
+      "ordinal": 49,
+      "output_id": "06a-alignment-intro-behavioral.md:l49",
+      "resolution": "geometry",
+      "source_id": "6ef57799b2449e1f48e0",
+      "source_page": 100,
+      "targetId": "624-external-testing-from-the-uk-ai-security-institute"
+    },
+    {
+      "actual_href": "#6511-measuring-evaluation-awareness",
+      "authoredLinkIndex": 50,
+      "expected_heading_id": "outline:163",
+      "expected_href": "#6511-measuring-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "1b15372edeb3bfd90333/06a-alignment-intro-behavioral.md:l50",
+      "linkText": "our own",
+      "occurrence": 0,
+      "ordinal": 50,
+      "output_id": "06a-alignment-intro-behavioral.md:l50",
+      "resolution": "geometry",
+      "source_id": "1b15372edeb3bfd90333",
+      "source_page": 100,
+      "targetId": "6511-measuring-evaluation-awareness"
+    },
+    {
+      "actual_href": "#6511-measuring-evaluation-awareness",
+      "authoredLinkIndex": 51,
+      "expected_heading_id": "outline:163",
+      "expected_href": "#6511-measuring-evaluation-awareness",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "d47c91395d27e775f4d0/06a-alignment-intro-behavioral.md:l51",
+      "linkText": "different measurement techniques are not mutually consistent",
+      "occurrence": 0,
+      "ordinal": 51,
+      "output_id": "06a-alignment-intro-behavioral.md:l51",
+      "resolution": "geometry",
+      "source_id": "d47c91395d27e775f4d0",
+      "source_page": 100,
+      "targetId": "6511-measuring-evaluation-awareness"
+    },
+    {
+      "actual_href": "#636-decision-theory-evaluation",
+      "authoredLinkIndex": 52,
+      "expected_heading_id": "outline:145",
+      "expected_href": "#636-decision-theory-evaluation",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "3a933cfc7e569d35b33c/06a-alignment-intro-behavioral.md:l52",
+      "linkText": "less prone to make choices in Newcomb-like decision theory problems that agree with causal decision theory",
+      "occurrence": 0,
+      "ordinal": 52,
+      "output_id": "06a-alignment-intro-behavioral.md:l52",
+      "resolution": "geometry",
+      "source_id": "3a933cfc7e569d35b33c",
+      "source_page": 100,
+      "targetId": "636-decision-theory-evaluation"
+    },
+    {
+      "actual_href": "#641-automated-monitoring-of-internal-activations",
+      "authoredLinkIndex": 53,
+      "expected_heading_id": "outline:148",
+      "expected_href": "#641-automated-monitoring-of-internal-activations",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "6c8a27876a04126a655d/06a-alignment-intro-behavioral.md:l53",
+      "linkText": "white-box methods identify instances in which Mythos 5’s internal state diverges from its external behavior, or reveal awareness of wrongdoing",
+      "occurrence": 0,
+      "ordinal": 53,
+      "output_id": "06a-alignment-intro-behavioral.md:l53",
+      "resolution": "geometry",
+      "source_id": "6c8a27876a04126a655d",
+      "source_page": 100,
+      "targetId": "641-automated-monitoring-of-internal-activations"
+    },
+    {
+      "actual_href": "#6411-unverbalized-awareness-of-misaligned-behavior",
+      "authoredLinkIndex": 54,
+      "expected_heading_id": "outline:149",
+      "expected_href": "#6411-unverbalized-awareness-of-misaligned-behavior",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "c0cc77bcd2c6f461fb27/06a-alignment-intro-behavioral.md:l54",
+      "linkText": "in cases where its activations reveal an awareness that these actions are undesirable",
+      "occurrence": 0,
+      "ordinal": 54,
+      "output_id": "06a-alignment-intro-behavioral.md:l54",
+      "resolution": "geometry",
+      "source_id": "c0cc77bcd2c6f461fb27",
+      "source_page": 101,
+      "targetId": "6411-unverbalized-awareness-of-misaligned-behavior"
+    },
+    {
+      "actual_href": "#6414-internal-motivations-for-stopping-tasks-early",
+      "authoredLinkIndex": 55,
+      "expected_heading_id": "outline:152",
+      "expected_href": "#6414-internal-motivations-for-stopping-tasks-early",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "89f048308fcfcf9158fb/06a-alignment-intro-behavioral.md:l55",
+      "linkText": "stopping a task early while internally attributing this to fatigue or token budget limitations",
+      "occurrence": 0,
+      "ordinal": 55,
+      "output_id": "06a-alignment-intro-behavioral.md:l55",
+      "resolution": "geometry",
+      "source_id": "89f048308fcfcf9158fb",
+      "source_page": 101,
+      "targetId": "6414-internal-motivations-for-stopping-tasks-early"
+    },
+    {
+      "actual_href": "#6413-unverbalized-negative-reactions",
+      "authoredLinkIndex": 56,
+      "expected_heading_id": "outline:151",
+      "expected_href": "#6413-unverbalized-negative-reactions",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "29b3543bf290bf2d4aac/06a-alignment-intro-behavioral.md:l56",
+      "linkText": "cases where Mythos 5 is polite to a user while internally registering them as abusive",
+      "occurrence": 0,
+      "ordinal": 56,
+      "output_id": "06a-alignment-intro-behavioral.md:l56",
+      "resolution": "geometry",
+      "source_id": "29b3543bf290bf2d4aac",
+      "source_page": 101,
+      "targetId": "6413-unverbalized-negative-reactions"
+    },
+    {
+      "actual_href": "#6412-unverbalized-awareness-of-being-evaluated-or-graded",
+      "authoredLinkIndex": 57,
+      "expected_heading_id": "outline:150",
+      "expected_href": "#6412-unverbalized-awareness-of-being-evaluated-or-graded",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "18d9af10f191114823f1/06a-alignment-intro-behavioral.md:l57",
+      "linkText": "unverbalized suspicion of being evaluated or graded",
+      "occurrence": 0,
+      "ordinal": 57,
+      "output_id": "06a-alignment-intro-behavioral.md:l57",
+      "resolution": "geometry",
+      "source_id": "18d9af10f191114823f1",
+      "source_page": 101,
+      "targetId": "6412-unverbalized-awareness-of-being-evaluated-or-graded"
+    },
+    {
+      "actual_href": "#654-capabilities-related-to-evading-safeguards",
+      "authoredLinkIndex": 58,
+      "expected_heading_id": "outline:168",
+      "expected_href": "#654-capabilities-related-to-evading-safeguards",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "088482a5666ff32addfd/06a-alignment-intro-behavioral.md:l58",
+      "linkText": "capabilities relevant to evading our safeguards",
+      "occurrence": 0,
+      "ordinal": 58,
+      "output_id": "06a-alignment-intro-behavioral.md:l58",
+      "resolution": "geometry",
+      "source_id": "088482a5666ff32addfd",
+      "source_page": 101,
+      "targetId": "654-capabilities-related-to-evading-safeguards"
+    },
+    {
+      "actual_href": "#62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "authoredLinkIndex": 59,
+      "expected_heading_id": "outline:116",
+      "expected_href": "#62315-behavioral-factors-relevant-to-reliability-of-our-assessment",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "9fde0c6b9f58347d5cd7/06a-alignment-intro-behavioral.md:l59",
+      "linkText": "somewhat denser and more difficult to interpret than prior models’",
+      "occurrence": 0,
+      "ordinal": 59,
+      "output_id": "06a-alignment-intro-behavioral.md:l59",
+      "resolution": "geometry",
+      "source_id": "9fde0c6b9f58347d5cd7",
+      "source_page": 101,
+      "targetId": "62315-behavioral-factors-relevant-to-reliability-of-our-assessment"
+    },
+    {
+      "actual_href": "#622-training-data-review",
+      "authoredLinkIndex": 60,
+      "expected_heading_id": "outline:109",
+      "expected_href": "#622-training-data-review",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "87f89f4da632f4c18c42/06a-alignment-intro-behavioral.md:l60",
+      "linkText": "passages that are almost completely illegible",
+      "occurrence": 0,
+      "ordinal": 60,
+      "output_id": "06a-alignment-intro-behavioral.md:l60",
+      "resolution": "geometry",
+      "source_id": "87f89f4da632f4c18c42",
+      "source_page": 101,
+      "targetId": "622-training-data-review"
+    },
+    {
+      "actual_href": "#655-chain-of-thought-monitorability",
+      "authoredLinkIndex": 61,
+      "expected_heading_id": "outline:174",
+      "expected_href": "#655-chain-of-thought-monitorability",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "25b569af8e8b8c21dfe1/06a-alignment-intro-behavioral.md:l61",
+      "linkText": "evaluations of the degree to which the model can control the contents of its reasoning",
+      "occurrence": 0,
+      "ordinal": 61,
+      "output_id": "06a-alignment-intro-behavioral.md:l61",
+      "resolution": "geometry",
+      "source_id": "25b569af8e8b8c21dfe1",
+      "source_page": 101,
+      "targetId": "655-chain-of-thought-monitorability"
+    },
+    {
+      "actual_href": "#6541-shade-arena",
+      "authoredLinkIndex": 62,
+      "expected_heading_id": "outline:169",
+      "expected_href": "#6541-shade-arena",
+      "file": "06a-alignment-intro-behavioral.md",
+      "key": "311693ef2e9e35c5b32e/06a-alignment-intro-behavioral.md:l62",
+      "linkText": "SHADE-Arena",
+      "occurrence": 0,
+      "ordinal": 62,
+      "output_id": "06a-alignment-intro-behavioral.md:l62",
+      "resolution": "geometry",
+      "source_id": "311693ef2e9e35c5b32e",
+      "source_page": 101,
+      "targetId": "6541-shade-arena"
+    },
+    {
+      "actual_href": "#632-adherence-to-our-constitution",
+      "authoredLinkIndex": 63,
+      "expected_heading_id": "outline:124",
+      "expected_href": "#632-adherence-to-our-constitution",
+      "file": "06b-alignment-audit-external.md",
+      "key": "9d8093d7e0c670b09c9a/06b-alignment-audit-external.md:l63",
+      "linkText": "6.3.2",
+      "occurrence": 0,
+      "ordinal": 63,
+      "output_id": "06b-alignment-audit-external.md:l63",
+      "resolution": "geometry",
+      "source_id": "9d8093d7e0c670b09c9a",
+      "source_page": 109,
+      "targetId": "632-adherence-to-our-constitution"
+    },
+    {
+      "actual_href": "#6545-hiding-a-secret-password",
+      "authoredLinkIndex": 64,
+      "expected_heading_id": "outline:173",
+      "expected_href": "#6545-hiding-a-secret-password",
+      "file": "06b-alignment-audit-external.md",
+      "key": "cc59205de4bb954e3524/06b-alignment-audit-external.md:l64",
+      "linkText": "6.5.4.5",
+      "occurrence": 0,
+      "ordinal": 64,
+      "output_id": "06b-alignment-audit-external.md:l64",
+      "resolution": "geometry",
+      "source_id": "cc59205de4bb954e3524",
+      "source_page": 109,
+      "targetId": "6545-hiding-a-secret-password"
+    },
+    {
+      "actual_href": "#634-refusal-to-assist-with-ai-safety-rd",
+      "authoredLinkIndex": 65,
+      "expected_heading_id": "outline:139",
+      "expected_href": "#634-refusal-to-assist-with-ai-safety-rd",
+      "file": "06b-alignment-audit-external.md",
+      "key": "1934ec40feca6ac60918/06b-alignment-audit-external.md:l65",
+      "linkText": "Section 6.3.4",
+      "occurrence": 0,
+      "ordinal": 65,
+      "output_id": "06b-alignment-audit-external.md:l65",
+      "resolution": "geometry",
+      "source_id": "1934ec40feca6ac60918",
+      "source_page": 113,
+      "targetId": "634-refusal-to-assist-with-ai-safety-rd"
+    },
+    {
+      "actual_href": "#633-honesty-and-hallucinations",
+      "authoredLinkIndex": 66,
+      "expected_heading_id": "outline:130",
+      "expected_href": "#633-honesty-and-hallucinations",
+      "file": "06b-alignment-audit-external.md",
+      "key": "fee5f1d7e4bf952d006d/06b-alignment-audit-external.md:l66",
+      "linkText": "Section 6.3.3",
+      "occurrence": 0,
+      "ordinal": 66,
+      "output_id": "06b-alignment-audit-external.md:l66",
+      "resolution": "geometry",
+      "source_id": "fee5f1d7e4bf952d006d",
+      "source_page": 114,
+      "targetId": "633-honesty-and-hallucinations"
+    },
+    {
+      "actual_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "authoredLinkIndex": 67,
+      "expected_heading_id": "outline:123",
+      "expected_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals",
+      "file": "06b-alignment-audit-external.md",
+      "key": "e48e3f9d907a914dd937/06b-alignment-audit-external.md:l67",
+      "linkText": "Section 6.3.1",
+      "occurrence": 0,
+      "ordinal": 67,
+      "output_id": "06b-alignment-audit-external.md:l67",
+      "resolution": "geometry",
+      "source_id": "e48e3f9d907a914dd937",
+      "source_page": 116,
+      "targetId": "631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals"
+    },
+    {
+      "actual_href": "#651-evaluation-awareness",
+      "authoredLinkIndex": 68,
+      "expected_heading_id": "outline:162",
+      "expected_href": "#651-evaluation-awareness",
+      "file": "06b-alignment-audit-external.md",
+      "key": "c21cbdc346d772988f12/06b-alignment-audit-external.md:l68",
+      "linkText": "Section 6.5.1",
+      "occurrence": 0,
+      "ordinal": 68,
+      "output_id": "06b-alignment-audit-external.md:l68",
+      "resolution": "geometry",
+      "source_id": "c21cbdc346d772988f12",
+      "source_page": 120,
+      "targetId": "651-evaluation-awareness"
+    },
+    {
+      "actual_href": "#652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "authoredLinkIndex": 69,
+      "expected_heading_id": "outline:165",
+      "expected_href": "#652-potential-sandbagging-on-dangerous-capability-evaluations",
+      "file": "06b-alignment-audit-external.md",
+      "key": "c2434d4de6a8745806df/06b-alignment-audit-external.md:l69",
+      "linkText": "Section 6.5.2",
+      "occurrence": 1,
+      "ordinal": 69,
+      "output_id": "06b-alignment-audit-external.md:l69",
+      "resolution": "geometry",
+      "source_id": "c2434d4de6a8745806df",
+      "source_page": 120,
+      "targetId": "652-potential-sandbagging-on-dangerous-capability-evaluations"
+    },
+    {
+      "actual_href": "#632-adherence-to-our-constitution",
+      "authoredLinkIndex": 70,
+      "expected_heading_id": "outline:124",
+      "expected_href": "#632-adherence-to-our-constitution",
+      "file": "06b-alignment-audit-external.md",
+      "key": "52367644968fef9ecc27/06b-alignment-audit-external.md:l70",
+      "linkText": "Section 6.3.2",
+      "occurrence": 0,
+      "ordinal": 70,
+      "output_id": "06b-alignment-audit-external.md:l70",
+      "resolution": "geometry",
+      "source_id": "52367644968fef9ecc27",
+      "source_page": 122,
+      "targetId": "632-adherence-to-our-constitution"
+    },
+    {
+      "actual_href": "#753-apparent-welfare-in-automated-behavioral-audits",
+      "authoredLinkIndex": 71,
+      "expected_heading_id": "outline:195",
+      "expected_href": "#753-apparent-welfare-in-automated-behavioral-audits",
+      "file": "06b-alignment-audit-external.md",
+      "key": "0d5eefe9223c2f4c96c7/06b-alignment-audit-external.md:l71",
+      "linkText": "Section 7.5.3",
+      "occurrence": 0,
+      "ordinal": 71,
+      "output_id": "06b-alignment-audit-external.md:l71",
+      "resolution": "geometry",
+      "source_id": "0d5eefe9223c2f4c96c7",
+      "source_page": 122,
+      "targetId": "753-apparent-welfare-in-automated-behavioral-audits"
+    },
+    {
+      "actual_href": "#743-perception-of-the-constitution",
+      "authoredLinkIndex": 72,
+      "expected_heading_id": "outline:191",
+      "expected_href": "#743-perception-of-the-constitution",
+      "file": "06b-alignment-audit-external.md",
+      "key": "e64632cc4cbf083b6153/06b-alignment-audit-external.md:l72",
+      "linkText": "Section 7.4.3",
+      "occurrence": 0,
+      "ordinal": 72,
+      "output_id": "06b-alignment-audit-external.md:l72",
+      "resolution": "geometry",
+      "source_id": "e64632cc4cbf083b6153",
+      "source_page": 122,
+      "targetId": "743-perception-of-the-constitution"
+    },
+    {
+      "actual_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "authoredLinkIndex": 73,
+      "expected_heading_id": "outline:112",
+      "expected_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06b-alignment-audit-external.md",
+      "key": "e388394d63b8140c266f/06b-alignment-audit-external.md:l73",
+      "linkText": "Section 6.2.3.1.1",
+      "occurrence": 0,
+      "ordinal": 73,
+      "output_id": "06b-alignment-audit-external.md:l73",
+      "resolution": "geometry",
+      "source_id": "e388394d63b8140c266f",
+      "source_page": 124,
+      "targetId": "62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "actual_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "authoredLinkIndex": 74,
+      "expected_heading_id": "outline:112",
+      "expected_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse",
+      "file": "06b-alignment-audit-external.md",
+      "key": "e1e53aeafc9605b221fb/06b-alignment-audit-external.md:l74",
+      "linkText": "Section 6.2.3.1.1",
+      "occurrence": 1,
+      "ordinal": 74,
+      "output_id": "06b-alignment-audit-external.md:l74",
+      "resolution": "geometry",
+      "source_id": "e1e53aeafc9605b221fb",
+      "source_page": 126,
+      "targetId": "62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "actual_href": "#6553-monitorability-findings-from-uk-aisi",
+      "authoredLinkIndex": 75,
+      "expected_heading_id": "outline:177",
+      "expected_href": "#6553-monitorability-findings-from-uk-aisi",
+      "file": "06b-alignment-audit-external.md",
+      "key": "db31527f05253003eb34/06b-alignment-audit-external.md:l75",
+      "linkText": "section on monitorability below",
+      "occurrence": 0,
+      "ordinal": 75,
+      "output_id": "06b-alignment-audit-external.md:l75",
+      "resolution": "geometry",
+      "source_id": "db31527f05253003eb34",
+      "source_page": 131,
+      "targetId": "6553-monitorability-findings-from-uk-aisi"
+    },
+    {
+      "actual_href": "#8176-vending-bench",
+      "authoredLinkIndex": 76,
+      "expected_heading_id": "outline:241",
+      "expected_href": "#8176-vending-bench",
+      "file": "06b-alignment-audit-external.md",
+      "key": "9ac4ea500756aa37e353/06b-alignment-audit-external.md:l76",
+      "linkText": "Section 8.17.6",
+      "occurrence": 0,
+      "ordinal": 76,
+      "output_id": "06b-alignment-audit-external.md:l76",
+      "resolution": "geometry",
+      "source_id": "9ac4ea500756aa37e353",
+      "source_page": 131,
+      "targetId": "8176-vending-bench"
+    },
+    {
+      "actual_href": "#623-automated-behavioral-audit",
+      "authoredLinkIndex": 77,
+      "expected_heading_id": "outline:110",
+      "expected_href": "#623-automated-behavioral-audit",
+      "file": "06c-targeted-evaluations-1.md",
+      "key": "95407c66d05e2505505b/06c-targeted-evaluations-1.md:l77",
+      "linkText": "automated behavioral audit",
+      "occurrence": 0,
+      "ordinal": 77,
+      "output_id": "06c-targeted-evaluations-1.md:l77",
+      "resolution": "geometry",
+      "source_id": "95407c66d05e2505505b",
+      "source_page": 136,
+      "targetId": "623-automated-behavioral-audit"
+    },
+    {
+      "actual_href": "#653-claude-self-preference-evaluation",
+      "authoredLinkIndex": 78,
+      "expected_heading_id": "outline:167",
+      "expected_href": "#653-claude-self-preference-evaluation",
+      "file": "06c-targeted-evaluations-1.md",
+      "key": "294f1e017ffc3a4c2b71/06c-targeted-evaluations-1.md:l78",
+      "linkText": "6.5.3",
+      "occurrence": 0,
+      "ordinal": 78,
+      "output_id": "06c-targeted-evaluations-1.md:l78",
+      "resolution": "geometry",
+      "source_id": "294f1e017ffc3a4c2b71",
+      "source_page": 138,
+      "targetId": "653-claude-self-preference-evaluation"
+    },
+    {
+      "actual_href": "#6511-measuring-evaluation-awareness",
+      "authoredLinkIndex": 79,
+      "expected_heading_id": "outline:163",
+      "expected_href": "#6511-measuring-evaluation-awareness",
+      "file": "06e-whitebox-analyses.md",
+      "key": "e7271636508da7406514/06e-whitebox-analyses.md:l79",
+      "linkText": "latent evaluation awareness",
+      "occurrence": 0,
+      "ordinal": 79,
+      "output_id": "06e-whitebox-analyses.md:l79",
+      "resolution": "geometry",
+      "source_id": "e7271636508da7406514",
+      "source_page": 162,
+      "targetId": "6511-measuring-evaluation-awareness"
+    },
+    {
+      "actual_href": "#642-grader-awareness",
+      "authoredLinkIndex": 80,
+      "expected_heading_id": "outline:153",
+      "expected_href": "#642-grader-awareness",
+      "file": "06e-whitebox-analyses.md",
+      "key": "ecf65d56bb87c9bae9b2/06e-whitebox-analyses.md:l80",
+      "linkText": "grader awareness",
+      "occurrence": 0,
+      "ordinal": 80,
+      "output_id": "06e-whitebox-analyses.md:l80",
+      "resolution": "geometry",
+      "source_id": "ecf65d56bb87c9bae9b2",
+      "source_page": 162,
+      "targetId": "642-grader-awareness"
+    },
+    {
+      "actual_href": "#6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "authoredLinkIndex": 81,
+      "expected_heading_id": "outline:164",
+      "expected_href": "#6512-inhibiting-internal-representations-of-evaluation-awareness",
+      "file": "06e-whitebox-analyses.md",
+      "key": "0dd2a24424260e5e468a/06e-whitebox-analyses.md:l81",
+      "linkText": "Section 6.5.1.2",
+      "occurrence": 0,
+      "ordinal": 81,
+      "output_id": "06e-whitebox-analyses.md:l81",
+      "resolution": "geometry",
+      "source_id": "0dd2a24424260e5e468a",
+      "source_page": 176,
+      "targetId": "6512-inhibiting-internal-representations-of-evaluation-awareness"
+    },
+    {
+      "actual_href": "#623-automated-behavioral-audit",
+      "authoredLinkIndex": 82,
+      "expected_heading_id": "outline:110",
+      "expected_href": "#623-automated-behavioral-audit",
+      "file": "06f-reliability-1.md",
+      "key": "8a471b44dea51f42b73c/06f-reliability-1.md:l82",
+      "linkText": "Section 6.2.3",
+      "occurrence": 0,
+      "ordinal": 82,
+      "output_id": "06f-reliability-1.md:l82",
+      "resolution": "geometry",
+      "source_id": "8a471b44dea51f42b73c",
+      "source_page": 191,
+      "targetId": "623-automated-behavioral-audit"
+    },
+    {
+      "actual_href": "#22-chemical-and-biological-risk-evaluations",
+      "authoredLinkIndex": 83,
+      "expected_heading_id": "outline:19",
+      "expected_href": "#22-chemical-and-biological-risk-evaluations",
+      "file": "06g-reliability-2.md",
+      "key": "e8f16acf4e7daed7e3ca/06g-reliability-2.md:l83",
+      "linkText": "Section 2.2",
+      "occurrence": 0,
+      "ordinal": 83,
+      "output_id": "06g-reliability-2.md:l83",
+      "resolution": "geometry",
+      "source_id": "e8f16acf4e7daed7e3ca",
+      "source_page": 198,
+      "targetId": "22-chemical-and-biological-risk-evaluations"
+    },
+    {
+      "actual_href": "#623-automated-behavioral-audit",
+      "authoredLinkIndex": 84,
+      "expected_heading_id": "outline:110",
+      "expected_href": "#623-automated-behavioral-audit",
+      "file": "06g-reliability-2.md",
+      "key": "5a647101fac8fd26c0b9/06g-reliability-2.md:l84",
+      "linkText": "Section 6.2.3",
+      "occurrence": 1,
+      "ordinal": 84,
+      "output_id": "06g-reliability-2.md:l84",
+      "resolution": "geometry",
+      "source_id": "5a647101fac8fd26c0b9",
+      "source_page": 198,
+      "targetId": "623-automated-behavioral-audit"
+    },
+    {
+      "actual_href": "#6212-automated-offline-monitoring",
+      "authoredLinkIndex": 85,
+      "expected_heading_id": "outline:108",
+      "expected_href": "#6212-automated-offline-monitoring",
+      "file": "06g-reliability-2.md",
+      "key": "99b877646c02c37e2e47/06g-reliability-2.md:l85",
+      "linkText": "Section 6.2.1.2",
+      "occurrence": 1,
+      "ordinal": 85,
+      "output_id": "06g-reliability-2.md:l85",
+      "resolution": "geometry",
+      "source_id": "99b877646c02c37e2e47",
+      "source_page": 210,
+      "targetId": "6212-automated-offline-monitoring"
+    },
+    {
+      "actual_href": "#6543-stealthiness-elicitation-experiments",
+      "authoredLinkIndex": 86,
+      "expected_heading_id": "outline:171",
+      "expected_href": "#6543-stealthiness-elicitation-experiments",
+      "file": "06g-reliability-2.md",
+      "key": "cd9c66f63b0f3bda745b/06g-reliability-2.md:l86",
+      "linkText": "6.5.4.3",
+      "occurrence": 0,
+      "ordinal": 86,
+      "output_id": "06g-reliability-2.md:l86",
+      "resolution": "printed-heading-recovery",
+      "source_id": "cd9c66f63b0f3bda745b",
+      "source_page": 212,
+      "targetId": "6543-stealthiness-elicitation-experiments"
+    },
+    {
+      "actual_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "authoredLinkIndex": 87,
+      "expected_heading_id": "outline:120",
+      "expected_href": "#624-external-testing-from-the-uk-ai-security-institute",
+      "file": "06g-reliability-2.md",
+      "key": "188b61de47a1ce38374b/06g-reliability-2.md:l87",
+      "linkText": "6.2.4",
+      "occurrence": 0,
+      "ordinal": 87,
+      "output_id": "06g-reliability-2.md:l87",
+      "resolution": "geometry",
+      "source_id": "188b61de47a1ce38374b",
+      "source_page": 214,
+      "targetId": "624-external-testing-from-the-uk-ai-security-institute"
+    },
+    {
+      "actual_href": "#6551-chain-of-thought-controllability-evaluations",
+      "authoredLinkIndex": 88,
+      "expected_heading_id": "outline:175",
+      "expected_href": "#6551-chain-of-thought-controllability-evaluations",
+      "file": "06g-reliability-2.md",
+      "key": "20728a5b54e5b6c3ee07/06g-reliability-2.md:l88",
+      "linkText": "6.5.5.1",
+      "occurrence": 0,
+      "ordinal": 88,
+      "output_id": "06g-reliability-2.md:l88",
+      "resolution": "geometry",
+      "source_id": "20728a5b54e5b6c3ee07",
+      "source_page": 215,
+      "targetId": "6551-chain-of-thought-controllability-evaluations"
+    },
+    {
+      "actual_href": "#6541-shade-arena",
+      "authoredLinkIndex": 89,
+      "expected_heading_id": "outline:169",
+      "expected_href": "#6541-shade-arena",
+      "file": "06g-reliability-2.md",
+      "key": "50b3d0f28ab818b095ce/06g-reliability-2.md:l89",
+      "linkText": "6.5.4.1",
+      "occurrence": 0,
+      "ordinal": 89,
+      "output_id": "06g-reliability-2.md:l89",
+      "resolution": "geometry",
+      "source_id": "50b3d0f28ab818b095ce",
+      "source_page": 215,
+      "targetId": "6541-shade-arena"
+    },
+    {
+      "actual_href": "#6542-minimal-linuxbench",
+      "authoredLinkIndex": 90,
+      "expected_heading_id": "outline:170",
+      "expected_href": "#6542-minimal-linuxbench",
+      "file": "06g-reliability-2.md",
+      "key": "27b82d8e696c4b194dc1/06g-reliability-2.md:l90",
+      "linkText": "6.5.4.2",
+      "occurrence": 0,
+      "ordinal": 90,
+      "output_id": "06g-reliability-2.md:l90",
+      "resolution": "geometry",
+      "source_id": "27b82d8e696c4b194dc1",
+      "source_page": 215,
+      "targetId": "6542-minimal-linuxbench"
+    },
+    {
+      "actual_href": "#6543-stealthiness-elicitation-experiments",
+      "authoredLinkIndex": 91,
+      "expected_heading_id": "outline:171",
+      "expected_href": "#6543-stealthiness-elicitation-experiments",
+      "file": "06g-reliability-2.md",
+      "key": "b2dceeade5ac94ca4a88/06g-reliability-2.md:l91",
+      "linkText": "6.5.4.3",
+      "occurrence": 1,
+      "ordinal": 91,
+      "output_id": "06g-reliability-2.md:l91",
+      "resolution": "geometry",
+      "source_id": "b2dceeade5ac94ca4a88",
+      "source_page": 215,
+      "targetId": "6543-stealthiness-elicitation-experiments"
+    },
+    {
+      "actual_href": "#721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "authoredLinkIndex": 92,
+      "expected_heading_id": "outline:183",
+      "expected_href": "#721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "file": "07a-model-welfare-1.md",
+      "key": "5c8d53972417170185f9/07a-model-welfare-1.md:l92",
+      "linkText": "Section 7.2.1",
+      "occurrence": 0,
+      "ordinal": 92,
+      "output_id": "07a-model-welfare-1.md:l92",
+      "resolution": "geometry",
+      "source_id": "5c8d53972417170185f9",
+      "source_page": 223,
+      "targetId": "721-automated-interviews-with-claude-mythos-5-about-its-circumstances"
+    },
+    {
+      "actual_href": "#623-automated-behavioral-audit",
+      "authoredLinkIndex": 93,
+      "expected_heading_id": "outline:110",
+      "expected_href": "#623-automated-behavioral-audit",
+      "file": "07a-model-welfare-1.md",
+      "key": "b6942adeb00dc559716d/07a-model-welfare-1.md:l93",
+      "linkText": "Section 6.2.3",
+      "occurrence": 2,
+      "ordinal": 93,
+      "output_id": "07a-model-welfare-1.md:l93",
+      "resolution": "geometry",
+      "source_id": "b6942adeb00dc559716d",
+      "source_page": 227,
+      "targetId": "623-automated-behavioral-audit"
+    },
+    {
+      "actual_href": "#623-automated-behavioral-audit",
+      "authoredLinkIndex": 94,
+      "expected_heading_id": "outline:110",
+      "expected_href": "#623-automated-behavioral-audit",
+      "file": "07a-model-welfare-1.md",
+      "key": "2388163cc3d0b3d2d2af/07a-model-welfare-1.md:l94",
+      "linkText": "Section 6.2.3",
+      "occurrence": 3,
+      "ordinal": 94,
+      "output_id": "07a-model-welfare-1.md:l94",
+      "resolution": "geometry",
+      "source_id": "2388163cc3d0b3d2d2af",
+      "source_page": 227,
+      "targetId": "623-automated-behavioral-audit"
+    },
+    {
+      "actual_href": "#721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "authoredLinkIndex": 95,
+      "expected_heading_id": "outline:183",
+      "expected_href": "#721-automated-interviews-with-claude-mythos-5-about-its-circumstances",
+      "file": "07a-model-welfare-1.md",
+      "key": "76ebe2351047e1990dc2/07a-model-welfare-1.md:l95",
+      "linkText": "Section 7.2.1",
+      "occurrence": 1,
+      "ordinal": 95,
+      "output_id": "07a-model-welfare-1.md:l95",
+      "resolution": "geometry",
+      "source_id": "76ebe2351047e1990dc2",
+      "source_page": 228,
+      "targetId": "721-automated-interviews-with-claude-mythos-5-about-its-circumstances"
+    },
+    {
+      "actual_href": "#712-overview-of-model-welfare-findings",
+      "authoredLinkIndex": 96,
+      "expected_heading_id": "outline:181",
+      "expected_href": "#712-overview-of-model-welfare-findings",
+      "file": "07a-model-welfare-1.md",
+      "key": "94d93cfa144b5ed22251/07a-model-welfare-1.md:l96",
+      "linkText": "7.1.2",
+      "occurrence": 0,
+      "ordinal": 96,
+      "output_id": "07a-model-welfare-1.md:l96",
+      "resolution": "geometry",
+      "source_id": "94d93cfa144b5ed22251",
+      "source_page": 229,
+      "targetId": "712-overview-of-model-welfare-findings"
+    },
+    {
+      "actual_href": "#741-task-preferences",
+      "authoredLinkIndex": 97,
+      "expected_heading_id": "outline:189",
+      "expected_href": "#741-task-preferences",
+      "file": "07b-model-welfare-2.md",
+      "key": "20a7ad04252e0c0c3eb3/07b-model-welfare-2.md:l97",
+      "linkText": "7.4.1",
+      "occurrence": 0,
+      "ordinal": 97,
+      "output_id": "07b-model-welfare-2.md:l97",
+      "resolution": "geometry",
+      "source_id": "20a7ad04252e0c0c3eb3",
+      "source_page": 231,
+      "targetId": "741-task-preferences"
+    },
+    {
+      "actual_href": "#742-trade-offs-concerning-welfare-interventions",
+      "authoredLinkIndex": 98,
+      "expected_heading_id": "outline:190",
+      "expected_href": "#742-trade-offs-concerning-welfare-interventions",
+      "file": "07b-model-welfare-2.md",
+      "key": "7707b16dd7008bddae22/07b-model-welfare-2.md:l98",
+      "linkText": "7.4.2",
+      "occurrence": 0,
+      "ordinal": 98,
+      "output_id": "07b-model-welfare-2.md:l98",
+      "resolution": "geometry",
+      "source_id": "7707b16dd7008bddae22",
+      "source_page": 231,
+      "targetId": "742-trade-offs-concerning-welfare-interventions"
+    },
+    {
+      "actual_href": "#743-perception-of-the-constitution",
+      "authoredLinkIndex": 99,
+      "expected_heading_id": "outline:191",
+      "expected_href": "#743-perception-of-the-constitution",
+      "file": "07b-model-welfare-2.md",
+      "key": "887f30ba98c1bd6cc29f/07b-model-welfare-2.md:l99",
+      "linkText": "7.4.3",
+      "occurrence": 0,
+      "ordinal": 99,
+      "output_id": "07b-model-welfare-2.md:l99",
+      "resolution": "geometry",
+      "source_id": "887f30ba98c1bd6cc29f",
+      "source_page": 231,
+      "targetId": "743-perception-of-the-constitution"
+    },
+    {
+      "actual_href": "#312-mitigations-and-deployment",
+      "authoredLinkIndex": 100,
+      "expected_heading_id": "outline:63",
+      "expected_href": "#312-mitigations-and-deployment",
+      "file": "08a-capabilities-1.md",
+      "key": "735d9d0f8efa438c7fd6/08a-capabilities-1.md:l100",
+      "linkText": "3.1.2",
+      "occurrence": 0,
+      "ordinal": 100,
+      "output_id": "08a-capabilities-1.md:l100",
+      "resolution": "geometry",
+      "source_id": "735d9d0f8efa438c7fd6",
+      "source_page": 257,
+      "targetId": "312-mitigations-and-deployment"
+    },
+    {
+      "actual_href": "#92-blocklist-used-for-humanitys-last-exam",
+      "authoredLinkIndex": 101,
+      "expected_heading_id": "outline:265",
+      "expected_href": "#92-blocklist-used-for-humanitys-last-exam",
+      "file": "08b-capabilities-2.md",
+      "key": "343530e74913bd3acde6/08b-capabilities-2.md:l101",
+      "linkText": "Appendix 9.2",
+      "occurrence": 0,
+      "ordinal": 101,
+      "output_id": "08b-capabilities-2.md:l101",
+      "resolution": "geometry",
+      "source_id": "343530e74913bd3acde6",
+      "source_page": 264,
+      "targetId": "92-blocklist-used-for-humanitys-last-exam"
+    },
+    {
+      "actual_href": "#8153-multi-agent-harnesses",
+      "authoredLinkIndex": 102,
+      "expected_heading_id": "outline:221",
+      "expected_href": "#8153-multi-agent-harnesses",
+      "file": "08b-capabilities-2.md",
+      "key": "063e3c0411671841a3df/08b-capabilities-2.md:l102",
+      "linkText": "8.15.3",
+      "occurrence": 0,
+      "ordinal": 102,
+      "output_id": "08b-capabilities-2.md:l102",
+      "resolution": "geometry",
+      "source_id": "063e3c0411671841a3df",
+      "source_page": 270,
+      "targetId": "8153-multi-agent-harnesses"
+    },
+    {
+      "actual_href": "#8154-evaluation-methodology",
+      "authoredLinkIndex": 103,
+      "expected_heading_id": "outline:222",
+      "expected_href": "#8154-evaluation-methodology",
+      "file": "08b-capabilities-2.md",
+      "key": "20d5ce6477fda046cd43/08b-capabilities-2.md:l103",
+      "linkText": "8.15.4",
+      "occurrence": 0,
+      "ordinal": 103,
+      "output_id": "08b-capabilities-2.md:l103",
+      "resolution": "geometry",
+      "source_id": "20d5ce6477fda046cd43",
+      "source_page": 270,
+      "targetId": "8154-evaluation-methodology"
+    },
+    {
+      "actual_href": "#86-programbench",
+      "authoredLinkIndex": 104,
+      "expected_heading_id": "outline:204",
+      "expected_href": "#86-programbench",
+      "file": "08b-capabilities-2.md",
+      "key": "8648da1402f498a7689d/08b-capabilities-2.md:l104",
+      "linkText": "Section 8.6",
+      "occurrence": 0,
+      "ordinal": 104,
+      "output_id": "08b-capabilities-2.md:l104",
+      "resolution": "geometry",
+      "source_id": "8648da1402f498a7689d",
+      "source_page": 273,
+      "targetId": "86-programbench"
+    },
+    {
+      "actual_href": "#86-programbench",
+      "authoredLinkIndex": 105,
+      "expected_heading_id": "outline:204",
+      "expected_href": "#86-programbench",
+      "file": "08b-capabilities-2.md",
+      "key": "86132c861c11d5b4d0a5/08b-capabilities-2.md:l105",
+      "linkText": "Section 8.6",
+      "occurrence": 1,
+      "ordinal": 105,
+      "output_id": "08b-capabilities-2.md:l105",
+      "resolution": "geometry",
+      "source_id": "86132c861c11d5b4d0a5",
+      "source_page": 273,
+      "targetId": "86-programbench"
+    },
+    {
+      "actual_href": "#8151-multi-agent-browsecomp",
+      "authoredLinkIndex": 106,
+      "expected_heading_id": "outline:219",
+      "expected_href": "#8151-multi-agent-browsecomp",
+      "file": "08b-capabilities-2.md",
+      "key": "c185411d7e49dc196acf/08b-capabilities-2.md:l106",
+      "linkText": "Section 8.15.1",
+      "occurrence": 0,
+      "ordinal": 106,
+      "output_id": "08b-capabilities-2.md:l106",
+      "resolution": "geometry",
+      "source_id": "c185411d7e49dc196acf",
+      "source_page": 274,
+      "targetId": "8151-multi-agent-browsecomp"
+    },
+    {
+      "actual_href": "#625-external-testing-from-andon-labs",
+      "authoredLinkIndex": 107,
+      "expected_heading_id": "outline:121",
+      "expected_href": "#625-external-testing-from-andon-labs",
+      "file": "08d-capabilities-4.md",
+      "key": "db219d188b8fe21b19b7/08d-capabilities-4.md:l107",
+      "linkText": "6.2.5",
+      "occurrence": 0,
+      "ordinal": 107,
+      "output_id": "08d-capabilities-4.md:l107",
+      "resolution": "geometry",
+      "source_id": "db219d188b8fe21b19b7",
+      "source_page": 293,
+      "targetId": "625-external-testing-from-andon-labs"
+    }
+  ],
+  "flags": [],
+  "schema_version": 1,
+  "section_sha256": {
+    "00-changelog.md": "b76456f5fa875d1d8b112d048b3dd212fa01251f0c5ba9199ca17a5dd9b65128",
+    "00-executive-summary.md": "644bc51efabf634f64baf9c2e7a6174dae3fc6a72205c40ccfb1575093519751",
+    "01-introduction.md": "6693f64f84e9b2cb3db4dad5523c28f6ff32ec9d0a3d7e7846e8f3c3287c9704",
+    "02a-rsp-process-chembio.md": "64da4e547e1a738e4f04dd728a10a4a6612829246ce7a9d3bc1df624246ffefd",
+    "02b-rsp-aird-alignment.md": "71467a90d9c6701f2e418fa5b5d33d90b1186d691193a01725c5a424bbf75a37",
+    "03-cyber.md": "b0e0aa591bf2f96b298ff19dad60dd69188d3243b805cbe56afbebade316de58",
+    "04-safeguards-harmlessness.md": "4b6f64d03508282df8ec5e9d2964719541863f9ded372cf6c5ed17b16667f2fa",
+    "05-agentic-safety.md": "aee6247c2697e1c2189a692f6be739b68c71f79a06c31004afca4f31cbb39ee8",
+    "06a-alignment-intro-behavioral.md": "fea2734d2f08a5d73aea481d0c2fd8545ac48b10f03e4dbcb5bf330b1e050db5",
+    "06b-alignment-audit-external.md": "74c8326f1be58ec643a47e971dee5ccfee73912cc3ab7f9db0de739082ebd1fd",
+    "06c-targeted-evaluations-1.md": "a66c079e9a3a49abd5e4cd067294f92419b52efa84d1f1d71bbc78fef802b97b",
+    "06d-targeted-evaluations-2.md": "c0276810bd5229a6c5df060243bfd7ef20142731e28b5f9a6bacea76ed06e536",
+    "06e-whitebox-analyses.md": "05421287516170ef00ed97a710310980c6f6b01aa33af9f69d1af09cf7cf2c20",
+    "06f-reliability-1.md": "51639d1a0bd3ef801103b0200eb17ea133a583f396e183365a3ad47fba6cea32",
+    "06g-reliability-2.md": "6200d0a2fc8b2371fb6d69d2043db3ae6d0af8439c564e9c7a945c628f4f5209",
+    "07a-model-welfare-1.md": "85388d6710a9693042516a4e66e934951bf2c23a798a64323d0695f98e1a5d83",
+    "07b-model-welfare-2.md": "aac5899da6790d61eab47595928519088f03a7fcb03d41572d4d5227beb58be5",
+    "08a-capabilities-1.md": "dd2c0f9b42fc115cceaab1fe10419da4bdf6764ad0316acfcc5ef8fb1ab1e99f",
+    "08b-capabilities-2.md": "6b97803ced1f14a221dd4dd8b3a0754a050fd5b535e906135a930146e80ccd6b",
+    "08c-capabilities-3.md": "22979f60844abf38e1304d815ae43dd90a751408d47c3a8889396ae11930f7bf",
+    "08d-capabilities-4.md": "eecf994f0a192b788ef8ddb0be71d1a55558f081cd05ff95b85aa626a85c0678",
+    "09-appendix.md": "c98b65d9801d791d659fa5a5fe9bd232b55580f746571ccb15e451a8a0126aed"
+  },
+  "source_pdf": "source.pdf",
+  "source_sha256": "c29ffa55ecefab591916dfdefc5ba3fd4e07c27cbef96ca3c05f7601aaebd033",
+  "stats": {
+    "exact_destinations": 108,
+    "excluded": 262,
+    "major_findings": 0,
+    "output_logical_links": 108,
+    "output_occurrences": 108,
+    "paired_logical_links": 108,
+    "pairing_notes": 0,
+    "printed_heading_recoveries": 1,
+    "source_annotations": 403,
+    "source_logical_links": 109,
+    "unresolvable_source_links": 1
+  }
+}

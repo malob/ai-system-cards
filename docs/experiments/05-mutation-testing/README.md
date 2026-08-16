@@ -8,7 +8,9 @@ covers the censorship gap in the v1 corpus (D5/D6).
 synthetic defect into a temporary copy of the current sections, runs the full
 invariant suite, and counts a catch iff a flag of the expected invariant appears
 that was not in the unmutated baseline. The current calibration is 8
-mutations/class with seed 5. The original Fable-only record remains
+mutations/class with seed 5. Each class has a deterministic, digest-derived RNG
+stream, so adding or reordering a class cannot resample the others. The original
+Fable-only record remains
 [results.json](results.json); the enforceable current baselines are:
 
 - [Fable 5](results-anthropic-claude-fable-5.json)
@@ -31,14 +33,21 @@ gate because an otherwise harmless source edit can move a seeded sample.
 
 | document | eligible classes | caught | recall | not applicable |
 | --- | ---: | ---: | ---: | --- |
-| Claude Fable 5 & Claude Mythos 5 | 12 | 86/96 | 89.6% | — |
-| Claude Opus 5 | 11 | 72/88 | 81.8% | `flatten-chip` |
-| Risk Report: August 2026 | 11 | 74/88 | 84.1% | `flatten-chip` |
+| Claude Fable 5 & Claude Mythos 5 | 13 | 95/104 | 91.3% | — |
+| Claude Opus 5 | 12 | 80/96 | 83.3% | `flatten-chip` |
+| Risk Report: August 2026 | 12 | 77/96 | 80.2% | `flatten-chip` |
 
 These are floors, not a claim of universal defect recall. The weakest measured
 classes are structural splits and S1 bold removal; the agent inspection layers
 remain their explicit backstop. The scoped/weekly GitHub Actions mutation workflow
 runs all three baselines independently of the fast per-change verifier gate.
+
+The current artifacts add `repoint-link`, which changes an internal link to a
+different existing heading without breaking the fragment graph. Existence-only link
+audits therefore remain green, while the source-bound L2 expectation must catch the
+wrong destination; recall is 8/8 on every card. The artifacts were intentionally
+rebaselined once when per-class RNG streams landed. Future class insertion no longer
+changes another class's sampled sites.
 
 ## Original Fable calibration (historical)
 

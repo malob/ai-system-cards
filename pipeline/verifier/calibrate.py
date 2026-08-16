@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import acceptance
 import cardcfg
 import invariants
+import l2_links
 import mdproj
 import oracle
 
@@ -29,8 +30,13 @@ TOC_PAGES = cardcfg.TOC_PAGES
 EXPECTED_PAGES = cardcfg.EXPECTED_PAGES  # 1 = cover (declared exclusion)
 
 
+def _full_l2_enabled(section_prefixes=None, only_pages=None) -> bool:
+    """L2 owns the complete source/output graph, never a partial projection."""
+    return not section_prefixes and not only_pages
+
+
 def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
-               sections_text=None) -> list[dict]:
+               sections_text=None, l2_flags=None) -> list[dict]:
     # global streams — sections share boundary pages, so compare the whole doc.
     # Page 1 is a declared exclusion (cover art + title typography; trivially
     # eyeballable, no body text). p.2 is the changelog — verified like any page.
@@ -69,6 +75,8 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
     flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages)
     flags += invariants.s2_chips(md_chips, pages, page_range, chip_colors, registry)
     flags += invariants.st_structure(sections, pages, page_range, TOC_PAGES, table_pages)
+    if l2_flags:
+        flags += list(l2_flags)
     if sections_text:
         # TB2 (owner-requested): table-cell ORDER integrity — a scrambled
         # cell is invisible to T1's table-zone demotion but md-detectable
@@ -114,8 +122,13 @@ def collect_flags(ref: str, section_prefixes=None) -> list[dict]:
             continue
         sections.append(mdproj.project(name, text))
         stexts.append((name, text))
+    # L2 needs the complete source/output link graph.  Partial generation and
+    # page-filtered diagnostics deliberately do not run it.
+    l2_report = (l2_links.verify(CARD / "source.pdf", stexts, TOC_PAGES)
+                 if _full_l2_enabled(section_prefixes) else None)
     return _flags_for(sections, pages, figures_map, bool(section_prefixes),
-                      sections_text=stexts)
+                      sections_text=stexts,
+                      l2_flags=l2_report.flags if l2_report else None)
 
 
 def _apply_accepted(flags: list[dict], path: Path, *, require_all: bool):
@@ -143,6 +156,8 @@ def main(argv=None):
     ap.add_argument("ref", help="git ref for the markdown side, or WORKTREE")
     ap.add_argument("--sections", nargs="*", help="prefixes to limit to (e.g. 02a)")
     ap.add_argument("--json", type=Path)
+    ap.add_argument("--l2-json", type=Path,
+                    help="write the deterministic source/canonical L2 expectation artifact")
     ap.add_argument("--samples", type=int, default=10)
     ap.add_argument("--only-pages", nargs="*", type=int,
                     help="restrict all checks to these source pages (for wave/partial runs)")
@@ -160,9 +175,13 @@ def main(argv=None):
         sections.append(mdproj.project(name, text))
         stexts.append((name, text))
 
+    l2_report = None
+    if _full_l2_enabled(args.sections, args.only_pages):
+        l2_report = l2_links.verify(CARD / "source.pdf", stexts, TOC_PAGES)
     flags = _flags_for(sections, pages, figures_map, bool(args.sections),
                        only_pages=set(args.only_pages) if args.only_pages else None,
-                       sections_text=stexts)
+                       sections_text=stexts,
+                       l2_flags=l2_report.flags if l2_report else None)
 
     acc_path = CARD / "accepted.json"
     # A full current-card gate is also a check that every committed acceptance
@@ -179,10 +198,17 @@ def main(argv=None):
               file=sys.stderr)
     by_inv = Counter((f["invariant"], f["severity"]) for f in flags)
     print(f"\n=== verifier v0 @ {args.ref} — {len(sections)} sections ===")
+    if l2_report:
+        s = l2_report.stats
+        print("  L2 exact  "
+              f"{s['exact_destinations']}/{s['paired_logical_links']} paired; "
+              f"{s['printed_heading_recoveries']} printed-heading recovery; "
+              f"{s['unresolvable_source_links']} source-unresolvable; "
+              f"{s['major_findings']} major")
     for (inv, sev), n in sorted(by_inv.items()):
         print(f"{inv:>4} {sev:<6} {n}")
 
-    for inv in ("T1", "L1", "S1", "S2", "S3", "ST1", "ST2", "ST3", "P1", "F1", "FN1"):
+    for inv in ("T1", "L1", "L2", "S1", "S2", "S3", "ST1", "ST2", "ST3", "P1", "F1", "FN1"):
         sample = [f for f in flags if f["invariant"] == inv and f["severity"] == "major"][: args.samples]
         if sample:
             print(f"\n--- {inv} major samples ---")
@@ -193,6 +219,13 @@ def main(argv=None):
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(flags, indent=1, ensure_ascii=False))
         print(f"\nwrote {args.json} ({len(flags)} flags)")
+    if args.l2_json:
+        if l2_report is None:
+            print("ERROR: --l2-json requires a full unfiltered gate", file=sys.stderr)
+            return 2
+        args.l2_json.parent.mkdir(parents=True, exist_ok=True)
+        args.l2_json.write_text(l2_report.to_json() + "\n")
+        print(f"wrote {args.l2_json} ({len(l2_report.expected_links)} expectations)")
     return acceptance.gate_exit_code(
         flags, report_only=args.report_only, config_error=acceptance_error is not None)
 

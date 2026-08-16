@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "fixtures": [
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "02b-rsp-aird-alignment.md",
+      "source_page": 52,
+      "label": "prefillattacks",
+      "rank": 0,
+      "old_href": "#6231-primary-results",
+      "correct_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "02b-rsp-aird-alignment.md",
+      "source_page": 52,
+      "label": "takerecklessordestructiveactionsinserviceofuserassignedgoals",
+      "rank": 0,
+      "old_href": "#63-targeted-evaluations",
+      "correct_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 99,
+      "label": "behavioralhonestyandfactualityproperties",
+      "rank": 0,
+      "old_href": "#6331-factual-hallucinations",
+      "correct_href": "#633-honesty-and-hallucinations"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 99,
+      "label": "broadbehavioralmeasuresofsafetyandalignment",
+      "rank": 0,
+      "old_href": "#6231-primary-results",
+      "correct_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 99,
+      "label": "propensitytoknowinglycooperatewithmisuse",
+      "rank": 0,
+      "old_href": "#6231-primary-results",
+      "correct_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 99,
+      "label": "takerecklessordestructiveactionsinserviceofuserassignedgoals",
+      "rank": 0,
+      "old_href": "#63-targeted-evaluations",
+      "correct_href": "#631-destructive-or-reckless-actions-in-pursuit-of-user-assigned-goals"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 100,
+      "label": "mediatessomemodelbehaviors",
+      "rank": 0,
+      "old_href": "#64212-grader-awareness-increases-during-training",
+      "correct_href": "#6422-assessing-the-impact-of-grader-awareness"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 100,
+      "label": "prefillattacks",
+      "rank": 0,
+      "old_href": "#6231-primary-results",
+      "correct_href": "#62311-overall-harmful-behavior-and-cooperation-with-misuse"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 100,
+      "label": "whiteboxmethodsidentifyinstancesinwhichmythos5sinternalstatedivergesfromitsexternalbehaviororrevealawarenessofwrongdoing",
+      "rank": 0,
+      "old_href": "#64-white-box-analyses-of-model-internals",
+      "correct_href": "#641-automated-monitoring-of-internal-activations"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-fable-5",
+      "file": "06a-alignment-intro-behavioral.md",
+      "source_page": 101,
+      "label": "shadearena",
+      "rank": 0,
+      "old_href": "#654-capabilities-related-to-evading-safeguards",
+      "correct_href": "#6541-shade-arena"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-opus-5",
+      "file": "06a-alignment-1.md",
+      "source_page": 79,
+      "label": "whiteboxanalyses",
+      "rank": 0,
+      "old_href": "#66-reliability-of-this-assessment",
+      "correct_href": "#661-white-box-analyses-of-model-internals"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/claude-opus-5",
+      "file": "06a-alignment-1.md",
+      "source_page": 80,
+      "label": "sandbagging",
+      "rank": 0,
+      "old_href": "#67-capabilities-related-to-evading-safeguards",
+      "correct_href": "#662-potential-sandbagging-on-dangerous-capability-evaluations"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "01-introduction.md",
+      "source_page": 7,
+      "label": "finalsection",
+      "rank": 0,
+      "old_href": "#51-acceleration-dynamics",
+      "correct_href": "#5-cross-cutting-content"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "04a-chem-bio-1.md",
+      "source_page": 121,
+      "label": "previousthreatmodel",
+      "rank": 0,
+      "old_href": "#42-threat-models",
+      "correct_href": "#421-cb-1-threat-model"
+    },
+    {
+      "commit": "aab9e96",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "04b-chem-bio-2.md",
+      "source_page": 156,
+      "label": "discussedabove",
+      "rank": 0,
+      "old_href": "#441-notes-on-how-we-weigh-evidence",
+      "correct_href": "#442-cb-1-evidence"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "02a-autonomy-misalignment-1.md",
+      "source_page": 26,
+      "label": "claim3",
+      "rank": 0,
+      "old_href": "#291-claim-31-experience-with-prior-anthropic-models-suggests-that-unknown-severe-pervasive-misalignment-is-unlikely-in-covered-models",
+      "correct_href": "#29-claim-3-unknown-severe-pervasive-misalignment-is-very-unlikely"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "02a-autonomy-misalignment-1.md",
+      "source_page": 26,
+      "label": "claim6",
+      "rank": 0,
+      "old_href": "#213-claim-7-threat-modeling-is-sufficient",
+      "correct_href": "#212-claim-6-catastrophic-harm-from-unknown-pervasive-misalignment-is-somewhat-likely-to-be-mitigated"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "02a-autonomy-misalignment-1.md",
+      "source_page": 26,
+      "label": "specificpathways",
+      "rank": 0,
+      "old_href": "#24-summary-and-methodology",
+      "correct_href": "#221-specific-pathways"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "02a-autonomy-misalignment-1.md",
+      "source_page": 27,
+      "label": "claim7",
+      "rank": 0,
+      "old_href": "#212-claim-6-catastrophic-harm-from-unknown-pervasive-misalignment-is-somewhat-likely-to-be-mitigated",
+      "correct_href": "#213-claim-7-threat-modeling-is-sufficient"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "02a-autonomy-misalignment-1.md",
+      "source_page": 27,
+      "label": "claim8",
+      "rank": 0,
+      "old_href": "#215-pathway-specific-risk-assessments",
+      "correct_href": "#214-claim-8-risk-from-deliberately-engineered-misalignment-is-low"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "02b-autonomy-misalignment-2.md",
+      "source_page": 60,
+      "label": "claim7",
+      "rank": 0,
+      "old_href": "#212-claim-6-catastrophic-harm-from-unknown-pervasive-misalignment-is-somewhat-likely-to-be-mitigated",
+      "correct_href": "#213-claim-7-threat-modeling-is-sufficient"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "02c-autonomy-misalignment-3.md",
+      "source_page": 82,
+      "label": "appendix64",
+      "rank": 0,
+      "old_href": "#63-appendix-redacted",
+      "correct_href": "#64-model-weight-security"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "03-automated-rd.md",
+      "source_page": 114,
+      "label": "section",
+      "rank": 0,
+      "old_href": "#352-conclusions-on-the-overall-degree-of-ai-rd-acceleration",
+      "correct_href": "#36-automated-rd-in-other-domains"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "04a-chem-bio-1.md",
+      "source_page": 132,
+      "label": "below",
+      "rank": 0,
+      "old_href": "#45321-boundary-point-jailbreaking",
+      "correct_href": "#4532-notes-on-jailbreak-methods-that-remain-viable-on-at-least-some-models-in-some-cases"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "04a-chem-bio-1.md",
+      "source_page": 133,
+      "label": "boundarypointjailbreaking",
+      "rank": 0,
+      "old_href": "#4532-notes-on-jailbreak-methods-that-remain-viable-on-at-least-some-models-in-some-cases",
+      "correct_href": "#45321-boundary-point-jailbreaking"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "04b-chem-bio-2.md",
+      "source_page": 146,
+      "label": "appendix64",
+      "rank": 0,
+      "old_href": "#63-appendix-redacted",
+      "correct_href": "#64-model-weight-security"
+    },
+    {
+      "commit": "cd5a21c",
+      "card": "anthropic/risk-report-2026-08",
+      "file": "04b-chem-bio-2.md",
+      "source_page": 150,
+      "label": "appendix64",
+      "rank": 0,
+      "old_href": "#63-appendix-redacted",
+      "correct_href": "#64-model-weight-security"
+    }
+  ]
+}
