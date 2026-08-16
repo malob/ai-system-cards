@@ -4,8 +4,8 @@ Settled 2026-08-15 after an adversarial two-model review of the shipped pipeline
 The immutable review record is under
 [`architecture-review-exchange/`](architecture-review-exchange/); D51 records the
 decision. Implementation and validation status live in [`state.md`](state.md). D55
-records phase 3's locally validated authority repair; it has not yet been pushed or
-deployed.
+records phase 3's local implementation evidence; D56 records its hosted certification
+and deployment.
 
 ## Bottom line
 
@@ -129,17 +129,23 @@ It intentionally changes one Fable p.99 canonical line from a dead empty-fragmen
 link to plain text under R2; Opus and Risk Report sections remain byte-identical.
 Hosted fast-gate, Pages, and three-card mutation runs all passed for phase 2.
 
-Phase 3 implementation and its fast release graph are complete and validated
-**locally** (D55), not yet pushed or deployed; exact final-tree replay of all mutation
-floors remains pending on the hosted post-push jobs. It
-changes no canonical `sections/*.md`; a clean `site/dist`, including Pagefind, is
-byte-identical to pre-change HEAD. The source/final-DOM lane verifies 676 page markers,
-263 rendered figures, and 267 exact source raster assets. Twenty-two newly blocking,
-PDF-reviewed table-order residuals are exact accepted T1 findings (25 accepted majors
-total across the corpus), not broad table immunity. Strict schema-v2 mutation floors
-cover 584 trials and separately preserve detection, intended-major severity, and
-major-blocking behavior. Phase 4 (ST2) is next. Phase 5 still owns complete
-extractor/cache provenance, and phase 9 still owns all-projection/bootstrap,
+Phase 3 is deployed and certified at HEAD `3d7b851` (implementation `75fd8b9`;
+D55/D56). Hosted fast-release / Pages run
+[31929997079](https://github.com/malob/ai-system-cards/actions/runs/31929997079)
+and mutation run
+[31929996953](https://github.com/malob/ai-system-cards/actions/runs/31929996953)
+succeeded. Downloaded, key-sorted mutation artifacts match all three committed strict
+schema-v2 baselines exactly across 584 trials. The first hosted attempt
+[31928741823](https://github.com/malob/ai-system-cards/actions/runs/31928741823)
+was cancelled solely at the old 30-minute Fable timeout; the 45-minute follow-up
+completed the unchanged floor. Phase 3 changes no canonical `sections/*.md`; a clean
+`site/dist`, including Pagefind, is byte-identical to pre-change HEAD. The
+source/final-DOM lane verifies 676 page markers, 263 rendered figures, and 267 exact
+source raster assets. Twenty-two newly blocking, PDF-reviewed table-order residuals
+are exact accepted T1 findings (25 accepted majors total across the corpus), not broad
+table immunity. Strict mutation floors separately preserve detection, intended-major
+severity, and major-blocking behavior. Phase 4 (ST2) is next. Phase 5 still owns
+complete extractor/cache provenance, and phase 9 still owns all-projection/bootstrap,
 computed-browser-visibility, and different-producer evidence.
 
 ## Experiments and kill criteria

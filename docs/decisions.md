@@ -1081,3 +1081,34 @@ and the clean build pass locally (147 Python tests, 31 site tests). Canonical
 `sections/*.md` did not change, and a clean 995-file `site/dist` including Pagefind is
 byte-identical to pre-change HEAD. This decision is
 implemented locally but not yet pushed or deployed. Phase 4 (ST2) is next.
+
+## D56 — phase 3 is deployed and certified by exact hosted replay (2026-08-16)
+
+The phase-3 implementation landed as `75fd8b9`; the mutation-timeout follow-up made
+the deployed HEAD `3d7b851`. GitHub Pages / fast-release run
+[31929997079](https://github.com/malob/ai-system-cards/actions/runs/31929997079)
+succeeded for that HEAD: the complete verifier dependency graph, all card gates and
+seams, tracked L2/source-projection freshness checks, production site tests/build,
+Pages packaging, and deployment passed on hosted runners.
+
+The deliberately separate mutation run
+[31929996953](https://github.com/malob/ai-system-cards/actions/runs/31929996953)
+also succeeded for all three strict schema-v2 baselines. The mutation gate steps took
+12m54s for Opus (05:52:08–06:05:02), 20m05s for the Risk Report
+(05:52:12–06:12:17), and 37m36s for Fable (05:52:09–06:29:45). Downloaded hosted
+artifacts, normalized with key-sorted `jq`, match the committed baselines exactly.
+This closes D55's deliberately unclaimed final-tree replay: all 584 trials and their
+separate detection, intended-major, major-blocking, and gate evidence are now proven
+on the deployed tree.
+
+Run [31928741823](https://github.com/malob/ai-system-cards/actions/runs/31928741823)
+was cancelled solely because Fable exceeded the old 30-minute job timeout; Opus and
+Risk had already passed, and no detector/baseline failure occurred. The follow-up
+raises the mutation job timeout to 45 minutes, after which the unchanged Fable floor
+completed normally. Timeout capacity is operational configuration, not verifier
+recall, and is recorded separately for that reason.
+
+Phase 3 is therefore deployed and certified, not merely implemented locally. It
+changed verification authority and release behavior, not card content: canonical
+sections remained unchanged and the complete built site, including Pagefind, remained
+byte-identical to pre-phase-3 HEAD. Phase 4 ST2 hardening is next.

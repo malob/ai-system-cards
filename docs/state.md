@@ -3,10 +3,10 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-08-15 (D55 phase 3 implemented; fast release validated locally;
-not yet pushed or deployed). The live site is still phase 2 commit `ff9b6e3`, whose hosted
-fast release, Pages deployment, and three mutation jobs succeeded. Everything below
-headed “phase 3” describes the current local worktree only.
+**Last updated:** 2026-08-16 (D56 phase 3 deployed and certified). The live site is
+HEAD `3d7b851` (phase-3 implementation `75fd8b9` plus the mutation-timeout follow-up).
+Hosted fast release, Pages deployment, and exact replay of all three strict mutation
+baselines succeeded for that tree.
 
 ## Current card gates
 
@@ -120,9 +120,10 @@ and major-blocking independently.
 - The built audit found 1,716 ids, 1,506 fragment links, 676 required page markers,
   263 rendered figures, and 267 copied raster assets, with 0 findings and all source
   PDF/PNG hashes matching.
-- All three strict mutation baselines were regenerated from 584 trials and validated
-  against the schema-v2 evidence contract. Exact final-tree replay of every trial is
-  pending the hosted mutation jobs after push.
+- All three strict mutation baselines were replayed on the final tree by hosted run
+  [31929996953](https://github.com/malob/ai-system-cards/actions/runs/31929996953).
+  Downloaded artifacts, normalized with key-sorted `jq`, match the committed
+  schema-v2 baselines exactly across all 584 trials.
 - `git diff -- cards/*/*/sections` is empty. No canonical card content changed.
 - A clean 995-file `site/dist`, including Pagefind output, is byte-identical to
   pre-change HEAD.
@@ -130,8 +131,14 @@ and major-blocking independently.
 - Full generation now hands off to the pinned, corpus-wide
   `pipeline/verify_release.py` command; partial generation remains an explicitly
   non-release diagnostic.
-- Nothing in D55 has been pushed or deployed yet. Do not describe the live site as
-  phase 3 until the hosted fast and mutation workflows and Pages deployment succeed.
+- Hosted fast-release / Pages run
+  [31929997079](https://github.com/malob/ai-system-cards/actions/runs/31929997079)
+  passed and deployed `3d7b851`; phase 3 is deployed and certified. The mutation
+  steps took 12m54s for Opus, 20m05s for the Risk Report, and 37m36s for Fable.
+  Earlier run
+  [31928741823](https://github.com/malob/ai-system-cards/actions/runs/31928741823)
+  was cancelled solely when Fable exceeded the old 30-minute job timeout; raising
+  that operational limit to 45 minutes allowed the unchanged baseline to complete.
 
 ## Durable process invariants
 
@@ -164,7 +171,7 @@ and major-blocking independently.
 
 The first attempt converted one card but made the human the test suite. The rebuild's
 goal is unattended mechanical conversion followed by bounded, evidence-directed
-review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D55),
+review. Read [charter.md](charter.md), [decisions.md](decisions.md) (D1…D56),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). The immediate task is

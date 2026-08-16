@@ -65,9 +65,15 @@ move a deterministic sampling site.
 | **Total** | — | **584** | **540 (92.5%)** | **518 (88.7%)** | **527 (90.2%)** | **527 (90.2%)** | — |
 
 These artifacts combine independent per-class runs with the final hide-image/V1
-refresh and pass the strict schema-v2 validator. One exact 584-trial replay against
-the final tree has **not** run locally; that independent proof is assigned to the
-hosted mutation workflow after push.
+refresh and pass the strict schema-v2 validator. Hosted run
+[31929996953](https://github.com/malob/ai-system-cards/actions/runs/31929996953)
+then replayed the exact final tree successfully: downloaded artifacts, normalized
+with key-sorted `jq`, match all three committed baselines exactly. The gate steps took
+12m54s for Opus (05:52:08–06:05:02), 20m05s for the Risk Report
+(05:52:12–06:12:17), and 37m36s for Fable (05:52:09–06:29:45). The first hosted run,
+[31928741823](https://github.com/malob/ai-system-cards/actions/runs/31928741823),
+was cancelled solely when Fable exceeded the old 30-minute timeout; the follow-up
+raised that operational limit to 45 minutes and completed the unchanged floor.
 
 The 25 possible classes cover:
 

@@ -177,8 +177,17 @@ on the latter two). Across 584 trials the totals are 540 detected, 518 intended-
 and 527 major-blocked. V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
 eligible; misses concentrate in ST1/ST2/ST3, L1, S1, and ordinary advisory word swaps.
 The strict artifacts combine independent per-class runs with the final hide-image/V1
-refresh. One exact final-tree 584-trial replay is pending the hosted post-push mutation
-workflow and is not claimed as local evidence.
+refresh. Hosted mutation run
+[31929996953](https://github.com/malob/ai-system-cards/actions/runs/31929996953)
+replayed all 584 trials on deployed HEAD `3d7b851`; downloaded artifacts normalized
+with key-sorted `jq` match the committed baselines exactly. The steps took 12m54s for
+Opus, 20m05s for the Risk Report, and 37m36s for Fable. The earlier run
+[31928741823](https://github.com/malob/ai-system-cards/actions/runs/31928741823)
+was cancelled only because Fable exceeded the old 30-minute timeout; the 45-minute
+follow-up completed the unchanged floor. Hosted fast-release / Pages run
+[31929997079](https://github.com/malob/ai-system-cards/actions/runs/31929997079)
+also succeeded for `3d7b851`, so phase 3 is deployed and certified. Canonical sections
+and the byte-identical built site did not change; phase 4 ST2 hardening is next.
 Classes use independent digest-derived RNG streams, so adding one cannot resample the
 others:
 
