@@ -66,3 +66,31 @@ seam audit 0; L2 and source-projection artifacts regenerated; all three certifie
 cards byte-identical. Round 2 (fresh `f51-sweep2/` inputs, `rulebook-round2.md`):
 fix-verification comparators over the ~35 affected pages + a rotating clean
 sample; mutation replays for all four cards follow.
+
+## Round 2 (same day) — fix verification + rotating sample
+
+Inputs `pipeline/.cache/f51-sweep2/` (fresh slices and served snapshot after
+commit `2340278`); rulebook `rulebook-round2.md`. Three agents, 49 units
+(`findings-fixver1.jsonl` 18 table-header pages, `findings-fixver2.jsonl` 16
+other fixed pages, `findings-sample2.jsonl` 15 pages clean in round 1): **48
+clean, zero regressions.** Every fix was confirmed against zoom crops and the
+served DOM — the 'Model' rowspan on the §4 tables, the 2×2 corners on pp.85–87
+and 167, the two-row 'Humanity's Last Exam' label, the p.100 code span, the
+p.106 bold lead, the whole p.199 caption, all 17 Table 9.1.A groups with rowspans
+equal to their question counts, and the single 75-line blocklist fence.
+
+One residual major: p.88 Table 5.2.2.3.A's corner was still split. Root cause:
+`_split_glued_cells` indexes one span per squash text, so the prefix of the wrapped
+header resolved to the neighbouring column's identical first line — to the right,
+so the side-by-side guard passed — and the corner's empty cell swallowed the
+second line before `_merge_cells_by_fill` ran. Fixed with a reading-order guard
+(the prefix piece must be the left one; D64, commit after `2340278`), regenerated
+with the certified cards byte-identical, and verified directly in the regenerated
+section (`<th colspan="2" rowspan="2">Model</th>` over `Attempts | Scenarios`),
+the same way the round-1 residuals were closed in experiment 11.
+
+**Convergence state:** gates 0 unsuppressed majors (5 exact) + T1 3 typed; L2
+66/66; seam audit 0; all three certified cards byte-identical; the fast-release
+gate green with four cards; the fourth card's strict mutation baseline regenerated
+on the final canon (24 classes / 192 trials). Remaining items are the deferred
+typed minors (owner list above) and the owner scroll pass (onboarding step 9).

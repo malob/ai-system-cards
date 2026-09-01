@@ -134,8 +134,7 @@ The 22 new findings were exposed by removing blanket table demotion, not by chan
 card content. A new finding on the same page is not covered, and a stale acceptance
 makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 28`;
 opus-5 `T1 8`; risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
-D45) / `T1 6` / `TB2 1` (seam-cell advisor); and claude-fable-5-1 `T1 4` (one seam
-displacement, three repeated-header drops). The opus/risk T1 counts fell from 9/21
+D45) / `T1 6` / `TB2 1` (seam-cell advisor); and claude-fable-5-1 `T1 3` (three repeated-header drops of its seven-page appendix table). The opus/risk T1 counts fell from 9/21
 when D62's projection classes removed phantom-space and bullet-glyph false minors.
 L2 is clean at 108 Fable, 54 Opus, and 66 Fable 5.1 authored destinations (67 authored
 occurrences), plus 121 Risk Report logical destinations over 123 authored occurrences;

@@ -12,7 +12,7 @@ Google-Docs/Skia export family), converted the same day through the shared
 pipeline: census → manifest → stubs → figures → source inventory → docling
 2.124.0 over 29 rule-scanned pages → 11 majors → 0 in two onboarding class batches
 (D62) → experiment-14 agent sweep round 1 → five more generator classes (D63) →
-round-2 fix verification. **Nothing has been pushed**; the owner scroll pass
+round-2 fix verification, 48/49 clean, one residual class-fixed (D64). **Nothing has been pushed**; the owner scroll pass
 (onboarding step 9) and the deploy decision remain the owner's.
 
 ## Current card gates
@@ -29,8 +29,8 @@ round-2 fix verification. **Nothing has been pushed**; the owner scroll pass
 - **claude-fable-5-1 (new, local):** 5 exact accepted T1 majors (the pp.159–160
   seam attribution of a table row the PDF cuts mid-cell, and the p.210 §9.2
   code-box label 'None' stream-order class merged with Table 9.1.A's dropped
-  repeated header), 0 unsuppressed; `T1 4` minors (one seam displacement, three
-  repeated-header drops); L2 66/66 exact (67 authored occurrences); P2/F3 206
+  repeated header), 0 unsuppressed; `T1 3` minors (three repeated-header drops of the
+  seven-page appendix table); L2 66/66 exact (67 authored occurrences); P2/F3 206
   required content pages / 103 required figures / 309 DOM events; RF1 30/30;
   seam 0.
 
@@ -78,8 +78,10 @@ units, 190 clean; 5 distinct majors (p.88 header corner, p.106 literal `**`,
 p.199 split caption, pp.207–209 stranded seam rows, p.212 second fence) and ~12
 actionable minors, all class-fixed; 38 source-faithful notes recorded in
 `rulebook-round2.md`. Round 2 (fresh `f51-sweep2/` inputs): two fix-verification
-comparators over the 34 affected pages + one rotating 15-page clean sample —
-results are appended to the experiment README when they land.
+comparators over the 34 affected pages + one rotating 15-page clean sample — 49
+units, 48 clean, zero regressions; the one residual (p.88's corner, a reading-order
+miss in the glued-cell splitter) was class-fixed and verified in the regenerated
+section (D64).
 
 Deferred typed minors (owner list): p.159 `<p>`-wrapped seam-merged cells (TB2
 class); p.207 a wrapped internal link as two adjacent anchors with one target;
@@ -142,10 +144,10 @@ card's committed baseline is `docs/experiments/05-mutation-testing/results-anthr
 The first attempt converted one card but made the human the test suite. The
 rebuild's goal is unattended mechanical conversion followed by bounded,
 evidence-directed review. Read [charter.md](charter.md),
-[decisions.md](decisions.md) (D1…D63),
+[decisions.md](decisions.md) (D1…D64),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
-[verification-methodology.md](verification-methodology.md). D62/D63 record the
+[verification-methodology.md](verification-methodology.md). D62–D64 record the
 fourth card's onboarding; experiment 14 is its sweep. For a changed corpus,
 experiment 11 remains the regression-sweep template: changed pages plus renderer
 controls, the PDF as sole authority, and prompts that ask rather than assert the

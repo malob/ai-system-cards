@@ -1451,3 +1451,22 @@ renderer's typographer curling the straight quotes of the p.95–96 shell comman
 (5 exact), T1 4, L2 66/66, P2/F3 206/103, seam 0; L2 and source-projection
 artifacts regenerated. Round 2 is fix-verification over the affected pages plus
 a rotating clean sample, then mutation replays for all four cards.
+
+## D64 — fourth-card sweep round 2: fix verification, one residual class (2026-09-01)
+
+Round 2 of experiment 14 (fresh inputs; two fix-verification comparators over the
+34 pages the D63 batch touched + one rotating 15-page clean sample): 49 units, 48
+clean, zero regressions, every D63 fix confirmed in the served DOM — except p.88.
+Table 5.2.2.3.A's corner was still `Model | without PI probes | Attack success
+rate`: `tables._split_glued_cells` indexes ONE span per squash text, so the prefix
+of the wrapped header ('Attack success rate' / 'without PI probes') resolved to the
+neighbouring column's identical first line, which sits to the right and passed the
+side-by-side guard; the corner's empty cell then swallowed the second line before
+the fill-geometry merge could claim it. The split now also requires reading order —
+the prefix piece must be the LEFT one. The certified cards are byte-identical; the
+new card's gate is 0 unsuppressed majors with T1 3 typed minors (the p.88 seam
+displacement disappeared with the corner), L2 66/66, seam 0, artifacts
+regenerated. The fourth card's mutation baseline is bound to this final canon; the
+three certified baselines were replayed after the oracle `fills` key (opus-5 held
+byte-identically; the other two are recorded in the experiment README). Remaining
+before certification: the owner scroll pass and the deploy decision.
