@@ -1,0 +1,20 @@
+title: "Claude Fable 5.1 & Claude Mythos 5.1"
+slug: claude-fable-5-1
+vendor: Anthropic
+models:
+  - Claude Fable 5.1
+  - Claude Mythos 5.1
+release_date: 2026-09-01
+source_url: https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20&%20Claude%20Mythos%205.1%20System%20Card.pdf
+source_pages: 212
+description: >-
+  System card for Claude Fable 5.1 and Claude Mythos 5.1, two configurations of
+  Anthropic’s latest and most capable large language model, sharing identical
+  weights but differing in safeguards. Covers RSP evaluations, cyber
+  capabilities, safeguards and harmlessness, agentic safety, alignment
+  assessment, model welfare, and capabilities.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+# (Empty — the 2026-09-01 signal census found no chip-pill fills in this
+# document; the #d9ead3 placeholder pill family is absent too.)
+chips: {}

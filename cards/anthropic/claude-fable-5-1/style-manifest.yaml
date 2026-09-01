@@ -1,0 +1,58 @@
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded from the 2026-09-01 signal census (pymupdf span/fill
+# probe over all 212 pages) + page-render inspection of every ambiguous signal
+# (pp.65, 93, 132, 152).
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+#
+# NOTE vs the earlier cards: the vocabulary is opus-5-shaped (same table
+# fills #141413/#dedcd1/#4d4c48, same green code text, same #f1f3f4 appendix
+# blocklist boxes) but with NO placeholder pills, NO turn labels and NO chips.
+# #faf9f5 is here the unlabeled prompt/response box of §6.1.3 (pp.93-94), so
+# its faithful role is transcript-container as in the risk report, not
+# opus-5's turn-assistant. #f3f3f3 is the empty-cell tint in the §4 tables
+# (pp.60-76; every rect is text-free), not opus-5's [System] box.
+
+card: anthropic/claude-fable-5-1
+status: >-
+  roles seeded mechanically 2026-09-01; verified against page renders
+  (pp.65, 93, 132, 152); closure rule applies to anything not listed
+
+text_colors:
+  "#000000": {role: body}
+  "#1155cc": {role: link}                      # 255 spans / 94 pages
+  "#666666": {role: heading}   # 107 spans / 96 pages — gray section headings
+  "#188038": {role: code-text}                 # green code spans, 24 pages ('low'/'medium'/'xhigh' effort levels)
+  "#1264a3": {role: link}                      # bare-URL footnote links pp.40-41
+  "#38761d": {role: code-text}                 # 'aiohttp' RobotoMono p.168 (as opus-5 p.150)
+  # near-black paste artifacts in the source doc — render as body, keep note
+  "#121212": {role: body, note: paste-artifact}   # exec summary pp.2-5
+  "#1d1c1d": {role: body, note: paste-artifact}   # pp.21, 40-42, 124-126, 166, 172
+  "#444746": {role: body, note: paste-artifact}   # one '.' span p.2
+  "#faf9f5": {role: table-header-text}         # light text on #141413 header fills, 25 pages
+  "#ffffff": {role: table-header-text}         # sub-header row text on #4d4c48, 10 pages
+  "#747775": {role: table-empty-cell}          # 'None' placeholder, p.210
+
+fills:
+  "#141413": {role: table-header-fill, exclude: true}   # dark header rows, 25 pages
+  "#dedcd1": {role: table-cell-bg, exclude: true}       # row-label tint, 29 pages
+  "#4d4c48": {role: table-subheader-fill, exclude: true} # 'API, without a system
+                                                         # prompt / Claude.ai' rows, 10 pages
+  "#f3f3f3": {role: table-cell-bg, exclude: true}   # text-free empty-cell tint,
+                                                    # §4 tables pp.60-76
+  "#fefdfb": {role: table-cell-bg, exclude: true}   # p.152 bullet-cell striping,
+                                                    # Table 7.4.1.C
+  "#faf9f5": {role: transcript-container}   # §6.1.3 prompt + Claude-review boxes
+                                            # pp.93-94 (no [User]/[Assistant] labels)
+  "#f1f3f4": {role: code-block-bg}    # appendix 9.2 blocklist boxes pp.210-212
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# No smart-chip vocabulary and no #d9ead3 placeholder pills in this document:
+# the census found neither. meta.yaml chips: {}
+
+document:
+  toc_pages: [6, 7, 8, 9, 10]     # site generates its own TOC; excluded
+  page_number_footer: bottom-center bare integer, excluded

@@ -1,0 +1,93 @@
+{
+ "schema_version": 1,
+ "observer_schema_version": 2,
+ "pymupdf_version": "1.28.2",
+ "source_sha256": "b0d59edc7a60eef32a879c13d713cce60c3fefd7e6b5183afdc8b835af3c8c39",
+ "page_exclusions": [
+  {
+   "page": 1,
+   "kind": "cover",
+   "reason": "reviewed PDF title and artwork cover; no archive body content",
+   "observation": {
+    "page": 1,
+    "word_count": 13,
+    "text_chars": 70,
+    "internal_links": 0,
+    "uri_links": 1,
+    "drawing_count": 2,
+    "raster_count": 1
+   }
+  },
+  {
+   "page": 6,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 6,
+    "word_count": 232,
+    "text_chars": 1283,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 7,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 7,
+    "word_count": 186,
+    "text_chars": 1100,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 8,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 8,
+    "word_count": 218,
+    "text_chars": 1321,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 9,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 9,
+    "word_count": 185,
+    "text_chars": 1174,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 10,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 10,
+    "word_count": 119,
+    "text_chars": 736,
+    "internal_links": 29,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  }
+ ],
+ "figure_exclusions": []
+}
