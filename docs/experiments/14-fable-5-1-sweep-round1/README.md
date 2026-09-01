@@ -91,6 +91,9 @@ the same way the round-1 residuals were closed in experiment 11.
 
 **Convergence state:** gates 0 unsuppressed majors (5 exact) + T1 3 typed; L2
 66/66; seam audit 0; all three certified cards byte-identical; the fast-release
-gate green with four cards; the fourth card's strict mutation baseline regenerated
-on the final canon (24 classes / 192 trials). Remaining items are the deferred
+gate green with four cards; the fourth card's strict mutation baseline regenerated on the final canon (24
+classes / 192 trials: 178 detected / 170 intended-major / 170 major-blocked); the
+three certified baselines replayed byte-identically (key-sorted) after both
+verifier changes of the day — the D62 projection classes and the oracle `fills`
+key. Remaining items are the deferred
 typed minors (owner list above) and the owner scroll pass (onboarding step 9).

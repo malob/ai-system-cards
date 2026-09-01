@@ -101,10 +101,10 @@ Strict schema-v2 baselines at eight trials/class, seed 5:
 | Risk Report | 24 | 192 | 173 | 166 | 171 |
 | Fable 5.1 | 24 | 192 | 178 | 170 | 170 |
 
-`flatten-chip` is inapplicable on the three chip-less cards. The three certified
-baselines held byte-identically (key-sorted) after the D62 verifier batch; the
-replay after the oracle `fills` key and the fourth card's post-round-1 baseline
-regeneration are recorded in the experiment 14 README when complete. The fourth
+`flatten-chip` is inapplicable on the three chip-less cards. The three certified baselines held byte-identically (key-sorted) after both
+verifier changes of the day (the D62 projection classes and the oracle `fills`
+key); the fourth card's baseline was regenerated on its final canon after round 2
+(totals unchanged at 178 / 170 / 170). The fourth
 card's committed baseline is `docs/experiments/05-mutation-testing/results-anthropic-claude-fable-5-1.json`;
 `.github/workflows/mutations.yml` carries its matrix row.
 
