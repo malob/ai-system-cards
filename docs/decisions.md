@@ -1397,3 +1397,57 @@ merged with Table 9.1.A's dropped repeated header row. Gate: 0 unsuppressed
 majors, T1 4 typed minors; L2 66/66; P2/F3 206 pages / 103 figures / 309 DOM
 events; RF1 clean; seam 0. The agent sweeps (experiment 14), mutation replays,
 owner scroll pass, and deploy decision follow; nothing is pushed.
+
+## D63 — fourth-card sweep round 1: five generator classes, one geometry knob, L2 geometry over link text (2026-09-01)
+
+Experiment 14's first inspection round (8 triple-pane comparators over all 206
+content pages + 3 markdown linters over the 11 section files; 217 units, 190
+clean) surfaced five distinct majors and a dozen actionable minors that the gates
+cannot see by design — all fixed at class level with the three certified cards
+byte-identical after every change:
+
+- **Caption continuation by dominant span size** (`assemble._dominant_size`). A
+  line's `size` is its MAX span size; the publisher set one 11pt glyph inside the
+  9pt caption of Figure 8.17.2.A (p.199) and the caption cut after its first line.
+- **Code box chain-merge** (`run.stitch`): adjacency runs against the block's LAST
+  merged page, so the §9.2 blocklist (pp.210–212) is one fence, not two.
+- **Fill-geometry cell merges** (`tables._merge_cells_by_fill`; oracle gains an
+  additive `fills` key listing every non-white filled rect ≥ 3pt — a narrow
+  two-row label cell was neither box nor pill). One drawn fill under a non-empty
+  cell that also covers the empty cell proves the merge: a left neighbour gives
+  colspan, an upper neighbour rowspan; separately drawn rects never merge. This
+  repairs the 2×2 'Model'/'Evaluation' header corners (pp.88, 167), the §4 tables'
+  'Model' over their sub-header rows, and 'Humanity's Last Exam' over its two
+  sub-rows. It sits behind the per-card knob `merge_cells_by_fill` (D16 scoped
+  idiom, D46 precedent): the certified cards carry the same corner shape (opus-5
+  prompt-injection and capabilities tables, fable-5 §5), and their canon moves
+  only after owner adjudication.
+- **Seam continuation rows join the host's last group** (`run._merge_tables`):
+  Google Docs does not repeat a spanned label after a page break (Table 9.1.A
+  pp.207–209). The rule fires only when the seam does not flow — terminated
+  previous side, capitalized new row — because its first version also claimed
+  mid-sentence continuations (fable's welfare table, risk-report p.115→116) that
+  belong to `merge_continuation_rows`; and `_promote_split_rowspan` now skips
+  all-header rows (a fragment's repeated 'Group | Question' row was promoted over
+  the unlabeled continuation below it, stripping that row's lead).
+- **Bold that cannot flank** (`serialize._apply_marks`): '**…behavior—**most'
+  (p.106) rendered literal asterisks because CommonMark forbids a close preceded
+  by punctuation and followed by a word character; such a run is emitted as raw
+  `<b>` with its exact extent. Pieces clipped at a link edge are exempt — the
+  first version re-emitted every `[**Claim N**](#…)**:` piece in fable/opus/risk.
+- **Inconsolata** joins the mono font set (p.100 'admin / admin123').
+- `link_text_resolution: extended` was tried for 'Appendix 9.1' (p.142) and
+  reverted: L2's source-first geometry binds that destination to the parent
+  '9 Appendix' heading sharing p.206's top and rejected the text target as
+  wrong-existing-target. The D46 knob is for wrong destinations, not coarse ones.
+
+Deferred typed minors (owner list): p.159 `<p>`-wrapped seam-merged cells (the
+TB2 class); p.207 a wrapped link as two adjacent anchors with one target; p.55 a
+link span excluding the trailing comma the PDF's link rect covers; p.59
+'Fable 5.1/ Mythos' wrap space (the PDF's own text layer carries it); the
+renderer's typographer curling the straight quotes of the p.95–96 shell command
+(site-wide behavior); the 'Transcript' chrome on the label-less §6.1.3 boxes
+(site styling, as for the risk report). Post-fix gate: 0 unsuppressed majors
+(5 exact), T1 4, L2 66/66, P2/F3 206/103, seam 0; L2 and source-projection
+artifacts regenerated. Round 2 is fix-verification over the affected pages plus
+a rotating clean sample, then mutation replays for all four cards.
