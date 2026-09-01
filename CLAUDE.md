@@ -26,11 +26,11 @@ process rules. `docs/` holds the design notes and decision log.
 ## Where this is headed
 
 The D35 question — one shared pipeline vs per-document pipelines — now has a
-three-document answer: **Claude Fable 5 & Claude Mythos 5** (317pp), **Claude Opus 5**
-(193pp), and **Risk Report: August 2026** (186pp) all convert through the shared
-pipeline. Per-document config supplies manifest roles, section stubs, and narrowly
+four-document answer: **Claude Fable 5 & Claude Mythos 5** (317pp), **Claude Opus 5**
+(193pp), **Risk Report: August 2026** (186pp), and **Claude Fable 5.1 & Claude
+Mythos 5.1** (212pp) all convert through the shared pipeline. Per-document config supplies manifest roles, section stubs, and narrowly
 scoped grammar knobs; generalization fixes live as classes in `pipeline/`, never as
-document-instance patches (D38–D48). This proves one pipeline only within Anthropic's
+document-instance patches (D38–D48, D62). This proves one pipeline only within Anthropic's
 Google-Docs-export family. Other vendors' PDFs (different producers and visual
 grammars) remain untested. Phase-4 structural-authority integration is paused. The
 immediate task is the shadow table extraction/grid program in
@@ -110,6 +110,9 @@ env CARD=anthropic/claude-opus-5 uv run --with pymupdf python pipeline/verifier/
 
 env CARD=anthropic/risk-report-2026-08 uv run --with pymupdf python pipeline/generate/run.py --all
 env CARD=anthropic/risk-report-2026-08 uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
+
+env CARD=anthropic/claude-fable-5-1 uv run --with pymupdf python pipeline/generate/run.py --all
+env CARD=anthropic/claude-fable-5-1 uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
 ```
 
 Full generation now prints the pinned, corpus-wide handoff below. After the site
@@ -121,24 +124,28 @@ and seams in parallel, then runs the production renderer tests and clean build.
 uv run --python 3.12 --with 'pymupdf==1.28.2' python pipeline/verify_release.py
 ```
 
-All three gates pass at **0 unsuppressed majors**, and each has a 0-seam baseline.
+All four gates pass at **0 unsuppressed majors**, and each has a 0-seam baseline.
 Fable has 20 exact accepted T1 majors: 3 historical owner-adjudicated visual-order
 findings and 17 maintainer/source-adjudicated table-order findings under broad owner
-authorization. Opus has 4 maintainer/source-adjudicated exact T1 findings; Risk has 1.
+authorization. Opus has 4 maintainer/source-adjudicated exact T1 findings; Risk has 1; Fable 5.1 has 5
+(the pp.159–160 seam attribution of a table row cut mid-cell, and the p.210 code-box
+label 'None' stream-order class, D62).
 The 22 new findings were exposed by removing blanket table demotion, not by changing
 card content. A new finding on the same page is not covered, and a stale acceptance
 makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 28`;
-opus-5 `T1 9`; and risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
-D45) / `T1 21` / `TB2 1` (seam-cell advisor).
-L2 is clean at 108 Fable and 54 Opus authored destinations, plus 121 Risk Report
-logical destinations over 123 authored occurrences; source expectations cover all
-285 authored occurrences. Fable's three additional L1 minors are publisher-broken
+opus-5 `T1 8`; risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
+D45) / `T1 6` / `TB2 1` (seam-cell advisor); and claude-fable-5-1 `T1 4` (one seam
+displacement, three repeated-header drops). The opus/risk T1 counts fell from 9/21
+when D62's projection classes removed phantom-space and bullet-glyph false minors.
+L2 is clean at 108 Fable, 54 Opus, and 66 Fable 5.1 authored destinations (67 authored
+occurrences), plus 121 Risk Report logical destinations over 123 authored occurrences;
+source expectations cover all 352 authored occurrences. Fable's three additional L1 minors are publisher-broken
 named destinations, reported even when one uniquely printed heading can be recovered
 under R2.
 P2/F3 source authority requires 309 pages/151 rendered figures for Fable, 187/98 for
-Opus, and 180/14 for Risk. The built audit totals 676 page markers, 263 rendered
-figures, and 267 exact copied raster assets, with 0 findings. RF1 is clean at raw
-reference/definition counts 76/76, 36/36, and 93/92; Risk's difference is the exact,
+Opus, 180/14 for Risk, and 206/103 for Fable 5.1. The built audit totals 882 page
+markers, 366 rendered figures, and 371 exact copied raster assets, with 0 findings. RF1 is clean at raw reference/definition counts 76/76, 36/36, 93/92, and 30/30 (Fable
+5.1); Risk's difference is the exact,
 source-hash-bound disposition for the publisher's stray p.126 superscript 18.
 These are measured residuals, not permission to ignore drift; re-baseline here only
 after an owner-approved fix batch moves them. `calibrate.py` takes a git ref, the
@@ -168,7 +175,7 @@ event stream; stale, malformed, or incomplete artifacts fail closed.
 
 **Regression scope is the target plus every non-target certified document.** For the
 current corpus, a shared-pipeline change therefore requires regenerating and gating
-all three documents. Each non-target's `sections/` must remain byte-identical (`git
+all four documents. Each non-target's `sections/` must remain byte-identical (`git
 diff`) unless an owner-approved, PDF-verified fidelity improvement intentionally moves
 its canon. This regression net has repeatedly caught real cross-document damage.
 
@@ -179,9 +186,9 @@ size. The `repoint-link` class preserves a live internal link but changes it to 
 different existing heading; L2 must catch what existence-only audits cannot. Current
 seed-5 schema-v2 floors separate detection, intended-major severity, and actual major
 blocking. Fable's 25 classes / 200 trials are 191 / 184 / 185; Opus's 24 / 192 are
-176 / 168 / 171; Risk's 24 / 192 are 173 / 166 / 171 (`flatten-chip` is inapplicable
-on the latter two). Across 584 trials the totals are 540 detected, 518 intended-major,
-and 527 major-blocked. V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
+176 / 168 / 171; Risk's 24 / 192 are 173 / 166 / 171; Fable 5.1's 24 / 192 are 178 / 170 / 170
+(`flatten-chip` is inapplicable on the latter three: no chips). Across 776 trials the
+totals are 718 detected, 688 intended-major, and 697 major-blocked. V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
 eligible; misses concentrate in ST1/ST2/ST3, L1, S1, and ordinary advisory word swaps.
 The strict artifacts combine independent per-class runs with the final hide-image/V1
 refresh. Hosted mutation run
@@ -238,7 +245,7 @@ push without explicit owner request (D13).
 ## Adding (or generalizing for) a document
 
 The site picks up any new system card or safety report under
-`cards/<vendor>/<slug>/` automatically. The procedure proven across the three current
+`cards/<vendor>/<slug>/` automatically. The procedure proven across the four current
 documents is:
 
 Manual setup is acceptable when it records genuine document-specific judgment, such
@@ -299,9 +306,9 @@ table task and not a mandate to automate editorial decisions.
 9. **Owner scroll pass before certification.** The sweep stack verifies per-page
    CONTENT; it is demonstrably weak on visual-layout classes — cross-element
    overlap (page-marker smear), intra-cell typography tiers, bubble scoping,
-   seam artifacts. Every current document has completed this gate; the opus-5
-   owner scroll found six such issues after full sweep convergence (2026-07-25), and
-   the risk-report owner scroll completed on 2026-08-15. Compare suspicious constructs
+   seam artifacts. Every certified document has completed this gate (the opus-5 owner scroll found six
+such issues after full sweep convergence, 2026-07-25; the risk-report owner scroll
+completed 2026-08-15); claude-fable-5-1 awaits it. Compare suspicious constructs
    against `extracted/pages/p-NNN.png` side by side. An owner scroll is certification
    evidence, not permission to push; the no-push rule below still applies.
 
