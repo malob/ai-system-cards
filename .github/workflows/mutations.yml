@@ -59,6 +59,9 @@ jobs:
           - card: anthropic/risk-report-2026-08
             baseline: results-anthropic-risk-report-2026-08.json
             result: mutation-anthropic-risk-report-2026-08.json
+          - card: anthropic/claude-fable-5-1
+            baseline: results-anthropic-claude-fable-5-1.json
+            result: mutation-anthropic-claude-fable-5-1.json
     env:
       CARD: ${{ matrix.card }}
     steps:

@@ -19,11 +19,11 @@ social-preview images, and search.
 
 ## Status
 
-Built and validated end-to-end on three Anthropic documents: **Claude Fable 5 &
-Claude Mythos 5** (317 pp.), **Claude Opus 5** (193 pp.), and **Risk Report:
-August 2026** (186 pp.). All three run through one shared pipeline with per-document
-configuration, establishing that the approach works within Anthropic's
-Google-Docs-export family. That is not yet evidence that it generalizes to a different
+Built and validated end-to-end on four Anthropic documents: **Claude Fable 5 &
+Claude Mythos 5** (317 pp.), **Claude Opus 5** (193 pp.), **Risk Report:
+August 2026** (186 pp.), and **Claude Fable 5.1 & Claude Mythos 5.1** (212 pp.).
+All four run through one shared pipeline with per-document configuration,
+establishing that the approach works within Anthropic's Google-Docs-export family. That is not yet evidence that it generalizes to a different
 PDF producer or visual grammar. A document from another vendor is the next
 architectural test.
 

@@ -1322,3 +1322,78 @@ keep HTML and refactor the legacy table helpers locally.
 This decision changes no production module, canonical section, card, site, release
 gate, deployed output, or website content. No push, hosted run, deployment, or output
 improvement is claimed.
+
+## D62 — fourth card: Claude Fable 5.1 & Claude Mythos 5.1; three table classes, one list class, four projection classes (2026-09-01)
+
+The owner handed the pipeline the URL of Anthropic's **Claude Fable 5.1 & Claude
+Mythos 5.1 System Card** (212pp, cover-dated 2026-09-01, Skia/PDF Google Docs
+producer — the same export family as the three certified documents). Slug
+`claude-fable-5-1` (version dots become hyphens, sorting after `claude-fable-5`).
+Onboarding followed CLAUDE.md steps 1–7 in one session:
+
+- **Census → manifest.** 8 fills / 12 text colors, opus-5-shaped: the same dark
+  header, row-label and sub-header table fills, green code text, and `#f1f3f4`
+  appendix code boxes; NO chips, NO `#d9ead3` placeholder pills, NO turn labels.
+  Two hexes carry roles that differ from opus-5 (D39 normal): `#faf9f5` is the
+  unlabeled §6.1.3 prompt/review box → `transcript-container` (the risk-report
+  reading, verified on p.93), and `#f3f3f3` is the text-free empty-cell tint of
+  the §4 tables → `table-cell-bg` (every rect on pp.60–76 clips no text).
+- **Stubs.** Eleven files from the bookmark TOC; §6 (49pp) split at the page-top
+  6.5 boundary (p.122); §8 (39pp) kept whole under the >40pp rule. Nameless
+  bookmarks (pp.10, 44, 58, 76, 89, 212) are continuation pages, as in D40/D44.
+- **Tables.** Docling 2.124.0 over 29 candidate pages from a stroked-rule scan
+  (this family draws table borders as strokes, not fills; the census's fill
+  classifier cannot see them), 33 tables; pp.93–94 excluded up front because
+  their rules are the transcript boxes' borders.
+- **Source authority.** Inventory proposal: cover p.1 + TOC pp.6–10, no blank
+  pages, no duplicate draws; 206 required content pages, 103 required figures
+  (104 raster occurrences; the cover logo is excluded with its page), 0 flags.
+
+The first gate showed 11 majors (9 T1 + 2 TB2). All fixed at class level with
+all three certified documents byte-identical after every change:
+
+- **Cascade dedup cuts only at a whitespace boundary** (`tables._dedup_cascaded_cells`).
+  A value ending with the next row's value ('100%' over '0%') is a coincidence,
+  not a docling cascade; the suffix cut left '10' in two cells of Table 4.4.3.A.
+- **Multiset-anchored row rebuild** (`tables._band_by_multiset` → `_rebuild_row`).
+  When docling detaches the label's first word AND rotates the values ('Opus 5 |
+  100% | Claude 82.1%', p.73; 'Fable 5 88% | (± 6%) | Claude 93% (± 5%)', p.76)
+  no cell equals, prefixes, or contains a unique span, so `_row_band` could not
+  anchor the row. The row's character multiset still identifies its y-band
+  exactly, and `_rebuild_row`'s own multiset guard bounds the repair. It fires
+  only when cell contents move — a row it would merely re-space (a wrapped cell
+  whose link span sits mid-line) keeps docling's spacing.
+- **Rebuilt short rows refill docling's own empty cells by column interval**
+  (`_rebuild_row`, `_column_edges`). 'Claude Mythos 5 100% | 0% | | |' (p.75)
+  rebuilt to three cells and was refused by the never-fewer-cells guard; the
+  shortfall is now accepted only when it equals docling's empty cells and every
+  rebuilt cell lies inside one column interval (a straddling cell is still a
+  fuse and still refused). The Mythos 5 rows of pp.61/65/69 and the p.78
+  'Claude Sonnet | 90.7% 96.9% | 5' row repaired the same way.
+- **List re-tiering runs AFTER stitch** (`run.py`). A wrapped item's page-break
+  continuation paragraph is a separate block until stitch rejoins it; tiering
+  before the join split the item run, and the orphan-indent shift flattened the
+  following ■ sub-item to level 0 (p.41→42).
+
+Four verifier-side projection classes then removed false typed minors
+(verifier code changed, so the seeded mutation suites are re-run for every card):
+
+- `mdproj`: INLINE tags (a/b/i/u/em/strong/small/span/sub/code/s) strip to
+  nothing — a link anchor inside parentheses ('(Section 7.2.1 only)') or before
+  punctuation ('Glasswing,') had projected a phantom space; block/cell tags stay
+  a whitespace boundary. Risk-report typed T1 minors 21 → 6, opus-5 9 → 8.
+- `mdproj`: `__` is bold only at word boundaries (CommonMark intraword rule; the
+  production renderer agrees) — 'mcp__claude_ai_Google_Calendar__*'.
+- `norm`: ■/□ join the bullet-glyph and list-marker sets, mirroring `assemble`.
+- `serialize` + `mdproj`: a source backslash before ASCII punctuation is doubled
+  so the renderer keeps it (the corpus's only such sequence: p.96 `\"`); the
+  projection reads the pair back as one character.
+
+Five exact T1 acceptances remain, render-checked: Table 7.4.3.A's third row is
+cut mid-cell at the p.159/160 page break (seam page attribution; the merged row
+is complete), and the p.210 §9.2 code-box label 'None' precedes the page's
+table in PyMuPDF's stream order (the fable-5 p.316 / opus-5 pp.191–193 class),
+merged with Table 9.1.A's dropped repeated header row. Gate: 0 unsuppressed
+majors, T1 4 typed minors; L2 66/66; P2/F3 206 pages / 103 figures / 309 DOM
+events; RF1 clean; seam 0. The agent sweeps (experiment 14), mutation replays,
+owner scroll pass, and deploy decision follow; nothing is pushed.
