@@ -1154,6 +1154,15 @@ def _split_glued_cells(html: str, bbox: list, oracle_page: dict) -> str:
             # stacked lines are one wrapped cell, not a glue (p.253 Gemini)
             if b2["bbox"][0] < a["bbox"][2] - 2:
                 continue
+            # and in READING order: the cell's prefix piece is the LEFT one.
+            # The squash index keeps one span per text, so the prefix of a
+            # wrapped header ('Attack success rate' / 'without PI probes')
+            # resolved to the NEIGHBOURING column's identical first line,
+            # which sits to the right and passed the side-by-side test —
+            # the header corner's empty cell then swallowed the second line
+            # (fable-5.1 p.88 Table 5.2.2.3.A)
+            if hit[0] is not a:
+                continue
             cells = [c2 for _, _, c2 in tags]
             # place by x-order: glued cell gets the piece nearer its column,
             # empty cell gets the other — empty left of glued => takes the
