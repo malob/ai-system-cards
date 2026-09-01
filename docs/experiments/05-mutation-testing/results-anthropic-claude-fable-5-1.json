@@ -919,7 +919,7 @@
     },
     {
      "file": "08-capabilities.md",
-     "site": "details about",
+     "site": "find additional",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
@@ -2548,7 +2548,7 @@
     },
     {
      "file": "06a-alignment-1.md",
-     "site": "Wet blanket",
+     "site": "Condescension toward the user",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
