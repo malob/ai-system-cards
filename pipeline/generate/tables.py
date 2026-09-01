@@ -610,6 +610,12 @@ def _dedup_cascaded_cells(html: str) -> str:
             if keep > len(idx):
                 continue
             cut = idx[keep - 1] + 1 if keep else 0
+            # the cascaded content is a whole later cell appended after a
+            # line/space boundary — a suffix match INSIDE a token is a value
+            # coincidence, not a cascade ('100%' ends with the next row's
+            # '0%', fable-5.1 p.75 4.4.3.A: the cut left '10')
+            if cut < len(c_dec) and not c_dec[cut].isspace():
+                continue
             new_c = _h.escape(c_dec[:cut].rstrip(), quote=False)
             old_cell = f"<{g}{attr}>{c}</{g}>"
             new_cell = f"<{g}{attr}>{new_c}</{g}>"
@@ -2122,6 +2128,57 @@ def _resplit_misjoined_cells(html: str, bbox: list, oracle_page: dict) -> str:
     return out
 
 
+def _column_edges(spans) -> list:
+    """Column left edges: x0 clusters (±2pt) with >= 3 member spans, sorted
+    (mid-line style-boundary spans have stray x0s and never found a
+    column of their own)."""
+    clusters: dict[float, int] = {}
+    for s in spans:
+        key = next((k for k in clusters if abs(k - s["bbox"][0]) <= 2), s["bbox"][0])
+        clusters[key] = clusters.get(key, 0) + 1
+    return sorted(k for k, n in clusters.items() if n >= 3)
+
+
+def _band_by_multiset(plain, oracle_page, bbox, tol=7.0):
+    """Last-resort row anchor for _repair_rotation: the y-band whose spans
+    (plus their hanging sub-lines, gathered exactly as _rebuild_row does)
+    carry precisely the row's characters. Unique-key anchoring fails when
+    docling detached the label's first word AND rotated the values ('Opus 5
+    | 100% | Claude 82.1%', fable-5.1 p.73; 'Fable 5 88% | (± 6%) | Claude
+    93% (± 5%)', p.76): no cell equals, prefixes, or contains any unique
+    span. The multiset is the same guard _rebuild_row applies, so an anchor
+    found here can only ever re-segment the row's own content; two bands
+    with identical characters stay unanchored."""
+    inviz = re.compile("[\u200b\u200c\u200d\ufeff\u00ad]")
+    have = sorted(inviz.sub("", "".join(plain)))
+    if not have:
+        return None
+    allspans = [s for s in _table_spans(oracle_page, bbox)
+                if inviz.sub("", s["text"]).strip() and s.get("zone") != "fnref"]
+    seen, hits = set(), []
+    for y in sorted({round((s["bbox"][1] + s["bbox"][3]) / 2) for s in allspans}):
+        chosen = [s for s in allspans
+                  if y - tol <= (s["bbox"][1] + s["bbox"][3]) / 2 <= y + tol]
+        for _ in range(2):
+            for s in allspans:
+                if s in chosen:
+                    continue
+                sb = s["bbox"]
+                if any(min(sb[2], m["bbox"][2]) - max(sb[0], m["bbox"][0]) > 0
+                       and -1 <= sb[1] - m["bbox"][3] <= 5 for m in chosen):
+                    chosen.append(s)
+        key = frozenset(id(s) for s in chosen)
+        if key in seen:
+            continue
+        seen.add(key)
+        want = sorted(_squash(inviz.sub("", "".join(s["text"] for s in chosen))))
+        if want == have:
+            hits.append(y)
+    if len(hits) != 1:
+        return None
+    return hits[0] - tol, hits[0] + tol
+
+
 def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     """Rebuild a garbled row directly from its banded spans (x-order), merging
     stacked wraps and sub-line annotations (the small '±1.4%' under a score).
@@ -2164,9 +2221,26 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
 
     # re-segmentation can only UN-glue: never fewer cells than docling
     # emitted (x-overlapping true columns fuse and are correctly rejected
-    # here, e.g. the wide sentence-cell welfare tables)
+    # here, e.g. the wide sentence-cell welfare tables) — UNLESS the
+    # shortfall is docling's own EMPTY cells: a short row ('Claude Mythos 5
+    # 100% | 0% | | |', fable-5.1 p.75) rebuilds to its non-empty cells,
+    # each inside ONE column interval, and the empties refill by column
     if len(cells2) < max(2, len(tags)):
-        return None
+        n_empty = sum(1 for p in plain if not p)
+        edges = _column_edges(allspans)
+        if (len(cells2) < 2 or len(tags) - len(cells2) > n_empty
+                or len(edges) != len(tags)):
+            return None
+        placed: dict = {}
+        for x0, x1, members in cells2:
+            ci = max((j for j, e in enumerate(edges) if x0 >= e - 2), default=None)
+            if ci is None or ci in placed:
+                return None
+            nxt = edges[ci + 1] if ci + 1 < len(edges) else bbox[2] + 3
+            if x1 > nxt - 2:      # a cell straddling two columns is a fuse
+                return None
+            placed[ci] = [x0, x1, members]
+        cells2 = [placed.get(j, [edges[j], edges[j], []]) for j in range(len(tags))]
     texts = []
     for _, _, members in cells2:
         members.sort(key=lambda s: (round(s["bbox"][1]), s["bbox"][0]))
@@ -2445,6 +2519,21 @@ def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
         plain = [_cell_sq(c) for _, _, c in tags]
         band = _row_band(plain, spans_xy)
         if band is None:
+            # no cell equals, prefixes, or contains a unique span: docling
+            # detached the label's first word AND rotated the values ('Opus 5
+            # | 100% | Claude 82.1%', fable-5.1 p.73). The row's characters
+            # still identify its y-band exactly — rebuild from that band
+            # under _rebuild_row's own multiset guard.
+            band = _band_by_multiset(plain, oracle_page, bbox)
+            if band is not None:
+                rb = _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal)
+                # only a row whose CELL CONTENTS move is damaged; a row the
+                # multiset merely re-spaces (a wrapped cell whose link span
+                # sits mid-line, appendix 9.1 '(Section 7.2.1 only)') keeps
+                # docling's own spacing
+                if rb and [_cell_sq(c) for c in re.findall(
+                        r"<t[hd][^>]*>(.*?)</t[hd]>", rb, re.S)] != plain:
+                    out = out.replace(r, rb, 1)
             continue
         if any(not p for p in plain):
             # an empty cell defeats pool matching but not the geometric

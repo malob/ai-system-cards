@@ -548,13 +548,17 @@ def main():
                 if tkey:
                     title2slug[tkey] = (None if tkey in title2slug
                                         else slugify(htext))
-        # re-tier nested lists over the whole section: a page that holds only
-        # sub-bullets (a list continued across a page break, UK AISI p.215→216)
-        # tiered them to level 0 in isolation; the full block list has the
-        # level-0 siblings from the previous page
-        assemble.assign_list_levels(blocks)
         fn_blocks = [bl for bl in blocks if bl["type"] == "footnote"]
         blocks = stitch([bl for bl in blocks if bl["type"] != "footnote"]) + fn_blocks
+        # re-tier nested lists over the whole section, AFTER stitching: a page
+        # that holds only sub-bullets (a list continued across a page break,
+        # UK AISI p.215→216) tiered them to level 0 in isolation; the full
+        # block list has the level-0 siblings from the previous page. And a
+        # wrapped item's hanging continuation paragraph is a separate block
+        # until stitch rejoins it — tiering before the join split the item
+        # run there, and the orphan-indent shift flattened the ■ sub-item
+        # that followed to level 0 (fable-5.1 p.41→42)
+        assemble.assign_list_levels(blocks)
         # in-cell bulleted lists are built on the COMPLETE logical table, so a
         # bullet split by a page break stays one <li> (owner-approved
         # 2026-08-15). Per-fragment construction produced two <ul>s with the
