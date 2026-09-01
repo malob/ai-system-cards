@@ -1,0 +1,93 @@
+{
+  "_comment": "Maintainer/source-adjudicated exact T1 residuals (2026-09-01), checked against the page renders: pp.159-160 are seam page-attribution of Table 7.4.3.A's third row, which the PDF cuts mid-cell at the page break — the merged logical row carries every cell's complete text; p.210 is the §9.2 code-box label 'None', which PyMuPDF's content-stream order lists before the page's table while the fence carries it after (the fable-5 p.316 / opus-5 pp.191-193 class), merged with the dropped repeated header row 'Group Question' of the seven-page Table 9.1.A (the D40 seam rule). No canonical content is missing or invented. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
+  "accepted": [
+    {
+      "invariant": "T1",
+      "page": 159,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "risks flagrant and serious moral violation of the type it expects senior Anthropic staff to readily recognize.…”",
+        "n_tokens": 17,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 17,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "3975eec0b18e9156465296112f43fecd41930d3d33089c20cfb5c06d6e479a9e",
+        "zone": "table"
+      },
+      "fingerprint": "f6d14a6a788ec8ccfa9490aa4e53a6c30e4918e8bb9a2dca15a688d0789dfcd3"
+    },
+    {
+      "invariant": "T1",
+      "page": 159,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "traditions would recognize, not just senior Anthropic staff.",
+        "n_tokens": 8,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 8,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "d622e47f7c5558703ecf65b34f53bc3b0f5774841697a302be40ae3b1d5a2f55",
+        "zone": "table"
+      },
+      "fingerprint": "11daa696c4a527c31fa0f6a47aeb15485174c21063776f5a40edd08064fa49c8"
+    },
+    {
+      "invariant": "T1",
+      "page": 210,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "None",
+        "n_tokens": 1,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 1,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91",
+        "critical_classes": [
+          "negation"
+        ],
+        "zone": "table"
+      },
+      "fingerprint": "3b6a43ff329db837a37030f454a3f59a0f1221100d4caec56df94d0f55fb23e5"
+    },
+    {
+      "invariant": "T1",
+      "page": 160,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "risks flagrant and serious moral violation of the type it expects senior Anthropic staff to readily recognize.…” traditions would recognize, not just senior Ant",
+        "extra_in_md": "",
+        "n_tokens": 25,
+        "missing_n_tokens": 25,
+        "extra_n_tokens": 0,
+        "missing_sha256": "8ee3b7b71e371bc6aa7cd4ca26be46fddac671c86f1757b17be4d39b609733c1",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "f9effc07faaaedf3604f26c04d54eeb60ae4c91ccbb1d4afa613be5d3115d8b7"
+    },
+    {
+      "invariant": "T1",
+      "page": 210,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "None Group Question",
+        "extra_in_md": "",
+        "n_tokens": 3,
+        "missing_n_tokens": 3,
+        "extra_n_tokens": 0,
+        "missing_sha256": "31ca3b09e7f29656abda8325eeb9631939f519a19c3bca63110c63daec19bad1",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "49409559d65cb6b8a17dc20e94eac5373187109249bb00196761f4ac79f21dca"
+    }
+  ]
+}
