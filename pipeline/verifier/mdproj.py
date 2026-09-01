@@ -37,7 +37,12 @@ RE_DIRECTIVE = re.compile(r"^:{3,}(\w*)(\{[^}]*\})?\s*$", re.M)
 RE_TURN_LABEL = re.compile(r'label="([^"]*)"')
 RE_CHIP = re.compile(r":chip\[([^\]]+)\]")
 RE_LINK = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
-RE_BOLD = re.compile(r"\*\*((?:[^*\n]|\*[^*\n]+\*)+)\*\*|__([^_\n]+(?:_[^_\n]+)*?)__")
+RE_BOLD = re.compile(r"\*\*((?:[^*\n]|\*[^*\n]+\*)+)\*\*"
+                     r"|(?<![A-Za-z0-9])__([^_\n]+(?:_[^_\n]+)*?)__(?![A-Za-z0-9])")
+# an underscore run INSIDE a word is literal in CommonMark (intraword '_'
+# never opens or closes emphasis), and the production renderer keeps it:
+# 'mcp__claude_ai_Google_Calendar__*' (fable-5.1 p.95) projected as
+# 'mcpclaude…Calendar*' and flagged a false T1 minor.
 # never cross lines: [^*]+ once crossed newlines, so one stray '****'
 # re-paired every later bold. The inner \*…\* alternative admits nested
 # italics ('**is slightly *less aligned* on…**', opus-5 p.79 — the PDF sets
@@ -45,6 +50,12 @@ RE_BOLD = re.compile(r"\*\*((?:[^*\n]|\*[^*\n]+\*)+)\*\*|__([^_\n]+(?:_[^_\n]+)*
 RE_SUP = re.compile(r"<sup>(.*?)</sup>", re.S)
 RE_TABLE = re.compile(r"<table.*?</table>", re.S)
 RE_TAG = re.compile(r"</?[a-zA-Z][^>]*>")
+# INLINE tags wrap part of a token's run — a link anchor inside parentheses
+# ('(<a>Section 7.2.1</a> only)', fable-5.1 appendix 9.1) or before
+# punctuation ('<a>Glasswing</a>,', risk-report p.10): they strip to
+# NOTHING, exactly as the browser lays them out. Only block/cell tags are a
+# whitespace boundary. <sup> keeps its own earlier space rule.
+RE_INLINE_TAG = re.compile(r"</?(?:a|b|i|u|em|strong|small|span|sub|code|s)\b[^>]*>", re.I)
 
 
 @dataclass
@@ -128,6 +139,7 @@ def _table_to_text(m: re.Match, sec: "Section", page: int) -> str:
             sec.fn_refs.append((int(digit), sup_page))
     t = RE_SUP.sub(" ", t)
     t = t.replace("<br>", " ").replace("<br/>", " ").replace("<br />", " ")
+    t = RE_INLINE_TAG.sub("", t)
     t = RE_TAG.sub(" ", t)
     return t
 
@@ -290,9 +302,13 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     # it carries the PDF's code-box language chrome ('None', pp.191-193 D42)
     seg = re.sub(r"^```(\w*)[ \t]*$", r" \1", seg, flags=re.M)
     seg = seg.replace("`", "")
+    seg = RE_INLINE_TAG.sub("", seg)
     seg = RE_TAG.sub(" ", seg)
     seg = html.unescape(seg)
-    seg = re.sub(r"\\([*_\[\]()#`~.!|])", r"\1", seg)         # md escapes
+    # md escapes — including an escaped BACKSLASH: the serializer doubles a
+    # source backslash that precedes ASCII punctuation ('\\"' -> '\\\\"'),
+    # and the projection must read it back as the one source character
+    seg = re.sub(r"\\([\\*_\[\]()#`~.!|])", r"\1", seg)
     return seg
 
 

@@ -39,7 +39,7 @@ def normalize(text: str, calibration: bool = False) -> str:
     return text
 
 
-BULLET_GLYPHS = "●•◦▪‣○"
+BULLET_GLYPHS = "●•◦▪‣○■□"  # ■/□: third-level bullets (opus-5 p.83, fable-5.1 p.42) — mirrors assemble.BULLETS
 
 # End-of-line hyphenation join (A1), the OUTPUT-side transform shared by the
 # serializer and the oracle's body-text projection so T1 sees both sides
@@ -78,7 +78,7 @@ def wrap_joins_tight(prev_line: str, next_line: str) -> bool:
 # glyph/number ("●​Text", "1.​Text") — the shared mechanical signature used by
 # both the generator (assemble) and the ST structural invariant.
 import re as _re
-LIST_MARKER = _re.compile(r"^([●•◦▪‣○]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists (a. b. c.)
+LIST_MARKER = _re.compile(r"^([●•◦▪‣○■□]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists (a. b. c.); mirrors assemble.LIST_MARKER
 
 
 def squash(text: str, calibration: bool = False) -> str:

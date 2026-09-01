@@ -116,6 +116,14 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
         i = m.start()
         if not any(a <= i < b for a, b in code_cov):
             ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
+    # ALWAYS: a source backslash before ASCII punctuation is a CommonMark
+    # escape and vanishes in rendering (the '\\"' of a quoted shell command,
+    # fable-5.1 p.96 — the corpus's only such sequence); '\\\\' renders as the
+    # backslash. Before a letter or a space it is already literal.
+    for m in re.finditer(r"\\(?=[!-/:-@\[-`{-~])", text):
+        i = m.start()
+        if not any(a <= i < b for a, b in code_cov):
+            ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
     out = text
     for _, _, _, _, edit in sorted(ops, key=lambda x: (-x[0], x[1], x[2], x[3])):
         out = edit(out)
