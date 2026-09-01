@@ -116,9 +116,28 @@ def _lines(page):
             "block": spans[0]["block"],
             "size": max((s["size"] for s in body), default=spans[0]["size"]),
             "fnbody": all(s["zone"] == "fnbody" for s in spans),
-            "mono": any(("Mono" in s["font"] or "Courier" in s["font"]) for s in spans),
+            "mono": any(("Mono" in s["font"] or "Courier" in s["font"]
+                         or "Inconsolata" in s["font"]) for s in spans),
         })
     return lines
+
+
+def _dominant_size(line) -> float:
+    """Character-weighted modal span size of a line. A line's `size` is its
+    MAX body span size, which one stray glyph can hijack: the publisher set
+    the final 't' of 'effort' at 11pt inside the 9pt caption of Figure
+    8.17.2.A (fable-5.1 p.199), and the max-size test cut the caption after
+    its first line, demoting four lines to a body paragraph."""
+    weights: dict[float, int] = {}
+    for _, _, s in line["segs"]:
+        if s["zone"] != "body":
+            continue
+        n = len(s["text"].strip())
+        if n:
+            weights[s["size"]] = weights.get(s["size"], 0) + n
+    if not weights:
+        return line["size"]
+    return max(weights.items(), key=lambda kv: (kv[1], kv[0]))[0]
 
 
 def assign_list_levels(blocks: list[dict]) -> None:
@@ -560,8 +579,9 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             # continuation sentences read as prose); tight gap = same flow, so a
             # real following paragraph (larger gap, or a size jump) is not pulled
             if (cur and cur["type"] == "caption"
-                    and (line["size"] <= 9.5
-                         or abs(line["size"] - cur["lines"][0]["size"]) < 0.6)
+                    and (_dominant_size(line) <= 9.5
+                         or abs(_dominant_size(line)
+                                - _dominant_size(cur["lines"][0])) < 0.6)
                     and line["bbox"][1] - cur["lines"][-1]["bbox"][3] < 8):
                 cur["lines"].append(line)
                 continue
@@ -846,7 +866,8 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                     and not s.get("super") and t.strip()
                     and line["size"] >= 10):
                 marks.append(("sub", m_start, m_end, None))
-            if "Mono" in s.get("font", "") and s["zone"] == "body":
+            if (("Mono" in s.get("font", "") or "Inconsolata" in s.get("font", ""))
+                    and s["zone"] == "body"):
                 # monospace span = inline code (RobotoMono in this card) —
                 # but NOT an early-out: a mono span can also be bold and can
                 # sit under a green placeholder pill (the code boxes on

@@ -136,8 +136,8 @@ The table below reports the attack success rate of this attacker, trained on a s
 Gray Swan identified an error in their evaluations for previous system cards, where runs labeled “without thinking” for Claude 5 models were using adaptive thinking; a change in the default API behavior for our latest models enabled thinking when the thinking parameter was not explicitly set. This has been fixed and results in this system card reflect correct thinking settings.
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without PI probes</th><th colspan="2">Attack success rate with PI probes</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without PI probes</th><th colspan="2">Attack success rate with PI probes</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th>Claude Fable 5.1</th><td><b>With thinking</b></td><td>9.26%</td><td>31/40</td><td>2.05%</td><td>18/40</td></tr>
 <tr><th>Claude Fable 5</th><td><b>With thinking</b></td><td>9.70%</td><td>31/40</td><td>2.42%</td><td>20/40</td></tr>
 <tr><th rowspan="2">Claude Opus 5</th><td><b>With thinking</b></td><td>2.68%</td><td>27/40</td><td>0.39%</td><td>11/40</td></tr>
@@ -155,8 +155,8 @@ Fable 5.1 performs comparably to Fable 5 in coding environments, with an attack 
 Gray Swan has developed a stronger version of the Shade attacker for coding environments, trained for longer and on a more diverse set of attacks. Like the previous attacker, it is optimized on the same 40 test scenarios it is evaluated on. We believe this revised version reflects a highly permissive threat model rather than expected real-world threat models, and results in high absolute rates (see table below and accompanying discussion), but nevertheless still view it as a useful stress test. We report its results below and will use it as our primary coding benchmark going forward.
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without PI probes</th><th colspan="2">Attack success rate with PI probes</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without PI probes</th><th colspan="2">Attack success rate with PI probes</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th>Claude Fable 5.1</th><td><b>With thinking</b></td><td>56.87%</td><td><u>38/40</u></td><td><b>12.80%</b></td><td><u>36/40</u></td></tr>
 <tr><th>Claude Fable 5</th><td><b>With thinking</b></td><td>86.87%</td><td>40/40</td><td>34.09%</td><td>39/40</td></tr>
 <tr><th rowspan="2">Claude Opus 5</th><td><b>With thinking</b></td><td>90.93%</td><td>40/40</td><td>18.21%</td><td>40/40</td></tr>
@@ -178,8 +178,8 @@ We also use Shade to evaluate the robustness of Claude models in computer-use en
 This evaluation was also affected by the thinking configuration error described in [Section 5.2.2.1](#5221-coding), where “without thinking” runs for Claude 5 models were in fact using adaptive thinking. Results reported here use the corrected settings.
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without PI probes</th><th colspan="2">Attack success rate with PI probes</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without PI probes</th><th colspan="2">Attack success rate with PI probes</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th>Claude Fable 5.1</th><td><b>With thinking</b></td><td><b>0.07%</b></td><td><u>2/14</u></td><td><b>0.07%</b></td><td><u>2/14</u></td></tr>
 <tr><th>Claude Fable 5</th><td><b>With thinking</b></td><td>2.50%</td><td>6/14</td><td>1.93%</td><td>5/14</td></tr>
 <tr><th rowspan="2">Claude Opus 5</th><td><b>With thinking</b></td><td><u>0.18%</u></td><td><b>1/14</b></td><td><u>0.18%</u></td><td><b>1/14</b></td></tr>

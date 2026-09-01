@@ -201,7 +201,7 @@ def extract_page(page) -> dict:
                 entry["name"] = l.get("nameddest") or l.get("name") or ""
             links["goto"].append(entry)
 
-    pills, boxes, rules = [], [], []
+    pills, boxes, rules, fills = [], [], [], []
     for d in page.get_drawings():
         if d.get("fill") is None:
             # stroke-only paths: thin horizontal strokes are underline rules
@@ -212,6 +212,10 @@ def extract_page(page) -> dict:
             continue
         r = d["rect"]
         col = "#" + "".join(f"{int(round(v * 255)):02x}" for v in d["fill"])
+        if r.height >= 3 and r.width >= 3 and col != "#ffffff":
+            # every non-white filled rect, unclassified: table CELL fills
+            # (a narrow two-row label cell is neither box nor pill above)
+            fills.append({"color": col, "bbox": [round(v, 1) for v in r]})
         is_box = (r.height >= 30 and r.width >= 100) or (r.height >= 12 and r.width >= 250)
         if is_box:
             # wide rect = container/bubble/panel (incl. single-line turn bubbles)
@@ -230,6 +234,7 @@ def extract_page(page) -> dict:
         "links": links,
         "pills": pills,
         "boxes": boxes,
+        "fills": fills,
         "rules": rules,
         "footnotes": footnotes,
         "image_rects": [[round(v, 1) for v in r] for r in image_rects],
@@ -253,6 +258,7 @@ def page_body_text(p: dict) -> str:
             buf += (" " if gap > 1.0 else "") + cur["text"]
         rendered.append(buf)
         mono_flags.append(any("Mono" in sp.get("font", "") or "Courier" in sp.get("font", "")
+                              or "Inconsolata" in sp.get("font", "")
                               for sp in spans))
     # a continuation opening with a hyphen joins TIGHT (the wrap fell inside
     # a hyphenated compound / URL: 'national-security' | '-relevant').

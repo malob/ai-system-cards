@@ -805,7 +805,7 @@
       "text": "Section 7.2.1"
     }
   ],
-  "canonical_sections_sha256": "d47228d2e25f05f3419b20d0dcc73cc8a865b5ee210f9374f4cd770432dde78a",
+  "canonical_sections_sha256": "d749d2c7fd13178e2ceacd1f957b6dfe4b2e7f0fc0be5a28258911bb9ab577ba",
   "card_id": "anthropic/claude-fable-5-1",
   "exclusions": [
     {
@@ -2775,13 +2775,13 @@
     "01-introduction.md": "e7d0ec47a7e144dda714a380b0a87dcbd4aea0ed36e5a544bf53a4b2d3230e83",
     "02-rsp-evaluations.md": "0a427ba0743e1a2e4d0cb79bedd00b83e32ee19296555aee93581dddb6f0ce66",
     "03-cyber.md": "229e380d5631187dad8aa1987b46aa91244f847e8a5dd5f69f3600f8bfc6c8ca",
-    "04-safeguards-harmlessness.md": "afbb20173ae36c7e3efb5357151c110c2407ee201a7fbb76e724b58e9917510f",
-    "05-agentic-safety.md": "991d25c505c12bd6961af8d925f42b909fcb0cd4d5a4b2a174cb3c07ffcc91e1",
-    "06a-alignment-1.md": "6bffc15b518dd6478db3ae358e230fb9f7cd4f608a1880dcc02d71972afe3900",
+    "04-safeguards-harmlessness.md": "cf117fd752c0ae85577aa5cfa171a27c4c73dcf04d785cc10fe00e70fe7a2ed5",
+    "05-agentic-safety.md": "b3f2767b715a1d2e7f88bbcfd9da45addefd3ea783238f21a1ecba564d9296e2",
+    "06a-alignment-1.md": "924a91162c8869e5c95b8b7269e1eb54a7d13bea28b1b84a1d2e3e76516ea7be",
     "06b-alignment-2.md": "17fa6d417d653bb1f7363ff6d2da6507bd08da4f43ba9679b5a88b768335df92",
     "07-model-welfare.md": "2545ecae6d2e1b4603c853fc17dc4f61d78d983f06da9553afa886eebf77d292",
-    "08-capabilities.md": "31018ab2134061db1e70c44858abf964eae65be1c88591b567e68c8f59eb6730",
-    "09-appendix.md": "7f7b341319ce1f62a53a1b3d4c4d2ab497434ee222ff9a68bc8dafba6f95844c"
+    "08-capabilities.md": "925117c0a083be2bbeea59fe6482cc993fd5437b717b91f4628d2ba0171cc2e9",
+    "09-appendix.md": "7761552ef211f80f133fd63b5d47121310c215f6b5f191bcd2e85e80082bd323"
   },
   "source_pdf": "source.pdf",
   "source_sha256": "b0d59edc7a60eef32a879c13d713cce60c3fefd7e6b5183afdc8b835af3c8c39",

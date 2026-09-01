@@ -69,6 +69,8 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _promote_white_text_headers(html, t["bbox"], oracle_page)
             html = _demote_black_text_th(html, t["bbox"], oracle_page)
             html = _debold_th(html)
+            if MERGE_BY_FILL:
+                html = _merge_cells_by_fill(html, t["bbox"], oracle_page)
         # hyphen-wrap join in cells the rebuild didn't touch (short label cells
         # like 'Self- knowledge'): keep the hyphen, drop only the wrap space.
         # Both directions, same rules as the shared A1 (norm.join_wrap_hyphens)
@@ -137,6 +139,18 @@ def _header_text_hexes() -> set:
 
 
 HEADER_TEXT = _header_text_hexes()
+
+
+def _document_knob(name: str) -> bool:
+    """A per-card `document:` grammar knob in the style manifest (D16)."""
+    try:
+        mtext = (cardcfg.CARD / "style-manifest.yaml").read_text()
+    except OSError:
+        return False
+    return bool(re.search(rf"^\s*{re.escape(name)}:\s*true", mtext, re.M))
+
+
+MERGE_BY_FILL = _document_knob("merge_cells_by_fill")
 
 
 def _header_blobs(hdr_spans: list) -> list:
@@ -396,6 +410,13 @@ def _promote_split_rowspan(html: str) -> str:
         cells = _split_cells(r)
         m = re.match(r"<tr><th([^>]*)>(.*?)</th>", r, re.S)
         if not cells or not m or "rowspan" in m.group(1) or not m.group(2).strip():
+            continue
+        # an all-<th> HEADER row never spans down into data: a cross-page
+        # fragment opening with the repeated header and an unlabeled
+        # continuation row ('Group | Question' over an empty-lead question,
+        # fable-5.1 p.209) made 'Group' a rowspan-2 label and stripped the
+        # continuation's lead
+        if not re.search(r"<td[ >]", r):
             continue
         ncells = _split_cells(rows[i + 1])
         if len(ncells) != len(cells):
@@ -2594,6 +2615,183 @@ def _repair_rotation(html: str, bbox: list, oracle_page: dict) -> str:
         rebuilt = "<tr>" + "".join(
             f"<{tg}{a}>{c}</{tg}>" for (tg, a, _), c in zip(tags, inner)) + "</tr>"
         out = out.replace(r, rebuilt, 1)
+    return out
+
+
+def _row_geometry(plain, oracle_page, bbox, spans_xy):
+    """(band, {cell_index: [x0, x1, y0, y1]}) for a row: its y-band and the
+    x-clusters of its banded spans (plus hanging sub-lines), mapped in order
+    onto the row's non-empty cells. (band, None) when the cluster count
+    disagrees with the cell count; (None, None) when nothing anchors it."""
+    band = _row_band(plain, spans_xy) or _band_by_multiset(plain, oracle_page, bbox)
+    if band is None:
+        return None, None
+    inviz = re.compile("[\u200b\u200c\u200d\ufeff\u00ad]")
+    allspans = [s for s in _table_spans(oracle_page, bbox)
+                if inviz.sub("", s["text"]).strip() and s.get("zone") != "fnref"]
+    chosen = [s for s in allspans
+              if band[0] <= (s["bbox"][1] + s["bbox"][3]) / 2 <= band[1]]
+    for _ in range(2):
+        for s in allspans:
+            if s in chosen:
+                continue
+            sb = s["bbox"]
+            if any(min(sb[2], m["bbox"][2]) - max(sb[0], m["bbox"][0]) > 0
+                   and -1 <= sb[1] - m["bbox"][3] <= 5 for m in chosen):
+                chosen.append(s)
+    chosen.sort(key=lambda s: s["bbox"][0])
+    clusters: list = []
+    for s in chosen:
+        sb = s["bbox"]
+        if clusters and min(sb[2], clusters[-1][1]) - max(sb[0], clusters[-1][0]) > 0:
+            clusters[-1][1] = max(clusters[-1][1], sb[2])
+            clusters[-1][2] = min(clusters[-1][2], sb[1])
+            clusters[-1][3] = max(clusters[-1][3], sb[3])
+        else:
+            clusters.append([sb[0], sb[2], sb[1], sb[3]])
+    nonempty = [i for i, p in enumerate(plain) if p]
+    if len(clusters) != len(nonempty):
+        return band, None
+    return band, dict(zip(nonempty, clusters))
+
+
+def _merge_cells_by_fill(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling emits EMPTY grid cells where the PDF has ONE merged cell: the
+    dark header corner ('Model' / 'Evaluation') spanning both header rows and
+    both label columns (fable-5.1 pp.88, 167 — and the corner over the §4
+    tables' sub-header rows), and a row label spanning its two sub-rows
+    ('Humanity's Last Exam' over No tools / With tools, p.167, in a table with
+    no other rowspan for _promote_split_rowspan's consistency test). The
+    page's cell FILLS settle it: the fill rect under a non-empty cell's text
+    that also covers the empty cell's region is one drawn cell — a left
+    neighbour gives colspan, an upper neighbour gives rowspan; two separately
+    drawn rects, even of one colour, never merge. Per-card manifest knob
+    `merge_cells_by_fill` (D16 scoped idiom, cf. D46): the certified cards
+    keep their canon until the owner adjudicates the same corners there."""
+    fills = [f for f in oracle_page.get("fills", [])
+             if bbox[0] - 3 <= f["bbox"][0] and f["bbox"][2] <= bbox[2] + 3
+             and bbox[1] - 3 <= f["bbox"][1] and f["bbox"][3] <= bbox[3] + 3]
+    if not fills:
+        return html
+
+    def fill_at(x, y):
+        hits = [f for f in fills
+                if f["bbox"][0] - 1 <= x <= f["bbox"][2] + 1
+                and f["bbox"][1] - 1 <= y <= f["bbox"][3] + 1]
+        if not hits:
+            return None
+        return min(hits, key=lambda f: (f["bbox"][2] - f["bbox"][0])
+                   * (f["bbox"][3] - f["bbox"][1]))
+
+    def span_of(attrs, name):
+        m = re.search(rf'{name}="(\d+)"', attrs)
+        return int(m.group(1)) if m else 1
+
+    def set_span(attrs, name, n):
+        attrs = re.sub(rf'\s*{name}="\d+"', "", attrs)
+        return attrs + (f' {name}="{n}"' if n > 1 else "")
+
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    if len(rows) < 2:
+        return html
+    spans_xy = _row_spans_xy(oracle_page, bbox)
+    parsed = []
+    for r in rows:
+        tags = [list(t) for t in re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)]
+        plain = [_cell_sq(c) for _, _, c in tags]
+        band, geo = _row_geometry(plain, oracle_page, bbox, spans_xy)
+        parsed.append({"tags": tags, "plain": plain, "band": band, "geo": geo,
+                       "cols": [], "src": r})
+    active: dict[int, int] = {}   # logical column -> last row index it is covered to
+    changed = False
+    for ri, row in enumerate(parsed):
+        tags, plain, band, geo = row["tags"], row["plain"], row["band"], row["geo"]
+        # colspan: an empty cell whose region lies inside the LEFT neighbour's fill
+        if geo is not None and band is not None:
+            ymid = (band[0] + band[1]) / 2
+            j = 1
+            while j < len(tags):
+                if plain[j] or not plain[j - 1] or (j - 1) not in geo:
+                    j += 1
+                    continue
+                g = geo[j - 1]
+                f_left = fill_at((g[0] + g[1]) / 2, ymid)
+                nxt = next((geo[k][0] for k in range(j + 1, len(tags))
+                            if plain[k] and k in geo), bbox[2])
+                if f_left is None or fill_at((g[1] + nxt) / 2, ymid) is not f_left:
+                    j += 1
+                    continue
+                tags[j - 1][1] = set_span(
+                    tags[j - 1][1], "colspan",
+                    span_of(tags[j - 1][1], "colspan") + span_of(tags[j][1], "colspan"))
+                del tags[j], plain[j]
+                geo = {(k if k < j else k - 1): v for k, v in geo.items() if k != j}
+                row["geo"] = geo
+                changed = True
+        covered = {c for c, last in active.items() if last >= ri}
+        cols, col = [], 0
+        for _, attrs, _ in tags:
+            while col in covered:
+                col += 1
+            cols.append(col)
+            col += span_of(attrs, "colspan")
+        row["cols"] = cols
+        # rowspan: an empty cell under a cell whose fill continues into this row
+        if band is not None:
+            ymid = (band[0] + band[1]) / 2
+            drop: set = set()
+            for ci in range(len(tags)):
+                if plain[ci] or ci in drop:
+                    continue
+                cc = cols[ci]
+                owner = None
+                for rj in range(ri - 1, -1, -1):
+                    prow = parsed[rj]
+                    hit = next((cj for cj, pc in enumerate(prow["cols"])
+                                if pc <= cc < pc + span_of(prow["tags"][cj][1], "colspan")), None)
+                    if hit is not None:
+                        owner = (rj, hit)
+                        break
+                if owner is None:
+                    continue
+                rj, cj = owner
+                prow = parsed[rj]
+                if not prow["plain"][cj] or prow["geo"] is None or cj not in prow["geo"]:
+                    continue
+                g = prow["geo"][cj]
+                cx = (g[0] + g[1]) / 2
+                f_up = fill_at(cx, (g[2] + g[3]) / 2)
+                if f_up is None or fill_at(cx, ymid) is not f_up:
+                    continue
+                oc = prow["cols"][cj]
+                ow = span_of(prow["tags"][cj][1], "colspan")
+                members = [k for k in range(len(tags)) if oc <= cols[k] < oc + ow]
+                if any(plain[k] for k in members):
+                    continue
+                need = ri - rj + 1
+                if span_of(prow["tags"][cj][1], "rowspan") < need:
+                    prow["tags"][cj][1] = set_span(prow["tags"][cj][1], "rowspan", need)
+                for c2 in range(oc, oc + ow):
+                    active[c2] = max(active.get(c2, -1), ri)
+                drop.update(members)
+                changed = True
+            if drop:
+                row["tags"] = [t for k, t in enumerate(tags) if k not in drop]
+                row["plain"] = [p for k, p in enumerate(plain) if k not in drop]
+                row["cols"] = [c for k, c in enumerate(cols) if k not in drop]
+        # register this row's own rowspans for the rows below
+        for ci, (_, attrs, _) in enumerate(row["tags"]):
+            rs = span_of(attrs, "rowspan")
+            if rs > 1:
+                for c2 in range(row["cols"][ci], row["cols"][ci] + span_of(attrs, "colspan")):
+                    active[c2] = max(active.get(c2, -1), ri + rs - 1)
+    if not changed:
+        return html
+    out = html
+    for row in parsed:
+        rebuilt = "<tr>" + "".join(f"<{tg}{a}>{c}</{tg}>" for tg, a, c in row["tags"]) + "</tr>"
+        if rebuilt != row["src"]:
+            out = out.replace(row["src"], rebuilt, 1)
     return out
 
 

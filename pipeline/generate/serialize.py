@@ -92,6 +92,27 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
             ops.append((b, 2, a, 0, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
         elif kind in SYNTAX:
             o, c = SYNTAX[kind]
+            if kind == "bold":
+                # CommonMark flanking: a '**' run cannot CLOSE when it is
+                # preceded by punctuation and followed by a word character
+                # ('**…behavior—**most', fable-5.1 p.106 rendered literal
+                # asterisks), nor OPEN when preceded by a word character and
+                # followed by punctuation. Such a run keeps its exact extent
+                # as raw <b>, which the renderer and the projection both
+                # read as the same bold.
+                # A piece clipped at a LINK edge is judged in raw text but
+                # sits beside `](url)` in markdown, where the delimiter is
+                # valid ('[**Claim 1**](#…)**: Models…**', risk-report
+                # §2.5) — only plain-text neighbours count.
+                def _punct(ch):
+                    return not ch.isalnum() and not ch.isspace()
+                edges = {e for la, lb in links for e in (la, lb)}
+                bad_close = (b not in edges and _punct(text[b - 1])
+                             and b < len(text) and text[b].isalnum())
+                bad_open = (a not in edges and _punct(text[a])
+                            and a > 0 and text[a - 1].isalnum())
+                if bad_close or bad_open:
+                    o, c = "<b>", "</b>"
             # raw-HTML marks (placeholder/underline/highlight/sup) sit
             # OUTERMOST: a span tag inside backticks renders literally
             r_open = 2 if kind in ("placeholder", "underline", "highlight", "sup", "sub") else 0
@@ -171,7 +192,8 @@ def _mono_line(l) -> bool:
     segs = [s for _, _, s in l.get("segs", []) if s.get("zone") == "body"]
     if not segs:
         return False
-    mono = sum(len(s["text"]) for s in segs if "Mono" in s.get("font", ""))
+    mono = sum(len(s["text"]) for s in segs
+               if "Mono" in s.get("font", "") or "Inconsolata" in s.get("font", ""))
     total = sum(len(s["text"]) for s in segs)
     return total > 0 and mono / total >= 0.5
 

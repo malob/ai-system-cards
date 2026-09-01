@@ -9,15 +9,15 @@
 Claude Fable 5.1 is more capable than Fable 5 and achieves state of the art performance on many benchmarks. All the evaluations in this section were run on the final snapshot of Claude Fable 5.1 or Claude Mythos 5.1.
 
 <table><tbody>
-<tr><th>Evaluation</th><td></td><th colspan="2">Fable family models</th><th colspan="2">Other models</th></tr>
-<tr><td></td><td></td><th>Claude Fable 5.1/ Mythos 5.1</th><th>Claude Fable 5/ Mythos 5</th><th>Claude Opus 5</th><th>GPT-5.6 Sol</th></tr>
+<tr><th colspan="2" rowspan="2">Evaluation</th><th colspan="2">Fable family models</th><th colspan="2">Other models</th></tr>
+<tr><th>Claude Fable 5.1/ Mythos 5.1</th><th>Claude Fable 5/ Mythos 5</th><th>Claude Opus 5</th><th>GPT-5.6 Sol</th></tr>
 <tr><th colspan="2">SWE-bench Pro</th><td><b>81.2</b></td><td>80</td><td>79.2</td><td>64.6</td></tr>
 <tr><th colspan="2">SWE-bench Multilingual</th><td>89.1</td><td>86.6</td><td><b>89.5</b></td><td>-</td></tr>
 <tr><th colspan="2">SWE-bench Multimodal</th><td>54.7</td><td>54.1</td><td><b>59.4</b></td><td>-</td></tr>
 <tr><th colspan="2">Terminal-Bench 4.0</th><td><b>56% (61%)</b></td><td>42% (45%)</td><td>52%</td><td>37%</td></tr>
 <tr><th colspan="2">Terminal-Bench-Science 0.1</th><td><b>52.6%</b></td><td>24.7%</td><td>29.0%</td><td>22.4%</td></tr>
-<tr><th>Humanity’s Last Exam</th><td><i><b>No tools</b></i></td><td><b>60.9%</b></td><td>57.8%</td><td>56.6%</td><td>-</td></tr>
-<tr><td></td><td><i><b>With tools</b></i></td><td><b>65.0%</b></td><td>63.8%</td><td>63.6%</td><td>-</td></tr>
+<tr><th rowspan="2">Humanity’s Last Exam</th><td><i><b>No tools</b></i></td><td><b>60.9%</b></td><td>57.8%</td><td>56.6%</td><td>-</td></tr>
+<tr><td><i><b>With tools</b></i></td><td><b>65.0%</b></td><td>63.8%</td><td>63.6%</td><td>-</td></tr>
 <tr><th colspan="2">OSWorld 2.0 (partial/strict)</th><td><b>77.9/41.7</b></td><td>72.9/36.1</td><td>75.4/39.6</td><td>-</td></tr>
 <tr><th colspan="2">HealthBench Professional</th><td>62.1%</td><td><b>63.3%</b></td><td>59.8%</td><td>–</td></tr>
 <tr><th colspan="2">GDPval-AA v2</th><td><b>1853</b></td><td>1723</td><td>1824</td><td>1711</td></tr>
@@ -443,10 +443,8 @@ On HealthBench Professional, Claude Fable 5.1 achieved a raw score of 74.2%, ahe
 ![](assets/figures/p199-1.png)
 
 :::caption
-**[Figure 8.17.2.A] HealthBench Professional raw and length-adjusted scores**. All Claude models used adaptive
+**[Figure 8.17.2.A] HealthBench Professional raw and length-adjusted scores**. All Claude models used adaptive thinking at `max` effort. Claude Opus 4.8 was the grader model. Claude Fable 5.1 was run with safety classifiers active and a fallback to Claude Opus 5 when a classifier block occurred. Scores were averaged over five trials. No tools or customized system prompts were provided to any model. Length-adjusted scores were calculated using the method published in the HealthBench Professional paper. Shown with 95% CI.
 :::
-
-thinking at `max` effort. Claude Opus 4.8 was the grader model. Claude Fable 5.1 was run with safety classifiers active and a fallback to Claude Opus 5 when a classifier block occurred. Scores were averaged over five trials. No tools or customized system prompts were provided to any model. Length-adjusted scores were calculated using the method published in the HealthBench Professional paper. Shown with 95% CI.
 
 ### 8.18 Multilingual performance
 

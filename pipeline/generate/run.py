@@ -236,6 +236,66 @@ def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | N
                     pending_rowspan = max(pending_rowspan, int(mrs.group(1)) - 1)
                 fixed.append(r)
             r2[i:] = fixed
+    # continuation rows whose FIRST cell is empty belong to the host's last
+    # label group: Google Docs does not repeat a spanned label after a page
+    # break (fable-5.1 Table 9.1.A: 'Autonomy & Anthropic's power' resumes
+    # with five unlabeled questions on p.208, 'Creation ethics' with one on
+    # p.209 — the latter lost its lead and landed in the Group column).
+    # Extend that label's rowspan and drop the empty leads. Only plain
+    # attribute-free rows qualify; sub-header rows (colspan) and docling's
+    # own rowspan rows are structure and stay.
+    lead_empty = re.compile(r"<tr><t[hd]>\s*</t[hd]>(?=<t[hd])")
+
+    def _new_member(prev_row, row):
+        # a NEW row of the group, not the previous row's own cells cut by
+        # the page break (those flow: lowercase start or an unterminated
+        # previous side — fable's welfare table, risk-report p.115→116 —
+        # and belong to merge_continuation_rows)
+        prev_cells = [re.sub(r"<[^>]+>", "", c).strip()
+                      for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", prev_row, re.S)]
+        cur_cells = [re.sub(r"<[^>]+>", "", c).strip()
+                     for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", row, re.S)]
+        prev_last = next((c for c in reversed(prev_cells) if c), "")
+        cur_first = next((c for c in cur_cells if c), "")
+        flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_first)
+                     or (prev_last and not re.search(
+                         r"[.!?:;\u2026\"\u201d')\]]$", prev_last)))
+        return bool(cur_first) and not flows
+
+    n_cont = 0
+    while (i + n_cont < len(r2) and lead_empty.match(r2[i + n_cont])
+           and "colspan" not in r2[i + n_cont] and "rowspan" not in r2[i + n_cont]
+           and r1 and _new_member(r1[-1] if n_cont == 0 else r2[i + n_cont - 1],
+                                  r2[i + n_cont])):
+        n_cont += 1
+    if n_cont:
+        # the host's last GROUP START: a row whose first cell is not covered
+        # by an earlier rowspan (a covered member row also begins with a
+        # non-empty cell — its question — and must never be the target)
+        label, covered = None, 0
+        for k, hr in enumerate(r1):
+            if covered > 0:
+                covered -= 1
+                continue
+            lm = re.match(r"<tr><(t[hd])([^>]*)>(.*?)</t[hd]>", hr, re.S)
+            if not lm:
+                continue
+            mrs = re.search(r'rowspan="(\d+)"', lm.group(2))
+            covered = (int(mrs.group(1)) if mrs else 1) - 1
+            label = (k, lm) if re.sub(r"<[^>]+>", "", lm.group(3)).strip() else None
+        if label is not None:
+            k, lm = label
+            mrs = re.search(r'rowspan="(\d+)"', lm.group(2))
+            span = int(mrs.group(1)) if mrs else 1
+            # the label's group must run exactly to the end of the host
+            if span - 1 == len(r1) - 1 - k:
+                attrs = re.sub(r'\s*rowspan="\d+"', "", lm.group(2)) + f' rowspan="{span + n_cont}"'
+                new_row = (f"<tr><{lm.group(1)}{attrs}>{lm.group(3)}</{lm.group(1)}>"
+                           + r1[k][len(lm.group(0)):])
+                prev_html = prev_html.replace(r1[k], new_row, 1)
+                r1[k] = new_row
+                for q in range(i, i + n_cont):
+                    r2[q] = lead_empty.sub("<tr>", r2[q], count=1)
     body = "".join(r2[i:])
     if body and next_page:
         # the page marker rides INSIDE the merged table between fragments
@@ -350,11 +410,13 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 out[-1]["last_page"] = blk["page"]  # chain across many pages
                 out[-1].setdefault("parts", []).extend(blk.get("parts", []))
                 continue
-        if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "code"
-                and out[-1]["type"] == "code"):
+        if (out and blk["type"] == "code" and out[-1]["type"] == "code"
+                and blk["page"] == out[-1].get("trailing_pages", [out[-1]["page"]])[-1] + 1):
             # one logical code block split by the page break (9.2 blocklist):
             # merge; the marker re-emits after the fence (a comment inside a
-            # fence would render literally)
+            # fence would render literally). The adjacency test runs against
+            # the block's LAST merged page, so a box spanning three pages
+            # (fable-5.1 pp.210-212) chains instead of restarting at page 3.
             out[-1]["lines"].extend(blk["lines"])
             out[-1].setdefault("trailing_pages", []).append(blk["page"])
             continue

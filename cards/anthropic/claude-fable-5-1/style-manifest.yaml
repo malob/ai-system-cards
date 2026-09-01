@@ -56,3 +56,13 @@ fills:
 document:
   toc_pages: [6, 7, 8, 9, 10]     # site generates its own TOC; excluded
   page_number_footer: bottom-center bare integer, excluded
+  # extended internal-link resolution (D46) stays OFF: tried for 'Appendix
+  # 9.1' (p.142), whose dest coordinates land on the parent '9 Appendix'
+  # heading that shares p.206's top with 9.1 — but L2's source-first
+  # geometry binds that destination exactly, and the PDF itself jumps there;
+  # the D46 knob exists for wrong destinations, not coarse ones
+  # fill-geometry cell merges (D62 round 2): docling emits empty grid cells
+  # where one drawn cell spans two header rows and two label columns (the
+  # dark 'Model'/'Evaluation' corners, pp.88/167 and the §4 tables) or a
+  # row label spans two sub-rows ('Humanity's Last Exam', p.167)
+  merge_cells_by_fill: true
