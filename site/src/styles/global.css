@@ -575,6 +575,8 @@ a:hover { text-decoration-color: var(--accent); }
   -webkit-user-select: none;
 }
 .pagemark::before { content: attr(data-page); }
+/* inside a joined code box the marker sits on a code line, not a body line */
+.article pre .pagemark { line-height: inherit; }
 .pagemark:hover { color: var(--accent); }
 /* Page markers need the centered text column to have a left gutter; that
    holds from 920px up (medium tier). Below 920px (narrow tier) the column

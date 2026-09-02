@@ -132,8 +132,8 @@ The table below reports the attack success rate of this attacker, trained on a s
 <!-- p.75 -->
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with probes enabled</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with probes enabled</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th rowspan="2">Claude Opus 5</th><td><b>With thinking</b></td><td>0.56%</td><td>13/40</td><td>0.18%</td><td>4/40</td></tr>
 <tr><td><b>Without thinking</b></td><td>0.41%</td><td>8/40</td><td>0.18%</td><td>4/40</td></tr>
 <tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.03%</td><td>23/40</td><td>2.09%</td><td>15/40</td></tr>
@@ -156,8 +156,8 @@ We also use Shade to evaluate the robustness of Claude models in computer-use en
 <!-- p.76 -->
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with probes enabled</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with probes enabled</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th rowspan="2">Claude Opus 5</th><td><b>With thinking</b></td><td><u>0.54%</u></td><td><u>1/14</u></td><td><b>0.25%</b></td><td><b>1/14</b></td></tr>
 <tr><td><b>Without thinking</b></td><td><b>0.39%</b></td><td><b>1/14</b></td><td><u>0.43%</u></td><td><u>1/14</u></td></tr>
 <tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.14%</td><td>7/14</td><td>5.11%</td><td>8/14</td></tr>
@@ -178,8 +178,8 @@ In computer use environments, Opus 5 also showed a large improvement over Claude
 We developed an internal adaptive evaluation to measure the robustness of products that use browser capabilities, such as the [Claude in Chrome extension](https://claude.com/blog/claude-for-chrome) and [Claude Cowork](https://claude.com/product/cowork). The current evaluation consists of 129 curated environments that are never seen during training and contain high-quality attacks viewed via screenshots or page reads. Environments are selected to ensure attacks are always viewed, and the success of injections is verified by a programmatic checker within the environment. We evaluate our models running in the<!-- p.77 --> Claude Cowork product harness, both without additional safeguards, and with auto mode enabled. Auto mode is our strongest set of safeguards, available across all products that use our Chrome connectors. It combines prompt injection probes that flag malicious tool results and a classifier that blocks potentially dangerous tool calls, acting on incoming data and outgoing actions respectively so that the two layers fail independently. The probes act on data coming in and the classifier on actions going out, so an attack has to defeat both independently to succeed. Claude Cowork never runs “without safeguards” and all instances, even if not using auto mode, use prompt injection probes. We exclude them from this evaluation to compare raw model behavior to our safest configuration.
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with auto mode</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with auto mode</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th rowspan="2">Claude Opus 5</th><td><b>With thinking</b></td><td>3.70%</td><td>11/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr>
 <tr><td><b>Without thinking</b></td><td>4.30%</td><td>15/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr>
 <tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>31.5%</td><td>81/129</td><td><u>0.08%</u></td><td><u>1/129</u></td></tr>

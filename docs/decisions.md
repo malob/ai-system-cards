@@ -1470,3 +1470,46 @@ regenerated. The fourth card's mutation baseline is bound to this final canon; t
 three certified baselines were replayed after the oracle `fills` key (opus-5 held
 byte-identically; the other two are recorded in the experiment README). Remaining
 before certification: the owner scroll pass and the deploy decision.
+
+## D65 — post-publish improvements adopted across the corpus: code boxes across page breaks, fill-geometry merges on the certified cards, wrapped links joined (2026-09-01)
+
+After publishing the fourth card, the owner asked for the post-publish list to be
+worked through "for general improvements without adding cruft", under the standing
+rule stated the same day: a shared improvement is run against the previously
+certified cards and agents judge every resulting diff hunk against the PDF as
+improvement / neutral / regression before their canon moves (experiment 15).
+
+- **Code boxes across page breaks (list item 1, the owner's top priority).** A
+  marker cannot live inside a fence, so the stitcher's code-box page merge (and
+  D63's three-page chain) re-emitted the markers AFTER the fence, stacking their
+  gutter labels on one line. The merge is deleted: the canon keeps one fence per
+  PDF page with the page marker between (the shape the Opus 5 appendix already
+  had), and the renderer joins adjacent `<pre>` siblings separated only by page
+  markers into one box, placing each marker inside the code at the join so its
+  label sits beside the line where the page turns. A continuation fence's info
+  string is the PDF's repeated code-box chrome and is dropped with the fence.
+  Net effect: serializer/stitch code deleted, one rehype pass added, markdown
+  exports unchanged in form. Canon moved on fable-5 (pp.316–317), opus-5
+  (pp.191–193: the p.191→192 box had been silently merged too) and fable-5-1
+  (pp.210–212).
+- **Fill-geometry cell merges on the certified cards (item 2).** `merge_cells_by_fill`
+  (D63) is now on for every card: fable-5 pp.76/78/81/85/94/95/97/251 and opus-5
+  pp.56/58/60/66/75/76/77/148 gain the 2×1, 2×2 and 3×2 'Model' / 'Evaluation'
+  corners the PDF draws as one cell; the risk report is byte-identical.
+- **Wrapped links joined (item 3).** Two internal anchors separated only by
+  whitespace and pointing at one target are one link (`run.py`, after destination
+  resolution). L2 already groups adjacent same-target occurrences into one logical
+  link, so pairing is unchanged (66/66, 121/121). Canon moved on fable-5-1 p.207
+  and the risk report pp.12/114; fable-5 and opus-5 unchanged.
+- **Scoped and deferred:** item 4 (user/assistant labels on label-less boxes) has
+  no non-brittle signal — roles come from fill colours and both boxes share one
+  fill; a prose-cue rule would be special-casing, which the owner declined. Item 5
+  ('Appendix 9.1' precision) needs L2 to accept a heading the anchor text names on
+  the destination page plus mutation reruns, for one link; deferred.
+
+Experiment 15's reviewers judged all 27 changed pages: 26 improvements, 1
+neutral, 0 regressions. Gates: every card at 0 unsuppressed majors with unchanged
+typed minors; L2 and source-projection artifacts regenerated; built-page audit
+2,171 ids / 1,871 fragment links (three seams joined) / 882 page markers / 366
+figures / 371 assets, 0 findings. Mutation baselines are regenerated for all four
+cards because every canon moved. Nothing is pushed until the owner asks.

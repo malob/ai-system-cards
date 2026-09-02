@@ -29,6 +29,11 @@ Our blocklist contains the following patterns:
 huggingface.co 
 hf.co 
 hf-mirror.com 
+```
+
+<!-- p.317 -->
+
+```
 promptfoo.dev 
 ://scale.com 
 .scale.com 
@@ -74,5 +79,3 @@ research-collection.ethz.ch/server/api/core/bitstreams/1902b5a9-4209-4529-b278-c
 
 news.qq.com/rain/a/20260228A00WDR00 
 ```
-<!-- p.317 -->
-

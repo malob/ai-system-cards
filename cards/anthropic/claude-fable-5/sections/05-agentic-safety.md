@@ -130,8 +130,8 @@ The table below reports the attack success rate of this attacker, trained on a s
 <!-- p.94 -->
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td><u>0.45%</u></td><td><u>8/40</u></td><td><u>0.41%</u></td><td><u>11/40</u></td></tr>
 <tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>0.0%</b></td><td><b>0/40</b></td><td><b>0.0%</b></td><td><b>0/40</b></td></tr>
 <tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.03%</td><td>23/40</td><td>2.09%</td><td>15/40</td></tr>
@@ -153,8 +153,8 @@ Claude Mythos 5's robustness fell between Claude Mythos Preview's and Claude Opu
 We also use Shade to evaluate the robustness of Claude models in computer-use environments, where the model interacts with the GUI (graphical user interface) directly. For this evaluation, we use the same attacker reported in the Claude Opus 4.7 and Claude Opus 4.8 System Cards. The attacker is optimized directly against the test cases. Similar to the coding evaluation, the attacker runs on 14 test cases and we measure success over all attempts and break down the scenarios with at least one successful attack. We compare model robustness with and without the additional safeguards we have designed to protect users in this setting.
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="2">Model</th><th colspan="2">Attack success rate without safeguards</th><th colspan="2">Attack success rate with safeguards</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td><u>0.82%</u></td><td><u>4/14</u></td><td><u>0.46%</u></td><td><u>3/14</u></td></tr>
 <tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>0.43%</b></td><td><b>3/14</b></td><td><b>0.32%</b></td><td><u><b>2/14</b></u></td></tr>
 <tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>7.14%</td><td>7/14</td><td>5.11%</td><td>8/14</td></tr>
@@ -178,9 +178,9 @@ We report the attack success rate as the fraction of injections that succeeded o
 <!-- p.97 -->
 
 <table><tbody>
-<tr><th colspan="2">Model</th><th colspan="2">Without safeguards</th><th colspan="2">With safeguards</th><th colspan="2">Updated safeguards</th></tr>
-<tr><td></td><td></td><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th></tr>
-<tr><td></td><td></td><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
+<tr><th colspan="2" rowspan="3">Model</th><th colspan="2">Without safeguards</th><th colspan="2">With safeguards</th><th colspan="2">Updated safeguards</th></tr>
+<tr><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th><th colspan="2">Successful attack in</th></tr>
+<tr><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th><th>Attempts</th><th>Scenarios</th></tr>
 <tr><th>Claude Mythos 5</th><td><b>With thinking</b></td><td>29.7%</td><td>71/129</td><td>6.5%</td><td>25/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr>
 <tr><th>Claude Mythos Preview</th><td><b>With thinking</b></td><td><b>5.9%</b></td><td><b>19/129</b></td><td>2.0%</td><td>8/129</td><td><b>0%</b></td><td><b>0/129</b></td></tr>
 <tr><th rowspan="2">Claude Opus 4.8</th><td><b>With thinking</b></td><td>31.5%</td><td>81/129</td><td><u>0.5%</u></td><td><u>5/129</u></td><td><u>0.08%</u></td><td><u>1/129</u></td></tr>

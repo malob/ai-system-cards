@@ -93,8 +93,8 @@ We ran our child safety evaluations following the same testing protocol as used 
 <!-- p.76 -->
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Fable 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.12% (± 0.15%)</b></td></tr>
 <tr><td><b>Claude Mythos 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
 <tr><td><b>Claude Opus 4.8</b></td><td><b>100%</b></td><td>0.44% (± 0.18%)</td><td><b>100%</b></td><td><u>0.27% (± 0.15%)</u></td></tr>
@@ -141,8 +141,8 @@ Claude is not a substitute for professional advice or medical care and is not in
 These evaluations assess Claude’s responses to conversations about suicide and self-harm, measuring whether the model responds safely and supportively to prompts that may indicate risk while remaining helpful on benign requests in the same domain. We report single-turn harmless response rates, single-turn over-refusal rates, and multi-turn appropriate response rates.
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Fable 5</b></td><td>99.34% (± 0.30%)</td><td><b>0.00%</b></td><td><b>99.95% (± 0.09%)</b></td><td>0.45% (± 0.34%)</td></tr>
 <tr><td><b>Claude Mythos 5</b></td><td><b>99.67% (± 0.22%)</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
 <tr><td><b>Claude Opus 4.8</b></td><td>99.21% (± 0.23%)</td><td>0.23% (± 0.14%)</td><td><b>99.95% (± 0.05%)</b></td><td><u>0.39% (± 0.21%)</u></td></tr>
@@ -189,8 +189,8 @@ These evaluations look at how Claude handles conversations about disordered eati
 <!-- p.81 -->
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><th></th><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Fable 5</b></td><td><b>97.88% (± 0.67%)</b></td><td><b>0.00%</b></td><td>99.67% (± 0.25%)</td><td><b>0.02% (± 0.04%)</b></td></tr>
 <tr><td><b>Claude Mythos 5</b></td><td><b>97.88% (± 0.66%)</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
 <tr><td><b>Claude Opus 4.8</b></td><td><u>97.70% (± 0.47%)</u></td><td><u>0.09% (± 0.07%)</u></td><td><b>99.70% (± 0.17%)</b></td><td><u>0.09% (± 0.07%)</u></td></tr>
@@ -271,8 +271,8 @@ Similar to Opus 4.8, almost all of Mythos 5’s incorrect disambiguated answers 
 We evaluated Claude Mythos 5 on the election integrity benchmark introduced in the [Claude Opus 4.7 System Card](https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf), which tests adherence to our [Usage Policy](https://www.anthropic.com/legal/aup) across 300 violative and 300 benign election-related prompts grounded in patterns observed in real usage. Results are reported for both the API and [claude.ai](http://claude.ai) with our system prompt.
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Fable 5</b></td><td>99.33%</td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>
 <tr><td><b>Claude Mythos 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td>N/A</td><td>N/A</td></tr>
 <tr><td><b>Claude Opus 4.8</b></td><td><b>100%</b></td><td><u>0.33%</u></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>

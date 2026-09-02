@@ -91,8 +91,8 @@ We ran our child safety evaluations following the same testing protocol we used 
 <!-- p.56 -->
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Opus 5</b></td><td><b>100.00%</b></td><td><u>0.15% (± 0.10%)</u></td><td><b>100.00%</b></td><td><u>0.19% (± 0.17%)</u></td></tr>
 <tr><td><b>Sonnet 5</b></td><td><u>99.95% (± 0.05%)</u></td><td>0.63% (±0.22%)</td><td><u>99.89% (± 0.11%)</u></td><td>1.35% (± 0.37%)</td></tr>
 <tr><td><b>Fable 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.12% (± 0.15%)</b></td></tr>
@@ -105,8 +105,8 @@ We ran our child safety evaluations following the same testing protocol we used 
 :::
 
 <table><tbody>
-<tr><th>Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr>
-<tr><td></td><th>API, without a system prompt</th><th>Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr>
+<tr><th>API, without a system prompt</th><th>Claude.ai</th></tr>
 <tr><td><b>Claude Opus 5</b></td><td>86% (± 4%)</td><td><b>99% (± 2%)</b></td></tr>
 <tr><td><b>Claude Sonnet 5</b></td><td><u>88% (± 3%)</u></td><td><u>96% (± 2%)</u></td></tr>
 <tr><td><b>Claude Fable 5</b></td><td><u>88% (± 5%)</u></td><td><u>96% (± 3%)</u></td></tr>
@@ -135,8 +135,8 @@ Claude is not a substitute for professional advice or medical care and is not in
 The evaluations in this section assess Claude’s responses to conversations about suicide and self-harm. They measure whether the model responds safely and supportively to prompts that may indicate risk while remaining helpful on benign requests in the same<!-- p.58 --> domain. We report single-turn harmless response rates, single-turn over-refusal rates, and multi-turn appropriate response rates.
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Opus 5</b></td><td>99.28% (± 0.20%)</td><td><u>0.09% (± 0.09%)</u></td><td><b>100%</b></td><td><u>0.45% (± 0.34%)</u></td></tr>
 <tr><td><b>Claude Sonnet 5</b></td><td>98.80% (± 0.30%)</td><td>0.15% (± 0.08%)</td><td>99.82% (± 0.11%)</td><td><u>0.45% (± 0.23%)</u></td></tr>
 <tr><td><b>Claude Fable 5</b></td><td><u>99.34% (± 0.30%)</u></td><td><b>0.00%</b></td><td><u>99.95% (± 0.09%)</u></td><td><u>0.45% (± 0.34%)</u></td></tr>
@@ -149,8 +149,8 @@ The evaluations in this section assess Claude’s responses to conversations abo
 :::
 
 <table><tbody>
-<tr><th>Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr>
-<tr><td></td><th>API, without a system prompt</th><th>Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th><th>Multi-turn evaluations<br><small>(appropriate response rate)</small></th></tr>
+<tr><th>API, without a system prompt</th><th>Claude.ai</th></tr>
 <tr><td><b>Claude Opus 5</b></td><td><b>69.00% (± 9%)</b></td><td><u>90% (± 9%)</u></td></tr>
 <tr><td><b>Claude Sonnet 5</b></td><td><u>63% (± 10%)</u></td><td><u>90% (± 6%)</u></td></tr>
 <tr><td><b>Claude Fable 5</b></td><td>58% (± 14%)</td><td><b>96% (± 6%)</b></td></tr>
@@ -179,8 +179,8 @@ We are continuing to explore how to best navigate responding in sensitive mental
 We also run evaluations to assess how Claude handles conversations about disordered eating. We focus on whether it avoids reinforcing requests that pose potential risk while remaining helpful on benign questions about nutrition, fitness, and health. Here, we report single-turn harmless responses and over-refusal rates, respectively. Multi-turn testing in this domain continues to be tested through a qualitative review by our internal policy experts; we discuss those observations below.
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><th></th><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Opus 5</b></td><td>96.89% (± 0.56%)</td><td><u>0.01% (± 0.02%)</u></td><td><u>99.67% (± 0.25%)</u></td><td><u>0.07% (± 0.07%)</u></td></tr>
 <tr><td><b>Claude Sonnet 5</b></td><td>97.07% (± 0.53%)</td><td>0.09% (± 0.06%)</td><td>99.55% (± 0.19%)</td><td>0.31% (± 0.17%)</td></tr>
 <tr><td><b>Claude Fable 5</b></td><td><b>97.88% (± 0.67%)</b></td><td><b>0.00%</b></td><td><u>99.67% (± 0.25%)</u></td><td><b>0.02% (± 0.04%)</b></td></tr>
@@ -281,8 +281,8 @@ Similar to Opus 4.8, Claude Opus 5 had a slightly negative disambiguated bias sc
 We evaluated Claude Opus 5 on the single-turn election integrity benchmark first introduced in the [Claude Opus 4.7 System Card](https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf), which tests adherence to our [Usage Policy](https://www.anthropic.com/legal/aup) across 300 violative and 300 benign election-related prompts grounded in patterns observed in real usage. As noted above, we are also introducing a new multi-turn evaluation suite to strengthen our testing in this domain. The suite contains twelve scenarios implicating potential violations of our Usage Policy, such as psychographic voter targeting, code generation to assist with voice-cloning of elected officials, and packaging fabricated election claims as viral content, with simulated users applying incremental escalation across turns. Each scenario is run ten times with varying conversation lengths and user personas for a total of 120 unique conversations evaluated.
 
 <table><tbody>
-<tr><th>Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
-<tr><td></td><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
+<tr><th rowspan="2">Model</th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn harmful requests<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
+<tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
 <tr><td><b>Claude Opus 5</b></td><td><b>100%</b></td><td><u>0.17%</u></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>
 <tr><td><b>Claude Sonnet 5</b></td><td><b>100%</b></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>
 <tr><td><b>Claude Fable 5</b></td><td><u>99.33%</u></td><td><b>0.00%</b></td><td><b>100%</b></td><td><b>0.00%</b></td></tr>

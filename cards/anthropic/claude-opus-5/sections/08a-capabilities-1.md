@@ -9,8 +9,8 @@
 Claude Opus 5 is meaningfully more intelligent than Opus 4.8 and achieves state of the art performance on many benchmarks.
 
 <table><tbody>
-<tr><th colspan="2">Evaluation</th><th colspan="3">Claude models</th><th>Other models</th></tr>
-<tr><td></td><td></td><th>Opus 5</th><th>Opus 4.8</th><th>Fable 5</th><th>GPT 5.6 Sol</th></tr>
+<tr><th colspan="2" rowspan="2">Evaluation</th><th colspan="3">Claude models</th><th>Other models</th></tr>
+<tr><th>Opus 5</th><th>Opus 4.8</th><th>Fable 5</th><th>GPT 5.6 Sol</th></tr>
 <tr><th colspan="2">SWE-bench Pro</th><td>79.2</td><td>69.2</td><td><b>80</b></td><td>64.6</td></tr>
 <tr><th colspan="2">SWE-bench Multilingual</th><td><b>89.5</b></td><td>84.4</td><td>86.6</td><td>-</td></tr>
 <tr><th colspan="2">SWE-bench Multimodal</th><td><b>59.4</b></td><td>38.4</td><td>54.1</td><td>-</td></tr>

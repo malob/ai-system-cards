@@ -1297,7 +1297,7 @@
       "text": "6.2.5"
     }
   ],
-  "canonical_sections_sha256": "f6d6b050d0d40a5254c3aa11d026571301eae7531768539c9f1be3e13ff33a09",
+  "canonical_sections_sha256": "0d14eb6d36788aceaba7ca9aa6b8b9af4568e613c0f2a6f86b4244e3b7639200",
   "card_id": "anthropic/claude-fable-5",
   "exclusions": [
     {
@@ -4350,8 +4350,8 @@
     "02a-rsp-process-chembio.md": "64da4e547e1a738e4f04dd728a10a4a6612829246ce7a9d3bc1df624246ffefd",
     "02b-rsp-aird-alignment.md": "71467a90d9c6701f2e418fa5b5d33d90b1186d691193a01725c5a424bbf75a37",
     "03-cyber.md": "b0e0aa591bf2f96b298ff19dad60dd69188d3243b805cbe56afbebade316de58",
-    "04-safeguards-harmlessness.md": "4b6f64d03508282df8ec5e9d2964719541863f9ded372cf6c5ed17b16667f2fa",
-    "05-agentic-safety.md": "aee6247c2697e1c2189a692f6be739b68c71f79a06c31004afca4f31cbb39ee8",
+    "04-safeguards-harmlessness.md": "0e0df8da5e62dc50333c8c052730dbb38ebca38cdc013e15272a8905ef39d032",
+    "05-agentic-safety.md": "9ed7fff30b5e644ad46cfd6592cffca915b2b944347616d51d5adff54c57ce09",
     "06a-alignment-intro-behavioral.md": "fea2734d2f08a5d73aea481d0c2fd8545ac48b10f03e4dbcb5bf330b1e050db5",
     "06b-alignment-audit-external.md": "74c8326f1be58ec643a47e971dee5ccfee73912cc3ab7f9db0de739082ebd1fd",
     "06c-targeted-evaluations-1.md": "a66c079e9a3a49abd5e4cd067294f92419b52efa84d1f1d71bbc78fef802b97b",
@@ -4361,11 +4361,11 @@
     "06g-reliability-2.md": "6200d0a2fc8b2371fb6d69d2043db3ae6d0af8439c564e9c7a945c628f4f5209",
     "07a-model-welfare-1.md": "85388d6710a9693042516a4e66e934951bf2c23a798a64323d0695f98e1a5d83",
     "07b-model-welfare-2.md": "aac5899da6790d61eab47595928519088f03a7fcb03d41572d4d5227beb58be5",
-    "08a-capabilities-1.md": "dd2c0f9b42fc115cceaab1fe10419da4bdf6764ad0316acfcc5ef8fb1ab1e99f",
+    "08a-capabilities-1.md": "ad31269b94091981aba849a81c79f9b651c49bf09f69e5ceda244d78e4a78aac",
     "08b-capabilities-2.md": "6b97803ced1f14a221dd4dd8b3a0754a050fd5b535e906135a930146e80ccd6b",
     "08c-capabilities-3.md": "22979f60844abf38e1304d815ae43dd90a751408d47c3a8889396ae11930f7bf",
     "08d-capabilities-4.md": "eecf994f0a192b788ef8ddb0be71d1a55558f081cd05ff95b85aa626a85c0678",
-    "09-appendix.md": "c98b65d9801d791d659fa5a5fe9bd232b55580f746571ccb15e451a8a0126aed"
+    "09-appendix.md": "3da4358b31b0fb3e7829dc4d93f8cb285b759f1f8dc60db9dacb81f9beee4f8d"
   },
   "source_pdf": "source.pdf",
   "source_sha256": "c29ffa55ecefab591916dfdefc5ba3fd4e07c27cbef96ca3c05f7601aaebd033",

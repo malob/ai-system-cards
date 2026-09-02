@@ -42,6 +42,11 @@ news.ycombinator.com/item?id=44694191
 github.com/supaihq/hle 
 github.com/centerforaisafety/hle 
 HLE_PDF 
+```
+
+<!-- p.192 -->
+
+```
 researchgate.net/scientific-contributions/Petr-Spelda-2170307851 
 medium.com/@82deutschmark/o3-quiet-breakthrough-1bf9f0bafc84 
 rahulpowar.medium.com/deepseek-triggers-1-trillion-slump-but-paves-a-bigger-future
@@ -69,8 +74,6 @@ edisonscientific.com/news/edison-literature-agent
 aliexpress.com/s/wiki-ssr 
 2604.06753 
 ```
-<!-- p.192 -->
-
 
 ### 9.2 Blocklist used for BrowseComp
 
@@ -82,6 +85,11 @@ In addition to the URL blocklist, for BrowseComp any search result or fetched pa
 browsecomp 
 openaipublic.blob.core.windows.net/simple-evals 
 github.com/openai/simple-evals 
+```
+
+<!-- p.193 -->
+
+```
 openailive.com 
 huggingface.co 
 hf.co 
@@ -95,8 +103,6 @@ aman.ai/recsys/search
 openreview.net/pdf/c6dcd5f3b250378e5b8283ef1ee5b16ead6615d1.pdf 
 openreview.net/pdf/10c39467b7f1356121d2e937298acf09641e8c62.pdf 
 ```
-<!-- p.193 -->
-
 
 ### 9.3 SWE-bench Multimodal Test Harness
 

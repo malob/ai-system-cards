@@ -7,8 +7,8 @@
 ### 8.1 Evaluation summary
 
 <table><tbody>
-<tr><th colspan="2">Evaluation</th><th colspan="4">Claude family models</th><th colspan="2">Other models</th></tr>
-<tr><td></td><td></td><td><b>Mythos 5</b></td><td><b>Fable 5</b></td><td><b>Mythos Preview</b></td><td><b>Opus 4.8</b></td><td><b>GPT-5.5</b></td><td><b>Gemini 3.1 Pro</b></td></tr>
+<tr><th colspan="2" rowspan="2">Evaluation</th><th colspan="4">Claude family models</th><th colspan="2">Other models</th></tr>
+<tr><td><b>Mythos 5</b></td><td><b>Fable 5</b></td><td><b>Mythos Preview</b></td><td><b>Opus 4.8</b></td><td><b>GPT-5.5</b></td><td><b>Gemini 3.1 Pro</b></td></tr>
 <tr><th colspan="2">SWE-bench Pro</th><td><b>80.3</b></td><td>80</td><td>77.8</td><td>69.2</td><td>58.6</td><td>54.2</td></tr>
 <tr><th colspan="2">SWE-bench Verified</th><td><b>95.5</b></td><td>95</td><td>93.9</td><td>88.6</td><td>-</td><td>80.6</td></tr>
 <tr><th colspan="2">Terminal-Bench 2.1</th><td><b>88.0</b></td><td>84.3</td><td>-</td><td>82.7</td><td>83.4<br><small>(Codex CLI)</small></td><td>70.7<br><small>(Gemini CLI)</small></td></tr>

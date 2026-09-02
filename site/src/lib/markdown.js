@@ -408,6 +408,56 @@ function rehypeArticle(opts = {}) {
         node.properties.className = Array.isArray(c) ? [...c, 'pagemark-row'] : ['pagemark-row'];
       }
     });
+    // A code box that continues across a PDF page break arrives as one fence
+    // per page with the page marker between them (a marker inside a fence
+    // would render literally, so the canon never merges them). Join
+    // consecutive <pre> siblings separated only by page markers into ONE box
+    // and place each marker inside the code at the join, so its gutter label
+    // sits beside the line where the page turns instead of stacking below the
+    // box (the §9.2 blocklists: fable-5 pp.316–317, opus-5 pp.191–193,
+    // fable-5.1 pp.210–212). A continuation fence's info string is the PDF's
+    // repeated code-box chrome, not content, and is dropped with the fence.
+    const pagemarksOnly = (n) => {
+      if (n?.type !== 'element') return null;
+      if (n.tagName === 'a' && hasClass(n, 'pagemark')) return [n];
+      if (n.tagName !== 'p') return null;
+      const kids = n.children.filter((c) => !(c.type === 'text' && !c.value.trim()));
+      return kids.length && kids.every((c) => c.tagName === 'a' && hasClass(c, 'pagemark'))
+        ? kids
+        : null;
+    };
+    visit(tree, 'element', (node, index, parent) => {
+      if (!parent || node.tagName !== 'pre') return;
+      const code = node.children.find((c) => c.tagName === 'code');
+      if (!code) return;
+      let end = index;
+      for (;;) {
+        let i = end + 1;
+        const marks = [];
+        while (parent.children[i]) {
+          const c = parent.children[i];
+          if (c.type === 'text' && !c.value.trim()) {
+            i += 1;
+            continue;
+          }
+          const pm = pagemarksOnly(c);
+          if (!pm) break;
+          marks.push(...pm);
+          i += 1;
+        }
+        const next = parent.children[i];
+        if (!marks.length || next?.type !== 'element' || next.tagName !== 'pre') break;
+        const nextCode = next.children.find((c) => c.tagName === 'code');
+        if (!nextCode) break;
+        const last = code.children[code.children.length - 1];
+        if (!(last?.type === 'text' && last.value.endsWith('\n'))) {
+          code.children.push({ type: 'text', value: '\n' });
+        }
+        code.children.push(...marks, ...nextCode.children);
+        end = i;
+      }
+      if (end !== index) parent.children.splice(index + 1, end - index);
+    });
     // Paragraphs made of figure images → a <figure> card. CONSECUTIVE image
     // paragraphs are merged into ONE card, so a multi-panel figure (stacked
     // charts, plus the running-title strip the PDF repeats atop each page the

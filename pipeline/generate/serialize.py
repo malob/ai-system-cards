@@ -638,9 +638,6 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                     raw = _code_raw(body_lines)
                     out.append(f"```{lang}\n" + (raw + "\n" if raw else "")
                                + "```\n")
-                for tp in blk.get("trailing_pages", []):
-                    marker_if_new(tp)
-                    emit_marker(False)
         elif t == "table_html":
             out.append(_table_lines(blk["html"]) + "\n")
             # a merged multi-page table carries embedded page markers: advance

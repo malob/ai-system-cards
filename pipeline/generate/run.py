@@ -96,7 +96,22 @@ def resolve_destination_placeholders(
         context = resolved[max(0, at - 40):at + 80].replace("\n", "\\n")
         raise DestinationResolutionError(
             f"unresolved destination placeholder remains near {context!r}")
-    return resolved
+    # A link the PDF wraps across a line arrives as two annotations sharing
+    # one destination ('Section' + '7.2.1'); each resolves to the same
+    # heading and rendered as two adjacent anchors with an unlinked space
+    # between (fable-5.1 Table 9.1.A p.207; the risk report's split-link
+    # halves). Two internal anchors separated only by whitespace and
+    # pointing at ONE target are one link. L2 already groups adjacent
+    # same-target occurrences into one logical link, so the pairing is
+    # unchanged; the reader just gets one underline.
+    join_md = re.compile(r"\[([^\]]+)\]\((#[^)]+)\)(\s+)\[([^\]]+)\]\(\2\)")
+    join_html = re.compile(r'<a href="(#[^"]+)">([^<]*)</a>(\s+)<a href="\1">([^<]*)</a>')
+    while True:
+        joined = join_md.sub(r"[\1\3\4](\2)", resolved)
+        joined = join_html.sub(r'<a href="\1">\2\3\4</a>', joined)
+        if joined == resolved:
+            return joined
+        resolved = joined
 
 
 def verifier_command(*, full: bool, section_prefixes: list[str]) -> str:
@@ -410,16 +425,13 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 out[-1]["last_page"] = blk["page"]  # chain across many pages
                 out[-1].setdefault("parts", []).extend(blk.get("parts", []))
                 continue
-        if (out and blk["type"] == "code" and out[-1]["type"] == "code"
-                and blk["page"] == out[-1].get("trailing_pages", [out[-1]["page"]])[-1] + 1):
-            # one logical code block split by the page break (9.2 blocklist):
-            # merge; the marker re-emits after the fence (a comment inside a
-            # fence would render literally). The adjacency test runs against
-            # the block's LAST merged page, so a box spanning three pages
-            # (fable-5.1 pp.210-212) chains instead of restarting at page 3.
-            out[-1]["lines"].extend(blk["lines"])
-            out[-1].setdefault("trailing_pages", []).append(blk["page"])
-            continue
+        # a code box split by a page break is NOT merged here: a page marker
+        # cannot live inside a fence (a comment there renders literally), so
+        # the canon keeps one fence per PDF page with the marker between them,
+        # and the renderer joins adjacent fences separated only by page
+        # markers into one box with each label at the true page turn (the §9.2
+        # blocklists). An earlier merge re-emitted the markers AFTER the fence,
+        # stacking their gutter labels on one line (owner-flagged, D65).
         if (out and blk["page"] == out[-1]["page"] + 1
                 and blk["type"] in ("example", "code")
                 and out[-1]["type"] == "turn" and out[-1].get("code_lines")

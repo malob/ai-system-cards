@@ -63,3 +63,7 @@ document:
   # owner-flagged when split). Fable's box-per-paragraph pilot quotes keep
   # the rule off there.
   bubble_page_continuation: true
+  # fill-geometry cell merges (D63, adopted for the certified cards after the
+  # owner-directed regression review of 2026-09-01): one drawn fill under a
+  # non-empty cell that also covers an empty neighbour proves colspan/rowspan
+  merge_cells_by_fill: true

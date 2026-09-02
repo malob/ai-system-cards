@@ -74,8 +74,8 @@ replayed): inline tags strip to nothing in the projection; `__` is bold only at
 word boundaries; ■/□ join the bullet sets; the projection reads `\\` back as one
 backslash.
 
-Manifest knobs on the new card: `merge_cells_by_fill: true`;
-`link_text_resolution` stays off (tried for 'Appendix 9.1' p.142 — L2's
+`merge_cells_by_fill: true` is now on for EVERY card (D65, after experiment 15's
+review); on the new card `link_text_resolution` stays off (tried for 'Appendix 9.1' p.142 — L2's
 source-first geometry binds that destination to the parent heading that shares
 p.206's top; the D46 knob is for wrong destinations, not coarse ones).
 
@@ -142,27 +142,24 @@ p.142 link, the p.42 nested bullets, the p.106 bold lead). Verdict: nothing bloc
 publication. Post-publish improvement list, in the owner's priority order — each
 item is to be scoped for cost and brittleness before deciding, not assumed worth it:
 
-1. **Page labels after a fenced code box overlap** (§9.2: the p.211 and p.212
-   gutter labels stack on one line because a marker cannot live inside a fence).
-   Top priority. Likely renderer-side: split the fence's lines at the page boundary
-   so each label sits beside the line where the PDF page turns, as markers already
-   do inside table rows. Opus 5's blocklist (three per-page fences) is the same
-   family.
-2. **Run each shared improvement against the certified cards** (standing rule from
-   the owner): enable `merge_cells_by_fill` for fable-5 / opus-5 / risk-report,
-   regenerate, and have agents judge every diff hunk against the PDF as
-   improvement / neutral / regression before the canon moves. Same for the Opus
-   blocklist fences.
-3. **Adjacent same-target anchors** from a wrapped PDF link (Table 9.1.A p.207)
-   could merge into one anchor; nice in principle, scope the complexity first.
-4. **Label-less prompt/response boxes** (§6.1.3 here, §2.20/§2.24 in the risk
-   report) would ideally carry user / assistant labels; the owner is reluctant to
-   add special-case rules — only if it is simple and not brittle.
-5. **Appendix-number link precision** ('Appendix 9.1' → the 9.1 heading rather
-   than the parent heading sharing its page): would need L2 to accept a heading the
-   anchor text names on the destination page, plus mutation reruns. Very minor.
+1. **Done (D65):** page labels after a fenced code box — the canon keeps one fence
+   per PDF page with the marker between, and the renderer joins them into one box
+   with each label at the true page turn (fable-5, opus-5, fable-5-1).
+2. **Done (D65, experiment 15):** `merge_cells_by_fill` enabled on the certified
+   cards after agent review of every changed page (26 improvements, 1 neutral, 0
+   regressions across all three changes).
+3. **Done (D65):** adjacent same-target anchors from a wrapped PDF link are one
+   anchor (fable-5-1 p.207, risk-report pp.12/114); eight lines after destination
+   resolution, L2 pairing unchanged.
+4. **Scoped, not built:** label-less prompt/response boxes (§6.1.3 here, §2.20/§2.24
+   in the risk report) have no non-brittle role signal — both boxes share one fill
+   and only a prose cue ('we prompted it with:') distinguishes them, which is the
+   special-casing the owner declined.
+5. **Scoped, deferred:** 'Appendix 9.1' precision needs L2 to accept a heading the
+   anchor text names on the destination page, plus mutation reruns, for one link.
 
-Deployed 2026-09-01; the list above is the next work.
+The D65 batch (items 1–3) is committed locally and awaits the owner's push; a
+push deploys it.
 
 - **Table evidence (unchanged from D61):** bind sparse/unruled positives and a
   natural absent-rule-but-separate negative from a genuinely different PDF
