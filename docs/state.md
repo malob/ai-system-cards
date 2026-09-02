@@ -128,10 +128,34 @@ card's committed baseline is `docs/experiments/05-mutation-testing/results-anthr
 
 ## Open / next
 
-- **Fourth card certification:** owner scroll pass over the built preview
-  (step 9), then the deploy decision. Candidate owner adjudications: enabling
-  `merge_cells_by_fill` for the certified cards (same 2×2 header corners in
-  opus-5 §5/§8 and fable-5 §5); the deferred typed minors above.
+Owner walkthrough of the built preview completed 2026-09-01 (seven stops: merged
+header corners, the §6.1.3 boxes, Table 9.1.A's seams, the §9.2 code box, the
+p.142 link, the p.42 nested bullets, the p.106 bold lead). Verdict: nothing blocks
+publication. Post-publish improvement list, in the owner's priority order — each
+item is to be scoped for cost and brittleness before deciding, not assumed worth it:
+
+1. **Page labels after a fenced code box overlap** (§9.2: the p.211 and p.212
+   gutter labels stack on one line because a marker cannot live inside a fence).
+   Top priority. Likely renderer-side: split the fence's lines at the page boundary
+   so each label sits beside the line where the PDF page turns, as markers already
+   do inside table rows. Opus 5's blocklist (three per-page fences) is the same
+   family.
+2. **Run each shared improvement against the certified cards** (standing rule from
+   the owner): enable `merge_cells_by_fill` for fable-5 / opus-5 / risk-report,
+   regenerate, and have agents judge every diff hunk against the PDF as
+   improvement / neutral / regression before the canon moves. Same for the Opus
+   blocklist fences.
+3. **Adjacent same-target anchors** from a wrapped PDF link (Table 9.1.A p.207)
+   could merge into one anchor; nice in principle, scope the complexity first.
+4. **Label-less prompt/response boxes** (§6.1.3 here, §2.20/§2.24 in the risk
+   report) would ideally carry user / assistant labels; the owner is reluctant to
+   add special-case rules — only if it is simple and not brittle.
+5. **Appendix-number link precision** ('Appendix 9.1' → the 9.1 heading rather
+   than the parent heading sharing its page): would need L2 to accept a heading the
+   anchor text names on the destination page, plus mutation reruns. Very minor.
+
+Then the deploy decision (owner push; the Pages workflow deploys `main`).
+
 - **Table evidence (unchanged from D61):** bind sparse/unruled positives and a
   natural absent-rule-but-separate negative from a genuinely different PDF
   producer before more table-model work; the fourth card is again the same
