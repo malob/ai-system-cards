@@ -18,10 +18,10 @@ walked the built preview (seven stops) and asked to publish: `8eb82c6` was pushe
 [33574671083](https://github.com/malob/ai-system-cards/actions/runs/33574671083)
 passed (all four card gates, clean build, deploy) and the card is live at
 https://malob.github.io/ai-system-cards/anthropic/claude-fable-5-1/ (HTTP 200,
-merged table corners present, listed on the index). The hosted mutation
-sensitivity run
+merged table corners present, listed on the index). The hosted mutation sensitivity run
 [33574670996](https://github.com/malob/ai-system-cards/actions/runs/33574670996)
-on the same commit is recorded below when it completes.
+on the same commit passed for all four cards: Opus 10m25s, Fable 5.1 14m54s,
+Risk Report 18m55s, Fable 38m03s (inside the 45-minute job limit).
 
 ## Current card gates
 
