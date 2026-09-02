@@ -3,7 +3,7 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-09-01 21:55 PDT. **Two certified cards re-onboarded on
+**Last updated:** 2026-09-02 10:10 PDT (session closed out; four docs-only commits after `0e7e3a7` are unpushed — the next push is docs only). **Two certified cards re-onboarded on
 publisher revisions (D66, experiment 16) and DEPLOYED:** the owner said "push away"
 at 21:50; `0e7e3a7` was pushed, hosted verify / Pages run
 [33592389799](https://github.com/malob/ai-system-cards/actions/runs/33592389799)
@@ -208,6 +208,15 @@ Report 20m32s, Fable 39m58s (inside the 45-minute job limit).
   identify the hash-only PDFs the transparency page links by title and page
   count. The transparency page also lists a Sonnet 5 System Card — a candidate
   fifth card, not requested.
+- **Mutation-suite speed (parked 2026-09-02, owner may pick up later):** the
+  suite is serial and re-verifies the whole document per trial (~3.5 s on
+  Opus, ~4 s on Fable; T1's whole-document difflib is about half). Experiment
+  17 showed prefix/suffix trimming is exact only behind a shifted-block guard
+  and saves almost nothing because typed residuals bracket each document
+  (patch kept there, not applied). The semantics-free win is a process pool
+  (one Node worker per process; six performance cores here) and sharding the
+  hosted job by class; the order-of-magnitude T1 win is an anchored diff,
+  which is a recorded decision with re-acceptance and regenerated baselines.
 - **Table evidence (unchanged from D61):** bind sparse/unruled positives and a
   natural absent-rule-but-separate negative from a genuinely different PDF
   producer before more table-model work; the fourth card is again the same
