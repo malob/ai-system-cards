@@ -3,16 +3,22 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-09-01 evening. **Two certified cards re-onboarded locally on
-publisher revisions (D66, experiment 16) — NOT pushed:** Claude Opus 5 now converts
+**Last updated:** 2026-09-01 21:55 PDT. **Two certified cards re-onboarded on
+publisher revisions (D66, experiment 16) and DEPLOYED:** the owner said "push away"
+at 21:50; `0e7e3a7` was pushed, hosted verify / Pages run
+[33592389799](https://github.com/malob/ai-system-cards/actions/runs/33592389799)
+passed (four card gates, clean build, deploy), and the live pages carry the
+revisions (Opus 5: §5.2.2.1 bug bounty and the five-row Cowork table, 282 page
+markers; Fable 5: the June 25 changelog block, 462 markers). The hosted mutation
+replay [33592389703](https://github.com/malob/ai-system-cards/actions/runs/33592389703)
+was still in progress at this rewrite — check it, then note the result here.
+Details: Claude Opus 5 now converts
 the August 19, 2026 revision (198pp; changelog, new §5.2.2.1 bug bounty, re-run
 Cowork table) and Claude Fable 5 the July 16 print with the June 25 changelog
 ("very low" alignment risk, repaired §7.2.1 link, BenchCAD correction). Both gates
 are at 0 unsuppressed majors, the corpus-wide release gate is green, and a 33-page
 agent sweep found 0 findings. Both mutation replays landed (Opus re-sampled −1,
-Fable identical). The deployed site is still `4579d5d` (D65) with the
-old prints; the next push deploys the revisions plus three unpushed docs-only
-commits. Earlier today the fourth card, Claude Fable 5.1 & Claude Mythos 5.1, was
+Fable identical). The deployed site is now `0e7e3a7`. Earlier today the fourth card, Claude Fable 5.1 & Claude Mythos 5.1, was
 onboarded and published (D62–D65); the previous baseline was the phase-3 docs
 commit `5b752ae` (hosted run
 [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)).
@@ -196,7 +202,7 @@ Report 20m32s, Fable 39m58s (inside the 45-minute job limit).
   reprint `b514064a…` found first was itself superseded); Fable 5 →
   `57a52ea7…` (July 16 print, June 25 changelog); Fable 5.1 current; the Risk
   Report has no slug and its URL serves unchanged bytes. Both revised cards are
-  re-onboarded locally (experiment 16) and await the owner's push. Method for
+  re-onboarded (experiment 16) and deployed at `0e7e3a7`. Method for
   the next check: follow each slug redirect, re-fetch every `source_url`, and
   identify the hash-only PDFs the transparency page links by title and page
   count. The transparency page also lists a Sonnet 5 System Card — a candidate
