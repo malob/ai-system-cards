@@ -65,7 +65,9 @@ not change but whose page number did.
   176 / 168 / 171 — the trial sites re-sampled on the changed text; split-item
   fell 3 → 1 detected and one swap-words trial lost its major block, both
   advisory-weak classes, while every strict class held 8/8). Baseline
-  regenerated. Fable's replay: see the mutation section of docs/state.md.
+  regenerated. Fable 5 held 191 / 184 / 185 of 200 with every per-class count
+  unchanged; its baseline file is refreshed so the recorded trial sites match
+  the new text.
 - Sweep: three comparator agents, 33 pages (Fable 2, 3, 220, 243, 244, 281–288;
   Opus 2, 75–81, 152–154, 156, 197 and the shifted sample 33, 53, 63, 124, 144,
   149, 196): **0 findings**. Findings files `findings-*.jsonl` here.

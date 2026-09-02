@@ -396,7 +396,7 @@
     },
     {
      "file": "07a-model-welfare-1.md",
-     "site": "https://www.anthropic.com/research/emotion-concepts-function",
+     "site": "https://www.anthropic.com/research/assistant-axis",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
@@ -883,7 +883,7 @@
     },
     {
      "file": "00-changelog.md",
-     "site": "- Noted CAIS\u2019s contribution to the VCT C",
+     "site": "- Corrected the description of alignment",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,

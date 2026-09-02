@@ -9,8 +9,8 @@ the August 19, 2026 revision (198pp; changelog, new §5.2.2.1 bug bounty, re-run
 Cowork table) and Claude Fable 5 the July 16 print with the June 25 changelog
 ("very low" alignment risk, repaired §7.2.1 link, BenchCAD correction). Both gates
 are at 0 unsuppressed majors, the corpus-wide release gate is green, and a 33-page
-agent sweep found 0 findings. The Fable 5 mutation replay was still running at
-the last rewrite (see below). The deployed site is still `4579d5d` (D65) with the
+agent sweep found 0 findings. Both mutation replays landed (Opus re-sampled −1,
+Fable identical). The deployed site is still `4579d5d` (D65) with the
 old prints; the next push deploys the revisions plus three unpushed docs-only
 commits. Earlier today the fourth card, Claude Fable 5.1 & Claude Mythos 5.1, was
 onboarded and published (D62–D65); the previous baseline was the phase-3 docs
@@ -64,11 +64,9 @@ unit-test fixtures that pinned source page numbers or counts were re-pinned
 
 **Mutation replay after the re-onboarding:** Opus 5 175 / 167 / 170 of 192
 (was 176 / 168 / 171; re-sampled trial sites, strict classes 8/8; baseline
-regenerated). Fable 5: running at the last rewrite — when it lands, compare
-`/private/tmp/claude-501/…/scratchpad/mutation-fable-rev2.json` against the
-committed baseline (191 / 184 / 185 of 200), copy it over
-`docs/experiments/05-mutation-testing/results-anthropic-claude-fable-5.json`,
-and update CLAUDE.md's totals line (776 trials) and experiment 16's README.
+regenerated). Fable 5 held 191 / 184 / 185 of 200 with every per-class count
+unchanged (baseline file refreshed). Corpus totals over 776 trials: 717 / 687 /
+696.
 
 ## What the fourth card changed (D62, D63)
 

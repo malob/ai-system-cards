@@ -189,7 +189,8 @@ seed-5 schema-v2 floors separate detection, intended-major severity, and actual 
 blocking. Fable's 25 classes / 200 trials are 191 / 184 / 185; Opus's 24 / 192 are
 175 / 167 / 170 (re-sampled on the August 19 revision, D66); Risk's 24 / 192 are 173 / 166 / 171; Fable 5.1's 24 / 192 are 178 / 170 / 170
 (`flatten-chip` is inapplicable on the latter three: no chips). Across 776 trials the
-totals are 718 detected, 688 intended-major, and 697 major-blocked. V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
+totals are 717 detected, 687 intended-major, and 696 major-blocked (Fable's replay on
+the July 16 print held 191 / 184 / 185 identically). V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
 eligible; misses concentrate in ST1/ST2/ST3, L1, S1, and ordinary advisory word swaps.
 The strict artifacts combine independent per-class runs with the final hide-image/V1
 refresh. Hosted mutation run
