@@ -168,6 +168,21 @@ same-target anchors left on any card. The hosted mutation replay
 [33577923899](https://github.com/malob/ai-system-cards/actions/runs/33577923899)
 on the same commit is recorded here when it completes.
 
+- **Source revision found (2026-09-01 check):** Anthropic republished the Claude
+  Opus 5 System Card the same day at a new CDN hash
+  (`b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude Opus 5 System Card.pdf`,
+  last-modified 2026-07-24 21:52 UTC, 194pp) — the file the transparency page
+  and the Fable 5.1 card cite. Our archived copy (`c5fbac3f…`, 16:51 UTC, 193pp)
+  is the earlier print: the revision changes Table 8.1.A's FrontierBench row
+  (18.7/33.7/37.5 → 21.1/33.8/34.4, attributed to Harbor), adds a note on
+  FrontierCode scores above high effort, rewords the FrontierSWE harness sentence,
+  and appends react-pdf test listings to the appendix; text differs on 22 pages
+  from p.85 on (one-page shift). No changelog page. Re-onboarding Opus 5 on the
+  revision awaits the owner's decision. Fable 5's archived 317pp file IS the
+  newer June 11 revision (the transparency page also links the June 9 319pp
+  original); the Risk Report and Fable 5.1 URLs serve identical bytes and no
+  re-issue was found. Method: re-fetch every `source_url`, then identify every
+  hash-only PDF the transparency page links (22 files) by title and page count.
 - **Table evidence (unchanged from D61):** bind sparse/unruled positives and a
   natural absent-rule-but-separate negative from a genuinely different PDF
   producer before more table-model work; the fourth card is again the same
