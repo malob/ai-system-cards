@@ -166,7 +166,8 @@ changes: merged header corners on Opus 5 (11), Fable 5 (10) and Fable 5.1 (12),
 every blocklist box joined with its page labels inside, and no adjacent
 same-target anchors left on any card. The hosted mutation replay
 [33577923899](https://github.com/malob/ai-system-cards/actions/runs/33577923899)
-on the same commit is recorded here when it completes.
+on the same commit passed for all four cards: Opus 8m35s, Fable 5.1 14m51s, Risk
+Report 20m32s, Fable 39m58s (inside the 45-minute job limit).
 
 - **Source revision found (2026-09-01 check):** Anthropic republished the Claude
   Opus 5 System Card the same day at a new CDN hash
