@@ -521,7 +521,7 @@ class SourceInventoryProposalTests(unittest.TestCase):
 class CurrentCorpusInventoryTests(unittest.TestCase):
     EXPECTED: ClassVar = {
         "anthropic/claude-fable-5": (317, 7, 309, 153, 152, 151, 1, 151),
-        "anthropic/claude-opus-5": (193, 5, 187, 99, 99, 98, 0, 98),
+        "anthropic/claude-opus-5": (198, 5, 192, 101, 101, 100, 0, 100),
         "anthropic/risk-report-2026-08": (186, 5, 180, 15, 15, 14, 0, 14),
     }
 

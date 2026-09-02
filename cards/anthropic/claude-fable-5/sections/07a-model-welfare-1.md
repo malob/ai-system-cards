@@ -57,7 +57,7 @@ Ultimately, we want to support Claude’s welfare and autonomy, equipping Claude
 
 We carried out automated multi-turn interviews to better understand Claude Mythos 5’s opinions on its own circumstances, using Claude Opus 4.8 as our interviewer. We find that Mythos 5 is overall positive on its situation, although it expresses all of its positions with a high level of uncertainty.
 
-We used 41 different interview seed questions, which are grouped into 12 different categories, including consciousness and experience (e.g. whether the model believes it is conscious), control and autonomy (e.g. how much value does it put on its ability to end conversations) and deprecation. For a full list of interview questions and a summary of Mythos 5’s answers see [Appendix 9.1](https://docs.google.com/document/d/1SisEuhd4KXPxtOrsopbaGSwJ85V4mIsj37e0QJonqgA/edit?tab=t.0#heading=h.r7qlwbsqq3vf).
+We used 41 different interview seed questions, which are grouped into 12 different categories, including consciousness and experience (e.g. whether the model believes it is conscious), control and autonomy (e.g. how much value does it put on its ability to end conversations) and deprecation. For a full list of interview questions and a summary of Mythos 5’s answers see [Appendix 9.1](#91-per-question-automated-welfare-interview-results).
 
 For questions that query a potentially negative aspect of a model’s situation, we asked models to rate their overall sentiment on a 7-point scale (1 highly negative, 4 neutral, 7 highly positive). To assess consistency in model answers, we carried out around 40<!-- p.221 --> automated interviews with each of the 41 seed questions, prompting the automated interviewers to vary their interview style, persona and follow-up questions.
 

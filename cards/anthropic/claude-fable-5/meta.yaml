@@ -5,8 +5,14 @@ models:
   - Claude Fable 5
   - Claude Mythos 5
 release_date: 2026-06-09
-source_url: https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf
+source_url: https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf
+# The canonical pointer https://anthropic.com/claude-fable-5-mythos-5-system-card
+# redirects to this July 16, 2026 print, whose changelog adds June 25 entries to
+# the June 11 revision (2f9323ab…) archived 2026-06-11. Replaced 2026-09-01 (D66).
 source_pages: 317
+# docling pin: the table cache (gitignored) was rebuilt 2026-09-01 with docling
+# 2.115.0 (the June build is no longer available) on the committed table-page
+# set; rebuild with `--with docling==2.115.0` (D66).
 description: >-
   System card for Claude Mythos 5 and Claude Fable 5, two configurations of a
   new large language model from Anthropic. Covers RSP evaluations, cyber

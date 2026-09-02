@@ -497,24 +497,24 @@ class RawFootnoteAuthorityTests(unittest.TestCase):
         raw_observation = raw_footnotes.observe(self.opus / "source.pdf")
         source_definition = next(
             definition for definition in raw_observation.definitions
-            if definition.number == 1 and definition.marker_page == 36
+            if definition.number == 1 and definition.marker_page == 37
         )
         baseline_markdown = baseline_markdown.replace(
-            "pages 002-002", "pages 002-036"
+            "pages 002-002", "pages 002-037"
         )
         baseline_markdown += (
-            "\n<!-- p.36 -->\n\nExploitBench[^1]\n\n"
+            "\n<!-- p.37 -->\n\nExploitBench[^1]\n\n"
             f"[^1]: {source_definition.text}\n"
         )
         baseline_section = mdproj.project("f18-referenced.md", baseline_markdown)
-        page_36 = {
+        page_37 = {
             "spans": [{"text": "1", "zone": "fnref"}],
             "footnotes": {1: source_definition.text},
         }
         blank = {"spans": [], "footnotes": {}}
-        baseline_pages = [copy.deepcopy(blank) for _ in range(36)]
+        baseline_pages = [copy.deepcopy(blank) for _ in range(37)]
         baseline_pages[1] = page_two
-        baseline_pages[35] = page_36
+        baseline_pages[36] = page_37
 
         prose = " ".join(text.strip() for text in fixture["relocated_spans"])
         mutated_page_two = copy.deepcopy(page_two)
@@ -526,17 +526,17 @@ class RawFootnoteAuthorityTests(unittest.TestCase):
         for span in selected:
             span["zone"] = "fnbody"
             span["fn"] = 1
-        mutated_page_36 = copy.deepcopy(page_36)
-        mutated_page_36["footnotes"][1] += " " + prose
+        mutated_page_37 = copy.deepcopy(page_37)
+        mutated_page_37["footnotes"][1] += " " + prose
         mutated_markdown = baseline_markdown.replace(prose, "", 1).replace(
             f"[^1]: {source_definition.text}",
             f"[^1]: {source_definition.text} {prose}",
             1,
         )
         mutated_section = mdproj.project("f18-referenced.md", mutated_markdown)
-        mutated_pages = [copy.deepcopy(blank) for _ in range(36)]
+        mutated_pages = [copy.deepcopy(blank) for _ in range(37)]
         mutated_pages[1] = mutated_page_two
-        mutated_pages[35] = mutated_page_36
+        mutated_pages[36] = mutated_page_37
 
         def page_two_tokens(section):
             return [item for item in section.tokens if item[1] == 2]
@@ -549,14 +549,14 @@ class RawFootnoteAuthorityTests(unittest.TestCase):
         self.assertEqual([], invariants.t1_text(
             page_two_tokens(mutated_section), mutated_pages, [2], set()))
         self.assertEqual([], invariants.fn1_footnotes(
-            [baseline_section], baseline_pages, [2, 36], set()))
+            [baseline_section], baseline_pages, [2, 37], set()))
         self.assertEqual([], invariants.fn1_footnotes(
-            [mutated_section], mutated_pages, [2, 36], set()))
+            [mutated_section], mutated_pages, [2, 37], set()))
         self.assertEqual([], dangling_footnotes.check([mutated_section]))
 
         # Apply the same attack to the complete real Markdown. RF1 reopens the
         # unmodified PDF and compares the referenced definition with the exact
-        # p.36 marker/body occurrence, so the appended p.2 prose cannot pass.
+        # p.37 marker/body occurrence, so the appended p.2 prose cannot pass.
         real_sections = section_texts(self.opus)
         start = "those of Claude Fable 5’s, with one change:"
         end = "Multi-turn behavior was in line with Opus 4.8, with some qualitative differences: Opus 5’s"

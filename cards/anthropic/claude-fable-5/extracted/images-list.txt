@@ -151,9 +151,9 @@ page   num  type   width height color comp bpc  enc interp  object ID x-ppi y-pp
  281   148 image    2000  1400  icc     3   8  image  no      1333  0   308   308 82.6K 1.0%
  282   149 image    2000  1200  icc     3   8  image  no      1339  0   308   307 58.6K 0.8%
  283   150 image    2000  1200  icc     3   8  image  no      1342  0   308   307 87.4K 1.2%
- 284   151 image    2000  1200  icc     3   8  image  no      1347  0   308   307 76.1K 1.1%
+ 284   151 image    2000  1200  icc     3   8  image  no      1346  0   308   307 76.1K 1.1%
  285   152 image    2000  1200  icc     3   8  image  no      1351  0   308   307 82.9K 1.2%
- 286   153 image    2000  1200  icc     3   8  image  no      1357  0   308   307 89.6K 1.3%
+ 286   153 image    2000  1200  icc     3   8  image  no      1356  0   308   307 89.6K 1.3%
  287   154 image    2000  1200  icc     3   8  image  no      1360  0   308   307 98.7K 1.4%
  289   155 image    2000  1200  icc     3   8  image  no      1368  0   308   307 84.9K 1.2%
  291   156 image    2000   809  icc     3   8  image  no      1373  0   308   308  109K 2.3%

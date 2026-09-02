@@ -1,9 +1,9 @@
 {
-  "_comment": "Maintainer/source-adjudicated exact T1 table-order projection residuals on pp.32 and 140-141, exposed when the blanket table-zone severity demotion was removed. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
+  "_comment": "Maintainer/source-adjudicated exact T1 table-order projection residuals on pp.33 and 144-145 (August 19, 2026 revision; the same four findings sat on pp.32 and 140-141 before the changelog page and the new §5.2.2.1 shifted the pagination), exposed when the blanket table-zone severity demotion was removed. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
   "accepted": [
     {
       "invariant": "T1",
-      "page": 140,
+      "page": 144,
       "severity": "major",
       "detail": {
         "op": "insert",
@@ -16,11 +16,11 @@
         "extra_sha256": "b182fba9fc68c5d8b9a46276c696079a86e7c6919549fb0ee1974ff4d29b60c8",
         "zone": "table"
       },
-      "fingerprint": "30d29a89a764a47b050061ff822fc8e189efa97745081b954775a791e4532b38"
+      "fingerprint": "0ace6130e7cceb8ea92f26ad768d477ea339525b0750ff24f17d45209c91b44b"
     },
     {
       "invariant": "T1",
-      "page": 140,
+      "page": 144,
       "severity": "major",
       "detail": {
         "op": "insert",
@@ -33,11 +33,11 @@
         "extra_sha256": "f1e3952a507ed6d812ca54c07160fc71a2f54249a03419c6d2a60fad83a581c8",
         "zone": "table"
       },
-      "fingerprint": "62b7a62d1293049103bcf6c7f202d53fcd692a576b162753490a471640e55718"
+      "fingerprint": "a292a6d8e977ed4833a4d0eea6b537f67226dd6fc9c70ba60249d3e22331dfed"
     },
     {
       "invariant": "T1",
-      "page": 32,
+      "page": 33,
       "severity": "major",
       "detail": {
         "op": "delete",
@@ -50,11 +50,11 @@
         "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "zone": "table"
       },
-      "fingerprint": "a776260914b94e8e344dc229ff510c06ea0deda25064bc30db42852e26bd0242"
+      "fingerprint": "a78e2ecd1d3d7c8026dedfb01520d182753f260a1565fe53c24dd04dcdfb919e"
     },
     {
       "invariant": "T1",
-      "page": 141,
+      "page": 145,
       "severity": "major",
       "detail": {
         "op": "delete",
@@ -67,7 +67,7 @@
         "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "zone": "table"
       },
-      "fingerprint": "953aa7d57d2d7fb8a9f4e5da3aeb3fa13afed44372172c8fffa4f8251ea69cfb"
+      "fingerprint": "e75f9ac6352f0f23cb5bbe99f0b0c824c262a3b11a5c0c26dde9294221b3c948"
     }
   ]
 }

@@ -17,3 +17,9 @@ June 11, 2026
     - Removed a footnote in Section 2.4.3.1 about the alignment properties of models with a prior version of these safeguards which is no longer relevant.
     - Removed “further” in Section 2.4.3.1 to clarify that the frontier LLM development safeguards are no longer different in nature to Claude Fable 5’s other safeguards (“Limited Deployments”).
     - Updated references to welfare concerns in Section 7.6 to reflect that these concerns pertain to the prior version of these safeguards.
+
+June 25, 2026
+
+- Corrected the description of alignment risk in the Executive Summary from “low” to “very low” to match Section 2.4.
+- Fixed broken hyperlink in Section 7.2.1.
+- Corrected the description of our internal implementation of BenchCAD in Section 8.15.4. We mistakenly described a grading change that had not yet been incorporated in the runs for which we published scores.

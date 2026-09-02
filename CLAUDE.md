@@ -27,7 +27,7 @@ process rules. `docs/` holds the design notes and decision log.
 
 The D35 question — one shared pipeline vs per-document pipelines — now has a
 four-document answer: **Claude Fable 5 & Claude Mythos 5** (317pp), **Claude Opus 5**
-(193pp), **Risk Report: August 2026** (186pp), and **Claude Fable 5.1 & Claude
+(198pp), **Risk Report: August 2026** (186pp), and **Claude Fable 5.1 & Claude
 Mythos 5.1** (212pp) all convert through the shared pipeline. Per-document config supplies manifest roles, section stubs, and narrowly
 scoped grammar knobs; generalization fixes live as classes in `pipeline/`, never as
 document-instance patches (D38–D48, D62). This proves one pipeline only within Anthropic's
@@ -132,19 +132,20 @@ authorization. Opus has 4 maintainer/source-adjudicated exact T1 findings; Risk 
 label 'None' stream-order class, D62).
 The 22 new findings were exposed by removing blanket table demotion, not by changing
 card content. A new finding on the same page is not covered, and a stale acceptance
-makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 28`;
+makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 27`;
 opus-5 `T1 8`; risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
 D45) / `T1 6` / `TB2 1` (seam-cell advisor); and claude-fable-5-1 `T1 3` (three repeated-header drops of its seven-page appendix table). The opus/risk T1 counts fell from 9/21
 when D62's projection classes removed phantom-space and bullet-glyph false minors.
-L2 is clean at 108 Fable, 54 Opus, and 66 Fable 5.1 authored destinations (67 authored
+L2 is clean at 109 Fable, 54 Opus, and 66 Fable 5.1 authored destinations (67 authored
 occurrences), plus 121 Risk Report logical destinations over 123 authored occurrences;
-source expectations cover all 352 authored occurrences. Fable's three additional L1 minors are publisher-broken
+source expectations cover all 353 authored occurrences (Fable's June 25 revision
+repaired the §7.2.1 'Appendix 9.1' link, D66). Fable's three additional L1 minors are publisher-broken
 named destinations, reported even when one uniquely printed heading can be recovered
 under R2.
-P2/F3 source authority requires 309 pages/151 rendered figures for Fable, 187/98 for
-Opus, 180/14 for Risk, and 206/103 for Fable 5.1. The built audit totals 882 page
-markers, 366 rendered figures, and 371 exact copied raster assets (2,171 ids,
-1,871 fragment links), with 0 findings. RF1 is clean at raw reference/definition counts 76/76, 36/36, 93/92, and 30/30 (Fable
+P2/F3 source authority requires 309 pages/151 rendered figures for Fable, 192/100 for
+Opus (August 19 revision, D66), 180/14 for Risk, and 206/103 for Fable 5.1. The built
+audit totals 887 page markers, 368 rendered figures, and 373 exact copied raster
+assets (2,178 ids, 1,875 fragment links), with 0 findings. RF1 is clean at raw reference/definition counts 76/76, 36/36, 93/92, and 30/30 (Fable
 5.1); Risk's difference is the exact,
 source-hash-bound disposition for the publisher's stray p.126 superscript 18.
 These are measured residuals, not permission to ignore drift; re-baseline here only
@@ -186,7 +187,7 @@ size. The `repoint-link` class preserves a live internal link but changes it to 
 different existing heading; L2 must catch what existence-only audits cannot. Current
 seed-5 schema-v2 floors separate detection, intended-major severity, and actual major
 blocking. Fable's 25 classes / 200 trials are 191 / 184 / 185; Opus's 24 / 192 are
-176 / 168 / 171; Risk's 24 / 192 are 173 / 166 / 171; Fable 5.1's 24 / 192 are 178 / 170 / 170
+175 / 167 / 170 (re-sampled on the August 19 revision, D66); Risk's 24 / 192 are 173 / 166 / 171; Fable 5.1's 24 / 192 are 178 / 170 / 170
 (`flatten-chip` is inapplicable on the latter three: no chips). Across 776 trials the
 totals are 718 detected, 688 intended-major, and 697 major-blocked. V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
 eligible; misses concentrate in ST1/ST2/ST3, L1, S1, and ordinary advisory word swaps.
@@ -267,9 +268,13 @@ table task and not a mandate to automate editorial decisions.
 3. Extract candidate observations: oracle (auto-cached per-document on first run), page renders
    (`pdftoppm -png -r 150 source.pdf extracted/pages/p`), figures (`pdfimages -p -png`
    + `extract_figures.py` — note the `-p`), docling tables (`tables.py <pages>` with
-   candidate pages from a rule-line scan; chart-page false positives are harmless —
-   docling returns 0 tables). These are claims about the PDF, not self-authorizing
-   truth.
+   candidate pages from a rule-line scan, then REMOVE pages whose rules are box
+   borders — transcript and prompt boxes on a candidate page become phantom tables
+   (fable-5 p.43 during the D66 re-onboarding); chart-page false positives are
+   harmless — docling returns 0 tables). Pin the docling version with
+   `--with docling==<version>` and record it in `meta.yaml`: the cache is
+   gitignored, and a newer docling changes table structure on unchanged pages.
+   These are claims about the PDF, not self-authorizing truth.
 4. **Establish source authority.** Observe every page and raw raster with
    `source_inventory.py`; review cover/TOC/blank and duplicate-draw proposals against
    the PDF; commit an exact `source-inventory.json` bound to the source SHA-256,

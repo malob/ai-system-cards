@@ -3363,9 +3363,9 @@
         "asset_sample_md5": "910ea9e19adac8dd553f1f140c752f97",
         "bbox": [
           73.5,
-          277.8125,
+          310.1875,
           541.5,
-          559.0625
+          591.4375
         ],
         "draw_index": 1,
         "has_soft_mask": false,
@@ -3388,9 +3388,9 @@
         "asset_sample_md5": "c8ee303ce28eb6486234b9bb58ef1798",
         "bbox": [
           73.5,
-          132.0625,
+          180.6562,
           541.5,
-          413.3125
+          461.9062
         ],
         "draw_index": 1,
         "has_soft_mask": false,
@@ -3413,15 +3413,15 @@
         "asset_sample_md5": "a793648cd053560244963405fd4d46f3",
         "bbox": [
           73.5,
-          180.6562,
+          229.2188,
           541.5,
-          461.9062
+          510.4688
         ],
         "draw_index": 1,
         "has_soft_mask": false,
         "pdf_page": 284,
         "raw_sample_md5": "a793648cd053560244963405fd4d46f3",
-        "xref": 1347
+        "xref": 1346
       },
       "width": 2000
     },
@@ -3438,9 +3438,9 @@
         "asset_sample_md5": "07397565cb576438d96edce4d963f209",
         "bbox": [
           73.5,
-          245.4062,
+          294.0,
           541.5,
-          526.6562
+          575.25
         ],
         "draw_index": 1,
         "has_soft_mask": false,
@@ -3463,15 +3463,15 @@
         "asset_sample_md5": "eac4b6bd26e0031e82561cdbf964589a",
         "bbox": [
           73.5,
-          310.1875,
+          326.3906,
           541.5,
-          591.4375
+          607.6406
         ],
         "draw_index": 1,
         "has_soft_mask": false,
         "pdf_page": 286,
         "raw_sample_md5": "eac4b6bd26e0031e82561cdbf964589a",
-        "xref": 1357
+        "xref": 1356
       },
       "width": 2000
     },
@@ -3488,9 +3488,9 @@
         "asset_sample_md5": "64adf6b9b88338c884bedcfb6ee945fe",
         "bbox": [
           73.5,
-          294.0,
+          354.7969,
           541.5,
-          575.25
+          636.0469
         ],
         "draw_index": 1,
         "has_soft_mask": false,
@@ -6585,7 +6585,7 @@
   "inputs": {
     "canonical_sections": {
       "digest_method": "l2.sections_sha256.v1",
-      "sha256": "0d14eb6d36788aceaba7ca9aa6b8b9af4568e613c0f2a6f86b4244e3b7639200"
+      "sha256": "efd020f8e40d51f0655074d5afe36271e0929fd8cb9560ad6b0c37eb9369397f"
     },
     "figures_map": {
       "file": "extracted/figures-map.json",
@@ -6593,7 +6593,7 @@
     },
     "inventory": {
       "file": "source-inventory.json",
-      "sha256": "fefe140bd9778d99a4b95d91f024f44ad15ef890fadb149a7635ca89ff36690f"
+      "sha256": "bba7ec6e8323e6cb8a17f9e23fe1ccc769396c406ec7c90ba0066b90ec0a8020"
     }
   },
   "observer_schema_version": 2,
@@ -6621,9 +6621,9 @@
         "internal_links": 0,
         "page": 2,
         "raster_count": 0,
-        "text_chars": 1303,
+        "text_chars": 1627,
         "uri_links": 1,
-        "word_count": 239
+        "word_count": 302
       }
     },
     {
@@ -6635,9 +6635,9 @@
         "internal_links": 0,
         "page": 3,
         "raster_count": 0,
-        "text_chars": 2429,
+        "text_chars": 2433,
         "uri_links": 4,
-        "word_count": 456
+        "word_count": 457
       }
     },
     {
@@ -9670,11 +9670,11 @@
       "reason_sha256": null,
       "source_observation": {
         "drawing_count": 2,
-        "internal_links": 0,
+        "internal_links": 1,
         "page": 220,
         "raster_count": 0,
         "text_chars": 2049,
-        "uri_links": 1,
+        "uri_links": 0,
         "word_count": 380
       }
     },
@@ -10527,7 +10527,7 @@
         "internal_links": 0,
         "page": 281,
         "raster_count": 1,
-        "text_chars": 1030,
+        "text_chars": 1028,
         "uri_links": 3,
         "word_count": 160
       }
@@ -10541,9 +10541,9 @@
         "internal_links": 0,
         "page": 282,
         "raster_count": 1,
-        "text_chars": 1272,
+        "text_chars": 1314,
         "uri_links": 0,
-        "word_count": 246
+        "word_count": 252
       }
     },
     {
@@ -10551,13 +10551,13 @@
       "pdf_page": 283,
       "reason_sha256": null,
       "source_observation": {
-        "drawing_count": 4,
+        "drawing_count": 3,
         "internal_links": 0,
         "page": 283,
         "raster_count": 1,
-        "text_chars": 1330,
-        "uri_links": 2,
-        "word_count": 209
+        "text_chars": 1099,
+        "uri_links": 1,
+        "word_count": 185
       }
     },
     {
@@ -10565,13 +10565,13 @@
       "pdf_page": 284,
       "reason_sha256": null,
       "source_observation": {
-        "drawing_count": 3,
+        "drawing_count": 4,
         "internal_links": 0,
         "page": 284,
         "raster_count": 1,
-        "text_chars": 1029,
-        "uri_links": 1,
-        "word_count": 163
+        "text_chars": 1310,
+        "uri_links": 2,
+        "word_count": 205
       }
     },
     {
@@ -10579,13 +10579,13 @@
       "pdf_page": 285,
       "reason_sha256": null,
       "source_observation": {
-        "drawing_count": 4,
+        "drawing_count": 3,
         "internal_links": 0,
         "page": 285,
         "raster_count": 1,
-        "text_chars": 1238,
-        "uri_links": 3,
-        "word_count": 208
+        "text_chars": 1112,
+        "uri_links": 2,
+        "word_count": 189
       }
     },
     {
@@ -10593,13 +10593,13 @@
       "pdf_page": 286,
       "reason_sha256": null,
       "source_observation": {
-        "drawing_count": 1,
+        "drawing_count": 3,
         "internal_links": 0,
         "page": 286,
         "raster_count": 1,
-        "text_chars": 1168,
-        "uri_links": 0,
-        "word_count": 203
+        "text_chars": 1212,
+        "uri_links": 1,
+        "word_count": 207
       }
     },
     {
@@ -10611,9 +10611,9 @@
         "internal_links": 0,
         "page": 287,
         "raster_count": 1,
-        "text_chars": 1057,
+        "text_chars": 1003,
         "uri_links": 2,
-        "word_count": 187
+        "word_count": 172
       }
     },
     {
@@ -10625,9 +10625,9 @@
         "internal_links": 0,
         "page": 288,
         "raster_count": 0,
-        "text_chars": 1723,
+        "text_chars": 1944,
         "uri_links": 1,
-        "word_count": 297
+        "word_count": 337
       }
     },
     {
@@ -11042,7 +11042,7 @@
   "source": {
     "file": "source.pdf",
     "page_count": 317,
-    "sha256": "c29ffa55ecefab591916dfdefc5ba3fd4e07c27cbef96ca3c05f7601aaebd033"
+    "sha256": "f95d413845ad8624f384ba026963f2bad2158f10f2626575bb45e823e3c2e0ca"
   },
   "source_flags": []
 }

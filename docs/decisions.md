@@ -1513,3 +1513,52 @@ typed minors; L2 and source-projection artifacts regenerated; built-page audit
 2,171 ids / 1,871 fragment links (three seams joined) / 882 page markers / 366
 figures / 371 assets, 0 findings. Mutation baselines are regenerated for all four
 cards because every canon moved. Nothing is pushed until the owner asks.
+
+## D66 — certified cards follow the publisher's canonical revision; re-onboarding is configuration-only (2026-09-01)
+
+The owner asked whether any published source had been revised and, on finding
+that two had, said to re-run on the updated files (Opus 5 via
+https://anthropic.com/claude-opus-5-system-card, Fable 5 via
+https://anthropic.com/claude-fable-5-mythos-5-system-card). Decisions:
+
+- **The canonical `https://anthropic.com/<doc-slug>` redirect is the authority
+  for "current".** The transparency page's hash-only links and a card's own
+  `source_url` are how to enumerate revisions, but the file the slug redirects
+  to is the one the archive converts. The July 24 Opus reprint found first
+  (`b514064a…`, 194pp) was superseded by the August 19 revision (`ceaf5c7f…`,
+  198pp) the slug serves; Fable 5's slug serves the July 16 print (`57a52ea7…`)
+  with the June 25 changelog entries. The archive tracks the current revision,
+  not every intermediate print; the changelog page the publisher keeps inside
+  the document is the reader's history.
+- **Re-onboarding is configuration-only.** Source bytes, `meta.yaml`
+  (`source_url`, `source_pages`, the docling pin), page renders, figure
+  extraction, `source-inventory.json` under the same review rules, the table
+  cache, the exact acceptance fingerprints of findings that moved pages
+  (identical digests, new pages: Opus pp.32/140/141 → 33/144/145; Fable's 20
+  unchanged), the hash-bound L2/source-projection artifacts, and the unit-test
+  fixtures that pin source page numbers or counts (two known-wrong-destination
+  replay pages, both PDF-structure count tables, the Opus inventory tuple, the
+  RF1 footnote-1 fixture page). No generator, serializer, verifier, or renderer
+  code changed. Every non-target card stayed byte-identical.
+- **The docling table cache is rebuilt with the pinned version on the reviewed
+  table-page set**, never from a fresh rule-line scan with whatever docling
+  resolves today: the scan produced phantom tables from transcript boxes
+  (fable-5 p.43) and docling 2.124.0 re-structured unchanged tables. The pin
+  (2.115.0 for these two cards) is now recorded in each `meta.yaml` and in the
+  onboarding procedure's step 3.
+- **Mutation baselines are regenerated when a canon moves, and re-sampling is
+  not a regression.** Opus 5's replay moved 176 / 168 / 171 → 175 / 167 / 170
+  because the trial sites are drawn from the changed text; every strict
+  (V1/P2/F3/L2, critical T1/FN1) class held 8/8, and the two classes that
+  dipped (split-item, an advisory swap-words trial) are the known weak
+  advisory classes. The Fable 5 replay is recorded in docs/state.md when it
+  completes.
+
+Evidence: experiment 16 — gates at 0 unsuppressed majors on both cards (Fable
+L2 108 → 109 with the repaired §7.2.1 link, T1 minors 28 → 27; Opus P2/F3
+187/98 → 192/100, T1 8 unchanged), the corpus-wide release gate green (160
+verifier tests, four gates, seams 0, clean build 887 markers / 368 figures /
+373 assets / 0 findings), and a 33-page comparator sweep with 0 findings,
+including two PDF edits the Fable changelog omits (p.243 em-dash spacing,
+p.282 "cardsWe"). Nothing is pushed until the owner asks; the push will deploy
+both revised cards together with the three unpushed docs-only commits.

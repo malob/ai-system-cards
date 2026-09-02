@@ -1,6 +1,6 @@
-<!-- source: source.pdf pages 191-193 -->
+<!-- source: source.pdf pages 195-198 -->
 
-<!-- p.191 -->
+<!-- p.195 -->
 
 ## 9 Appendix
 
@@ -44,7 +44,7 @@ github.com/centerforaisafety/hle
 HLE_PDF 
 ```
 
-<!-- p.192 -->
+<!-- p.196 -->
 
 ```
 researchgate.net/scientific-contributions/Petr-Spelda-2170307851 
@@ -87,7 +87,7 @@ openaipublic.blob.core.windows.net/simple-evals
 github.com/openai/simple-evals 
 ```
 
-<!-- p.193 -->
+<!-- p.197 -->
 
 ```
 openailive.com 
@@ -113,7 +113,23 @@ We remove one instance (`diegomura__react-pdf-1552`) due to incompatibilities wi
 The following “pass to pass” tests fail nondeterministically on our infrastructure and are unrelated to the target fix; we drop them from the pass criteria:
 
 ```None
+diegomura__react-pdf-2400 (7 / 206): 
+  packages/renderer/tests/svg.test.js 
+  packages/renderer/tests/link.test.js 
+  packages/renderer/tests/resume.test.js 
+  packages/renderer/tests/pageWrap.test.js 
+  packages/renderer/tests/text.test.js 
+  packages/renderer/tests/debug.test.js 
+  packages/renderer/tests/emoji.test.js 
+diegomura__react-pdf-471 (1 / 31): 
+  tests/font.test.js 
+diegomura__react-pdf-1541 (1 / 212): 
+  packages/renderer/tests/debug.test.js 
+diegomura__react-pdf-433 (1 / 22): 
+  tests/font.test.js 
 ```
+
+<!-- p.198 -->
 
 For `chartjs/Chart.js`, `processing/p5.js`, and `markedjs/marked`, the harness rewrites the JavaScript test-framework configuration (Karma, Grunt, Jasmine respectively) to emit machine-parseable output rather than the default formatted reporter. This changes only the output format, not which tests run or their pass/fail criteria.
 

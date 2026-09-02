@@ -1,6 +1,6 @@
-<!-- source: source.pdf pages 010-011 -->
+<!-- source: source.pdf pages 011-012 -->
 
-<!-- p.10 -->
+<!-- p.11 -->
 
 ## 1 Introduction
 
@@ -22,7 +22,7 @@ Anthropic partners with data work platforms to engage workers who help improve o
 
 ### 1.3 Usage Policy and support
 
-Anthropic’s [Usage Policy](https://www.anthropic.com/legal/aup) details prohibited uses of our models as well as our requirements<!-- p.11 --> for uses in high-risk and other specific scenarios.
+Anthropic’s [Usage Policy](https://www.anthropic.com/legal/aup) details prohibited uses of our models as well as our requirements<!-- p.12 --> for uses in high-risk and other specific scenarios.
 
 For models that fall under applicable regulatory regimes, we have formalized how we meet our obligations under such regulations in our [Frontier Compliance Framework](https://trust.anthropic.com/resources?s=zgt6rgfecy1eo7vicr064b&name=anthropic-frontier-compliance-framework) (“FCF”). The FCF documents our current technical and organizational protocols for systemic risk assessment and mitigation across key risk categories. The FCF is our compliance framework for applicable regimes, including California’s Transparency in Frontier AI Act (TFAIA) and the EU AI Act’s General-Purpose AI Code of Practice.
 
