@@ -4,7 +4,7 @@ Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
 **Last updated:** 2026-09-01 (fourth card onboarded locally: Claude Fable 5.1 &
-Claude Mythos 5.1). All four cards are deployed at `8eb82c6`; the previous baseline was the
+Claude Mythos 5.1). All four cards are deployed at `4579d5d` (D65); the previous baseline was the
 phase-3 docs commit `5b752ae` (hosted run
 [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)).
 The fourth card, `anthropic/claude-fable-5-1` (212pp, cover-dated 2026-09-01, same
@@ -158,8 +158,15 @@ item is to be scoped for cost and brittleness before deciding, not assumed worth
 5. **Scoped, deferred:** 'Appendix 9.1' precision needs L2 to accept a heading the
    anchor text names on the destination page, plus mutation reruns, for one link.
 
-The D65 batch (items 1–3) is committed locally and awaits the owner's push; a
-push deploys it.
+The D65 batch (items 1–3) was pushed at the owner's request 2026-09-01 18:04 PDT
+(`4579d5d`); hosted fast-release / Pages run
+[33577924053](https://github.com/malob/ai-system-cards/actions/runs/33577924053)
+passed (all four gates, clean build, deploy) and the live pages carry the
+changes: merged header corners on Opus 5 (11), Fable 5 (10) and Fable 5.1 (12),
+every blocklist box joined with its page labels inside, and no adjacent
+same-target anchors left on any card. The hosted mutation replay
+[33577923899](https://github.com/malob/ai-system-cards/actions/runs/33577923899)
+on the same commit is recorded here when it completes.
 
 - **Table evidence (unchanged from D61):** bind sparse/unruled positives and a
   natural absent-rule-but-separate negative from a genuinely different PDF
