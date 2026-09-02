@@ -11,7 +11,8 @@ passed (four card gates, clean build, deploy), and the live pages carry the
 revisions (Opus 5: §5.2.2.1 bug bounty and the five-row Cowork table, 282 page
 markers; Fable 5: the June 25 changelog block, 462 markers). The hosted mutation
 replay [33592389703](https://github.com/malob/ai-system-cards/actions/runs/33592389703)
-was still in progress at this rewrite — check it, then note the result here.
+passed for all four cards (Opus 9m12s, Fable 5.1 14m06s, Risk 20m10s, Fable
+29m15s).
 Details: Claude Opus 5 now converts
 the August 19, 2026 revision (198pp; changelog, new §5.2.2.1 bug bounty, re-run
 Cowork table) and Claude Fable 5 the July 16 print with the June 25 changelog
