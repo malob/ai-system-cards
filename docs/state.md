@@ -4,16 +4,24 @@ Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
 **Last updated:** 2026-09-01 (fourth card onboarded locally: Claude Fable 5.1 &
-Claude Mythos 5.1). The three certified cards are deployed at the phase-3 baseline
-(`5b752ae`, hosted run
+Claude Mythos 5.1). All four cards are deployed at `8eb82c6`; the previous baseline was the
+phase-3 docs commit `5b752ae` (hosted run
 [31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)).
 The fourth card, `anthropic/claude-fable-5-1` (212pp, cover-dated 2026-09-01, same
 Google-Docs/Skia export family), converted the same day through the shared
 pipeline: census → manifest → stubs → figures → source inventory → docling
 2.124.0 over 29 rule-scanned pages → 11 majors → 0 in two onboarding class batches
 (D62) → experiment-14 agent sweep round 1 → five more generator classes (D63) →
-round-2 fix verification, 48/49 clean, one residual class-fixed (D64). **Nothing has been pushed**; the owner scroll pass
-(onboarding step 9) and the deploy decision remain the owner's.
+round-2 fix verification, 48/49 clean, one residual class-fixed (D64). The owner
+walked the built preview (seven stops) and asked to publish: `8eb82c6` was pushed
+2026-09-01 17:16 PDT; hosted fast-release / Pages run
+[33574671083](https://github.com/malob/ai-system-cards/actions/runs/33574671083)
+passed (all four card gates, clean build, deploy) and the card is live at
+https://malob.github.io/ai-system-cards/anthropic/claude-fable-5-1/ (HTTP 200,
+merged table corners present, listed on the index). The hosted mutation
+sensitivity run
+[33574670996](https://github.com/malob/ai-system-cards/actions/runs/33574670996)
+on the same commit is recorded below when it completes.
 
 ## Current card gates
 
@@ -26,7 +34,7 @@ round-2 fix verification, 48/49 clean, one residual class-fixed (D64). **Nothing
   (declared orphan-ref source defect) / `T1 6` (was 21: phantom-space link-anchor
   false minors removed) / `TB2 1`; L2 121/121 over 123 occurrences; P2/F3 180/14;
   RF1 93/92 with the exact p.126 disposition; seam 0. Canon unchanged.
-- **claude-fable-5-1 (new, local):** 5 exact accepted T1 majors (the pp.159–160
+- **claude-fable-5-1 (deployed 2026-09-01):** 5 exact accepted T1 majors (the pp.159–160
   seam attribution of a table row the PDF cuts mid-cell, and the p.210 §9.2
   code-box label 'None' stream-order class merged with Table 9.1.A's dropped
   repeated header), 0 unsuppressed; `T1 3` minors (three repeated-header drops of the
@@ -154,7 +162,7 @@ item is to be scoped for cost and brittleness before deciding, not assumed worth
    than the parent heading sharing its page): would need L2 to accept a heading the
    anchor text names on the destination page, plus mutation reruns. Very minor.
 
-Then the deploy decision (owner push; the Pages workflow deploys `main`).
+Deployed 2026-09-01; the list above is the next work.
 
 - **Table evidence (unchanged from D61):** bind sparse/unruled positives and a
   natural absent-rule-but-separate negative from a genuinely different PDF
