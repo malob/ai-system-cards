@@ -1,0 +1,204 @@
+diff --git a/pipeline/verifier/invariants.py b/pipeline/verifier/invariants.py
+index 8f6530c..01d9ebc 100644
+--- a/pipeline/verifier/invariants.py
++++ b/pipeline/verifier/invariants.py
+@@ -3,6 +3,7 @@ flag dicts: {invariant, page, severity, detail}. Severity is consequence-aware:
+ whole constructs, differences of at least three tokens, and critical semantic
+ atoms are major; ordinary one- and two-token residuals remain minor."""
+ 
++import bisect
+ import difflib
+ import hashlib
+ import re
+@@ -16,6 +17,92 @@ def _flag(inv, page, severity, detail):
+     return {"invariant": inv, "page": page, "severity": severity, "detail": detail}
+ 
+ 
++def _occurs_elsewhere(haystack: list, needle: list, aligned_at: int | None,
++                      extend: tuple[int, object] | None = None) -> bool:
++    """Does ``needle`` occur in ``haystack`` at a token index other than
++    ``aligned_at``?  With ``extend=(offset, token)`` an occurrence at index q
++    only counts when ``haystack[q + offset] == token`` — the shifted block must
++    continue across the boundary. Token sequences are joined on NUL so the C
++    substring search does the work; a match must start and end on a token
++    boundary."""
++    if not needle or len(needle) > len(haystack):
++        return False
++    text = "\x00" + "\x00".join(haystack) + "\x00"
++    pattern = "\x00" + "\x00".join(needle) + "\x00"
++    offsets = None
++    if aligned_at is not None or extend is not None:
++        offsets, total = [], 0
++        for tok in haystack:
++            offsets.append(total)
++            total += len(tok) + 1
++    aligned_offset = offsets[aligned_at] if aligned_at is not None and aligned_at < len(offsets) else None
++    pos = text.find(pattern)
++    while pos != -1:
++        if pos != aligned_offset:
++            if extend is None:
++                return True
++            q = bisect.bisect_left(offsets, pos) + extend[0]
++            if 0 <= q < len(haystack) and haystack[q] == extend[1]:
++                return True
++        pos = text.find(pattern, pos + 1)
++    return False
++
++
++def _full_opcodes(a: list, b: list) -> list[tuple]:
++    sm = difflib.SequenceMatcher(a=a, b=b, autojunk=False)
++    return [op for op in sm.get_opcodes() if op[0] != "equal"]
++
++
++def trimmed_opcodes(a: list, b: list, window: int = 8) -> list[tuple]:
++    """difflib's non-equal opcodes for ``a`` vs ``b``, computed by diffing
++    only the window between the shared prefix P and suffix S.
++
++    The result is the untrimmed matcher's exactly. difflib picks the longest
++    block first (ties: earliest in ``a``, then in ``b``), so P and S are taken
++    whole unless some block overlapping P shifted is longer than P, or some
++    block overlapping S shifted is at least as long as S. Any such block must
++    carry either ``window`` tokens of the far side of the boundary, or the
++    boundary region minus ``window`` tokens, to a shifted position in the
++    other sequence. Those eight substring searches are linear and almost never
++    hit on real documents; when one does, or when P or S is shorter than the
++    window, the full matcher runs. ``test_t1_trim`` replays the equivalence
++    against difflib on seeded random and periodic corpora.
++    """
++    n = min(len(a), len(b))
++    p = 0
++    while p < n and a[p] == b[p]:
++        p += 1
++    s = 0
++    while s < n - p and a[len(a) - 1 - s] == b[len(b) - 1 - s]:
++        s += 1
++    w = window
++    if (p and p < w) or (s and s < w):
++        return _full_opcodes(a, b)
++    if p:
++        # A block longer than P overlapping P shifted continues past p by m
++        # tokens; if m >= w that continuation occurs shifted with the block
++        # reaching back into P, otherwise its P-part starts at or before w - 2
++        # and covers P[w - 1:].
++        if (p + w <= len(a) and _occurs_elsewhere(b, a[p:p + w], None, (-1, a[p - 1]))) or \
++           (p + w <= len(b) and _occurs_elsewhere(a, b[p:p + w], None, (-1, b[p - 1]))) or \
++           _occurs_elsewhere(b, a[w - 1:p], w - 1) or \
++           _occurs_elsewhere(a, b[w - 1:p], w - 1):
++            return _full_opcodes(a, b)
++    if s:
++        qa, qb = len(a) - s, len(b) - s
++        # A block at least as long as S overlapping S shifted (or an earlier
++        # copy of S) reaches back >= w tokens before S and on into S, or
++        # covers S[:s - w + 1].
++        if (qa >= w and _occurs_elsewhere(b, a[qa - w:qa], qb - w, (w, a[qa]))) or \
++           (qb >= w and _occurs_elsewhere(a, b[qb - w:qb], qa - w, (w, b[qb]))) or \
++           _occurs_elsewhere(b, a[qa:qa + s - w + 1], qb) or \
++           _occurs_elsewhere(a, b[qb:qb + s - w + 1], qa):
++            return _full_opcodes(a, b)
++    sm = difflib.SequenceMatcher(a=a[p:len(a) - s], b=b[p:len(b) - s], autojunk=False)
++    return [(op, i1 + p, i2 + p, j1 + p, j2 + p)
++            for op, i1, i2, j1, j2 in sm.get_opcodes() if op != "equal"]
++
++
+ def t1_text(md_tokens, oracle_pages, page_range, toc_pages, table_pages=frozenset()) -> list[dict]:
+     """Bidirectional, order-sensitive token-stream equality (T1/T2), run over
+     the whole document at once (sections share boundary pages). Ops on pages
+@@ -36,10 +123,7 @@ def t1_text(md_tokens, oracle_pages, page_range, toc_pages, table_pages=frozense
+             o_pages.append(pno)
+ 
+     flags = []
+-    sm = difflib.SequenceMatcher(a=o_toks, b=md_toks, autojunk=False)
+-    for op, i1, i2, j1, j2 in sm.get_opcodes():
+-        if op == "equal":
+-            continue
++    for op, i1, i2, j1, j2 in trimmed_opcodes(o_toks, md_toks):
+         page = o_pages[i1] if i1 < len(o_pages) else (o_pages[-1] if o_pages else 0)
+         missing = " ".join(o_toks[i1:i2])
+         extra = " ".join(md_toks[j1:j2])
+diff --git a/pipeline/verifier/test_t1_trim.py b/pipeline/verifier/test_t1_trim.py
+new file mode 100644
+index 0000000..04870bb
+--- /dev/null
++++ b/pipeline/verifier/test_t1_trim.py
+@@ -0,0 +1,81 @@
++"""Common prefix/suffix trimming must not change T1's opcodes.
++
++``invariants.t1_text`` diffs the whole document's token streams. Trimming the
++shared prefix and suffix before the quadratic matcher runs is only admissible
++if every opcode — and therefore every acceptance fingerprint and mutation
++digest — is identical to the untrimmed matcher's. This test replays the
++trimmed and untrimmed matchers over seeded random documents with local edits
++(the shapes the mutation suite injects) and demands identical opcodes.
++"""
++
++from __future__ import annotations
++
++import difflib
++import random
++import unittest
++
++import invariants
++
++
++def _reference(a: list[str], b: list[str]) -> list[tuple]:
++    sm = difflib.SequenceMatcher(a=a, b=b, autojunk=False)
++    return [op for op in sm.get_opcodes() if op[0] != "equal"]
++
++
++def _mutate(tokens: list[str], rng: random.Random) -> list[str]:
++    out = list(tokens)
++    for _ in range(rng.randint(1, 3)):
++        kind = rng.choice(["delete", "insert", "replace", "swap", "dup"])
++        if not out:
++            break
++        i = rng.randrange(len(out))
++        n = rng.randint(1, 6)
++        if kind == "delete":
++            del out[i:i + n]
++        elif kind == "insert":
++            out[i:i] = [rng.choice("abcdefgh") for _ in range(n)]
++        elif kind == "replace":
++            out[i:i + n] = [rng.choice("abcdefgh") for _ in range(n)]
++        elif kind == "swap" and i + 1 < len(out):
++            out[i], out[i + 1] = out[i + 1], out[i]
++        elif kind == "dup":
++            out[i:i] = out[i:i + n]
++    return out
++
++
++class TrimEquivalenceTests(unittest.TestCase):
++    def test_trimmed_opcodes_match_reference_on_random_local_edits(self):
++        rng = random.Random(5)
++        vocab = list("abcdefgh")  # small alphabet → many repeats → ambiguity
++        mismatches = []
++        for trial in range(2000):
++            n = rng.randint(0, 120)
++            a = [rng.choice(vocab) for _ in range(n)]
++            b = _mutate(a, rng) if rng.random() < 0.95 else list(a)
++            got = invariants.trimmed_opcodes(a, b, window=rng.choice([1, 2, 4, 8]))
++            want = _reference(a, b)
++            if got != want:
++                mismatches.append((trial, a, b, got, want))
++        self.assertEqual(mismatches, [], f"{len(mismatches)} mismatching trials; first: {mismatches[:1]}")
++
++    def test_periodic_and_repetitive_corpora_match_reference(self):
++        rng = random.Random(11)
++        mismatches = 0
++        for trial in range(3000):
++            period = [rng.choice("abc") for _ in range(rng.randint(1, 4))]
++            reps = rng.randint(1, 12)
++            a = (period * reps)[: rng.randint(0, 40)] + [rng.choice("xyz") for _ in range(rng.randint(0, 10))] + (period * reps)[: rng.randint(0, 40)]
++            b = _mutate(a, rng)
++            if rng.random() < 0.3:
++                b = _mutate(b, rng)
++            if invariants.trimmed_opcodes(a, b, window=rng.choice([1, 2, 3, 8])) != _reference(a, b):
++                mismatches += 1
++        self.assertEqual(mismatches, 0)
++
++    def test_edges(self):
++        for a, b in ([], []), (["x"], []), ([], ["x"]), (["x"], ["x"]), (["x", "y"], ["y", "x"]), (["a"] * 5, ["a"] * 7):
++            self.assertEqual(invariants.trimmed_opcodes(a, b), _reference(a, b), (a, b))
++
++
++if __name__ == "__main__":
++    unittest.main()
