@@ -143,7 +143,8 @@ named destinations, reported even when one uniquely printed heading can be recov
 under R2.
 P2/F3 source authority requires 309 pages/151 rendered figures for Fable, 187/98 for
 Opus, 180/14 for Risk, and 206/103 for Fable 5.1. The built audit totals 882 page
-markers, 366 rendered figures, and 371 exact copied raster assets, with 0 findings. RF1 is clean at raw reference/definition counts 76/76, 36/36, 93/92, and 30/30 (Fable
+markers, 366 rendered figures, and 371 exact copied raster assets (2,171 ids,
+1,871 fragment links), with 0 findings. RF1 is clean at raw reference/definition counts 76/76, 36/36, 93/92, and 30/30 (Fable
 5.1); Risk's difference is the exact,
 source-hash-bound disposition for the publisher's stray p.126 superscript 18.
 These are measured residuals, not permission to ignore drift; re-baseline here only
