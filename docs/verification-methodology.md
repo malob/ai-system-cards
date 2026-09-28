@@ -87,7 +87,7 @@ output together.** Then **re-sweep** the affected pages plus a rotating sample,
 and repeat until a round comes back clean. The owner sees editorial decisions
 and converged results, not per-fix demos.
 
-## Layer 4 — the owner scroll pass (before certification)
+## Layer 4 — the rendered visual pass (before certification)
 
 The layers above verify per-page CONTENT strongly and visual layout weakly —
 the sweeps compare renders/slices/DOM per page but do not experience the page
@@ -95,10 +95,18 @@ the way a reader does. Empirically (opus-5, 2026-07-25): after full gate + two
 sweep rounds converged, the owner's manual scroll found six real issues, every
 one in the visual-layout plane the sweeps are blind to — cross-element overlap
 (stacked page markers), intra-cell typography tiers, bubble scoping, page-seam
-highlight artifacts, spanning-header extent. So the final step of onboarding
-(CLAUDE.md §"Adding a document", step 8) is a human scroll with the PDF renders at
-hand; treat its findings as a normal layer-3 fix queue. Nothing here replaces
-the sweeps — the two catch disjoint failure classes.
+highlight artifacts, spanning-header extent. Opus 5.5 (2026-09-28) added a
+seventh: a pill whose markup was right but rendered split.
+
+Until D69 the final step was a human scroll. It is now a mechanical render pass
+(experiment 19; CLAUDE.md §"Adding a document", step 9): a DOM layout audit at
+three widths (label/sidenote overlap, overflow, broken images) plus reviewer
+agents comparing screenshots of every table, box and code block with the PDF
+page renders, and a PDF | live | new composite for each certified-canon hunk.
+The owner sees only those composites, unresolved flags and genuine judgment
+calls. Findings feed the normal layer-3 fix queue. For a new PDF producer or
+visual grammar, a full owner scroll returns until the pass is re-calibrated
+there. Nothing here replaces the sweeps — the two catch disjoint failure classes.
 
 ## Provenance
 

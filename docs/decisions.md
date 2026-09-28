@@ -1676,3 +1676,28 @@ matches opus-5's). Gates: every card 0 unsuppressed majors; fast release gate
 green (160 tests, built audit 0 findings). Remaining before certification:
 round-2 fix verification (in progress), the owner scroll pass, and the deploy
 decision. Nothing is pushed.
+
+## D69 — the owner scroll becomes a rendered visual pass; literal backticks adopted; fifth card certified for deploy (2026-09-28)
+
+The owner asked for only what he actually needed to see on the fifth card,
+not a 230-page scroll. The curated review (screenshots from the Browser pane)
+surfaced one render-only defect — a wrapped placeholder pill drawn as two
+pills (p.98), spotted by the owner and fixed as a class in `9aed2f4` — which
+motivated experiment 19: a DOM layout audit at three widths plus agent review
+of screenshots of every table, box and code block against the PDF (26
+constructs; 25 clean, 1 cosmetic column-width wrap).
+
+Decisions, owner-stated:
+
+- **Literal backticks match the PDF.** The D67 canon moves on fable-5 p.45 and
+  opus-5 p.87 are adopted (PDF | live | new composites reviewed). The fable-5-1
+  caption `<u>` removal (D68) is visually identical and needs no adjudication.
+- **Onboarding step 9 is now the rendered visual pass** (CLAUDE.md), replacing
+  the owner scroll for same-family cards: the owner sees adjudication
+  composites, unresolved flags and genuine judgment calls only. A different
+  producer or visual grammar reverts to a full owner scroll until the pass is
+  re-calibrated there. The owner welcomed further visual checks that reduce his
+  review labor.
+- **Push authorized** ("when you're happy, you're free to push"): the fifth card
+  deploys with the certified-canon moves once the final release gate and the
+  new card's mutation replay on its final canon pass.

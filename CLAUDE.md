@@ -320,15 +320,27 @@ table task and not a mandate to automate editorial decisions.
    document page, sidenotes, turns, exported Markdown, search, and responsive behavior.
    V1 rejects authored raw HTML with known browser-hidden semantics, but computed CSS,
    clipping/occlusion, and viewport visibility still require this inspection.
-9. **Owner scroll pass before certification.** The sweep stack verifies per-page
-   CONTENT; it is demonstrably weak on visual-layout classes — cross-element
-   overlap (page-marker smear), intra-cell typography tiers, bubble scoping,
-   seam artifacts. Every certified document has completed this gate (the opus-5 owner scroll found six
-such issues after full sweep convergence, 2026-07-25; the risk-report owner scroll
-completed 2026-08-15; the claude-fable-5-1 owner walkthrough 2026-09-01);
-claude-opus-5-5 awaits it. Compare suspicious constructs
-   against `extracted/pages/p-NNN.png` side by side. An owner scroll is certification
-   evidence, not permission to push; the no-push rule below still applies.
+9. **Rendered visual pass before certification (replaces the owner scroll, D69).**
+   The sweep stack verifies per-page CONTENT from markup; it is demonstrably weak on
+   what only shows once rendered — cross-element overlap (page-marker smear),
+   intra-cell typography tiers, bubble scoping, seam artifacts, a pill that is
+   correct markup but renders split (opus-5.5 p.98, caught by the owner in the
+   curated review of 2026-09-28). Run experiment 19's pass on the production build
+   (`docs/experiments/19-rendered-visual-pass/README.md`):
+   - **DOM layout audit** at ~1340px, 1680px (sidenotes on) and 375px: overlapping
+     gutter page labels, sidenote collisions (with each other, labels, body text),
+     horizontal page scroll, content wider than the column outside a scroll
+     wrapper, broken images.
+   - **Construct screenshots** of every table, box and code block with its caption
+     (`shoot.py`), split across reviewer agents who compare each against the PDF
+     page render(s) for visual-only defects. Any flagged screenshot goes to the
+     orchestrator for class fixes and re-shoot.
+   - **One PDF | live | new composite per certified-canon hunk** (`hunks.py`).
+   The owner sees only those composites, any flagged screenshot the orchestrator
+   cannot settle against the PDF, and genuine judgment calls — not a full scroll.
+   This applies to same-family (Google Docs export) cards; a new producer or visual
+   grammar gets a full owner scroll again until the pass is re-calibrated on it.
+   Certification evidence is not permission to push; the no-push rule still applies.
 
 ## Process rules
 

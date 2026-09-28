@@ -101,7 +101,7 @@ faithful); p.166 a stray publisher '.' line joins as '. .'.
   a per-card manifest knob is the device for a fidelity improvement whose
   certified-card canon change awaits owner adjudication.
 - Mechanical majors gate within their written scope; probabilistic/visual checks
-  advise. The owner scroll remains mandatory for layout classes outside those
+  advise. The rendered visual pass (D69; the owner scroll for a new producer) covers layout classes outside those
   scopes.
 - Generic acceptance cannot weaken a source-bound or final-projection authority.
 - Commit early and append decisions. Never push without an explicit owner request.
