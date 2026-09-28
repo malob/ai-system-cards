@@ -1,0 +1,69 @@
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded from the 2026-09-28 signal census (pymupdf span/fill
+# probe over all 230 pages) + page-render inspection of every ambiguous signal
+# (pp.27, 95, 98, 102, 174, 222).
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+#
+# NOTE vs the earlier cards: the vocabulary is fable-5-1-shaped (same table
+# fills #141413/#dedcd1/#4d4c48, green code text, #f1f3f4 appendix blocklist
+# boxes, #faf9f5 label-less §6.1.3 prompt/review boxes) plus three signals
+# that card lacked: the D15 #d9ead3 placeholder pills return (p.98, inside the
+# #faf9f5 Transcript 6.2.1.B box), #e2decf is the row-label tint of Table
+# 8.1.A (p.174, as opus-5 pp.148-149), and the appendix Table 9.1.A header is
+# drawn in pure #000000 rather than #141413. #fafafa is a faint paste
+# highlight behind the p.27 Figure 2.2.3.2.1.B caption body — furniture; the
+# caption text itself stays in scope. No chips, no turn labels.
+
+card: anthropic/claude-opus-5-5
+status: >-
+  roles seeded mechanically 2026-09-28; verified against page renders
+  (pp.27, 95, 98, 102, 174, 222); closure rule applies to anything not listed
+
+text_colors:
+  "#000000": {role: body}
+  "#1155cc": {role: link}                      # 265 spans
+  "#666666": {role: heading}   # 113 spans — gray section headings
+  "#188038": {role: code-text}                 # green code spans ('max'/'high'/'low' effort levels)
+  "#38761d": {role: code-text}                 # p.102 bash command, 'aiohttp' p.175
+  # near-black paste artifacts in the source doc — render as body, keep note
+  "#121212": {role: body, note: paste-artifact}   # exec summary p.2
+  "#1d1c1d": {role: body, note: paste-artifact}   # pp.2, 20, 38, 47-48, 96, 98, 103
+  "#1c231f": {role: body, note: paste-artifact}   # §7.3 bullets pp.162-163
+  "#1d1d1f": {role: body, note: paste-artifact}   # figure-caption bodies pp.27, 29
+  "#141413": {role: body, note: paste-artifact}   # '[Table 2.2.1.A]' caption lead p.18
+  "#ffffff": {role: table-header-text}         # light text on dark header fills
+  "#faf9f5": {role: table-header-text}         # header text pp.18, 211
+  "#747775": {role: table-empty-cell}          # 'None' placeholder, p.226
+
+fills:
+  "#141413": {role: table-header-fill, exclude: true}   # dark header rows
+  "#000000": {role: table-header-fill, exclude: true}   # Table 9.1.A 'Group | Question'
+                                                        # header, pp.222-226
+  "#dedcd1": {role: table-cell-bg, exclude: true}       # row-label tint
+  "#e2decf": {role: table-cell-bg, exclude: true}       # row-label tint, Table 8.1.A p.174
+  "#4d4c48": {role: table-subheader-fill, exclude: true} # 'API, without a system
+                                                         # prompt / Claude.ai' and model rows
+  "#d9ead3": {role: placeholder, forms: [inline-pill]}  # D15 [a phrase quoted from the
+                                                        # task statement] pills, p.98
+  "#faf9f5": {role: transcript-container}   # §6.1.3 prompt + review boxes pp.95-96;
+                                            # Transcript 6.2.1.B p.98 (inline bold
+                                            # 'Assistant (thinking):' lead, no turn fill)
+  "#f1f3f4": {role: code-block-bg}    # appendix 9.2 blocklist boxes pp.226-230
+  "#fafafa": {role: page-furniture, exclude: true}   # faint highlight behind the
+                                                     # p.27 caption body
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# No smart-chip vocabulary in this document: the census found no chip-pill
+# fills (the #d9ead3 pills are D15 placeholders, not chips). meta.yaml chips: {}
+
+document:
+  toc_pages: [5, 6, 7, 8, 9, 10]     # site generates its own TOC; excluded
+  page_number_footer: bottom-center bare integer, excluded
+  # fill-geometry cell merges (D63/D65): one drawn fill under a non-empty cell
+  # that also covers an empty neighbour proves colspan/rowspan (Table 8.1.A's
+  # 2×2 'Evaluation' corner and two-row 'Humanity's Last Exam' label, p.174)
+  merge_cells_by_fill: true

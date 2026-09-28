@@ -1,0 +1,22 @@
+title: "Claude Opus 5.5"
+slug: claude-opus-5-5
+vendor: Anthropic
+models:
+  - Claude Opus 5.5
+release_date: 2026-09-22
+source_url: https://www-cdn.anthropic.com/fc1b44717c85dc068bc6ba5024219938094694bd/Claude%20Opus%205.5%20System%20Card.pdf
+# The canonical pointer https://anthropic.com/claude-opus-5-5-system-card
+# redirects to this September 22, 2026 print (230 pages), fetched 2026-09-28.
+source_pages: 230
+# docling pin: the table cache (gitignored) was built 2026-09-28 with docling
+# 2.124.0 on the reviewed table-page set (pp.18, 39, 62-63, 66-67, 69, 71,
+# 76-78, 80-82, 87, 89-90, 174, 211, 222-226; pp.95-96 excluded — their rules
+# are the §6.1.3 transcript boxes' borders); rebuild with
+# `--with docling==2.124.0` on that set (D66).
+description: >-
+  System card for Claude Opus 5.5, an upgrade to Claude Opus 5 from Anthropic.
+  Covers RSP evaluations, cyber capabilities, safeguards and harmlessness,
+  agentic safety, alignment assessment, model welfare, and capabilities.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+chips: {}

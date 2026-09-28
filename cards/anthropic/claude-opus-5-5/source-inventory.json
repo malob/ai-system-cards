@@ -1,0 +1,107 @@
+{
+ "schema_version": 1,
+ "observer_schema_version": 2,
+ "pymupdf_version": "1.28.2",
+ "source_sha256": "7311c9c6bbb16d012f1c12c7418b05949fcf7ae3e30d2c40f22050074b2a7378",
+ "page_exclusions": [
+  {
+   "page": 1,
+   "kind": "cover",
+   "reason": "reviewed PDF title and artwork cover; no archive body content",
+   "observation": {
+    "page": 1,
+    "word_count": 9,
+    "text_chars": 54,
+    "internal_links": 0,
+    "uri_links": 1,
+    "drawing_count": 2,
+    "raster_count": 1
+   }
+  },
+  {
+   "page": 5,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 5,
+    "word_count": 237,
+    "text_chars": 1299,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 6,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 6,
+    "word_count": 197,
+    "text_chars": 1156,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 7,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 7,
+    "word_count": 230,
+    "text_chars": 1396,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 8,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 8,
+    "word_count": 205,
+    "text_chars": 1291,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 9,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 9,
+    "word_count": 144,
+    "text_chars": 930,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 10,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page (five-entry tail of the TOC, below the proposal's link threshold)",
+   "observation": {
+    "page": 10,
+    "word_count": 29,
+    "text_chars": 156,
+    "internal_links": 5,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  }
+ ],
+ "figure_exclusions": []
+}
