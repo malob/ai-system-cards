@@ -1108,8 +1108,16 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
         if pa is None or pb is None or not (0 <= pa < len(pills) and 0 <= pb < len(pills)):
             return False
         ba, bb = pills[pa].get("bbox"), pills[pb].get("bbox")
-        return bool(ba and bb and bb[1] >= ba[3] - 3
-                    and min(ba[2], bb[2]) - max(ba[0], bb[0]) > 0)
+        if not (ba and bb and bb[1] >= ba[3] - 3):
+            return False
+        if min(ba[2], bb[2]) - max(ba[0], bb[0]) > 0:
+            return True
+        # a pill wrapped at the right margin: no x-overlap, but the next line
+        # closes the bracket this line opened ('[a phrase quoted from the task
+        # | statement]', opus-5.5 p.98); distinct pills balance their own
+        ta, tb = pills[pa].get("text", ""), pills[pb].get("text", "")
+        return (bb[1] - ba[3] < 6 and ta.count("[") > ta.count("]")
+                and tb.count("]") > tb.count("["))
     merged_ph = []
     for m in keep:
         if (merged_ph and not text[merged_ph[-1][2]:m[1]].strip()
