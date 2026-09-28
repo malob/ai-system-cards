@@ -1562,3 +1562,74 @@ verifier tests, four gates, seams 0, clean build 887 markers / 368 figures /
 including two PDF edits the Fable changelog omits (p.243 em-dash spacing,
 p.282 "cardsWe"). Nothing is pushed until the owner asks; the push will deploy
 both revised cards together with the three unpushed docs-only commits.
+
+## D67 — fifth card: Claude Opus 5.5; four table/seam classes, a source-size-independent footnote region, literal backticks in prose (2026-09-28)
+
+The owner handed the pipeline the canonical URL
+https://anthropic.com/claude-opus-5-5-system-card, which redirects to the
+**Claude Opus 5.5 System Card** (230pp, cover-dated 2026-09-22, Skia/PDF Google
+Docs producer — the same export family). Slug `claude-opus-5-5`. Onboarding
+followed CLAUDE.md steps 1–6 in one session:
+
+- **Census → manifest.** Fable-5.1-shaped table vocabulary plus three signals
+  that card lacked: the D15 `#d9ead3` placeholder pills return (p.98, inside
+  the `#faf9f5` Transcript 6.2.1.B box), `#e2decf` is Table 8.1.A's row-label
+  tint (as opus-5), and Table 9.1.A's header is drawn in pure `#000000`.
+  `#fafafa` is a faint paste highlight behind one caption (furniture).
+- **Stubs.** Twelve files from the bookmark TOC; §6 (59pp) split at the
+  page-top 6.4.11 boundary p.122 and §8 (48pp) at the page-top 8.12 boundary
+  p.189 — no level-2 heading in §6 starts a page.
+- **Source authority.** Cover p.1 + TOC pp.5–10. The proposal helper found
+  pp.5–9; p.10 is the TOC's five-entry tail (5 links, below the helper's
+  12-link threshold) and was added as a reviewed `toc` exclusion. 109
+  required figures (110 rasters; the cover logo leaves with its page), 0
+  flags.
+- **Tables.** Docling 2.124.0 over 24 stroked-rule pages; pp.95–96 excluded
+  (their rules are the §6.1.3 transcript boxes' borders).
+
+The first gate showed 20 majors (14 T1, 2 FN1, 2 RF1, 2 TB2). Classes, every
+one regenerated against all four certified cards:
+
+- **Separately drawn cell fills break a column chain** (`tables._column_chains`).
+  Table 2.3.5.3.A (p.39) sets 21pt rows whose line gap is under the 9pt
+  wrapped-cell threshold, so `_merge_fragment_rows` read all five rows as one
+  wrapped row. The PDF draws one `#dedcd1` rect per row label; two lines in
+  different fills are two cells (the `_merge_cells_by_fill` principle, D63).
+- **A cascade cut needs duplicated characters** (`_dedup_cascaded_cells`).
+  With the page's spans, the cells must hold at least the cut's characters
+  more than the PDF draws in the table. A rotated row that glued its last
+  value into a cell ('0.40%) 0%' over the next row's '0%', p.71) has no such
+  surplus; the existing multiset rebuild then repairs the row.
+- **An extension may only fill a deficit** (`_extend_truncated_cells`): the
+  mirror rule. p.82's glued '(Helpful-only) 29.5' already carried the text
+  the extension appended to 'Claude Mythos 5.1'.
+- **A flowing first seam row no longer stops the group rule**
+  (`run._merge_tables`). Table 9.1.A cuts 'Training still to come' mid-cell at
+  p.225/226; the flowing piece still goes to `merge_continuation_rows`, and
+  the four new members after it join the group (rowspan 6).
+- **The footnote separator opens the footnote region at any type size**
+  (`oracle`, and independently `raw_footnotes` for RF1). The publisher set
+  footnotes 11/12 (pp.136–137) at the 11pt body size, so both small-type walks
+  read them as prose. Corpus census: every one of 198 separator pages draws
+  a black stroke exactly 144pt wide with a marker line below; the only other
+  short black strokes are 115/118pt underlines. Every certified oracle is
+  byte-identical.
+- **A source backtick in prose is escaped** (`serialize`), and the projection
+  restores an escaped backtick after the fence strip (`mdproj` — it had been
+  removing the restored glyph too). p.102's '`gsutil -m rm -r [path]`' is set
+  in the body serif. **Certified canon moves:** fable-5 p.45 '`pkill`' and
+  opus-5 p.87 '`WebSearch`' are the same Lora-Regular literal glyphs, which
+  the canon had rendered as monospace code spans without backticks. PDF-verified
+  as fidelity improvements, one hunk each; recorded here for owner
+  adjudication before any push. Typed T1 minors fall as false findings
+  disappear: fable-5 27 → 24, opus-5 8 → 7.
+
+Two exact T1 acceptances remain: p.226's §9.2 code-box label 'None' in
+PyMuPDF stream order before the page's table, merged with Table 9.1.A's
+dropped repeated header (the fable-5-1 p.210 class). Gate: 0 unsuppressed
+majors; T1 3 typed minors (repeated-header drops pp.223–225); L2 84/84;
+P2/F3 223/109, 332 DOM events; RF1 clean; seam 0. The fast release gate passed
+with five cards (built audit 2,667 ids / 2,275 fragment links / 1,110 page
+markers / 477 figures / 483 assets, 0 findings). Verifier code changed, so all
+five mutation suites are re-run. The agent sweep (experiment 18), owner scroll
+pass, and deploy decision follow; nothing is pushed.
