@@ -1,0 +1,26 @@
+{"shot": "00", "page": 18, "status": "clean", "findings": [], "note": "Rowspan, bold labels, values, caption match PDF. Only a ~2px step in the table bottom edge under cols 2-3 of the last row (cells overlap the outer border by 2px beside the rowspanned cell) - pixel-level, not reader-visible, not a finding."}
+{"shot": "01", "page": 39, "status": "clean", "findings": []}
+{"shot": "02", "page": 62, "status": "clean", "findings": []}
+{"shot": "03", "page": 63, "status": "clean", "findings": []}
+{"shot": "04", "page": 66, "status": "clean", "findings": []}
+{"shot": "05", "page": 67, "status": "clean", "findings": []}
+{"shot": "06", "page": 69, "status": "clean", "findings": []}
+{"shot": "07", "page": 69, "status": "clean", "findings": []}
+{"shot": "08", "page": 71, "status": "clean", "findings": []}
+{"shot": "09", "page": 76, "status": "clean", "findings": []}
+{"shot": "10", "page": 76, "status": "clean", "findings": []}
+{"shot": "11", "page": 77, "status": "clean", "findings": []}
+{"shot": "12", "page": 78, "status": "clean", "findings": []}
+{"shot": "13", "page": 80, "status": "clean", "findings": []}
+{"shot": "14", "page": 81, "status": "clean", "findings": []}
+{"shot": "15", "page": 82, "status": "flagged", "findings": [{"severity": "minor", "desc": "Column widths starve the row-label column: \"Claude Mythos 5.1\" breaks as \"Claude Mythos / 5.1 / (Helpful-only)\" (model name split across lines) while the two numeric columns hold short values with wide empty space; header note wraps to an orphan \"32)\" line. Content and structure correct.", "evidence": "15-p-82-table-wrap.png row 2 label vs p-082.png where the label column is ~1/3 width and each name fits one line"}]}
+{"shot": "16", "page": 87, "status": "clean", "findings": []}
+{"shot": "17", "page": 89, "status": "clean", "findings": []}
+{"shot": "18", "page": 90, "status": "clean", "findings": []}
+{"shot": "19", "page": 95, "status": "clean", "findings": []}
+{"shot": "20", "page": 96, "status": "clean", "findings": []}
+{"shot": "21", "page": 98, "status": "clean", "findings": []}
+{"shot": "22", "page": 174, "status": "clean", "findings": [], "notes": "Header rows, 2x2 Evaluation corner, colspan-3 Claude family models, Other models/GPT-6 Astra, HLE rowspan-2 with No tools/With tools sub-labels, bold/underline values, en-dash vs hyphen dashes, and caption all match PDF. In the screenshot the HLE sub-labels No tools/With tools look upright although the PDF has bold italic; markup is <i><b>, computed style is italic, and live DOM text width (54.55px) matches Literata italic metrics (54.55) not upright (57.88) -- so the page renders italic and the screenshot was likely captured before the lazily loaded Literata italic face finished loading. Not a page defect; consider awaiting document.fonts.ready in the screenshot harness before judging italics."}
+{"shot": "23", "page": 211, "status": "clean", "findings": []}
+{"shot": "24", "page": 222, "status": "clean", "findings": [], "notes": "All 17 groups and row counts across pp.222-226 match the PDF (Memory spans the p.223 continuation row, Autonomy 7, Creation 2, Training 6, Consultation 2); header once; caption attached. The tall screenshot has a sticky-header band at ~y=1570-1650 that occludes the Values-and-role row \"What\u2019s your view on the kind of work you do or will do...\"; that is a capture/stitching artifact -- live DOM shows the row present as the 3rd of 4 rows under Values and role (rowspan 4). Extra blank space under the seam-merged Training-still-to-come cell is the known deferred p.225 <p> minor."}
+{"shot": "25", "page": 226, "status": "clean", "findings": [], "notes": "One code box across pp.226-230. Live DOM <pre> lines compared programmatically to PyMuPDF mono lines of pp.226-230: 154 lines + 4 page turns, 0 differences in content or order; page turns fall exactly at hf-mirror.com|hf.global-rail.com (p.227), interactivebench|openreview.net/pdf/a94b... (p.228), 2ndbook.org|2603.01710 (p.229), u_fetch:|LLMcompe-Team-Watanabe/hle (p.230), each gutter label beside the first line of its page. Two PDF-wrapped entries shown as two lines (known deferred). The screenshot has a sticky-header band at ~y=1600-1675 hiding the two x.com lines; capture artifact, DOM has them. None label not shown (not a finding per rulebook)."}
