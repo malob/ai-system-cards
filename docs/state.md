@@ -3,28 +3,24 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-09-28 11:25 PDT. **Fifth card onboarded locally and
-converged: Claude Opus 5.5** (`anthropic/claude-opus-5-5`, 230pp, cover-dated
-2026-09-22), from the owner-supplied canonical URL
-https://anthropic.com/claude-opus-5-5-system-card (redirects to
-`fc1b4471…/Claude Opus 5.5 System Card.pdf`). Nothing is pushed. The deployed
-site is still `0e7e3a7` (four cards); ten commits sit on top of it (four
-docs-only from 2026-09-02, six from this session).
+**Last updated:** 2026-09-28 13:15 PDT. **Five cards LIVE.** Claude Opus 5.5
+(`anthropic/claude-opus-5-5`, 230pp, cover-dated 2026-09-22) was onboarded,
+converged, certified under the new rendered visual pass (D69, experiment 19)
+and deployed: the owner approved the literal-backtick canon moves and said
+"free to push". `282a67c` was pushed; hosted verify / Pages run
+[36477037493](https://github.com/malob/ai-system-cards/actions/runs/36477037493)
+passed (five card gates, clean build, deploy) and the live site serves the card
+(HTTP 200, the merged p.98 pill, the p.42 underline, the index entry) plus the
+fable-5 `` `pkill` `` backticks. The hosted mutation replay
+[36477036722](https://github.com/malob/ai-system-cards/actions/runs/36477036722)
+was still running at close; locally every card's replay matched its committed
+baseline byte-identically on the pushed canon.
 
-**Awaiting the owner (after the 2026-09-28 curated review):**
-
-1. **Owner scroll → replaced, pending approval, by experiment 19's rendered
-   visual pass**: DOM layout audit at three widths (clean) + screenshots of all
-   26 tables/boxes/code blocks reviewed against the PDF (25 clean, 1 cosmetic
-   p.82 column-width wrap). The owner spotted a split wrapped pill (p.98) in
-   the curated review; fixed as a class in `9aed2f4` (certified cards
-   byte-identical). Proposed: make this pass onboarding step 9 for same-family
-   cards (CLAUDE.md edit awaits the owner's yes).
-2. **Adjudicate the literal-backtick hunks** on fable-5 p.45 and opus-5 p.87
-   (composites in experiment 19's method: PDF | live | new — the new build
-   matches the PDF). The fable-5-1 caption hunk is visually identical (Markdown
-   cleanup only) and needs no decision.
-3. **Deploy decision** — a push to `main` deploys all five cards.
+Owner decisions this session (D69): literal backticks match the PDF; the owner
+scroll is replaced for same-family cards by the rendered visual pass
+(CLAUDE.md onboarding step 9) — the owner sees only adjudication composites,
+unresolved flags, and genuine judgment calls; a new producer reverts to a full
+scroll.
 
 ## Onboarding summary (D67, D68, experiment 18)
 
