@@ -793,7 +793,7 @@
       "text": "Section 7.2.1"
     }
   ],
-  "canonical_sections_sha256": "96cf839357d506807872a08bf4d4cc12a65bc38bf9db15efd084d8b3d0c8db51",
+  "canonical_sections_sha256": "e723da273ad55456ae95de091fc7c187373843d199906253fcdb90a70c190253",
   "card_id": "anthropic/claude-fable-5-1",
   "exclusions": [
     {
@@ -2752,7 +2752,7 @@
     "06a-alignment-1.md": "924a91162c8869e5c95b8b7269e1eb54a7d13bea28b1b84a1d2e3e76516ea7be",
     "06b-alignment-2.md": "17fa6d417d653bb1f7363ff6d2da6507bd08da4f43ba9679b5a88b768335df92",
     "07-model-welfare.md": "2545ecae6d2e1b4603c853fc17dc4f61d78d983f06da9553afa886eebf77d292",
-    "08-capabilities.md": "925117c0a083be2bbeea59fe6482cc993fd5437b717b91f4628d2ba0171cc2e9",
+    "08-capabilities.md": "021fb97ed19eae57c948a903cdd919e2524e65198feb136e401f35c7bc6f1869",
     "09-appendix.md": "411e93b6c18fdeec927b9f78bf6c1022b23f45ff9d29fd3de8e01b8e53f2c992"
   },
   "source_pdf": "source.pdf",

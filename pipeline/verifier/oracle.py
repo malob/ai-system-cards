@@ -220,11 +220,14 @@ def extract_page(page) -> dict:
                 entry["name"] = l.get("nameddest") or l.get("name") or ""
             links["goto"].append(entry)
 
-    pills, boxes, rules, fills = [], [], [], []
+    pills, boxes, rules, fills, strokes = [], [], [], [], []
     for d in page.get_drawings():
         if d.get("fill") is None:
             # stroke-only paths: thin horizontal strokes are underline rules
             r = d["rect"]
+            if (d.get("color") is not None and max(d["color"]) < 0.3
+                    and r.height <= 1.5 and r.width >= 8):
+                strokes.append(r)
             if d.get("color") is not None and r.height <= 2.5 and 8 <= r.width <= 250:
                 col = "#" + "".join(f"{int(round(v * 255)):02x}" for v in d["color"])
                 rules.append({"color": col, "bbox": [round(v, 1) for v in r]})
@@ -248,7 +251,15 @@ def extract_page(page) -> dict:
             # thin rule = underline candidate (FL-09: legend-bearing underlines)
             rules.append({"color": col, "bbox": [round(v, 1) for v in r]})
 
-    return {
+    # prose underlines (additive key): a thin dark stroke of ANY width that
+    # hugs the bottom of a body span — Google Docs underlines whole runs, so
+    # a line-length underline exceeds the 250pt `rules` cap (opus-5.5 p.42)
+    underlines = [
+        {"bbox": [round(v, 1) for v in r]} for r in strokes
+        if any(s["zone"] == "body" and s["bbox"][3] - 2.5 <= r.y0 <= s["bbox"][3] + 0.5
+               and min(s["bbox"][2], r.x1) - max(s["bbox"][0], r.x0) > 4
+               for s in spans)]
+    out = {
         "spans": spans,
         "links": links,
         "pills": pills,
@@ -259,6 +270,9 @@ def extract_page(page) -> dict:
         "image_rects": [[round(v, 1) for v in r] for r in image_rects],
         "n_raster_images": len(set(map(tuple, [tuple(r) for r in image_rects]))),
     }
+    if underlines:
+        out["underlines"] = underlines
+    return out
 
 
 def page_body_text(p: dict) -> str:

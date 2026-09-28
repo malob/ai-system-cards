@@ -157,10 +157,14 @@ def _header_blobs(hdr_spans: list) -> list:
     """Header-colored text concatenated per COLUMN (x0 clusters, top-down).
     A header cell's text often arrives as several spans, and reading order
     interleaves the columns of a multi-column header row — so containment is
-    tested per column, never against one global stream."""
+    tested per column, never against one global stream. A CENTRED header
+    cell's lines share a centre, not a left edge ('Other' / 'models' start
+    3.2pt apart, opus-5.5 p.174)."""
     cols: dict = {}
     for s in hdr_spans:
-        k = next((k for k in cols if abs(k - s["bbox"][0]) <= 3), s["bbox"][0])
+        x0, cx = s["bbox"][0], (s["bbox"][0] + s["bbox"][2]) / 2
+        k = next((k for k in cols if abs(k[0] - x0) <= 3 or abs(k[1] - cx) <= 3),
+                 (x0, cx))
         cols.setdefault(k, []).append(s)
     blobs = []
     for mem in cols.values():

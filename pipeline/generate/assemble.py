@@ -117,7 +117,8 @@ def _lines(page):
             "size": max((s["size"] for s in body), default=spans[0]["size"]),
             "fnbody": all(s["zone"] == "fnbody" for s in spans),
             "mono": any(("Mono" in s["font"] or "Courier" in s["font"]
-                         or "Inconsolata" in s["font"]) for s in spans),
+                         or "Inconsolata" in s["font"] or "Consolas" in s["font"])
+                        for s in spans),
         })
     return lines
 
@@ -866,7 +867,8 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                     and not s.get("super") and t.strip()
                     and line["size"] >= 10):
                 marks.append(("sub", m_start, m_end, None))
-            if (("Mono" in s.get("font", "") or "Inconsolata" in s.get("font", ""))
+            if (("Mono" in s.get("font", "") or "Inconsolata" in s.get("font", "")
+                 or "Consolas" in s.get("font", ""))  # '--bare', opus-5.5 p.179
                     and s["zone"] == "body"):
                 # monospace span = inline code (RobotoMono in this card) —
                 # but NOT an early-out: a mono span can also be bold and can
@@ -877,12 +879,15 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                 marks.append(("bold", m_start, m_end, None))
             if s["italic"]:
                 marks.append(("italic", m_start, m_end, None))
-            # prose underline: CAPTION blocks only (the legend's literal
-            # 'underlined' word). The unrestricted version over-fired on
-            # chart-axis/table-border rules under ordinary prose (T1 6->33);
-            # in this card prose underline occurs only in captions. The rule
-            # must hug the baseline and span most of the word, nothing more.
-            if block.get("type") == "caption" and s["zone"] == "body":
+            # prose underline: CAPTION blocks read the page's short rules
+            # (the legend's literal 'underlined' word); other prose reads
+            # only the oracle's `underlines` — dark strokes of ANY width that
+            # hug a body span's baseline (the METR quote's underlined run,
+            # opus-5.5 p.42). The unrestricted rules version over-fired on
+            # chart-axis/table-border rules under ordinary prose (T1 6->33).
+            # The rule must hug the baseline and span most of the word.
+            is_caption = block.get("type") == "caption"
+            if s["zone"] == "body" and (is_caption or page.get("underlines")):
                 sb = s["bbox"]
                 scy = (sb[1] + sb[3]) / 2
                 # linked text is underlined by LINK styling — never mark it
@@ -893,9 +898,18 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                     for lk in page["links"]["uri"] + page["links"]["goto"]
                     for lr in (lk.get("rects") or [lk.get("rect")]) if lr)
                 if not in_link and len(t.strip()) > 1:
-                    for ru in page.get("rules", []):
+                    link_rects = [lr for lk in page["links"]["uri"] + page["links"]["goto"]
+                                  for lr in (lk.get("rects") or [lk.get("rect")]) if lr]
+                    for ru in page.get("rules" if is_caption else "underlines", []):
                         rb = ru["bbox"]
-                        if not (sb[3] - 2.5 <= rb[1] <= sb[3] + 5.0):
+                        if not (sb[3] - 2.5 <= rb[1] <= sb[3] + (5.0 if is_caption else 0.5)):
+                            continue
+                        # a rule under a link rect is that LINK's underline
+                        # (a black-styled link inside a longer span, opus-5.5
+                        # p.174 — word-centre drift pulled in the next 'for')
+                        if any(lr[1] <= rb[1] <= lr[3] + 1
+                               and rb[0] >= lr[0] - 2 and rb[2] <= lr[2] + 2
+                               for lr in link_rects):
                             continue
                         ov0, ov1 = max(sb[0], rb[0]), min(sb[2], rb[2])
                         if ov1 - ov0 <= 2:
@@ -915,7 +929,7 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         if not hit:
                             continue
                         a2, b2 = start + hit[0][0], start + hit[-1][1]
-                        while b2 > a2 and t[b2 - start - 1] in ".,;:":
+                        while is_caption and b2 > a2 and t[b2 - start - 1] in ".,;:":
                             b2 -= 1
                         if b2 > a2:
                             marks.append(("underline", a2, b2, None))
@@ -979,13 +993,21 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                             rb = t.find("]", max(lb + 1, i1 - 4), min(len(t), i1 + 5))
                             if rb < 0:
                                 rb = t.find("]", lb + 1, min(len(t), max(i1 + 4, lb + 40)))
+                        # a pill WRAPPED onto this line has only its close
+                        # bracket here: end at it, not at the next space
+                        # ('statement] —' took the em dash, opus-5.5 p.98)
+                        rb_only = (t.rfind("]", 0, min(len(t), i1 + 5))
+                                   if lb < 0 else -1)
                         if lb >= 0 and rb >= 0 and rb > lb:
                             i0, i1 = lb, rb + 1
                         else:
                             while i0 > 0 and not t[i0 - 1].isspace():
                                 i0 -= 1
-                            while i1 < len(t) and not t[i1].isspace():
-                                i1 += 1
+                            if rb_only >= max(0, i1 - 4):
+                                i1 = rb_only + 1
+                            else:
+                                while i1 < len(t) and not t[i1].isspace():
+                                    i1 += 1
                         seg = t[i0:i1]
                         a2 = start + i0 + (len(seg) - len(seg.lstrip()))
                         b2 = start + i1 - (len(seg) - len(seg.rstrip()))

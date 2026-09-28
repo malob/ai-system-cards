@@ -1009,7 +1009,7 @@
       "text": "Section 8.12.4"
     }
   ],
-  "canonical_sections_sha256": "901b5292ebe8305f15e775fa1d9e5595763848431c5fe0237757d4d641866dbd",
+  "canonical_sections_sha256": "0d07e179910c739ba1de23bcc10e5c3b0f0c8a5c55ecd4997b54151269803772",
   "card_id": "anthropic/claude-opus-5-5",
   "exclusions": [
     {
@@ -3314,14 +3314,14 @@
   "section_sha256": {
     "00-executive-summary.md": "5734f5c677cfc0b7d98b372c78db31b126ee5049d2a2a03effc4b920312512da",
     "01-introduction.md": "90b8e8edd611f1f5cbf0f82e01b7a19bb65f4f72c44c41aeb6eabb5e880ba786",
-    "02-rsp-evaluations.md": "74c852c1cf4914fa04110637fc9fd75ca0e0cc3c733d658711252000e77fbfb7",
+    "02-rsp-evaluations.md": "704f20738749f1fa62c019ebd605aa6aff1e5bce6c97b1e4611e927b0f971486",
     "03-cyber.md": "f976f7eeb17b1a0b5097d02112b15b8de8c52c2307a970b6c11f6c847b03b569",
     "04-safeguards-harmlessness.md": "a48ad1cfc5cd39777d3b2a50f84ea797fa3fa68ed022d55654bc2c0c602fc855",
     "05-agentic-safety.md": "a3a53f873304b58a940a46ca64dea907dcc00998b34286cadbbe43592d5e537f",
-    "06a-alignment-1.md": "7a7adb5354f9b0ea4b6238104271d7c2c1c343c1a7749db7d2bee8e97a81f300",
+    "06a-alignment-1.md": "bdcdf081c2cfe57bf72a0a9f856b4e74d1b725ee11d03bc51da9e222056321b5",
     "06b-alignment-2.md": "4e734a95291738938e803d2e1037200d5abf86c4629d17220d8da0f13df0c615",
     "07-model-welfare.md": "80a3091d3d22f6259498cc5267379daeb92ef4afe130e8c872419d625e61f404",
-    "08a-capabilities-1.md": "57c45628c392c913ca63a38e34169ab85eb178356f8b5e020449e6e74da9afbf",
+    "08a-capabilities-1.md": "6860a1ca1de2b02979e397db7c69f4329eb0e59c054ee90c84694e00df6f6696",
     "08b-capabilities-2.md": "5c80c611b5561932c06d5dd5c1f7f4ac462fc9d246ba79fb88d91795e9e174cf",
     "09-appendix.md": "059af2e5ab04d2bf9a1114f300b3421af3e1ea0726b95416e5b89bfa2b31c99a"
   },

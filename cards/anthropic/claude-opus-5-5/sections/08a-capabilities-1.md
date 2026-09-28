@@ -7,7 +7,7 @@
 ### 8.1 Evaluation summary
 
 <table><tbody>
-<tr><td colspan="2" rowspan="2"><b>Evaluation</b></td><td colspan="3"><b>Claude family models</b></td><td><b>Other models</b></td></tr>
+<tr><th colspan="2" rowspan="2">Evaluation</th><th colspan="3">Claude family models</th><th>Other models</th></tr>
 <tr><th>Claude Opus 5.5</th><th>Claude Opus 5</th><th>Claude Fable 5.1</th><th>GPT-6 Astra</th></tr>
 <tr><th colspan="2">SWE-bench Pro</th><td><b>89.9</b></td><td>79.2</td><td>81.2</td><td>–</td></tr>
 <tr><th colspan="2">SWE-bench Multilingual</th><td><u><b>93.9</b></u></td><td>89.5</td><td>89.1</td><td>-</td></tr>
@@ -25,7 +25,7 @@
 </tbody></table>
 
 :::caption
-**[Table 8.1.A] Capability evaluation summary.** Unless otherwise noted, all Claude Opus 5.5 results use the following standard configuration: adaptive thinking at `max` effort, default sampling settings (temperature, top_p), averaged over five trials. Terminal-Bench 4.0 score is reported at `xhigh` effort. Context window sizes are evaluation dependent and do not exceed 1M tokens. The best score in each row is **bolded**. Competitor figures are drawn from the respective developers’ published system cards or benchmark leaderboards. See the <u>[Claude Opus 5 System Card](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf)</u> <u>for</u> evaluation details of earlier Claude models.
+**[Table 8.1.A] Capability evaluation summary.** Unless otherwise noted, all Claude Opus 5.5 results use the following standard configuration: adaptive thinking at `max` effort, default sampling settings (temperature, top_p), averaged over five trials. Terminal-Bench 4.0 score is reported at `xhigh` effort. Context window sizes are evaluation dependent and do not exceed 1M tokens. The best score in each row is **bolded**. Competitor figures are drawn from the respective developers’ published system cards or benchmark leaderboards. See the [Claude Opus 5 System Card](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf) for evaluation details of earlier Claude models.
 :::
 
 <!-- p.175 -->
@@ -86,7 +86,7 @@ Claude Opus 5.5 scored 58.7% on Terminal-Bench-Science with safeguards enabled; 
 
 <!-- p.179 -->
 
-The numbers reported use Claude Code in --bare mode and `max` thinking effort. For reference, the public leaderboard reports Claude Opus 5 at 30.0% and Claude Fable 5 at 21.4% (three trials, using the Claude Code harness), all within expected noise of our internal setup. OpenAI reported GPT-6 Astra at 64.6% with `max` thinking effort.
+The numbers reported use Claude Code in `--bare` mode and `max` thinking effort. For reference, the public leaderboard reports Claude Opus 5 at 30.0% and Claude Fable 5 at 21.4% (three trials, using the Claude Code harness), all within expected noise of our internal setup. OpenAI reported GPT-6 Astra at 64.6% with `max` thinking effort.
 
 ### 8.7 FrontierSWE v2
 

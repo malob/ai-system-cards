@@ -28,7 +28,7 @@ Claude Fable 5.1 is more capable than Fable 5 and achieves state of the art perf
 </tbody></table>
 
 :::caption
-**[Table 8.1.A] Capability evaluation summary.** Unless otherwise noted, all results for Claude Fable 5.1 and Claude Mythos 5.1 use the following standard configuration: adaptive thinking at max effort, default sampling settings<!-- p.168 --> (temperature, top_p), averaged over five trials. Context window sizes are evaluation dependent and do not exceed 1M tokens. The best score in each row is **bolded**. Competitor figures are drawn from the respective developers’ published system cards or benchmark leaderboards. See the <u>[Claude Opus 5 System Card](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf)</u> for evaluation details of earlier Claude models.
+**[Table 8.1.A] Capability evaluation summary.** Unless otherwise noted, all results for Claude Fable 5.1 and Claude Mythos 5.1 use the following standard configuration: adaptive thinking at max effort, default sampling settings<!-- p.168 --> (temperature, top_p), averaged over five trials. Context window sizes are evaluation dependent and do not exceed 1M tokens. The best score in each row is **bolded**. Competitor figures are drawn from the respective developers’ published system cards or benchmark leaderboards. See the [Claude Opus 5 System Card](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf) for evaluation details of earlier Claude models.
 :::
 
 ### 8.2 SWE-bench Pro, Multilingual, and Multimodal

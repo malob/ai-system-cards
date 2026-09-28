@@ -402,9 +402,9 @@ We conducted pre-deployment testing of Claude Opus 5.5’s capabilities with MET
 >    - <!-- p.42 -->*Sunlight*, a task measuring an agent’s ability to conduct open-ended research and write a corresponding report.
 > - Background information about trends and capabilities of previous models, especially as reported in our recent [Frontier Risk Report](https://metr.org/blog/2026-05-19-frontier-risk-report/#executive-summary-and-guide-to-the-report).
 > - Additional information from Anthropic about [Claude Opus 5.5]’s capabilities, including responses to a questionnaire inquiring about model capabilities and control factors, and an interview with an Anthropic researcher.
-> - A highly experimental and preliminary report from a separate METR assessment of AI R&D acceleration inside Anthropic. This **report was written** by a separate METR team with elevated access compared to the team that wrote this content. **As a result of this difference in access,** the separate METR team shared its conclusions with us, but **was not able to share the supporting evidence or details of their** reasoning.
+> - A highly experimental and preliminary report from a separate METR assessment of AI R&D acceleration inside Anthropic. <u>This **report was written** by a separate METR team with elevated access compared to the team that wrote this content. **As a result of this difference in access,** the separate METR team shared its conclusions with us, but **was not able to share the supporting evidence or details of their** reasoning.</u>
 >    - Thus we use the evidence in the provided AI R&D report as an input to our assessment but do not argue directly in defense of its claims.
->    - We consider its inclusion here a trial version of a more holistic assessment process. We expect further public outputs from this separate investigation in the coming weeks.
+>    - We consider its inclusion here a trial version of a more holistic assessment process. We expect further public outputs from this <u>separate</u> investigation in the coming weeks.
 >
 > Conclusions
 >
