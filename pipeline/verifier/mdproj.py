@@ -264,7 +264,10 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     seg = RE_SUP.sub(" ", seg)
     seg = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"\1", seg)   # italics
     seg = re.sub(r"(?<!`)`(?!`)", "", seg)   # inline code backticks (mono spans)
-    seg = seg.replace("\x03", "*").replace("\x04", "`").replace("\x05", "<")   # restore literals
+    # restore literals — the escaped BACKTICK only after the code-fence pass
+    # below strips markup backticks (it was stripping the restored glyph too:
+    # a PDF's literal '`gsutil …`' projected without its backticks)
+    seg = seg.replace("\x03", "*").replace("\x05", "<")
 
     def heading(m):
         sec.headings.append((_strip_sentinels(m.group(1)), pg(m)))
@@ -301,7 +304,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     # code fences: the delimiter vanishes, but an INFO STRING is projected —
     # it carries the PDF's code-box language chrome ('None', pp.191-193 D42)
     seg = re.sub(r"^```(\w*)[ \t]*$", r" \1", seg, flags=re.M)
-    seg = seg.replace("`", "")
+    seg = seg.replace("`", "").replace("\x04", "`")
     seg = RE_INLINE_TAG.sub("", seg)
     seg = RE_TAG.sub(" ", seg)
     seg = html.unescape(seg)

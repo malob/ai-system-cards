@@ -48,8 +48,25 @@ def _zone(span, page_height, image_rects):
     return "body"
 
 
+FN_SEPARATOR_WIDTH = 144.0  # Google Docs draws the footnote rule 2in wide
+
+
+def _footnote_separator_y(page) -> float | None:
+    """y of the footnote separator: a thin black stroke exactly 2in wide.
+    It opens the footnote region whatever the notes' type size — the
+    publisher set opus-5.5 fn 11/12 (pp.136-137) at the 11pt body size, so a
+    small-type walk alone read them as prose. Underlines (other widths,
+    link colours) never match."""
+    ys = [d["rect"].y0 for d in page.get_drawings()
+          if d.get("fill") is None and d.get("color") is not None
+          and max(d["color"]) < 0.2 and d["rect"].height <= 1.5
+          and abs(d["rect"].width - FN_SEPARATOR_WIDTH) <= 1]
+    return max(ys) if ys else None
+
+
 def extract_page(page) -> dict:
     H = page.rect.height
+    fn_separator = _footnote_separator_y(page)
     image_rects = _image_rects(page)
     spans = []
     line_id = 0
@@ -97,7 +114,9 @@ def extract_page(page) -> dict:
         if not body_spans:
             continue
         first = body_spans[0]
-        small = first["size"] <= BODY_SIZE - 0.8
+        top = min(s["bbox"][1] for s in body_spans)
+        small = (first["size"] <= BODY_SIZE - 0.8
+                 or (fn_separator is not None and top > fn_separator))
         marker_shape = bool(
             first["size"] <= 7.5
             and re.fullmatch(r"\d{1,2}", first["text"].strip())

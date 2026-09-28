@@ -137,6 +137,13 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
         i = m.start()
         if not any(a <= i < b for a, b in code_cov):
             ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
+    # ALWAYS: a source backtick in prose is a literal glyph, but a pair opens
+    # a code span and both vanish ('`gsutil -m rm -r [path]`', opus-5.5
+    # p.102, set in the body serif). Transcripts already escape it above.
+    if not escape_literals:
+        for i, ch in enumerate(text):
+            if ch == "`" and not any(a <= i < b for a, b in code_cov):
+                ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
     # ALWAYS: a source backslash before ASCII punctuation is a CommonMark
     # escape and vanishes in rendering (the '\\"' of a quoted shell command,
     # fable-5.1 p.96 — the corpus's only such sequence); '\\\\' renders as the

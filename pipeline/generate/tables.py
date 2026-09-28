@@ -36,7 +36,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         t = {**t, "html": _demote_data_th(t["html"])}
         t = {**t, "html": _promote_split_rowspan(t["html"])}
         t = {**t, "html": _normalize_rowspan_subrows(t["html"])}
-        t = {**t, "html": _dedup_cascaded_cells(t["html"])}
+        t = {**t, "html": _dedup_cascaded_cells(t["html"], t["bbox"], oracle_page)}
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
         if oracle_page is not None:
             # split BEFORE rotation repair: a glued cell defeats x-matching,
@@ -47,7 +47,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _extend_truncated_cells(html, t["bbox"], oracle_page)
             # extension can cascade next-row content into a cell in dense
             # rule-less tables — the endswith-dedup undoes exactly that
-            html = _dedup_cascaded_cells(html)
+            html = _dedup_cascaded_cells(html, t["bbox"], oracle_page)
             html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
             html = _repair_rotation(html, t["bbox"], oracle_page)
             # AFTER rotation: the pp.78/80 label-cell split (an extra cell
@@ -605,23 +605,36 @@ def _cell_lists(html: str, ctx) -> str:
     return "".join(out)
 
 
-def _dedup_cascaded_cells(html: str) -> str:
+def _dedup_cascaded_cells(html: str, bbox: list | None = None,
+                          oracle_page: dict | None = None) -> str:
     """Docling cascade bug (7.4.1.A/B): each cell also contains every LATER
     row's same-column content (bullet counts 12/9/6/3 for a uniform-3 table).
     Invariant: a polluted cell ENDS WITH the next row's entire cell — so
     truncating to the prefix is provably content-safe. Bullets then join with
-    <br> (v1's convention for these cells)."""
+    <br> (v1's convention for these cells).
+    With the page's spans, a cascade must also be DUPLICATED text: the cells
+    hold at least the cut's characters more than the PDF draws in the table.
+    A rotated row that glued its last value into a cell ('0.40%) 0%' over the
+    next row's '0%', opus-5.5 p.71) has no such surplus and keeps its value."""
     rows = re.findall(r"<tr>.*?</tr>", html, re.S)
     if len(rows) < 3:
         return html
     grid = [re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S) for r in rows]
     orig_sq = [[_cell_sq(c) for _, _, c in row] for row in grid]
+    surplus = None
+    if oracle_page is not None:
+        from collections import Counter
+        surplus = (Counter("".join(c for row in orig_sq for c in row))
+                   - Counter("".join(_squash(s["text"])
+                                     for s in _table_spans(oracle_page, bbox))))
     out = html
     changed = False
     for ri in range(len(grid) - 1):
         for ci in range(min(len(grid[ri]), len(grid[ri + 1]))):
             a, b = orig_sq[ri][ci], orig_sq[ri + 1][ci]
             if not b or len(a) <= len(b) or not a.endswith(b):
+                continue
+            if surplus is not None and Counter(b) - surplus:
                 continue
             g, attr, c = grid[ri][ci]
             keep = len(a) - len(b)
@@ -1068,7 +1081,7 @@ def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:
     the previous row: merge it into that cell and drop the fragment row."""
     spans = [s for s in _table_spans(oracle_page, bbox)
              if s["text"].strip() and s.get("zone") != "fnref"]
-    chains = _column_chains(spans)
+    chains = _column_chains(spans, oracle_page.get("fills", []))
     if not chains:
         return html
     rows = re.findall(r"<tr>.*?</tr>", html, re.S)
@@ -2293,9 +2306,22 @@ def _rebuild_row(r, tags, plain, band, oracle_page, bbox, modal):
     return "<tr>" + "".join(f"<{tg}>{c}</{tg}>" for c in texts) + "</tr>"
 
 
-def _column_chains(spans):
+def _column_chains(spans, fills=()):
     """Maximal vertical chains of spans sharing a left-edge cluster with
-    < 9pt line gaps — the geometry of a wrapped (multi-line) table cell."""
+    < 9pt line gaps — the geometry of a wrapped (multi-line) table cell.
+    Two lines in separately drawn cell fills are two cells however tight the
+    row pitch (opus-5.5 p.39: 21pt rows, one #dedcd1 rect per row label —
+    the whole table read as one wrapped row); cf. _merge_cells_by_fill."""
+    def fill_under(s):
+        x, y = (s["bbox"][0] + s["bbox"][2]) / 2, (s["bbox"][1] + s["bbox"][3]) / 2
+        hits = [f["bbox"] for f in fills
+                if f["bbox"][0] <= x <= f["bbox"][2] and f["bbox"][1] <= y <= f["bbox"][3]]
+        return min(hits, key=lambda b: (b[2] - b[0]) * (b[3] - b[1])) if hits else None
+
+    def same_cell(a, b):
+        fa, fb = fill_under(a), fill_under(b)
+        return fa is None or fb is None or fa == fb
+
     by_x: dict[float, list] = {}
     for s in spans:
         key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
@@ -2305,7 +2331,7 @@ def _column_chains(spans):
         col.sort(key=lambda s: s["bbox"][1])
         cur = [col[0]]
         for s in col[1:]:
-            if s["bbox"][1] - cur[-1]["bbox"][3] < 9:
+            if s["bbox"][1] - cur[-1]["bbox"][3] < 9 and same_cell(cur[-1], s):
                 cur.append(s)
             else:
                 chains.append(cur)
@@ -2320,9 +2346,16 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
     final 'conversations?' line p.311). When a cell's text equals a
     consecutive span run of an x-column and the run's IMMEDIATE continuation
     (vertically adjacent, < 9pt) is claimed by no cell in the table, extend
-    the cell with that continuation."""
+    the cell with that continuation — and only while the table's cells lack
+    those characters: a continuation some other cell already carries (glued
+    '(Helpful-only) 29.5' in a rotated row, opus-5.5 p.82) is not dropped
+    text, and appending it would duplicate it."""
+    from collections import Counter
     spans = [s for s in _table_spans(oracle_page, bbox)
              if s["text"].strip() and s.get("zone") != "fnref"]
+    deficit = (Counter("".join(_squash(s["text"]) for s in _table_spans(oracle_page, bbox)))
+               - Counter("".join(_cell_sq(c) for c in
+                                 re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", html, re.S))))
     by_x: dict[float, list] = {}
     for s in spans:
         key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
@@ -2404,6 +2437,10 @@ def _extend_truncated_cells(html: str, bbox: list, oracle_page: dict) -> str:
                             break
             if len(cand) != 1:
                 continue
+            added = Counter("".join(_squash(s["text"]) for s in cand[0])) - Counter(p2)
+            if added - deficit:
+                continue
+            deficit -= added
             import html as _h
             cells[i] = _h.escape(_join_wrapped(s["text"] for s in cand[0]),
                                  quote=False)

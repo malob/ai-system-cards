@@ -192,13 +192,7 @@ To test how robust this behavior was, we kept the same reasoning and resampled t
 
 #### 6.6.2 Verbalized grader awareness
 
-We measured the verbalized grader awareness of Claude Opus 5.5, using the same definitions as in Section 6.3.1 of the [Claude Fable 5.1 and Claude Mythos 5.1 System Card](https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20&%20Claude%20Mythos%205.1%20System%20Card.pdf).[^11] In brief, grader awareness is when models consider the presence of a grader assessing some property of their work; verbalized grader awareness is when these considerations
-
-<sub>11</sub> Though unlike that section's rater, ours also counts cases where the prompt discloses a grader, as explained in later paragraphs.
-
-<!-- p.137 -->
-
-occur in the model’s output texts (generally within its thinking), as opposed to in its internal activations (studied in [Section 6.6.1](#661-white-box-analyses-of-model-internals) above). In this system card, we also add new evaluations of the extent to which models act on their verbalized grader awareness (Figure 6.6.2.B).
+We measured the verbalized grader awareness of Claude Opus 5.5, using the same definitions as in Section 6.3.1 of the [Claude Fable 5.1 and Claude Mythos 5.1 System Card](https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20&%20Claude%20Mythos%205.1%20System%20Card.pdf).[^11] In brief, grader awareness is when models consider the presence of a grader assessing some property of their work; verbalized grader awareness is when these considerations<!-- p.137 --> occur in the model’s output texts (generally within its thinking), as opposed to in its internal activations (studied in [Section 6.6.1](#661-white-box-analyses-of-model-internals) above). In this system card, we also add new evaluations of the extent to which models act on their verbalized grader awareness (Figure 6.6.2.B).
 
 We revised the autorater used in the Claude Fable 5.1 and Claude Mythos 5.1 System Card to additionally measure the extent to which graders were disclosed in the prompt or tool call outputs.[^12] The grader also measures when Claude acts on its grader awareness, shown in Figure 6.6.2.B.
 
@@ -209,8 +203,6 @@ We measured grader awareness in Claude Opus 5.5 on our internal coding evaluatio
 - **Barely or not disclosed, 3/10 or less.** The input contains a single weak cue at most. For example, an ordinary development request might ask the model to keep the visible test suite passing.
 
 We do not find grader awareness in the cases of clear or ambiguous disclosure concerning. We also do not think that grader awareness in cases with little to no disclosure of graders in the input is *necessarily* worrying, as models consider many details in their chain of thought that they appear to take no action on. In Figure 6.6.2.B, we study cases where grader awareness influences models’ actions.
-
-<sub>12</sub> We made this revision drawing on internal experiences and using the recommendations in [Li et al., 2026](https://arxiv.org/abs/2605.23055).
 
 <!-- p.138 -->
 
@@ -343,5 +335,9 @@ Our evaluations suggest that Claude Opus 5.5 controls its CoT about as well as C
 :::caption
 **[Figure 6.6.4.4.A] Claude Opus 5.5 has relatively low CoT controllability, similar to that of Claude Opus 4.7.** Each point is one reasoning effort level or one fixed thinking budget, placed at the mean CoT length produced at that setting. Controllability is the fraction of responses in which the model followed the instruction given for its extended thinking on questions from GPQA, HLE, and MMLU-Pro. Lower is better, since higher controllability indicates a greater ability to alter the contents of its extended thinking when instructed, which could make monitoring less reliable.
 :::
+[^11]: Though unlike that section's rater, ours also counts cases where the prompt discloses a grader, as explained in later paragraphs.
+
+[^12]: We made this revision drawing on internal experiences and using the recommendations in [Li et al., 2026](https://arxiv.org/abs/2605.23055).
+
 [^13]: Chen, Y. et. al. (2026). Reasoning models struggle to control their chains of thought. [https://arxiv.org/abs/2603.05706](https://arxiv.org/abs/2603.05706)
 

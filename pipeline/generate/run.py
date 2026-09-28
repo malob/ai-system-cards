@@ -277,11 +277,24 @@ def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | N
                          r"[.!?:;\u2026\"\u201d')\]]$", prev_last)))
         return bool(cur_first) and not flows
 
+    def _plain_lead_empty(row):
+        return (lead_empty.match(row) and "colspan" not in row
+                and "rowspan" not in row)
+
+    # a first row that FLOWS is the host's last row cut mid-cell (opus-5.5
+    # Table 9.1.A p.225→226); merge_continuation_rows joins it right after
+    # this merge, and the new members that follow it still join the group
+    first = i
+    if (r1 and first < len(r2) and _plain_lead_empty(r2[first])
+            and not _new_member(r1[-1], r2[first])
+            and first + 1 < len(r2) and _plain_lead_empty(r2[first + 1])
+            and _new_member(r2[first], r2[first + 1])):
+        first += 1
     n_cont = 0
-    while (i + n_cont < len(r2) and lead_empty.match(r2[i + n_cont])
-           and "colspan" not in r2[i + n_cont] and "rowspan" not in r2[i + n_cont]
-           and r1 and _new_member(r1[-1] if n_cont == 0 else r2[i + n_cont - 1],
-                                  r2[i + n_cont])):
+    while (first + n_cont < len(r2) and _plain_lead_empty(r2[first + n_cont])
+           and r1 and _new_member(r1[-1] if first + n_cont == i
+                                  else r2[first + n_cont - 1],
+                                  r2[first + n_cont])):
         n_cont += 1
     if n_cont:
         # the host's last GROUP START: a row whose first cell is not covered
@@ -309,7 +322,7 @@ def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | N
                            + r1[k][len(lm.group(0)):])
                 prev_html = prev_html.replace(r1[k], new_row, 1)
                 r1[k] = new_row
-                for q in range(i, i + n_cont):
+                for q in range(first, first + n_cont):
                     r2[q] = lead_empty.sub("<tr>", r2[q], count=1)
     body = "".join(r2[i:])
     if body and next_page:

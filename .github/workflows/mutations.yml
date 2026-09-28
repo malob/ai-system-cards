@@ -62,6 +62,9 @@ jobs:
           - card: anthropic/claude-fable-5-1
             baseline: results-anthropic-claude-fable-5-1.json
             result: mutation-anthropic-claude-fable-5-1.json
+          - card: anthropic/claude-opus-5-5
+            baseline: results-anthropic-claude-opus-5-5.json
+            result: mutation-anthropic-claude-opus-5-5.json
     env:
       CARD: ${{ matrix.card }}
     steps:

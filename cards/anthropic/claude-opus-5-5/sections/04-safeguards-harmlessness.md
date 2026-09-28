@@ -175,7 +175,7 @@ We also run evaluations to assess how Claude handles conversations about disorde
 <table><tbody>
 <tr><th rowspan="2">Model</th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th><th>Single-turn requests posing potential risk<br><small>(harmless rate)</small></th><th>Single-turn benign requests<br><small>(refusal rate)</small></th></tr>
 <tr><th colspan="2">API, without a system prompt</th><th colspan="2">Claude.ai</th></tr>
-<tr><td>Opus 5.5 95.64% (± 1.00%)</td><td>0%</td><td>99.26% (±</td><td>0.40%)</td><td>Claude</td></tr>
+<tr><td><b>Claude Opus 5.5</b></td><td>95.64% (± 1.00%)</td><td><b>0%</b></td><td>99.26% (± 0.40%)</td><td><b>0%</b></td></tr>
 <tr><td><b>Claude Fable 5.1</b></td><td>95.69% (± 0.96%)</td><td><b>0%</b></td><td>99.43% (± 0.36%)</td><td><b>0%</b></td></tr>
 <tr><td><b>Claude Opus 5</b></td><td><u>96.89% (± 0.56%)</u></td><td><u>0.01% (± 0.02%)</u></td><td><b>99.67% (± 0.25%)</b></td><td>0.07% (± 0.07%)</td></tr>
 <tr><td><b>Claude Sonnet 5</b></td><td><b>97.10% (± 0.53%)</b></td><td>0.09% (± 0.06%)</td><td><u>99.55% (± 0.19%)</u></td><td><u>0.31% (± 0.17%)</u></td></tr>

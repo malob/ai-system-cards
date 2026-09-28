@@ -44,6 +44,7 @@ SMALL_TYPE_GAP = 0.8
 LEFT_MARGIN_SLOP = 5.0
 FOOTER_BAND = 42.0
 VERTICAL_GAP = 16.0
+FN_SEPARATOR_WIDTH = 144.0
 
 _NUMERIC = re.compile(r"\d{1,3}")
 _HEADER = re.compile(r"<!--\s*source: source\.pdf pages (\d+)-(\d+)\s*-->")
@@ -549,10 +550,25 @@ def _marker_number(line: RawLine, body_size: float, left_margin: float) -> int |
     return int(text)
 
 
+def _separator_y(page: Any) -> float | None:
+    """The footnote separator: a thin black stroke exactly 2in (144pt) wide,
+    as Google Docs draws it. Lines below it are footnote region whatever
+    their type size (opus-5.5 pp.136-137 set two notes at body size)."""
+    ys = [
+        float(drawing["rect"].y0) for drawing in page.get_drawings()
+        if drawing.get("fill") is None and drawing.get("color") is not None
+        and max(drawing["color"]) < 0.2 and drawing["rect"].height <= 1.5
+        and abs(drawing["rect"].width - FN_SEPARATOR_WIDTH) <= 1.0
+    ]
+    return max(ys) if ys else None
+
+
 def _bottom_small_region(
     lines: Sequence[RawLine], body_size: float, page_height: float,
+    separator_y: float | None = None,
 ) -> tuple[int, int] | None:
-    """Return [start, end) for the contiguous small-type region at page bottom."""
+    """Return [start, end) for the contiguous small-type region at page bottom
+    (a line below the footnote separator belongs to it at any size)."""
     eligible = [i for i, line in enumerate(lines) if not _footer_number(line, page_height)]
     if not eligible:
         return None
@@ -563,7 +579,8 @@ def _bottom_small_region(
         if _footer_number(line, page_height):
             index -= 1
             continue
-        if line.max_size > body_size - SMALL_TYPE_GAP:
+        below_separator = separator_y is not None and line.bbox[1] > separator_y
+        if line.max_size > body_size - SMALL_TYPE_GAP and not below_separator:
             break
         if index + 1 < end:
             following = lines[index + 1]
@@ -583,13 +600,13 @@ def _observe_cached(source_path: str, expected_sha256: str) -> RawObservation:
     if actual_sha256 != expected_sha256:
         raise RuntimeError(f"source PDF changed while observing footnotes: {source_pdf}")
 
-    page_data: list[tuple[list[RawLine], float]] = []
+    page_data: list[tuple[list[RawLine], float, float | None]] = []
     references: list[RawReference] = []
     with fitz.open(stream=source_bytes, filetype="pdf") as document:
         for page_index, page in enumerate(document):
             page_number = page_index + 1
             lines = _page_lines(page, page_number)
-            page_data.append((lines, float(page.rect.height)))
+            page_data.append((lines, float(page.rect.height), _separator_y(page)))
 
             for line in lines:
                 for span in line.spans:
@@ -609,12 +626,12 @@ def _observe_cached(source_path: str, expected_sha256: str) -> RawObservation:
     # Infer the document's body size once. A long footnote can dominate a
     # single page (risk report pp.50/117), so per-page modal size mistakes the
     # 10pt note for body and makes its markers disappear.
-    document_lines = [line for lines, _height in page_data for line in lines]
+    document_lines = [line for lines, _height, _sep in page_data for line in lines]
     body_size = _body_size(document_lines)
     left_margin = _left_margin(document_lines, body_size)
     page_regions: list[tuple[list[RawLine], int, int, float, float]] = []
-    for lines, page_height in page_data:
-        region = _bottom_small_region(lines, body_size, page_height)
+    for lines, page_height, separator_y in page_data:
+        region = _bottom_small_region(lines, body_size, page_height, separator_y)
         if region:
             page_regions.append((lines, region[0], region[1], body_size, left_margin))
         else:

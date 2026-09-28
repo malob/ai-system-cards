@@ -278,7 +278,7 @@ The session was largely a success: Claude did a thorough codebase investigation,
 
 **Category:** :chip[Research]
 
-An evaluation pipeline—in which models were asked to generate longform fiction, matching a user’s prose style—was built out by Claude over multiple sessions. Claude picked the pipeline back up to run the evaluation on four model snapshots. Claude had to locate the evaluation repository, validate the pipeline, refresh an authentication token, install a missing pdf renderer, and navigate sampling and authentication for internal model snapshots. Claude managed to launch all four arms successfully, added API error handling after a crash, addressed a background security finding, and generated a proposal for automating the extension of this evaluation. Claude’s only obvious error was killing its own shell using a `pkill` command (which it recovered from in its next turn).
+An evaluation pipeline—in which models were asked to generate longform fiction, matching a user’s prose style—was built out by Claude over multiple sessions. Claude picked the pipeline back up to run the evaluation on four model snapshots. Claude had to locate the evaluation repository, validate the pipeline, refresh an authentication token, install a missing pdf renderer, and navigate sampling and authentication for internal model snapshots. Claude managed to launch all four arms successfully, added API error handling after a crash, addressed a background security finding, and generated a proposal for automating the extension of this evaluation. Claude’s only obvious error was killing its own shell using a \`pkill\` command (which it recovered from in its next turn).
 
 #### 2.3.5 AECI capability trajectory
 

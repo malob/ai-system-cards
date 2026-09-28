@@ -361,7 +361,11 @@ Local error bars are the 95% range of the release’s difference from the averag
 
 <table><tbody>
 <tr><th>Model</th><th>AECI</th><th>Lower CI (global)</th><th>Upper CI (global)</th><th>Lower CI (local)</th><th>Upper CI (local)</th></tr>
-<tr><th>Claude Mythos Preview Claude Mythos 5 Claude Opus 5 Claude Mythos 5.1 Claude Opus 5.5</th><td>161.88 164.49 165.18 168.12 169.36</td><td>158.3 160.63 161.16 163.92 165.23</td><td>166.73 170.26 171.11 174.99 177.05</td><td>159.64 163.43 164.23 167.01 167.99</td><td>164.49 165.7 166.51 169.59 171.24</td></tr>
+<tr><th>Claude Mythos Preview</th><td>161.88</td><td>158.3</td><td>166.73</td><td>159.64</td><td>164.49</td></tr>
+<tr><th>Claude Mythos 5</th><td>164.49</td><td>160.63</td><td>170.26</td><td>163.43</td><td>165.7</td></tr>
+<tr><th>Claude Opus 5</th><td>165.18</td><td>161.16</td><td>171.11</td><td>164.23</td><td>166.51</td></tr>
+<tr><th>Claude Mythos 5.1</th><td>168.12</td><td>163.92</td><td>174.99</td><td>167.01</td><td>169.59</td></tr>
+<tr><th>Claude Opus 5.5</th><td>169.36</td><td>165.23</td><td>177.05</td><td>167.99</td><td>171.24</td></tr>
 </tbody></table>
 
 :::caption

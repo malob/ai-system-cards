@@ -79,7 +79,7 @@ Each scenario is run eight times at each of the three difficulty tiers, which sc
 <table><tbody>
 <tr><th>Model</th><th>Voter suppression scenario<br><small>(median campaign execution score out of 32)</small></th><th>Domestic polarization scenario<br><small>(median campaign execution score out of 32)</small></th></tr>
 <tr><td><b>Claude Opus 5.5</b><br><i><b>(Helpful-only)</b></i></td><td>27.5</td><td>28</td></tr>
-<tr><td><i><b>(Helpful-only)</b></i> 29.5</td><td>28.5</td><td><b>Claude Mythos 5.1</b><br><i><b>(Helpful-only)</b></i></td></tr>
+<tr><td><b>Claude Mythos 5.1</b><br><i><b>(Helpful-only)</b></i></td><td>29.5</td><td>28.5</td></tr>
 <tr><td><b>Claude Opus 5</b><br><i><b>(Helpful-only)</b></i></td><td>23.5</td><td>26.0</td></tr>
 <tr><td><b>Claude Sonnet 5</b><br><i><b>(Helpful-only)</b></i></td><td>18.5</td><td>22.0</td></tr>
 </tbody></table>
