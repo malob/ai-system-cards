@@ -11,18 +11,19 @@ https://anthropic.com/claude-opus-5-5-system-card (redirects to
 site is still `0e7e3a7` (four cards); ten commits sit on top of it (four
 docs-only from 2026-09-02, six from this session).
 
-**Awaiting the owner:**
+**Awaiting the owner (after the 2026-09-28 curated review):**
 
-1. **Owner scroll pass** of the new card (onboarding step 9) — local preview:
-   `pnpm --dir site build && pnpm --dir site preview --port 4321`, then
-   http://localhost:4321/ai-system-cards/anthropic/claude-opus-5-5/ (note the
-   `/ai-system-cards/` base path).
-2. **Adjudicate three certified canon hunks** (D67/D68), each PDF-verified:
-   fable-5 p.45 '`pkill`' and opus-5 p.87 '`WebSearch`' now keep the PDF's
-   literal backticks in body serif (were monospace code spans without the
-   glyphs); fable-5-1's Table 8.1.A caption drops a redundant `<u>` around its
-   black-styled Opus 5 System Card link (site CSS already underlines links).
-   These are committed; reverting any means a knob or a revert commit.
+1. **Owner scroll → replaced, pending approval, by experiment 19's rendered
+   visual pass**: DOM layout audit at three widths (clean) + screenshots of all
+   26 tables/boxes/code blocks reviewed against the PDF (25 clean, 1 cosmetic
+   p.82 column-width wrap). The owner spotted a split wrapped pill (p.98) in
+   the curated review; fixed as a class in `9aed2f4` (certified cards
+   byte-identical). Proposed: make this pass onboarding step 9 for same-family
+   cards (CLAUDE.md edit awaits the owner's yes).
+2. **Adjudicate the literal-backtick hunks** on fable-5 p.45 and opus-5 p.87
+   (composites in experiment 19's method: PDF | live | new — the new build
+   matches the PDF). The fable-5-1 caption hunk is visually identical (Markdown
+   cleanup only) and needs no decision.
 3. **Deploy decision** — a push to `main` deploys all five cards.
 
 ## Onboarding summary (D67, D68, experiment 18)
