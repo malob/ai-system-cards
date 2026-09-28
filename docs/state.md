@@ -3,146 +3,89 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-09-02 10:10 PDT (session closed out; four docs-only commits after `0e7e3a7` are unpushed — the next push is docs only). **Two certified cards re-onboarded on
-publisher revisions (D66, experiment 16) and DEPLOYED:** the owner said "push away"
-at 21:50; `0e7e3a7` was pushed, hosted verify / Pages run
-[33592389799](https://github.com/malob/ai-system-cards/actions/runs/33592389799)
-passed (four card gates, clean build, deploy), and the live pages carry the
-revisions (Opus 5: §5.2.2.1 bug bounty and the five-row Cowork table, 282 page
-markers; Fable 5: the June 25 changelog block, 462 markers). The hosted mutation
-replay [33592389703](https://github.com/malob/ai-system-cards/actions/runs/33592389703)
-passed for all four cards (Opus 9m12s, Fable 5.1 14m06s, Risk 20m10s, Fable
-29m15s).
-Details: Claude Opus 5 now converts
-the August 19, 2026 revision (198pp; changelog, new §5.2.2.1 bug bounty, re-run
-Cowork table) and Claude Fable 5 the July 16 print with the June 25 changelog
-("very low" alignment risk, repaired §7.2.1 link, BenchCAD correction). Both gates
-are at 0 unsuppressed majors, the corpus-wide release gate is green, and a 33-page
-agent sweep found 0 findings. Both mutation replays landed (Opus re-sampled −1,
-Fable identical). The deployed site is now `0e7e3a7`. Earlier today the fourth card, Claude Fable 5.1 & Claude Mythos 5.1, was
-onboarded and published (D62–D65); the previous baseline was the phase-3 docs
-commit `5b752ae` (hosted run
-[31938330163](https://github.com/malob/ai-system-cards/actions/runs/31938330163)).
-The fourth card, `anthropic/claude-fable-5-1` (212pp, cover-dated 2026-09-01, same
-Google-Docs/Skia export family), converted the same day through the shared
-pipeline: census → manifest → stubs → figures → source inventory → docling
-2.124.0 over 29 rule-scanned pages → 11 majors → 0 in two onboarding class batches
-(D62) → experiment-14 agent sweep round 1 → five more generator classes (D63) →
-round-2 fix verification, 48/49 clean, one residual class-fixed (D64). The owner
-walked the built preview (seven stops) and asked to publish: `8eb82c6` was pushed
-2026-09-01 17:16 PDT; hosted fast-release / Pages run
-[33574671083](https://github.com/malob/ai-system-cards/actions/runs/33574671083)
-passed (all four card gates, clean build, deploy) and the card is live at
-https://malob.github.io/ai-system-cards/anthropic/claude-fable-5-1/ (HTTP 200,
-merged table corners present, listed on the index). The hosted mutation sensitivity run
-[33574670996](https://github.com/malob/ai-system-cards/actions/runs/33574670996)
-on the same commit passed for all four cards: Opus 10m25s, Fable 5.1 14m54s,
-Risk Report 18m55s, Fable 38m03s (inside the 45-minute job limit).
+**Last updated:** 2026-09-28 11:25 PDT. **Fifth card onboarded locally and
+converged: Claude Opus 5.5** (`anthropic/claude-opus-5-5`, 230pp, cover-dated
+2026-09-22), from the owner-supplied canonical URL
+https://anthropic.com/claude-opus-5-5-system-card (redirects to
+`fc1b4471…/Claude Opus 5.5 System Card.pdf`). Nothing is pushed. The deployed
+site is still `0e7e3a7` (four cards); ten commits sit on top of it (four
+docs-only from 2026-09-02, six from this session).
+
+**Awaiting the owner:**
+
+1. **Owner scroll pass** of the new card (onboarding step 9) — local preview:
+   `pnpm --dir site build && pnpm --dir site preview --port 4321`, then
+   http://localhost:4321/ai-system-cards/anthropic/claude-opus-5-5/ (note the
+   `/ai-system-cards/` base path).
+2. **Adjudicate three certified canon hunks** (D67/D68), each PDF-verified:
+   fable-5 p.45 '`pkill`' and opus-5 p.87 '`WebSearch`' now keep the PDF's
+   literal backticks in body serif (were monospace code spans without the
+   glyphs); fable-5-1's Table 8.1.A caption drops a redundant `<u>` around its
+   black-styled Opus 5 System Card link (site CSS already underlines links).
+   These are committed; reverting any means a knob or a revert commit.
+3. **Deploy decision** — a push to `main` deploys all five cards.
+
+## Onboarding summary (D67, D68, experiment 18)
+
+- Census → manifest: fable-5.1-shaped vocabulary plus `#d9ead3` placeholder
+  pills (p.98), `#e2decf` Table 8.1.A row tint, pure-black Table 9.1.A header
+  fill, `#fafafa` caption highlight furniture. Stubs: 12 files; §6 split at the
+  page-top 6.4.11 boundary (p.122), §8 at 8.12 (p.189). TOC pp.5–10 (p.10 the
+  five-link tail, reviewed). Docling 2.124.0 on 24 table pages (pp.95–96
+  excluded — box borders); the pin is recorded in `meta.yaml`.
+- First gate: 20 majors → 2 exact. Classes (D67): fill-aware column chains;
+  cascade dedup needs a character surplus, extension a deficit; the seam group
+  rule continues past a flowing first row; the 144pt footnote separator opens
+  the footnote region at any type size (oracle and RF1, independently); prose
+  backticks escaped and the projection keeps them.
+- Sweep round 1 (8 comparators + 3 linters, 235 units, 215 clean): 2 majors +
+  4 minors fixed as classes (D68): oracle additive `underlines` key for prose
+  underline, centred header columns, wrapped pill close bracket, link-rect
+  underline, Consolas mono. Round 2: 19/19 clean, fixes verified.
+- Production preview DOM-checked: the p.42 underline run, Table 8.1.A header
+  band, p.98 pills, footnotes 11/12 as sidenotes, `--bare` code, literal
+  backticks, 'Training still to come' rowspan 6; the index lists the card.
 
 ## Current card gates
 
-- **fable-5 (July 16 print, June 25 changelog — local, D66):** 20 exact accepted
-  T1 majors (all fingerprints still valid), 0 unsuppressed; `L1 34` / `T1 27`
-  minors; L2 109/109 (the repaired §7.2.1 'Appendix 9.1' link is now an exact
-  internal destination; 1 source-unresolvable remains); P2/F3 309/151; RF1 76/76;
-  seam 0. Canon moved on pp.2–3, 220, 243, 281–288 only.
-- **opus-5 (August 19 revision — local, D66):** 4 exact accepted T1 majors,
-  re-fingerprinted on pp.33/144/145 (same digests; were pp.32/140/141), 0
-  unsuppressed; `T1 8` minors; L2 54/54; P2/F3 192/100 (192 content pages, 100
-  figures; TOC now pp.6–10); RF1 36/36; seam 0. Every page marker shifted (+1
-  from p.3, +4 from p.78); content changed on pp.2, 75–81, 152–154, 156, 197.
-- **risk-report-2026-08:** 1 exact accepted T1 major, 0 unsuppressed; `FN1 1`
-  (declared orphan-ref source defect) / `T1 6` (was 21: phantom-space link-anchor
-  false minors removed) / `TB2 1`; L2 121/121 over 123 occurrences; P2/F3 180/14;
-  RF1 93/92 with the exact p.126 disposition; seam 0. Canon unchanged.
-- **claude-fable-5-1 (deployed 2026-09-01):** 5 exact accepted T1 majors (the pp.159–160
-  seam attribution of a table row the PDF cuts mid-cell, and the p.210 §9.2
-  code-box label 'None' stream-order class merged with Table 9.1.A's dropped
-  repeated header), 0 unsuppressed; `T1 3` minors (three repeated-header drops of the
-  seven-page appendix table); L2 66/66 exact (67 authored occurrences); P2/F3 206
-  required content pages / 103 required figures / 309 DOM events; RF1 30/30;
-  seam 0.
+| card | accepted majors | typed minors | L2 | P2/F3 | RF1 |
+| --- | --- | --- | --- | --- | --- |
+| fable-5 | 20 T1 | L1 34 / T1 24 | 109/109 | 309/151 | 76/76 |
+| opus-5 | 4 T1 | T1 7 | 54/54 | 192/100 | 36/36 |
+| risk-report-2026-08 | 1 T1 | FN1 1 / T1 6 / TB2 1 | 121/121 | 180/14 | 93/92 (p.126 disposition) |
+| claude-fable-5-1 | 5 T1 | T1 3 | 66/66 | 206/103 | 30/30 |
+| claude-opus-5-5 | 2 T1 (p.226) | T1 3 | 84/84 | 223/109 | 32/32 |
 
-The pinned corpus-wide fast-release gate passed with four cards after the
-re-onboarding (160 verifier tests; built audit: 2,178 ids, 1,875 fragment links,
-887 page markers, 368 rendered figures, 373 exact assets, 0 findings). Five
-unit-test fixtures that pinned source page numbers or counts were re-pinned
-(D66); the risk report and fable-5-1 stayed byte-identical.
-
-**Mutation replay after the re-onboarding:** Opus 5 175 / 167 / 170 of 192
-(was 176 / 168 / 171; re-sampled trial sites, strict classes 8/8; baseline
-regenerated). Fable 5 held 191 / 184 / 185 of 200 with every per-class count
-unchanged (baseline file refreshed). Corpus totals over 776 trials: 717 / 687 /
-696.
-
-## What the fourth card changed (D62, D63)
-
-Generator classes, all regression-proven byte-identical on the certified cards:
-
-- tables: cascade dedup cuts only at a whitespace boundary ('100%' over '0%');
-  multiset-anchored row rebuild when docling detaches a label's first word and
-  rotates the values; rebuilt short rows refill docling's own empty cells by
-  column interval; `_promote_split_rowspan` skips all-header rows.
-- tables: **fill-geometry cell merges** (`_merge_cells_by_fill`) — one drawn fill
-  under a non-empty cell that also covers an empty neighbour proves colspan /
-  rowspan (2×2 header corners, two-row labels). The oracle gained an additive
-  `fills` key. The pass runs behind the per-card manifest knob
-  `merge_cells_by_fill`; the certified cards carry the same corner shape and
-  their canon moves only after owner adjudication (D46 precedent).
-- run: list re-tiering after stitch; seam continuation rows with an empty lead
-  join the host's last group start when the seam does not flow; a code box split
-  over three pages chains through its last merged page.
-- assemble: caption continuation by the line's dominant span size; Inconsolata is
-  a mono font.
-- serialize: a bold whose `**` cannot flank is emitted as raw `<b>`; a source
-  backslash before ASCII punctuation is doubled so the renderer keeps it.
-
-Verifier projection classes (verifier code changed; every mutation baseline was
-replayed): inline tags strip to nothing in the projection; `__` is bold only at
-word boundaries; ■/□ join the bullet sets; the projection reads `\\` back as one
-backslash.
-
-`merge_cells_by_fill: true` is now on for EVERY card (D65, after experiment 15's
-review); on the new card `link_text_resolution` stays off (tried for 'Appendix 9.1' p.142 — L2's
-source-first geometry binds that destination to the parent heading that shares
-p.206's top; the D46 knob is for wrong destinations, not coarse ones).
-
-## Experiment 14 — sweep status
-
-Round 1: 8 comparators over all 206 content pages + 3 linters over 11 files; 217
-units, 190 clean; 5 distinct majors (p.88 header corner, p.106 literal `**`,
-p.199 split caption, pp.207–209 stranded seam rows, p.212 second fence) and ~12
-actionable minors, all class-fixed; 38 source-faithful notes recorded in
-`rulebook-round2.md`. Round 2 (fresh `f51-sweep2/` inputs): two fix-verification
-comparators over the 34 affected pages + one rotating 15-page clean sample — 49
-units, 48 clean, zero regressions; the one residual (p.88's corner, a reading-order
-miss in the glued-cell splitter) was class-fixed and verified in the regenerated
-section (D64).
-
-Deferred typed minors (owner list): p.159 `<p>`-wrapped seam-merged cells (TB2
-class); p.207 a wrapped internal link as two adjacent anchors with one target;
-p.55 link span excluding the trailing comma the PDF's link rect covers; p.59
-'Fable 5.1/ Mythos' wrap space from the PDF's text layer; the renderer's
-typographer curling the p.95–96 shell command's straight quotes (site-wide);
-the 'Transcript' chrome on the label-less §6.1.3 boxes (site styling).
+All 0 unsuppressed majors, seams 0. Fast release gate green: 160 verifier
+tests; built audit 5 cards, 2,667 ids, 2,275 fragment links, 1,110 page
+markers, 477 figures, 483 exact assets, 0 findings. fable-5/opus-5 T1 minors
+fell 27/8 → 24/7 when the projection stopped dropping escaped backticks.
 
 ## Mutation evidence
 
-Strict schema-v2 baselines at eight trials/class, seed 5:
+Strict schema-v2 baselines, eight trials/class, seed 5:
 
 | card | classes | trials | detected | intended-major | major-blocked |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Fable | 25 | 200 | 191 | 184 | 185 |
-| Opus | 24 | 192 | 176 | 168 | 171 |
+| Opus | 24 | 192 | 175 | 167 | 170 |
 | Risk Report | 24 | 192 | 173 | 166 | 171 |
 | Fable 5.1 | 24 | 192 | 178 | 170 | 170 |
+| Opus 5.5 | 24 | 192 | 177 | 169 | 169 |
 
-`flatten-chip` is inapplicable on the three chip-less cards. The three certified baselines held byte-identically (key-sorted) after both
-verifier changes of the day (the D62 projection classes and the oracle `fills`
-key); the fourth card's baseline was regenerated on its final canon after round 2
-(totals unchanged at 178 / 170 / 170). The fourth
-card's committed baseline is `docs/experiments/05-mutation-testing/results-anthropic-claude-fable-5-1.json`;
-`.github/workflows/mutations.yml` carries its matrix row.
+After this session's verifier changes (oracle footnote region + `underlines`
+key, RF1 separator, mdproj backticks) the four certified replays are
+byte-identical to their committed baselines (key-sorted `jq`). The new card's
+misses sit in the known weak classes (ST1/ST2, L1, S1, advisory swap-words);
+its `split-item` 1/8 equals opus-5's. `.github/workflows/mutations.yml` has its
+matrix row. A hosted replay happens on the next push.
+
+## Deferred typed minors (owner list, unchanged in kind)
+
+p.225 `<p>`-wrapped seam-merged cell (TB2 class, as fable-5-1 p.159);
+'Transcript' chrome on label-less boxes (pp.95–96, 98; site styling); p.228
+soft-wrapped blocklist entries kept as two code lines (line-for-line
+faithful); p.166 a stray publisher '.' line joins as '. .'.
 
 ## Durable process invariants
 
@@ -161,66 +104,26 @@ card's committed baseline is `docs/experiments/05-mutation-testing/results-anthr
   scopes.
 - Generic acceptance cannot weaken a source-bound or final-projection authority.
 - Commit early and append decisions. Never push without an explicit owner request.
+- Don't regenerate `sections/` or delete oracle caches while a mutation suite or
+  a sweep is reading them (mutate.py loads sections once at start, but agents
+  read files live).
 
-## Open / next
+## Open / next (after the three owner items above)
 
-Owner walkthrough of the built preview completed 2026-09-01 (seven stops: merged
-header corners, the §6.1.3 boxes, Table 9.1.A's seams, the §9.2 code box, the
-p.142 link, the p.42 nested bullets, the p.106 bold lead). Verdict: nothing blocks
-publication. Post-publish improvement list, in the owner's priority order — each
-item is to be scoped for cost and brittleness before deciding, not assumed worth it:
-
-1. **Done (D65):** page labels after a fenced code box — the canon keeps one fence
-   per PDF page with the marker between, and the renderer joins them into one box
-   with each label at the true page turn (fable-5, opus-5, fable-5-1).
-2. **Done (D65, experiment 15):** `merge_cells_by_fill` enabled on the certified
-   cards after agent review of every changed page (26 improvements, 1 neutral, 0
-   regressions across all three changes).
-3. **Done (D65):** adjacent same-target anchors from a wrapped PDF link are one
-   anchor (fable-5-1 p.207, risk-report pp.12/114); eight lines after destination
-   resolution, L2 pairing unchanged.
-4. **Scoped, not built:** label-less prompt/response boxes (§6.1.3 here, §2.20/§2.24
-   in the risk report) have no non-brittle role signal — both boxes share one fill
-   and only a prose cue ('we prompted it with:') distinguishes them, which is the
-   special-casing the owner declined.
-5. **Scoped, deferred:** 'Appendix 9.1' precision needs L2 to accept a heading the
-   anchor text names on the destination page, plus mutation reruns, for one link.
-
-The D65 batch (items 1–3) was pushed at the owner's request 2026-09-01 18:04 PDT
-(`4579d5d`); hosted fast-release / Pages run
-[33577924053](https://github.com/malob/ai-system-cards/actions/runs/33577924053)
-passed (all four gates, clean build, deploy) and the live pages carry the
-changes: merged header corners on Opus 5 (11), Fable 5 (10) and Fable 5.1 (12),
-every blocklist box joined with its page labels inside, and no adjacent
-same-target anchors left on any card. The hosted mutation replay
-[33577923899](https://github.com/malob/ai-system-cards/actions/runs/33577923899)
-on the same commit passed for all four cards: Opus 8m35s, Fable 5.1 14m51s, Risk
-Report 20m32s, Fable 39m58s (inside the 45-minute job limit).
-
-- **Source revisions (2026-09-01 check, acted on the same evening — D66):** the
-  canonical `https://anthropic.com/<doc-slug>` redirect is the authority for the
-  current file. Opus 5 → `ceaf5c7f…` (August 19 revision, 198pp; the July 24
-  reprint `b514064a…` found first was itself superseded); Fable 5 →
-  `57a52ea7…` (July 16 print, June 25 changelog); Fable 5.1 current; the Risk
-  Report has no slug and its URL serves unchanged bytes. Both revised cards are
-  re-onboarded (experiment 16) and deployed at `0e7e3a7`. Method for
-  the next check: follow each slug redirect, re-fetch every `source_url`, and
-  identify the hash-only PDFs the transparency page links by title and page
-  count. The transparency page also lists a Sonnet 5 System Card — a candidate
-  fifth card, not requested.
-- **Mutation-suite speed (parked 2026-09-02, owner may pick up later):** the
-  suite is serial and re-verifies the whole document per trial (~3.5 s on
-  Opus, ~4 s on Fable; T1's whole-document difflib is about half). Experiment
-  17 showed prefix/suffix trimming is exact only behind a shifted-block guard
-  and saves almost nothing because typed residuals bracket each document
-  (patch kept there, not applied). The semantics-free win is a process pool
-  (one Node worker per process; six performance cores here) and sharding the
-  hosted job by class; the order-of-magnitude T1 win is an anchored diff,
-  which is a recorded decision with re-acceptance and regenerated baselines.
+- **Source revisions:** the canonical `https://anthropic.com/<doc-slug>` redirect
+  is the authority for "current" (D66). Method for the next check: follow each
+  slug redirect, re-fetch every `source_url`, compare hashes. The transparency
+  page also lists a Sonnet 5 System Card — a candidate further card, not
+  requested.
+- **Mutation-suite speed (parked 2026-09-02):** serial, ~3.5–4 s per trial;
+  a process pool and per-class hosted sharding are the semantics-free wins
+  (experiment 17 has the analysis).
 - **Table evidence (unchanged from D61):** bind sparse/unruled positives and a
   natural absent-rule-but-separate negative from a genuinely different PDF
-  producer before more table-model work; the fourth card is again the same
-  producer family, so it adds no such evidence.
+  producer before more table-model work; Opus 5.5 is again the same producer
+  family.
+- **Scoped, not built:** label-less box roles (no non-brittle signal); 'Appendix
+  9.1'-style L2 precision (fable-5-1 p.142).
 - **Paused phase 4** and the later authority work are unchanged.
 - **Secondary cleanup:** separate section-plan input from generated Markdown.
 
@@ -229,12 +132,11 @@ Report 20m32s, Fable 39m58s (inside the 45-minute job limit).
 The first attempt converted one card but made the human the test suite. The
 rebuild's goal is unattended mechanical conversion followed by bounded,
 evidence-directed review. Read [charter.md](charter.md),
-[decisions.md](decisions.md) (D1…D66),
+[decisions.md](decisions.md) (D1…D68),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
-[verification-methodology.md](verification-methodology.md). D62–D64 record the
-fourth card's onboarding; experiment 14 is its sweep; D66 / experiment 16 record
-how a certified card follows a publisher revision. For a changed corpus,
-experiment 11 remains the regression-sweep template: changed pages plus renderer
-controls, the PDF as sole authority, and prompts that ask rather than assert the
-expected answer.
+[verification-methodology.md](verification-methodology.md). D67–D68 and
+experiment 18 are the most recent full onboarding (the template for the next
+card); D62–D64 / experiment 14 the previous one; D66 / experiment 16 record how
+a certified card follows a publisher revision. For a changed corpus, experiment
+11 remains the regression-sweep template.
