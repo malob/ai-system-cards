@@ -50,3 +50,16 @@ bold ')' p.57, caption bold extent pp.31/54, '11.13%--a' p.88, 'attackcovering'
 p.96, Figure 6.2.1.B/C citation p.99, 'Claude Mythos 5' vs 'Fable 5' naming
 p.15, underline on a non-second-best value p.71, bold+underline p.81, missing
 caption period p.205, literal '[Figure 8.12.3.E]' p.197, italic '64.8' p.178.
+
+## Round 2 (same day) — fix verification + rotating sample
+
+Inputs `pipeline/.cache/o55-sweep2/` (fresh slices and production-build snapshot
+after commit `6774d45`); rulebook `rulebook-round2.md` (round-1 outcomes and the
+adjudicated source-faithful list added). One agent, 19 units: the four fix pages
+(42, 98, 174, 179) and a seeded 15-page sample of round-1-clean pages (36, 43,
+46, 55, 63, 64, 67, 119, 131, 152, 165, 180, 199, 207, 212). **19 clean, 0
+findings, all four fixes verified** against crops and the served DOM with no
+nearby regressions. Notes, not findings: p.98's box shares the deferred
+'Transcript' chrome; p.199 carries a duplicate publisher link rect over '. '
+before footnote 23's URL, same target, no content effect. The sweep has
+converged.
