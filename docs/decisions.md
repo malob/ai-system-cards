@@ -1633,3 +1633,46 @@ with five cards (built audit 2,667 ids / 2,275 fragment links / 1,110 page
 markers / 477 figures / 483 assets, 0 findings). Verifier code changed, so all
 five mutation suites are re-run. The agent sweep (experiment 18), owner scroll
 pass, and deploy decision follow; nothing is pushed.
+
+## D68 — fifth-card sweep round 1: prose underlines as an additive oracle key, centred header columns, three small classes (2026-09-28)
+
+Experiment 18's first inspection round (8 comparators over all 223 content
+pages + 3 linters over the 12 section files; 235 units, 215 clean) found two
+distinct majors and four actionable minors the gates cannot see, each fixed as
+a class:
+
+- **Prose underlines** (`oracle` additive `underlines` key; `assemble`). The
+  METR quote (p.42) underlines a five-line run whose strokes are 334–348pt
+  wide, above the `rules` 250pt cap, and prose underline read only caption
+  blocks (the old unrestricted version over-fired on chart/table rules, T1
+  6→33). The new key holds dark strokes of ANY width that hug a body span's
+  baseline (2.5pt above to 0.5pt below its bottom). Non-caption prose reads
+  only that key and keeps trailing punctuation; captions keep their path
+  unchanged. Corpus census: every other hugging stroke sits in a table
+  (second-best scores, owned by the table code), so no certified prose moved.
+  Certified oracles differ only by the additive key on table pages.
+- **Centred header columns** (`tables._header_blobs`). Table 8.1.A's top header
+  row arrived as `<td>`; 'Other' / 'models' are centred and start 3.2pt apart,
+  so the left-edge clustering split them and the white-text promotion never
+  matched. Lines sharing a centre within 3pt now join one column.
+- **A wrapped placeholder pill piece ends at its close bracket** (p.98
+  'statement] —' took the em dash).
+- **A rule under a link rect is that link's underline** (p.174 caption: the
+  word after a black-styled link was underlined by word-centre drift).
+- **Consolas** joins the mono font set (p.179 '--bare'), as Inconsolata did.
+
+**Certified canon moves awaiting owner adjudication** (this batch and D67), all
+PDF-verified, one hunk each: fable-5 p.45 '`pkill`' and opus-5 p.87
+'`WebSearch`' keep the PDF's literal backticks in body serif instead of
+becoming monospace code spans (D67); fable-5-1's Table 8.1.A caption loses a
+redundant `<u>` around its black-styled Opus 5 System Card link (article links
+are already underlined by site CSS). Risk report unchanged.
+
+Mutation replays after both batches: fable-5, opus-5 and risk-report are
+byte-identical to their committed baselines (key-sorted `jq`); fable-5-1 is
+identical after its caption change; the new card's baseline is 177 / 169 / 169
+over 24 classes / 192 trials, every strict class 8/8 (its `split-item` 1/8
+matches opus-5's). Gates: every card 0 unsuppressed majors; fast release gate
+green (160 tests, built audit 0 findings). Remaining before certification:
+round-2 fix verification (in progress), the owner scroll pass, and the deploy
+decision. Nothing is pushed.
