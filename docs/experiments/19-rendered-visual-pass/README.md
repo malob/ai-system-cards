@@ -39,6 +39,8 @@ visibly match the PDF where the live site shows a code chip; the fable-5-1
 caption hunk is visually identical (it only removes a redundant `<u>` from the
 Markdown).
 
+**Capture lessons (reviewer C):** the first capture ran before webfonts loaded ('No tools' / 'With tools' looked upright; computed style is italic) and the sticky masthead covered a Table 9.1.A row and two blocklist lines in the tall shots; both checked correct in the live DOM. `shoot.py` now waits for `document.fonts.ready` and un-sticks the masthead.
+
 **Known render-level polish, not new with this card:** a merged 2×2 header
 corner (e.g. 'Evaluation', Table 8.1.A) carries the thin inset rule the site
 draws under every spanning header cell (`global.css` colspan rule); the same

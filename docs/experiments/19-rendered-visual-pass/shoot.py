@@ -6,6 +6,10 @@ with sync_playwright() as p:
     pg = b.new_page(viewport={"width": 1680, "height": 1100}, device_scale_factor=1.5)
     pg.goto(url, wait_until="networkidle")
     pg.wait_for_timeout(1500)
+    # wait for webfonts (italics judged too early read as upright) and hide the
+    # sticky masthead, which otherwise covers rows of tall full-page captures
+    pg.evaluate("() => document.fonts.ready")
+    pg.add_style_tag(content=".masthead, header { position: static !important; }")
     items = pg.evaluate("""() => {
       const marks = [...document.querySelectorAll('.pagemark')];
       const pageOf = el => { let p = null; for (const m of marks) { if (m.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING || m === el || el.contains(m)) { if (!el.contains(m)) p = m.id; } } return p; };
