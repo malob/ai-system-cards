@@ -105,7 +105,7 @@ faithful); p.166 a stray publisher '.' line joins as '. .'.
   a sweep is reading them (mutate.py loads sections once at start, but agents
   read files live).
 
-## Open / next (after the three owner items above)
+## Open / next
 
 - **Source revisions:** the canonical `https://anthropic.com/<doc-slug>` redirect
   is the authority for "current" (D66). Method for the next check: follow each
