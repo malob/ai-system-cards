@@ -26,13 +26,17 @@ process rules. `docs/` holds the design notes and decision log.
 ## Where this is headed
 
 The D35 question — one shared pipeline vs per-document pipelines — now has a
-five-document answer: **Claude Fable 5 & Claude Mythos 5** (317pp), **Claude Opus 5**
+six-document answer: **Claude Fable 5 & Claude Mythos 5** (317pp), **Claude Opus 5**
 (198pp), **Risk Report: August 2026** (186pp), **Claude Fable 5.1 & Claude
-Mythos 5.1** (212pp), and **Claude Opus 5.5** (230pp) all convert through the shared pipeline. Per-document config supplies manifest roles, section stubs, and narrowly
+Mythos 5.1** (212pp), **Claude Opus 5.5** (230pp), and Google DeepMind's **Gemini 4
+Argon Safety & Security Report** (217pp, `google-deepmind/gemini-4-argon`, D70–D71)
+all convert through the shared pipeline. Per-document config supplies manifest roles, section stubs, and narrowly
 scoped grammar knobs; generalization fixes live as classes in `pipeline/`, never as
-document-instance patches (D38–D48, D62, D67–D68). This proves one pipeline only within Anthropic's
-Google-Docs-export family. Other vendors' PDFs (different producers and visual
-grammars) remain untested. Phase-4 structural-authority integration is paused. The
+document-instance patches (D38–D48, D62, D67–D68, D70–D71). The Gemini card is the first
+DIFFERENT VENDOR and visual grammar (Google Sans, unnumbered style-tier headings,
+light header bands, bold `Figure N:` captions, fully ruled tables) — but the SAME
+producer (Skia/PDF Google Docs Renderer), so a different producer remains
+untested. Phase-4 structural-authority integration is paused. The
 immediate task is the shadow table extraction/grid program in
 `docs/experiments/13-table-candidate-shadow/`: a raw-rule origin/projection overlay now
 composes topology and word ownership for the fully ruled hard set without mutating
@@ -116,6 +120,9 @@ env CARD=anthropic/claude-fable-5-1 uv run --with pymupdf python pipeline/verifi
 
 env CARD=anthropic/claude-opus-5-5 uv run --with pymupdf python pipeline/generate/run.py --all
 env CARD=anthropic/claude-opus-5-5 uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
+
+env CARD=google-deepmind/gemini-4-argon uv run --with pymupdf python pipeline/generate/run.py --all
+env CARD=google-deepmind/gemini-4-argon uv run --with pymupdf python pipeline/verifier/calibrate.py WORKTREE
 ```
 
 Full generation now prints the pinned, corpus-wide handoff below. After the site
@@ -127,34 +134,40 @@ and seams in parallel, then runs the production renderer tests and clean build.
 uv run --python 3.12 --with 'pymupdf==1.28.2' python pipeline/verify_release.py
 ```
 
-All five gates pass at **0 unsuppressed majors**, and each has a 0-seam baseline.
+All six gates pass at **0 unsuppressed majors**, and each has a 0-seam baseline.
 Fable has 20 exact accepted T1 majors: 3 historical owner-adjudicated visual-order
 findings and 17 maintainer/source-adjudicated table-order findings under broad owner
 authorization. Opus has 4 maintainer/source-adjudicated exact T1 findings; Risk has 1; Fable 5.1 has 5
 (the pp.159–160 seam attribution of a table row cut mid-cell, and the p.210 code-box
 label 'None' stream-order class, D62); Opus 5.5 has 2 (the same p.226 code-box
-label class merged with its appendix table's dropped repeated header, D67).
+label class merged with its appendix table's dropped repeated header, D67); Gemini 4
+Argon has 8 (p.147 Figure 3.38's table, which PyMuPDF streams column by column, and the
+pp.184–185 seam attribution of Table 5.3's cut first row, D71).
 The 22 new findings were exposed by removing blanket table demotion, not by changing
 card content. A new finding on the same page is not covered, and a stale acceptance
-makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 24`;
-opus-5 `T1 7`; risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
+makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 21`;
+opus-5 `T1 4`; risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
 D45) / `T1 6` / `TB2 1` (seam-cell advisor); claude-fable-5-1 `T1 3` (three repeated-header drops of its seven-page appendix table);
-and claude-opus-5-5 `T1 3` (the same class, pp.223–225). The opus/risk T1 counts fell from 9/21
+claude-opus-5-5 `T1 3` (the same class, pp.223–225); and gemini-4-argon `T1 5` /
+`TB2 3` (seam-cell advisors). The opus/risk T1 counts fell from 9/21
 when D62's projection classes removed phantom-space and bullet-glyph false minors;
-fable/opus fell again (27/8 → 24/7) when D67's projection restored escaped backticks.
-L2 is clean at 109 Fable, 54 Opus, 66 Fable 5.1 (67 authored occurrences), and 84
-Opus 5.5 authored destinations, plus 121 Risk Report logical destinations over 123
-authored occurrences; source expectations cover all 434 authored occurrences (Fable's June 25 revision
+fable/opus fell again (27/8 → 24/7) when D67's projection restored escaped backticks,
+and again (24/7 → 21/4) when D71's projection kept literal '<' in code spans and
+escapes and literal '|' outside pipe tables.
+L2 is clean at 109 Fable, 54 Opus, 66 Fable 5.1 (67 authored occurrences), 84
+Opus 5.5 and 23 Gemini 4 Argon authored destinations, plus 121 Risk Report logical
+destinations over 123 authored occurrences; source expectations cover all 457 authored occurrences (Fable's June 25 revision
 repaired the §7.2.1 'Appendix 9.1' link, D66). Fable's three additional L1 minors are publisher-broken
 named destinations, reported even when one uniquely printed heading can be recovered
 under R2.
 P2/F3 source authority requires 309 pages/151 rendered figures for Fable, 192/100 for
-Opus (August 19 revision, D66), 180/14 for Risk, 206/103 for Fable 5.1, and 223/109
-for Opus 5.5. The built audit totals 1,110 page markers, 477 rendered figures, and 483
-exact copied raster assets (2,667 ids, 2,275 fragment links), with 0 findings. RF1 is
-clean at raw reference/definition counts 76/76, 36/36, 93/92, 30/30 (Fable 5.1), and
-32/32 (Opus 5.5, whose notes 11/12 are set at body size — the 144pt separator opens
-the region, D67); Risk's difference is the exact,
+Opus (August 19 revision, D66), 180/14 for Risk, 206/103 for Fable 5.1, 223/109
+for Opus 5.5, and 212/85 for Gemini 4 Argon. The built audit totals 1,322 page markers,
+562 rendered figures, and 569 exact copied raster assets (3,129 ids, 2,571 fragment
+links), with 0 findings. RF1 is clean at raw reference/definition counts 76/76, 36/36,
+93/92, 30/30 (Fable 5.1), 32/32 (Opus 5.5, whose notes 11/12 are set at body size — the
+144pt separator opens the region, D67), and 28/28 (Gemini 4 Argon, whose fn 11 tail sits
+alone under the separator on p.36, D71); Risk's difference is the exact,
 source-hash-bound disposition for the publisher's stray p.126 superscript 18.
 These are measured residuals, not permission to ignore drift; re-baseline here only
 after an owner-approved fix batch moves them. `calibrate.py` takes a git ref, the
@@ -184,7 +197,7 @@ event stream; stale, malformed, or incomplete artifacts fail closed.
 
 **Regression scope is the target plus every non-target certified document.** For the
 current corpus, a shared-pipeline change therefore requires regenerating and gating
-all five documents. Each non-target's `sections/` must remain byte-identical (`git
+all six documents. Each non-target's `sections/` must remain byte-identical (`git
 diff`) unless an owner-approved, PDF-verified fidelity improvement intentionally moves
 its canon. This regression net has repeatedly caught real cross-document damage.
 
@@ -275,6 +288,11 @@ table task and not a mandate to automate editorial decisions.
    role from the fixed vocabulary (D39) — verify ambiguous ones against page renders,
    never guess. Same hex, different card, different role is NORMAL (D39). Set
    `document: toc_pages` (the PDF's own contents pages). No chips → `chips: {}`.
+   A template whose headings are not all numbered by depth (Google DeepMind's) declares
+   `headings:` style tiers and `document: heading_source: outline` (D70); cross-check the
+   generated headings against the PDF outline. Other template knobs from D70–D71:
+   `link_text_resolution: geometry`, `cell_fit_breaks`, `header_rows_by_fill`,
+   `cell_run_restyle`, and a `highlight` fill role with a declared class.
 3. Extract candidate observations: oracle (auto-cached per-document on first run), page renders
    (`pdftoppm -png -r 150 source.pdf extracted/pages/p`), figures (`pdfimages -p -png`
    + `extract_figures.py` — note the `-p`), docling tables (`tables.py <pages>` with

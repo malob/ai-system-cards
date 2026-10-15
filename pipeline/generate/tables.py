@@ -2584,6 +2584,12 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
                     # the cell already breaks here (a _restyle_cells tier
                     # break) — don't double it
                     pending = False
+                if pending and re.match(r'<span class="hl', t):
+                    # a break before a HIGHLIGHT lands outside it: inside, the
+                    # tint paints a sliver at the end of the previous line
+                    # (Figure 3.43 p.155, visual pass)
+                    out.append(pending)
+                    pending = False
                 out.append(t)
                 continue
             vis = _h.unescape(t)
