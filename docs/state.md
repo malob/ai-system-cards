@@ -42,8 +42,11 @@ grammar, the judgment calls below, and the deploy decision.
   17 seeded clean pages (17 clean).
 - **Rendered visual pass:** DOM audit at 1338/1680/375px clean (212 labels, 28
   sidenotes at 1680, 0 overlaps, no horizontal scroll, 85 lazy figures decode);
-  14 table screenshots reviewed (see `pipeline/.cache/g4a-visual/findings.jsonl`;
-  outcome in the wrap-up below when complete).
+  14 table screenshots: 12 clean, the p.92 blank line (already fixed) and a
+  highlight sliver (fixed: breaks land outside highlight spans)
+  (`docs/experiments/20-gemini-4-argon-sweep-round1/visual-findings.jsonl`).
+- **Release:** fast release gate PASSED with six cards (all gates, artifacts,
+  seams, 170 verifier + 45 site tests, clean build, 0 audit findings).
 
 ## Owner judgment calls (Gemini)
 
@@ -81,9 +84,10 @@ assets, 0 findings.
 
 Strict schema-v2 baselines, eight trials/class, seed 5. The five certified
 replays held byte-identically on this session's verifier (twice: after the
-first and the final verifier batch). The Gemini baseline is generated on its
+first and the final verifier batch). The Gemini baseline was generated on its
 final canon (`results-google-deepmind-gemini-4-argon.json`; its row is in
-`.github/workflows/mutations.yml`).
+`.github/workflows/mutations.yml`); its misses sit in the known weak classes
+(ST2 split-item 5/8, ST1 6/8, L1 7/8, advisory swap-words).
 
 | card | classes | trials | detected | intended-major | major-blocked |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -92,6 +96,7 @@ final canon (`results-google-deepmind-gemini-4-argon.json`; its row is in
 | Risk Report | 24 | 192 | 173 | 166 | 171 |
 | Fable 5.1 | 24 | 192 | 178 | 170 | 170 |
 | Opus 5.5 | 24 | 192 | 177 | 169 | 169 |
+| Gemini 4 Argon | 24 | 192 | 186 | 178 | 178 |
 
 ## Deferred typed minors (owner list, unchanged in kind)
 

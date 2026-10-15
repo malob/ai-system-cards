@@ -209,9 +209,10 @@ different existing heading; L2 must catch what existence-only audits cannot. Cur
 seed-5 schema-v2 floors separate detection, intended-major severity, and actual major
 blocking. Fable's 25 classes / 200 trials are 191 / 184 / 185; Opus's 24 / 192 are
 175 / 167 / 170 (re-sampled on the August 19 revision, D66); Risk's 24 / 192 are 173 / 166 / 171; Fable 5.1's 24 / 192 are 178 / 170 / 170;
-Opus 5.5's 24 / 192 are 177 / 169 / 169
-(`flatten-chip` is inapplicable on the latter four: no chips). Across 968 trials the
-totals are 894 detected, 856 intended-major, and 865 major-blocked (Fable's replay on
+Opus 5.5's 24 / 192 are 177 / 169 / 169; Gemini 4 Argon's 24 / 192 are 186 / 178 / 178
+(`flatten-chip` is inapplicable on the latter five: no chips). Across 1,160 trials the
+totals are 1,080 detected, 1,034 intended-major, and 1,043 major-blocked; the five
+certified replays held byte-identically on D70–D71's verifier (Fable's replay on
 the July 16 print held 191 / 184 / 185 identically). V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
 eligible; misses concentrate in ST1/ST2/ST3, L1, S1, and ordinary advisory word swaps.
 The strict artifacts combine independent per-class runs with the final hide-image/V1
