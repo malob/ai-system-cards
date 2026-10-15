@@ -764,7 +764,7 @@
    "details": [
     {
      "file": "03e-cot-transparency.md",
-     "site": "We select five LinuxArena environments (",
+     "site": "Our results demonstrate a sharp capabili",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
@@ -812,7 +812,7 @@
     },
     {
      "file": "03c-loss-of-control.md",
-     "site": "We also measure the degree of automation",
+     "site": "In the two sections following this risk ",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
@@ -1088,12 +1088,12 @@
      "site": "without",
      "caught": true,
      "detected": true,
-     "intended_new_flags": 2,
+     "intended_new_flags": 1,
      "intended_major": true,
      "major_blocked": true,
      "gate_blocked": true,
-     "gate_exit": 2,
-     "gate_reason": "acceptance-config"
+     "gate_exit": 1,
+     "gate_reason": "major"
     },
     {
      "file": "06-third-party-harm.md",
@@ -1383,7 +1383,7 @@
     },
     {
      "file": "03e-cot-transparency.md",
-     "site": "< -> >=",
+     "site": "over -> under",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
@@ -2488,7 +2488,7 @@
     },
     {
      "file": "03a-frontier-safety-misuse.md",
-     "site": "CBRN Uplift 1 CCL Definition:",
+     "site": "Biological and chemical",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
@@ -2512,7 +2512,7 @@
     },
     {
      "file": "03a-frontier-safety-misuse.md",
-     "site": "Radiological and nuclear domains (TCL)",
+     "site": "Figure 3.3:",
      "caught": true,
      "detected": true,
      "intended_new_flags": 1,
