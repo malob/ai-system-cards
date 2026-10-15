@@ -321,7 +321,9 @@ CAPTION_LEAD = re.compile(r"^\[(Figure|Table|Transcript)\b")
 # the second caption grammar: a BOLD 'Figure 3.18' / 'Table 3.2' label + colon
 # opening the line (gemini-4-argon — all 97 of its captions; prose mentions
 # like 'Figure 3.19 because …' carry no colon and no bold)
-BOLD_CAPTION_LEAD = re.compile(r"^(?:Figure|Table)\s+\d+(?:\.\d+)*[a-z]?\s*:")
+# — or a period: 'Figure 3.36. Top left: …' (p.144, the card's one period
+# form; the bold label still rules out prose mentions)
+BOLD_CAPTION_LEAD = re.compile(r"^(?:Figure|Table)\s+\d+(?:\.\d+)*[a-z]?\s*[:.](?!\d)")
 
 
 def _caption_lead(line) -> bool:
@@ -334,7 +336,7 @@ def _caption_lead(line) -> bool:
             and norm.INVISIBLES.sub("", s["text"]).strip()]
     # the bold run must cover the LABEL; the colon is bold in 40 of the 97
     # and regular in the rest ('**Table 3.2**: Scoring rubric …')
-    need, got = len(re.sub(r"[\s:]", "", m.group(0))), 0
+    need, got = len(re.sub(r"[\s:]", "", m.group(0)).rstrip(".")), 0
     for s in lead:
         if not s["bold"]:
             return False
@@ -347,7 +349,9 @@ def _caption_lead(line) -> bool:
 # also distinguishes ordered-list markers from prose lines starting with digits
 # a plain HYPHEN bullet carries the same ZWSP signature ('-​Suicide &
 # self-harm', gemini-4-argon p.179); bare '-' prose never does
-LIST_MARKER = re.compile(r"^([●•◦▪‣○■□-]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists
+# lower ROMAN numerals carry the same signature ('ii.​A holistic …',
+# gemini-4-argon p.15 — right-aligned markers, so x0 steps 85/83/81)
+LIST_MARKER = re.compile(r"^([●•◦▪‣○■□-]|\d{1,2}[.)]|[a-z][.)]|(?:ii|iii|iv|vi{1,3}|ix|xi{1,3})[.)])​")  # incl. lettered sub-lists
 # Word-style lists (pasted reviews) use a LONE LATIN 'o' as the level-1
 # glyph, no ZWSP (UK AISI, opus-5 p.104). Only a lone 'o' + space at a deep
 # indent qualifies — 'of …' etc. never match.
@@ -648,10 +652,21 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                     2 if g in "■▪□‣" else None)
             shift_ok = tier is None or line["bbox"][0] - (90 + 36 * tier) >= 12
             q_item = _is_quote(line, page, list_tiers)
+            marker_x0 = line["bbox"][0]
+            if re.match(r"[ivx]{1,4}[.)]​", line["text"].lstrip()) and len(line["segs"]) > 1:
+                # Google Docs RIGHT-aligns roman numerals (gemini-4-argon p.15:
+                # 'i.' / 'ii.' / 'iii.' start at x 85/83/80), so their x0
+                # splits one list into tiers; the item TEXT is aligned — tier
+                # on it, less the 18pt hanging indent (a left-aligned marker
+                # gives its own x0 back unchanged)
+                txt = next((sg for _, _, sg in line["segs"][1:]
+                            if norm.INVISIBLES.sub("", sg["text"]).strip()), None)
+                if txt is not None:
+                    marker_x0 = txt["bbox"][0] - 18
             cur = {"type": "item", "lines": [line], "page": pno,
-                   "marker_x0": line["bbox"][0],
+                   "marker_x0": marker_x0,
                    "quote": q_item and quote_ctx and shift_ok}
-            marker_x0s.add(round(line["bbox"][0]))
+            marker_x0s.add(round(marker_x0))
             # an item that is clearly NOT at quote depth closes any quote
             # context: a page-leading hanging-indent continuation of the
             # previous page's item self-classifies as a quote paragraph and

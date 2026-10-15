@@ -66,6 +66,7 @@ _REFERENCE_LINK = re.compile(
 _HTML_TAG = re.compile(r"<[^>\n]+>")
 _ESCAPED_PUNCTUATION = re.compile(r"\\[\\`*{}\[\]()#+.!_<>-]")
 _INVISIBLES = re.compile("[\u00ad\u200b\u200c\u200d\u2060\ufeff]")
+_INVISIBLE_CHARS = _INVISIBLES
 _WRAP_HYPHEN = re.compile(r"(\w)-\s+(?=[a-z])")
 _A1_HYPHEN = re.compile(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])")
 _LIGATURES = {
@@ -237,6 +238,9 @@ def _canonical_plain(text: str) -> str:
     text = re.sub(r"\[([^\]]+)\]\((?:https?://)?[^)]+\)", r"\1", text)
     text = re.sub(r"<(https?://[^>\s]+)>", r"\1", text)
     text = re.sub(r"</?(?:pre|code)\b[^>]*>", "", text, flags=re.I)
+    # a line break inside a note (gemini-4-argon fn 11's TAC list) is
+    # layout, not a printed glyph
+    text = re.sub(r"<br\s*/?>", " ", text, flags=re.I)
     text = re.sub(r"(?m)^(?:`{3,}|~{3,})[^\n]*$", "", text)
     text = text.replace("`", "")
     text = re.sub(r"(?m)^\s*[-*+]\s+", " ", text)
@@ -665,6 +669,30 @@ def _observe_cached(source_path: str, expected_sha256: str) -> RawObservation:
             offset for offset, line in enumerate(region_lines)
             if _marker_number(line, body_size, left_margin) is not None
         ]
+        separator_y = page_data[page_index][2]
+        tail = [line for line in region_lines
+                if separator_y is not None and line.bbox[1] > separator_y
+                and _INVISIBLE_CHARS.sub("", line.text).strip()]
+        if (not marker_offsets and tail and len(tail) == sum(
+                1 for line in region_lines if _INVISIBLE_CHARS.sub("", line.text).strip())
+                and open_definition and open_definition[1] == page_number - 1):
+            # The page's footnote region holds ONLY the previous page's
+            # continued note: the 2in separator opens the region, and every
+            # visible line sits below it (gemini-4-argon p.36, footnote 11).
+            # That is observed, not guessed; without a separator the rule
+            # below still refuses to guess.
+            definition_index, _ = open_definition
+            previous = definitions[definition_index]
+            definitions[definition_index] = RawDefinition(
+                previous.number,
+                previous.marker_page,
+                previous.marker_bbox,
+                page_number,
+                (previous.text + " " + _join_lines(tail)).strip(),
+                previous.line_bboxes + tuple((page_number, line.bbox) for line in tail),
+            )
+            open_definition = (definition_index, page_number)
+            continue
         if not marker_offsets:
             # There is no source marker to distinguish a true continuation
             # from a small caption/table at page bottom.  Do not guess.  The

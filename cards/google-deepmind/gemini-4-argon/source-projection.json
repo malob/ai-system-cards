@@ -3897,7 +3897,7 @@
   "inputs": {
     "canonical_sections": {
       "digest_method": "l2.sections_sha256.v1",
-      "sha256": "18f0760f609d744c7d3be4c44364476c23d00f0d17f4dca32b6500ac45e692d0"
+      "sha256": "b73e14247e6ff3374b33e274f6d3689f4628213e8f77b5ee6ee2cc8dcfb9aff0"
     },
     "figures_map": {
       "file": "extracted/figures-map.json",

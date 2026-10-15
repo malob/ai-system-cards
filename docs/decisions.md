@@ -1764,3 +1764,66 @@ oracles; certified oracles differ only by the additive `outline` key):**
 
 Gate after this batch: SRC/P2/F3, RF1 and FN1 clean; L2 16 and T1 14 majors
 remain (table pages and link-destination classes), under investigation.
+
+## D71 — gemini-4-argon convergence batch: ruled tables, link destinations, highlights (2026-10-15)
+
+Continuation of D70; every shared change regenerated all five certified cards
+byte-identical from fresh oracles (certified oracles differ only by the
+additive `outline`, `hrules` and `vrules` keys). The card gates at 0
+unsuppressed majors; seam audit 0.
+
+- **Ruled-table repairs** (`tables.py`; oracle additive `hrules`/`vrules`: every
+  drawn horizontal/vertical segment, any length — the 250pt-capped `rules`
+  loses wide row rules). Four narrow classes, each a no-op without the drawn
+  evidence it names:
+  - *rehome across a row rule* — docling cut Table 3.1's 'Stealth …' cell above
+    its drawn rule (p.18) and opened the next row with its tail; the head of a
+    cell lying above a rule crossing its column returns to the cell above;
+  - *rowspan an unruled empty cell* — in a table that draws internal row rules,
+    an empty cell with no rule between it and the cell above continues that
+    cell ('Loss of Control' spans three rows);
+  - *reproject on lost letters* — when docling's cells lack LETTERS or DIGITS
+    the source has (p.154: 'Write health.sh', 'user bash' dropped) AND the
+    drawn rules form exactly docling's grid, every span goes to the cell
+    rectangle containing it. Glyph-only differences never trigger it (a first
+    version fired on risk-report p.113's '‚', caught by the regression net);
+  - *pad a dropped empty cell* — span-free ruled tables only (a first version
+    padded rows under a real rowspan on opus-5 Table 2.2.A, caught by the net).
+  Experiment 13's typed model is NOT adopted; these are legacy-architecture
+  classes gated on drawn rules.
+- **Seam merges**: entities decoded before the sentence-end test ('recall
+  &amp;' read as terminated); a continuation under a rowspan group aligns past
+  its extra empty lead (Table 3.6 p.92→93); only a fragment's FIRST row can be
+  a cut row (later rows sit below a drawn rule). Run matching for these passes
+  also reads column regions (a bold lead + the rest of its line).
+- **Links**: per-card `link_text_resolution: geometry` — the anchor text never
+  overrides the destination. Three DeepMind anchors name a different section
+  than they jump to (p.6 'Section 2' → 2.2, 'Section 3.4' → 3.4.1.4; p.181
+  'Section 3.2' → 4.2); the archive reproduces the jump (L2 demands it). A
+  destination INSIDE a wrapped heading names that heading. L2 pairs a relocated
+  footnote link with a repeated label ('Section 3.7' in five notes) through its
+  footnote's reference page.
+- **Lists**: a hyphen + ZWSP marker is a bullet (generator and the verifier's
+  LIST_MARKER mirror); the T1 oracle text drops it only with item text 6–16pt
+  to its right, so fable-5's '-' table placeholders stay text.
+- **Projection** (`mdproj`): a literal '<' in an inline code span or an escaped
+  '\<' survives the tag strip; '|' is blanked only on pipe-table rows. Typed
+  minor baselines move for real fixes only: fable-5 T1 24 → 21 ('<link>',
+  '<result>', '|'), opus-5 T1 7 → 4 ('<answer>', '<score>', '<result>').
+- **Meaningful highlights**: a manifest `highlight` fill wraps its table-cell
+  spans in a declared class (`hl-orange`, Figure 3.43's history-wiping commands,
+  which the caption cites). The site allows the class and tints it.
+- **In-cell returns**: per-card `cell_fit_breaks` — an in-cell line whose
+  successor's first word would have fit ends in `<br>` (never across a
+  paragraph gap). Code lines whose next token is too long to have fit still
+  join: no observable signal separates them (every line ends in a space).
+- **Exact acceptances (8 T1)**: p.147 Figure 3.38's table streams column by
+  column in PyMuPDF while the canon reads rows; pp.184–185 seam attribution of
+  Table 5.3's cut first row. Source-adjudicated; full-gate stale checks apply.
+
+Known, NOT fixed (owner judgment / later): the bordered single-column CCL
+definition boxes (pp.22, 34, 41, 64 — docling sees no table) render as plain
+paragraphs; Figure 3.38's spanning first row renders above its table and its
+answer options join; Table 5.2's p.184 continuation is a second sub-row;
+risk-report p.113 prints '‚' (U+201A) where its canon has ',' (a D41 glyph-
+restoration gap, already a typed T1 minor there).

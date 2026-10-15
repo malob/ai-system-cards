@@ -508,7 +508,16 @@ def stitch(blocks: list[dict]) -> list[dict]:
             continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
                 and out[-1]["type"] == "caption"
-                and blk["lines"][0].get("size", 11) <= 9.5):
+                and (blk["lines"][0].get("size", 11) <= 9.5
+                     # a BODY-size caption continues at its own size
+                     # (gemini-4-argon Figures 3.20/3.22, pp.107→108, 114→115)
+                     # — never into a paragraph opening on a BOLD lead (the
+                     # p.129 '**Analysis**:' after Figure 3.30's period-less
+                     # caption)
+                     or (abs(assemble._dominant_size(blk["lines"][0])
+                             - assemble._dominant_size(out[-1]["lines"][0])) < 0.6
+                         and not (blk["lines"][0]["segs"]
+                                  and blk["lines"][0]["segs"][0][2]["bold"])))):
             # caption wrapped across the page break: the continuation has no
             # bracket lead and no figure region, so it classified as a body
             # paragraph — but caption-size lines betray it (6.5.2.B class)

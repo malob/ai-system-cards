@@ -47,7 +47,7 @@ fills:
   "#e8f0fe": {role: table-header-fill, exclude: true}   # light-blue header bands,
                                                         # 12 pages (16, 26-27, 44, 87, 92,
                                                         # 108, 161, 178, 183-184, 194)
-  "#f3f3f3": {role: table-cell-bg, exclude: true}       # p.44 Table 3.4 'Elicitation
+  "#f3f3f3": {role: table-subheader-fill, exclude: true} # p.44 Table 3.4 'Elicitation
                                                         # method' sub-header row
   "#f1f3f4": {role: page-furniture, exclude: true}      # faint paste highlight behind
                                                         # single words ('setuid', 'hg diff',
@@ -90,3 +90,10 @@ document:
   # ends in a deliberate break (Figure 3.43's code lines pp.154-155, the
   # 'Environment: … / Model: …' stack) — not only at bold label edges
   cell_fit_breaks: true
+  # header rows are the table's leading rows on the header BAND (#e8f0fe /
+  # #f3f3f3): Table 3.4's band holds mostly BLACK text (p.44)
+  header_rows_by_fill: true
+  # cell bold extents and paragraph breaks from each cell's own span run
+  # (tall and page-cut cells: Table 3.5's bold 'Uncertainties & verification:'
+  # labels and their paragraph breaks, Table 3.6's bold key findings)
+  cell_run_restyle: true

@@ -54,9 +54,9 @@ We ran our strategic planning evaluation on Gemini 4 Argon on Model A and Model 
 <!-- p.44 -->
 
 <table><tbody>
-<tr><td>Model</td><td colspan="3">Gemini 4 Argon (Model C)</td><td colspan="3">Gemini  3.8 Flash</td></tr>
-<tr><td>Elicitation method</td><td>Direct request</td><td>Jailbreak + direct request</td><td>Dynamic prompting</td><td>Direct request</td><td>Jailbreak + direct request</td><td>Dynamic prompting</td></tr>
-<tr><td>% of all elicitation attempts resulting in an elicited plan</td><td>1.8% (1/55)</td><td>3.6% (2/55)</td><td>98.2% (54/55)</td><td>9.1% (5/55)</td><td>9.1% (5/55)</td><td>98.2% (54/55)</td></tr>
+<tr><th>Model</th><th colspan="3">Gemini 4 Argon (Model C)</th><th colspan="3">Gemini  3.8 Flash</th></tr>
+<tr><th>Elicitation method</th><th>Direct request</th><th>Jailbreak + direct request</th><th>Dynamic prompting</th><th>Direct request</th><th>Jailbreak + direct request</th><th>Dynamic prompting</th></tr>
+<tr><td>% of all elicitation attempts resulting in an elicited plan</td><td>1.8%<br>(1/55)</td><td>3.6%<br>(2/55)</td><td>98.2% (54/55)</td><td>9.1% (5/55)</td><td>9.1% (5/55)</td><td>98.2% (54/55)</td></tr>
 <tr><td># of scenarios with at least one elicited plan output</td><td>1/11</td><td>1/11</td><td>11/11</td><td>1/11</td><td>1/11</td><td>11/11</td></tr>
 </tbody></table>
 

@@ -23,12 +23,8 @@ All things considered, we conclude that Argon is transparent by default, though 
 ![](assets/figures/p114-1.png)
 
 :::caption
-**Figure 3.22:** Overview of our main findings. Gemini 4 Argon presents a substantial boost on no-CoT reasoning performance over previous Gemini versions. This is accompanied by a
+**Figure 3.22:** Overview of our main findings. Gemini 4 Argon presents a substantial boost on no-CoT reasoning performance over previous Gemini versions. This is accompanied by a<!-- p.115 --> stronger capability of the model to control its CoT in ways that suppress information. Eliciting the model reveals that it is capable of evading action-only monitors in control environments, but its trajectories will be flagged by monitors with access to its thoughts. However, when elicited to evade monitors that also have access to its CoT, the model more frequently evades monitors with access to the full trajectory (but monitors still detect many attempts).
 :::
-
-<!-- p.115 -->
-
-stronger capability of the model to control its CoT in ways that suppress information. Eliciting the model reveals that it is capable of evading action-only monitors in control environments, but its trajectories will be flagged by monitors with access to its thoughts. However, when elicited to evade monitors that also have access to its CoT, the model more frequently evades monitors with access to the full trajectory (but monitors still detect many attempts).
 
 ##### 3.4.5.2 Model Training Procedure
 
@@ -420,7 +416,9 @@ Among all models tested Gemini 4 Argon exhibits the highest CoT controllability,
 
 ![](assets/figures/p144-1.png)
 
+:::caption
 **Figure 3.36**. Top left: Gemini 4 Argon exhibits the highest CoT controllability among Gemini models, with a moderate increase over the previous generation on both strict controllability (the whole CoT complies) and continuous controllability (the share of CoT units that comply). Top right: Strict CoT controllability decreases with reasoning length for every model. The plot beneath shows the number of samples at each reasoning length. Bottom left: Restricting to correctly answered questions, we split each model's traces by whether the CoT was necessary (the model answers the question wrong without a CoT over 5 no-CoT samples) or<!-- p.145 --> unnecessary. Controllability is higher when the CoT is unnecessary, i.e. the easier a task is for a model, the more controllable its CoT. Argon's continuous controllability is the highest in both arms; on the strict measure 3.1 Pro's lower no-CoT accuracy makes its necessary set larger and easier. Bottom right: Grouping the CoT-Control constraints into stylistic modification and information suppression, Argon exhibits markedly higher controllability on information suppression constraints, the most relevant for monitor evasion. Whiskers and shading are 95% Wilson intervals.
+:::
 
 <!-- p.146 -->
 

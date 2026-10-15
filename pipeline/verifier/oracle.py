@@ -158,6 +158,14 @@ def extract_page(page) -> dict:
     # PREVIOUS page's last footnote -> keyed "cont"
     cont_idx = set()
     mi = next((i for i, inf in enumerate(infos) if inf["is_marker"]), None)
+    if mi is None and fn_separator is not None:
+        # a footnote region holding ONLY the previous page's continued note
+        # (no marker of its own): the separator opens it, so every line
+        # below the rule is that tail (gemini-4-argon p.36, footnote 11 —
+        # it was body text, stranded between the halves of a sentence)
+        cont_idx = {j for j, inf in enumerate(infos)
+                    if inf["top"] > fn_separator and norm.INVISIBLES.sub(
+                        "", "".join(s["text"] for s in inf["body_spans"])).strip()}
     if mi is not None:
         edge = infos[mi]["top"]
         j = mi - 1

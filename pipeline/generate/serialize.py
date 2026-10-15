@@ -113,6 +113,24 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
                             and a > 0 and text[a - 1].isalnum())
                 if bad_close or bad_open:
                     o, c = "<b>", "</b>"
+            if kind == "italic":
+                # the same flanking rule for '*': an italic run opening at a
+                # comma after a word ('each*, conditional on* access',
+                # gemini-4-argon p.35) rendered its asterisks literally
+                def _punct_i(ch):
+                    return not ch.isalnum() and not ch.isspace()
+                # a footnote ref becomes '[^N]' — punctuation — in markdown,
+                # so its edges are delimiter-safe like link edges
+                # ('*… respectively.*[^45]', risk-report §4)
+                edges_i = ({e for la, lb in links for e in (la, lb)}
+                           | {e for k2, fa, fb, _ in marks if k2 == "fnref"
+                              for e in (fa, fb)})
+                bad_close_i = (b not in edges_i and _punct_i(text[b - 1])
+                               and b < len(text) and text[b].isalnum())
+                bad_open_i = (a not in edges_i and _punct_i(text[a])
+                              and a > 0 and text[a - 1].isalnum())
+                if bad_close_i or bad_open_i:
+                    o, c = "<i>", "</i>"
             # raw-HTML marks (placeholder/underline/highlight/sup) sit
             # OUTERMOST: a span tag inside backticks renders literally
             r_open = 2 if kind in ("placeholder", "underline", "highlight", "sup", "sub") else 0
@@ -360,16 +378,18 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 # lettered sub-list marker ('a.​On' — ZWSP eaten by the join):
                 # restore the space, gated on the RAW line's marker signature
                 raw0 = blk["lines"][0]["text"] if blk.get("lines") else ""
-                if not re.match(r"^\s*[a-z][.)]\u200b", raw0):
+                if not re.match(r"^\s*(?:[a-z]|ii|iii|iv|vi{1,3}|ix|xi{1,3})[.)]\u200b", raw0):
                     last_lettered_indent = None
-                if re.match(r"^\s*[a-z][.)]\u200b", raw0):
+                if re.match(r"^\s*(?:[a-z]|ii|iii|iv|vi{1,3}|ix|xi{1,3})[.)]\u200b", raw0):
                     # insert the marker space without splitting an emphasis
                     # pair: '\**' backtracking half-consumed a closing '**'
                     # and left '**c.* *' / '**c. **' (literal asterisks,
                     # p.42). Longest-first alternation + an already-spaced
                     # guard keep every form intact.
-                    if not re.match(r"^\**[a-z][.)]\**\s", body):
-                        body = re.sub(r"^(\*\*[a-z][.)]\*\*|\*\*[a-z][.)]|[a-z][.)])",
+                    if not re.match(r"^\**(?:[a-z]|ii|iii|iv|vi{1,3}|ix|xi{1,3})[.)]\**\s", body):
+                        body = re.sub(r"^(\*\*(?:ii|iii|iv|vi{1,3}|ix|xi{1,3}|[a-z])[.)]\*\*"
+                                      r"|\*\*(?:ii|iii|iv|vi{1,3}|ix|xi{1,3}|[a-z])[.)]"
+                                      r"|(?:ii|iii|iv|vi{1,3}|ix|xi{1,3}|[a-z])[.)])",
                                       r"\1 ", body, count=1)
                     # lettered markers are SUB-items when they follow a
                     # NON-lettered item (fable p.66 item 2b: a page break
@@ -668,9 +688,38 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
 
     close_transcript()
 
+    def _fn_groups(lines):
+        """A note that sets a NUMBERED/lettered list inside itself (gemini-4-
+        argon fn 11 p.35: lead-in, '1.​TAC-1 …' … '4.​TAC-4 …', then a closing
+        sentence back at the margin) breaks into its printed lines: each
+        marker line opens a group, and the first line back at the note's
+        left margin after the items opens the closing group. '●' lists keep
+        their own _fn_def path."""
+        is_item = [bool(LIST_MARKER.match(l["text"].lstrip()))
+                   and l["text"].lstrip()[:1] not in BULLETS for l in lines]
+        if sum(is_item) < 2:
+            return None
+        margin = min(l["bbox"][0] for l, it in zip(lines, is_item) if not it)
+        groups, in_list = [], False
+        for l, it in zip(lines, is_item):
+            back = in_list and not it and l["bbox"][0] <= margin + 2
+            if it or back or not groups:
+                groups.append([l])
+            else:
+                groups[-1].append(l)
+            in_list = (in_list or it) and not back
+        return groups
+
     def _fn_body(fb):
         page = oracle_pages[fb["page"] - 1]
-        if fb.get("lines"):
+        groups = _fn_groups(fb["lines"]) if fb.get("lines") else None
+        if groups:
+            parts = []
+            for g in groups:
+                text, marks = block_text_and_marks({**fb, "lines": g}, page, chips)
+                parts.append(_hyphen_join(_apply_marks(text, marks)).strip())
+            body = "<br>".join(p for p in parts if p)
+        elif fb.get("lines"):
             text, marks = block_text_and_marks(fb, page, chips)
             body = _hyphen_join(_apply_marks(text, marks)).strip()
         else:

@@ -75,11 +75,19 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             # AFTER demotion: a white-text header sub-row reads as a mixed row
             # (empty leads + labels) and _demote_data_th would revert it
             html = _promote_white_text_headers(html, t["bbox"], oracle_page)
+            html = _demote_regular_row_labels(html, t["bbox"], oracle_page)
+            if CELL_RUN_RESTYLE:
+                html = _restyle_cells_from_runs(html, t["bbox"], oracle_page)
             html = _demote_black_text_th(html, t["bbox"], oracle_page)
             html = _debold_th(html)
             if MERGE_BY_FILL:
                 html = _merge_cells_by_fill(html, t["bbox"], oracle_page)
             html = _rowspan_unruled_empties(html, t["bbox"], oracle_page)
+            # AFTER _demote_black_text_th, whose dark-band premise is the
+            # Anthropic family's: a LIGHT band's black-text header row
+            # (Table 3.4's gray sub-header, p.44) would be demoted again
+            if HEADER_BY_FILL:
+                html = _promote_filled_header_rows(html, t["bbox"], oracle_page)
         # hyphen-wrap join in cells the rebuild didn't touch (short label cells
         # like 'Self- knowledge'): keep the hyphen, drop only the wrap space.
         # Both directions, same rules as the shared A1 (norm.join_wrap_hyphens)
@@ -187,6 +195,175 @@ def _highlight_fills() -> dict:
 
 
 HIGHLIGHT_FILLS = _highlight_fills()
+
+
+def _header_fill_hexes() -> set:
+    """Fills the manifest marks `table-header-fill` / `table-subheader-fill`."""
+    try:
+        mtext = (cardcfg.CARD / "style-manifest.yaml").read_text()
+    except OSError:
+        return set()
+    m = re.search(r"^fills:\n((?:[ \t]+.*\n)+)", mtext, re.M)
+    return {mm.group(1) for mm in re.finditer(
+        r'^  "(#[0-9a-f]{6})":\s*\{\s*role:\s*table-(?:sub)?header-fill', m.group(1), re.M)} if m else set()
+
+
+HEADER_FILLS = _header_fill_hexes()
+# per-card knob: header rows from the drawn header BAND, not text colour
+HEADER_BY_FILL = _document_knob("header_rows_by_fill")
+
+
+# per-card knob: rebuild each locatable cell's BOLD extents and paragraph
+# breaks from its own span run (the row-band restyle cannot segment tall or
+# page-cut cells: Table 3.5's 'Uncertainties & verification:' labels lost
+# their bold, Table 3.6 grew a bold 'capability' from a neighbour cell)
+CELL_RUN_RESTYLE = _document_knob("cell_run_restyle")
+
+
+def _restyle_cells_from_runs(html: str, bbox: list, oracle_page: dict) -> str:
+    """For every cell whose visible text is ONE consecutive span run, the
+    run is the authority for (a) which characters are bold and (b) where a
+    paragraph gap (> 0.45 line height) separates two of its lines. Existing
+    <b> tags are rebuilt from the spans (never straddling another tag);
+    a missing break at a paragraph gap becomes <br>. Cells that cannot be
+    located exactly, or whose character count disagrees, are untouched."""
+    import html as _h
+    cols = _x_columns(oracle_page, bbox)
+    spans_all = [s for s in _table_spans(oracle_page, bbox)
+                 if s["text"].strip() and s.get("color") not in HEADER_TEXT]
+    bold_share = sum(1 for s in spans_all if s.get("bold")) / max(1, len(spans_all))
+    if bold_share >= 0.9:
+        return html
+
+    def restyle(m):
+        tg, attrs, c = m.groups()
+        if "<p>" in c or "<li>" in c:
+            return m.group(0)
+        plain = _h.unescape(re.sub(r"\[\^\d+\]", "", re.sub(r"<[^>]+>", "", c)))
+        sq = _squash(_INVISIBLE.sub("", plain))
+        run = _unique_col_run(sq, cols) if len(sq) >= 2 else None
+        if not run:
+            return m.group(0)
+        flags, starts = [], set()
+        lines = _line_lists(run)
+        for li, ln in enumerate(lines):
+            if li:
+                prev = lines[li - 1]
+                gap = min(sp["bbox"][1] for sp in ln) - max(sp["bbox"][3] for sp in prev)
+                lh = max(sp["bbox"][3] for sp in prev) - min(sp["bbox"][1] for sp in prev)
+                if gap > 0.45 * lh:
+                    starts.add(len(flags))
+            for sp in ln:
+                for ch in _INVISIBLE.sub("", sp["text"]):
+                    if not ch.isspace():
+                        flags.append(bool(sp.get("bold")))
+        toks = re.findall(r"<[^>]+>|&[a-zA-Z0-9#]{1,8};|\[\^\d+\]|.", c, re.S)
+        n_vis = sum(1 for t in toks if not t.startswith(("<", "[^"))
+                    and not _h.unescape(t).isspace() and _h.unescape(t) not in _INVIS)
+        if n_vis != len(flags):
+            return m.group(0)
+        out, k, bold_open, pending_space = [], 0, False, ""
+        for t in toks:
+            if re.fullmatch(r"</?b>", t):
+                continue
+            if t.startswith("<") or t.startswith("[^"):
+                if bold_open:
+                    out.append("</b>")
+                    bold_open = False
+                out.append(pending_space + t)
+                pending_space = ""
+                continue
+            vis = _h.unescape(t)
+            if vis.isspace() or vis in _INVIS:
+                pending_space += t
+                continue
+            if k in starts and not re.search(r"<br\s*/?>\s*$", "".join(out) + pending_space):
+                if bold_open:
+                    out.append("</b>")
+                    bold_open = False
+                out.append("<br>")
+                pending_space = ""
+            if flags[k] != bold_open:
+                out.append("</b>" if bold_open else "")
+                out.append(pending_space)
+                pending_space = ""
+                if flags[k]:
+                    out.append("<b>")
+                bold_open = flags[k]
+            out.append(pending_space + t)
+            pending_space = ""
+            k += 1
+        if bold_open:
+            out.append("</b>")
+        out.append(pending_space)
+        return f"<{tg}{attrs}>{''.join(out)}</{tg}>"
+
+    return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", restyle, html, flags=re.S)
+
+
+def _demote_regular_row_labels(html: str, bbox: list, oracle_page: dict) -> str:
+    """A ROW-LABEL <th> in a data row (docling's row header) renders bold by
+    browser default; where the PDF sets the label in REGULAR weight
+    (gemini-4-argon Table 5.1 p.178, Table 5.4 p.194 — five bold labels, two
+    regular, all regular in the PDF) it is a <td>. Only cells whose every
+    span is located, non-bold, off any header band and not header-coloured."""
+    cols = _x_columns(oracle_page, bbox)
+    fills = [f["bbox"] for f in oracle_page.get("fills", []) if f.get("color") in HEADER_FILLS]
+
+    def regular_label(c):
+        run = _unique_col_run(_cell_sq(c), cols) if _cell_sq(c) else None
+        if not run:
+            return False
+        for s in run:
+            cx, cy = (s["bbox"][0] + s["bbox"][2]) / 2, (s["bbox"][1] + s["bbox"][3]) / 2
+            if (s.get("bold") or s.get("color") in HEADER_TEXT
+                    or any(f[0] - 1 <= cx <= f[2] + 1 and f[1] - 1 <= cy <= f[3] + 1
+                           for f in fills)):
+                return False
+        return True
+
+    out = html
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        if "<td" not in r or "<th" not in r:
+            continue
+        cells = re.findall(r"<(t[dh])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        if not any(tg == "th" and regular_label(c) for tg, _, c in cells):
+            continue
+        fixed = "<tr>" + "".join(
+            f"<td{a}>{c}</td>" if tg == "th" and regular_label(c) else f"<{tg}{a}>{c}</{tg}>"
+            for tg, a, c in cells) + "</tr>"
+        out = out.replace(r, fixed, 1)
+    return out
+
+
+def _promote_filled_header_rows(html: str, bbox: list, oracle_page: dict) -> str:
+    """The table's LEADING rows whose every text span sits on a header-band
+    fill are header rows (gemini-4-argon Table 3.4 p.44: a light-blue band
+    with mostly BLACK text, then a gray sub-header band — the text-colour
+    promotion cannot see them). Stops at the first row off the band."""
+    fills = [f["bbox"] for f in oracle_page.get("fills", []) if f.get("color") in HEADER_FILLS]
+    if not fills:
+        return html
+    cols = _x_columns(oracle_page, bbox)
+
+    def on_band(s):
+        cx, cy = (s["bbox"][0] + s["bbox"][2]) / 2, (s["bbox"][1] + s["bbox"][3]) / 2
+        return any(f[0] - 1 <= cx <= f[2] + 1 and f[1] - 1 <= cy <= f[3] + 1 for f in fills)
+
+    out = html
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        cells = re.findall(r"<(t[dh])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        # a repeated label ('Direct request' under both model groups) has
+        # several runs: the row is on the band when EVERY run of every cell is
+        cand = [_col_runs(_cell_sq(c), cols) for _, _, c in cells if _cell_sq(c)]
+        if not cand or any(not runs or not all(on_band(s) for run in runs for s in run)
+                           for runs in cand):
+            break
+        fixed = "<tr>" + "".join(
+            f"<th{a}>{c}</th>" if tg == "td" and _cell_sq(c) else f"<{tg}{a}>{c}</{tg}>"
+            for tg, a, c in cells) + "</tr>"
+        out = out.replace(r, fixed, 1)
+    return out
 
 
 def _header_blobs(hdr_spans: list) -> list:
@@ -1167,25 +1344,42 @@ def _x_columns(oracle_page: dict, bbox: list) -> list[list]:
     for s in spans:
         key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
         by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    # CENTRED cells stack lines on a shared centre, not a left edge
+    # ('Gemini 4 Argon' / '(Model C)', Table 3.4's header band p.44)
+    by_cx: dict[float, list] = {}
+    for s in spans:
+        cx = (s["bbox"][0] + s["bbox"][2]) / 2
+        key = next((k for k in by_cx if abs(k - cx) <= 3), None)
+        by_cx.setdefault(cx if key is None else key, []).append(s)
     return ([sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
-            + _column_regions(spans))
+            + _column_regions(spans)
+            + [sorted(c, key=lambda s: s["bbox"][1]) for c in by_cx.values() if len(c) > 1])
 
 
 def _unique_col_run(sq: str, cols: list[list]) -> list | None:
     """The ONE consecutive span run (in any candidate sequence) spelling
     ``sq``, else None. The same spans found twice are one run."""
+    hits = _col_runs(sq, cols)
+    return hits[0] if len(hits) == 1 else None
+
+
+def _col_runs(sq: str, cols: list[list]) -> list[list]:
+    """Every distinct consecutive span run spelling ``sq``."""
     hits: dict = {}
+    # zero-width marks are layout ('Gemini 4 Argon​' + '(Model C)', p.44);
+    # docling's cell text never carries them
+    sq = _INVISIBLE.sub("", sq)
     for col in cols:
         for st in range(len(col)):
             acc = ""
             for j in range(st, len(col)):
-                acc += _squash(col[j]["text"])
+                acc += _squash(_INVISIBLE.sub("", col[j]["text"]))
                 if len(acc) >= len(sq):
                     break
             if acc == sq:
                 run = sorted(col[st:j + 1], key=lambda s: (s["bbox"][1], s["bbox"][0]))
                 hits.setdefault(tuple(id(s) for s in run), run)
-    return next(iter(hits.values())) if len(hits) == 1 else None
+    return list(hits.values())
 
 
 def _spans_text(spans: list) -> str:

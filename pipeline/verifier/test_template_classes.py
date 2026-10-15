@@ -64,6 +64,46 @@ class FooterAndAdjacentRefTests(unittest.TestCase):
             self.assertEqual([78], [r.number for r in observation.references])
 
 
+def _continued_note_pdf(path: Path, *, separator_on_page_2: bool) -> None:
+    """Note 1 starts at the bottom of page 1 and its tail sits alone at the
+    bottom of page 2 — under a 2in rule when ``separator_on_page_2``."""
+    document = raw_footnotes.fitz.open()
+    for number in (1, 2):
+        page = document.new_page(width=612, height=792)
+        page.insert_htmlbox(
+            raw_footnotes.fitz.Rect(72, 72, 500, 160),
+            '<p style="font-size:11pt">Body<sup>1</sup> sentence on the page</p>'
+            if number == 1 else
+            '<p style="font-size:11pt">Second page body sentence here</p>')
+        if number == 1 or separator_on_page_2:
+            page.draw_line((72, 640), (216, 640), color=(0, 0, 0), width=0.5)
+        if number == 1:
+            page.insert_text((72, 660), "1", fontsize=6)
+            page.insert_text((78, 660), "first part of the note", fontsize=10)
+        else:
+            page.insert_text((72, 660), "tail of the note", fontsize=10)
+        page.insert_text((530, 770), str(number), fontsize=11)
+    document.save(path)
+    document.close()
+
+
+class SeparatorContinuationTests(unittest.TestCase):
+    def test_tail_alone_under_the_separator_continues_the_previous_note(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "source.pdf"
+            _continued_note_pdf(source, separator_on_page_2=True)
+            (definition,) = raw_footnotes.observe(source).definitions
+            self.assertEqual("first part of the note tail of the note", definition.text)
+            self.assertEqual(2, definition.end_page)
+
+    def test_without_a_separator_the_tail_is_not_guessed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "source.pdf"
+            _continued_note_pdf(source, separator_on_page_2=False)
+            (definition,) = raw_footnotes.observe(source).definitions
+            self.assertEqual("first part of the note", definition.text)
+
+
 class RelocatedFootnoteLinkTests(unittest.TestCase):
     def test_repeated_label_pairs_through_each_footnote_reference_page(self):
         text = (

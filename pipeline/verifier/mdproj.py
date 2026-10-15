@@ -197,6 +197,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         for lm in RE_AUTOLINK.finditer(body):
             sec.links.append((lm.group(1), lm.group(1), pg(m)))
         body_text = RE_LINK.sub(lambda l: l.group(1), body)
+        body_text = re.sub(r"<br\s*/?>", " ", body_text, flags=re.I)  # line breaks in a note
         body_text = RE_AUTOLINK.sub(r"\1", body_text)
         body_text = re.sub(r"(?m)^\s*[-*+][ \t]+", " ", body_text)  # list markers in defs
         n = int(m.group(1))

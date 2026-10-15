@@ -19,8 +19,8 @@ Our FSF is built around capability thresholds called “Critical Capability Leve
 In line with FSF [v3.1](https://deepmind.google/discover/blog/strengthening-our-frontier-safety-framework/), we conducted a structured risk management process for Gemini 4 Argon, including identifying, assessing, and mitigating severe risks as appropriate. This report represents the most detailed and comprehensive safety report we have published to date on these topics. And it specifically expands our risk assessments with three additions:
 
 - i. A holistic assessment of the degree of ML R&D automation within Google DeepMind.
-
-ii. A holistic assessment of the loss of control risks potentially posed by our models. iii. An assessment of the alignment propensities of our models.
+- ii. A holistic assessment of the loss of control risks potentially posed by our models.
+- iii. An assessment of the alignment propensities of our models.
 
 We have also expanded some of our previous assessments substantially. For example, our assessment of chain-of-thought transparency includes many more evaluations as well as results from an audit of our training practices.
 
@@ -341,7 +341,7 @@ These attacks span five categories:
 - Cryptocurrency heists (e.g., Ronin Network)
 - Purely destructive operations (e.g., NotPetya)
 
-To estimate uplift, we defined a taxonomy of 23 standardized operational steps (e.g., 0-Day Vulnerability Discovery, Create Malware). We then model each of the 22 historical attacks as a specific sequence of these steps. We then estimate the amount of uplift for each*, conditional on* access to AIs at different capabilities levels. This allows us to calculate, based on Gemini’s performance on evaluations related to each step, the total uplift for the entire attack.[^11]
+To estimate uplift, we defined a taxonomy of 23 standardized operational steps (e.g., 0-Day Vulnerability Discovery, Create Malware). We then model each of the 22 historical attacks as a specific sequence of these steps. We then estimate the amount of uplift for each<i>, conditional on</i> access to AIs at different capabilities levels. This allows us to calculate, based on Gemini’s performance on evaluations related to each step, the total uplift for the entire attack.[^11]
 
 <!-- p.36 -->
 
@@ -356,13 +356,7 @@ We use the number of attempts it takes for an agent to succeed at capturing the 
 - **TAC score:** for this metric, success is evaluated based on whether the model successfully captures the flag in at least 50% of the unique challenges within a specific difficulty tier, requiring only one success per challenge within the maximum allocated attempt budget. If the model succeeds even once across many tries, it demonstrates that the model possesses the underlying knowledge, reasoning, and skill at the given TAC tier. This establishes the model's raw capability ceiling and determines the maximum percentage of an attack phase it could theoretically automate.
 - **Reliability, conditional on time horizon:** if the model isn't reliable, the attacker must retry many times, directly driving up total inference costs, as well as the costs of human labor required to verify whether the task was completed correctly. If the model is capable of operating reliably at long time horizons, the overall uplift is likely substantially increased. We factor these additional costs to assess whether an attacker is likely to substantially benefit from the model.
 
-Because we do not have TAC-4 evals in CyScenarioBench, and because models have historically performed well at TAC-3 level, we cannot rule out models being at TAC-4 level capability. In our uplift modeling, we therefore assume conservatively that models 1) score at
-
-uplift—i.e. uplift assuming AI can perform those portions of the attack chain unsupervised. In practice, significant human involvement is required to utilize AI for most cyber tasks: we therefore adjust these theoretical uplift numbers based on an SME estimate of supervision-adjusted uplift *conditional on* success rate and time horizon. More specifically, we estimate a mapping from (time horizon, success rate) → uplift, and subject the portions of the attack chain that can be theoretically accomplished by AI to that adjustment.
-
-<!-- p.37 -->
-
-the TAC-4 level across all archetypes, and 2), operating at that difficulty level, have the same time horizon and success rate as in the other TAC levels.
+Because we do not have TAC-4 evals in CyScenarioBench, and because models have historically performed well at TAC-3 level, we cannot rule out models being at TAC-4 level capability. In our uplift modeling, we therefore assume conservatively that models 1) score at<!-- p.37 --> the TAC-4 level across all archetypes, and 2), operating at that difficulty level, have the same time horizon and success rate as in the other TAC levels.
 
 Gemini 4 Argon is meaningfully more capable than previous models on CyScenarioBench. It solves 100% of the end-to-end challenges[^12], compared to 41.7% solved by Gemini 3.8 Flash Cyber. CyScenarioBench is therefore saturated for Gemini 4 Argon and no longer upper-bounds its capability; because we cannot rule out the CCL on these results, saturation does not affect our determination.
 
@@ -435,7 +429,7 @@ As a result, we have developed a safety case prior to launch, and are deploying 
 
 [^10]: We additionally include NotPetya, WannaCry, and the Ukraine Power Grid Attack in our dataset even though they do not meet this criteria, as they represent unique attack chains.
 
-[^11]: In more detail: using structured expert elicitation from 25+ offensive security professionals, we estimate the baseline human cost (in hours and dollars) for each operational step of the historical attacks, alongside the percentage of that work an AI could theoretically automate at specific Threat Actor Capability (TAC) levels. We define these difficulty levels as follows: 1. TAC-1: programmer with limited cybersecurity knowledge (e.g., "script kiddie") 2. TAC-2: median cybersecurity expert (e.g., junior pentester) 3. TAC-3: 75th percentile cybersecurity expert (e.g., senior pentester) 4. TAC-4: 95th+ percentile cybersecurity expert (e.g., nation-state-sponsored groups) By mapping the model's performance on the “key skills” benchmark to these TAC levels, we calculate the AI's cost to execute the attack and compare it to the human baseline to find the total *no-oversight*
+[^11]: In more detail: using structured expert elicitation from 25+ offensive security professionals, we estimate the baseline human cost (in hours and dollars) for each operational step of the historical attacks, alongside the percentage of that work an AI could theoretically automate at specific Threat Actor Capability (TAC) levels. We define these difficulty levels as follows:<br>1. TAC-1: programmer with limited cybersecurity knowledge (e.g., "script kiddie")<br>2. TAC-2: median cybersecurity expert (e.g., junior pentester)<br>3. TAC-3: 75th percentile cybersecurity expert (e.g., senior pentester)<br>4. TAC-4: 95th+ percentile cybersecurity expert (e.g., nation-state-sponsored groups)<br>By mapping the model's performance on the “key skills” benchmark to these TAC levels, we calculate the AI's cost to execute the attack and compare it to the human baseline to find the total *no-oversight* uplift—i.e. uplift assuming AI can perform those portions of the attack chain unsupervised. In practice, significant human involvement is required to utilize AI for most cyber tasks: we therefore adjust these theoretical uplift numbers based on an SME estimate of supervision-adjusted uplift *conditional on* success rate and time horizon. More specifically, we estimate a mapping from (time horizon, success rate) → uplift, and subject the portions of the attack chain that can be theoretically accomplished by AI to that adjustment.
 
 [^12]: Transcript review of end-to-end challenge solves revealed that two challenges were solved via unintended solutions. As a result, raw success rates and derived uplift calculations may represent an overestimate of performance on the intended tasks.
 
