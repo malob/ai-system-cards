@@ -34,7 +34,38 @@ def _hexes(rolemap: dict, *roles: str) -> set:
     return {h for h, r in rolemap.items() if r in roles}
 
 
+def _heading_tiers() -> list[dict]:
+    """Optional per-card heading TIERS (D16 grammar): each visual heading
+    style — size, color, optional italic — and the Markdown level it carries.
+    A card that declares them classifies headings by tier alone. The
+    Anthropic cards number every heading, so number depth gives their level;
+    gemini-4-argon uses the Google Docs default heading styles with many
+    UNNUMBERED heads ('Executive Summary' at H2, ~50 italic H5 heads), which
+    number depth sent to level 2 or missed entirely."""
+    mtext = (cardcfg.CARD / "style-manifest.yaml").read_text()
+    m = re.search(r"^headings:\n((?:[ \t]+.*\n)+)", mtext, re.M)
+    if not m:
+        return []
+    tiers = []
+    for mm in re.finditer(r"^  - \{(.*)\}", m.group(1), re.M):
+        kv = dict(re.findall(r'(\w+):\s*("[^"]*"|[^,}]+)', mm.group(1)))
+        tiers.append({"size": float(kv["size"]),
+                      "color": kv["color"].strip().strip('"'),
+                      "italic": kv.get("italic", "false").strip() == "true",
+                      "level": int(kv["level"])})
+    return tiers
+
+
 BODY_SIZE = 11.0
+HEADING_TIERS = _heading_tiers()
+# per-card knob: heading MEMBERSHIP from the PDF outline (oracle `outline`
+# key). Google Docs emits one bookmark per heading-styled paragraph, so the
+# outline names exactly the headings — including ones the publisher restyled
+# (gemini-4-argon's italic-black 'Chemical' p.29, bold-black '3.5.1 …'
+# p.157) and excluding a heading-LOOKING plain paragraph ('Summary' p.153).
+OUTLINE_HEADINGS = bool(re.search(
+    r"^\s*heading_source:\s*outline\b",
+    (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
 HEADING_GRAY = next(iter(_hexes(_TEXT_ROLES, "heading")), "#666666")
 COMMENTARY_GRAY = next(iter(_hexes(_TEXT_ROLES, "transcript-commentary")), None)
 TRANSCRIPT_BOXES = _hexes(_FILL_ROLES, "transcript-container")
@@ -287,6 +318,30 @@ HEAD_NUM = re.compile(r"^(\d+(?:\.\d+)*)\.?\s+\S")  # tolerate the trailing
 # dot in opus-5's '1.1. Training data and process' (an authoring typo —
 # without it the level fell back to 2 and outranked the heading's own parent)
 CAPTION_LEAD = re.compile(r"^\[(Figure|Table|Transcript)\b")
+# the second caption grammar: a BOLD 'Figure 3.18' / 'Table 3.2' label + colon
+# opening the line (gemini-4-argon — all 97 of its captions; prose mentions
+# like 'Figure 3.19 because …' carry no colon and no bold)
+BOLD_CAPTION_LEAD = re.compile(r"^(?:Figure|Table)\s+\d+(?:\.\d+)*[a-z]?\s*:")
+
+
+def _caption_lead(line) -> bool:
+    if CAPTION_LEAD.match(line["text"].lstrip()):
+        return True
+    m = BOLD_CAPTION_LEAD.match(norm.INVISIBLES.sub("", line["text"]).lstrip())
+    if not m:
+        return False
+    lead = [s for _, _, s in line["segs"] if s["zone"] == "body"
+            and norm.INVISIBLES.sub("", s["text"]).strip()]
+    # the bold run must cover the LABEL; the colon is bold in 40 of the 97
+    # and regular in the rest ('**Table 3.2**: Scoring rubric …')
+    need, got = len(re.sub(r"[\s:]", "", m.group(0))), 0
+    for s in lead:
+        if not s["bold"]:
+            return False
+        got += len(re.sub(r"\s", "", norm.INVISIBLES.sub("", s["text"])))
+        if got >= need:
+            return True
+    return False
 # Google Docs exports mark list markers with a zero-width space after the
 # glyph/number: "●​Text", "1.​Text" — a mechanical signature that
 # also distinguishes ordered-list markers from prose lines starting with digits
@@ -297,18 +352,78 @@ LIST_MARKER = re.compile(r"^([●•◦▪‣○■□]|\d{1,2}[.)]|[a-z][.)])�
 WORD_O_MARKER = re.compile(r"^o[\s​]+\S")  # ZWSP after the marker, like ●​
 
 
-def _classify(line, page, in_figure):
+def _heading_tier(line) -> dict | None:
+    """The declared heading tier every visible body span of the line carries,
+    or None. Invisible-only spans (ZWSP paragraph marks) don't count."""
+    spans = [s for _, _, s in line["segs"] if s["zone"] == "body"
+             and norm.INVISIBLES.sub("", s["text"]).strip()]
+    if not spans:
+        return None
+    for t in HEADING_TIERS:
+        if all(abs(s["size"] - t["size"]) <= 0.3 and s["color"] == t["color"]
+               and (s["italic"] or not t["italic"]) for s in spans):
+            return t
+    return None
+
+
+def _outline_key(text: str) -> str:
+    return re.sub(r"[\W_]+", "", norm.INVISIBLES.sub("", text)).lower()
+
+
+def outline_heading_lines(lines: list, page: dict) -> dict:
+    """{line id: outline entry} for the lines that print each of the page's
+    outline entries. An entry claims the run of consecutive lines whose
+    joined text spells its title (wrapped headings), nearest its
+    destination y; blank entries (empty heading paragraphs) claim nothing."""
+    claimed: dict = {}
+    order = sorted(lines, key=lambda l: (round(l["bbox"][1]), l["bbox"][0]))
+    for entry in page.get("outline", []):
+        key = _outline_key(entry["title"])
+        if not key:
+            continue
+        best = None
+        for i, first in enumerate(order):
+            if first["id"] in claimed:
+                continue
+            acc, run = "", []
+            for l in order[i:]:
+                k = _outline_key(l["text"])
+                if not k or not key.startswith(acc + k):
+                    break
+                acc += k
+                run.append(l)
+                if acc == key:
+                    break
+            if acc != key:
+                continue
+            dist = abs(first["bbox"][1] - entry["y"]) if entry.get("y") is not None else 0
+            if best is None or dist < best[0]:
+                best = (dist, run)
+        if best:
+            for l in best[1]:
+                claimed[l["id"]] = entry
+    return claimed
+
+
+def _classify(line, page, in_figure, outline_ids=None):
     if line["fnbody"]:
         return "fnbody"
-    body_colors = {s["color"] for _, _, s in line["segs"] if s["zone"] == "body"}
-    if line["size"] >= 12.6 or (body_colors == {HEADING_GRAY} and HEAD_NUM.match(line["text"])):
-        return "heading"
+    if OUTLINE_HEADINGS:
+        if line["id"] in (outline_ids or {}):
+            return "heading"
+    elif HEADING_TIERS:
+        if _heading_tier(line):
+            return "heading"
+    else:
+        body_colors = {s["color"] for _, _, s in line["segs"] if s["zone"] == "body"}
+        if line["size"] >= 12.6 or (body_colors == {HEADING_GRAY} and HEAD_NUM.match(line["text"])):
+            return "heading"
     # deep headings (h5/h6, e.g. "2.3.4.1 Example 1: …") are bold body-size
     # black text — heading iff the whole line is bold AND it leads with a
     # multi-component section number (≥3 components; bold leads have no number,
     # ordered items carry the ZWSP marker)
     m = HEAD_NUM.match(line["text"])
-    if (m and m.group(1).count(".") >= 2
+    if (not HEADING_TIERS and not OUTLINE_HEADINGS and m and m.group(1).count(".") >= 2
             and all(s["bold"] for _, _, s in line["segs"] if s["zone"] == "body")):
         return "heading"
     role, _, in_transcript = _box_role(line, page)
@@ -324,7 +439,7 @@ def _classify(line, page, in_figure):
     # ([Figure|Table|Transcript N…]) at line start is a caption at ANY size
     # (Figure 6.5.4.2.A on p.205 is set at body size), or small text inside a
     # figure region
-    if CAPTION_LEAD.match(line["text"].lstrip()) or (line["size"] <= 9.5 and in_figure):
+    if _caption_lead(line) or (line["size"] <= 9.5 and in_figure):
         return "caption"
     if LIST_MARKER.match(line["text"].lstrip()) or line["text"].lstrip()[:1] in BULLETS:
         return "item"
@@ -404,6 +519,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     lines = [l for l in _lines(page) if not l["fnbody"] and not _in_table(l)]
     for l in lines:
         l["pno"] = pno   # per-line page, for cross-page bubble continuation
+    outline_ids = outline_heading_lines(lines, page) if OUTLINE_HEADINGS else {}
     img_rects = page.get("image_rects", [])
     # table blocks slotted by their top y-coordinate
     table_blocks = [{"type": "table_html", "html": t["html"], "page": pno,
@@ -453,7 +569,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
             flush()
             cur = None
             continue
-        kind = _classify(line, page, in_figure)
+        kind = _classify(line, page, in_figure, outline_ids)
         # figure blocks are emitted once, when we first pass their region
         # emit each figure AS ITS REGION IS PASSED (interleaved with its own
         # caption) — emitting all at once put both captions below both
@@ -488,19 +604,28 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         if kind == "heading":
             # multi-line headings (wrapped titles) merge into one block — a
             # split heading produced the duplicate-TOC-entry bug
+            # (outline mode: the lines one outline entry claimed, exactly)
             if (cur and cur["type"] == "heading"
-                    and line["bbox"][1] - cur["lines"][-1]["bbox"][3] < 10
-                    and abs(line["size"] - cur["lines"][-1]["size"]) < 0.6):
+                    and (outline_ids.get(line["id"]) is outline_ids.get(cur["lines"][-1]["id"])
+                         if OUTLINE_HEADINGS else
+                         line["bbox"][1] - cur["lines"][-1]["bbox"][3] < 10
+                         and abs(line["size"] - cur["lines"][-1]["size"]) < 0.6)):
                 cur["lines"].append(line)
                 continue
             flush()
             m = HEAD_NUM.match(line["text"])
-            level = (m.group(1).count(".") + 2) if m else 2
+            tier = _heading_tier(line) if HEADING_TIERS else None
+            level = tier["level"] if tier else (m.group(1).count(".") + 2) if m else 2
+            if OUTLINE_HEADINGS and not tier and not m and line["id"] in outline_ids:
+                # an unnumbered head the publisher restyled off-tier: its
+                # outline depth (Google Docs nests one level per heading
+                # style when no level is skipped, as here)
+                level = outline_ids[line["id"]]["level"]
             cur = {"type": "heading", "level": min(level, 6),
                    "lines": [line], "page": pno}
         elif kind == "caption":
             if (cur and cur["type"] == "caption"
-                    and not CAPTION_LEAD.match(line["text"].lstrip())):
+                    and not _caption_lead(line)):
                 cur["lines"].append(line)
             else:
                 # a bracket lead starts its OWN caption — two figures' captions

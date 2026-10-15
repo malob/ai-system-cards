@@ -1,0 +1,27 @@
+title: "Gemini 4 Argon"
+slug: gemini-4-argon
+vendor: Google DeepMind
+# document type shown in the page eyebrow and OG image (defaults to
+# "System Card" when absent)
+doc_type: Safety & Security Report
+models:
+  - Gemini 4 Argon
+release_date: 2026-10-13
+source_url: https://storage.googleapis.com/deepmind-media/gemini/gemini_4_safety_report.pdf
+# Linked from the model card https://deepmind.google/models/model-cards/gemini-4-argon/
+# and the 2026-10-13 launch post. Cover-dated "October 2026", 217 pages. The
+# storage object fetched 2026-10-15 is generation 1792077359102092 (uploaded
+# 2026-10-15 15:15:59 UTC, metageneration 2) — a re-upload after the
+# 2026-10-13 release; SHA-256 21043f9b…44be7. The archive is faithful to these
+# bytes; compare the live object's generation/hash to detect a later revision.
+source_pages: 217
+description: >-
+  Google DeepMind’s Safety & Security Report for Gemini 4 Argon, the first
+  model in the Gemini 4 series. Covers safety and security mitigations,
+  Frontier Safety Framework assessments (CBRN, cybersecurity, harmful
+  manipulation, loss of control, alignment, and chain-of-thought
+  transparency), content safety and agentic misuse, safe and aligned model
+  interactions, prompt-injection robustness, and cyber-defense capabilities.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+chips: {}

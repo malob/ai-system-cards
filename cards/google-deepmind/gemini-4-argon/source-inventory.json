@@ -1,0 +1,79 @@
+{
+ "schema_version": 1,
+ "observer_schema_version": 2,
+ "pymupdf_version": "1.28.2",
+ "source_sha256": "21043f9b7b1297026b1003fc5ea2c949eca6ceb883e4f52174175863ced44be7",
+ "page_exclusions": [
+  {
+   "page": 1,
+   "kind": "cover",
+   "reason": "reviewed PDF title cover (Google logo, title, date); no archive body content",
+   "observation": {
+    "page": 1,
+    "word_count": 9,
+    "text_chars": 44,
+    "internal_links": 0,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 1
+   }
+  },
+  {
+   "page": 2,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 2,
+    "word_count": 145,
+    "text_chars": 4969,
+    "internal_links": 35,
+    "uri_links": 0,
+    "drawing_count": 2,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 3,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 3,
+    "word_count": 158,
+    "text_chars": 4916,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 4,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 4,
+    "word_count": 167,
+    "text_chars": 5065,
+    "internal_links": 37,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 5,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 5,
+    "word_count": 120,
+    "text_chars": 3348,
+    "internal_links": 25,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  }
+ ],
+ "figure_exclusions": []
+}

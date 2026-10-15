@@ -49,6 +49,7 @@ def _zone(span, page_height, image_rects):
 
 
 FN_SEPARATOR_WIDTH = 144.0  # Google Docs draws the footnote rule 2in wide
+FOOTER_MARGIN = 72.0  # Google Docs' default 1in bottom margin holds the footer
 
 
 def _footnote_separator_y(page) -> float | None:
@@ -95,6 +96,20 @@ def extract_page(page) -> dict:
                 )
     for s in spans:
         s["zone"] = _zone(s, H, image_rects)
+    # A footer page number can sit above the 45pt band: gemini-4-argon's
+    # (Google DeepMind's template) sits 50pt up, so it leaked into prose as
+    # quoted '10' paragraphs and a trailing '11' on footnotes. Google Docs
+    # puts the footer inside the 1in bottom margin, below all body text, so
+    # a bare integer that is ALONE on the page's lowest text row there is the
+    # page number whatever its exact height.
+    if spans:
+        lowest = max(s["bbox"][1] for s in spans)
+        bottom_row = [s for s in spans if s["bbox"][1] >= lowest - 1.0]
+        if len(bottom_row) == 1:
+            s = bottom_row[0]
+            if (s["zone"] == "body" and re.fullmatch(r"\d+", s["text"].strip())
+                    and s["bbox"][3] > H - FOOTER_MARGIN):
+                s["zone"] = "pagenum"
 
     # footnote bodies: line-level pass. A footnote starts at a small-font line
     # in the bottom ~28% whose text begins with a 1-2 digit marker; subsequent
@@ -320,6 +335,41 @@ def extract(pdf_path: Path, cache: Path | None = None) -> list[dict]:
         return json.loads(cache.read_text())
     doc = fitz.open(pdf_path)
     pages = [extract_page(doc[i]) for i in range(len(doc))]
+    # additive OUTLINE key: the PDF's own bookmark entries on each page
+    # (title, outline depth, destination y, top-left). Google Docs builds the
+    # outline from exactly the heading-styled paragraphs, so a card that opts
+    # in (`heading_source: outline`, gemini-4-argon) takes heading membership
+    # from it rather than from typography alone.
+    for lvl, title, pno, dest in doc.get_toc(simple=False):
+        to = dest.get("to") if isinstance(dest, dict) else None
+        if 1 <= pno <= len(pages):
+            pages[pno - 1].setdefault("outline", []).append(
+                {"title": title, "level": lvl,
+                 "y": round(to.y, 1) if to is not None else None})
+    # ADJACENT refs: two markers set back to back ('CyScenarioBench⁷⁸',
+    # gemini-4-argon p.34) arrive as ONE superscript span '78'. Where the
+    # page defines no such note but defines both consecutive halves, the
+    # span is two refs — split it (bbox shared out by character).
+    for p in pages:
+        page_defs = {int(n) for n in p["footnotes"] if str(n) != "cont"}
+        out = []
+        for s in p["spans"]:
+            t = s["text"].strip()
+            parts = None
+            if s["zone"] == "fnref" and int(t) not in page_defs:
+                parts = next(([t[:k], t[k:]] for k in range(1, len(t))
+                              if not t[k:].startswith("0")
+                              and int(t[k:]) == int(t[:k]) + 1
+                              and {int(t[:k]), int(t[k:])} <= page_defs), None)
+            if not parts:
+                out.append(s)
+                continue
+            x0, y0, x1, y1 = s["bbox"]
+            w = (x1 - x0) / len(t)
+            k = len(parts[0])
+            out.append({**s, "text": parts[0], "bbox": [x0, y0, round(x0 + w * k, 1), y1]})
+            out.append({**s, "text": parts[1], "bbox": [round(x0 + w * k, 1), y0, x1, y1]})
+        p["spans"] = out
     # document-wide ORPHAN pass. Footnote numbering is strictly increasing in
     # this document family and a ref's def sits on the ref's own page (long
     # defs spill forward as "cont") — so a ref whose number has no def on its

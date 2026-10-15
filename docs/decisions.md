@@ -1701,3 +1701,66 @@ Decisions, owner-stated:
 - **Push authorized** ("when you're happy, you're free to push"): the fifth card
   deploys with the certified-canon moves once the final release gate and the
   new card's mutation replay on its final canon pass.
+
+## D70 — sixth document, first non-Anthropic: Google DeepMind's Gemini 4 Argon Safety & Security Report (2026-10-15)
+
+The owner handed over `https://storage.googleapis.com/deepmind-media/gemini/gemini_4_safety_report.pdf`
+("a new challenge"). Card `google-deepmind/gemini-4-argon` (vendor dir
+`google-deepmind`, `doc_type: Safety & Security Report`, release 2026-10-13
+per the launch post and model card; the fetched storage object is a 2026-10-15
+re-upload, generation recorded in `meta.yaml`). 217pp, Letter.
+
+**What this tests.** A different VENDOR and visual grammar, but NOT a different
+producer: the PDF is `Skia/PDF m157 Google Docs Renderer`, the same exporter
+family as every Anthropic card. The "different producer" architectural test
+(charter, D61's table-evidence ask) therefore remains open; this card tests
+whether per-card config plus generalization classes carry the pipeline across
+a second publisher's template.
+
+**Template census.** Google Sans type (two body faces), RobotoMono green inline
+code, the Google Docs DEFAULT heading styles (22pt black / 16pt #1a73e8 / 14pt
+#434343 / 12pt #666666 / 11pt italic #666666) with many UNNUMBERED heads,
+#e8f0fe table header bands with blue header text (the heading blue doubles as
+table-header text), gray 10pt footnotes, bold `Figure 3.18:` / `Table 3.2:`
+caption labels below their constructs (no brackets), page numbers bottom-right
+50pt from the edge, a #fdb895 orange highlight that the p.155 caption cites as
+meaningful. No chips, no transcript bubbles; three JPEG figures.
+
+**Classes added (all five certified cards regenerate byte-identical from fresh
+oracles; certified oracles differ only by the additive `outline` key):**
+
+- **Footer page numbers above the 45pt band** (`oracle`, and independently
+  `raw_footnotes`): a bare integer alone on the page's LOWEST text row inside
+  the 1in bottom margin is the page number. DeepMind's sat 50pt up, leaked into
+  prose (quoted '10' paragraphs, '11' trailing footnotes) and hid every RF1
+  footnote region (56 majors).
+- **Adjacent footnote refs** (`oracle`, independently `raw_footnotes`): '⁷⁸'
+  (p.34) is one superscript span; where the page defines no note 78 but
+  defines 7 and 8, it is two refs.
+- **Heading tiers** (`style-manifest.yaml` `headings:`; `assemble`): a card may
+  declare each heading style (size, color, italic) and its Markdown level; the
+  tier, not section-number depth, sets the level ('Executive Summary' is H3
+  under '1. Introduction'). Undeclared → the legacy rules, unchanged.
+- **Heading membership from the PDF outline** (`document: heading_source:
+  outline`; oracle additive `outline` key): Google Docs emits one bookmark per
+  heading-styled paragraph, so the outline names exactly the headings —
+  including the publisher's off-tier ones (italic-black 'Chemical' p.29,
+  bold-black '3.5.1'–'3.5.3') and excluding a heading-looking plain paragraph
+  ('Summary', 03e). Level: tier, else number depth, else outline depth. The
+  generator and L2 now both read the outline; that shares a SOURCE fact, not a
+  heuristic, and L2's identity check is unchanged. Result: 181/181 headings
+  equal the outline in order with no level/number conflict.
+- **Bold caption labels** (`assemble.BOLD_CAPTION_LEAD`): a bold `Figure|Table
+  N(.N)*` label + colon opening a line is a caption (all 97 here; the colon is
+  regular weight in 57). Prose mentions carry no colon or bold.
+- **github-slugger order** (`run.slugify`): whitespace normalized to the
+  visible heading first, then punctuation removed, then EACH space a hyphen —
+  '… Safety & Agentic …' → `safety--agentic`. Collapsing after the removal gave
+  dead `&` targets; collapsing nothing broke wrapped certified headings (the
+  regression net caught that intermediate version).
+- **JPEG figures decode with PyMuPDF** (`extract_figures`): poppler's libjpeg
+  and MuPDF disagree on a few samples, and F3 binds assets to PyMuPDF's decode.
+  No certified card has a JPEG.
+
+Gate after this batch: SRC/P2/F3, RF1 and FN1 clean; L2 16 and T1 14 majors
+remain (table pages and link-destination classes), under investigation.

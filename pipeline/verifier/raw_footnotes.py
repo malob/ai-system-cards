@@ -43,6 +43,7 @@ PYMUPDF_VERSION = str(getattr(fitz, "__version__", "unknown"))
 SMALL_TYPE_GAP = 0.8
 LEFT_MARGIN_SLOP = 5.0
 FOOTER_BAND = 42.0
+FOOTER_MARGIN = 72.0
 VERTICAL_GAP = 16.0
 FN_SEPARATOR_WIDTH = 144.0
 
@@ -517,12 +518,22 @@ def _left_margin(lines: Sequence[RawLine], body_size: float) -> float:
     return xs[max(0, int(len(xs) * 0.05) - 1)] if xs else 0.0
 
 
-def _footer_number(line: RawLine, page_height: float) -> bool:
-    return (
-        line.bbox[3] >= page_height - FOOTER_BAND
-        and bool(_NUMERIC.fullmatch(line.text.strip()))
+def _footer_number(line: RawLine, page_height: float, lowest_top: float | None = None) -> bool:
+    """A bare page number in the footer. Inside the 42pt band it qualifies by
+    position alone; higher up the 1in bottom margin (Google DeepMind's
+    template sets it 50pt from the edge) only as the page's LOWEST line."""
+    if not (
+        bool(_NUMERIC.fullmatch(line.text.strip()))
         and len(line.spans) == 1
         and line.spans[0].size >= 8.0
+    ):
+        return False
+    if line.bbox[3] >= page_height - FOOTER_BAND:
+        return True
+    return (
+        lowest_top is not None
+        and line.bbox[3] >= page_height - FOOTER_MARGIN
+        and line.bbox[1] >= lowest_top - 1.0
     )
 
 
@@ -569,14 +580,19 @@ def _bottom_small_region(
 ) -> tuple[int, int] | None:
     """Return [start, end) for the contiguous small-type region at page bottom
     (a line below the footnote separator belongs to it at any size)."""
-    eligible = [i for i, line in enumerate(lines) if not _footer_number(line, page_height)]
+    lowest_top = max((line.bbox[1] for line in lines), default=None)
+    # the lowest line ALONE (two numerals on one bottom row are content)
+    if lowest_top is not None and sum(line.bbox[1] >= lowest_top - 1.0 for line in lines) > 1:
+        lowest_top = None
+    eligible = [i for i, line in enumerate(lines)
+                if not _footer_number(line, page_height, lowest_top)]
     if not eligible:
         return None
     end = eligible[-1] + 1
     index = eligible[-1]
     while index >= 0:
         line = lines[index]
-        if _footer_number(line, page_height):
+        if _footer_number(line, page_height, lowest_top):
             index -= 1
             continue
         below_separator = separator_y is not None and line.bbox[1] > separator_y
@@ -584,7 +600,7 @@ def _bottom_small_region(
             break
         if index + 1 < end:
             following = lines[index + 1]
-            if (not _footer_number(following, page_height)
+            if (not _footer_number(following, page_height, lowest_top)
                     and following.bbox[1] - line.bbox[3] > VERTICAL_GAP):
                 break
         index -= 1
@@ -697,11 +713,39 @@ def _observe_cached(source_path: str, expected_sha256: str) -> RawObservation:
             )
         open_definition = (len(definitions) - 1, page_number)
 
+    # Two markers set back to back ('CyScenarioBench⁷⁸', gemini-4-argon
+    # p.34) are ONE superscript span. A reference whose number no definition
+    # on its page carries, while both consecutive halves of its digits do,
+    # is two references; the bbox is shared out by character.
+    defined: dict[int, set[int]] = defaultdict(set)
+    for definition in definitions:
+        defined[definition.marker_page].add(definition.number)
+    split_references: list[RawReference] = []
+    for reference in references:
+        digits = str(reference.number)
+        on_page = defined[reference.page]
+        halves = None
+        if reference.number not in on_page:
+            halves = next(
+                ((digits[:k], digits[k:]) for k in range(1, len(digits))
+                 if not digits[k:].startswith("0")
+                 and int(digits[k:]) == int(digits[:k]) + 1
+                 and {int(digits[:k]), int(digits[k:])} <= on_page),
+                None,
+            )
+        if halves is None:
+            split_references.append(reference)
+            continue
+        x0, y0, x1, y1 = reference.bbox
+        cut = x0 + (x1 - x0) * len(halves[0]) / len(digits)
+        split_references.append(RawReference(int(halves[0]), reference.page, (x0, y0, cut, y1)))
+        split_references.append(RawReference(int(halves[1]), reference.page, (cut, y0, x1, y1)))
+
     return RawObservation(
         source_pdf=str(source_pdf),
         source_sha256=actual_sha256,
         definitions=tuple(definitions),
-        references=tuple(references),
+        references=tuple(split_references),
     )
 
 

@@ -9,10 +9,15 @@ first, then run this:
     cd cards/<vendor>/<slug>
     pdfimages -png  source.pdf assets/figures/raw          # raw-PPP-NNN.png images
     pdfimages -list source.pdf > extracted/images-list.txt # the image inventory
-    uv run --with pillow python ../../../pipeline/generate/extract_figures.py
+    uv run --with pillow --with pymupdf==1.28.2 python ../../../pipeline/generate/extract_figures.py
 
 This renames each image to pPPP-K.png (page, k-th figure on that page), composites any
 soft-mask (smask) as alpha, and writes extracted/figures-map.json (page → [filenames]).
+
+DCT (JPEG) images are decoded with PyMuPDF instead: poppler's libjpeg and MuPDF's
+decoder disagree on a few sample values, and F3 binds each asset to the source
+authority's PyMuPDF-decoded pixels (gemini-4-argon pp.177/204/217 — the corpus's
+first JPEGs). Flate images decode identically in both, so their path is unchanged.
 """
 import json
 import sys
@@ -32,7 +37,25 @@ for line in (CARD / "extracted/images-list.txt").read_text().splitlines()[2:]:
     parts = line.split()
     if len(parts) < 16:
         continue
-    rows.append({"page": int(parts[0]), "num": int(parts[1]), "type": parts[2], "objid": parts[11]})
+    rows.append({"page": int(parts[0]), "num": int(parts[1]), "type": parts[2],
+                 "enc": parts[8], "xref": int(parts[10]), "objid": parts[11]})
+
+_doc = None
+
+
+def _mupdf_rgb(xref: int) -> Image.Image:
+    """The image's samples exactly as PyMuPDF decodes them (F3's authority)."""
+    global _doc
+    import pymupdf
+    if _doc is None:
+        _doc = pymupdf.open(CARD / "source.pdf")
+    pix = pymupdf.Pixmap(_doc, xref)
+    if pix.colorspace is None or pix.colorspace.n != pymupdf.csRGB.n:
+        pix = pymupdf.Pixmap(pymupdf.csRGB, pix)
+    if pix.alpha:
+        pix = pymupdf.Pixmap(pix, 0)
+    return Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+
 
 mapping = {}
 counters = {}
@@ -50,7 +73,10 @@ while i < len(rows):
     smask = None
     if i + 1 < len(rows) and rows[i + 1]["type"] == "smask" and rows[i + 1]["objid"] == r["objid"]:
         smask = figdir / "raw-{:03d}-{:03d}.png".format(rows[i + 1]["page"], rows[i + 1]["num"])
-    img = Image.open(src).convert("RGB")
+    if r["enc"] == "jpeg":
+        img = _mupdf_rgb(r["xref"])
+    else:
+        img = Image.open(src).convert("RGB")
     if smask and smask.exists():
         alpha = Image.open(smask).convert("L").resize(img.size)
         img = img.convert("RGBA")

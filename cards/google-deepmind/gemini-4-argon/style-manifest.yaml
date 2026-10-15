@@ -1,0 +1,84 @@
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded from the 2026-10-15 signal census (pymupdf span/fill/
+# stroke probe over all 217 pages) + page-render inspection of every
+# ambiguous signal (pp.16, 23, 26-27, 44, 64, 87, 92, 99, 101-102, 122, 155,
+# 201-202).
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+#
+# NOTE: the archive's first non-Anthropic document. Same producer (Skia/PDF
+# m157 Google Docs Renderer) but Google DeepMind's own template: Google Sans
+# type, the Google Docs DEFAULT heading styles (22pt black / 16pt blue / 14pt
+# #434343 / 12pt #666666 / 11pt italic #666666), many UNNUMBERED headings
+# (Executive Summary; ~50 italic sub-subsection heads), light-blue #e8f0fe
+# table header bands with blue #1a73e8 header text, gray #666666 10pt
+# footnotes, and "**Figure 3.18:** …" bold-label captions below figures and
+# tables (no brackets). No chips, no transcript bubbles.
+
+card: google-deepmind/gemini-4-argon
+status: >-
+  roles seeded mechanically 2026-10-15; verified against page renders; closure
+  rule applies to anything not listed
+
+text_colors:
+  "#000000": {role: body}
+  "#1155cc": {role: link}                      # 165 spans, 72 pages
+  "#666666": {role: heading}   # 12pt numbered H4 heads + 11pt italic H5 heads;
+                               # ALSO the 10pt footnote text (fnbody zone first),
+                               # some gray list bullets and in-text citations
+                               # ('Singh et al., 2026', p.94) — body otherwise
+  "#1a73e8": {role: table-header-text}   # blue header text in #e8f0fe bands;
+                                         # also the 16pt H2 heads (size-detected)
+  "#434343": {role: body, note: heading-tier}   # 14pt H3 heads (size-detected)
+  "#188038": {role: code-text}   # RobotoMono green inline code ('<thought>',
+                                 # '0.49' in-table values, p.141 9pt quote)
+  # near-black paste artifacts in the source doc — render as body
+  "#101010": {role: body, note: paste-artifact}   # §4.3 distillation pp.173-175, §7.2 pp.216-217
+  "#1f1f1f": {role: body, note: paste-artifact}   # p.83 quote, §5.7 robotics pp.200-202
+  # cover / TOC-page chrome (pages excluded from conversion)
+  "#212226": {role: page-furniture}   # cover title p.1
+  "#b2bbc5": {role: page-furniture}   # cover subtitle p.1
+  "#45474d": {role: page-furniture}   # 'Gemini 4 Argon — Safety & Security Report' p.2 (TOC page)
+
+fills:
+  "#e8f0fe": {role: table-header-fill, exclude: true}   # light-blue header bands,
+                                                        # 12 pages (16, 26-27, 44, 87, 92,
+                                                        # 108, 161, 178, 183-184, 194)
+  "#f3f3f3": {role: table-cell-bg, exclude: true}       # p.44 Table 3.4 'Elicitation
+                                                        # method' sub-header row
+  "#f1f3f4": {role: page-furniture, exclude: true}      # faint paste highlight behind
+                                                        # single words ('setuid', 'hg diff',
+                                                        # '10,000') pp.101-102, 122 — not code
+  "#fdb895": {role: highlight}   # p.155 Figure 3.43: the history-wiping commands and
+                                 # 'Monitor Suspicion: 2/10' highlighted in orange —
+                                 # SEMANTIC (the caption cites "highlighted in orange")
+  "#fdfcfc": {role: page-furniture, exclude: true}      # near-white panels behind the
+                                                        # p.201-202 robotics figures/notes
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# Heading tiers (D16 grammar): the Google Docs default heading styles. A
+# card that declares tiers classifies headings by tier alone, and the tier —
+# not the section number's depth — gives the Markdown level ('Executive
+# Summary' is an unnumbered H2-style head under '1. Introduction'). Every
+# tier-styled line was cross-checked against the PDF outline (bookmarks).
+headings:
+  - {size: 22, color: "#000000", level: 2}               # '1. Introduction'
+  - {size: 16, color: "#1a73e8", level: 3}               # '2.1 Model Training'
+  - {size: 14, color: "#434343", level: 4}               # '2.4.1 Monitoring and Prevention'
+  - {size: 12, color: "#666666", level: 5}               # '3.2.1.1 Overview'
+  - {size: 11, color: "#666666", italic: true, level: 6} # 'Scenario mapping and prioritization'
+
+# No smart-chip vocabulary in this document. meta.yaml chips: {}
+
+document:
+  toc_pages: [2, 3, 4, 5]     # site generates its own TOC; excluded
+  page_number_footer: bottom-right bare integer (printed = PDF page - 1), excluded
+  # heading MEMBERSHIP from the PDF outline (every non-blank bookmark is one
+  # heading paragraph); `headings:` tiers above give the level. Needed for the
+  # publisher's off-tier heads: italic-black 'Chemical' / 'Radiological and
+  # Nuclear' (pp.29-30), bold-black '3.5.1'-'3.5.3' (pp.157-159); and the
+  # heading-styled plain paragraph 'Summary' (p.153) stays a paragraph.
+  heading_source: outline

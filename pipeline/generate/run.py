@@ -575,8 +575,13 @@ def main():
     title2slug: dict[str, str | None] = {}  # squashed title -> slug (None = collision)
 
     def slugify(text):
-        s = re.sub(r"[^\w\s-]", "", text.lower()).strip()
-        return re.sub(r"[\s]+", "-", s)
+        # github-slugger over the VISIBLE heading (the site's heading ids):
+        # whitespace as rendered (one space; wrapped lines join with doubled
+        # spaces here), punctuation removed, then EACH remaining space a
+        # hyphen — '… Safety & Agentic …' → 'safety--agentic'. Collapsing
+        # after the removal gave gemini-4-argon dead '&' targets.
+        s = re.sub(r"\s+", " ", text).strip()
+        return re.sub(r"[^\w -]", "", s.lower()).replace(" ", "-")
 
     written = []
     for si, (name, a, b) in enumerate(ranges):
