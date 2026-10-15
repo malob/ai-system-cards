@@ -65,6 +65,67 @@ def _footnote_separator_y(page) -> float | None:
     return max(ys) if ys else None
 
 
+def _tag_tables(page) -> list[dict]:
+    """The page's TAGGED tables (Google Docs exports a structure tree):
+    Table → TR → TH/TD → P, each P with its text lines (bbox + text). The
+    PDF's own record of table rows, cells and paragraphs — including rows a
+    page break cuts (the same TR index on both pages) and soft returns (a
+    line ending in U+200B inside one P). Additive `tags` oracle key."""
+    try:
+        raw = page.get_text("rawdict", flags=fitz.TEXTFLAGS_RAWDICT | fitz.TEXT_COLLECT_STRUCTURE)
+    except Exception:   # untagged or unsupported: no structure facts
+        return []
+
+    def lines_of(block, out):
+        if block.get("type") == 0:
+            for ln in block.get("lines", []):
+                text = "".join(ch["c"] for sp in ln["spans"] for ch in sp["chars"])
+                if text.strip():
+                    out.append([round(v, 1) for v in ln["bbox"]] + [text])
+        for child in block.get("blocks", []) or []:
+            lines_of(child, out)
+        return out
+
+    def role(b):
+        return b.get("std") or b.get("raw") or ""
+
+    tables = []
+
+    def walk(b):
+        if b.get("type") != 2:
+            return
+        if role(b) == "Table":
+            rows = []
+            for tr in b.get("blocks", []) or []:
+                if tr.get("type") != 2 or role(tr) != "TR":
+                    continue
+                cells = []
+                for cell in tr.get("blocks", []) or []:
+                    if cell.get("type") != 2 or role(cell) not in ("TD", "TH"):
+                        continue
+                    paras = []
+                    for para in cell.get("blocks", []) or []:
+                        # the page footer is tagged into the last cell on
+                        # some pages ('15' at y 728-742, p.16): bare integers
+                        # in the bottom margin and blank lines are not cell text
+                        ls = [l for l in lines_of(para, [])
+                              if not (l[3] > page.rect.height - 72
+                                      and re.fullmatch(r"\d+", l[4].strip()))
+                              and l[4].replace("\u200b", "").strip()]
+                        if ls:
+                            paras.append({"i": para.get("index"), "lines": ls})
+                    cells.append({"tag": role(cell), "index": cell.get("index"), "paras": paras})
+                rows.append({"tr": tr.get("index"), "cells": cells})
+            tables.append({"table": b.get("index"), "rows": rows})
+            return
+        for child in b.get("blocks", []) or []:
+            walk(child)
+
+    for b in raw.get("blocks", []):
+        walk(b)
+    return tables
+
+
 def extract_page(page) -> dict:
     H = page.rect.height
     fn_separator = _footnote_separator_y(page)
@@ -311,6 +372,9 @@ def extract_page(page) -> dict:
     }
     if underlines:
         out["underlines"] = underlines
+    tags = _tag_tables(page)
+    if tags:
+        out["tags"] = tags
     if hrules:
         out["hrules"] = hrules
     if vrules:

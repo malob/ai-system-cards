@@ -50,7 +50,7 @@ Testing for this report was conducted across three successive model checkpoints:
 <table><tbody>
 <tr><th>Checkpoint</th><th>Description</th><th>Evaluations Run</th></tr>
 <tr><td>Model A</td><td>Early checkpoint of Gemini 4 Argon<br><br>(T-10 days before final checkpoint)</td><td>Efficacy evaluations (Harmful Manipulation)<br><br>Red teaming evaluations (CBRN)</td></tr>
-<tr><td>Model B</td><td>Intermediary checkpoint of Gemini 4 Argon<br><br>(T-6 days before final checkpoint)</td><td><p>Independent External safety testing (CBRN)</p><p>Independent External safety testing (Harmful Manipulation)</p><p>Red teaming evaluations (CBRN)</p><p>Static single- and multi-turn evaluations (CBRN)</p></td></tr>
+<tr><td>Model B</td><td>Intermediary checkpoint of Gemini 4 Argon<br><br>(T-6 days before final checkpoint)</td><td>Independent External safety testing (CBRN)<br><br>Independent External safety testing (Harmful Manipulation)<br><br>Red teaming evaluations (CBRN)<br><br>Static single- and multi-turn evaluations (CBRN)</td></tr>
 <tr><td>Model C</td><td>Final release candidate</td><td>All other evaluations</td></tr>
 </tbody></table>
 

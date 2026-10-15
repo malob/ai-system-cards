@@ -433,13 +433,28 @@ def stitch(blocks: list[dict]) -> list[dict]:
         # adjacent-page table fragments merge into one logical table
         if (out and blk["type"] == "table_html" and out[-1]["type"] == "table_html"
                 and blk["page"] == out[-1].get("last_page", out[-1]["page"]) + 1):
+            # tagged PDFs name a row cut by the page break: the next
+            # fragment's first TR is the host's last TR (tables.TAGGED_TABLES)
+            forced = None
+            prev_ends, next_ends = out[-1].get("tag_rows"), blk.get("tag_rows")
+            if (prev_ends and next_ends and prev_ends["table"] == next_ends["table"]
+                    and prev_ends["last"][0] == next_ends["first"][0]):
+                p_ix, n_ix = prev_ends["last"][1], next_ends["first"][1]
+                k = min(len(p_ix), len(n_ix))
+                # None = the tags cannot say (untagged continuation text):
+                # that cell keeps the legacy seam test
+                flows = [None if a is None or b is None else a == b
+                         for a, b in zip(p_ix[-k:], n_ix[-k:])]
+                forced = (len(tables.re.findall(r"<tr>", out[-1]["html"])), flows)
             merged = _merge_tables(out[-1]["html"], blk["html"], blk["page"])
             if merged is not None:
                 # bullet breaks re-run AFTER the seam join: a cross-page
                 # bullet arrives with the continuation chunk and the merged
                 # cell's third '●' had no <br> (p.113→114)
                 out[-1]["html"] = tables._bullet_breaks(
-                    tables.merge_continuation_rows(merged))
+                    tables.merge_continuation_rows(merged, forced))
+                if next_ends:
+                    out[-1]["tag_rows"] = {**next_ends, "first": (prev_ends or next_ends)["first"]}
                 out[-1]["last_page"] = blk["page"]  # chain across many pages
                 out[-1].setdefault("parts", []).extend(blk.get("parts", []))
                 continue

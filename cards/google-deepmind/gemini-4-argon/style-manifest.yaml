@@ -97,3 +97,8 @@ document:
   # (tall and page-cut cells: Table 3.5's bold 'Uncertainties & verification:'
   # labels and their paragraph breaks, Table 3.6's bold key findings)
   cell_run_restyle: true
+  # the PDF's TAGGED structure (Table/TR/TD/P) is authority where present:
+  # tables docling missed (the bordered CCL definition boxes pp.22/34/41/64,
+  # Figure 3.38's prompt row p.147), in-cell paragraphs and soft returns
+  # (Figure 3.43's code lines), rows cut by a page break (same TR index)
+  tagged_tables: true

@@ -1845,3 +1845,44 @@ widths; 14 table screenshots, 12 clean, one highlight sliver fixed (a break
 before a highlight lands outside it). New judgment items for the owner: the
 renderer's smart-quote pass curls straight quotes in raw-HTML tables (all
 cards); the D69 full scroll applies (new visual grammar).
+
+## D72 — the PDF's tagged structure becomes table authority for gemini-4-argon (2026-10-15)
+
+Owner scroll feedback: Figure 3.43's line breaks are all real ("I think the line
+breaks are all real here"); the bordered CCL definition boxes are "an important
+semantic loss" as plain paragraphs; Figure 3.38 "should be reproduced at the
+correct fidelity"; Figure 3.43 needs fixing.
+
+Finding: Google Docs exports a TAGGED PDF (`/MarkInfo /Marked true`), and PyMuPDF's
+`TEXT_COLLECT_STRUCTURE` exposes it: Table → TR → TH/TD → P, each P with its
+lines. The tag tree is the source's own record of what the heuristics guessed:
+- a P boundary is a paragraph break; inside one P, a line ending in U+200B is a
+  SOFT RETURN (Shift+Enter) and a line ending in a space is a wrap — every
+  Figure 3.43 code line is its own P; Figure 3.38's options A)–G) are one P with
+  soft returns;
+- tables docling never saw are tagged tables (the four definition boxes are
+  one-column Table/TR/TD); Figure 3.38's prompt is the table's spanning first TR;
+- a row cut by a page break keeps its identity: the same Table index on both
+  pages and the next page's first TR = the host's last TR ('STEPS 1–6', TR 1 of
+  Table 955, pp.154–155); a cut cell opening on the SAME P index continues its
+  paragraph, a higher index starts a new one.
+The tags are not complete: some continuation lines are UNTAGGED marked content
+outside the tree (p.93's Gram tail, p.89's 'tamper-resistance' / 'tool-calling'),
+so they are authority where they speak and the legacy path stands where silent.
+
+Implementation (card knob `document: tagged_tables`; oracle additive `tags` key,
+page-footer lines dropped): (a) a tagged table no docling table covers, or one
+docling covers under 60% of its height, is built from the tags as a simple grid
+(rows of full width or one spanning cell; anything with row spans stays docling's)
+and then flows through the normal repair/restyle passes; (b) every docling cell
+that exactly one tag cell spells gets its breaks rebuilt from the tags (P → `<br>`
+or `<br><br>` across a paragraph gap; soft return → `<br>`; never before an
+opening inline tag); (c) fragments carry their tag row ends and the seam merge
+joins a cut row by identity (`merge_continuation_rows(forced=…)`), each cell
+flowing iff its P index matches — trusted only when the fragment's cell text
+starts with that tagged P (else the legacy seam test). Certified cards are
+byte-identical (their PDFs are tagged too: a candidate later improvement).
+Result: the definition boxes are bordered one-column tables; Figure 3.38 is one
+table with its prompt row and option lines; Figure 3.43 matches the PDF line for
+line with 'STEPS 1–6' rejoined; the five p.147 column-order acceptances went
+stale and were removed (3 remain, pp.184–185).

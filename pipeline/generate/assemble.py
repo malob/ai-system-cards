@@ -530,7 +530,8 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     # table blocks slotted by their top y-coordinate
     table_blocks = [{"type": "table_html", "html": t["html"], "page": pno,
                      "bbox": t["bbox"], "parts": [(t["bbox"], pno)],
-                     "_y": t["bbox"][1]} for t in page_tables]
+                     "_y": t["bbox"][1], "tag_rows": t.get("tag_rows")}
+                    for t in page_tables]
 
     blocks = []
     cur = None

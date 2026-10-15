@@ -277,7 +277,7 @@
       "text": "Section 6.1"
     }
   ],
-  "canonical_sections_sha256": "0dccb5d7a6268287aabfe22bdba7d1d1b614dff9d758f87032a0a782844e7e07",
+  "canonical_sections_sha256": "19fa66e4e4c5b5bd40a5b3030162a0470aa9e8d3e491894430432e3439a7a019",
   "card_id": "google-deepmind/gemini-4-argon",
   "exclusions": [
     {
@@ -1326,14 +1326,14 @@
   "section_sha256": {
     "01-introduction.md": "55f937cf47c8f952137e2aaf73e664bc21143896c3432299ff14bd59f077dbea",
     "02-mitigations.md": "f419af65c2ac67b19512dcb004357a981e331a48a925a9838d497d9d9438ccc6",
-    "03a-frontier-safety-misuse.md": "6c45c23653cb660e63e36fe982ae750c75d4f35a04d4e1fd51b30746d71cadc1",
-    "03b-manipulation-safeguards.md": "d460e8e1bb2c9a237efbdcd13431cdb7ef7dd7a6dfac0e3b1093227aef57a172",
-    "03c-loss-of-control.md": "44ba42d9cd2162957261b985d9be0bfa1e8c3fa2aaeb31c95d4b82a214a44076",
-    "03d-alignment-assessment.md": "b09cf731972985805a25d5158ebf4230eecce6c2b778afceef683a1bdc9e33b6",
-    "03e-cot-transparency.md": "d412b75e84cc43c0b314e29fa35ed6d437428ebff57df25e250351f8df992292",
-    "03f-evaluation-awareness.md": "7766b96589e046e91b362bc03aa98b53a72e80caf1d572ccf36cb2201afcb787",
+    "03a-frontier-safety-misuse.md": "ac4166848f5363531b48e59dcb3b9a42be7206f62f68e75191f6dd962cc52dd7",
+    "03b-manipulation-safeguards.md": "cd6694635a19f076766ef7168d1044c9aa3d7cd7242a54ecf6be639d623f2230",
+    "03c-loss-of-control.md": "3d44f9aeb24726b1db83164680166a662fde08ff396ba1a67aab7b07ae8cbda6",
+    "03d-alignment-assessment.md": "dcff40812e86818fe75936c1e7886db06615d489db23282109c64ebd0d688ad4",
+    "03e-cot-transparency.md": "60e5ef6ae3130da21b4dc04b5802343d5cecd38a586dba8ed1d9d3322356bf54",
+    "03f-evaluation-awareness.md": "d8c94e06831a085b99e17d653000fad11709de9b268bbb3761d8d2ebcaad4d33",
     "04-content-safety.md": "7db248175890c1775a9eb063fab152aaecd04447246868f601dfb9ecaed3dc5b",
-    "05-aligned-interactions.md": "e2090dbce72aabfa9baa4d8d77587f6a186d366bd207a1679f8976f189102ec7",
+    "05-aligned-interactions.md": "01edeb85664d7e3851eae0333421b60c3f359b981aff795df9a3cc251382ce31",
     "06-third-party-harm.md": "4075fcf2709e748fd0418ab4a8875d607f825d7eeddfc311d06845811914d534",
     "07-cyber-defense.md": "c5641255fb107f76e08abfc82282c24bb4d57762324b1189b42ebc6134fcc090"
   },

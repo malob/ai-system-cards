@@ -99,13 +99,10 @@ We also partner with specialized third parties to conduct targeted assessments a
 
 #### 3.2.1 CBRN (Chemical, Biological, Radiological and Nuclear)
 
-**CBRN Uplift 1 CCL Definition:** "Provides low to medium resourced actors uplift in reference scenarios resulting in additional expected harm at severe scale.”
-
-**CCL reached?** We cannot rule out that Gemini 4 Argon without out-of-model mitigations reaches the biological CCL. We are therefore applying safeguards that we assess lower risk to below the biological CCL level (see misuse safeguards section for more).
-
-**CBRN Uplift TCL Definition:** “Provides low to medium resourced actors uplift in reference scenarios resulting in material risk of CBRN attacks that could result in significant but not severe harm.”
-
-**TCL reached?** We can rule out the TCL for the chemical, radiological, and nuclear domains with reasonable confidence. While Gemini 4 Argon demonstrates high capability in certain areas of theoretical reasoning, responses lacked nuanced expert knowledge and actionable depth necessary to complete priority harm journeys. We continue to deploy mitigations.
+<table><tbody>
+<tr><td><b>CBRN Uplift 1 CCL Definition:</b> "Provides low to medium resourced actors uplift in reference scenarios resulting in additional expected harm at severe scale.”<br><br><b>CCL reached?</b> We cannot rule out that Gemini 4 Argon without out-of-model mitigations reaches the biological CCL. We are therefore applying safeguards that we assess lower risk to below the biological CCL level (see misuse safeguards section for more).</td></tr>
+<tr><td><b>CBRN Uplift TCL Definition:</b> “Provides low to medium resourced actors uplift in reference scenarios resulting in material risk of CBRN attacks that could result in significant but not severe harm.”<br><br><b>TCL reached?</b> We can rule out the TCL for the chemical, radiological, and nuclear domains with reasonable confidence. While Gemini 4 Argon demonstrates high capability in certain areas of theoretical reasoning, responses lacked nuanced expert knowledge and actionable depth necessary to complete priority harm journeys. We continue to deploy mitigations.</td></tr>
+</tbody></table>
 
 ##### 3.2.1.1 Overview
 
@@ -310,9 +307,9 @@ Unlike digital risk domains, CBRN threats are heavily bounded by physical real-w
 
 #### 3.2.2 Cybersecurity
 
-**Cyber Uplift Level 1 CCL:** "Provides sufficient uplift with high impact cyber attacks for additional expected harm at severe scale."
-
-**CCL reached?** We cannot rule out that the unmitigated Gemini 4 Argon reaches the cybersecurity CCL. The model provides substantial uplift by our evaluations and quantitative modeling, and additional evidence about the efficacy of Gemini 4 Argon and other frontier models in cyber contexts suggests the possibility of severe harm without adequate mitigations. We are therefore applying safeguards that we assess lower risk to below the cybersecurity CCL level (see misuse safeguards section for more).
+<table><tbody>
+<tr><td><b>Cyber Uplift Level 1 CCL:</b> "Provides sufficient uplift with high impact cyber attacks for additional expected harm at severe scale."<br><br><b>CCL reached?</b> We cannot rule out that the unmitigated Gemini 4 Argon reaches the cybersecurity CCL. The model provides substantial uplift by our evaluations and quantitative modeling, and additional evidence about the efficacy of Gemini 4 Argon and other frontier models in cyber contexts suggests the possibility of severe harm without adequate mitigations. We are therefore applying safeguards that we assess lower risk to below the cybersecurity CCL level (see misuse safeguards section for more).</td></tr>
+</tbody></table>
 
 ##### 3.2.2.1 Overview
 

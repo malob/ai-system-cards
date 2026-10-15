@@ -33,7 +33,10 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
     - repair column rotation against oracle span geometry (docling TableFormer
       cyclically mis-assigns columns on wide numeric tables, e.g. 4.4.2.A)."""
     out = []
-    for t in _load().get(str(page_no), []):
+    entries = _load().get(str(page_no), [])
+    if TAGGED_TABLES and oracle_page is not None:
+        entries = _reconcile_tag_tables(entries, oracle_page)
+    for t in entries:
         t = {**t, "html": _demote_data_th(t["html"])}
         t = {**t, "html": _promote_split_rowspan(t["html"])}
         t = {**t, "html": _normalize_rowspan_subrows(t["html"])}
@@ -111,7 +114,13 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         # as the rule; the regression sweep found the exceptions)
         if oracle_page is not None:
             html = _lift_regular_sups(html, t["bbox"], oracle_page)
-        out.append({**t, "html": html})
+        entry = {**t, "html": html}
+        if TAGGED_TABLES and oracle_page is not None:
+            entry["html"] = _breaks_from_tags(entry["html"], t["bbox"], oracle_page)
+            ends = _tag_row_ends(t["bbox"], oracle_page, entry["html"])
+            if ends:
+                entry["tag_rows"] = ends
+        out.append(entry)
     return out
 
 
@@ -211,6 +220,207 @@ def _header_fill_hexes() -> set:
 HEADER_FILLS = _header_fill_hexes()
 # per-card knob: header rows from the drawn header BAND, not text colour
 HEADER_BY_FILL = _document_knob("header_rows_by_fill")
+
+
+# per-card knob: the PDF's TAGGED structure (oracle `tags`: Table → TR →
+# TH/TD → P lines) is authority for (a) tables and rows docling missed —
+# the bordered CCL definition boxes (pp.22, 34, 41, 64), Figure 3.38's
+# spanning prompt row (p.147); (b) in-cell line structure — a P boundary is
+# a paragraph break, a line ending in U+200B inside one P a soft return
+# (Figure 3.43's code lines, p.155); (c) a row cut by a page break (the same
+# TR index on both pages — Figure 3.43's 'STEPS 1–6', pp.154-155). Where the
+# tags are silent (untagged marked content, p.93) the legacy path stands.
+TAGGED_TABLES = _document_knob("tagged_tables")
+
+
+def _tag_table_lines(t: dict) -> list:
+    return [l for r in t["rows"] for c in r["cells"] for pa in c["paras"] for l in pa["lines"]]
+
+
+def _tag_table_bbox(t: dict) -> list | None:
+    ls = _tag_table_lines(t)
+    if not ls:
+        return None
+    return [min(l[0] for l in ls), min(l[1] for l in ls), max(l[2] for l in ls), max(l[3] for l in ls)]
+
+
+def _tag_cell_sq(cell: dict) -> str:
+    return _squash(_INVISIBLE.sub("", "".join(l[4] for pa in cell["paras"] for l in pa["lines"])))
+
+
+def _tag_cell_breaks(cell: dict) -> dict:
+    """{visible-char ordinal: break} for a tag cell: '<br>' before each later
+    P (or '<br><br>' across a paragraph GAP) and after a line ending in
+    U+200B inside one P (a soft return). Ordinals count non-space,
+    non-invisible characters, as the cell walkers do."""
+    breaks, k = {}, 0
+    prev_bottom, prev_h = None, None
+    for pi, pa in enumerate(cell["paras"]):
+        for li, (x0, y0, x1, y1, text) in enumerate(pa["lines"]):
+            if k and li == 0 and pi:
+                gap = y0 - prev_bottom
+                breaks[k] = "<br><br>" if gap > 0.45 * prev_h else "<br>"
+            elif k and li and pa["lines"][li - 1][4].rstrip(" ").endswith("\u200b"):
+                breaks[k] = "<br>"
+            k += sum(1 for ch in _INVISIBLE.sub("", text) if not ch.isspace())
+            prev_bottom, prev_h = y1, y1 - y0
+    return breaks
+
+
+def _tag_cell_html(cell: dict) -> str:
+    """Plain cell HTML from a tag cell: its lines joined (wraps by the wrap
+    rule), with the tag breaks."""
+    import html as _h
+    parts, prev_soft = [], False
+    for pi, pa in enumerate(cell["paras"]):
+        for li, l in enumerate(pa["lines"]):
+            text = _INVISIBLE.sub("", l[4]).strip()
+            if not text:
+                continue
+            if parts and (li == 0 or prev_soft):
+                parts.append(None)   # break marker
+            parts.append(text)
+            prev_soft = l[4].rstrip(" ").endswith("\u200b")
+    out, chunk = [], []
+    for part in parts + [None]:
+        if part is None:
+            if chunk:
+                out.append(_h.escape(_join_wrapped(chunk), quote=False))
+            chunk = []
+        else:
+            chunk.append(part)
+    return "<br>".join(out)
+
+
+def _html_from_tag_table(t: dict) -> str | None:
+    """A simple grid from a tag table: every row has the table's full cell
+    count, or one cell spanning all columns. Anything else (row spans) is
+    left to docling."""
+    rows = [r for r in t["rows"] if r["cells"]]
+    if not rows:
+        return None
+    n = max(len(r["cells"]) for r in rows)
+    out = []
+    for r in rows:
+        cells = r["cells"]
+        if len(cells) not in (1, n):
+            return None
+        span = f' colspan="{n}"' if len(cells) == 1 and n > 1 else ""
+        out.append("<tr>" + "".join(f"<td{span}>{_tag_cell_html(c)}</td>" for c in cells) + "</tr>")
+    return "<table><tbody>" + "".join(out) + "</tbody></table>"
+
+
+def _reconcile_tag_tables(entries: list, oracle_page: dict) -> list:
+    """Add a table docling never saw, or replace one that covers under 60%
+    of its tagged table's height (it lost rows), with the tag-built grid."""
+    out = list(entries)
+    for t in oracle_page.get("tags", []):
+        tb = _tag_table_bbox(t)
+        if not tb or tb[3] - tb[1] < 8:
+            continue
+        cover = [max(0.0, min(tb[3], e["bbox"][3]) - max(tb[1], e["bbox"][1])) / (tb[3] - tb[1])
+                 for e in out]
+        best = max(range(len(out)), key=lambda i: cover[i]) if out else None
+        if best is not None and cover[best] >= 0.6:
+            continue
+        html = _html_from_tag_table(t)
+        if html is None:
+            continue
+        bbox = [tb[0] - 4, tb[1] - 4, tb[2] + 4, tb[3] + 4]
+        if best is not None and cover[best] > 0:
+            eb = out[best]["bbox"]
+            bbox = [min(bbox[0], eb[0]), min(bbox[1], eb[1]), max(bbox[2], eb[2]), max(bbox[3], eb[3])]
+            out[best] = {"bbox": bbox, "html": html, "from_tags": True}
+        else:
+            out.append({"bbox": bbox, "html": html, "from_tags": True})
+    return sorted(out, key=lambda e: e["bbox"][1])
+
+
+def _breaks_from_tags(html: str, bbox: list, oracle_page: dict) -> str:
+    """Rebuild each tag-located cell's line breaks from the tags: existing
+    <br> and <p> boundaries are dropped and the tag breaks inserted (before
+    any opening inline tag, so a highlight or bold run never starts with a
+    break). Cells holding list markup or bullets, and cells no single tag
+    cell spells, are left alone."""
+    import html as _h
+    tag_cells = [c for t in oracle_page.get("tags", []) for r in t["rows"] for c in r["cells"]]
+    by_sq: dict = {}
+    for c in tag_cells:
+        by_sq.setdefault(_tag_cell_sq(c), []).append(c)
+
+    def rebuild(m):
+        tg, attrs, c = m.groups()
+        if "<li" in c or "<ul" in c or "●" in c:
+            return m.group(0)
+        plain = _h.unescape(re.sub(r"\[\^\d+\]", "", re.sub(r"<[^>]+>", "", c)))
+        sq = _squash(_INVISIBLE.sub("", plain))
+        hits = by_sq.get(sq, [])
+        if not sq or len(hits) != 1:
+            return m.group(0)
+        breaks = _tag_cell_breaks(hits[0])
+        toks = re.findall(r"<[^>]+>|&[a-zA-Z0-9#]{1,8};|\[\^\d+\]|.", c, re.S)
+        out, k, held, pending_ws = [], 0, [], ""
+        for t in toks:
+            if re.fullmatch(r"</?p>|<br\s*/?>", t):
+                pending_ws = pending_ws or " "
+                continue
+            if t.startswith("<") and not t.startswith("</"):
+                held.append(t)      # opening tag: emitted with the next char
+                continue
+            if t.startswith("</") or t.startswith("[^"):
+                out.append("".join(held) + t)
+                held = []
+                continue
+            vis = _h.unescape(t)
+            if vis.isspace() or vis in _INVIS:
+                pending_ws = pending_ws or t
+                continue
+            if k in breaks and k:
+                out.append(breaks[k])
+                pending_ws = ""
+            elif pending_ws and out:
+                out.append(" ")
+            pending_ws = ""
+            out.append("".join(held) + t)
+            held = []
+            k += 1
+        out.append("".join(held))
+        return f"<{tg}{attrs}>{''.join(out).strip()}</{tg}>"
+
+    return re.sub(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", rebuild, html, flags=re.S)
+
+
+def _tag_row_ends(bbox: list, oracle_page: dict, html: str = "") -> dict | None:
+    """Tag identity of a table fragment's first and last rows: the tag
+    table it overlaps, and each end row's TR index with every cell's first /
+    last P index (a continuation cell opening on the SAME P flows on). A
+    first-row cell whose HTML text does not START with its first tagged P
+    opens on untagged text (pp.89/93 carry continuation lines outside the
+    structure tree): its index is unknown (None), so the seam heuristic
+    decides that cell."""
+    first_html = re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>",
+                            (re.findall(r"<tr>.*?</tr>", html, re.S) or [""])[0], re.S)
+    for t in oracle_page.get("tags", []):
+        tb = _tag_table_bbox(t)
+        if not tb or min(tb[3], bbox[3]) - max(tb[1], bbox[1]) <= 0:
+            continue
+        rows = [r for r in t["rows"] if r["cells"] and any(c["paras"] for c in r["cells"])]
+        if not rows:
+            continue
+        first, last = rows[0], rows[-1]
+
+        def opens_on(ci, c):
+            if not c["paras"] or ci >= len(first_html):
+                return None
+            head = _squash(_INVISIBLE.sub("", c["paras"][0]["lines"][0][4]))
+            return c["paras"][0]["i"] if head and _cell_sq(first_html[ci]).startswith(head) else None
+
+        lead = len(first_html) - len(first["cells"])
+        first_ix = [opens_on(ci + max(lead, 0), c) for ci, c in enumerate(first["cells"])]
+        return {"table": t["table"],
+                "first": [first["tr"], first_ix],
+                "last": [last["tr"], [c["paras"][-1]["i"] if c["paras"] else None for c in last["cells"]]]}
+    return None
 
 
 # per-card knob: rebuild each locatable cell's BOLD extents and paragraph
@@ -1232,21 +1442,27 @@ def _visible(cell: str) -> str:
     return _h.unescape(re.sub(r"<[^>]+>", "", cell)).strip()
 
 
-def merge_continuation_rows(html: str) -> str:
+def merge_continuation_rows(html: str, forced: tuple | None = None) -> str:
     """After cross-page table stitching: a row whose FIRST cell is empty and
     whose content continues the previous row mid-sentence is the same logical
     row split by the page break — merge cell-wise. The seam paragraph joins
     when the continuation starts lowercase/'('; otherwise it stays its own
     <p>. (v1's hand-built 9-page welfare table is the shape target.)"""
+    # `forced` = (row ordinal, per-cell flow flags): the PDF's tags say that
+    # row is the previous row cut by the page break (same TR index on both
+    # pages), and whether each cell continues its paragraph (same P index)
     parts = re.split(r"(<tr>.*?</tr>)", html, flags=re.S)
     out_parts = []
     last_row_idx = None
     rows_merged = 0
+    row_ord = -1
     for pi, part in enumerate(parts):
         if not part.startswith("<tr>"):
             out_parts.append(part)   # inter-row content (page markers) kept
             continue
+        row_ord += 1
         r = part
+        force = forced is not None and row_ord == forced[0]
         last_row_of_table = not any(p2.startswith("<tr>") for p2 in parts[pi + 1:])
         tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
         plain = [_cell_sq(c) for _, _, c in tags]
@@ -1281,9 +1497,10 @@ def merge_continuation_rows(html: str) -> str:
         else:
             first_lead_empty = False
         if (prev_tags and len(tags) == len(prev_tags) and tags
-                and (not plain[0] or first_continues or first_lead_empty)
-                and any(plain if first_lead_empty else plain[1:]) and starts_lower
-                and not any("colspan" in a for _, a, _ in tags)):
+                and (force and any(plain)
+                     or ((not plain[0] or first_continues or first_lead_empty)
+                         and any(plain if first_lead_empty else plain[1:]) and starts_lower
+                         and not any("colspan" in a for _, a, _ in tags)))):
             # the page marker that rode BETWEEN the fragments must move
             # INSIDE the merged cell at its seam: left between </tr> and
             # </tbody> it gets foster-parented out of the table by the HTML
@@ -1300,7 +1517,10 @@ def merge_continuation_rows(html: str) -> str:
                         seam_marker += "".join(mks)
                         out_parts[j] = re.sub(r"<!--\s*p\.\d+\s*-->", "", out_parts[j])
             cells = []
-            for (pg, pa, pc), (_, _, cc) in zip(prev_tags, tags):
+            flows = list(forced[1]) if force else []
+            if force and len(flows) != len(tags):
+                flows = flows[-len(tags):] if len(flows) > len(tags) else [None] * len(tags)
+            for ci_, ((pg, pa, pc), (_, _, cc)) in enumerate(zip(prev_tags, tags)):
                 if not _cell_sq(cc):
                     cells.append((pg, pa, pc))
                     continue
@@ -1314,6 +1534,8 @@ def merge_continuation_rows(html: str) -> str:
                 seam_flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_plain)
                                   or (prev_plain and not re.search(
                                       r"[.!?:;\u2026\"\u201d')\]]$", prev_plain)))
+                if force and flows[ci_] is not None:
+                    seam_flows = flows[ci_]   # the tags' own P identity
                 # normalize BOTH sides to <p>-wrapped form first (a flat side
                 # mixed with a block side renders spurious line breaks), then
                 # a flowing seam merges prev's last <p> with cur's first
