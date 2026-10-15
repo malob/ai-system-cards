@@ -1827,3 +1827,21 @@ paragraphs; Figure 3.38's spanning first row renders above its table and its
 answer options join; Table 5.2's p.184 continuation is a second sub-row;
 risk-report p.113 prints '‚' (U+201A) where its canon has ',' (a D41 glyph-
 restoration gap, already a typed T1 minor there).
+
+**D71 addendum — sweep rounds and visual pass (same day).** Experiment 20 round
+1 (7 comparators + 2 linters, 224 units) found 33 majors in ~9 classes, all
+fixed as classes with certified cards byte-identical: roman-numeral list
+markers (tiered on the item text — Google Docs right-aligns them); a footnote
+tail alone under the separator continues the open note (oracle + RF1); numbered
+lines inside a note break with `<br>` (RF1/FN1 read it as whitespace); italic
+`<i>` flanking fallback with footnote-ref edges safe; body-size caption seams
+(never into a bold-lead paragraph) and period caption labels; card knobs
+`header_rows_by_fill` (after the dark-band demotion) and `cell_run_restyle`
+(bold extents, paragraph gaps, and gapless blank lines from each cell's own
+run); regular-weight row-label `th` → `td`; run matching ignores zero-widths and
+reads centred stacks. Round 2: 24 fix pages (one remaining major fixed) + 17
+seeded clean pages, all clean. Rendered visual pass: DOM audit clean at three
+widths; 14 table screenshots, 12 clean, one highlight sliver fixed (a break
+before a highlight lands outside it). New judgment items for the owner: the
+renderer's smart-quote pass curls straight quotes in raw-HTML tables (all
+cards); the D69 full scroll applies (new visual grammar).
