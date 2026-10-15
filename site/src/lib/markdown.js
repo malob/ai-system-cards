@@ -29,7 +29,7 @@ const FORBIDDEN_RAW_TAGS = new Set([
 // noscript, template, etc.) are separately forbidden above.
 const BROWSER_HIDDEN_RAW_TAGS = new Set(['datalist', 'option', 'optgroup', 'rp', 'select']);
 const BROWSER_HIDDEN_RAW_CLASSES = new Set(['fnref-shim', 'sidenote']);
-const SOURCE_RAW_CLASSES = new Set(['hl', 'ph']);
+const SOURCE_RAW_CLASSES = new Set(['hl', 'hl-orange', 'ph']);
 const MECHANICAL_RAW_CLASSES = new Set(['fn-html', 'fnref-shim', 'pagemark']);
 // Raw-HTML vocabulary observed in canonical source sections, plus explicitly
 // supported semantic containers whose visibility is checked below. Markdown

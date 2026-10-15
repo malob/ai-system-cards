@@ -495,6 +495,18 @@ a:hover { text-decoration-color: var(--accent); }
   color: inherit;
 }
 
+.hl-orange {
+  /* a highlight the document gives meaning: gemini-4-argon Figure 3.43
+     marks the history-wiping commands "highlighted in orange" (#fdb895) */
+  background: #fdb895;
+  padding: 0.02em 0.15em;
+  border-radius: 3px;
+}
+[data-theme='dark'] .hl-orange {
+  background: color-mix(in srgb, #fdb895 38%, transparent);
+  color: inherit;
+}
+
 .chip {
   --chip: var(--ink-soft);
   display: inline-block;

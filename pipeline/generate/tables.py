@@ -160,6 +160,33 @@ def _document_knob(name: str) -> bool:
 
 
 MERGE_BY_FILL = _document_knob("merge_cells_by_fill")
+# per-card knob: EVERY in-cell line whose successor's first word would have
+# fit is a deliberate return, not only bold→regular label boundaries
+# (gemini-4-argon Figure 3.43's code lines and 'Environment: … / Model: …'
+# stack, pp.154-155 — joined they read as one run-on paragraph)
+CELL_FIT_BREAKS = _document_knob("cell_fit_breaks")
+
+
+def _highlight_fills() -> dict:
+    """{fill hex: span class} for the manifest's `highlight` fills — a tint
+    the document gives MEANING (gemini-4-argon Figure 3.43 p.155: its caption
+    points at the commands 'highlighted in orange'). Default class `hl`."""
+    try:
+        mtext = (cardcfg.CARD / "style-manifest.yaml").read_text()
+    except OSError:
+        return {}
+    m = re.search(r"^fills:\n((?:[ \t]+.*\n)+)", mtext, re.M)
+    if not m:
+        return {}
+    out = {}
+    for mm in re.finditer(r'^  "(#[0-9a-f]{6})":\s*\{([^}]*)\}', m.group(1), re.M):
+        if re.search(r"\brole:\s*highlight\b", mm.group(2)):
+            cls = re.search(r"\bclass:\s*([\w-]+)", mm.group(2))
+            out[mm.group(1)] = cls.group(1) if cls else "hl"
+    return out
+
+
+HIGHLIGHT_FILLS = _highlight_fills()
 
 
 def _header_blobs(hdr_spans: list) -> list:
@@ -1738,6 +1765,18 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
     # are exactly the legend's promise (p.82/98 missing-bold cluster)
     bold_signifies = bold_share < 0.9
 
+    def highlight_of(s):
+        """Span class of a meaningful highlight fill under the span's centre."""
+        if not HIGHLIGHT_FILLS:
+            return None
+        cx, cy = (s["bbox"][0] + s["bbox"][2]) / 2, (s["bbox"][1] + s["bbox"][3]) / 2
+        for f in oracle_page.get("fills", []) + oracle_page.get("pills", []):
+            fb = f["bbox"]
+            if (f.get("color") in HIGHLIGHT_FILLS
+                    and fb[0] <= cx <= fb[2] and fb[1] <= cy <= fb[3]):
+                return HIGHLIGHT_FILLS[f["color"]]
+        return None
+
     def underlined(s):
         sb = s["bbox"]
         # LINKED text is underlined by link styling, never a word underline
@@ -1894,6 +1933,9 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                     wraps.append(("<i>", "</i>"))
                 if underlined(inst) and styleable:
                     wraps.append(("<u>", "</u>"))
+                hl = highlight_of(inst)
+                if hl and styleable:
+                    wraps.append((f'<span class="{hl}">', "</span>"))
                 # a run set >=1.5pt below the cell's lead size is a QUIETER
                 # TIER — the header parenthetical '(refusal rate)' /
                 # '(median campaign execution score…)' (owner-spotted,
@@ -2272,9 +2314,12 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
                 # paragraph-split cells keep their <p> boundary as the blank
                 breaks[k - 1] = "<br><br>"
                 continue
-            if not (a.get("bold") and not b.get("bold")):
+            label_edge = bool(a.get("bold") and not b.get("bold"))
+            # the knob's fit test never fires across a PARAGRAPH gap: a
+            # <p>-split cell already breaks there ('<p><br>Red teaming …')
+            if not (label_edge or (CELL_FIT_BREAKS and gap <= 0.6 * line_h)):
                 continue
-            is_lead = all(s.get("bold") for s in srcs[:k])
+            is_lead = label_edge and all(s.get("bold") for s in srcs[:k])
             word = b["text"].strip().split(" ")[0]
             w = ((b["bbox"][2] - b["bbox"][0]) * len(word)
                  / max(1, len(b["text"].rstrip())))
