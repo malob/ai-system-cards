@@ -262,8 +262,31 @@ def _restyle_cells_from_runs(html: str, bbox: list, oracle_page: dict) -> str:
                     and not _h.unescape(t).isspace() and _h.unescape(t) not in _INVIS)
         if n_vis != len(flags):
             return m.group(0)
+        # a BLANK line ('<br><br>') where the run shows no paragraph gap is
+        # a misaligned break (Table 3.6 p.92 'on capability<br><br>benchmarks',
+        # a neighbour cell's geometry): it reads as one wrapped run
+        drop = set()
+        vis_ix, k2 = {}, 0
+        for i, t in enumerate(toks):
+            if not t.startswith(("<", "[^")) and not _h.unescape(t).isspace() \
+                    and _h.unescape(t) not in _INVIS:
+                vis_ix[i] = k2
+                k2 += 1
+        for i, t in enumerate(toks):
+            if re.fullmatch(r"<br\s*/?>", t):
+                j = i + 1
+                while j < len(toks) and _h.unescape(toks[j]).isspace():
+                    j += 1
+                if j < len(toks) and re.fullmatch(r"<br\s*/?>", toks[j]):
+                    nxt = next((vis_ix[q] for q in range(j + 1, len(toks)) if q in vis_ix), None)
+                    if nxt is not None and nxt not in starts:
+                        drop.update({i, j})
         out, k, bold_open, pending_space = [], 0, False, ""
-        for t in toks:
+        for i, t in enumerate(toks):
+            if i in drop:
+                if not pending_space:
+                    pending_space = " "
+                continue
             if re.fullmatch(r"</?b>", t):
                 continue
             if t.startswith("<") or t.startswith("[^"):

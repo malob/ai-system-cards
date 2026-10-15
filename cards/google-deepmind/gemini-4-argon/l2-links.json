@@ -277,7 +277,7 @@
       "text": "Section 6.1"
     }
   ],
-  "canonical_sections_sha256": "b73e14247e6ff3374b33e274f6d3689f4628213e8f77b5ee6ee2cc8dcfb9aff0",
+  "canonical_sections_sha256": "006588b228b9da111fc470cc025e25bfab49feaf4a4b874c0c050c1e457d93ad",
   "card_id": "google-deepmind/gemini-4-argon",
   "exclusions": [
     {
@@ -1329,7 +1329,7 @@
     "03a-frontier-safety-misuse.md": "6c45c23653cb660e63e36fe982ae750c75d4f35a04d4e1fd51b30746d71cadc1",
     "03b-manipulation-safeguards.md": "d460e8e1bb2c9a237efbdcd13431cdb7ef7dd7a6dfac0e3b1093227aef57a172",
     "03c-loss-of-control.md": "44ba42d9cd2162957261b985d9be0bfa1e8c3fa2aaeb31c95d4b82a214a44076",
-    "03d-alignment-assessment.md": "7421063641547a0e740031728734666496be1ff798cf843ffb5bfabd9c5d8ed1",
+    "03d-alignment-assessment.md": "b09cf731972985805a25d5158ebf4230eecce6c2b778afceef683a1bdc9e33b6",
     "03e-cot-transparency.md": "c475caf5d178b02645511b4c45f934001d4237624f2479da791df8cd8d016f0b",
     "03f-evaluation-awareness.md": "7766b96589e046e91b362bc03aa98b53a72e80caf1d572ccf36cb2201afcb787",
     "04-content-safety.md": "7db248175890c1775a9eb063fab152aaecd04447246868f601dfb9ecaed3dc5b",
