@@ -8,6 +8,7 @@ top-left, emits clean HTML for the v1 renderer + verifier.
 
 import json
 import re
+from collections import Counter
 import sys
 import tempfile
 from pathlib import Path
@@ -39,6 +40,13 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         t = {**t, "html": _dedup_cascaded_cells(t["html"], t["bbox"], oracle_page)}
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
         if oracle_page is not None:
+            # docling LOST source text in a ruled table whose drawn grid is
+            # its own grid: every word goes back to the cell it sits in
+            html = _reproject_ruled_on_deficit(html, t["bbox"], oracle_page)
+            html = _pad_dropped_empty_cells(html, t["bbox"], oracle_page)
+            # a docling row cut ABOVE its drawn rule goes back first, so the
+            # fragment/continuation machinery never sees a false fragment
+            html = _rehome_across_row_rules(html, t["bbox"], oracle_page)
             # split BEFORE rotation repair: a glued cell defeats x-matching,
             # leaving its row rotated; once split, the row becomes repairable
             html = _merge_fragment_rows(html, t["bbox"], oracle_page)
@@ -71,6 +79,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             html = _debold_th(html)
             if MERGE_BY_FILL:
                 html = _merge_cells_by_fill(html, t["bbox"], oracle_page)
+            html = _rowspan_unruled_empties(html, t["bbox"], oracle_page)
         # hyphen-wrap join in cells the rebuild didn't touch (short label cells
         # like 'Self- knowledge'): keep the hyphen, drop only the wrap space.
         # Both directions, same rules as the shared A1 (norm.join_wrap_hyphens)
@@ -1075,6 +1084,361 @@ def merge_continuation_rows(html: str) -> str:
         last_row_idx = len(out_parts) - 1
     merged_html = "".join(out_parts) if rows_merged else html
     return _split_inline_questions(_extend_rowspans_over_short_rows(merged_html))
+
+
+def _grid_cells(rows: list[str]) -> list[list[tuple]]:
+    """[(tag, attrs, content, col, rowspan, colspan)] per row, with each
+    cell's grid column resolved past rowspans from earlier rows."""
+    occupied: set = set()
+    grid = []
+    for ri, r in enumerate(rows):
+        out, col = [], 0
+        for tg, a, c in re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S):
+            while (ri, col) in occupied:
+                col += 1
+            rs = int((re.search(r'rowspan="(\d+)"', a) or [0, 1])[1])
+            cs = int((re.search(r'colspan="(\d+)"', a) or [0, 1])[1])
+            for dr in range(rs):
+                for dc in range(cs):
+                    occupied.add((ri + dr, col + dc))
+            out.append((tg, a, c, col, rs, cs))
+            col += cs
+        grid.append(out)
+    return grid
+
+
+def _x_columns(oracle_page: dict, bbox: list) -> list[list]:
+    """The table's spans clustered by left edge (2pt), each top-down."""
+    by_x: dict[float, list] = {}
+    for s in _table_spans(oracle_page, bbox):
+        if not s["text"].strip() or s.get("zone") == "fnref":
+            continue
+        key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
+        by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
+    return [sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
+
+
+def _unique_col_run(sq: str, cols: list[list]) -> list | None:
+    """The ONE consecutive x-column span run spelling ``sq``, else None."""
+    hits = []
+    for col in cols:
+        for st in range(len(col)):
+            acc = ""
+            for j in range(st, len(col)):
+                acc += _squash(col[j]["text"])
+                if len(acc) >= len(sq):
+                    break
+            if acc == sq:
+                hits.append(col[st:j + 1])
+    return hits[0] if len(hits) == 1 else None
+
+
+def _rules_crossing(rules: list, x0: float, x1: float, y_top: float, y_bot: float) -> list:
+    """y of drawn horizontal rules spanning [x0, x1] between y_top..y_bot."""
+    return [ry for rx0, ry, rx1, _ in rules
+            if rx0 <= x0 + 2 and rx1 >= x1 - 2 and y_top <= ry <= y_bot]
+
+
+def _rowspan_unruled_empties(html: str, bbox: list, oracle_page: dict) -> str:
+    """A RULED table draws a line under every cell it closes; an empty cell
+    with no rule between it and the cell above is that cell continuing
+    (gemini-4-argon Table 3.1 p.18: 'Loss of Control' spans three rows,
+    docling emits it over two empty cells). Ruled means the table draws an
+    internal row rule somewhere (top/bottom borders alone don't count), so
+    unruled and booktabs-style tables never qualify."""
+    rules = [r for r in oracle_page.get("hrules", [])
+             if bbox[0] - 3 <= r[0] and r[2] <= bbox[2] + 3
+             and bbox[1] + 3 <= r[1] <= bbox[3] - 3]   # internal rules only
+    if not rules:
+        return html
+    cols = _x_columns(oracle_page, bbox)
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    grid = _grid_cells(rows)
+    runs = [[_unique_col_run(_cell_sq(c), cols) if _cell_sq(c) else None
+             for _, _, c, *_ in row] for row in grid]
+    tops = [min((rn[0]["bbox"][1] for rn in rr if rn), default=None) for rr in runs]
+    # owner[(row, col)] = (row, index) of the cell covering that grid slot
+    owner = {}
+    for ri, row in enumerate(grid):
+        for ci, (_, _, _, col, rs, cs) in enumerate(row):
+            for dr in range(rs):
+                for dc in range(cs):
+                    owner[(ri + dr, col + dc)] = (ri, ci)
+    drop: set = set()
+    span_add: dict = {}
+    for ri in range(1, len(grid)):
+        if tops[ri] is None:
+            continue
+        for ci, (_, a, c, col, rs, cs) in enumerate(grid[ri]):
+            if _cell_sq(c) or rs != 1 or cs != 1 or "<" in c:
+                continue
+            up = owner.get((ri - 1, col))
+            if up is None:
+                continue
+            ur, uc = up
+            if (ur, uc) in drop:
+                continue
+            u_run = runs[ur][uc]
+            if not u_run or grid[ur][uc][5] != 1:
+                continue
+            x0 = min(s["bbox"][0] for s in u_run)
+            x1 = max(s["bbox"][2] for s in u_run)
+            if _rules_crossing(rules, x0, x1, u_run[-1]["bbox"][3], tops[ri]):
+                continue
+            span_add[(ur, uc)] = span_add.get((ur, uc), 0) + 1
+            drop.add((ri, ci))
+            for k in range(rs):
+                owner[(ri + k, col)] = (ur, uc)
+    if not drop:
+        return html
+    out = html
+    for ri, (r, row) in enumerate(zip(rows, grid)):
+        cells = []
+        for ci, (tg, a, c, col, rs, cs) in enumerate(row):
+            if (ri, ci) in drop:
+                continue
+            if (ri, ci) in span_add:
+                a = re.sub(r'\s*rowspan="\d+"', "", a) + f' rowspan="{rs + span_add[(ri, ci)]}"'
+            cells.append(f"<{tg}{a}>{c}</{tg}>")
+        out = out.replace(r, "<tr>" + "".join(cells) + "</tr>", 1)
+    return out
+
+
+_INVISIBLE = re.compile("[\u200b\u200c\u200d\u2060\ufeff\u00ad]")
+
+
+def _visible_chars(text: str) -> Counter:
+    """Letters and digits only: docling's glyph folding (curly quotes,
+    dashes, risk-report p.113's '‚') is restored later by D41 and is not
+    lost text — a deficit here means words actually went missing."""
+    return Counter(ch for ch in _INVISIBLE.sub("", text) if ch.isalnum())
+
+
+def _line_lists(spans: list) -> list[list]:
+    """Spans grouped into visual lines (y-overlap), each left to right."""
+    lines: list[list] = []
+    for s in sorted(spans, key=lambda s: (s["bbox"][1], s["bbox"][0])):
+        for ln in lines:
+            a = ln[0]["bbox"]
+            ov = min(a[3], s["bbox"][3]) - max(a[1], s["bbox"][1])
+            if ov > 0.5 * min(a[3] - a[1], s["bbox"][3] - s["bbox"][1]):
+                ln.append(s)
+                break
+        else:
+            lines.append([s])
+    for ln in lines:
+        ln.sort(key=lambda s: s["bbox"][0])
+    return lines
+
+
+def _reproject_ruled_on_deficit(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling can DROP source text while getting the table's shape right
+    (gemini-4-argon p.154: '4 of 29 pdf cells matched neither a row nor a
+    column band' — 'Write health.sh' and 'user bash' vanished, the rest
+    landed in the wrong cells). When the table's visible characters fall
+    short of the source AND the drawn rules form exactly docling's grid
+    (every cell boundary drawn, no rule inside a merged cell), each span is
+    re-assigned to the cell rectangle containing its centre. Anything less
+    certain — no deficit, a grid that disagrees, a span outside every cell,
+    a result that does not reproduce the source characters — leaves the
+    HTML untouched."""
+    import html as _h
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if _INVISIBLE.sub("", s["text"]).strip() and s.get("zone") != "fnref"]
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    if not rows or not spans:
+        return html
+    grid = _grid_cells(rows)
+    src = _visible_chars("".join(s["text"] for s in spans))
+    have = _visible_chars("".join(_h.unescape(re.sub(r"<[^>]+>", "", c))
+                                  for row in grid for _, _, c, *_ in row))
+    if not (src - have):
+        return html
+
+    def inside(r):
+        return (bbox[0] - 3 <= min(r[0], r[2]) and max(r[0], r[2]) <= bbox[2] + 3
+                and bbox[1] - 3 <= min(r[1], r[3]) and max(r[1], r[3]) <= bbox[3] + 3)
+
+    hr = [r for r in oracle_page.get("hrules", []) if inside(r)]
+    vr = [r for r in oracle_page.get("vrules", []) if inside(r)]
+
+    def lines_at(vals):
+        out: list[float] = []
+        for v in sorted(vals):
+            if not out or v - out[-1] > 1.5:
+                out.append(v)
+        return out
+
+    ys, xs = lines_at(r[1] for r in hr), lines_at(r[0] for r in vr)
+    n_cols = max(col + cs for row in grid for _, _, _, col, _, cs in row)
+    if len(ys) != len(rows) + 1 or len(xs) != n_cols + 1:
+        return html
+
+    def h_drawn(y, x0, x1):
+        cov = sum(max(0.0, min(r[2], x1) - max(r[0], x0)) for r in hr if abs(r[1] - y) <= 1.5)
+        return cov >= 0.8 * (x1 - x0)
+
+    def v_drawn(x, y0, y1):
+        cov = sum(max(0.0, min(r[3], y1) - max(r[1], y0)) for r in vr if abs(r[0] - x) <= 1.5)
+        return cov >= 0.8 * (y1 - y0)
+
+    def v_any(x, y0, y1):
+        return any(abs(r[0] - x) <= 1.5 and min(r[3], y1) - max(r[1], y0) > 2 for r in vr)
+
+    def h_any(y, x0, x1):
+        return any(abs(r[1] - y) <= 1.5 and min(r[2], x1) - max(r[0], x0) > 2 for r in hr)
+
+    rects = []
+    for ri, row in enumerate(grid):
+        for ci, (_, _, _, col, rs, cs) in enumerate(row):
+            x0, x1, y0, y1 = xs[col], xs[col + cs], ys[ri], ys[ri + rs]
+            if not (h_drawn(y0, x0, x1) and h_drawn(y1, x0, x1)
+                    and v_drawn(x0, y0, y1) and v_drawn(x1, y0, y1)):
+                return html
+            if any(v_any(xs[k], y0, y1) for k in range(col + 1, col + cs)):
+                return html
+            if any(h_any(ys[k], x0, x1) for k in range(ri + 1, ri + rs)):
+                return html
+            rects.append(((ri, ci), (x0, y0, x1, y1)))
+    owned: dict = {}
+    for s in spans:
+        cx, cy = (s["bbox"][0] + s["bbox"][2]) / 2, (s["bbox"][1] + s["bbox"][3]) / 2
+        hit = [k for k, (x0, y0, x1, y1) in rects if x0 <= cx <= x1 and y0 <= cy <= y1]
+        if len(hit) != 1:
+            return html
+        owned.setdefault(hit[0], []).append(s)
+    texts = {}
+    for key, ss in owned.items():
+        parts = []
+        for ln in _line_lists(ss):
+            t = ""
+            for j, sp in enumerate(ln):
+                if j and sp["bbox"][0] - ln[j - 1]["bbox"][2] > 0.5 and not t.endswith(" "):
+                    t += " "
+                t += sp["text"]
+            parts.append(t)
+        texts[key] = _join_wrapped(parts)
+    if _visible_chars("".join(texts.values())) != src:
+        return html
+    out = html
+    for ri, (r, row) in enumerate(zip(rows, grid)):
+        rebuilt = "<tr>" + "".join(
+            f"<{tg}{a}>{_h.escape(texts.get((ri, ci), ''), quote=False)}</{tg}>"
+            for ci, (tg, a, *_) in enumerate(row)) + "</tr>"
+        out = out.replace(r, rebuilt, 1)
+    return out
+
+
+def _pad_dropped_empty_cells(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling can drop an EMPTY cell, shifting a row's cells left
+    (gemini-4-argon p.184: Table 5.2's page-top continuation came back as two
+    cells under three drawn columns, so the seam merge refused it). Where
+    the table draws full-height column rules, a plain row with fewer cells
+    than drawn columns gets an empty cell in each column its text never
+    touches — only when every cell's span run sits inside one distinct
+    column."""
+    vr = [r for r in oracle_page.get("vrules", [])
+          if bbox[0] - 3 <= r[0] <= bbox[2] + 3
+          and r[1] <= bbox[1] + 3 and r[3] >= bbox[3] - 3]
+    xs: list[float] = []
+    for x in sorted(r[0] for r in vr):
+        if not xs or x - xs[-1] > 1.5:
+            xs.append(x)
+    # a row under an earlier rowspan legitimately has fewer cells (opus-5
+    # Table 2.2.A): only span-free tables are read this way
+    if len(xs) < 3 or re.search(r"(?:row|col)span=", html):
+        return html
+    bands = list(zip(xs, xs[1:]))
+    cols = _x_columns(oracle_page, bbox)
+    out = html
+    for r in re.findall(r"<tr>.*?</tr>", html, re.S):
+        tags = re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", r, re.S)
+        if len(tags) >= len(bands) or any(a.strip() for _, a, _ in tags):
+            continue
+        slots = []
+        for _, _, c in tags:
+            sq = _cell_sq(c)
+            run = _unique_col_run(sq, cols) if sq else None
+            if run is None:
+                break
+            x0 = min(sp["bbox"][0] for sp in run)
+            x1 = max(sp["bbox"][2] for sp in run)
+            hit = [k for k, (a, b) in enumerate(bands) if a - 1 <= x0 and x1 <= b + 1]
+            if len(hit) != 1:
+                break
+            slots.append(hit[0])
+        else:
+            if slots != sorted(set(slots)):
+                continue
+            tg = tags[0][0]
+            cells = {k: f"<{t}{a}>{c}</{t}>" for k, (t, a, c) in zip(slots, tags)}
+            rebuilt = "<tr>" + "".join(cells.get(k, f"<{tg}></{tg}>")
+                                       for k in range(len(bands))) + "</tr>"
+            out = out.replace(r, rebuilt, 1)
+    return out
+
+
+def _rehome_across_row_rules(html: str, bbox: list, oracle_page: dict) -> str:
+    """Docling can cut a wrapped cell short and open the next row with its
+    tail (gemini-4-argon p.18: '… absent additional' | 'mitigations, …
+    human control. ML R&D acceleration …'). Where the table DRAWS its row
+    rules, the rule is the boundary: when the head of a cell's span run lies
+    above a horizontal rule crossing its column, the rest below it, and the
+    cell directly above (same column, one row) ends just above that head
+    with no rule between, the head belongs to the cell above."""
+    import html as _h
+    rules = [r for r in oracle_page.get("hrules", [])
+             if bbox[0] - 3 <= r[0] and r[2] <= bbox[2] + 3
+             and bbox[1] - 3 <= r[1] <= bbox[3] + 3]
+    if not rules:
+        return html
+    cols = _x_columns(oracle_page, bbox)
+
+    def run_of(sq):
+        return _unique_col_run(sq, cols)
+
+    def crossing(x0, x1, y_top, y_bot):
+        return _rules_crossing(rules, x0, x1, y_top, y_bot)
+
+    rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    grid = _grid_cells(rows)
+    contents = [[c for _, _, c, *_ in row] for row in grid]
+    changed = False
+    for ri in range(1, len(grid)):
+        for bi, (_, _, bc, col, rs, cs) in enumerate(grid[ri]):
+            above = [(ai, cell) for ai, cell in enumerate(grid[ri - 1])
+                     if cell[3] == col and cell[4] == 1 and cell[5] == cs]
+            if len(above) != 1:
+                continue
+            ai, _ = above[0]
+            a_sq, b_sq = _cell_sq(contents[ri - 1][ai]), _cell_sq(contents[ri][bi])
+            if not a_sq or not b_sq:
+                continue
+            a_run, b_run = run_of(a_sq), run_of(b_sq)
+            if not a_run or not b_run or a_run[-1]["bbox"][3] > b_run[0]["bbox"][1]:
+                continue
+            x0 = min(s["bbox"][0] for s in a_run + b_run)
+            x1 = max(s["bbox"][2] for s in a_run + b_run)
+            if crossing(x0, x1, a_run[-1]["bbox"][3] - 1, b_run[0]["bbox"][1] + 1):
+                continue   # a rule already separates the cells: docling was right
+            cut = next((k for k in range(1, len(b_run))
+                        if crossing(x0, x1, b_run[k - 1]["bbox"][3] - 1,
+                                    b_run[k]["bbox"][1] + 1)), None)
+            if cut is None:
+                continue
+            contents[ri - 1][ai] = _h.escape(_join_wrapped(
+                s["text"] for s in a_run + b_run[:cut]), quote=False)
+            contents[ri][bi] = _h.escape(_join_wrapped(
+                s["text"] for s in b_run[cut:]), quote=False)
+            changed = True
+    if not changed:
+        return html
+    out = html
+    for r, row, cells in zip(rows, grid, contents):
+        rebuilt = "<tr>" + "".join(f"<{tg}{a}>{c}</{tg}>"
+                                   for (tg, a, *_), c in zip(row, cells)) + "</tr>"
+        out = out.replace(r, rebuilt, 1)
+    return out
 
 
 def _merge_fragment_rows(html: str, bbox: list, oracle_page: dict) -> str:

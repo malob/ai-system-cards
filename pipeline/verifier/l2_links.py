@@ -187,6 +187,9 @@ class OutputOccurrence:
     end: int
     relocated_footnote: bool
     separator: str = ""
+    # for a relocated footnote-definition link: the page of its [^N]
+    # reference in the same file (the footnote's own source page)
+    footnote_page: int | None = None
 
 
 @dataclass(frozen=True)
@@ -220,6 +223,7 @@ class OutputLink:
     member_texts: tuple[str, ...]
     member_ordinals: tuple[int, ...]
     relocated_footnote: bool
+    footnote_page: int | None = None
 
 
 @dataclass
@@ -397,6 +401,24 @@ def _in_footnote_definition(text: str, pos: int) -> bool:
     return False
 
 
+def _footnote_reference_page(text: str, pos: int, start_page: int) -> int | None:
+    """Page of the body reference ``[^N]`` whose definition contains ``pos``."""
+    cursor = text.rfind("\n", 0, pos) + 1
+    while True:
+        line = text[cursor:text.find("\n", cursor) if "\n" in text[cursor:] else len(text)]
+        m = re.match(r"\[\^(\d+)\]:", line)
+        if m:
+            break
+        if cursor == 0:
+            return None
+        cursor = text.rfind("\n", 0, cursor - 1) + 1
+    ref = re.search(rf"\[\^{m.group(1)}\](?!:)", text)
+    if not ref:
+        return None
+    markers = [int(mm.group(1)) for mm in re.finditer(r"<!--\s*p\.(\d+)\s*-->", text[:ref.start()])]
+    return markers[-1] if markers else start_page
+
+
 def parse_markdown(sections_text: Iterable[tuple[str, str]]) -> ParsedMarkdown:
     """Sequentially project canonical headings and internal-link occurrences."""
     headings = []
@@ -423,10 +445,14 @@ def parse_markdown(sections_text: Iterable[tuple[str, str]]) -> ParsedMarkdown:
             else:
                 label, target = _plain(event.group("md_text")), event.group("md_href")
             separator = text[prior_internal_end:event.start()] if prior_internal_end is not None else ""
+            relocated = _in_footnote_definition(text, event.start())
             links.append(OutputOccurrence(
                 f"{filename}:l{link_ordinal}", filename, link_ordinal, label,
                 target, page, event.start(), event.end(),
-                _in_footnote_definition(text, event.start()), separator,
+                relocated, separator,
+                footnote_page=(_footnote_reference_page(
+                    text, event.start(), int(header.group(1)) if header else 0)
+                    if relocated else None),
             ))
             prior_internal_end = event.end()
             link_ordinal += 1
@@ -628,6 +654,7 @@ def _output_group(members: list[OutputOccurrence]) -> OutputLink:
         first.page, " ".join(m.text for m in members).strip(), first.target,
         tuple(m.output_id for m in members), tuple(m.text for m in members),
         tuple(m.ordinal for m in members), any(m.relocated_footnote for m in members),
+        first.footnote_page,
     )
 
 
@@ -667,6 +694,24 @@ def pair_links(source_links: list[SourceLink], output_links: list[OutputLink]) -
             pairs[sis[0]] = oi
             unmatched_sources.remove(sis[0])
             notes.append({"kind": "relocated-footnote", "source": source_links[sis[0]].source_id,
+                          "output": output.output_id})
+    # A REPEATED label in relocated footnotes ('Section 3.7' in five
+    # gemini-4-argon notes) keeps its identity through the footnote's own
+    # reference page: the source occurrence sits on that page, or the next
+    # one when the note runs over. Exactly one candidate, or no pairing.
+    for oi in [i for i in range(len(output_links)) if i not in set(pairs.values())]:
+        output = output_links[oi]
+        if not output.relocated_footnote or output.footnote_page is None:
+            continue
+        key = text_key(output.text)
+        sis = [si for si in unmatched_sources
+               if text_key(source_links[si].anchor) == key
+               and source_links[si].page in (output.footnote_page, output.footnote_page + 1)]
+        if len(sis) == 1:
+            pairs[sis[0]] = oi
+            unmatched_sources.remove(sis[0])
+            notes.append({"kind": "relocated-footnote-reference-page",
+                          "source": source_links[sis[0]].source_id,
                           "output": output.output_id})
     return pairs, notes
 

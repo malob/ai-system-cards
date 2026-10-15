@@ -186,7 +186,9 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
         sec.table_pages.add(pg(m))
         return " "
     seg = re.sub(r"^\|[-| :]+\|$", piperule, seg, flags=re.M)  # pipe-table rules
-    seg = seg.replace("|", " ")                                # pipe-table cells
+    # pipe-table cells — only on pipe-table ROWS: a '|' in prose or an HTML
+    # cell is literal text ('2>/dev/null || true', gemini-4-argon p.155)
+    seg = re.sub(r"(?m)^[ \t]*\|.*$", lambda m: m.group(0).replace("|", " "), seg)
 
     def fndef(m):
         body = m.group(2)
@@ -263,11 +265,17 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
 
     seg = RE_SUP.sub(" ", seg)
     seg = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"\1", seg)   # italics
+    # a '<' inside an inline code span is literal text ('`<thought>`',
+    # gemini-4-argon pp.99/141/157): sentinel it like an escaped '\<' so the
+    # final tag strip cannot read '<thought>' as markup
+    seg = re.sub(r"(?<!`)`([^`\n]+)`(?!`)",
+                 lambda m: "`" + m.group(1).replace("<", "\x05") + "`", seg)
     seg = re.sub(r"(?<!`)`(?!`)", "", seg)   # inline code backticks (mono spans)
     # restore literals — the escaped BACKTICK only after the code-fence pass
     # below strips markup backticks (it was stripping the restored glyph too:
-    # a PDF's literal '`gsutil …`' projected without its backticks)
-    seg = seg.replace("\x03", "*").replace("\x05", "<")
+    # a PDF's literal '`gsutil …`' projected without its backticks); the
+    # literal '<' only after the tag strip (it read '\<thought>' as a tag)
+    seg = seg.replace("\x03", "*")
 
     def heading(m):
         sec.headings.append((_strip_sentinels(m.group(1)), pg(m)))
@@ -299,7 +307,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     # block starts (ST2): first chars of every markdown block (blank-line
     # separated), for detecting paragraph-starts that are continuations;
     # ZWNJ-prefixed lines are consumed items, not paragraph starts
-    for m in re.finditer(r"(?:^|\n\n)[ \t]*([^\s#:>|!\[<‌-][^\n]{0,79})", seg):
+    for m in re.finditer(r"(?:^|\n\n)[ \t]*([^\s#:>|!\[<\x05‌-][^\n]{0,79})", seg):
         sec.block_starts.append((m.group(1)[:80], pg(m)))
     # code fences: the delimiter vanishes, but an INFO STRING is projected —
     # it carries the PDF's code-box language chrome ('None', pp.191-193 D42)
@@ -307,6 +315,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     seg = seg.replace("`", "").replace("\x04", "`")
     seg = RE_INLINE_TAG.sub("", seg)
     seg = RE_TAG.sub(" ", seg)
+    seg = seg.replace("\x05", "<")
     seg = html.unescape(seg)
     # md escapes — including an escaped BACKSLASH: the serializer doubles a
     # source backslash that precedes ASCII punctuation ('\\"' -> '\\\\"'),

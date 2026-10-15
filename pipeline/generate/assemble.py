@@ -345,7 +345,9 @@ def _caption_lead(line) -> bool:
 # Google Docs exports mark list markers with a zero-width space after the
 # glyph/number: "●​Text", "1.​Text" — a mechanical signature that
 # also distinguishes ordered-list markers from prose lines starting with digits
-LIST_MARKER = re.compile(r"^([●•◦▪‣○■□]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists
+# a plain HYPHEN bullet carries the same ZWSP signature ('-​Suicide &
+# self-harm', gemini-4-argon p.179); bare '-' prose never does
+LIST_MARKER = re.compile(r"^([●•◦▪‣○■□-]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists
 # Word-style lists (pasted reviews) use a LONE LATIN 'o' as the level-1
 # glyph, no ZWSP (UK AISI, opus-5 p.104). Only a lone 'o' + space at a deep
 # indent qualifies — 'of …' etc. never match.

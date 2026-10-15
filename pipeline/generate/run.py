@@ -570,6 +570,7 @@ def main():
     shared = {a for _, a, _ in ranges} & {b for _, _, b in ranges}
 
     heading_anchors = []  # (page, y, slug) in document order
+    heading_bottoms: dict = {}  # (page, y) -> the heading's last-line bottom
     num2slug: dict[str, str] = {}  # '8.17.6' -> its heading slug
     claim2slug: dict[str, str] = {}  # '7' -> slug of the 'Claim 7: …' heading
     title2slug: dict[str, str | None] = {}  # squashed title -> slug (None = collision)
@@ -625,6 +626,8 @@ def main():
                 heading_anchors.append((bl["page"],
                                         bl["lines"][0]["bbox"][1],
                                         slugify(htext)))
+                heading_bottoms[(bl["page"], bl["lines"][0]["bbox"][1])] = \
+                    bl["lines"][-1]["bbox"][3]
                 mnum = re.match(r"(\d+(?:\.\d+)*)[.\s]", htext + " ")
                 if mnum:
                     num2slug.setdefault(mnum.group(1), slugify(htext))
@@ -697,6 +700,13 @@ def main():
                 # (The old rule took the last heading ABOVE the dest, which
                 # combined with the bottom-up dest_y bug meant multi-heading
                 # destination pages resolved to their first heading.)
+                # A dest INSIDE a wrapped heading names that heading
+                # (gemini-4-argon p.7 'Section 4' lands on the second line of
+                # '4. Preventing content safety & agentic / misuse').
+                inside = [s for hy, s in on_page
+                          if hy < y - 2 and y <= heading_bottoms.get((n, hy), hy)]
+                if inside:
+                    return inside[-1]
                 below = [s for hy, s in on_page if hy >= y - 2]
                 if below:
                     return below[0]
@@ -713,8 +723,18 @@ def main():
     extended_res = bool(re.search(
         r"^\s*link_text_resolution:\s*extended",
         (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
+    # `geometry`: the anchor text never overrides the destination. Google
+    # DeepMind's links are named destinations bound to the exact heading, and
+    # three of its 'Section N' anchors point at a DIFFERENT section than they
+    # name (gemini-4-argon p.6 'Section 2' → 2.2, 'Section 3.4' → 3.4.1.4;
+    # p.181 'Section 3.2' → 4.2): the archive reproduces where the PDF jumps.
+    geometry_only = bool(re.search(
+        r"^\s*link_text_resolution:\s*geometry",
+        (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
 
     def text_resolution(plain):
+        if geometry_only:
+            return None
         # anchors that NAME their target ('Section 8.17.6') resolve exactly —
         # the PDF's dest coordinates are sloppy in both directions (13/28
         # landed on a neighboring section by geometry on the first card)

@@ -78,7 +78,7 @@ def wrap_joins_tight(prev_line: str, next_line: str) -> bool:
 # glyph/number ("●​Text", "1.​Text") — the shared mechanical signature used by
 # both the generator (assemble) and the ST structural invariant.
 import re as _re
-LIST_MARKER = _re.compile(r"^([●•◦▪‣○■□]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists (a. b. c.); mirrors assemble.LIST_MARKER
+LIST_MARKER = _re.compile(r"^([●•◦▪‣○■□-]|\d{1,2}[.)]|[a-z][.)])​")  # incl. lettered sub-lists (a. b. c.) and hyphen bullets; mirrors assemble.LIST_MARKER
 
 
 def squash(text: str, calibration: bool = False) -> str:

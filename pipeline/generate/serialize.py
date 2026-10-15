@@ -348,6 +348,10 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                 raw0_o = blk["lines"][0]["text"] if blk.get("lines") else ""
                 if re.match(r"^\s*o[\s​]+\S", raw0_o):
                     body = re.sub(r"^o[\s​]+", "", body)
+                # hyphen bullet ('-​', gemini-4-argon p.179): gated on the RAW
+                # marker signature, so a body that merely starts with '-' keeps it
+                if re.match(r"^\s*-​", raw0_o):
+                    body = re.sub(r"^(\**)-[​‌ ]*", r"\1", body)
                 # the strip can leave an EMPTY bold pair when the bullet's
                 # bold run ends before a following link ('**○​** [**Reckless…',
                 # opus-5 p.79) — a literal '****' desyncs every later bold

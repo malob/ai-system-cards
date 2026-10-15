@@ -236,7 +236,23 @@ def extract_page(page) -> dict:
             links["goto"].append(entry)
 
     pills, boxes, rules, fills, strokes = [], [], [], [], []
+    hrules, vrules = [], []
     for d in page.get_drawings():
+        if d.get("fill") is None and d.get("color") is not None:
+            # every drawn HORIZONTAL / VERTICAL segment, any length/colour
+            # (additive `hrules` / `vrules` keys): a ruled table's drawn
+            # grid, which the 250pt-capped `rules` loses on wide tables
+            # (gemini-4-argon p.18) and never records vertically
+            for it in d["items"]:
+                if it[0] != "l":
+                    continue
+                a, b = it[1], it[2]
+                if abs(a.y - b.y) < 0.5 and abs(b.x - a.x) >= 8:
+                    hrules.append([round(min(a.x, b.x), 1), round(a.y, 1),
+                                   round(max(a.x, b.x), 1), round(b.y, 1)])
+                elif abs(a.x - b.x) < 0.5 and abs(b.y - a.y) >= 8:
+                    vrules.append([round(a.x, 1), round(min(a.y, b.y), 1),
+                                   round(b.x, 1), round(max(a.y, b.y), 1)])
         if d.get("fill") is None:
             # stroke-only paths: thin horizontal strokes are underline rules
             r = d["rect"]
@@ -287,6 +303,10 @@ def extract_page(page) -> dict:
     }
     if underlines:
         out["underlines"] = underlines
+    if hrules:
+        out["hrules"] = hrules
+    if vrules:
+        out["vrules"] = vrules
     return out
 
 
@@ -298,8 +318,22 @@ def page_body_text(p: dict) -> str:
     for s in p["spans"]:
         if s["zone"] == "body":
             lines.setdefault(s["line"], []).append(s)
+    def _hyphen_bullet(spans):
+        # a HYPHEN list marker ('-​', gemini-4-argon p.179) is list structure,
+        # like the ● glyphs norm drops: alone on its PyMuPDF line, with the
+        # item text opening 6–16pt to its right on the same row. A table's
+        # '-' placeholder cell (fable-5 pp.251-252) has no such neighbour.
+        if len(spans) != 1 or spans[0]["text"].strip() != "-​":
+            return False
+        b = spans[0]["bbox"]
+        return any(s is not spans[0] and s["zone"] == "body"
+                   and abs(s["bbox"][1] - b[1]) < 4
+                   and 6 <= s["bbox"][0] - b[2] <= 16 for s in p["spans"])
+
     rendered, mono_flags = [], []
     for _, spans in sorted(lines.items()):
+        if _hyphen_bullet(spans):
+            continue
         buf = spans[0]["text"]
         for prev, cur in zip(spans, spans[1:]):
             gap = cur["bbox"][0] - prev["bbox"][2]
