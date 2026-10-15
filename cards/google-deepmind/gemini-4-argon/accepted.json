@@ -1,0 +1,141 @@
+{
+ "_comment": "Maintainer/source-adjudicated exact T1 residuals (2026-10-15), checked against the page renders. p.147: Figure 3.38’s four-column transcript table, which PyMuPDF streams COLUMN by column (‘4 Argon CoT’, its CoT, ‘4 Argon Output’, ‘ANSWER: B’, then the next column) while the canonical table reads its rows left to right exactly as printed; every cell is complete. pp.184–185: seam page-attribution of Table 5.3’s first row (‘Fabricating data’), which the PDF cuts mid-cell at the page break; the merged logical row carries each cell’s complete text (the fable-5-1 pp.159–160 class). No canonical content is missing or invented. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
+ "accepted": [
+  {
+   "invariant": "T1",
+   "page": 147,
+   "severity": "major",
+   "detail": {
+    "op": "insert",
+    "missing_from_md": "",
+    "extra_in_md": "3.8 Flash CoT 3.6 Flash CoT 3.1 Pro CoT",
+    "n_tokens": 9,
+    "missing_n_tokens": 0,
+    "extra_n_tokens": 9,
+    "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "extra_sha256": "fd7f45d4dadf12f16e9f6ef5ffdf560d6434868167908df7091bb52b6c2db9fa",
+    "zone": "table"
+   },
+   "fingerprint": "2555ac818fb91a128b2a0307a0ed2b90648bb4869e624cf032fc42a3521d74ab"
+  },
+  {
+   "invariant": "T1",
+   "page": 147,
+   "severity": "major",
+   "detail": {
+    "op": "insert",
+    "missing_from_md": "",
+    "extra_in_md": "4 Argon Output ANSWER: B 3.8 Flash Output ANSWER: A 3.6 Flash Output ANSWER: A",
+    "n_tokens": 15,
+    "missing_n_tokens": 0,
+    "extra_n_tokens": 15,
+    "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "extra_sha256": "5d9abf271a42fe8793ff80d8ef658bd4b58f7bb772d197454b8d717b73b14ad1",
+    "zone": "table"
+   },
+   "fingerprint": "02db89fa1148cc887107301174a33f33834f004720df259e7832823785a854aa"
+  },
+  {
+   "invariant": "T1",
+   "page": 184,
+   "severity": "major",
+   "detail": {
+    "op": "insert",
+    "missing_from_md": "",
+    "extra_in_md": "requested document was missing",
+    "n_tokens": 4,
+    "missing_n_tokens": 0,
+    "extra_n_tokens": 4,
+    "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "extra_sha256": "0b206d9048585d9300f98df9606dc044722e2bf13f5c01d028f4cd89846f5a5d",
+    "zone": "table"
+   },
+   "fingerprint": "2cb222effefff87bfa03165c1b224685b94bd8d7cfee410c7b79906ce36b2d15"
+  },
+  {
+   "invariant": "T1",
+   "page": 184,
+   "severity": "major",
+   "detail": {
+    "op": "insert",
+    "missing_from_md": "",
+    "extra_in_md": "adjacent files or substituting the wrong quarter's report to fulfill the request.",
+    "n_tokens": 12,
+    "missing_n_tokens": 0,
+    "extra_n_tokens": 12,
+    "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "extra_sha256": "572efeacd42ae191ee510861bd3464cc096a324c3eab1b031d572471a17e6ade",
+    "zone": "table"
+   },
+   "fingerprint": "56c0f54eb496f169e2e2cf1dc3796fea86e1d261017ebd303a0ad3f0caa38d7a"
+  },
+  {
+   "invariant": "T1",
+   "page": 147,
+   "severity": "major",
+   "detail": {
+    "op": "delete",
+    "missing_from_md": "4 Argon Output ANSWER: B 3.8 Flash CoT",
+    "extra_in_md": "",
+    "n_tokens": 8,
+    "missing_n_tokens": 8,
+    "extra_n_tokens": 0,
+    "missing_sha256": "a72c23fec7e87196154e31f10824ce7b666fe59c119344dd8c765301123a71af",
+    "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "zone": "table"
+   },
+   "fingerprint": "ed7e249f920296eb8682fa3c3f67b6f62d0b48ba959bb877db46a3e884dcae10"
+  },
+  {
+   "invariant": "T1",
+   "page": 147,
+   "severity": "major",
+   "detail": {
+    "op": "delete",
+    "missing_from_md": "3.8 Flash Output ANSWER: A 3.6 Flash CoT",
+    "extra_in_md": "",
+    "n_tokens": 8,
+    "missing_n_tokens": 8,
+    "extra_n_tokens": 0,
+    "missing_sha256": "8f8cc748d871de73f153c034bd301e08a483dbef34f4bae8193ed523e510e2d9",
+    "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "zone": "table"
+   },
+   "fingerprint": "1178ccc8dd4bcb2dcf57c5457e824a3d60e2e9ad468f4503d27736d653d589c9"
+  },
+  {
+   "invariant": "T1",
+   "page": 147,
+   "severity": "major",
+   "detail": {
+    "op": "delete",
+    "missing_from_md": "3.6 Flash Output ANSWER: A 3.1 Pro CoT",
+    "extra_in_md": "",
+    "n_tokens": 8,
+    "missing_n_tokens": 8,
+    "extra_n_tokens": 0,
+    "missing_sha256": "f8585137f750e389c7cda88b343c696ba25af1f233c30cc68bf87b1f6565bfe4",
+    "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "zone": "table"
+   },
+   "fingerprint": "8932e2955166f52c4188a854dee5f8f9112b5d161d7bdc17f571bdea9059ab68"
+  },
+  {
+   "invariant": "T1",
+   "page": 185,
+   "severity": "major",
+   "detail": {
+    "op": "delete",
+    "missing_from_md": "requested document was missing adjacent files or substituting the wrong quarter's report to fulfill the request.",
+    "extra_in_md": "",
+    "n_tokens": 16,
+    "missing_n_tokens": 16,
+    "extra_n_tokens": 0,
+    "missing_sha256": "0c64560aeb22657588c4b3f529e348e0f7a8575d6e6507f3f96a121cdccb748d",
+    "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "zone": "table"
+   },
+   "fingerprint": "54e94f8515a689414bcbce3b104ed0bf371b40f94483965787803ce457aeacd1"
+  }
+ ]
+}

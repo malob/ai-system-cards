@@ -261,19 +261,23 @@ def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | N
     # own rowspan rows are structure and stay.
     lead_empty = re.compile(r"<tr><t[hd]>\s*</t[hd]>(?=<t[hd])")
 
-    def _new_member(prev_row, row):
+    def _new_member(prev_row, row, page_top=True):
         # a NEW row of the group, not the previous row's own cells cut by
         # the page break (those flow: lowercase start or an unterminated
         # previous side — fable's welfare table, risk-report p.115→116 —
-        # and belong to merge_continuation_rows)
-        prev_cells = [re.sub(r"<[^>]+>", "", c).strip()
+        # and belong to merge_continuation_rows). Only a fragment's FIRST
+        # row can be a cut row: a later row sits below a drawn rule on its
+        # own page, so only a lowercase start keeps it a continuation
+        # (gemini-4-argon p.93 'Honeypots' after a cut-row tail ending
+        # 'where considered', no period)
+        prev_cells = [tables._visible(c)
                       for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", prev_row, re.S)]
-        cur_cells = [re.sub(r"<[^>]+>", "", c).strip()
+        cur_cells = [tables._visible(c)
                      for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", row, re.S)]
         prev_last = next((c for c in reversed(prev_cells) if c), "")
         cur_first = next((c for c in cur_cells if c), "")
         flows = bool(re.match(r"[a-z(\u2018\u2019]", cur_first)
-                     or (prev_last and not re.search(
+                     or (page_top and prev_last and not re.search(
                          r"[.!?:;\u2026\"\u201d')\]]$", prev_last)))
         return bool(cur_first) and not flows
 
@@ -288,13 +292,14 @@ def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | N
     if (r1 and first < len(r2) and _plain_lead_empty(r2[first])
             and not _new_member(r1[-1], r2[first])
             and first + 1 < len(r2) and _plain_lead_empty(r2[first + 1])
-            and _new_member(r2[first], r2[first + 1])):
+            and _new_member(r2[first], r2[first + 1], page_top=False)):
         first += 1
     n_cont = 0
     while (first + n_cont < len(r2) and _plain_lead_empty(r2[first + n_cont])
            and r1 and _new_member(r1[-1] if first + n_cont == i
                                   else r2[first + n_cont - 1],
-                                  r2[first + n_cont])):
+                                  r2[first + n_cont],
+                                  page_top=first + n_cont == i)):
         n_cont += 1
     if n_cont:
         # the host's last GROUP START: a row whose first cell is not covered

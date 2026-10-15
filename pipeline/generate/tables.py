@@ -999,6 +999,12 @@ def _extend_rowspans_over_short_rows(html: str) -> str:
     return out
 
 
+def _visible(cell: str) -> str:
+    """A cell's visible text: tags stripped, entities decoded."""
+    import html as _h
+    return _h.unescape(re.sub(r"<[^>]+>", "", cell)).strip()
+
+
 def merge_continuation_rows(html: str) -> str:
     """After cross-page table stitching: a row whose FIRST cell is empty and
     whose content continues the previous row mid-sentence is the same logical
@@ -1026,14 +1032,30 @@ def merge_continuation_rows(html: str) -> str:
         # when prev's first cell ends mid-sentence and cur's starts lowercase
         first_continues = False
         if plain[0] and prev_tags and prev_tags[0][2].strip():
-            pt = re.sub(r"<[^>]+>", "", prev_tags[0][2]).strip()
-            ct = re.sub(r"<[^>]+>", "", tags[0][2]).strip()
+            # entities DECODED before the punctuation test: a label ending
+            # 'recall &' reads '&amp;' and its ';' looked like a sentence end
+            # (gemini-4-argon p.88→89, Assumption 4)
+            pt = _visible(prev_tags[0][2])
+            ct = _visible(tags[0][2])
             first_continues = bool(pt and ct
                                    and not re.search(r"[.!?:;\u2026\"\u201d')\]]$", pt)
                                    and re.match(r"[a-z(\u2018\u2019]", ct))
+        # a continuation under a ROWSPAN group repeats the covered column as
+        # an empty lead the host row does not have (gemini-4-argon Table 3.6
+        # p.92→93: the Gram row has four cells, its continuation five) —
+        # align past the extra empty leads
+        lead = len(tags) - len(prev_tags) if prev_tags else 0
+        if (prev_tags and 0 < lead < len(tags) and not any(plain[:lead])
+                and not first_continues):
+            tags, plain = tags[lead:], plain[lead:]
+            starts_lower = any(re.match(r"[a-z(\u2018\u2019]", _visible(c))
+                               for _, _, c in tags if _cell_sq(c))
+            first_lead_empty = True
+        else:
+            first_lead_empty = False
         if (prev_tags and len(tags) == len(prev_tags) and tags
-                and (not plain[0] or first_continues)
-                and any(plain[1:]) and starts_lower
+                and (not plain[0] or first_continues or first_lead_empty)
+                and any(plain if first_lead_empty else plain[1:]) and starts_lower
                 and not any("colspan" in a for _, a, _ in tags)):
             # the page marker that rode BETWEEN the fragments must move
             # INSIDE the merged cell at its seam: left between </tr> and
@@ -1057,8 +1079,8 @@ def merge_continuation_rows(html: str) -> str:
                     continue
                 cur = cc.strip()
                 prev_c = pc.rstrip()
-                cur_plain = re.sub(r"<[^>]+>", "", cur).strip()
-                prev_plain = re.sub(r"<[^>]+>", "", prev_c).strip()
+                cur_plain = _visible(cur)
+                prev_plain = _visible(prev_c)
                 # flows on a lowercase continuation OR when the previous side
                 # ends mid-sentence \u2014 'do not yet meet our | CB-2 threshold'
                 # (p.115\u2192116) starts uppercase and still flows
@@ -1108,19 +1130,24 @@ def _grid_cells(rows: list[str]) -> list[list[tuple]]:
 
 
 def _x_columns(oracle_page: dict, bbox: list) -> list[list]:
-    """The table's spans clustered by left edge (2pt), each top-down."""
+    """Candidate column sequences: the table's spans clustered by left edge
+    (2pt), each top-down, PLUS the per-column reading regions — a cell whose
+    line mixes x0s ('Uncertainties & verification:' bold lead + the rest of
+    its line, gemini-4-argon p.89) is consecutive only in the latter."""
+    spans = [s for s in _table_spans(oracle_page, bbox)
+             if s["text"].strip() and s.get("zone") != "fnref"]
     by_x: dict[float, list] = {}
-    for s in _table_spans(oracle_page, bbox):
-        if not s["text"].strip() or s.get("zone") == "fnref":
-            continue
+    for s in spans:
         key = next((k for k in by_x if abs(k - s["bbox"][0]) <= 2), None)
         by_x.setdefault(s["bbox"][0] if key is None else key, []).append(s)
-    return [sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
+    return ([sorted(c, key=lambda s: s["bbox"][1]) for c in by_x.values()]
+            + _column_regions(spans))
 
 
 def _unique_col_run(sq: str, cols: list[list]) -> list | None:
-    """The ONE consecutive x-column span run spelling ``sq``, else None."""
-    hits = []
+    """The ONE consecutive span run (in any candidate sequence) spelling
+    ``sq``, else None. The same spans found twice are one run."""
+    hits: dict = {}
     for col in cols:
         for st in range(len(col)):
             acc = ""
@@ -1129,8 +1156,23 @@ def _unique_col_run(sq: str, cols: list[list]) -> list | None:
                 if len(acc) >= len(sq):
                     break
             if acc == sq:
-                hits.append(col[st:j + 1])
-    return hits[0] if len(hits) == 1 else None
+                run = sorted(col[st:j + 1], key=lambda s: (s["bbox"][1], s["bbox"][0]))
+                hits.setdefault(tuple(id(s) for s in run), run)
+    return next(iter(hits.values())) if len(hits) == 1 else None
+
+
+def _spans_text(spans: list) -> str:
+    """Visible text of a cell's spans: lines in reading order, spans on a
+    line joined by their gaps, lines by the wrap rule."""
+    parts = []
+    for ln in _line_lists(spans):
+        t = ""
+        for j, sp in enumerate(ln):
+            if j and sp["bbox"][0] - ln[j - 1]["bbox"][2] > 0.5 and not t.endswith(" "):
+                t += " "
+            t += sp["text"]
+        parts.append(t)
+    return _join_wrapped(parts)
 
 
 def _rules_crossing(rules: list, x0: float, x1: float, y_top: float, y_bot: float) -> list:
@@ -1307,17 +1349,7 @@ def _reproject_ruled_on_deficit(html: str, bbox: list, oracle_page: dict) -> str
         if len(hit) != 1:
             return html
         owned.setdefault(hit[0], []).append(s)
-    texts = {}
-    for key, ss in owned.items():
-        parts = []
-        for ln in _line_lists(ss):
-            t = ""
-            for j, sp in enumerate(ln):
-                if j and sp["bbox"][0] - ln[j - 1]["bbox"][2] > 0.5 and not t.endswith(" "):
-                    t += " "
-                t += sp["text"]
-            parts.append(t)
-        texts[key] = _join_wrapped(parts)
+    texts = {key: _spans_text(ss) for key, ss in owned.items()}
     if _visible_chars("".join(texts.values())) != src:
         return html
     out = html
@@ -1426,10 +1458,8 @@ def _rehome_across_row_rules(html: str, bbox: list, oracle_page: dict) -> str:
                                     b_run[k]["bbox"][1] + 1)), None)
             if cut is None:
                 continue
-            contents[ri - 1][ai] = _h.escape(_join_wrapped(
-                s["text"] for s in a_run + b_run[:cut]), quote=False)
-            contents[ri][bi] = _h.escape(_join_wrapped(
-                s["text"] for s in b_run[cut:]), quote=False)
+            contents[ri - 1][ai] = _h.escape(_spans_text(a_run + b_run[:cut]), quote=False)
+            contents[ri][bi] = _h.escape(_spans_text(b_run[cut:]), quote=False)
             changed = True
     if not changed:
         return html
