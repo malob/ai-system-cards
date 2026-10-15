@@ -79,7 +79,12 @@ def _tag_tables(page) -> list[dict]:
     def lines_of(block, out):
         if block.get("type") == 0:
             for ln in block.get("lines", []):
-                text = "".join(ch["c"] for sp in ln["spans"] for ch in sp["chars"])
+                # superscript footnote numerals are refs, not cell text (the
+                # canonical cell carries them as [^N]): '…(Exploratory)¹⁴:' p.41
+                text = "".join(ch["c"] for sp in ln["spans"]
+                               if not (sp.get("flags", 0) & SUPER
+                                       and "".join(c["c"] for c in sp["chars"]).strip().isdigit())
+                               for ch in sp["chars"])
                 if text.strip():
                     out.append([round(v, 1) for v in ln["bbox"]] + [text])
         for child in block.get("blocks", []) or []:

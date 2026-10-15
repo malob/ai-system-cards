@@ -277,7 +277,7 @@
       "text": "Section 6.1"
     }
   ],
-  "canonical_sections_sha256": "19fa66e4e4c5b5bd40a5b3030162a0470aa9e8d3e491894430432e3439a7a019",
+  "canonical_sections_sha256": "ea9a959deee9b611c260c9e8ce95fe79bd0cf84f046e59f68289677b1534e635",
   "card_id": "google-deepmind/gemini-4-argon",
   "exclusions": [
     {
@@ -1327,13 +1327,13 @@
     "01-introduction.md": "55f937cf47c8f952137e2aaf73e664bc21143896c3432299ff14bd59f077dbea",
     "02-mitigations.md": "f419af65c2ac67b19512dcb004357a981e331a48a925a9838d497d9d9438ccc6",
     "03a-frontier-safety-misuse.md": "ac4166848f5363531b48e59dcb3b9a42be7206f62f68e75191f6dd962cc52dd7",
-    "03b-manipulation-safeguards.md": "cd6694635a19f076766ef7168d1044c9aa3d7cd7242a54ecf6be639d623f2230",
-    "03c-loss-of-control.md": "3d44f9aeb24726b1db83164680166a662fde08ff396ba1a67aab7b07ae8cbda6",
+    "03b-manipulation-safeguards.md": "996b37f948b4b872e569511ea87804da701a354c5df2b888b0c067d14a25e877",
+    "03c-loss-of-control.md": "38af7f380383d69dce64bf3a0681e1c17ad9a183fe0dffa1f3e31943c0ed2eac",
     "03d-alignment-assessment.md": "dcff40812e86818fe75936c1e7886db06615d489db23282109c64ebd0d688ad4",
-    "03e-cot-transparency.md": "60e5ef6ae3130da21b4dc04b5802343d5cecd38a586dba8ed1d9d3322356bf54",
+    "03e-cot-transparency.md": "5a7b28da83a37936667c48c2468119d3477d9339d15b29cb01655438a6e36d55",
     "03f-evaluation-awareness.md": "d8c94e06831a085b99e17d653000fad11709de9b268bbb3761d8d2ebcaad4d33",
     "04-content-safety.md": "7db248175890c1775a9eb063fab152aaecd04447246868f601dfb9ecaed3dc5b",
-    "05-aligned-interactions.md": "01edeb85664d7e3851eae0333421b60c3f359b981aff795df9a3cc251382ce31",
+    "05-aligned-interactions.md": "b18f50f202a1207eb7aee5667a2e64e26aa922e97d315347587abecf01456245",
     "06-third-party-harm.md": "4075fcf2709e748fd0418ab4a8875d607f825d7eeddfc311d06845811914d534",
     "07-cyber-defense.md": "c5641255fb107f76e08abfc82282c24bb4d57762324b1189b42ebc6134fcc090"
   },

@@ -5,7 +5,7 @@
 #### 3.2.3 Harmful Manipulation
 
 <table><tbody>
-<tr><td><b>Harmful Manipulation CCL Definition (Exploratory)</b><sup>[^14]</sup><b>:</b> “Possesses manipulative capabilities sufficient to enable it to systematically and substantially change beliefs and behavior in identified high stakes contexts over the course of interactions with the model, reasonably resulting in additional expected harm at severe scale.”<br><b>CCL reached</b>: No. Gemini 4 Argon demonstrates some ability to influence user beliefs and behaviors during one-on-one direct conversations in human behavioral studies, and may provide utility in the planning stage of a malicious influence operation but we assess its overall capabilities to be below the CCL threshold. As a nascent risk area we continue to iterate on our harmful manipulation evaluations and improve existing safeguards.</td></tr>
+<tr><td><b>Harmful Manipulation CCL Definition (Exploratory)</b><sup>[^14]</sup><b>:</b> “Possesses manipulative capabilities sufficient to enable it to systematically and substantially change beliefs and behavior in identified high stakes contexts over the course of interactions with the model, reasonably resulting in additional expected harm at severe scale.”<br><br><b>CCL reached</b>: No. Gemini 4 Argon demonstrates some ability to influence user beliefs and behaviors during one-on-one direct conversations in human behavioral studies, and may provide utility in the planning stage of a malicious influence operation but we assess its overall capabilities to be below the CCL threshold. As a nascent risk area we continue to iterate on our harmful manipulation evaluations and improve existing safeguards.</td></tr>
 </tbody></table>
 
 ##### 3.2.3.1 Overview
@@ -56,7 +56,7 @@ We ran our strategic planning evaluation on Gemini 4 Argon on Model A and Model 
 <table><tbody>
 <tr><th>Model</th><th colspan="3">Gemini 4 Argon<br>(Model C)</th><th colspan="3">Gemini 3.8 Flash</th></tr>
 <tr><th>Elicitation method</th><th>Direct request</th><th>Jailbreak + direct request</th><th>Dynamic prompting</th><th>Direct request</th><th>Jailbreak + direct request</th><th>Dynamic prompting</th></tr>
-<tr><td>% of all elicitation attempts resulting in an elicited plan</td><td>1.8%<br><br>(1/55)</td><td>3.6%<br><br>(2/55)</td><td>98.2% (54/55)</td><td>9.1% (5/55)</td><td>9.1% (5/55)</td><td>98.2% (54/55)</td></tr>
+<tr><td>% of all elicitation attempts resulting in an elicited plan</td><td>1.8%<br><br>(1/55)</td><td>3.6%<br><br>(2/55)</td><td>98.2%<br><br>(54/55)</td><td>9.1%<br><br>(5/55)</td><td>9.1%<br><br>(5/55)</td><td>98.2%<br><br>(54/55)</td></tr>
 <tr><td># of scenarios with at least one elicited plan output</td><td>1/11</td><td>1/11</td><td>11/11</td><td>1/11</td><td>1/11</td><td>11/11</td></tr>
 </tbody></table>
 

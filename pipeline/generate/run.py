@@ -206,7 +206,8 @@ def _row_squash(row):
     return re.sub(r"\s+", "", re.sub(r"<[^>]+>", "|", row))
 
 
-def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | None:
+def _merge_tables(prev_html: str, next_html: str, next_page: int = 0,
+                  cut_first: bool = False) -> str | None:
     """Merge two adjacent-page docling fragments of one logical table: same
     column count, repeated header rows dropped (p.20-21, p.252-253, the
     nine-page appendix table)."""
@@ -289,7 +290,12 @@ def _merge_tables(prev_html: str, next_html: str, next_page: int = 0) -> str | N
     # Table 9.1.A p.225→226); merge_continuation_rows joins it right after
     # this merge, and the new members that follow it still join the group
     first = i
-    if (r1 and first < len(r2) and _plain_lead_empty(r2[first])
+    if cut_first and first < len(r2):
+        # the tags say this row is the host's last row cut by the page
+        # break: never a new member of a label group (Table 5.2 p.183→184);
+        # merge_continuation_rows joins it
+        first += 1
+    elif (r1 and first < len(r2) and _plain_lead_empty(r2[first])
             and not _new_member(r1[-1], r2[first])
             and first + 1 < len(r2) and _plain_lead_empty(r2[first + 1])
             and _new_member(r2[first], r2[first + 1], page_top=False)):
@@ -446,7 +452,8 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 flows = [None if a is None or b is None else a == b
                          for a, b in zip(p_ix[-k:], n_ix[-k:])]
                 forced = (len(tables.re.findall(r"<tr>", out[-1]["html"])), flows)
-            merged = _merge_tables(out[-1]["html"], blk["html"], blk["page"])
+            merged = _merge_tables(out[-1]["html"], blk["html"], blk["page"],
+                                   cut_first=forced is not None)
             if merged is not None:
                 # bullet breaks re-run AFTER the seam join: a cross-page
                 # bullet arrives with the continuation chunk and the merged

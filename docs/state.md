@@ -48,22 +48,38 @@ grammar, the judgment calls below, and the deploy decision.
 - **Release:** fast release gate PASSED with six cards (all gates, artifacts,
   seams, 170 verifier + 45 site tests, clean build, 0 audit findings).
 
-## Owner judgment calls (Gemini)
+## Owner scroll feedback and D72 (2026-10-15 afternoon)
 
-1. **Naming:** vendor `google-deepmind` / "Google DeepMind" (the cover shows the
-   Google logo; the report and model card are DeepMind's), title "Gemini 4
-   Argon", doc type "Safety & Security Report", release 2026-10-13.
-2. **Known structure approximations** (recorded, not fixed): the bordered
-   single-column CCL definition boxes (pp.22, 34, 41, 64) render as plain
-   bold-lead paragraphs; Figure 3.38's spanning first row renders above its
-   table and its A)–G) options join; Figure 3.43's 'STEPS 1–6' row splits at the
-   p.154/155 break; some in-cell code lines and stacked values join.
-3. **Site-wide (all cards):** the renderer's smart-quote pass curls straight
-   quotes inside raw-HTML table cells (Figure 3.43's shell lines print straight
-   quotes). Canon carries true glyphs since D41, so the pass may be removable;
-   that moves every card's rendered output — owner decision.
-4. **Risk report p.113** prints U+201A '‚' where canon has ',' (a D41 glyph
-   restoration gap, already one of its typed T1 minors) — candidate fix.
+The owner scrolled the card: naming approved; Figure 3.43's line breaks are all
+real; the bordered CCL definition boxes are a semantic loss as paragraphs;
+Figure 3.38 must be reproduced at fidelity. D72 makes the PDF's TAGGED
+structure (Google Docs exports Table/TR/TD/P tags) the table authority on this
+card (`tagged_tables` knob, oracle additive `tags`): the four boxes are now
+bordered one-column tables, Figure 3.38 is one table with its spanning prompt
+row and one line per answer option, Figure 3.43 matches the PDF line for line
+with 'STEPS 1–6' rejoined across the page, and every in-cell break follows the
+PDF's paragraphs and soft returns (a line ending in U+200B). Some continuation
+lines are untagged (pp.89, 93) — the legacy path covers them. Certified cards
+byte-identical; their PDFs are tagged too (a later candidate).
+
+## Open owner decisions
+
+1. **Quotes (all cards):** the renderer's `rehypeSmartQuotes` (from June,
+   before D41 restored true glyphs) now only changes quotes the PDF prints
+   straight — publisher apostrophes ('model's': Gemini 219, Fable ~180) and
+   code-like text (Figure 3.43's `'EOF'`). Recommended: curl only intra-word
+   apostrophes (letter'letter — never code-significant) and leave every other
+   quote exactly as printed; first make canon equal the PDF's glyphs where
+   docling folds survive (Fable canon has ~74 more straight quotes than its
+   PDF). Proposed as a separate session.
+2. **Printed page numbers:** Gemini prints PDF page − 1 (unnumbered cover; no
+   PDF page labels); the gutter shows PDF indices ('p.113' = printed 112). The
+   Anthropic cards' printed numbers equal the index. Option: label the gutter
+   with the printed footer number the oracle already reads, keeping the link to
+   the physical page.
+3. **Risk report p.113:** the PDF prints U+201A '‚' (a low quote that looks
+   exactly like a comma) where canon has ','; invisible to the eye — a typed T1
+   minor there, candidate for the glyph-restoration class.
 
 ## Current card gates
 
@@ -74,7 +90,7 @@ grammar, the judgment calls below, and the deploy decision.
 | risk-report-2026-08 | 1 T1 | FN1 1 / T1 6 / TB2 1 | 121/121 | 180/14 | 93/92 (p.126 disposition) |
 | claude-fable-5-1 | 5 T1 | T1 3 | 66/66 | 206/103 | 30/30 |
 | claude-opus-5-5 | 2 T1 (p.226) | T1 3 | 84/84 | 223/109 | 32/32 |
-| gemini-4-argon | 8 T1 (p.147, pp.184–185) | T1 5 / TB2 3 | 23/23 | 212/85 | 28/28 |
+| gemini-4-argon | 3 T1 (pp.184–185) | T1 7 / TB2 4 | 23/23 | 212/85 | 28/28 |
 
 All 0 unsuppressed majors, seams 0. 170 verifier tests. Built audit: 6 cards,
 3,129 ids, 2,571 fragment links, 1,322 page markers, 562 figures, 569 exact
@@ -130,7 +146,7 @@ sentence, decorative section-end rules.
 
 ## Open / next
 
-- **Gemini deploy:** owner scroll (D69, new grammar), the judgment calls above,
+- **Gemini deploy:** the owner's re-check of the D72 tables, the decisions above,
   then push (Pages deploys; CI derives the matrix from `meta.yaml`).
 - **Source revisions:** Anthropic's canonical `https://anthropic.com/<doc-slug>`
   redirects are the authority for "current" (D66). Gemini's source is a Google
@@ -152,7 +168,7 @@ sentence, decorative section-end rules.
 The first attempt converted one card but made the human the test suite. The
 rebuild's goal is unattended mechanical conversion followed by bounded,
 evidence-directed review. Read [charter.md](charter.md),
-[decisions.md](decisions.md) (D1…D71),
+[decisions.md](decisions.md) (D1…D72),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). D70–D71 and

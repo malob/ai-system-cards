@@ -1886,3 +1886,16 @@ Result: the definition boxes are bordered one-column tables; Figure 3.38 is one
 table with its prompt row and option lines; Figure 3.43 matches the PDF line for
 line with 'STEPS 1–6' rejoined; the five p.147 column-order acceptances went
 stale and were removed (3 remain, pp.184–185).
+
+**D72 addendum — visual re-check (same day).** 18 re-shot tables: 13 clean; the
+classes it found were fixed: repeated cell texts ('9.1% (5/55)' twice) take
+their tag breaks when every copy has the same structure; tag text drops
+superscript footnote numerals (the canonical cell carries `[^N]`), so cells
+holding a ref match; paragraph gaps are measured against the cell's MEDIAN line
+height (a superscript inflated one line's box); a tagged cut row joins with
+the table's own paragraph style (`<br><br>` where the table uses blank lines,
+`<br>` in Figure 3.43), never `<p>` gaps; a cut row is never a new member of a
+label group (Table 5.2's p.184 'Expected Behavior' cells now complete its last
+row); under the knob a lone break at a measured gap becomes a blank line. Not
+fixed: Figure 3.43's alignment spaces collapse (HTML whitespace). Gates: 3 exact
+T1, typed T1 7 (seam displacements) / TB2 4; certified byte-identical.

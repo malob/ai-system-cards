@@ -254,16 +254,20 @@ def _tag_cell_breaks(cell: dict) -> dict:
     U+200B inside one P (a soft return). Ordinals count non-space,
     non-invisible characters, as the cell walkers do."""
     breaks, k = {}, 0
-    prev_bottom, prev_h = None, None
+    heights = sorted(l[3] - l[1] for pa in cell["paras"] for l in pa["lines"])
+    # the cell's MEDIAN line height is the yardstick: a superscript inflates
+    # its own line's box (fn 14 in the p.41 definition box)
+    lh = heights[len(heights) // 2] if heights else 12.0
+    prev_bottom = None
     for pi, pa in enumerate(cell["paras"]):
         for li, (x0, y0, x1, y1, text) in enumerate(pa["lines"]):
             if k and li == 0 and pi:
                 gap = y0 - prev_bottom
-                breaks[k] = "<br><br>" if gap > 0.45 * prev_h else "<br>"
+                breaks[k] = "<br><br>" if gap > 0.45 * lh else "<br>"
             elif k and li and pa["lines"][li - 1][4].rstrip(" ").endswith("\u200b"):
                 breaks[k] = "<br>"
             k += sum(1 for ch in _INVISIBLE.sub("", text) if not ch.isspace())
-            prev_bottom, prev_h = y1, y1 - y0
+            prev_bottom = y1
     return breaks
 
 
@@ -355,9 +359,12 @@ def _breaks_from_tags(html: str, bbox: list, oracle_page: dict) -> str:
         plain = _h.unescape(re.sub(r"\[\^\d+\]", "", re.sub(r"<[^>]+>", "", c)))
         sq = _squash(_INVISIBLE.sub("", plain))
         hits = by_sq.get(sq, [])
-        if not sq or len(hits) != 1:
+        maps = {tuple(sorted(_tag_cell_breaks(h).items())) for h in hits}
+        # repeated cells ('9.1% (5/55)' twice, Table 3.4) are fine when every
+        # copy has the same structure
+        if not sq or not hits or len(maps) != 1:
             return m.group(0)
-        breaks = _tag_cell_breaks(hits[0])
+        breaks = dict(next(iter(maps)))
         toks = re.findall(r"<[^>]+>|&[a-zA-Z0-9#]{1,8};|\[\^\d+\]|.", c, re.S)
         out, k, held, pending_ws = [], 0, [], ""
         for t in toks:
@@ -510,11 +517,16 @@ def _restyle_cells_from_runs(html: str, bbox: list, oracle_page: dict) -> str:
             if vis.isspace() or vis in _INVIS:
                 pending_space += t
                 continue
+            if (k in starts and TAGGED_TABLES
+                    and re.search(r"(?<!<br>)<br>\s*$", "".join(out) + pending_space)):
+                out.append("<br>")   # an earlier single break at a GAP → blank line
             if k in starts and not re.search(r"<br\s*/?>\s*$", "".join(out) + pending_space):
                 if bold_open:
                     out.append("</b>")
                     bold_open = False
-                out.append("<br>")
+                # a paragraph GAP: a blank line where the tag breaks would
+                # draw one (same > 0.45 line-height rule), else a line break
+                out.append("<br><br>" if TAGGED_TABLES else "<br>")
                 pending_space = ""
             if flags[k] != bold_open:
                 out.append("</b>" if bold_open else "")
@@ -1456,6 +1468,10 @@ def merge_continuation_rows(html: str, forced: tuple | None = None) -> str:
     last_row_idx = None
     rows_merged = 0
     row_ord = -1
+    # a page break hides the paragraph gap at a cut: a tagged seam takes the
+    # table's own paragraph style (blank lines in Tables 3.5/5.2, single
+    # breaks in Figure 3.43)
+    seam_para = "<br><br>" if "<br><br>" in html else "<br>"
     for pi, part in enumerate(parts):
         if not part.startswith("<tr>"):
             out_parts.append(part)   # inter-row content (page markers) kept
@@ -1536,6 +1552,14 @@ def merge_continuation_rows(html: str, forced: tuple | None = None) -> str:
                                       r"[.!?:;\u2026\"\u201d')\]]$", prev_plain)))
                 if force and flows[ci_] is not None:
                     seam_flows = flows[ci_]   # the tags' own P identity
+                if force:
+                    # a tagged cut row: one cell, its lines as printed — a
+                    # paragraph boundary is a line break, as elsewhere in the
+                    # table, not a <p> gap (Figure 3.43 'STEPS 1–6')
+                    joined = (prev_c + seam_marker + (" " if seam_flows else seam_para) + cur)
+                    seam_marker = ""
+                    cells.append((pg, pa, joined))
+                    continue
                 # normalize BOTH sides to <p>-wrapped form first (a flat side
                 # mixed with a block side renders spurious line breaks), then
                 # a flowing seam merges prev's last <p> with cur's first
