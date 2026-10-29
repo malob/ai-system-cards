@@ -1924,5 +1924,7 @@ the aligned span carries '‚'. The risk report's canon moves by that one
 character (sanctioned by this decision: a PDF-verified glyph), typed T1 6 → 5,
 its L2/source-projection artifacts re-hashed; the other five cards regenerate
 byte-identical. Rendered HTML, the Markdown exports and search now agree on
-every quote glyph. Supersedes the quote items in D63's deferred list and D71's
-judgment items.
+every quote glyph (built-page totals equal the PDF's on every glyph, all six
+cards). Fast release gate passed; the six strict mutation replays (seed 5, 8 per
+class) are byte-identical to their committed baselines. Supersedes the quote
+items in D63's deferred list and D71's judgment items.
