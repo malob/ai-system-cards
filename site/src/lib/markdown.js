@@ -586,52 +586,6 @@ function rehypeArticle(opts = {}) {
   };
 }
 
-// Render-time typography: educate straight quotes/apostrophes into curly ones.
-// Runs on the HTML tree (so raw-HTML tables are covered) and skips code, pre,
-// and transcript/example boxes — those reproduce verbatim output where the
-// source PDF itself prints straight quotes.
-function rehypeSmartQuotes() {
-  const SKIP = new Set(['pre', 'code', 'script', 'style', 'kbd']);
-  // quote context does not flow across block boundaries (new cell, new
-  // paragraph, new list item, …)
-  const BLOCK = new Set([
-    'p', 'li', 'td', 'th', 'tr', 'table', 'caption', 'blockquote', 'figcaption',
-    'div', 'section', 'dt', 'dd', 'h2', 'h3', 'h4', 'h5', 'h6', 'br',
-  ]);
-  const opensAfter = (ch) => /[\s([{=—–‘“>]/.test(ch) || ch === '\n';
-  return (tree) => {
-    let prev = '\n';
-    const walk = (node) => {
-      if (node.type === 'element' && (SKIP.has(node.tagName) || hasClass(node, 'box'))) {
-        prev = '\n';
-        return;
-      }
-      if (node.type === 'element' && BLOCK.has(node.tagName)) prev = '\n';
-      if (node.type === 'text') {
-        const chars = [...node.value];
-        let out = '';
-        for (let i = 0; i < chars.length; i++) {
-          const ch = chars[i];
-          if (ch === '"') {
-            out += opensAfter(prev) ? '“' : '”';
-          } else if (ch === "'") {
-            // decades ('90s) and mid-word apostrophes always close
-            const next = chars[i + 1] ?? '\n';
-            out += opensAfter(prev) && !/\d/.test(next) ? '‘' : '’';
-          } else {
-            out += ch;
-          }
-          prev = out.at(-1);
-        }
-        node.value = out;
-        return;
-      }
-      (node.children ?? []).forEach(walk);
-    };
-    walk(tree);
-  };
-}
-
 const HEADING_RE = /^(\d+(?:\.\d+)*)\s+(.*)$/;
 
 function textOf(node) {
@@ -702,7 +656,6 @@ export async function renderCard(markdown, opts = {}) {
     })
     .use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: 'Footnotes' })
     .use(rehypeRaw)
-    .use(rehypeSmartQuotes)
     .use(rehypeSlug)
     .use(collectToc)
     .use(rehypeArticle, opts)

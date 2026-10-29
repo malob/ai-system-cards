@@ -1899,3 +1899,30 @@ label group (Table 5.2's p.184 'Expected Behavior' cells now complete its last
 row); under the knob a lone break at a measured gap becomes a blank line. Not
 fixed: Figure 3.43's alignment spaces collapse (HTML whitespace). Gates: 3 exact
 T1, typed T1 7 (seam displacements) / TB2 4; certified byte-identical.
+
+## D73 — quotes print exactly as the PDF prints them: the renderer's smart-quote pass is removed (2026-10-29)
+
+Owner decision (after the Gemini scroll): give up render-time typographic quote
+conversion and "just present things as the documents presented them" — curly
+where the PDF is curly, straight where it is straight. The renderer's
+`rehypeSmartQuotes` (e9046f9, June 2026) predates D41's glyph restoration; since
+D41 the canon already carries the PDF's own glyphs, so the pass only changed
+quotes the PDF prints straight: publisher apostrophes ('model's') and code-like
+text outside code elements (Gemini Figure 3.43's `'EOF'`, fable-5-1's p.95–96
+shell command deferred in D63). Telling literal straight quotes from
+typographic ones would be a guess about the publisher's intent; printing the
+glyph is faithful and needs no rule.
+
+Precondition measured first, a census of every quote glyph (`' " ‘ ’ “ ” ‚ „ ‹
+› « » ′ ″ ´`) in the oracle's text layer vs the canon with markup stripped:
+per-card totals are identical on every glyph for all six cards except the risk
+report's one U+201A '‚' on p.113, which docling folds to ',' inside a table
+cell (a typed T1 minor). Per-page differences are attribution only (footnote
+placement, seams); T1's unfolded token comparison is the positional check. The
+cell-run glyph repair (D41 family) now also undoes the low-9 → comma fold where
+the aligned span carries '‚'. The risk report's canon moves by that one
+character (sanctioned by this decision: a PDF-verified glyph), typed T1 6 → 5,
+its L2/source-projection artifacts re-hashed; the other five cards regenerate
+byte-identical. Rendered HTML, the Markdown exports and search now agree on
+every quote glyph. Supersedes the quote items in D63's deferred list and D71's
+judgment items.

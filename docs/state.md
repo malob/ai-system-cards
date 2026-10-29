@@ -3,7 +3,7 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-10-15. **Five cards LIVE; a sixth converged locally, NOT
+**Last updated:** 2026-10-29 (D73 quotes). **Five cards LIVE; a sixth converged locally, NOT
 pushed.** The owner handed over Google DeepMind's **Gemini 4 Argon Safety &
 Security Report** (`google-deepmind/gemini-4-argon`, 217pp, released
 2026-10-13; the fetched storage object is a 2026-10-15 re-upload — see
@@ -64,22 +64,15 @@ byte-identical; their PDFs are tagged too (a later candidate).
 
 ## Open owner decisions
 
-1. **Quotes (all cards):** the renderer's `rehypeSmartQuotes` (from June,
-   before D41 restored true glyphs) now only changes quotes the PDF prints
-   straight — publisher apostrophes ('model's': Gemini 219, Fable ~180) and
-   code-like text (Figure 3.43's `'EOF'`). Recommended: curl only intra-word
-   apostrophes (letter'letter — never code-significant) and leave every other
-   quote exactly as printed; first make canon equal the PDF's glyphs where
-   docling folds survive (Fable canon has ~74 more straight quotes than its
-   PDF). Proposed as a separate session.
-2. **Printed page numbers:** Gemini prints PDF page − 1 (unnumbered cover; no
+1. **Printed page numbers:** Gemini prints PDF page − 1 (unnumbered cover; no
    PDF page labels); the gutter shows PDF indices ('p.113' = printed 112). The
    Anthropic cards' printed numbers equal the index. Option: label the gutter
    with the printed footer number the oracle already reads, keeping the link to
    the physical page.
-3. **Risk report p.113:** the PDF prints U+201A '‚' (a low quote that looks
-   exactly like a comma) where canon has ','; invisible to the eye — a typed T1
-   minor there, candidate for the glyph-restoration class.
+
+Resolved 2026-10-29 (D73): quotes print exactly as each PDF prints them — the
+renderer's smart-quote pass is gone; the risk report's p.113 low quote '‚' is
+restored (its only canon change; the other cards were already glyph-exact).
 
 ## Current card gates
 
@@ -87,7 +80,7 @@ byte-identical; their PDFs are tagged too (a later candidate).
 | --- | --- | --- | --- | --- | --- |
 | fable-5 | 20 T1 | L1 34 / T1 21 | 109/109 | 309/151 | 76/76 |
 | opus-5 | 4 T1 | T1 4 | 54/54 | 192/100 | 36/36 |
-| risk-report-2026-08 | 1 T1 | FN1 1 / T1 6 / TB2 1 | 121/121 | 180/14 | 93/92 (p.126 disposition) |
+| risk-report-2026-08 | 1 T1 | FN1 1 / T1 5 / TB2 1 | 121/121 | 180/14 | 93/92 (p.126 disposition) |
 | claude-fable-5-1 | 5 T1 | T1 3 | 66/66 | 206/103 | 30/30 |
 | claude-opus-5-5 | 2 T1 (p.226) | T1 3 | 84/84 | 223/109 | 32/32 |
 | gemini-4-argon | 3 T1 (pp.184–185) | T1 7 / TB2 4 | 23/23 | 212/85 | 28/28 |
@@ -168,7 +161,7 @@ sentence, decorative section-end rules.
 The first attempt converted one card but made the human the test suite. The
 rebuild's goal is unattended mechanical conversion followed by bounded,
 evidence-directed review. Read [charter.md](charter.md),
-[decisions.md](decisions.md) (D1…D72),
+[decisions.md](decisions.md) (D1…D73),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). D70–D71 and

@@ -2755,12 +2755,16 @@ def _cell_blank_lines(html: str, bbox: list, oracle_page: dict) -> str:
         # ones ('dramatic acceleration', p.13). The alignment folds every
         # quote variant, so any position where the cell's char and the
         # span's raw char are both quote-ish but differ is a fold to undo.
+        # The low-9 quote ‚ folds to a comma (risk-report p.113
+        # 'standard‚'): the site prints quotes as the PDF does (D73), so
+        # that fold is undone too.
         cellraw = [ch for ch in _squash(plain).translate(_INVIS_DEL)
                    .translate(_BULLET_DEL).translate(_LOW9)]
         subs = {}
         if len(cellraw) == len(raw):
             for k, (a2, b2) in enumerate(zip(cellraw, raw)):
-                if a2 != b2 and a2 in "'\"“”‘’" and b2 in "'\"“”‘’":
+                if a2 != b2 and ((a2 in "'\"“”‘’" and b2 in "'\"“”‘’")
+                                 or (a2 == "," and b2 == "‚")):
                     subs[k] = b2
         cell_x2 = max(s["bbox"][2] for s in srcs)
         right = min([e for e in edges if e > cell_x2 + 2], default=bbox[2]) - 6

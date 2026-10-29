@@ -69,7 +69,8 @@ fidelity is reproducible and checkable. Four stages:
 4. **Render** (`site/`): Astro stitches `sections/*.md`, makes page markers into PDF
    deep links, footnotes into sidenotes, per-page OG images, md exports (`card.md`,
    one `.md` per top-level section, `llms.txt` index — all with provenance headers);
-   Pagefind search.
+   Pagefind search. No typographic rewriting: quotes print exactly as the PDF
+   prints them, curly or straight (D73).
 
 ## Pipeline modules
 
@@ -147,7 +148,7 @@ The 22 new findings were exposed by removing blanket table demotion, not by chan
 card content. A new finding on the same page is not covered, and a stale acceptance
 makes a full `WORKTREE` gate fail. Typed minor baselines are fable-5 `L1 34` / `T1 21`;
 opus-5 `T1 4`; risk-report-2026-08 `FN1 1` (declared orphan-ref source defect,
-D45) / `T1 6` / `TB2 1` (seam-cell advisor); claude-fable-5-1 `T1 3` (three repeated-header drops of its seven-page appendix table);
+D45) / `T1 5` / `TB2 1` (seam-cell advisor); claude-fable-5-1 `T1 3` (three repeated-header drops of its seven-page appendix table);
 claude-opus-5-5 `T1 3` (the same class, pp.223–225); and gemini-4-argon `T1 7` (page-seam
 displacements) / `TB2 4` (seam-cell advisors). The opus/risk T1 counts fell from 9/21
 when D62's projection classes removed phantom-space and bullet-glyph false minors;

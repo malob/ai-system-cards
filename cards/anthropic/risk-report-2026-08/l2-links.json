@@ -1453,7 +1453,7 @@
       "text": "Section 4.5.5.3.2"
     }
   ],
-  "canonical_sections_sha256": "3c5e3703b27bbd1f0f947ec914b880d147066cb53093a855868e77d1d8f39866",
+  "canonical_sections_sha256": "1273f03ac7dd94faa726b71addafc5ea4840b17e37a25580963a6876a0946d8f",
   "card_id": "anthropic/risk-report-2026-08",
   "exclusions": [
     {
@@ -4303,7 +4303,7 @@
     "02a-autonomy-misalignment-1.md": "ce01de9989e84b4741241b100e0029f320b71910f863482fa7467aa578810b43",
     "02b-autonomy-misalignment-2.md": "152d8b4cd3949173fe5a78eb46610be13cf053c6a3a5b49cc793a4ca0f3c3bcb",
     "02c-autonomy-misalignment-3.md": "b777d82bcc88b59bb1327bb1814a8515ddad45b8a98f19b2f3bf7193f3134b0d",
-    "03-automated-rd.md": "0d318bc8f9b7bdc933bf32c399999b43bbf2ef97492ce2267d089092e853e3d2",
+    "03-automated-rd.md": "0df645a336c8765096af3a6c41ecc1bdb1345916c898ab7e43ae6acf3b12466f",
     "04a-chem-bio-1.md": "ab8b1b980c0fd490be34c8c08af01aa3d0dfda24f0344e904be76febae4c9775",
     "04b-chem-bio-2.md": "0dbb48fce5582b7dfcb38d76745693e5b3bf930045fdee662b788e87a21bb0dd",
     "05-cross-cutting.md": "2c8afb07804b472787864eeaddcb482e1e5d94e816596b98011dd99398c90d09",
