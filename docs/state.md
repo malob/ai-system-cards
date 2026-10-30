@@ -3,16 +3,19 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-10-29 (D73 quotes). **Five cards LIVE; a sixth converged locally, NOT
-pushed.** The owner handed over Google DeepMind's **Gemini 4 Argon Safety &
-Security Report** (`google-deepmind/gemini-4-argon`, 217pp, released
-2026-10-13; the fetched storage object is a 2026-10-15 re-upload — see
-`meta.yaml`). It is the archive's first non-Anthropic document: a different
-vendor and visual grammar, but the SAME producer (Skia/PDF Google Docs Renderer
-m157). Onboarded, gated, swept (two rounds) and rendered-pass checked in one
-session (D70, D71, experiment 20). Certified cards stayed byte-identical
-throughout. Awaiting the owner: the full scroll D69 requires for a new visual
-grammar, the judgment calls below, and the deploy decision.
+**Last updated:** 2026-10-29. **Six cards LIVE.** The owner handed over Google
+DeepMind's **Gemini 4 Argon Safety & Security Report**
+(`google-deepmind/gemini-4-argon`, 217pp, released 2026-10-13; the fetched
+storage object is a 2026-10-15 re-upload — see `meta.yaml`), the archive's
+first non-Anthropic document: a different vendor and visual grammar, but the
+SAME producer (Skia/PDF Google Docs Renderer m157). Onboarded, gated, swept
+(two rounds) and rendered-pass checked (D70, D71, experiment 20); the owner's
+scroll led to D72 (tagged tables), D73 (quotes as printed, all cards) and D74
+(PDF-index page labels). Pushed at the owner's request 2026-10-29: `038d146`,
+Pages run 41003852290 green (six card gates, clean build, deploy), live pages
+verified glyph-exact. The hosted mutation run for that push (41003852147) was
+still running at the time of writing; the six local replays had held
+byte-identically.
 
 ## Gemini 4 Argon onboarding (D70, D71, experiment 20)
 
@@ -135,8 +138,6 @@ sentence, decorative section-end rules.
 
 ## Open / next
 
-- **Gemini deploy:** all owner decisions are settled (D72–D74); awaiting the
-  owner's push request (Pages deploys; CI derives the matrix from `meta.yaml`).
 - **Source revisions:** Anthropic's canonical `https://anthropic.com/<doc-slug>`
   redirects are the authority for "current" (D66). Gemini's source is a Google
   Cloud Storage object: compare its `x-goog-generation` / hash to `meta.yaml`.
