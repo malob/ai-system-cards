@@ -64,15 +64,11 @@ byte-identical; their PDFs are tagged too (a later candidate).
 
 ## Open owner decisions
 
-1. **Printed page numbers:** Gemini prints PDF page − 1 (unnumbered cover; no
-   PDF page labels); the gutter shows PDF indices ('p.113' = printed 112). The
-   Anthropic cards' printed numbers equal the index. Option: label the gutter
-   with the printed footer number the oracle already reads, keeping the link to
-   the physical page.
-
-Resolved 2026-10-29 (D73): quotes print exactly as each PDF prints them — the
+None. Resolved 2026-10-29 (D73): quotes print exactly as each PDF prints them — the
 renderer's smart-quote pass is gone; the risk report's p.113 low quote '‚' is
 restored (its only canon change; the other cards were already glyph-exact).
+Resolved 2026-10-29 (D74): gutter labels stay PDF indices (Gemini's printed
+footer is index − 1; one convention, and the label names the linked page).
 
 ## Current card gates
 
@@ -139,8 +135,8 @@ sentence, decorative section-end rules.
 
 ## Open / next
 
-- **Gemini deploy:** the owner's re-check of the D72 tables, the decisions above,
-  then push (Pages deploys; CI derives the matrix from `meta.yaml`).
+- **Gemini deploy:** all owner decisions are settled (D72–D74); awaiting the
+  owner's push request (Pages deploys; CI derives the matrix from `meta.yaml`).
 - **Source revisions:** Anthropic's canonical `https://anthropic.com/<doc-slug>`
   redirects are the authority for "current" (D66). Gemini's source is a Google
   Cloud Storage object: compare its `x-goog-generation` / hash to `meta.yaml`.
@@ -161,7 +157,7 @@ sentence, decorative section-end rules.
 The first attempt converted one card but made the human the test suite. The
 rebuild's goal is unattended mechanical conversion followed by bounded,
 evidence-directed review. Read [charter.md](charter.md),
-[decisions.md](decisions.md) (D1…D73),
+[decisions.md](decisions.md) (D1…D74),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
 [verification-methodology.md](verification-methodology.md). D70–D71 and

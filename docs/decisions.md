@@ -1928,3 +1928,11 @@ every quote glyph (built-page totals equal the PDF's on every glyph, all six
 cards). Fast release gate passed; the six strict mutation replays (seed 5, 8 per
 class) are byte-identical to their committed baselines. Supersedes the quote
 items in D63's deferred list and D71's judgment items.
+
+## D74 — gutter page labels stay PDF indices on every card (2026-10-29)
+
+Owner decision. Gemini 4 Argon prints PDF page − 1 in its footer (unnumbered
+cover, no PDF page labels), so its gutter 'p.113' sits on the page printed 112;
+the Anthropic cards' printed numbers equal the index. Offered: label the gutter
+with the printed footer number. Chosen: keep PDF indices. One convention across
+the archive, and the label names the page the deep link opens.
