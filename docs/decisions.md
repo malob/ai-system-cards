@@ -2030,3 +2030,9 @@ falls after 'and'). Every other certified card byte-identical; the six
 certified mutation replays held byte-identically; the new card's baseline is
 177 / 169 / 171 over 24 classes / 192 trials. The box-fit-break candidates on
 the certified cards (D75 body) remain an owner question. Nothing is pushed.
+
+**D75 addendum 2 — owner approval (2026-11-09 evening).** The owner reviewed the
+two certified-hunk composites (experiment 21 `hunks/`) and approved both:
+opus-5 p.97's '[tool use]' panel as its own code box, and risk-report p.181's
+'Opus- and Sonnet- class models' as printed. Both are canon. Push remains a
+separate owner request (D13).

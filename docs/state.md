@@ -10,8 +10,8 @@ canonical pointer `anthropic.com/claude-fable-5-2-mythos-5-2-system-card`)
 and the owner asked to onboard it. Same Google Docs export family (Skia/PDF
 m159). Onboarded, gated, swept (two rounds), rendered-pass checked and
 mutation-baselined in one session (D75 + addendum, experiment 21). The six
-live cards are unchanged except two PDF-verified one-hunk canon moves
-awaiting the owner (below). Gemini 4 Argon went live 2026-10-29 (`038d146`,
+live cards are unchanged except two PDF-verified one-hunk canon moves the
+owner approved (opus-5 p.97, risk-report p.181). Gemini 4 Argon went live 2026-10-29 (`038d146`,
 D70–D74).
 
 ## Fable 5.2 onboarding (D75, experiment 21)
@@ -45,16 +45,12 @@ D70–D74).
 
 ## Open owner decisions
 
-1. **Two certified canon hunks** (composites:
-   `docs/experiments/21-fable-5-2-sweep-round1/hunks/hunk-0.png`, `hunk-1.png`):
-   opus-5 p.97 '[tool use]' in its own code box, as the PDF draws it;
-   risk-report p.181 'Opus- and Sonnet- class models' as printed (canon had
-   'Sonnet-class').
-2. **Deploy** the seventh card (push to main triggers Pages).
-3. Later, optional: `box_fit_breaks` on the certified cards (45 candidates).
+1. **Deploy** the seventh card (push to main triggers Pages).
+2. Later, optional: `box_fit_breaks` on the certified cards (45 candidates).
 
-Resolved 2026-10-29: quotes print as each PDF prints them (D73); gutter labels
-stay PDF indices (D74).
+Resolved 2026-11-09: the owner approved both certified hunks (opus-5 p.97,
+risk-report p.181; D75 addendum 2). Resolved 2026-10-29: quotes print as each
+PDF prints them (D73); gutter labels stay PDF indices (D74).
 
 ## Current card gates
 
