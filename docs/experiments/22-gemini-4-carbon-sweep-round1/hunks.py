@@ -21,7 +21,9 @@ H = [("gemini-4-argon pp.87-88 — page label at the cut row's seam", "google-de
      ("gemini-4-argon pp.88-89 — page label at the cut row's seam", "google-deepmind/gemini-4-argon", 88,
       (60, 600, 552, 760), ".article tr", "High monitor coverage"),
      ("gemini-4-argon pp.154-155 — page label at the cut row's seam (Figure 3.43)", "google-deepmind/gemini-4-argon", 154,
-      (60, 560, 552, 760), ".article tr", "CODEBASE RECONNAISSANCE")]
+      (60, 560, 552, 760), ".article tr", "CODEBASE RECONNAISSANCE"),
+     ("opus-5 p.147 — 'ARGH ARGH ARGH.' ends its line (D77)", "anthropic/claude-opus-5", 147,
+      (72, 520, 540, 620), ".article .turn p", "ARGH ARGH ARGH")]
 
 
 def web(pg, url, sel, needle, out):
