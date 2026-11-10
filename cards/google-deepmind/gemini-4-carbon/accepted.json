@@ -1,0 +1,56 @@
+{
+  "_comment": "Maintainer/source-adjudicated exact T1 residuals (2026-11-10), checked against the page renders: pp.33-34 are the seam attribution of Table 3.2's 'Scheming honeypot evaluations' row, cut by the page break with continuations in three cells ('two prompt formats (1,021 runs)', 'elsewhere; vs Argon …', '…stricter cutoffs)'). The table merges the cut row cell by cell, so each cell's p.34 tail sits beside its p.33 head, while the PDF's stream reads every p.33 head before the p.34 tails (the gemini-4-argon pp.184-185 class). No canonical content is missing or invented. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
+  "accepted": [
+    {
+      "invariant": "T1",
+      "page": 33,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "two prompt formats (1,021 runs)",
+        "n_tokens": 5,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 5,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "96ac30e98443ff9af65b7184286d75bb91237b6cc69688a9da3d50b0b73b1c68",
+        "zone": "table"
+      },
+      "fingerprint": "f9af0d19a268a4783c70560ce8ce95c5abf10bca173385441e8395f1f7124f63"
+    },
+    {
+      "invariant": "T1",
+      "page": 33,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "elsewhere; vs Argon 0.0%–0.1% sabotage and 0.0%–0.3% scheming reasoning)",
+        "n_tokens": 9,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 9,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "0a00f4662151395cb3cb929a268e52db56176850b61d8a21b32948af16739eb8",
+        "zone": "table"
+      },
+      "fingerprint": "df8ec1eca028138d348fe4fc921f0bc470579006d41663ddb9e225ba227db12d"
+    },
+    {
+      "invariant": "T1",
+      "page": 34,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "two prompt formats (1,021 runs) elsewhere; vs Argon 0.0%–0.1% sabotage and 0.0%–0.3% scheming reasoning)",
+        "extra_in_md": "",
+        "n_tokens": 14,
+        "missing_n_tokens": 14,
+        "extra_n_tokens": 0,
+        "missing_sha256": "df832afbda2556608d4a63e9951945bc47d944be8c1f519352826b1cc4e8066c",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "b0b7a3c4ada041df0d27f9222a1e5797f19720ae20838c329345d8a9c6c4b8dd"
+    }
+  ]
+}

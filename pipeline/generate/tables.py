@@ -71,7 +71,12 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
             # rule-less tables — the endswith-dedup undoes exactly that
             html = _dedup_cascaded_cells(html, t["bbox"], oracle_page)
             html = _fix_wrapped_header_cells(html, t["bbox"], oracle_page)
-            html = _repair_rotation(html, t["bbox"], oracle_page)
+            # a grid rebuilt from the PDF's tags is exact: docling's column
+            # rotation never applies (gemini-4-carbon p.61 — the rotation
+            # rebuild re-segmented '98.9', drawn as per-glyph spans, into
+            # five cells)
+            if not t.get("from_tags"):
+                html = _repair_rotation(html, t["bbox"], oracle_page)
             # AFTER rotation: the pp.78/80 label-cell split (an extra cell
             # per row) is produced by the earlier repairs, not raw docling
             html = _merge_overflow_cells(html, t["bbox"], oracle_page)
@@ -244,6 +249,31 @@ HEADER_BY_FILL = _document_knob("header_rows_by_fill")
 TAGGED_TABLES = _document_knob("tagged_tables")
 
 
+def _page_tags(oracle_page: dict) -> list:
+    """The page's tagged tables without lines in the FOOTNOTE zone: a note
+    referenced from a table cell is nested in that cell's tag tree
+    (gemini-4-carbon p.31 fn 2 printed as the header row's text). The zone
+    starts at the page's first footnote-body span; a table never sits below
+    its page's notes."""
+    fn_top = min((s["bbox"][1] for s in oracle_page.get("spans", [])
+                  if s.get("zone") == "fnbody"), default=None)
+    tags = oracle_page.get("tags", [])
+    if fn_top is None:
+        return tags
+    out = []
+    for t in tags:
+        rows = []
+        for r in t["rows"]:
+            cells = []
+            for c in r["cells"]:
+                paras = [{**pa, "lines": [l for l in pa["lines"] if l[1] < fn_top - 1]}
+                         for pa in c["paras"]]
+                cells.append({**c, "paras": [pa for pa in paras if pa["lines"]]})
+            rows.append({**r, "cells": cells})
+        out.append({**t, "rows": rows})
+    return out
+
+
 def _tag_table_lines(t: dict) -> list:
     return [l for r in t["rows"] for c in r["cells"] for pa in c["paras"] for l in pa["lines"]]
 
@@ -325,20 +355,50 @@ def _html_from_tag_table(t: dict) -> str | None:
     return "<table><tbody>" + "".join(out) + "</tbody></table>"
 
 
+def _docling_split_rows(html: str, t: dict) -> bool:
+    """Docling's grid has MORE rows than a full-width tag grid with the same
+    column count (every tag row holds every column)."""
+    rows = [r for r in t["rows"] if r["cells"]]
+    if not rows:
+        return False
+    n = max(len(r["cells"]) for r in rows)
+    if any(len(r["cells"]) != n for r in rows):
+        return False
+    html = _strip_docling_extras(html)   # an absorbed caption is not cell text
+    doc_rows = re.findall(r"<tr>.*?</tr>", html, re.S)
+    doc_cols = max((len(re.findall(r"<t[hd][ >]", r)) for r in doc_rows), default=0)
+    if doc_cols != n or len(doc_rows) <= len(rows):
+        return False
+    # ...and the tags spell ALL of docling's text: a cut row's continuation
+    # can be untagged (gemini-4-argon p.185 'requested document was missing'),
+    # and then docling's extra row is that content, not a split
+    from collections import Counter as _C
+    doc_chars = _C(_cell_sq(re.sub(r"<[^>]+>", "", html)))
+    tag_chars = _C("".join(_tag_cell_sq(c) for r in rows for c in r["cells"]))
+    return not (doc_chars - tag_chars)
+
+
 def _reconcile_tag_tables(entries: list, oracle_page: dict) -> list:
     """Add a table docling never saw, or replace one that covers under 60%
     of its tagged table's height (it lost rows), with the tag-built grid."""
     out = list(entries)
-    for t in oracle_page.get("tags", []):
+    for t in _page_tags(oracle_page):
         tb = _tag_table_bbox(t)
         if not tb or tb[3] - tb[1] < 8:
             continue
         cover = [max(0.0, min(tb[3], e["bbox"][3]) - max(tb[1], e["bbox"][1])) / (tb[3] - tb[1])
                  for e in out]
         best = max(range(len(out)), key=lambda i: cover[i]) if out else None
-        if best is not None and cover[best] >= 0.6:
-            continue
         html = _html_from_tag_table(t)
+        if best is not None and cover[best] >= 0.6:
+            # docling covers the table but SPLIT its rows: more rows than the
+            # tags over the same columns (gemini-4-carbon p.61 — each cell's
+            # second line '(59.5)' became a row of its own, and the repairs
+            # then shredded '98.9' into characters). A full tag grid wins.
+            if html is None or not _docling_split_rows(out[best]["html"], t):
+                continue
+            out[best] = {"bbox": out[best]["bbox"], "html": html, "from_tags": True}
+            continue
         if html is None:
             continue
         bbox = [tb[0] - 4, tb[1] - 4, tb[2] + 4, tb[3] + 4]
@@ -358,7 +418,7 @@ def _breaks_from_tags(html: str, bbox: list, oracle_page: dict) -> str:
     break). Cells holding list markup or bullets, and cells no single tag
     cell spells, are left alone."""
     import html as _h
-    tag_cells = [c for t in oracle_page.get("tags", []) for r in t["rows"] for c in r["cells"]]
+    tag_cells = [c for t in _page_tags(oracle_page) for r in t["rows"] for c in r["cells"]]
     by_sq: dict = {}
     for c in tag_cells:
         by_sq.setdefault(_tag_cell_sq(c), []).append(c)
@@ -418,7 +478,7 @@ def _tag_row_ends(bbox: list, oracle_page: dict, html: str = "") -> dict | None:
     decides that cell."""
     first_html = re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>",
                             (re.findall(r"<tr>.*?</tr>", html, re.S) or [""])[0], re.S)
-    for t in oracle_page.get("tags", []):
+    for t in _page_tags(oracle_page):
         tb = _tag_table_bbox(t)
         if not tb or min(tb[3], bbox[3]) - max(tb[1], bbox[1]) <= 0:
             continue
@@ -1534,10 +1594,13 @@ def merge_continuation_rows(html: str, forced: tuple | None = None) -> str:
             # parser and its gutter label renders at the table TOP
             # (Table 3.10.A p.114, owner-spotted)
             seam_marker = ""
-            if last_row_of_table:
-                # only when leaving it WOULD foster-parent (no row follows);
-                # a marker before a surviving <tr> is already tucked into
-                # that row's first cell by the renderer (canon placement)
+            if last_row_of_table or force:
+                # when leaving it WOULD foster-parent (no row follows); a
+                # marker before a surviving <tr> is already tucked into that
+                # row's first cell by the renderer (canon placement) — except
+                # at a TAGGED cut row, where the marker belongs at the exact
+                # seam: the continuation's text and links are the next page's
+                # (gemini-4-carbon Table 3.1 pp.15→16, three links on p.16)
                 for j in range(last_row_idx + 1, len(out_parts)):
                     mks = re.findall(r"<!--\s*p\.\d+\s*-->", out_parts[j])
                     if mks:
@@ -2391,8 +2454,15 @@ def _restyle_cells(html: str, bbox: list, oracle_page: dict) -> str:
                     pieces.append(c_dec[cur:en])
                     cur = en
                     continue
+                # an EXHAUSTED key reuses its last instance for geometry, but
+                # that instance's style is another cell's: a duplicate value
+                # drawn as split spans ('9' + '9.4', gemini-4-carbon p.61)
+                # took its twin's bold
+                reused = used.get(k, 0) >= len(pool[k])
                 inst = pool[k][min(used.get(k, 0), len(pool[k]) - 1)]
                 used[k] = used.get(k, 0) + 1
+                if reused:
+                    inst = {**inst, "bold": False, "italic": False}
                 wraps = []
                 # single ALNUM segments can carry style (the wrapped '5' of
                 # 'Mythos 5' lost its bold to a len>=2 guard); lone

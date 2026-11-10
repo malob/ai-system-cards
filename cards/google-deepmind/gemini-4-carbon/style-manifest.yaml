@@ -1,0 +1,71 @@
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded from the 2026-11-10 signal census (pymupdf span/fill/
+# stroke probe over all 94 pages) + page-render inspection of every ambiguous
+# signal (pp.15, 18, 20, 51).
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+#
+# NOTE: Google DeepMind's second report in this template (gemini-4-argon is
+# the first; same producer, Skia/PDF m159). Differences from Argon's census:
+# body text is mostly #101010 (Argon: a paste artifact) with #000000 on 26
+# pages, the 22pt section heads are #101010, footnotes are #101010 at 10pt
+# (Argon: gray), no monospace code, no orange highlight, and table rules are
+# stroked #dadce0 (#cccccc p.61, #d9d9d9 p.66). Black-bordered CCL definition
+# boxes (pp.18, 20) are tagged one-column tables, as on Argon (D72).
+
+card: google-deepmind/gemini-4-carbon
+status: >-
+  roles seeded mechanically 2026-11-10; verified against page renders; closure
+  rule applies to anything not listed
+
+text_colors:
+  "#101010": {role: body}                      # 2,641 spans, every page
+  "#000000": {role: body}                      # TOC pp.2-4 and §§4-7 body runs
+  "#1155cc": {role: link}                      # 135 spans, 45 pages
+  "#666666": {role: heading}   # 12pt numbered H5 heads + 11pt italic H6 heads;
+                               # also some gray list bullets (body otherwise)
+  "#1a73e8": {role: table-header-text}   # blue header text in #e8f0fe bands;
+                                         # also the 16pt H3 heads (size-detected)
+  "#434343": {role: body, note: heading-tier}   # 14pt H4 heads (size-detected)
+  "#202124": {role: body, note: paste-artifact}   # 'Figure 4.2:' / 'Figure 4.6:'
+                                                  # captions pp.51, 54
+  # cover / TOC-page chrome (pages excluded from conversion)
+  "#212226": {role: page-furniture}   # cover title p.1
+  "#b2bbc5": {role: page-furniture}   # cover subtitle p.1
+  "#45474d": {role: page-furniture}   # 'Gemini 4 Carbon — Safety & Security Report' p.2 (TOC page)
+
+fills:
+  "#e8f0fe": {role: table-header-fill, exclude: true}   # light-blue header bands,
+                                                        # 6 pages (15, 31, 46, 61, 66, 67)
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# Heading tiers (D16 grammar): the Google Docs default heading styles, as on
+# gemini-4-argon, except the 22pt tier is set in #101010. Every tier-styled
+# line is cross-checked against the PDF outline (bookmarks).
+headings:
+  - {size: 22, color: "#101010", level: 2}               # '1. Introduction'
+  - {size: 16, color: "#1a73e8", level: 3}               # '2.1 Model Training'
+  - {size: 14, color: "#434343", level: 4}               # '2.4.1 Monitoring and Prevention'
+  - {size: 12, color: "#666666", level: 5}               # '3.2.1.1 Overview'
+  - {size: 11, color: "#666666", italic: true, level: 6} # 'Cyber Agentic Evaluations'
+
+# No smart-chip vocabulary in this document. meta.yaml chips: {}
+
+document:
+  toc_pages: [2, 3, 4]     # site generates its own TOC; excluded
+  page_number_footer: bottom-right bare integer (printed = PDF page - 1), excluded
+  # heading MEMBERSHIP from the PDF outline, level from the tiers above (D70)
+  heading_source: outline
+  # internal links follow the PDF destination, never the anchor text (D70)
+  link_text_resolution: geometry
+  # the gemini-4-argon template knobs (D70-D72): deliberate in-cell returns,
+  # header rows from the #e8f0fe band, cell styling from each cell's own span
+  # run, and the PDF's tagged structure as table authority (the bordered CCL
+  # boxes, in-cell paragraphs and soft returns, rows cut by a page break)
+  cell_fit_breaks: true
+  header_rows_by_fill: true
+  cell_run_restyle: true
+  tagged_tables: true

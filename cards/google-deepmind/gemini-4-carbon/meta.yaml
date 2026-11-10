@@ -1,0 +1,32 @@
+title: "Gemini 4 Carbon"
+slug: gemini-4-carbon
+vendor: Google DeepMind
+# document type shown in the page eyebrow and OG image (defaults to
+# "System Card" when absent)
+doc_type: Safety & Security Report
+models:
+  - Gemini 4 Carbon
+release_date: 2026-11-10
+source_url: https://storage.googleapis.com/deepmind-media/gemini/gemini_4_carbon_safety_report.pdf
+# Published with the 2026-11-10 general-availability post ("Gemini 4 Carbon is
+# now available"; the model was announced 2026-10-28 and first released to
+# cyber defenders). Cover-dated "November 2026", 94 pages, Skia/PDF m159 Google
+# Docs Renderer. The storage object fetched 2026-11-10 is generation
+# 1794326790243583 (last-modified 2026-11-10 16:06:30 UTC); SHA-256
+# 78179c76…3774eb. The archive is faithful to these bytes; compare the live
+# object's generation/hash to detect a later revision.
+source_pages: 94
+# docling pin: the table cache (gitignored) was built 2026-11-10 with docling
+# 2.124.0 on the reviewed table-page set (pp.15-18, 20, 31-34, 46, 61, 66-67 —
+# every page drawing non-link, non-separator rules; pp.18/20 are the bordered
+# CCL boxes docling returns no table for, built from the PDF's tags, D72);
+# rebuild with `--with docling==2.124.0` on that set (D66).
+description: >-
+  Google DeepMind’s Safety & Security Report for Gemini 4 Carbon, built on
+  Gemini 4 Argon. Covers safety and security mitigations, Frontier Safety
+  Framework assessments, content safety and agentic misuse, safe and aligned
+  model interactions, prompt-injection robustness, and cyber-defense
+  capabilities.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+chips: {}
