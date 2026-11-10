@@ -622,28 +622,38 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                     body += sep + seam_marker + txt
                     in_ordered = last_item = False
             if blk.get("code_lines"):  # displaced code box merged into this turn
-                # the box may continue on the next page (code_cont, stitched):
-                # each segment's marks come from ITS OWN page's pills/links
-                segs_cl = [(page, blk["code_lines"])]
-                if blk.get("code_cont"):
-                    cont = blk["code_cont"]
-                    segs_cl.append((oracle_pages[cont["page"] - 1], cont["lines"]))
-                styled = False
-                for pg_, cl_ in segs_cl:
-                    _, probe_marks = block_text_and_marks({**blk, "lines": cl_}, pg_, chips)
-                    if any(s.get("bold") for l in cl_ for _, _, s in l.get("segs", [])) \
-                            or any(m[0] == "placeholder" for m in probe_marks):
-                        # bold or green placeholders — fences can't hold either
-                        styled = True
-                if styled:
-                    raws = [_pre_html({**blk, "lines": cl_}, pg_, chips) for pg_, cl_ in segs_cl]
-                    raw = raws[0]
-                    for r in raws[1:]:
-                        raw = raw[: -len("</pre>")] + "\n" + r[len("<pre>"):]
-                    body = (body + "\n\n" if body else "") + raw
-                else:
-                    raw = "\n".join(_code_raw(cl_) for _, cl_ in segs_cl)
-                    body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
+                # one <pre>/fence per physical box: assemble flags the first
+                # line of each further box (fable-5-2 p.104's thinking box and
+                # two tool-call panels inside one '[Assistant]' turn)
+                groups = [[]]
+                for cl in blk["code_lines"]:
+                    if cl.get("box_start") and groups[-1]:
+                        groups.append([])
+                    groups[-1].append(cl)
+                for gi, group in enumerate(groups):
+                    # the box may continue on the next page (code_cont,
+                    # stitched — always the LAST box): each segment's marks
+                    # come from ITS OWN page's pills/links
+                    segs_cl = [(page, group)]
+                    if blk.get("code_cont") and gi == len(groups) - 1:
+                        cont = blk["code_cont"]
+                        segs_cl.append((oracle_pages[cont["page"] - 1], cont["lines"]))
+                    styled = False
+                    for pg_, cl_ in segs_cl:
+                        _, probe_marks = block_text_and_marks({**blk, "lines": cl_}, pg_, chips)
+                        if any(s.get("bold") for l in cl_ for _, _, s in l.get("segs", [])) \
+                                or any(m[0] == "placeholder" for m in probe_marks):
+                            # bold or green placeholders — fences can't hold either
+                            styled = True
+                    if styled:
+                        raws = [_pre_html({**blk, "lines": cl_}, pg_, chips) for pg_, cl_ in segs_cl]
+                        raw = raws[0]
+                        for r in raws[1:]:
+                            raw = raw[: -len("</pre>")] + "\n" + r[len("<pre>"):]
+                        body = (body + "\n\n" if body else "") + raw
+                    else:
+                        raw = "\n".join(_code_raw(cl_) for _, cl_ in segs_cl)
+                        body = (body + "\n\n" if body else "") + "```\n" + raw + "\n```"
             # same-bubble continuation (assemble's turn_cont, D42): splice
             # this body into the previous :::turn instead of opening a
             # second bubble for one physical box. Look back past block

@@ -649,7 +649,7 @@
       "text": "Section 2.2"
     }
   ],
-  "canonical_sections_sha256": "7fe24a5580950d61f43d25f2d79a99b8ebbb2ecf431a69d12f5b01c90a1e4021",
+  "canonical_sections_sha256": "caacf8e154ae057cd5275260220f2c34a34e88f85c65aef97e80cda6491fb0dc",
   "card_id": "anthropic/claude-opus-5",
   "exclusions": [
     {
@@ -2429,7 +2429,7 @@
     "03-cyber.md": "f066873f85f7be7bdb3968ab08e0503ecbb624a4a81a473f022d540370ee0887",
     "04-safeguards-harmlessness.md": "bab2fa1d4f97fc30493f75413f49f0a04cc0b50c0d2a36b994fabf3532bcf9b4",
     "05-agentic-safety.md": "9095b3d93cb1ee96c0d79957d3199c3f41e965a59a39fd5b38f51b9720442b5b",
-    "06a-alignment-1.md": "dc71dd10c8e8f4214c9032fe7a6d0e3282dc22b527b1b07e390f933c117bc55a",
+    "06a-alignment-1.md": "524d022f8167fd58a9b354f0150a42bee050a790d8b4cc26ddb4674eb2353276",
     "06b-alignment-2.md": "d9ee0e73ed878af1c8281fb0d2997088c2a24badd71f5459ad81502817022188",
     "07-model-welfare.md": "07810ac757b63b27735b0411b40dcee11a84d2db94c65eef65edd7b5f91840ef",
     "08a-capabilities-1.md": "54574c565d30f93d9df8a6fa11f8b252793cebbce718354da484947b26da87a3",

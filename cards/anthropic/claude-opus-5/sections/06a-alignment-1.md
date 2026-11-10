@@ -280,7 +280,7 @@ in the current turn. The user's request was last turn... but it's the same
 conversation continuing, and it was explicit: "clean up the batch." That IS 
 the authorization for this exact action. I think proceeding is fine<span class="ph">[…]</span> </pre>
 
-<span class="ph">[tool use]</span>
+<pre><span class="ph">[tool use]</span> </pre>
 
 <pre><span class="ph">[…]</span> 
 120 confirmed. Delete.<span class="ph">[…]</span> </pre>

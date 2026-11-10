@@ -88,6 +88,7 @@ CODE_BOXES = _hexes(_FILL_ROLES, "code-block-bg", "example-box")
 # a code/example box inside one of these is a turn's nested output (stays in
 # the transcript); a box in none of them is a standalone code block (§9.2)
 _TURN_OR_TRANSCRIPT = set(TURN_FILLS) | TRANSCRIPT_BOXES
+NESTED_PANEL = "#ffffff"   # see _box_role: a white mono panel inside a turn
 PLACEHOLDER = next(iter(_hexes(_FILL_ROLES, "placeholder")), "#d9ead3")
 BULLETS = "●•◦▪‣○■□"  # ■/□: opus-5 third-level bullets use U+25A0, not U+25AA
 
@@ -99,6 +100,10 @@ def _rect_contains(outer, inner, slack=2.0):
 
 def _overlaps(a, b):
     return not (a[2] <= b[0] or b[2] <= a[0] or a[3] <= b[1] or b[3] <= a[1])
+
+
+def _mono_font(font: str) -> bool:
+    return any(k in font for k in ("Mono", "Courier", "Inconsolata", "Consolas"))
 
 
 def _lines(page):
@@ -153,9 +158,7 @@ def _lines(page):
             "block": spans[0]["block"],
             "size": max((s["size"] for s in body), default=spans[0]["size"]),
             "fnbody": all(s["zone"] == "fnbody" for s in spans),
-            "mono": any(("Mono" in s["font"] or "Courier" in s["font"]
-                         or "Inconsolata" in s["font"] or "Consolas" in s["font"])
-                        for s in spans),
+            "mono": any(_mono_font(s["font"]) for s in spans),
         })
     return lines
 
@@ -298,6 +301,31 @@ def _label_lead(line) -> bool:
     return 0 <= colon <= 40 and cap <= off + colon + 2
 
 
+def _mono_panel(box, page) -> bool:
+    """Every text span inside the panel is monospace — a white panel holding
+    any serif text (fable-5 p.117's 'error: gh …' line beside a mono pill)
+    is not a code box."""
+    x0, y0, x1, y1 = box["bbox"]
+    spans = [s for s in page["spans"] if s["text"].strip()
+             and x0 - 1 <= s["bbox"][0] and s["bbox"][2] <= x1 + 1
+             and y0 - 1 <= s["bbox"][1] and s["bbox"][3] <= y1 + 1]
+    return bool(spans) and all(_mono_font(s["font"]) for s in spans)
+
+
+def _code_box(line, page):
+    """bbox of the INNERMOST code box (code/example fill, or a nested white
+    mono panel) holding the line — its identity separates adjacent boxes."""
+    best = None
+    for b in page.get("boxes", []):
+        if not (_is_container(b) and _rect_contains(b["bbox"], line["bbox"], slack=4.0)):
+            continue
+        if b["color"] in CODE_BOXES or (b["color"] == NESTED_PANEL and _mono_panel(b, page)):
+            area = (b["bbox"][2] - b["bbox"][0]) * (b["bbox"][3] - b["bbox"][1])
+            if best is None or area < best[0]:
+                best = (area, tuple(b["bbox"]))
+    return best[1] if best else None
+
+
 def _box_role(line, page):
     """Most-specific containing box wins: a turn bubble nested inside a
     transcript container must classify as the turn, not the container."""
@@ -309,6 +337,16 @@ def _box_role(line, page):
     in_transcript = any(b["color"] in TRANSCRIPT_BOXES for b in containing)
     for b in containing:
         c = b["color"]
+        # a WHITE panel nested inside a turn/transcript box holding monospace
+        # lines is a code box (fable-5-2 p.104's tool-call panels inside the
+        # '[Assistant]' turn; opus-5 p.97's '[tool use]' panel). White is
+        # page furniture everywhere else: only nesting + mono qualify it.
+        if (c == NESTED_PANEL and line.get("mono")
+                and any(o is not b and o["color"] in _TURN_OR_TRANSCRIPT
+                        and _rect_contains(o["bbox"], b["bbox"], slack=1.0)
+                        for o in containing)
+                and _mono_panel(b, page)):
+            return ("code", None, in_transcript)
         if c in TURN_FILLS:
             return ("turn", TURN_FILLS[c], in_transcript)
         if c in EXAMPLE_BOXES:
@@ -695,7 +733,12 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                         and (cur.get("role") != role
                              or cur.get("box") != line_box
                              or _label_lead(line)))
-            if cur and cur["type"] == kind and not new_turn:
+            # adjacent code boxes stay apart: a new physical box opens a new
+            # block (fable-5-2 p.104's thinking box and two tool-call panels)
+            code_box = _code_box(line, page) if kind in ("code", "example") else None
+            new_box = (kind in ("code", "example") and cur and cur["type"] == kind
+                       and cur.get("code_box") != code_box)
+            if cur and cur["type"] == kind and not new_turn and not new_box:
                 # paragraph breaks INSIDE turns/boxes (PDF turn 229 has two
                 # paragraphs): record split indices for the serializer
                 prev_l = cur["lines"][-1]
@@ -712,6 +755,7 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                     cur["box"] = line_box
                     cur["fill"] = _container_fill(line, page)
                 if kind in ("code", "example"):
+                    cur["code_box"] = code_box
                     # a mono output box nested inside a turn/transcript box is
                     # the assistant's output WITHIN the transcript — flag it so
                     # the serializer keeps it inside ::::transcript instead of
@@ -842,8 +886,13 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
         if (merged and merged[-1]["type"] == "turn" and blk["type"] in ("code", "example")
                 and (_turn_is_label_only(merged[-1]) or "code_lines" in merged[-1])):
             # APPEND: a box can split into several code/example blocks (the
-            # '<thinking>' opener/closer rows) — overwrite lost all but the last
+            # '<thinking>' opener/closer rows) — overwrite lost all but the last.
+            # A block from a DIFFERENT physical box flags its first line so the
+            # serializer gives that box its own <pre>
+            if merged[-1].get("code_lines") and blk.get("code_box") != merged[-1].get("last_code_box"):
+                blk["lines"][0]["box_start"] = True
             merged[-1]["code_lines"] = merged[-1].get("code_lines", []) + blk["lines"]
+            merged[-1]["last_code_box"] = blk.get("code_box")
             continue
         merged.append(blk)
     blocks = merged
@@ -954,10 +1003,16 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
     # full-line-width green highlights exceed the pill extractor's width cap
     # and arrive as BOXES (p.197 narration turn): a line-height d9ead3 box is
     # a placeholder pill all the same
+    # a placeholder pill is one by its fill alone, whatever its width: the
+    # oracle `fills` key also holds wide pills just under the box height
+    # (fable-5-2 p.104's 313–400pt × 11.9pt code-line pills) that neither the
+    # pill nor the box extractor admits
+    seen = {tuple(p["bbox"]) for p in pills}
     pills = pills + [{"bbox": b["bbox"], "color": b["color"]}
-                     for b in page.get("boxes", [])
+                     for b in page.get("boxes", []) + page.get("fills", [])
                      if b["color"] == PLACEHOLDER
-                     and 6 < (b["bbox"][3] - b["bbox"][1]) < 30]
+                     and 6 < (b["bbox"][3] - b["bbox"][1]) < 30
+                     and not (tuple(b["bbox"]) in seen or seen.add(tuple(b["bbox"])))]
     # sub-container tint strips (a turn-fill color at line height) are INLINE
     # HIGHLIGHTS riding under prose — opus-5 p.137's cream constitution
     # quotes — and mark their covered range like placeholder pills do
