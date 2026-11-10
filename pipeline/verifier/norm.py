@@ -45,18 +45,30 @@ BULLET_GLYPHS = "●•◦▪‣○■□"  # ■/□: third-level bullets (opus
 # serializer and the oracle's body-text projection so T1 sees both sides
 # identically. 'informa- tion' → 'information'; suspended compounds keep
 # their hyphen via the and/or/to lookahead ('single- and multi-'); and a
-# wrap INSIDE a suspended-compound family keeps the hyphen too — 'Opus- and
-# Sonnet- class models' must join to 'Sonnet-class', not 'Sonnetclass'
-# (risk-report p.181).
+# wrap INSIDE a suspended-compound family keeps the hyphen too ('single- and
+# multi- | turn' joins to 'multi-turn', not 'multiturn').
 A1_HYPHEN = re.compile(r"(\w)- (?!(?:and|or|to)\b)(?=[a-z])")
+
+# Only a LINE END is a wrap. A hyphen-space INSIDE one span is the
+# publisher's own text ('no-chain-of- thought', fable-5-2 p.44; 'Opus- and
+# Sonnet- class models', risk-report p.181, whose wrap falls after 'and'):
+# both T1 sides swap that space for a same-length guard before the lines are
+# joined, so A1 never sees it, and join_wrap_hyphens restores it.
+INLINE_HYPHEN_GUARD = ""
+_INLINE_HYPHEN = re.compile(r"(\w)- (?=[a-z])")
+
+
+def guard_inline_hyphens(text: str) -> str:
+    return _INLINE_HYPHEN.sub(lambda m: m.group(1) + "-" + INLINE_HYPHEN_GUARD, text)
 
 
 def join_wrap_hyphens(text: str) -> str:
     def _sub(m):
-        if re.search(r"\w- (?:and|or|to)\b", text[max(0, m.start() - 40):m.start()]):
+        if re.search(rf"\w-[ {INLINE_HYPHEN_GUARD}](?:and|or|to)\b",
+                     text[max(0, m.start() - 40):m.start()]):
             return m.group(1) + "-"
         return m.group(1)
-    return A1_HYPHEN.sub(_sub, text)
+    return A1_HYPHEN.sub(_sub, text).replace(INLINE_HYPHEN_GUARD, " ")
 
 
 # MIRROR of A1 — the line wraps BEFORE the hyphen, so the continuation opens

@@ -1070,7 +1070,9 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
             prev_span = s
             start = pos
             t = s["text"]
-            text_parts.append(t)
+            # a hyphen-space inside the span is the publisher's own text, not
+            # a wrap (norm.guard_inline_hyphens; same length, marks unmoved)
+            text_parts.append(t if line.get("mono") else norm.guard_inline_hyphens(t))
             pos += len(t)
             # trim mark range to non-space content
             t_strip_l = len(t) - len(t.lstrip())

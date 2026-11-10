@@ -1153,7 +1153,7 @@
       "text": "Section 8.12.5"
     }
   ],
-  "canonical_sections_sha256": "af023190262d7a175586aac85140ee421337aa305abeee24dd1cc562e0a71855",
+  "canonical_sections_sha256": "8c4faf0a77aa4bec24d7e135c85cdc42bb051329cc3c5a8b36f0d6b41c6eeca9",
   "card_id": "anthropic/claude-fable-5-2",
   "exclusions": [
     {
@@ -3755,7 +3755,7 @@
   "section_sha256": {
     "00-executive-summary.md": "0a9cdffc1c8681a731cc065b9e67b65dee6255776f9338600e3b48ddce9443fc",
     "01-introduction.md": "747e0ba9d66f8d331deb8241fb35e4dc6d2ed63aa436c21d377ce0e2568ed8ca",
-    "02-rsp-evaluations.md": "138f6f31016ba5f6a1927f8f7d605c2b6c9f3bb5d881f9e23bd6f52076f30fb1",
+    "02-rsp-evaluations.md": "30ee5e9909dcf97b5b97fd4983693340247f2cea26ca40d9567b6e95825b6e86",
     "03-cyber.md": "0f7f159261732baaded196cb5a5295c40dde9d99548e39d36e1389e0e72117dc",
     "04-safeguards-harmlessness.md": "0ddd088179a0a2afdf41686b639ceb86eba6f2d88e7ad4fe42cfb5e9228b4234",
     "05-agentic-safety.md": "83a07bcc8763b131cd8849b132d8fbe72ccf66ff1dce354a5bf8c8239c4eefb7",

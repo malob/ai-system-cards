@@ -411,10 +411,10 @@ def page_body_text(p: dict) -> str:
     for _, spans in sorted(lines.items()):
         if _hyphen_bullet(spans):
             continue
-        buf = spans[0]["text"]
+        buf = norm.guard_inline_hyphens(spans[0]["text"])
         for prev, cur in zip(spans, spans[1:]):
             gap = cur["bbox"][0] - prev["bbox"][2]
-            buf += (" " if gap > 1.0 else "") + cur["text"]
+            buf += (" " if gap > 1.0 else "") + norm.guard_inline_hyphens(cur["text"])
         rendered.append(buf)
         mono_flags.append(any("Mono" in sp.get("font", "") or "Courier" in sp.get("font", "")
                               or "Inconsolata" in sp.get("font", "")

@@ -23,6 +23,7 @@ sys.path.insert(0, str(HERE))
 
 import assemble  # noqa: E402
 import cardcfg  # noqa: E402
+import norm  # noqa: E402
 import oracle  # noqa: E402
 import serialize  # noqa: E402
 import tables  # noqa: E402
@@ -719,6 +720,9 @@ def main():
         md_cur = md
         md = re.sub(r'</span>(\s*<!-- p\.\d+ -->\s*)<span class="hl">',
                     _hl_seam, md)
+        # the inline-hyphen guard is restored by every A1 join; one surviving
+        # in a section means an output path skipped that join
+        assert norm.INLINE_HYPHEN_GUARD not in md, f"{name}: unrestored hyphen guard"
         (OUT / name).write_text(f"<!-- source: source.pdf pages {a:03d}-{b:03d} -->\n\n{md}")
         written.append((name, sel))
         print(f"{name}: pages {sel[0]}..{sel[-1]} ({len(sel)} pages, {len(blocks)} blocks)")

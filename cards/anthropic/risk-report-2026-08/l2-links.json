@@ -1453,7 +1453,7 @@
       "text": "Section 4.5.5.3.2"
     }
   ],
-  "canonical_sections_sha256": "1273f03ac7dd94faa726b71addafc5ea4840b17e37a25580963a6876a0946d8f",
+  "canonical_sections_sha256": "529f2b41b3755bfe5181927403e9cf3a42593fc033e5b9bd8ec36ed36cb1d5af",
   "card_id": "anthropic/risk-report-2026-08",
   "exclusions": [
     {
@@ -4307,7 +4307,7 @@
     "04a-chem-bio-1.md": "ab8b1b980c0fd490be34c8c08af01aa3d0dfda24f0344e904be76febae4c9775",
     "04b-chem-bio-2.md": "0dbb48fce5582b7dfcb38d76745693e5b3bf930045fdee662b788e87a21bb0dd",
     "05-cross-cutting.md": "2c8afb07804b472787864eeaddcb482e1e5d94e816596b98011dd99398c90d09",
-    "06-appendices.md": "28e496216183b019796e9d6c34837b008dedad361c55fffaae95cfb574166037"
+    "06-appendices.md": "78c1a50ce2b6919195b80ac3a0e86ff3bb961ef0275d8b8b4621529b0d9be5d2"
   },
   "source_pdf": "source.pdf",
   "source_sha256": "d76815f8c0bd284a33c7017d642d0734ba903ae63f7c1e6ca7778b35b2c40fa4",
