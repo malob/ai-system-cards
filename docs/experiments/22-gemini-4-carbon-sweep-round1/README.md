@@ -67,6 +67,12 @@ bold runs only in `#000000`, and Carbon sets most body text — its bold leads
 included — in `#101010`. S1 now checks every colour the card's manifest maps
 to the body role (`calibrate` passes them). No card gains an S1 flag.
 
+It also showed item-to-paragraph (ST1) recall 2/8: the projection stripped
+'## ' from '## 1. Introduction' and then counted the line as an ordered list
+item, so every gemini-template section page carried one phantom item that
+masked a dropped one. Consumed heading lines now take the ZWNJ prefix that
+consumed items already use. No card's gate changed.
+
 ## Certified hunks for the owner (`hunks/`)
 
 - `hunk-0..2`: gemini-4-argon's three tagged cut rows (pp.87–88, 88–89,
