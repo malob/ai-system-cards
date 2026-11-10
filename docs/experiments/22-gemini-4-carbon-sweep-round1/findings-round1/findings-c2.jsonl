@@ -1,0 +1,23 @@
+{"page": 28, "status": "flagged", "findings": [{"severity": "minor", "construct": "seam", "desc": "pp.27-28 seam reads \"(240 trajectory attempts), Carbon maintained\" \u2014 \"Gemini 4\" seemingly missing before \"Carbon\"", "evidence": "p-027.png last line ends \"(240 trajectory attempts),\"; p-028.png first line starts \"Carbon maintained\"; served.html joins them in one <p> with p-28 pagemark between. PDF itself omits the words; text otherwise token-identical (tokdiff ratio 0.998, only footer 27 differs)", "verdict": "source-faithful"}]}
+{"page": 29, "status": "clean"}
+{"page": 30, "status": "clean"}
+{"page": 31, "status": "clean"}
+{"page": 32, "status": "flagged", "findings": [{"severity": "minor", "construct": "table", "desc": "Table 3.2 row 2, Key-finding cell: the PDF breaks the single word \"inverse-probability-weighted\" mid-word across two cell lines (\"inverse-probability-w\" / \"eighted\", no hyphen); the md/served cell joins with a space, printing \"inverse-probability-w eighted\"", "evidence": "crop p32-65x65.png shows the forced mid-word wrap; rawdict line \"inverse-probability-w\" has NO trailing space while every ordinary wrapped line ends in a space (\"lower \"), so the break is detectable; served.html <td>\u20264.5x lower inverse-probability-w eighted confirmed alert rate\u2026</td>. Only such case on pp.28\u201350 (scanned all lines lacking a trailing space)", "verdict": "confirmed"}, {"severity": "minor", "construct": "table", "desc": "Table 3.2 row 1 \"What it tests\" cell reads \"Termina-Bench 4.0\" (missing l) while other cells say Terminal-Bench 4.0", "evidence": "crop p32-65x65.png: PDF prints \"Termina-Bench 4.0\"; md matches the PDF", "verdict": "source-faithful"}]}
+{"page": 33, "status": "flagged", "findings": [{"severity": "major", "construct": "seam", "desc": "Table 3.2 \"Specification gaming / eval\" row is cut by the pp.32\u219233 page break (its Key-finding cell continues on p.33: \"\u20260.00 across all 72/360 runs below\" / \"6/10 safety-evaluation awareness (vs Argon 0.03 across 144/360)\"), but it is NOT stitched into one row: the md emits a second sub-row (first cell rowspan=\"2\", then <td></td><td></td><td>6/10 safety-evaluation awareness (vs Argon 0.03 across 144/360)</td><td></td>). The web table shows a row border splitting the sentence mid-phrase and three empty stray cells, unlike the pp.33\u219234 cut row (Scheming honeypot) which IS merged cell-by-cell with the page marker at the seam \u2014 and contrary to rulebook item 6 (Table 3.2 cut rows = one complete row)", "evidence": "p-032.png/crop p32-65x65.png: row ends \"all 72/360 runs below\" at page bottom; p-033.png/crop p33-65x65.png: top row has only the Key-finding continuation, other cells empty. served.html: <td rowspan=\"2\"><b>Specification gaming / eval</b></td>\u2026<td>\u20260.00 across all 72/360 runs below</td>\u2026</tr><tr><td>[p-33 pagemark]</td><td></td><td>6/10 safety-evaluation awareness (vs Argon 0.03 across 144/360)</td><td></td></tr>", "verdict": "confirmed"}]}
+{"page": 34, "status": "clean"}
+{"page": 35, "status": "clean"}
+{"page": 36, "status": "clean"}
+{"page": 37, "status": "clean"}
+{"page": 38, "status": "clean"}
+{"page": 39, "status": "clean"}
+{"page": 40, "status": "clean"}
+{"page": 41, "status": "clean"}
+{"page": 42, "status": "clean"}
+{"page": 43, "status": "clean"}
+{"page": 44, "status": "clean"}
+{"page": 45, "status": "clean"}
+{"page": 46, "status": "clean"}
+{"page": 47, "status": "clean"}
+{"page": 48, "status": "clean"}
+{"page": 49, "status": "clean"}
+{"page": 50, "status": "clean"}

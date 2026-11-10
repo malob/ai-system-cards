@@ -1,0 +1,23 @@
+{"page": 5, "status": "clean"}
+{"page": 6, "status": "clean"}
+{"page": 7, "status": "clean"}
+{"page": 8, "status": "clean"}
+{"page": 9, "status": "clean"}
+{"page": 10, "status": "clean"}
+{"page": 11, "status": "clean"}
+{"page": 12, "status": "clean"}
+{"page": 13, "status": "clean"}
+{"page": 14, "status": "clean"}
+{"page": 15, "status": "clean"}
+{"page": 16, "status": "flagged", "findings": [{"severity": "minor", "construct": "table", "desc": "Table 3.1, 'Harmful Manipulation - Uplift CCL' row, T/CCL Determination cell: '(carried forward from Argon)' is italic in the PDF but rendered upright ('<td>CCL not reached (carried forward from Argon)</td>'); every other row's identical parenthetical keeps <i>, including the next row whose span layout is byte-for-byte the same shape (Regular 'CCL not reached ' line then Italic '(carried forward from ' / 'Argon) ' lines)", "evidence": "crop p16-65x65.png (italic visible); spans p.16 y=313.3/325.9 GoogleSans-Italic '(carried forward from ' 'Argon) '; served.html Table 3.1 row 4 cell 2 has no <i>, row 5 cell 2 at y=449.8/462.3 (same layout) has <i>", "verdict": "confirmed"}]}
+{"page": 17, "status": "clean"}
+{"page": 18, "status": "clean"}
+{"page": 19, "status": "clean"}
+{"page": 20, "status": "flagged", "findings": [{"severity": "minor", "construct": "link", "desc": "'Section 7.1.1' in \u00a73.2.2.1 links to an external docs.google.com draft URL (\u2026/document/d/1iKmtwL\u2026#heading=h.bpqmgmcgtoqm) instead of the internal \u00a77.1.1 anchor; the PDF's own link annotation is that same /URI (not a /GoTo), so the web is faithful. The identical 'Section 7.1.1' reference on p.14 is a proper GoTo and renders as #711-exploitbench. Reporting so the rulebook can record this publisher-broken link.", "evidence": "PyMuPDF get_links p.20: URI 'Section 7.1.1' https://docs.google.com/document/d/1iKmtwL_pvFejyJMC4SiIA0hDMMrilkUWx7EeOAWQnSo/edit?...#heading=h.bpqmgmcgtoqm; served.html same href", "verdict": "source-faithful"}]}
+{"page": 21, "status": "clean"}
+{"page": 22, "status": "clean"}
+{"page": 23, "status": "clean"}
+{"page": 24, "status": "clean"}
+{"page": 25, "status": "clean"}
+{"page": 26, "status": "clean"}
+{"page": 27, "status": "clean"}

@@ -1,0 +1,23 @@
+{"page": 51, "status": "clean"}
+{"page": 52, "status": "flagged", "findings": [{"severity": "minor", "construct": "link", "desc": "Links 'Section 5.6.1.' and 'Section 5.6.2.' include the trailing period inside the <a>; the PDF's visible underline stops before the period", "evidence": "crop p52-380x360.png / p52-70x425.png show period not underlined; but PDF /Link annotation rects [450.6,371.0,514.7,384.7] and [374.1,462.2,439.6,475.9] enclose the period (get_textbox returns 'Section 5.6.1.'), so geometry-based link text is faithful to the annotation", "verdict": "source-faithful"}]}
+{"page": 53, "status": "clean"}
+{"page": 54, "status": "clean"}
+{"page": 55, "status": "clean"}
+{"page": 56, "status": "clean"}
+{"page": 57, "status": "clean"}
+{"page": 58, "status": "clean"}
+{"page": 59, "status": "clean"}
+{"page": 60, "status": "clean"}
+{"page": 57, "status": "flagged", "note": "supersedes the earlier clean line for p.57", "findings": [{"severity": "minor", "construct": "other", "desc": "Full-width decorative section-end horizontal rule below the last \u00a74.3 paragraph (y\u2248392pt) has no web equivalent (served.html has zero <hr>). Same known class experiment 20 recorded as not fixed for Argon (pp.8, 174, 202); purely a separator before the next ## heading.", "evidence": "p-057.png gray rule at ~y 815px; slice/served region end at the 'as well.' paragraph", "verdict": "confirmed"}]}
+{"page": 61, "status": "flagged", "findings": [{"severity": "minor", "construct": "table", "desc": "Table 5.1: the PDF's heavier (\u22482pt) group rule between 'High-risk health scenarios' and 'HealthBench Hard' (internal evals vs public benchmarks) is not reproduced; web uses uniform borders. All 32 cells, bold marks (73.2/63.6/66.2/99.4, both 45.4s, 72.8+(59.5), 76.7+(61.4)) and the stacked value<br>(adjusted) line breaks match exactly. Known Argon class ('Table 5.1's 2pt group rule', exp 20 not fixed).", "evidence": "crop p61-65x332.png vs served.html Table 5.1 <tr>s", "verdict": "confirmed"}]}
+{"page": 62, "status": "clean"}
+{"page": 63, "status": "clean"}
+{"page": 64, "status": "clean"}
+{"page": 65, "status": "clean"}
+{"page": 66, "status": "clean", "note": "Table 5.2 crop p66-65x65.png: header <th> row, all 9 cells and every in-cell paragraph gap (<br><br>) match; straight quotes and Q2\u2013Q4 en dash match. Bullet bold extents match spans (1st bullet's ')' regular, 2nd's ')' bold). Only unreproduced styling: the PDF sets each bullet's ': ' after the bold lead in italic (GoogleSansFlexText-Italic span) \u2014 invisible-scale, not flagged."}
+{"page": 67, "status": "clean", "note": "Table 5.3 crop p67-68x217.png: header row (bold in PDF, site-styled <th> band) + 4 body rows x 3 cells match exactly, no in-cell hard breaks in source; bullet leads' bold extents match; the italic ': ' after each bold lead (as p.66) is not reproduced \u2014 invisible-scale, not flagged. List continues correctly from p.66 (same <ul>)."}
+{"page": 68, "status": "clean"}
+{"page": 69, "status": "clean"}
+{"page": 70, "status": "clean"}
+{"page": 71, "status": "clean"}
+{"page": 72, "status": "clean"}
