@@ -207,6 +207,22 @@ def _row_squash(row):
     return re.sub(r"\s+", "", re.sub(r"<[^>]+>", "|", row))
 
 
+def _sparse_continuation(prev_html: str, next_html: str) -> bool:
+    """The next fragment's first row has text ONLY under columns the host's
+    last row fills, and leaves empty at least one interior column the host
+    fills (a cut row's tail, not a label group's new member)."""
+    r1, r2 = _tbl_rows(prev_html), _tbl_rows(next_html)
+    if not r1 or not r2:
+        return False
+    cells = lambda r: [tables._visible(c) for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", r, re.S)]
+    prev, cur = cells(r1[-1]), cells(r2[0])
+    if len(prev) != len(cur) or len(cur) < 3 or not any(cur):
+        return False
+    if any(c and not p for p, c in zip(prev, cur)):
+        return False
+    return any(p and not c for p, c in zip(prev[1:-1], cur[1:-1])) and not cur[0]
+
+
 def _merge_tables(prev_html: str, next_html: str, next_page: int = 0,
                   cut_first: bool = False) -> str | None:
     """Merge two adjacent-page docling fragments of one logical table: same
@@ -453,6 +469,17 @@ def stitch(blocks: list[dict]) -> list[dict]:
                 flows = [None if a is None or b is None else a == b
                          for a, b in zip(p_ix[-k:], n_ix[-k:])]
                 forced = (len(tables.re.findall(r"<tr>", out[-1]["html"])), flows)
+            elif (tables.TAGGED_TABLES and prev_ends and next_ends
+                    and prev_ends["table"] == next_ends["table"]
+                    and _sparse_continuation(out[-1]["html"], blk["html"])):
+                # the tags cannot name an UNTAGGED continuation (its first
+                # tagged row is the next one), but its shape can: text only
+                # under columns the host's last row fills, with an interior
+                # column empty — a new group member fills those (gemini-4-
+                # carbon Table 3.2 p.32→33, the 'Specification gaming /
+                # eval' finding continued as '6/10 safety-evaluation…')
+                n_cells = len(tables.re.findall(r"<t[hd][ >]", _tbl_rows(blk["html"])[0]))
+                forced = (len(tables.re.findall(r"<tr>", out[-1]["html"])), [None] * n_cells)
             merged = _merge_tables(out[-1]["html"], blk["html"], blk["page"],
                                    cut_first=forced is not None)
             if merged is not None:
