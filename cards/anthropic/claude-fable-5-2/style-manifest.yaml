@@ -77,7 +77,3 @@ document:
   # that also covers an empty neighbour proves colspan/rowspan (Table 8.1's
   # 2×2 'Evaluation' corner and two-row row labels, p.207)
   merge_cells_by_fill: true
-  # in-box returns: a turn/transcript line whose successor's first word would
-  # have fit ends in a deliberate return (p.175 Transcript 6.6.4.8.B's typed
-  # '- …' prompt lines, joined into one run-on list item without it)
-  box_fit_breaks: true

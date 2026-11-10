@@ -66,12 +66,12 @@ HEADING_TIERS = _heading_tiers()
 OUTLINE_HEADINGS = bool(re.search(
     r"^\s*heading_source:\s*outline\b",
     (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
-# per-card knob: inside a turn/transcript box, a line whose successor's first
-# word would have fit ends in a deliberate return (fable-5-2 p.175's typed
-# '- …' prompt lines) — the prose twin of tables' cell_fit_breaks
-BOX_FIT_BREAKS = bool(re.search(
-    r"^\s*box_fit_breaks:\s*true",
-    (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
+# inside a turn/transcript box, a line whose successor's first word would
+# have fit ends in a deliberate return (fable-5-2 p.175's typed '- …' prompt
+# lines; opus-5 p.147 'ARGH ARGH ARGH.' | 'OK. Gun to head…') — the prose twin
+# of tables' cell_fit_breaks. A D75 card knob, made the default (D77) once a
+# corpus census showed it changes exactly those lines.
+BOX_FIT_BREAKS = True
 HEADING_GRAY = next(iter(_hexes(_TEXT_ROLES, "heading")), "#666666")
 COMMENTARY_GRAY = next(iter(_hexes(_TEXT_ROLES, "transcript-commentary")), None)
 TRANSCRIPT_BOXES = _hexes(_FILL_ROLES, "transcript-container")

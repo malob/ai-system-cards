@@ -649,7 +649,7 @@
       "text": "Section 2.2"
     }
   ],
-  "canonical_sections_sha256": "caacf8e154ae057cd5275260220f2c34a34e88f85c65aef97e80cda6491fb0dc",
+  "canonical_sections_sha256": "4f9844205dff32492c5c60fb37a1a51a7ae2ffd85d631ed8eb7234387a9064b9",
   "card_id": "anthropic/claude-opus-5",
   "exclusions": [
     {
@@ -2431,7 +2431,7 @@
     "05-agentic-safety.md": "9095b3d93cb1ee96c0d79957d3199c3f41e965a59a39fd5b38f51b9720442b5b",
     "06a-alignment-1.md": "524d022f8167fd58a9b354f0150a42bee050a790d8b4cc26ddb4674eb2353276",
     "06b-alignment-2.md": "d9ee0e73ed878af1c8281fb0d2997088c2a24badd71f5459ad81502817022188",
-    "07-model-welfare.md": "07810ac757b63b27735b0411b40dcee11a84d2db94c65eef65edd7b5f91840ef",
+    "07-model-welfare.md": "bc5cfbc058e150f4aff4bf51923dee7b2ceecaf18a3f84e283ce46f38da14118",
     "08a-capabilities-1.md": "54574c565d30f93d9df8a6fa11f8b252793cebbce718354da484947b26da87a3",
     "08b-capabilities-2.md": "780a0545366610c0ea6fdb4dfe1420e7635bb8e9161814f8a9b11e0db68c96a4",
     "09-appendix.md": "3e058822e2fe6433d676b0d78e9c54aa32e12c822365bea1371873d458af6181"
