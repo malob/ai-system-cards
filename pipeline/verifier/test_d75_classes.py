@@ -91,5 +91,48 @@ class BoxFitBreakTests(unittest.TestCase):
         self.assertEqual(["nothing", "else", "-", "I’d"], _tokens(out))
 
 
+class InlineHyphenTests(unittest.TestCase):
+    def test_mid_line_hyphen_space_survives_and_line_end_joins(self):
+        import norm
+        guarded = norm.guard_inline_hyphens("no-chain-of- thought time")
+        self.assertEqual("no-chain-of- thought time", norm.join_wrap_hyphens(guarded))
+        self.assertEqual("information", norm.join_wrap_hyphens("informa- tion"))
+
+    def test_suspended_compound_lookback_reads_the_guard(self):
+        import norm
+        # 'single- and' sits mid-line (guarded); 'multi-' ends the line
+        text = norm.guard_inline_hyphens("single- and multi-") + " turn"
+        self.assertEqual("single- and multi-turn", norm.join_wrap_hyphens(text))
+
+    def test_oracle_body_text_keeps_a_mid_span_hyphen_space(self):
+        import oracle
+        page = {"spans": [{"text": "no-chain-of- thought horizon", "zone": "body",
+                           "bbox": [72, 590, 400, 604], "line": 1, "font": "Lora"},
+                          {"text": "informa-", "zone": "body",
+                           "bbox": [72, 606, 120, 620], "line": 2, "font": "Lora"},
+                          {"text": "tion", "zone": "body",
+                           "bbox": [72, 622, 100, 636], "line": 3, "font": "Lora"}]}
+        self.assertEqual("no-chain-of- thought horizon information",
+                         oracle.page_body_text(page))
+
+
+class InvisibleMarkTests(unittest.TestCase):
+    def test_bidi_marks_are_invisible(self):
+        import norm
+        self.assertEqual(["None"], norm.tokens("None‎"))
+
+
+class MonoPanelTests(unittest.TestCase):
+    def _page(self, *fonts):
+        return {"spans": [{"text": "x", "font": f, "bbox": [90, 260 + 12 * i, 200, 270 + 12 * i]}
+                          for i, f in enumerate(fonts)]}
+
+    def test_all_mono_panel_is_code_and_mixed_is_not(self):
+        box = {"color": "#ffffff", "bbox": [82, 248, 529, 293]}
+        self.assertTrue(assemble._mono_panel(box, self._page("RobotoMono-Regular", "RobotoMono-Regular")))
+        self.assertFalse(assemble._mono_panel(box, self._page("Lora-Regular", "RobotoMono-Regular")))
+        self.assertFalse(assemble._mono_panel(box, {"spans": []}))
+
+
 if __name__ == "__main__":
     unittest.main()
