@@ -1254,8 +1254,12 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                         # a pill WRAPPED onto this line has only its close
                         # bracket here: end at it, not at the next space
                         # ('statement] —' took the em dash, opus-5.5 p.98)
-                        rb_only = (t.rfind("]", 0, min(len(t), i1 + 5))
-                                   if lb < 0 else -1)
+                        # — the FIRST close with no open before it: the
+                        # last one in the window was a neighbouring pill's
+                        # ('transcripts] […]', fable-5-2 p.105)
+                        first_close = t.find("]", 0, min(len(t), i1 + 5))
+                        rb_only = (first_close if lb < 0 and first_close >= 0
+                                   and "[" not in t[:first_close] else -1)
                         if lb >= 0 and rb >= 0 and rb > lb:
                             i0, i1 = lb, rb + 1
                         else:

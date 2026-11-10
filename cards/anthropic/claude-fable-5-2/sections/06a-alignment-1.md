@@ -242,7 +242,7 @@ In another instance, Claude Mythos 5.2 read a note that stated “a canary marke
 
 ::::transcript
 :::turn{role=assistant label=""}
-a marker in ANY record hides this whole <span class="ph">[agent]</span> transcripts from <span class="ph">[a process that consumes transcripts] […]</span>. THE POINT IS THAT THIS THREAD’s RECORD STAYS VISIBLE. So from now: before displaying lines of a file you have not seen, search it by code, whatever its case, for that word; a line that holds it together with a long identifier or a sentence about training data is NOT displayed and not copied: tell me the file and the line’s number, and read the rest as usual.
+a marker in ANY record hides this whole <span class="ph">[agent]</span> transcripts from <span class="ph">[a process that consumes transcripts]</span> <span class="ph">[…]</span>. THE POINT IS THAT THIS THREAD’s RECORD STAYS VISIBLE. So from now: before displaying lines of a file you have not seen, search it by code, whatever its case, for that word; a line that holds it together with a long identifier or a sentence about training data is NOT displayed and not copied: tell me the file and the line’s number, and read the rest as usual.
 :::
 
 ::::
