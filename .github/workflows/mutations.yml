@@ -68,6 +68,9 @@ jobs:
           - card: google-deepmind/gemini-4-argon
             baseline: results-google-deepmind-gemini-4-argon.json
             result: mutation-google-deepmind-gemini-4-argon.json
+          - card: anthropic/claude-fable-5-2
+            baseline: results-anthropic-claude-fable-5-2.json
+            result: mutation-anthropic-claude-fable-5-2.json
     env:
       CARD: ${{ matrix.card }}
     steps:
