@@ -2082,3 +2082,17 @@ Gate: 0 unsuppressed majors; 3 exact T1 acceptances (pp.33–34, Table 3.2's
 cut row — the gemini-4-argon pp.184–185 class); TB2 2 typed minors; L2 36/36;
 P2/F3 90/48 (138 DOM events); RF1 4/4; seams 0. Sweeps, visual pass and
 mutation baseline follow.
+
+## D77 — in-box line returns become default behaviour (2026-11-10)
+
+The owner asked whether D75's `box_fit_breaks` knob (a turn/transcript line
+whose successor's first word would have fit ends in a deliberate `<br>`) was
+worth applying to the certified cards. Measured by turning it on for the
+three cards whose census showed candidates (fable-5 27, risk report 13,
+opus-5 5): fable-5 and the risk report regenerate byte-identical (their
+candidates are already line-structured — bullets, new speaker labels, code
+boxes), and opus-5 changes exactly one line, p.147's 'ARGH ARGH ARGH.' |
+'OK. Gun to head…', which the PDF sets on two lines (crop-verified). The
+knob is retired and the behaviour is the default; every other card is
+byte-identical (fable-5-2 unchanged). **Certified canon move awaiting owner
+adjudication:** that one opus-5 hunk.
