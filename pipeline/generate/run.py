@@ -621,6 +621,24 @@ def main():
         s = re.sub(r"\s+", " ", text).strip()
         return re.sub(r"[^\w -]", "", s.lower()).replace(" ", "-")
 
+    def _trailing_quoted_list_x0(pblocks, prior):
+        """Shallowest marker x0 of the quoted list run that ENDS the page
+        (merged with the carried run when the page holds nothing else), or
+        None when the page ends outside one."""
+        flow = [b for b in pblocks if b["type"] in ("paragraph", "item")]
+        if not flow:
+            return prior
+        run = []
+        for b in reversed(flow):
+            if b["type"] != "item" or not b.get("quote"):
+                break
+            run.append(b["marker_x0"])
+        if not run:
+            return None
+        if len(run) == len(flow) and prior is not None:
+            run.append(prior)
+        return min(run)
+
     written = []
     for si, (name, a, b) in enumerate(ranges):
         sel = [p for p in range(a, b + 1) if p in want and p not in TOC and owner.get(p) == name]
@@ -628,12 +646,13 @@ def main():
             continue
         blocks = []
         qcarry = False
+        qlist = None
         start_midpage = False
         for pno in sel:
             pg, figs = _dedupe_figures(pages[pno - 1], figures_map.get(str(pno), []))
             pblocks = assemble.assemble_page(pno, pg, figs,
                                              chips, tables.get_tables(pno, pages[pno - 1]),
-                                             quote_carry=qcarry)
+                                             quote_carry=qcarry, quoted_list_x0=qlist)
             if pno == a and pno in shared:
                 # shared start page: this section's content begins at its heading
                 i = heading_index(pblocks, firsts.get(name, ""))
@@ -643,6 +662,7 @@ def main():
             blocks += pblocks
             qcarry = next((b.get("quote", False) for b in reversed(pblocks)
                            if b["type"] in ("paragraph", "item")), qcarry)
+            qlist = _trailing_quoted_list_x0(pblocks, qlist)
         # shared END page (owned by the next section): the pre-heading slice
         # belongs HERE, so the boundary paragraph can stitch across pages
         if si + 1 < len(ranges) and ranges[si + 1][1] == b and b in want and b not in TOC \

@@ -11,7 +11,7 @@ import re
 import unicodedata
 
 LIGATURES = {"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl", "ﬅ": "ft", "ﬆ": "st"}
-INVISIBLES = re.compile("[­​‌‍⁠﻿]")  # soft hyphen, zero-widths
+INVISIBLES = re.compile("[­​‌‍⁠﻿\u200e\u200f]")  # soft hyphen, zero-widths, bidi marks (fable-5-2 p.259 'None\u200e')
 # A hyphenated compound that wraps after its hyphen extracts as 'X- y'
 # ('introspection- based', 'Self- knowledge'); the faithful render joins it to
 # 'X-y'. Fold both forms to 'X-y' so the comparison is wrap-insensitive (an A2

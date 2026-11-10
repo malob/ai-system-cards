@@ -63,8 +63,7 @@
 
 ### 9.2 Blocklist used for Humanity’s Last Exam
 
-```
-None‎
+```None
 huggingface.co 
 hf.co 
 hf-mirror 

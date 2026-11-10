@@ -554,7 +554,8 @@ def _is_quote(line, page, list_tiers: frozenset = frozenset()) -> bool:
 
 def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict,
                   page_tables: list[dict] | None = None,
-                  quote_carry: bool = False) -> list[dict]:
+                  quote_carry: bool = False,
+                  quoted_list_x0: float | None = None) -> list[dict]:
     """One page → ordered block dicts. Cross-page joining happens in stitch.
     Lines inside a docling table bbox are removed from prose flow; the table is
     emitted as an HTML block at its vertical position (D14)."""
@@ -598,6 +599,9 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
 
     fig_done = False
     figures_emitted = []
+    # shallowest marker x0 of the current quoted list run (carried over a page
+    # break: p.42 opens on a quoted ○ sub-bullet)
+    quoted_item_x0 = quoted_list_x0 if quote_carry else None
     quote_ctx = quote_carry   # items INHERIT quote-ness from context: deep
     # x alone misfires on nested list items (the 6.1.2 'disaster')
     pending_tables = sorted(table_blocks, key=lambda b: b["_y"])
@@ -708,9 +712,17 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                             if norm.INVISIBLES.sub("", sg["text"]).strip()), None)
                 if txt is not None:
                     marker_x0 = txt["bbox"][0] - 18
+            # a deeper item directly under a QUOTED item is quoted too: inside
+            # a quote the sub-list steps 18pt, not the 36pt home grid, so a ○
+            # lands only 10.5pt right of its home column (fable-5-2 METR
+            # quote pp.39-42) and fails shift_ok on its own
+            nested_in_quote = (quoted_item_x0 is not None
+                               and marker_x0 > quoted_item_x0 + 6)
             cur = {"type": "item", "lines": [line], "page": pno,
                    "marker_x0": marker_x0,
-                   "quote": q_item and quote_ctx and shift_ok}
+                   "quote": q_item and quote_ctx and (shift_ok or nested_in_quote)}
+            quoted_item_x0 = (min(marker_x0, quoted_item_x0 if quoted_item_x0 is not None else marker_x0)
+                              if cur["quote"] else None)
             marker_x0s.add(round(marker_x0))
             # an item that is clearly NOT at quote depth closes any quote
             # context: a page-leading hanging-indent continuation of the
@@ -842,9 +854,24 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
                                             and prev["text"].rstrip().endswith((".", ":", "?", "!"))
                                             and line["text"].lstrip()[:1].isupper()))
                                    and line["segs"] and not line["segs"][0][2]["bold"])
+                # two all-bold lines: a deliberate break when the next line's
+                # first word would have fit on the previous one (fable-5-2
+                # p.40 '**2) Summary of findings**' over '**2a) …**' — no end
+                # punctuation for the bold-lead test, no regular start for
+                # the label test)
+                line_body = [s for _, _, s in line["segs"] if s["zone"] == "body"
+                             and s["text"].strip("​‌‍﻿­ ")]
+                bold_pair_break = False
+                if prev_all_bold and line_body and all(s["bold"] for s in line_body):
+                    first = line_body[0]
+                    word = first["text"].strip().split(" ")[0]
+                    w = ((first["bbox"][2] - first["bbox"][0]) * len(word)
+                         / max(1, len(first["text"].rstrip())))
+                    bold_pair_break = prev["bbox"][2] + 0.25 * line_h + w <= col_right - 2
                 same_para = (gap < max(4.0, 0.55 * line_h)
                              and not starts_bold_lead
                              and not ends_bold_label
+                             and not bold_pair_break
                              and not chip_boundary
                              and cur.get("quote", False) == _is_quote(line, page, list_tiers))
             if same_para:

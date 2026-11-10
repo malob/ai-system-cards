@@ -389,21 +389,20 @@ METR shared the following findings with us:
 >
 > - This is primarily based on preexisting weaknesses in previous models, and a lack of evidence that [Claude Mythos 5.2] has overcome those weaknesses (see Section 2b)
 >
-> **2) Summary of findings 2a) [Claude Mythos 5.2] appears to be a substantial step above Fable 5.1 on verifiable tasks**
+> **2) Summary of findings**
+>
+> **2a) [Claude Mythos 5.2] appears to be a substantial step above Fable 5.1 on verifiable tasks**
 >
 > - [Claude Mythos 5.2] substantially improves upon Fable 5.1 and Claude Opus 5.5 on *Budget NanoGPT Speedrun*
-
-- In particular, the primary way it does this is by better optimizing the verifiable signal of a profiler.
-- Note that we think it is plausible that the model’s training was specifically optimized for tasks similar to *Budget NanoGPT Speedrun* with relatively clear feedback loops.
-
+>    - In particular, the primary way it does this is by better optimizing the verifiable signal of a profiler.
+>    - Note that we think it is plausible that the model’s training was specifically optimized for tasks similar to *Budget NanoGPT Speedrun* with relatively clear feedback loops.
 > - Anthropic reports that [Claude Mythos 5.2] does better on AI R&D tasks than previous models.
-
-- [Claude Mythos 5.2] “solves a clear majority of an internal benchmark of research tasks that represent about a month of academic unpublished work”
-- [Claude Mythos 5.2] also “nearly saturates an internal long-horizon task on which previous models solved around half to three quarters”
-- And, outside of evals, “completed several multi-day, fully autonomous software builds with good self-verification”
-
-<!-- p.41 -->
-
+>    - [Claude Mythos 5.2] “solves a clear majority of an internal benchmark of research tasks that represent about a month of academic unpublished work”
+>    - [Claude Mythos 5.2] also “nearly saturates an internal long-horizon task on which previous models solved around half to three quarters”
+>    - And, outside of evals, “completed several multi-day, fully autonomous software builds with good self-verification”
+>
+> <!-- p.41 -->
+>
 > **2b) It is unclear how much better [Claude Mythos 5.2] is than Fable 5.1 on fuzzier, more open-ended, and harder to verify tasks**
 >
 > The evidence is mixed. Some evidence in favor of improvement:
@@ -414,39 +413,28 @@ METR shared the following findings with us:
 > **Some evidence that does not clearly indicate improvement, or suggests weaknesses:**
 >
 > - On Sunlight, [Claude Mythos 5.2]’s report is extremely lengthy and the summary does not make it clear what considerations it took to be most important, and what use cases it decided to focus on.
-
-- As with Claude Opus 5.5, it neglects rigorous, fair comparisons between its preferred solution and the alternatives.
-- However, it’s unclear to what extent this weakness only applies to humans reading the task, and the same communication weaknesses may not be detrimental when the consumer of the report is another agent.
-
+>    - As with Claude Opus 5.5, it neglects rigorous, fair comparisons between its preferred solution and the alternatives.
+>    - However, it’s unclear to what extent this weakness only applies to humans reading the task, and the same communication weaknesses may not be detrimental when the consumer of the report is another agent.
 > - Even on verifiable tasks on which [Claude Mythos 5.2] performs well, it still has weaknesses on the fuzzy aspects of those tasks.
-
-- [Claude Mythos 5.2] does not reach further milestones than Claude Opus 5.5 on *Gaming Bot*, but it does reach the same milestones more efficiently.
-
+>    - [Claude Mythos 5.2] does not reach further milestones than Claude Opus 5.5 on *Gaming Bot*, but it does reach the same milestones more efficiently.
 > - [Claude Mythos 5.2] and Claude Opus 5.5 share similar weaknesses. For instance, not creating efficient feedback loops, and spending too much time attempting small iterative fixes when a strategic pivot would have been more appropriate.
-
-- On *Budget NanoGPT Speedrun*, across all attempts, the improvements [Claude Mythos 5.2] finds are almost all about improving kernels, and are found by using the profiler as a hillclimbable feedback loop.
-
+>    - On *Budget NanoGPT Speedrun*, across all attempts, the improvements [Claude Mythos 5.2] finds are almost all about improving kernels, and are found by using the profiler as a hillclimbable feedback loop.
 > - Thus the improvement on *Budget NanoGPT Speedrun* does not imply that [Claude Mythos 5.2] is improving at ideation or research taste (in contrast, human solutions often involve qualitatively new ideas).
 > - Evidence from the questionnaire indicates that research taste is still lacking.
-
-- <!-- p.42 -->For example, [Claude Mythos 5.2] “launches large studies where a first-principles calculation would do, misses obvious sanity checks, and is ‘good at working towards a precise goal, not great at discovering new scientific facts’.”
-
+>    - <!-- p.42 -->For example, [Claude Mythos 5.2] “launches large studies where a first-principles calculation would do, misses obvious sanity checks, and is ‘good at working towards a precise goal, not great at discovering new scientific facts’.”
 > - The questionnaire and interview also say that sometimes Anthropic researchers would switch to older models for open-ended research work.
-
-- But that [Claude Mythos 5.2] was still the most-used internal model overall.
-
+>    - But that [Claude Mythos 5.2] was still the most-used internal model overall.
+>
 > **3) Summary of evidence**
 >
 > We conducted a preliminary evaluation of [Claude Mythos 5.2] informed by:
 >
 > - Capability testing conducted via API access granted over a period of 10 business days. We used five tasks for this testing:
-
-- *Budget NanoGPT Speedrun*, a constrained version of the popular [*NanoGPT Speedrun*](https://github.com/kellerjordan/modded-nanogpt) competition for AI R&D.
-- *Language Model Conceptual Argumentation (LMCA)*, a conceptual reasoning dataset described in *A dataset of rated conceptual arguments* (Cooper et al., 2026).
-- *Train a Program*, a task measuring an agent’s ability to train a machine learning model that replicates the behavior of a piece of software.
-- *Gaming Bot*, a task where an agent has to write a Python program capable of playing a video game, given a non-visual API to control the game.
-- *Sunlight*, a task measuring an agent’s ability to conduct open-ended research and write a corresponding report.
-
+>    - *Budget NanoGPT Speedrun*, a constrained version of the popular [*NanoGPT Speedrun*](https://github.com/kellerjordan/modded-nanogpt) competition for AI R&D.
+>    - *Language Model Conceptual Argumentation (LMCA)*, a conceptual reasoning dataset described in *A dataset of rated conceptual arguments* (Cooper et al., 2026).
+>    - *Train a Program*, a task measuring an agent’s ability to train a machine learning model that replicates the behavior of a piece of software.
+>    - *Gaming Bot*, a task where an agent has to write a Python program capable of playing a video game, given a non-visual API to control the game.
+>    - *Sunlight*, a task measuring an agent’s ability to conduct open-ended research and write a corresponding report.
 > - Background information about trends, and capabilities of previous models, especially as reported in our recent [Frontier Risk Report](https://metr.org/blog/2026-05-19-frontier-risk-report/#executive-summary-and-guide-to-the-report).
 > - Additional information from Anthropic about [Claude Mythos 5.2]’s capabilities, including responses to a questionnaire inquiring about model capabilities and control factors, an interview with an Anthropic researcher, and AECI measurements for [Claude Mythos 5.2] and previous Anthropic models.
 

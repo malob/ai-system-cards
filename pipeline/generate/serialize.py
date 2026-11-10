@@ -713,9 +713,11 @@ def serialize_blocks(blocks: list[dict], page_of_prev_block: int, oracle_pages, 
                     # phantom 'None' pattern)
                     body_lines = blk["lines"]
                     lang = ""
+                    # invisible marks don't count ('None' + U+200E, fable-5-2 p.259)
+                    label = norm.INVISIBLES.sub("", body_lines[0]["text"]).strip() if body_lines else ""
                     if (body_lines and not _mono_line(body_lines[0])
-                            and re.fullmatch(r"\w+", body_lines[0]["text"].strip())):
-                        lang = body_lines[0]["text"].strip()
+                            and re.fullmatch(r"\w+", label)):
+                        lang = label
                         body_lines = body_lines[1:]
                     raw = _code_raw(body_lines)
                     out.append(f"```{lang}\n" + (raw + "\n" if raw else "")
