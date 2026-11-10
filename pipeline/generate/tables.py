@@ -25,6 +25,17 @@ def _load() -> dict:
     return json.loads(CACHE.read_text()) if CACHE.exists() else {}
 
 
+def _strip_docling_extras(html: str) -> str:
+    """Drop what docling attaches to a table that is not the table: an
+    absorbed <caption> (D23: captions are our block, and they duplicated) and
+    table FOOTNOTES after </table> as <div class="footnote"> (fable-5-2 p.207
+    notes 10-11) — the page's own footnotes, emitted from the oracle like
+    every other note."""
+    html = re.sub(r"<caption>.*?</caption>", "", html, flags=re.S)
+    end = html.rfind("</table>")
+    return html[: end + len("</table>")] if end >= 0 else html
+
+
 def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
     """[{bbox:[x0,y0,x1,y1] top-left, html}] for a page (cached). Empty if
     uncached. Post-processing on load:
@@ -41,11 +52,7 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         t = {**t, "html": _promote_split_rowspan(t["html"])}
         t = {**t, "html": _normalize_rowspan_subrows(t["html"])}
         t = {**t, "html": _dedup_cascaded_cells(t["html"], t["bbox"], oracle_page)}
-        html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
-        # docling-absorbed table FOOTNOTES follow the table as
-        # <div class="footnote"> (fable-5-2 p.207 notes 10-11): they are the
-        # page's own footnotes, emitted from the oracle like every other note
-        html = html[: html.rfind("</table>") + len("</table>")] if "</table>" in html else html
+        html = _strip_docling_extras(t["html"])
         if oracle_page is not None:
             # docling LOST source text in a ruled table whose drawn grid is
             # its own grid: every word goes back to the cell it sits in
