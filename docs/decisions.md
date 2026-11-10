@@ -2036,3 +2036,49 @@ two certified-hunk composites (experiment 21 `hunks/`) and approved both:
 opus-5 p.97's '[tool use]' panel as its own code box, and risk-report p.181's
 'Opus- and Sonnet- class models' as printed. Both are canon. Push remains a
 separate owner request (D13).
+
+## D76 — eighth card: Gemini 4 Carbon; tagged-table seam, footnote and split-row classes (2026-11-10)
+
+The owner handed over
+`https://storage.googleapis.com/deepmind-media/gemini/gemini_4_carbon_safety_report.pdf`
+as the first priority. Card `google-deepmind/gemini-4-carbon`: Google
+DeepMind's Gemini 4 Carbon Safety & Security Report (94pp, cover-dated November
+2026, published with the 2026-11-10 general-availability post; the model was
+announced 2026-10-28). Same producer family (Skia/PDF m159), tagged, no page
+labels (printed = PDF page − 1, D74 keeps PDF indices). The second report in
+the gemini-4-argon template: the Argon knobs carry over unchanged
+(`heading_source: outline`, `link_text_resolution: geometry`,
+`cell_fit_breaks`, `header_rows_by_fill`, `cell_run_restyle`, `tagged_tables`).
+Census differences: body text mostly `#101010` (with `#000000` on 26 pages),
+22pt heads `#101010`, footnotes `#101010` at 10pt, no monospace code, no
+highlight, table rules stroked `#dadce0`. TOC pp.2–4; 7 stubs (§3, 36pp, kept
+whole); docling 2.124.0 on 13 ruled pages (the bordered CCL boxes pp.18/20 come
+from the tags, D72); inventory 90 pages / 48 figures (0 flags).
+
+The first gate showed 28 L2 and 12 T1 majors. Classes (every Anthropic card
+byte-identical throughout):
+
+- **A tagged cut row takes its page marker at the exact seam** inside the
+  merged cell (`merge_continuation_rows`, forced rows). Table 3.1's TCL row is
+  cut at pp.15→16 and its p.16 tail holds three links; with the marker after
+  the row they read as p.15, and L2 (which admits no generic acceptance) could
+  not pair the page's 14 links. **Certified canon move:** gemini-4-argon's
+  three tagged cut rows move their markers to the exact seam (pp.88, 89, 155;
+  markers only, content unchanged; its TB2 seam advisories 4 → 7).
+- **Tagged lines in the footnote zone are not cell text** (`_page_tags`): a
+  note referenced from a table cell is nested in that cell's tag tree (p.31
+  fn 2 printed as the header row's text).
+- **Docling's split rows yield to a full tag grid** that spells all of
+  docling's text (`_docling_split_rows`): p.61's two-line cells ('72.8' /
+  '(59.5)') became rows of their own. Argon p.185, whose cut-row continuation
+  is untagged, keeps docling.
+- **Column-rotation repair never runs on a tag-built grid**: its span rebuild
+  re-segmented '98.9' (drawn as per-glyph spans) into five cells.
+- **A cell reusing an exhausted span instance takes no style from it**
+  (`_restyle_cells`): the third '99.4', drawn as '9' + '9.4', took its twin's
+  bold.
+
+Gate: 0 unsuppressed majors; 3 exact T1 acceptances (pp.33–34, Table 3.2's
+cut row — the gemini-4-argon pp.184–185 class); TB2 2 typed minors; L2 36/36;
+P2/F3 90/48 (138 DOM events); RF1 4/4; seams 0. Sweeps, visual pass and
+mutation baseline follow.
