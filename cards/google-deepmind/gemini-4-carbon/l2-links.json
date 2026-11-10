@@ -433,7 +433,7 @@
       "text": "Section 6.1"
     }
   ],
-  "canonical_sections_sha256": "f851b99915d646008d1abcba3641c11889b32723cc69b740cf41e0b314a9b4dd",
+  "canonical_sections_sha256": "16ee130babe4f1af3bbcd3361328bad4ae7d7d4bee56e9ecfa9188ef98b3bb6a",
   "card_id": "google-deepmind/gemini-4-carbon",
   "exclusions": [
     {
@@ -1462,7 +1462,7 @@
     "02-mitigations.md": "dc07e46ed1ca04f1acd2ebef7fe0b8406f4a24ba7d71f040bba1dd8cc7919828",
     "03-frontier-safety.md": "8c7a1a599f8ddd7a1241e0940c0d10f2c427e71e023ced567a72d4525f26b2a8",
     "04-content-safety.md": "df016eaa8e55c26a76a37a436677b4b9171083b3d6fb1c9f45c1c3084d43db37",
-    "05-aligned-interactions.md": "215c33f0a60d681534de3e271a481d5ab2c15ef7350fc84bac245dfa506bbdf5",
+    "05-aligned-interactions.md": "2b51929568ee26b730162db0e2b047a577d82c612e07f617e2fc2b2b0ddd59ef",
     "06-prompt-injection.md": "eaf7fa1599c837339075bec04bdb096410251c44689b700c81fdc5310b4b0529",
     "07-cyber-defense.md": "0eb01f1c5c167f98591ff67a22aa7ce7fb155f588a80ec1c9fb7c39577e19784"
   },

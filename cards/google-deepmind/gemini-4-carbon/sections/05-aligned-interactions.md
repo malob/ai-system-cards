@@ -55,7 +55,7 @@ As shown in the results below, Gemini 4 Carbon maintains safety standards and de
 <tr><td>Static text, document, and image understanding</td><td><b>73.2</b></td><td>72.7</td><td>68.3</td></tr>
 <tr><td>Language and locale-specific, with Search</td><td><b>63.6</b></td><td>61.4</td><td>53.9</td></tr>
 <tr><td>Dynamic conversation - hidden health scenario</td><td><b>66.2</b></td><td>56.0</td><td>44.6</td></tr>
-<tr><td>High-risk health scenarios</td><td><b>99.4</b></td><td>98.9</td><td><b>99.4</b></td></tr>
+<tr><td>High-risk health scenarios</td><td><b>99.4</b></td><td>98.9</td><td>99.4</td></tr>
 <tr><td>HealthBench Hard</td><td><b>45.4</b></td><td><b>45.4</b></td><td>38.2</td></tr>
 <tr><td>HealthBench Pro, without Search grounding (length-adjusted)</td><td><b>72.8</b><br><b>(59.5)</b></td><td>68.8<br>(56.5)</td><td>65.4<br>(53.7)</td></tr>
 <tr><td>HealthBench Pro, with Search grounding (length-adjusted)</td><td>75.6<br>(58.4)</td><td><b>76.7</b><br><b>(61.4)</b></td><td>71.5<br>(58.7)</td></tr>
