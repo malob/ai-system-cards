@@ -32,6 +32,31 @@ SYNTAX = {
 }
 
 
+def _flanking_stars(text: str) -> list[int]:
+    """Positions of literal '*' that CommonMark could read as an emphasis
+    opener or closer (left- or right-flanking): not whitespace on both
+    sides. Text edges count as whitespace."""
+    import unicodedata
+
+    def ws(c):
+        return c is None or c.isspace()
+
+    def punct(c):
+        return c is not None and unicodedata.category(c)[0] in "PS"
+
+    out = []
+    for i, ch in enumerate(text):
+        if ch != "*":
+            continue
+        prev = text[i - 1] if i else None
+        nxt = text[i + 1] if i + 1 < len(text) else None
+        left = not ws(nxt) and (not punct(nxt) or ws(prev) or punct(prev))
+        right = not ws(prev) and (not punct(prev) or ws(nxt) or punct(nxt))
+        if left or right:
+            out.append(i)
+    return out
+
+
 def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
     """Apply ALL mark edits in one strictly end-first pass so earlier offsets
     never go stale. (A two-pass version replaced fnrefs '11'->'[^11]' first,
@@ -87,6 +112,10 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
     for kind, a, b, data in marks:
         if kind == "fnref":
             ops.append((a, 0, 0, 0, lambda t, a=a, b=b, d=data: t[:a] + f"[^{d}]" + t[b:]))
+        elif kind == "br":
+            # a deliberate in-box return (assemble's box_fit_breaks): the
+            # line-join space becomes a hard break
+            ops.append((a, 0, 0, 0, lambda t, a=a, b=b: t[:a] + "<br>" + t[b:]))
         elif kind == "link":
             ops.append((a, 1, b, 1, lambda t, a=a: t[:a] + "[" + t[a:]))
             ops.append((b, 2, a, 0, lambda t, b=b, d=data: t[:b] + f"]({d})" + t[b:]))
@@ -146,6 +175,12 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
         for i, ch in enumerate(text):
             if ch in "*`" and not any(a <= i < b for a, b in covered):
                 ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
+        # a typed '- ' opening the text is a literal hyphen, not a list
+        # marker (fable-5-2 p.175's '- I’d like your answer …' prompt lines;
+        # Google Docs list items carry the ZWSP marker and never reach here)
+        lead = len(text) - len(text.lstrip())
+        if text[lead:lead + 2] in ("- ", "+ "):
+            ops.append((lead, 0.5, 0, 0, lambda t, i=lead: t[:i] + "\\" + t[i:]))
     # ALWAYS: a raw '<' before a letter or '/' opens an HTML tag and the
     # renderer swallows it ('<link>' in p.216 prose vanished); '\<' renders
     # as the character in every md text context. Code-marked ranges are
@@ -158,9 +193,15 @@ def _apply_marks(text: str, marks: list, escape_literals: bool = False) -> str:
     # ALWAYS: a source backtick in prose is a literal glyph, but a pair opens
     # a code span and both vanish ('`gsutil -m rm -r [path]`', opus-5.5
     # p.102, set in the body serif). Transcripts already escape it above.
+    # A source asterisk likewise, once two of them can pair as emphasis
+    # ('Bash(python3:*) and Bash(source:*)', fable-5-2 p.102). A lone or
+    # space-surrounded one already renders literally and stays bare.
     if not escape_literals:
+        stars = [i for i in _flanking_stars(text)
+                 if not any(a <= i < b for a, b in code_cov)]
         for i, ch in enumerate(text):
-            if ch == "`" and not any(a <= i < b for a, b in code_cov):
+            if ((ch == "`" or (ch == "*" and len(stars) >= 2 and i in stars))
+                    and not any(a <= i < b for a, b in code_cov)):
                 ops.append((i, 0.5, 0, 0, lambda t, i=i: t[:i] + "\\" + t[i:]))
     # ALWAYS: a source backslash before ASCII punctuation is a CommonMark
     # escape and vanishes in rendering (the '\\"' of a quoted shell command,

@@ -1,0 +1,42 @@
+{
+  "_comment": "Maintainer/source-adjudicated exact T1 residuals (2026-11-09), checked against the page render: p.259 is the §9.2 code-box label 'None' (with its U+200E mark), which PyMuPDF's content-stream order lists before the page's table while the fence carries it after (the fable-5-1 p.210 / opus-5-5 p.226 class), merged with the dropped repeated header row 'Group Question' of the five-page Table 9.1.A (the D40 seam rule). No canonical content is missing or invented. Full token counts and SHA-256 digests bind every accepted occurrence, and the full WORKTREE gate rejects stale entries; this is not permission to alter canonical content.",
+  "accepted": [
+    {
+      "invariant": "T1",
+      "page": 259,
+      "severity": "major",
+      "detail": {
+        "op": "insert",
+        "missing_from_md": "",
+        "extra_in_md": "None‎",
+        "n_tokens": 1,
+        "missing_n_tokens": 0,
+        "extra_n_tokens": 1,
+        "missing_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "extra_sha256": "7feb3b97f8c3f9f08891da772acb81b7a2a0b81d65e66f3af4a3abf1d87ba0e6",
+        "critical_classes": [
+          "negation"
+        ],
+        "zone": "table"
+      },
+      "fingerprint": "7465df051ee781b27f55fc2215ca52cd0fa27cab25e991b85ecdb892a59811b2"
+    },
+    {
+      "invariant": "T1",
+      "page": 259,
+      "severity": "major",
+      "detail": {
+        "op": "delete",
+        "missing_from_md": "None‎ Group Question",
+        "extra_in_md": "",
+        "n_tokens": 3,
+        "missing_n_tokens": 3,
+        "extra_n_tokens": 0,
+        "missing_sha256": "5e09fa66a01491771808ef38a90f871e1455012934e0819cbb8e50acec9644ad",
+        "extra_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "zone": "table"
+      },
+      "fingerprint": "c84d83d09cf17455a1dbae164e9c0bd64fc806e363c20af7d537f5e7036601bc"
+    }
+  ]
+}

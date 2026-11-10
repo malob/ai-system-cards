@@ -1,0 +1,107 @@
+{
+ "schema_version": 1,
+ "observer_schema_version": 2,
+ "pymupdf_version": "1.28.2",
+ "source_sha256": "bb548a5db76349a67a0e65b84f36ddd15c19c3d5819eb3028460955682bfc259",
+ "page_exclusions": [
+  {
+   "page": 1,
+   "kind": "cover",
+   "reason": "reviewed PDF title and artwork cover; no archive body content",
+   "observation": {
+    "page": 1,
+    "word_count": 13,
+    "text_chars": 68,
+    "internal_links": 0,
+    "uri_links": 1,
+    "drawing_count": 2,
+    "raster_count": 1
+   }
+  },
+  {
+   "page": 5,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 5,
+    "word_count": 232,
+    "text_chars": 1331,
+    "internal_links": 38,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 6,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 6,
+    "word_count": 202,
+    "text_chars": 1201,
+    "internal_links": 39,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 7,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 7,
+    "word_count": 251,
+    "text_chars": 1516,
+    "internal_links": 39,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 8,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 8,
+    "word_count": 235,
+    "text_chars": 1549,
+    "internal_links": 39,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 9,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 9,
+    "word_count": 159,
+    "text_chars": 977,
+    "internal_links": 39,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  },
+  {
+   "page": 10,
+   "kind": "toc",
+   "reason": "reviewed PDF table-of-contents page",
+   "observation": {
+    "page": 10,
+    "word_count": 79,
+    "text_chars": 504,
+    "internal_links": 17,
+    "uri_links": 0,
+    "drawing_count": 1,
+    "raster_count": 0
+   }
+  }
+ ],
+ "figure_exclusions": []
+}

@@ -42,6 +42,10 @@ def get_tables(page_no: int, oracle_page: dict | None = None) -> list[dict]:
         t = {**t, "html": _normalize_rowspan_subrows(t["html"])}
         t = {**t, "html": _dedup_cascaded_cells(t["html"], t["bbox"], oracle_page)}
         html = re.sub(r"<caption>.*?</caption>", "", t["html"], flags=re.S)
+        # docling-absorbed table FOOTNOTES follow the table as
+        # <div class="footnote"> (fable-5-2 p.207 notes 10-11): they are the
+        # page's own footnotes, emitted from the oracle like every other note
+        html = html[: html.rfind("</table>") + len("</table>")] if "</table>" in html else html
         if oracle_page is not None:
             # docling LOST source text in a ruled table whose drawn grid is
             # its own grid: every word goes back to the cell it sits in
@@ -3072,7 +3076,11 @@ def _resplit_misjoined_cells(html: str, bbox: list, oracle_page: dict) -> str:
                 continue
             joined = plain[i] + plain[i + 1]
             for k1 in banded:
-                if joined.startswith(k1) and joined[len(k1):] in banded:
+                # only single spans re-split: a stacked composite key
+                # ('Claude' / 'Haiku 5.5', fable-5-2 §4) has no one span
+                # text to write back
+                if (joined.startswith(k1) and joined[len(k1):] in banded
+                        and k1 in sq2text and joined[len(k1):] in sq2text):
                     import html as _h
                     cells[i] = _h.escape(sq2text[k1], quote=False)
                     cells[i + 1] = _h.escape(sq2text[joined[len(k1):]], quote=False)

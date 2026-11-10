@@ -66,6 +66,12 @@ HEADING_TIERS = _heading_tiers()
 OUTLINE_HEADINGS = bool(re.search(
     r"^\s*heading_source:\s*outline\b",
     (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
+# per-card knob: inside a turn/transcript box, a line whose successor's first
+# word would have fit ends in a deliberate return (fable-5-2 p.175's typed
+# '- …' prompt lines) — the prose twin of tables' cell_fit_breaks
+BOX_FIT_BREAKS = bool(re.search(
+    r"^\s*box_fit_breaks:\s*true",
+    (cardcfg.CARD / "style-manifest.yaml").read_text(), re.M))
 HEADING_GRAY = next(iter(_hexes(_TEXT_ROLES, "heading")), "#666666")
 COMMENTARY_GRAY = next(iter(_hexes(_TEXT_ROLES, "transcript-commentary")), None)
 TRANSCRIPT_BOXES = _hexes(_FILL_ROLES, "transcript-container")
@@ -920,6 +926,24 @@ def _extend(cur, kind, line, pno, flush_cb):
     return {"type": kind, "lines": [line], "page": pno}
 
 
+def _box_fit_break(block: dict, prev: dict, line: dict) -> bool:
+    """A turn/transcript line whose successor's first word would have fit on
+    it ends in a deliberate return (the cell_fit_breaks test, measured
+    against the box's text measure: its right edge less the left inset)."""
+    box = block.get("box") or block.get("container")
+    if block.get("type") not in ("turn", "commentary") or not box or not line["segs"]:
+        return False
+    if prev.get("mono") or line.get("mono"):
+        return False  # mono lines keep their own line structure
+    inset = min(ln["bbox"][0] for ln in block["lines"]) - box[0]
+    right = box[2] - max(inset, 0)
+    line_h = prev["bbox"][3] - prev["bbox"][1]
+    s = line["segs"][0][2]
+    word = s["text"].strip().split(" ")[0]
+    w = (s["bbox"][2] - s["bbox"][0]) * len(word) / max(1, len(s["text"].rstrip()))
+    return bool(word) and prev["bbox"][2] + 0.25 * line_h + w <= right - 12
+
+
 def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple[str, list]:
     """Join a block's lines into text; compute inline marks as char ranges:
     bold/italic from span flags; links from annotation rects; chips and
@@ -974,6 +998,10 @@ def block_text_and_marks(block: dict, page: dict, manifest_chips: dict) -> tuple
                     and not nxt0.startswith(" ") and not tight):
                 text_parts.append(" ")
                 pos += 1
+            if BOX_FIT_BREAKS and _box_fit_break(block, block["lines"][li - 1], line):
+                # the separator space (or the span's own trailing space)
+                # becomes a hard return
+                marks.append(("br", pos - 1, pos, None))
         prev_span = None
         for a, b, s in line["segs"]:
             # a >=1pt x-gap between same-line spans is a word space the

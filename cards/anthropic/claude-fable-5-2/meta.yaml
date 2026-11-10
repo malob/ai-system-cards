@@ -1,0 +1,28 @@
+title: "Claude Fable 5.2 & Claude Mythos 5.2"
+slug: claude-fable-5-2
+vendor: Anthropic
+models:
+  - Claude Fable 5.2
+  - Claude Mythos 5.2
+release_date: 2026-11-09
+source_url: https://assets.claude.com/27d60918d218125e7504bc7354c4b4626ec56b11.pdf
+# The canonical pointer https://anthropic.com/claude-fable-5-2-mythos-5-2-system-card
+# redirects to this November 9, 2026 print (264 pages, Skia/PDF m159 Google
+# Docs Renderer, SHA-256 bb548a5d…bfc259), fetched 2026-11-09.
+source_pages: 264
+# docling pin: the table cache (gitignored) was built 2026-11-09 with docling
+# 2.124.0 on the reviewed table-page set (pp.16, 37, 60-61, 64-65, 67, 69,
+# 74-76, 79-80, 82, 87-88, 207-208, 255-259 — every page drawing black
+# non-separator rules; the transcript boxes are stroked #e2decf, so none
+# needed excluding); rebuild with `--with docling==2.124.0` on that set (D66).
+description: >-
+  System card for Claude Fable 5.2 and Claude Mythos 5.2, two configurations of
+  Anthropic’s latest and most capable large language model, sharing identical
+  weights but differing in safeguards. Covers RSP evaluations, cyber
+  capabilities, safeguards and harmlessness, agentic safety, alignment
+  assessment, model welfare, and capabilities.
+# Controlled vocabulary of Google Docs "smart chip" labels and their colors,
+# reproduced as inline :chip[…] pills. One color per label across the document.
+# (Empty — the 2026-11-09 signal census found no chip-pill fills; the #d9ead3
+# fills are D15 placeholder pills.)
+chips: {}

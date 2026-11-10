@@ -1,0 +1,83 @@
+# Per-card style manifest (decision D16): maps THIS card's visual signals to
+# semantic roles. Seeded from the 2026-11-09 signal census (pymupdf span/fill/
+# stroke probe over all 264 pages) + page-render inspection of every
+# ambiguous signal (pp.16, 25, 39, 82, 93, 102, 104, 142, 175, 207).
+# The closure rule (verification contract, operating rule 6): any recurring
+# signal NOT mapped here is a conversion flag, never a silent pass-through.
+#
+# `exclude: true` = the signal's text is outside T1 text-equality scope
+# (declared exclusion, verification contract §Exclusions).
+#
+# NOTE vs the earlier cards: the table and appendix vocabulary is Opus 5.5's
+# (dark #141413 headers, #dedcd1/#e2decf row-label tints, #4d4c48 sub-header
+# rows, a pure-black Table 9.1.A header, #f1f3f4 blocklist boxes, #d9ead3
+# placeholder pills, #faf9f5 unlabelled prompt/review boxes). NEW here is a
+# turn-structured transcript (p.104, Transcript 6.3.1.1.A): a #f3f3f3
+# '[System prompt]' box, a #e2decf '[User]' bubble, and the '[Assistant]'
+# turn inside a #faf9f5 container with a #f0eee6 mono sub-box and white
+# tool-call boxes — opus-5's grammar. #e2decf is therefore BOTH the '[User]'
+# bubble (pp.104, 175) and Table 8.1's row-label tint (pp.207-208; table
+# cells are owned by the table code). #faf9f5 stays transcript-container:
+# its boxes hold a human prompt (p.93), Claude's review (pp.93-94), bare
+# model output (pp.102-103) and '[Assistant]:'-led turns (pp.104-105, 142),
+# so a turn-assistant role would misattribute the p.93 prompt; the inline
+# bold '[Assistant]' lead carries the speaker.
+
+card: anthropic/claude-fable-5-2
+status: >-
+  roles seeded mechanically 2026-11-09; verified against page renders
+  (pp.16, 25, 39, 82, 93, 102, 104, 142, 175, 207); closure rule applies
+  to anything not listed
+
+text_colors:
+  "#000000": {role: body}
+  "#1155cc": {role: link}                      # 332 spans / 134 pages
+  "#1264a3": {role: link}                      # bare arXiv URL footnote link p.240
+  "#666666": {role: heading}   # 118 spans / 103 pages — gray section headings
+  "#188038": {role: code-text}                 # green RobotoMono spans, 46 pages
+                                               # (effort levels, appendix code)
+  # near-black paste artifacts in the source doc — render as body, keep note
+  "#1d1c1d": {role: body, note: paste-artifact}   # pp.20, 36, 46-47, 147-149, 186-187, 199
+  "#1d1d1f": {role: body, note: paste-artifact}   # figure-caption bodies pp.25, 27
+  "#1f1f1f": {role: body, note: paste-artifact}   # one sentence tail p.76
+  "#444746": {role: body, note: paste-artifact}   # 'about three quarters' p.61
+  "#141413": {role: body, note: paste-artifact}   # '[Table 2.2.1.A]' caption lead p.16
+  "#ffffff": {role: table-header-text}         # light text on dark header fills, 20 pages
+  "#faf9f5": {role: table-header-text}         # header text p.16
+  "#f3f3f3": {role: table-header-text}         # header text on #141413, Table 5.1.3.A p.82
+  "#747775": {role: table-empty-cell}          # 'None' placeholder, p.259
+
+fills:
+  "#141413": {role: table-header-fill, exclude: true}   # dark header rows, 17 pages
+  "#000000": {role: table-header-fill, exclude: true}   # Table 9.1.A 'Group | Question'
+                                                        # header, pp.255-259
+  "#dedcd1": {role: table-cell-bg, exclude: true}       # row-label tint, 21 pages
+  "#4d4c48": {role: table-subheader-fill, exclude: true} # model / surface sub-header rows
+  "#d9ead3": {role: placeholder, forms: [inline-pill]}  # D15 [bracketed placeholder]
+                                                        # pills pp.93, 102-105, 142, 175
+  "#e2decf": {role: turn-user, note: also Table 8.1 row-label tint pp.207-208 (table-owned)}
+                                                        # '[User]' bubbles pp.104, 175
+  "#faf9f5": {role: transcript-container}   # unlabelled prompt / review / output
+                                            # boxes pp.93-94, 102-105, 142
+  "#f3f3f3": {role: transcript-container}   # '[System prompt]' box p.104
+  "#f0eee6": {role: example-box}            # mono sub-box nested in the p.104
+                                            # '[Assistant]' turn
+  "#f1f3f4": {role: code-block-bg}    # appendix 9.2 blocklist boxes pp.259-264
+  "#fafafa": {role: page-furniture, exclude: true}   # faint highlight behind the
+                                                     # p.25 caption body
+  "#ffffff": {role: page-furniture, exclude: true}
+
+# No smart-chip vocabulary in this document: the census found no chip-pill
+# fills (the #d9ead3 pills are D15 placeholders, not chips). meta.yaml chips: {}
+
+document:
+  toc_pages: [5, 6, 7, 8, 9, 10]     # site generates its own TOC; excluded
+  page_number_footer: bottom-right bare integer, excluded
+  # fill-geometry cell merges (D63/D65): one drawn fill under a non-empty cell
+  # that also covers an empty neighbour proves colspan/rowspan (Table 8.1's
+  # 2×2 'Evaluation' corner and two-row row labels, p.207)
+  merge_cells_by_fill: true
+  # in-box returns: a turn/transcript line whose successor's first word would
+  # have fit ends in a deliberate return (p.175 Transcript 6.6.4.8.B's typed
+  # '- …' prompt lines, joined into one run-on list item without it)
+  box_fit_breaks: true

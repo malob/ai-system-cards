@@ -321,7 +321,7 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
     # md escapes — including an escaped BACKSLASH: the serializer doubles a
     # source backslash that precedes ASCII punctuation ('\\"' -> '\\\\"'),
     # and the projection must read it back as the one source character
-    seg = re.sub(r"\\([\\*_\[\]()#`~.!|])", r"\1", seg)
+    seg = re.sub(r"\\([\\*_\[\]()#`~.!|+-])", r"\1", seg)
     return seg
 
 
