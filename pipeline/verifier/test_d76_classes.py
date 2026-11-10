@@ -71,5 +71,16 @@ class SplitRowTests(unittest.TestCase):
         self.assertFalse(tables._docling_split_rows(html, self.TAGS))
 
 
+class NumberedHeadingProjectionTests(unittest.TestCase):
+    def test_numbered_heading_is_not_an_ordered_item(self):
+        import mdproj
+        text = ("<!-- source: source.pdf pages 005-005 -->\n\n<!-- p.5 -->\n\n"
+                "## 1. Introduction\n\n1. A real item\n2. Another\n")
+        sec = mdproj.project("x.md", text)
+        self.assertEqual(["1. Introduction"], [t for t, _ in sec.headings])
+        self.assertEqual(2, len(sec.items))
+        self.assertIn("Introduction", [t for t, _ in sec.tokens])
+
+
 if __name__ == "__main__":
     unittest.main()

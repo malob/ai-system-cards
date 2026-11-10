@@ -280,7 +280,11 @@ def _clean_segment(seg: str, sec: Section, start: int) -> str:
 
     def heading(m):
         sec.headings.append((_strip_sentinels(m.group(1)), pg(m)))
-        return m.group(1)
+        # consumed like an item (ZWNJ prefix, stripped by norm): a numbered
+        # heading '## 1. Introduction' (the gemini template) must not read
+        # as an ordered list item below — one phantom item per section page
+        # masked a dropped one (ST1 mutation recall 2/8 on gemini-4-carbon)
+        return "‌" + m.group(1)
     seg = re.sub(r"^#{1,6}\s+(.*)$", heading, seg, flags=re.M)
     seg = re.sub(r"^>\s?", "", seg, flags=re.M)               # blockquotes
     # unordered bullets: require same-line whitespace so a LONE "-" line (the
