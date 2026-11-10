@@ -3,16 +3,18 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-11-09. **Six cards LIVE; a seventh converged locally,
-NOT pushed.** Anthropic released the **Claude Fable 5.2 & Claude Mythos 5.2
-System Card** (`anthropic/claude-fable-5-2`, 264pp, cover-dated 2026-11-09,
-canonical pointer `anthropic.com/claude-fable-5-2-mythos-5-2-system-card`)
-and the owner asked to onboard it. Same Google Docs export family (Skia/PDF
-m159). Onboarded, gated, swept (two rounds), rendered-pass checked and
-mutation-baselined in one session (D75 + addendum, experiment 21). The six
-live cards are unchanged except two PDF-verified one-hunk canon moves the
-owner approved (opus-5 p.97, risk-report p.181). Gemini 4 Argon went live 2026-10-29 (`038d146`,
-D70–D74).
+**Last updated:** 2026-11-09. **Seven cards LIVE.** Anthropic released the
+**Claude Fable 5.2 & Claude Mythos 5.2 System Card** (`anthropic/claude-fable-5-2`,
+264pp, cover-dated 2026-11-09, canonical pointer
+`anthropic.com/claude-fable-5-2-mythos-5-2-system-card`) and the owner asked to
+onboard it. Same Google Docs export family (Skia/PDF m159). Onboarded, gated,
+swept (two rounds), rendered-pass checked and mutation-baselined in one session
+(D75 + addenda, experiment 21); the owner approved the two certified one-hunk
+moves (opus-5 p.97, risk-report p.181) and asked to ship. Pushed 2026-11-09:
+`8e69334`, Pages run 42757157136 green (seven card gates, clean build, deploy),
+live pages verified. The hosted mutation run for that push (42757157334) was
+still running at the time of writing; the six local replays had held
+byte-identically.
 
 ## Fable 5.2 onboarding (D75, experiment 21)
 
@@ -45,8 +47,7 @@ D70–D74).
 
 ## Open owner decisions
 
-1. **Deploy** the seventh card (push to main triggers Pages).
-2. Later, optional: `box_fit_breaks` on the certified cards (45 candidates).
+1. Later, optional: `box_fit_breaks` on the certified cards (45 candidates).
 
 Resolved 2026-11-09: the owner approved both certified hunks (opus-5 p.97,
 risk-report p.181; D75 addendum 2). Resolved 2026-10-29: quotes print as each
