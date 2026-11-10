@@ -1,0 +1,33 @@
+{"page": 2, "status": "clean"}
+{"page": 3, "status": "clean"}
+{"page": 4, "status": "clean"}
+{"page": 11, "status": "clean"}
+{"page": 12, "status": "clean"}
+{"page": 13, "status": "clean"}
+{"page": 14, "status": "flagged", "findings": [{"severity": "minor", "construct": "footnote", "desc": "Footnote 1: PDF sets 'Relevant language from our RSP:' on its own line with the RSP quotation starting on a new line; md/served join them into one run with a space (hard line break lost).", "evidence": "p-014.png footnote area vs 02-rsp-evaluations.md line 492 [^1] and served <li id=\"user-content-fn-1\"> single <p>", "verdict": "confirmed"}]}
+{"page": 15, "status": "clean"}
+{"page": 16, "status": "clean"}
+{"page": 17, "status": "flagged", "findings": [{"severity": "minor", "construct": "paragraph", "desc": "Italic extent: PDF sets 'C. trachomatis' with an upright 'C.' and only 'trachomatis' italic; md/served italicize the whole 'C. trachomatis' (*C. trachomatis* / <em>C. trachomatis</em>).", "evidence": "crop p17-70x548.png (upright C.) vs slice p-017.md '*C. trachomatis*' and served <em>C. trachomatis</em>", "verdict": "confirmed"}]}
+{"page": 18, "status": "clean"}
+{"page": 19, "status": "flagged", "findings": [{"severity": "minor", "construct": "paragraph", "desc": "Italic extent (same class as p.17): PDF sets the genus initial upright in 'C. trachomatis' and 'C. caviae' (only the species word italic); md/served italicize the whole binomial (*C. trachomatis*, *C. caviae*).", "evidence": "crops p19-300x362.png and p19-70x395.png (upright C.) vs served <em>C. trachomatis</em>, <em>C. caviae</em>", "verdict": "confirmed"}]}
+{"page": 20, "status": "clean"}
+{"page": 21, "status": "clean"}
+{"page": 22, "status": "clean"}
+{"page": 23, "status": "clean"}
+{"page": 24, "status": "clean"}
+{"page": 25, "status": "clean"}
+{"page": 26, "status": "clean"}
+{"page": 27, "status": "clean"}
+{"page": 28, "status": "clean"}
+{"page": 29, "status": "clean"}
+{"page": 30, "status": "clean"}
+{"page": 31, "status": "clean"}
+{"page": 32, "status": "clean"}
+{"page": 33, "status": "clean"}
+{"page": 34, "status": "clean"}
+{"page": 35, "status": "clean"}
+{"page": 36, "status": "clean"}
+{"page": 37, "status": "clean"}
+{"page": 38, "status": "clean"}
+{"page": 39, "status": "clean"}
+{"page": 40, "status": "flagged", "findings": [{"severity": "major", "construct": "list", "desc": "METR blockquote: the four hollow-circle (\u25cb) sub-bullets nested under '[Claude Mythos 5.2] substantially improves upon Fable 5.1\u2026' ('In particular, the primary way\u2026', 'Note that we think it is plausible\u2026') and under 'Anthropic reports that [Claude Mythos 5.2] does better\u2026' ('\u2026\u201csolves a clear majority\u2026\u201d', '\u2026also \u201cnearly saturates\u2026\u201d', 'And, outside of evals, \u201ccompleted several\u2026\u201d') escape the blockquote and lose nesting: md emits them as unquoted top-level '- ' lists between quote fragments, so the served page closes the <blockquote>, renders a plain top-level <ul>, reopens a new <blockquote> for 'Anthropic reports\u2026', then another plain <ul>. PDF shows one continuous left-ruled quote with a 2-level list (\u25cf items with \u25cb children).", "evidence": "p-040.png (\u25cb sub-bullets indented under \u25cf items, inside the left rule) vs sections/02-rsp-evaluations.md lines 394-403 (lines 396-397 and 401-403 lack '> ' and are not indented) and served.html '</blockquote>\\n<ul>\\n<li>In particular\u2026' / '<blockquote>\\n<ul>\\n<li>Anthropic reports\u2026</li>\\n</ul>\\n</blockquote>\\n<ul>\\n<li>[Claude Mythos 5.2] \u201csolves\u2026'", "verdict": "confirmed"}, {"severity": "major", "construct": "paragraph", "desc": "METR blockquote: two separate bold lines in the PDF \u2014 '2) Summary of findings' and '2a) [Claude Mythos 5.2] appears to be a substantial step above Fable 5.1 on verifiable tasks' \u2014 are merged into one bold paragraph ('2) Summary of findings 2a) [Claude Mythos 5.2] appears\u2026'), losing the section/subsection split (parallel to '1) Summary of conclusions' standing alone on p.39).", "evidence": "p-040.png lines at y\u2248731 and y\u2248773 (first line short, separate line) vs sections/02-rsp-evaluations.md line 392 and served <p><strong>2) Summary of findings 2a) \u2026</strong></p>", "verdict": "confirmed"}]}

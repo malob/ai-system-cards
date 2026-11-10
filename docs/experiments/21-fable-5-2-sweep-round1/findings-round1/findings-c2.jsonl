@@ -1,0 +1,32 @@
+{"page": 41, "status": "flagged", "findings": [{"severity": "major", "construct": "list", "desc": "METR quote (blockquote): every second-level (○) sub-bullet escapes the blockquote and becomes a top-level <ul> outside the quote, splitting the quote into 4 fragments and losing nesting. Affected: 'As with Claude Opus 5.5, it neglects…', 'However, it’s unclear to what extent…' (children of the Sunlight bullet), '[Claude Mythos 5.2] does not reach further milestones…Gaming Bot' (child of 'Even on verifiable tasks…'), 'On Budget NanoGPT Speedrun, across all attempts…' (child of '[Claude Mythos 5.2] and Claude Opus 5.5 share similar weaknesses'). Same class also visible at the end of p.40 ('In particular, the primary way…', '[Claude Mythos 5.2] “solves a clear majority…' etc.).", "evidence": "p-041.png shows ○ sub-bullets indented under ● bullets, all inside the left-ruled quote; served.html p-41 region: </blockquote><ul><li>As with Claude Opus 5.5…</li>…</ul><blockquote> — sub-items are top-level, outside the quote; slice p-041.md shows them as unquoted '- ' lines", "verdict": "confirmed"}]}
+{"page": 42, "status": "flagged", "findings": [{"severity": "major", "construct": "list", "desc": "METR quote: ○ sub-bullets escape the blockquote as top-level bullets, quote split into fragments. 'For example, [Claude Mythos 5.2] “launches large studies…' (child of p.41's 'Evidence from the questionnaire…'), 'But that [Claude Mythos 5.2] was still the most-used internal model overall.' (child of 'The questionnaire and interview also say…'), and the five task sub-bullets (Budget NanoGPT Speedrun, LMCA, Train a Program, Gaming Bot, Sunlight; children of 'Capability testing conducted via API access…') all render as unquoted top-level <ul> items between </blockquote> and <blockquote>.", "evidence": "p-042.png: ○ items indented under ● items, all inside the left-ruled quote ending before 2.3.7; served.html p-42 region: </blockquote><ul><li><em>Budget NanoGPT Speedrun</em>…</li>…</ul><blockquote>", "verdict": "confirmed"}]}
+{"page": 43, "status": "clean"}
+{"page": 44, "status": "flagged", "findings": [{"severity": "major", "construct": "paragraph", "desc": "Mid-line 'no-chain-of- thought' (hyphen + space, NOT at a line end) is emitted as 'no-chain-ofthought' — the hyphen and space are dropped, producing a non-word. Looks like a dehyphenation join firing on an intra-line '-␠' sequence.", "evidence": "crop p44-60x580.png shows 'no-chain-of- thought time horizon…' at the START of a line (y≈590pt; raw PDF line text 'no-chain-of- thought time horizon than previous models…'); served.html/slice p-044.md: '(ii) Claude Mythos 5.2 has a higher no-chain-ofthought time horizon'", "verdict": "confirmed"}]}
+{"page": 45, "status": "clean"}
+{"page": 46, "status": "clean"}
+{"page": 47, "status": "clean"}
+{"page": 48, "status": "clean"}
+{"page": 49, "status": "clean"}
+{"page": 50, "status": "clean"}
+{"page": 51, "status": "clean"}
+{"page": 52, "status": "clean"}
+{"page": 53, "status": "clean"}
+{"page": 54, "status": "clean"}
+{"page": 55, "status": "clean"}
+{"page": 56, "status": "clean"}
+{"page": 57, "status": "clean"}
+{"page": 58, "status": "clean"}
+{"page": 59, "status": "clean"}
+{"page": 60, "status": "clean"}
+{"page": 61, "status": "clean"}
+{"page": 62, "status": "clean"}
+{"page": 63, "status": "clean"}
+{"page": 64, "status": "clean"}
+{"page": 65, "status": "clean"}
+{"page": 66, "status": "clean"}
+{"page": 67, "status": "clean"}
+{"page": 68, "status": "clean"}
+{"page": 69, "status": "clean"}
+{"page": 70, "status": "clean"}
+{"page": 71, "status": "clean"}
+{"page": 72, "status": "clean"}

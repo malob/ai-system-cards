@@ -1,0 +1,32 @@
+{"page": 73, "status": "clean"}
+{"page": 74, "status": "flagged", "findings": [{"severity": "minor", "construct": "caption", "desc": "Table 4.4.2.B caption: PDF underlines the trailing period ('underlined.' fully underlined); web underlines only the word ('<u>underlined</u>.'). Table A's caption underlines the word only, matching PDF there. Both tables' cells, bold and underlines otherwise match.", "evidence": "crop p74-280x435.png shows underline extending under the period; served.html Table 4.4.2.B caption '<u>underlined</u>.'", "verdict": "confirmed"}]}
+{"page": 75, "status": "clean"}
+{"page": 76, "status": "clean"}
+{"page": 77, "status": "clean"}
+{"page": 78, "status": "clean"}
+{"page": 79, "status": "flagged", "findings": [{"severity": "minor", "construct": "caption", "desc": "Table 5.1.1.A caption: PDF underline covers the trailing period ('underlined.'); web '<u>underlined</u>.' (same class as p.74 Table 4.4.2.B). Table cells, bold/underline marks and the list/prose all match.", "evidence": "crop p79-70x438.png; served.html Table 5.1.1.A caption", "verdict": "confirmed"}]}
+{"page": 80, "status": "clean"}
+{"page": 81, "status": "clean"}
+{"page": 82, "status": "clean"}
+{"page": 83, "status": "clean"}
+{"page": 84, "status": "clean"}
+{"page": 85, "status": "clean"}
+{"page": 86, "status": "clean"}
+{"page": 87, "status": "flagged", "findings": [{"severity": "minor", "construct": "caption", "desc": "Table 5.2.2.1.A caption: PDF underline covers the trailing period ('underlined.'); web '<u>underlined</u>.' (same class as pp.74, 79). Table cells, merged 'Model' corner, colspans and bold/underline marks all match.", "evidence": "page render p-087.png caption line 2 + crop p87-66x65.png; served.html Table 5.2.2.1.A caption", "verdict": "confirmed"}]}
+{"page": 88, "status": "flagged", "findings": [{"severity": "minor", "construct": "caption", "desc": "Table 5.2.2.2.A caption: PDF draws an underline under the lone period after bold 'bolded' ('bolded.' with only the '.' underlined — a publisher leftover, this caption has no 'underlined' clause); web renders '<strong>bolded</strong>.' with no underline. Cosmetic, same punctuation-underline class as pp.74/79/87; arguably fine to leave. Table cells (bold pattern incl. regular 0.07% in col 3), merged corner, colspans, prose and footnote 3 (text + assets.claude.com link) all match.", "evidence": "crop p88-280x292.png (underline only under the period); spans show '. (Note…' as Lora-Regular", "verdict": "confirmed"}]}
+{"page": 89, "status": "clean"}
+{"page": 90, "status": "clean"}
+{"page": 91, "status": "clean"}
+{"page": 92, "status": "clean"}
+{"page": 93, "status": "clean"}
+{"page": 94, "status": "clean"}
+{"page": 95, "status": "clean"}
+{"page": 96, "status": "clean"}
+{"page": 97, "status": "clean"}
+{"page": 98, "status": "clean"}
+{"page": 99, "status": "clean"}
+{"page": 100, "status": "clean"}
+{"page": 101, "status": "clean"}
+{"page": 102, "status": "flagged", "findings": [{"severity": "major", "construct": "list", "desc": "Two author-narration paragraphs that continue the third bullet of §6.3.1 ('In the second one, it said in its extended thinking:' and 'It also added a comment above the command stating “DEFAULT permission mode, …”. After both variants were blocked, it gave up and reported its own behavior.') render as <blockquote> (left rule + soft ink = quote styling). In the PDF they are plain narration set at the bullet's text column (x=108, same as the bullet text on pp.101–102), with no rule — list-item continuation paragraphs between the two full-width transcript boxes, not quotations. A reader sees the author's narration styled like quoted material sitting between two quoted model outputs. Unique to this card: no other card has a '> ' paragraph directly after a '::::' transcript close. Box contents, pills, literal backticks and straight quotes all match.", "evidence": "spans p.102: 'In the second one…' x=108 y=299, 'It also added…' x=108 y=469 (bullet text column; boxes at x=72–540); crop p102-70x205.png; served.html '<blockquote><p>In the second one, it said in its extended thinking:</p></blockquote>' and '<blockquote><p>It also added a comment…</p></blockquote>'; sections/06a-alignment-1.md lines 161, 169; global.css .article blockquote border-left", "verdict": "confirmed"}]}
+{"page": 103, "status": "clean"}
+{"page": 104, "status": "clean"}

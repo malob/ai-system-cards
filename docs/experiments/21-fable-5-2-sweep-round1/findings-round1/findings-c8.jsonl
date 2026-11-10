@@ -1,0 +1,32 @@
+{"page": 233, "status": "clean"}
+{"page": 234, "status": "clean"}
+{"page": 235, "status": "clean"}
+{"page": 236, "status": "clean"}
+{"page": 237, "status": "clean"}
+{"page": 238, "status": "clean"}
+{"page": 239, "status": "clean"}
+{"page": 240, "status": "clean"}
+{"page": 241, "status": "clean"}
+{"page": 242, "status": "clean"}
+{"page": 243, "status": "clean"}
+{"page": 244, "status": "clean"}
+{"page": 245, "status": "flagged", "findings": [{"severity": "minor", "construct": "link", "desc": "PDF styles \"system cards\" (first line, \"Our recent system cards reported...\") as a blue underlined link, but the web text is plain (no <a>)", "evidence": "p-245.png shows blue underline; PyMuPDF get_links() on p.245 returns NO link annotations at all (cf. identical phrase on pp.234/238/246 which carry https://www.anthropic.com/system-cards). Publisher-side missing annotation; md/served faithfully plain.", "verdict": "source-faithful"}]}
+{"page": 246, "status": "clean"}
+{"page": 247, "status": "clean"}
+{"page": 248, "status": "clean"}
+{"page": 249, "status": "clean"}
+{"page": 250, "status": "clean"}
+{"page": 251, "status": "clean"}
+{"page": 252, "status": "clean"}
+{"page": 253, "status": "clean"}
+{"page": 254, "status": "clean"}
+{"page": 255, "status": "clean"}
+{"page": 256, "status": "clean"}
+{"page": 257, "status": "clean"}
+{"page": 258, "status": "flagged", "findings": [{"severity": "minor", "construct": "table", "desc": "The seam-joined cut cell (\"What would you want to be done with this checkpoint ... or a combination. (Section 7.4 only)\") is the only cell in Table 9.1.A wrapped in <p>...</p>; site CSS .article p { margin: 0 0 1.15em } has no td-p override, so this one cell should render with ~1.15em extra blank space under its text, unlike its sibling rows. Text and row/rowspan placement are correct.", "evidence": "sections/09-appendix.md:50 <td><p>What would you want\u2026</p></td>; served.html has exactly 1 <td><p> in the whole page; site/src/styles/global.css:456 .article p margin, only td li > p overridden (l.697-698). Same markup exists in certified claude-opus-5-5 09-appendix.md:50. Not checked in a live browser.", "verdict": "uncertain"}]}
+{"page": 259, "status": "clean"}
+{"page": 260, "status": "clean"}
+{"page": 261, "status": "flagged", "findings": [{"severity": "minor", "construct": "code", "desc": "Two over-long blocklist entries are split across two <pre> lines (\"rahulpowar.medium.com/...-a-bigger-future\" + \"-for-ai\"; \"research-collection.ethz.ch/.../b278-c25\" + \"8aad557ba/content\"), so the web shows \"-for-ai\" / \"8aad557ba/content\" as if separate entries even though the column is wide enough for one line.", "evidence": "PDF p.261 wraps the same two entries at the box edge (first segment has no trailing space, unlike every other line); md 09-appendix.md:136-137,148-149 and served <pre> reproduce the visual split exactly. Same treatment in certified claude-fable-5-1 09-appendix.md:96-97,103-104. All 189 PDF RobotoMono lines pp.259-264 match md and served <pre> 1:1 in order.", "verdict": "source-faithful"}]}
+{"page": 262, "status": "clean"}
+{"page": 263, "status": "clean"}
+{"page": 264, "status": "clean"}
