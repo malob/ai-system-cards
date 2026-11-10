@@ -1,0 +1,35 @@
+{"shot": "00-p-16-table-wrap.png", "status": "clean"}
+{"shot": "01-p-37-table-wrap.png", "status": "clean"}
+{"shot": "02-p-60-table-wrap.png", "status": "clean"}
+{"shot": "03-p-61-table-wrap.png", "status": "clean"}
+{"shot": "04-p-64-table-wrap.png", "status": "clean"}
+{"shot": "05-p-65-table-wrap.png", "status": "clean"}
+{"shot": "06-p-67-table-wrap.png", "status": "clean"}
+{"shot": "07-p-67-table-wrap.png", "status": "clean"}
+{"shot": "08-p-69-table-wrap.png", "status": "clean"}
+{"shot": "09-p-74-table-wrap.png", "status": "clean"}
+{"shot": "10-p-74-table-wrap.png", "status": "flagged", "findings": [{"severity": "minor", "desc": "Caption of Table 4.4.2.B: the PDF underlines the trailing period of 'underlined.' but the site ends the underline before the period. All cell values, bold and underline marks in the table itself match.", "evidence": "PDF p.74 underline drawing spans x=379.0-427.0 at y=454.5; the '.' glyph sits at x=424.8-427.0. sections/04-safeguards-harmlessness.md:280 has '<u>underlined</u>.' (period outside the <u>)"}]}
+{"shot": "11-p-75-table-wrap.png", "status": "clean"}
+{"shot": "12-p-76-table-wrap.png", "status": "clean"}
+{"shot": "13-p-79-table-wrap.png", "status": "clean", "note": "caption punctuation-only styling differs (PDF bolds the period after \"better\" and underlines the period after \"underlined\"); not treated as a finding"}
+{"shot": "14-p-80-table-wrap.png", "status": "clean"}
+{"shot": "15-p-82-table-wrap.png", "status": "flagged", "findings": [{"severity": "minor", "desc": "Intra-cell typography tier lost in the Model column: '(Helpful-only)' renders at the same size as the bold model name; the PDF sets it one size smaller (10pt BoldItalic under 11pt Bold) as a sub-label.", "evidence": "PyMuPDF spans p.82: 'Claude Mythos 5.2 ' Lora-Bold 11.0 / '(Helpful-only)' Lora-BoldItalic 10.0 (same for all 5 rows); crop pipeline/.cache/crops/p82-70x180.png shows the smaller sub-label. Text, cells, bold/italic and caption otherwise match."}]}
+{"shot": "16-p-87-table-wrap.png", "status": "clean"}
+{"shot": "17-p-88-table-wrap.png", "status": "clean"}
+{"shot": "18-p-93-box.png", "status": "clean"}
+{"shot": "19-p-93-box.png", "status": "clean"}
+{"shot": "20-p-102-box.png", "status": "clean"}
+{"shot": "21-p-102-box.png", "status": "clean"}
+{"shot": "22-p-103-box.png", "status": "clean"}
+{"shot": "23-p-104-box.png", "status": "clean"}
+{"shot": "24-p-104-PRE.png", "status": "clean"}
+{"shot": "25-p-104-PRE.png", "status": "clean"}
+{"shot": "26-p-104-PRE.png", "status": "clean", "note": "'raw/[id]' shows a small gap before the pill: it is the .ph padding (0.35em) inside the green fill; markdown has no space (06a-alignment-1.md:209). Styling, not counted."}
+{"shot": "27-p-105-box.png", "status": "clean"}
+{"shot": "28-p-105-box.png", "status": "clean"}
+{"shot": "29-p-142-box.png", "status": "clean"}
+{"shot": "30-p-142-box.png", "status": "clean"}
+{"shot": "31-p-175-box.png", "status": "clean"}
+{"shot": "32-p-207-table-wrap.png", "status": "clean", "note": "All 24 data rows, bold best scores, en-dash vs hyphen placeholders, 79.5*10, footnotes 10-12, merged Evaluation corner and caption match pp.207-208. Sub-row labels (No tools/With tools) are <i><b> like Rubric; they only look near-upright in Literata italic. The p.208 CVE Rediscovery label is a <td colspan=2> with <b> rather than a <th>: visually identical, semantic only."}
+{"shot": "33-p-255-table-wrap.png", "status": "flagged", "findings": [{"severity": "minor", "desc": "The 'Training still to come' first question cell, merged across the pp.258-259 seam, carries extra blank space (about one line) below its text that no sibling cell has; the PDF cells have even padding.", "evidence": "sections/09-appendix.md:50 wraps only that cell's text in <p>…</p> (<td><p>What would you want to be done with this checkpoint, … (Section 7.4 only)</p></td>), so the paragraph margin adds bottom space; every other cell is bare text. Text, row order, groups/rowspans, page labels p.256-p.259 and the caption all match pp.255-259."}]}
+{"shot": "34-p-259-PRE.png", "status": "clean", "note": "All 189 PDF code lines (pp.259-264, RobotoMono spans) match the rendered fence lines byte-for-byte in order (scripted diff, trailing spaces stripped). The six per-page fences render as one box, and the p.260-p.264 labels sit on the first line of each page (hf.global-rail.com, openreview.net/pdf/a94b…, 2603.01710, LLMcompe-Team-Watanabe/hle, biorxiv.org/…696019). The gray 'None' label is not shown as a term. FYI, not counted: two entries that the PDF wraps mid-token at the box edge (p.261 'rahulpowar.medium.com/…bigger-future' + '-for-ai'; 'research-collection.ethz.ch/…b278-c25' + '8aad557ba/content'; neither first half has the trailing space every hard line has) stay two lines. That matches the PDF and the site box puts the first halves near its right edge too, but each reads as two blocklist entries."}

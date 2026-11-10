@@ -60,3 +60,47 @@ link with no annotation (p.245).
 certified hunks moved, both PDF-verified fidelity improvements awaiting owner
 adjudication: opus-5 p.97 (`[tool use]` in its own code box) and
 risk-report p.181 ('Sonnet- class'). Everything else byte-identical.
+
+## Round 2 result (fix verification)
+
+3 comparators over the 12 fix pages (39–42, 44, 102–105, 164–165, 259) plus
+15 seeded clean pages (`random.seed(21)` over the content pages less the fix
+pages: 55, 59, 68, 85, 124, 138, 139, 146, 148, 152, 181, 195, 221, 225, 234),
+`rulebook-round2.md`, inputs `pipeline/.cache/f52-sweep2/` (findings copied to
+`findings-round2/`): **27/27 clean**, every fix confirmed in the served HTML,
+no regression on the sample. One more source-faithful note: p.42 '(LMCA)'
+looks upright but sits in a Lora-Italic span.
+
+## Rendered visual pass (experiment 19 method)
+
+- **DOM audit** (browser pane, production build): 1338px — 257 page labels,
+  0 overlaps, 132 images decoded, no horizontal scroll, nothing wider than the
+  column; 1680px — 25 sidenotes, 0 sidenote/sidenote, sidenote/label or
+  sidenote/body overlaps; 375px — no horizontal scroll, nothing outside its
+  scroll wrapper (gutter labels hidden by design).
+- **Construct screenshots** (`shoot.py` here: experiment 19's, made resumable —
+  a 264-page card takes ~25 s per full-page clip): 35 constructs (18 tables, 13
+  transcript boxes, 4 code boxes), three reviewer agents vs the PDF
+  (`visual-findings.jsonl`): **0 major, 3 minor**, all known classes — the
+  p.74 caption underline stops before its period (the deferred caption
+  punctuation class), p.82's '(Helpful-only)' loses its smaller in-cell size
+  (an in-cell type tier the renderer does not express; the same table on the
+  certified cards), and p.258's `<p>`-wrapped seam cell (the opus-5-5 TB2
+  class).
+- **Certified hunks** (`hunks.py` here): one PDF | live | new composite each in
+  `hunks/` — opus-5 p.97 (`[tool use]` in its own code box, as drawn) and
+  risk-report p.181 ('Sonnet- class' as printed).
+
+## Mutation evidence
+
+All six certified replays (seed 5, 8 per class) are byte-identical to their
+committed baselines after every batch in this experiment, including opus-5 and
+the risk report with their one-hunk canon moves. The new card's baseline,
+generated on its final canon: 24 classes / 192 trials, 177 detected / 169
+intended-major / 171 major-blocked; misses in the known weak classes (ST2
+split-item 1/8, as on opus-5-5; ST1 6/8; ST3 6/8 detected; L1 6/8; S1 6/8;
+advisory swap-words).
+
+**Conclusion:** converged — round 1's five major classes and one known class
+fixed at the class level, round 2 clean, visual pass clean of majors. Owner
+items: the two certified hunks (composites above) and the deploy decision.
