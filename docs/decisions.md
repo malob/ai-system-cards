@@ -1994,3 +1994,39 @@ Gate: 0 unsuppressed majors; 2 exact T1 acceptances (p.259's code-box label
 'None' merged with Table 9.1.A's dropped repeated header — the fable-5-1
 p.210 / opus-5-5 p.226 class); T1 3 typed minors (repeated-header drops
 pp.256–258); L2 96/96; P2/F3 257/132 (389 DOM events); RF1 clean; seams 0.
+
+**D75 addendum — sweep rounds, visual pass, two certified hunks (same day).**
+Experiment 21's first round (8 comparators + 3 linters, 270 units, 245 clean)
+found five major classes the gates cannot see, plus the known p.104 panels;
+each fixed as a class with every certified card regenerated:
+
+- white all-monospace panels nested in a turn/transcript box are code boxes,
+  adjacent code boxes keep their own `<pre>`, and wide line-height placeholder
+  fills mark their pills (p.104);
+- a deeper item directly under a quoted item is quoted, carried across a page
+  break (the METR quote's ○ sub-bullets, pp.39–42);
+- two all-bold lines break when the next line's first word would have fit
+  (p.40);
+- only a line END is a hyphen wrap: both T1 sides guard a mid-span
+  hyphen-space (`norm.guard_inline_hyphens`) — p.44 'no-chain-of- thought'
+  had joined identically on both sides;
+- an item left open at a page's end lends its tiers to the next page's
+  ambiguous quote band (p.102);
+- a block absorbs at most one page-top continuation, and a trailing zero-width
+  mark is not an unterminated line (pp.164–165);
+- bidi marks are invisible, so p.259's 'None' + U+200E is the fence info
+  string; a wrapped pill piece ends at the first unopened close bracket
+  (p.105).
+
+Round 2 (12 fix pages + 15 seeded clean pages) came back 27/27 clean. The
+rendered visual pass (DOM audit at three widths, 35 construct screenshots
+reviewed against the PDF) found 0 majors and 3 cosmetic minors in known
+classes. **Certified canon moves awaiting owner adjudication**, PDF-verified,
+one hunk each, with composites in `docs/experiments/21-fable-5-2-sweep-round1/hunks/`:
+opus-5 p.97's '[tool use]' white panel becomes its own code box (it rendered
+as a paragraph pill between two code boxes); risk-report p.181 keeps the
+PDF's 'Opus- and Sonnet- class models' (canon had 'Sonnet-class', the wrap
+falls after 'and'). Every other certified card byte-identical; the six
+certified mutation replays held byte-identically; the new card's baseline is
+177 / 169 / 171 over 24 classes / 192 trials. The box-fit-break candidates on
+the certified cards (D75 body) remain an owner question. Nothing is pushed.

@@ -3,75 +3,58 @@
 Rewritable snapshot of where the project stands. **Read this first.** Rewrite it
 freely before any stopping point — history lives in git and decisions.md, not here.
 
-**Last updated:** 2026-10-29. **Six cards LIVE.** The owner handed over Google
-DeepMind's **Gemini 4 Argon Safety & Security Report**
-(`google-deepmind/gemini-4-argon`, 217pp, released 2026-10-13; the fetched
-storage object is a 2026-10-15 re-upload — see `meta.yaml`), the archive's
-first non-Anthropic document: a different vendor and visual grammar, but the
-SAME producer (Skia/PDF Google Docs Renderer m157). Onboarded, gated, swept
-(two rounds) and rendered-pass checked (D70, D71, experiment 20); the owner's
-scroll led to D72 (tagged tables), D73 (quotes as printed, all cards) and D74
-(PDF-index page labels). Pushed at the owner's request 2026-10-29: `038d146`,
-Pages run 41003852290 green (six card gates, clean build, deploy), live pages
-verified glyph-exact. The hosted mutation run for that push (41003852147) was
-still running at the time of writing; the six local replays had held
-byte-identically.
+**Last updated:** 2026-11-09. **Six cards LIVE; a seventh converged locally,
+NOT pushed.** Anthropic released the **Claude Fable 5.2 & Claude Mythos 5.2
+System Card** (`anthropic/claude-fable-5-2`, 264pp, cover-dated 2026-11-09,
+canonical pointer `anthropic.com/claude-fable-5-2-mythos-5-2-system-card`)
+and the owner asked to onboard it. Same Google Docs export family (Skia/PDF
+m159). Onboarded, gated, swept (two rounds), rendered-pass checked and
+mutation-baselined in one session (D75 + addendum, experiment 21). The six
+live cards are unchanged except two PDF-verified one-hunk canon moves
+awaiting the owner (below). Gemini 4 Argon went live 2026-10-29 (`038d146`,
+D70–D74).
 
-## Gemini 4 Argon onboarding (D70, D71, experiment 20)
+## Fable 5.2 onboarding (D75, experiment 21)
 
-- **Template census:** Google Sans; RobotoMono green inline code; the Google Docs
-  DEFAULT heading styles with many unnumbered heads; #e8f0fe header bands with
-  blue header text; gray 10pt footnotes; bold `Figure N:` / `Table N:` captions
-  below their constructs; page numbers 50pt up the bottom margin; a meaningful
-  #fdb895 orange highlight (Figure 3.43); three JPEG figures; fully ruled tables.
-- **Card config:** `headings:` style tiers + `heading_source: outline` (181/181
-  headings equal the PDF outline), `link_text_resolution: geometry` (three
-  publisher links jump to a different section than they name — reproduced),
-  `cell_fit_breaks`, `header_rows_by_fill`, `cell_run_restyle`, a `highlight`
-  fill with class `hl-orange`. Stubs: 12 files (§3 split at page-top 3.2.3, 3.4,
-  3.4.4, 3.4.5, 3.5). TOC pp.2–5. Docling 2.124.0 on 26 rule-scanned pages.
-- **Shared classes** (all certified cards byte-identical from fresh oracles):
-  footer page number above the 45pt band; adjacent footnote refs ('⁷⁸'); a
-  footnote tail alone under the separator continues the previous note; bold
-  caption labels (colon or period); github-slugger order; PyMuPDF-decoded JPEGs;
-  hyphen and roman-numeral list markers; ruled-table rehome / rowspan / reproject
-  / pad repairs (oracle additive `hrules`/`vrules`); entity-safe seam merges and
-  rowspan-aligned continuations; italic `<i>` flanking fallback; relocated
-  footnote links paired by reference page (L2); projection keeps literal '<' and
-  '|' (fable-5 T1 24→21, opus-5 T1 7→4); regular-weight row-label `th` → `td`.
-- **Sweeps:** round 1 (7 comparators + 2 linters, 224 units, 185 clean) → 33
-  majors collapsing to ~9 classes, all fixed (experiment 20 README). Round 2:
-  24 fix pages (21 clean; the one major, a stray blank line on p.92, fixed) +
-  17 seeded clean pages (17 clean).
-- **Rendered visual pass:** DOM audit at 1338/1680/375px clean (212 labels, 28
-  sidenotes at 1680, 0 overlaps, no horizontal scroll, 85 lazy figures decode);
-  14 table screenshots: 12 clean, the p.92 blank line (already fixed) and a
-  highlight sliver (fixed: breaks land outside highlight spans)
-  (`docs/experiments/20-gemini-4-argon-sweep-round1/visual-findings.jsonl`).
-- **Release:** fast release gate PASSED with six cards (all gates, artifacts,
-  seams, 170 verifier + 45 site tests, clean build, 0 audit findings).
-
-## Owner scroll feedback and D72 (2026-10-15 afternoon)
-
-The owner scrolled the card: naming approved; Figure 3.43's line breaks are all
-real; the bordered CCL definition boxes are a semantic loss as paragraphs;
-Figure 3.38 must be reproduced at fidelity. D72 makes the PDF's TAGGED
-structure (Google Docs exports Table/TR/TD/P tags) the table authority on this
-card (`tagged_tables` knob, oracle additive `tags`): the four boxes are now
-bordered one-column tables, Figure 3.38 is one table with its spanning prompt
-row and one line per answer option, Figure 3.43 matches the PDF line for line
-with 'STEPS 1–6' rejoined across the page, and every in-cell break follows the
-PDF's paragraphs and soft returns (a line ending in U+200B). Some continuation
-lines are untagged (pp.89, 93) — the legacy path covers them. Certified cards
-byte-identical; their PDFs are tagged too (a later candidate).
+- **Census → manifest:** Opus 5.5's table/appendix vocabulary plus opus-5's
+  turn-structured transcript (p.104: `#f3f3f3` '[System prompt]', `#e2decf`
+  '[User]', '[Assistant]' in a `#faf9f5` container). `#e2decf` is also Table
+  8.1's row-label tint (table-owned); `#faf9f5` stays `transcript-container`.
+  TOC pp.5–10; 13 stubs (§6 split at page-top 6.5 and 6.6.3, §8 at 8.15);
+  docling 2.124.0 on 23 black-ruled pages; inventory 257 pages / 132 figures.
+- **Card knob** `box_fit_breaks` (deliberate returns inside turn boxes, p.175).
+  The same test finds 45 candidates on certified cards (fable-5 27, risk 13,
+  opus-5 5), most already line-structured — an owner question, not done.
+- **Shared classes** (all in D75 + addendum): docling-absorbed table footnotes
+  dropped; misjoined-cell re-split skips composite keys; two-or-more flanking
+  literal asterisks escaped; typed leading '- ' in transcripts literal; white
+  mono panels in transcripts are code boxes (one `<pre>` per box); wide
+  placeholder fills mark pills; quoted sub-lists stay quoted across pages;
+  bold-pair line breaks; mid-line hyphen-space guarded on both T1 sides;
+  open-item tiers carried across a page; one page-top continuation per block;
+  bidi marks invisible; wrapped pill pieces end at their own bracket.
+- **Sweeps:** round 1 (8 comparators + 3 linters, 270 units, 245 clean) → 5
+  major classes + the known p.104 class, all fixed; round 2 (12 fix + 15
+  seeded clean pages) 27/27 clean.
+- **Rendered visual pass:** DOM audit clean at 1338/1680/375px (257 labels, 25
+  sidenotes, 132 images); 35 construct screenshots, 0 major, 3 minor (known
+  classes).
+- **Release:** fast release gate PASSED with seven cards (184 verifier tests,
+  built audit 0 findings: 3,660 ids, 2,997 fragment links, 1,579 page markers,
+  694 figures, 702 assets).
 
 ## Open owner decisions
 
-None. Resolved 2026-10-29 (D73): quotes print exactly as each PDF prints them — the
-renderer's smart-quote pass is gone; the risk report's p.113 low quote '‚' is
-restored (its only canon change; the other cards were already glyph-exact).
-Resolved 2026-10-29 (D74): gutter labels stay PDF indices (Gemini's printed
-footer is index − 1; one convention, and the label names the linked page).
+1. **Two certified canon hunks** (composites:
+   `docs/experiments/21-fable-5-2-sweep-round1/hunks/hunk-0.png`, `hunk-1.png`):
+   opus-5 p.97 '[tool use]' in its own code box, as the PDF draws it;
+   risk-report p.181 'Opus- and Sonnet- class models' as printed (canon had
+   'Sonnet-class').
+2. **Deploy** the seventh card (push to main triggers Pages).
+3. Later, optional: `box_fit_breaks` on the certified cards (45 candidates).
+
+Resolved 2026-10-29: quotes print as each PDF prints them (D73); gutter labels
+stay PDF indices (D74).
 
 ## Current card gates
 
@@ -83,19 +66,19 @@ footer is index − 1; one convention, and the label names the linked page).
 | claude-fable-5-1 | 5 T1 | T1 3 | 66/66 | 206/103 | 30/30 |
 | claude-opus-5-5 | 2 T1 (p.226) | T1 3 | 84/84 | 223/109 | 32/32 |
 | gemini-4-argon | 3 T1 (pp.184–185) | T1 7 / TB2 4 | 23/23 | 212/85 | 28/28 |
+| claude-fable-5-2 | 2 T1 (p.259) | T1 3 | 96/96 | 257/132 | 25/25 |
 
-All 0 unsuppressed majors, seams 0. 170 verifier tests. Built audit: 6 cards,
-3,129 ids, 2,571 fragment links, 1,322 page markers, 562 figures, 569 exact
+All 0 unsuppressed majors, seams 0. 184 verifier tests. Built audit: 7 cards,
+3,660 ids, 2,997 fragment links, 1,579 page markers, 694 figures, 702 exact
 assets, 0 findings.
 
 ## Mutation evidence
 
-Strict schema-v2 baselines, eight trials/class, seed 5. The five certified
-replays held byte-identically on this session's verifier (twice: after the
-first and the final verifier batch). The Gemini baseline was generated on its
-final canon (`results-google-deepmind-gemini-4-argon.json`; its row is in
-`.github/workflows/mutations.yml`); its misses sit in the known weak classes
-(ST2 split-item 5/8, ST1 6/8, L1 7/8, advisory swap-words).
+Strict schema-v2 baselines, eight trials/class, seed 5. The six certified
+replays held byte-identically on the D75 verifier (including opus-5 and the
+risk report after their one-hunk moves). The Fable 5.2 baseline was generated
+on its final canon (`results-anthropic-claude-fable-5-2.json`; its row is in
+`.github/workflows/mutations.yml`).
 
 | card | classes | trials | detected | intended-major | major-blocked |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -105,14 +88,17 @@ final canon (`results-google-deepmind-gemini-4-argon.json`; its row is in
 | Fable 5.1 | 24 | 192 | 178 | 170 | 170 |
 | Opus 5.5 | 24 | 192 | 177 | 169 | 169 |
 | Gemini 4 Argon | 24 | 192 | 186 | 178 | 178 |
+| Fable 5.2 | 24 | 192 | 177 | 169 | 171 |
 
 ## Deferred typed minors (owner list, unchanged in kind)
 
-p.225 `<p>`-wrapped seam-merged cell (opus-5-5, TB2 class); 'Transcript' chrome
-on label-less boxes; p.228 soft-wrapped blocklist entries; p.166 stray '. .';
-Gemini: link anchors that include a period the PDF rect covers, underline
-extents with a trailing colon (pp.78–79), the p.66/67 join after a period-less
-sentence, decorative section-end rules.
+`<p>`-wrapped seam-merged cells (opus-5-5 p.225, fable-5-2 p.258, TB2 class);
+'Transcript' chrome on label-less boxes; p.228 soft-wrapped blocklist entries;
+p.166 stray '. .'; caption underlines that stop before a trailing period /
+colon (fable-5-2 pp.74/79/87/88, Gemini pp.78–79); in-cell smaller type
+('(Helpful-only)', Table 5.1.3.A); footnote-internal line breaks (fable-5-2
+fn 1); Gemini: link anchors that include a period the PDF rect covers, the
+p.66/67 join after a period-less sentence, decorative section-end rules.
 
 ## Durable process invariants
 
@@ -144,6 +130,9 @@ sentence, decorative section-end rules.
 - **Different producer** is still untested: every card so far is Skia/PDF Google
   Docs Renderer. The table-evidence ask (D61) still wants sparse/unruled
   positives and a natural absent-rule negative from another producer.
+- **Visual-pass capture speed:** `shoot.py` full-page clips take ~25 s per
+  construct on a 264-page card (experiment 21 made it resumable); element
+  screenshots would be the fix.
 - **Mutation-suite speed (parked 2026-09-02):** serial, ~3.5–4 s per trial;
   a process pool and per-class hosted sharding are the semantics-free wins
   (experiment 17).
@@ -158,12 +147,12 @@ sentence, decorative section-end rules.
 The first attempt converted one card but made the human the test suite. The
 rebuild's goal is unattended mechanical conversion followed by bounded,
 evidence-directed review. Read [charter.md](charter.md),
-[decisions.md](decisions.md) (D1…D74),
+[decisions.md](decisions.md) (D1…D75),
 [architecture-roadmap.md](architecture-roadmap.md),
 [verification-contract.md](verification-contract.md), and
-[verification-methodology.md](verification-methodology.md). D70–D71 and
-experiment 20 are the most recent full onboarding — the template for a new
-vendor's Google Docs export; D67–D68 / experiment 18 the template for another
-Anthropic card; D66 / experiment 16 record how a certified card follows a
+[verification-methodology.md](verification-methodology.md). D75 and
+experiment 21 are the most recent full onboarding — the template for another
+Anthropic card (D67–D68 / experiment 18 before it); D70–D71 and experiment 20
+the template for a new vendor's Google Docs export; D66 / experiment 16 record how a certified card follows a
 publisher revision. For a changed corpus, experiment 11 remains the
 regression-sweep template.
