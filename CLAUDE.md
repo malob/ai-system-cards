@@ -223,12 +223,15 @@ size. The `repoint-link` class preserves a live internal link but changes it to 
 different existing heading; L2 must catch what existence-only audits cannot. Current
 seed-5 schema-v2 floors separate detection, intended-major severity, and actual major
 blocking. Fable's 25 classes / 200 trials are 191 / 184 / 185; Opus's 24 / 192 are
-175 / 167 / 170 (re-sampled on the August 19 revision, D66); Risk's 24 / 192 are 173 / 166 / 171; Fable 5.1's 24 / 192 are 178 / 170 / 170;
-Opus 5.5's 24 / 192 are 177 / 169 / 169; Gemini 4 Argon's 24 / 192 are 186 / 178 / 178;
-Fable 5.2's 24 / 192 are 177 / 169 / 171 (`flatten-chip` is inapplicable on the latter six:
-no chips). Across 1,352 trials the totals are 1,257 detected, 1,203 intended-major, and
-1,214 major-blocked; the six certified replays held byte-identically on D75's verifier (Fable's replay on
-the July 16 print held 191 / 184 / 185 identically). V1/P2/F3/L2 and every critical T1/FN1 class are 8/8 wherever
+176 / 168 / 171 (re-sampled on the August 19 revision, D66); Risk's 24 / 192 are 173 / 166 / 171;
+Fable 5.1's 24 / 192 are 180 / 172 / 172; Opus 5.5's 24 / 192 are 177 / 169 / 169; Gemini 4
+Argon's 24 / 192 are 187 / 179 / 179; Fable 5.2's 24 / 192 are 177 / 169 / 171; Gemini 4
+Carbon's 24 / 192 are 179 / 171 / 173 (`flatten-chip` is inapplicable on all but Fable: no
+chips). Across 1,544 trials the totals are 1,440 detected, 1,378 intended-major, and 1,391
+major-blocked. D76's two verifier fixes (S1 checks every manifest body colour; a numbered
+heading is not an ordered item) raised Opus drop-bold 6→7, Fable 5.1 drop-bold 5→7 and Argon
+item-to-paragraph 6→7; every other certified replay held byte-identically. V1/P2/F3/L2 and
+every critical T1/FN1 class are 8/8 wherever
 eligible; misses concentrate in ST1/ST2/ST3, L1, S1, and ordinary advisory word swaps.
 The strict artifacts combine independent per-class runs with the final hide-image/V1
 refresh. Hosted mutation run

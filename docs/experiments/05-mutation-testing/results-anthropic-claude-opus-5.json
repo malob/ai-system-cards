@@ -2467,11 +2467,11 @@
   },
   "drop-bold": {
    "invariant": "S1",
-   "caught": 6,
-   "detected": 6,
-   "intended_major": 6,
-   "major_blocked": 6,
-   "gate_blocked": 6,
+   "caught": 7,
+   "detected": 7,
+   "intended_major": 7,
+   "major_blocked": 7,
+   "gate_blocked": 7,
    "tried": 8,
    "details": [
     {
@@ -2549,14 +2549,14 @@
     {
      "file": "00-executive-summary.md",
      "site": "Alignment assessment.",
-     "caught": false,
-     "detected": false,
-     "intended_new_flags": 0,
-     "intended_major": false,
-     "major_blocked": false,
-     "gate_blocked": false,
-     "gate_exit": 0,
-     "gate_reason": "none"
+     "caught": true,
+     "detected": true,
+     "intended_new_flags": 1,
+     "intended_major": true,
+     "major_blocked": true,
+     "gate_blocked": true,
+     "gate_exit": 1,
+     "gate_reason": "major"
     },
     {
      "file": "08b-capabilities-2.md",
