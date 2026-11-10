@@ -2096,3 +2096,29 @@ boxes), and opus-5 changes exactly one line, p.147's 'ARGH ARGH ARGH.' |
 knob is retired and the behaviour is the default; every other card is
 byte-identical (fable-5-2 unchanged). **Certified canon move awaiting owner
 adjudication:** that one opus-5 hunk.
+
+**D76 addendum — sweep rounds, visual pass, two verifier fixes (same day).**
+Experiment 22's first round (4 comparators + 2 linters, 97 units, 87 clean)
+found one major class: an UNTAGGED cut-row continuation (Table 3.2 p.32→33)
+read by the legacy seam test as a new label-group member. Under
+`tagged_tables`, a fragment's first row with text only under columns the host
+row fills and an interior column empty is stitched as a cut row
+(`run._sparse_continuation`); gemini-4-argon and every other card unchanged.
+Round 2 (8 fix pages + 10 seeded clean pages) confirmed every table fix and
+caught one stale cell: a debugging run had left p.61's third '99.4' bold in
+the committed canon (regenerated; only that cell changed). The rendered visual
+pass (DOM audit at three widths, 8 construct screenshots) found 0 majors.
+Deferred minors: a dropped italic in one Table 3.1 cell (p.16), a mid-word
+wrap printed with a space in a narrow docling cell (p.32), `<td><p>` wrappers
+on a stitched cut row (p.34, the TB2 class), an italic colon (p.79).
+
+The new card's first mutation baseline exposed two verifier blind spots,
+both fixed with every card's gate unchanged:
+
+- **S1 checks bold runs in every manifest body colour**, not only `#000000`:
+  Carbon's body (and bold leads) are `#101010` (drop-bold recall 1/8 → 7/8).
+- **A numbered heading is not an ordered list item** in the projection
+  (`mdproj`): '## 1. Introduction' was counted as an item on every gemini
+  section page, masking one dropped item per page (ST1 recall 2/8).
+
+All eight mutation suites are re-run on the final verifier.
