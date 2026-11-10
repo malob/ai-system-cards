@@ -219,7 +219,7 @@ def f1_figures(sections, figures_map) -> list[dict]:
 
 
 def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozenset(),
-            body_color="#000000") -> list[dict]:
+            body_colors=frozenset({"#000000"})) -> list[dict]:
     """Bold-run coverage (S1): every bold body-text run in the source appears as
     markdown emphasis (or a heading / turn label, which consume bold runs as
     typed conversions). Table pages skipped — cell bolds belong to TB1's layer.
@@ -251,7 +251,10 @@ def s1_bold(md_emphasis, oracle_pages, page_range, toc_pages, table_pages=frozen
         # merge consecutive bold spans on the same line into runs
         runs, cur = [], None
         for s in oracle_pages[pno - 1]["spans"]:
-            ok = (s["zone"] == "body" and s["bold"] and s["color"] == body_color
+            # every colour the manifest maps to BODY: gemini-4-carbon sets
+            # most body text, its bold leads included, in #101010 — checking
+            # #000000 alone left S1 blind there (drop-bold recall 1/8)
+            ok = (s["zone"] == "body" and s["bold"] and s["color"] in body_colors
                   and s["size"] < 12.5)
             if ok:
                 if cur and cur["line"] == s["line"]:

@@ -73,6 +73,13 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
             chip_colors[m.group(2)] = m.group(1).strip()
             registry.add(m.group(1).strip())
 
+    # S1 checks bold runs in every colour the manifest maps to body text
+    tc_block = _re.search(r"^text_colors:\n((?:  .*\n|\n)+?)(?=^\S)", mtext, _re.MULTILINE)
+    body_colors = frozenset(
+        h.lower() for h, role in _re.findall(
+            r'"(#[0-9a-fA-F]{6})":\s*\{role:\s*([a-z-]+)', tc_block.group(1) if tc_block else "")
+        if role == "body") or frozenset({"#000000"})
+
     md_emphasis = [e for sec in sections for e in (sec.bolds + sec.headings + sec.turn_labels)]
     md_chips = [c for sec in sections for c in sec.chips]
 
@@ -84,7 +91,8 @@ def _flags_for(sections, pages, figures_map, limited: bool, only_pages=None,
     # usable footnote.  This catches F18 even when the shared source/body zoning
     # interpretation wrongly removes the same prose from both T1 projections.
     flags += dangling_footnotes.check(sections)
-    flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages)
+    flags += invariants.s1_bold(md_emphasis, pages, page_range, TOC_PAGES, table_pages,
+                                body_colors=body_colors)
     flags += invariants.s2_chips(md_chips, pages, page_range, chip_colors, registry)
     flags += invariants.st_structure(sections, pages, page_range, TOC_PAGES, table_pages)
     if l2_flags:
