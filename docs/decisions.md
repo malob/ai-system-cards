@@ -1936,3 +1936,61 @@ cover, no PDF page labels), so its gutter 'p.113' sits on the page printed 112;
 the Anthropic cards' printed numbers equal the index. Offered: label the gutter
 with the printed footer number. Chosen: keep PDF indices. One convention across
 the archive, and the label names the page the deep link opens.
+
+## D75 — seventh card: Claude Fable 5.2 & Claude Mythos 5.2; five small shared classes and an in-box line-break knob (2026-11-09)
+
+The owner asked to onboard the **Claude Fable 5.2 & Claude Mythos 5.2 System
+Card**, released that day (264pp, cover-dated 2026-11-09). The canonical
+pointer https://anthropic.com/claude-fable-5-2-mythos-5-2-system-card
+redirects to `assets.claude.com/27d60918….pdf` (Skia/PDF m159 Google Docs
+Renderer — the same export family; renderer versions across the corpus run
+m152–m159). Slug `claude-fable-5-2`. The Fable 5.1 pointer still resolves to
+the certified print (unchanged).
+
+- **Census → manifest.** Opus 5.5's table and appendix vocabulary plus one
+  construct new to this family since opus-5: a turn-structured transcript
+  (p.104) with a `#f3f3f3` '[System prompt]' box, a `#e2decf` '[User]' bubble
+  and an '[Assistant]' turn in a `#faf9f5` container with a `#f0eee6` mono
+  sub-box. `#e2decf` is both the '[User]' bubble (pp.104, 175) and Table 8.1's
+  row-label tint (pp.207–208, table-owned). `#faf9f5` stays
+  `transcript-container`: its boxes hold a human prompt (p.93) as well as
+  model output, so `turn-assistant` would misattribute.
+- **Stubs.** Thirteen files; §6 (96pp) split at page-top 6.5 (p.127) and
+  6.6.3 (p.158), §8 (48pp) at page-top 8.15 (p.243).
+- **Source authority.** Cover p.1 + TOC pp.5–10 (the proposal helper agreed,
+  0 flags); 133 rasters, the cover logo leaves with its page: 257 required
+  pages, 132 required figures.
+- **Tables.** Docling 2.124.0 on the 23 pages drawing black non-separator
+  rules (25 tables); the transcript boxes are stroked `#e2decf`, so none
+  needed excluding.
+
+The first gate showed 3 majors and 6 minors. Classes (all six certified cards
+regenerate byte-identical):
+
+- **Docling-absorbed table footnotes are dropped** (`tables.get_tables`):
+  docling attached p.207's footnotes 10–11 to Table 8.1 as
+  `<div class="footnote">` after `</table>`, duplicating the oracle's notes.
+  No certified cache holds anything outside its `<table>`.
+- **The misjoined-cell re-split skips stacked composite keys**
+  (`_resplit_misjoined_cells`): a wrapped 'Claude' / 'Haiku 5.5' composite
+  key has no single span text to write back (it crashed assembly).
+- **Literal asterisks in prose are escaped once two can pair** (`serialize`):
+  'Bash(python3:\*) and Bash(source:\*)' (p.102) rendered as emphasis.
+  Only asterisks that CommonMark could read as openers/closers count, and
+  only when there are two or more: escaping every literal asterisk would
+  have added render-neutral backslashes to five certified cards.
+- **A typed '- ' opening transcript text is a literal hyphen** (`serialize`)
+  and the projection reads `\-` / `\+` escapes (`mdproj`).
+- **Card knob `box_fit_breaks`** (`assemble`): inside a turn/transcript box, a
+  line whose successor's first word would have fit ends in a deliberate
+  return (`<br>`), the prose twin of D70's `cell_fit_breaks`. p.175's typed
+  '- …' prompt lines had collapsed into one list item. A census of the same
+  test over the certified cards finds 45 candidate breaks (fable-5 27, risk
+  report 13, opus-5 5; fable-5-1 and opus-5-5 none), most of them already
+  line-structured in canon (bullets, new speaker labels) — enabling the knob
+  there is a certified-canon question for the owner, not done here.
+
+Gate: 0 unsuppressed majors; 2 exact T1 acceptances (p.259's code-box label
+'None' merged with Table 9.1.A's dropped repeated header — the fable-5-1
+p.210 / opus-5-5 p.226 class); T1 3 typed minors (repeated-header drops
+pp.256–258); L2 96/96; P2/F3 257/132 (389 DOM events); RF1 clean; seams 0.
