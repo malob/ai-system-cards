@@ -485,11 +485,13 @@ def stitch(blocks: list[dict]) -> list[dict]:
             out[-1]["code_cont"] = {"page": blk["page"], "lines": blk["lines"]}
             continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "turn"
+                and "page_break" not in out[-1]
                 and out[-1]["type"] == "turn"
                 and out[-1].get("role") == blk.get("role")
                 and not blk.get("code_lines") and not out[-1].get("code_lines")):
             prev = out[-1]
-            prev_text = prev["lines"][-1]["text"].rstrip()
+            # a trailing zero-width mark is not a terminator (fable-5-2 p.165)
+            prev_text = norm.INVISIBLES.sub("", prev["lines"][-1]["text"]).rstrip()
             nxt = blk["lines"][0]["text"].lstrip()
             if prev_text and prev_text[-1] not in UNTERMINATED and (
                     nxt[:1].islower() or prev_text[-1] in ",;" or _wrap_fit(prev, nxt)):
@@ -530,6 +532,7 @@ def stitch(blocks: list[dict]) -> list[dict]:
             prev["last_container"] = blk["container"]
             continue
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
+                and "page_break" not in out[-1]
                 and out[-1]["type"] == "caption"
                 and (blk["lines"][0].get("size", 11) <= 9.5
                      # a BODY-size caption continues at its own size
@@ -545,17 +548,24 @@ def stitch(blocks: list[dict]) -> list[dict]:
             # bracket lead and no figure region, so it classified as a body
             # paragraph — but caption-size lines betray it (6.5.2.B class)
             prev = out[-1]
-            prev_text = prev["lines"][-1]["text"].rstrip()
+            # a trailing zero-width mark is not a terminator (fable-5-2 p.165)
+            prev_text = norm.INVISIBLES.sub("", prev["lines"][-1]["text"]).rstrip()
             nxt = blk["lines"][0]["text"].lstrip()
             if prev_text and prev_text[-1] not in UNTERMINATED and (
                     nxt[:1].islower() or prev_text[-1] in ",;" or _wrap_fit(prev, nxt)):
                 prev["page_break"] = (blk["page"], len(prev["lines"]))
                 prev["lines"].extend(blk["lines"])
                 continue
+        # a block that already absorbed its page-top continuation keeps its
+        # FIRST page: without the page_break guard every later block of the
+        # next page re-qualified as a continuation (fable-5-2 p.165 'However…'
+        # merged into the paragraph that ended 'flagged every one.')
         if (out and blk["page"] == out[-1]["page"] + 1 and blk["type"] == "paragraph"
+                and "page_break" not in out[-1]
                 and out[-1]["type"] in ("paragraph", "item")):
             prev = out[-1]
-            prev_text = prev["lines"][-1]["text"].rstrip()
+            # a trailing zero-width mark is not a terminator (fable-5-2 p.165)
+            prev_text = norm.INVISIBLES.sub("", prev["lines"][-1]["text"]).rstrip()
             nxt_line = blk["lines"][0]
             nxt = nxt_line["text"].lstrip()
             joinable = prev_text and prev_text[-1] not in UNTERMINATED
@@ -647,12 +657,14 @@ def main():
         blocks = []
         qcarry = False
         qlist = None
+        ctiers = frozenset()
         start_midpage = False
         for pno in sel:
             pg, figs = _dedupe_figures(pages[pno - 1], figures_map.get(str(pno), []))
             pblocks = assemble.assemble_page(pno, pg, figs,
                                              chips, tables.get_tables(pno, pages[pno - 1]),
-                                             quote_carry=qcarry, quoted_list_x0=qlist)
+                                             quote_carry=qcarry, quoted_list_x0=qlist,
+                                             carry_tiers=ctiers)
             if pno == a and pno in shared:
                 # shared start page: this section's content begins at its heading
                 i = heading_index(pblocks, firsts.get(name, ""))
@@ -663,6 +675,9 @@ def main():
             qcarry = next((b.get("quote", False) for b in reversed(pblocks)
                            if b["type"] in ("paragraph", "item")), qcarry)
             qlist = _trailing_quoted_list_x0(pblocks, qlist)
+            last = next((b for b in reversed(pblocks) if b["type"] in ("paragraph", "item")), None)
+            ctiers = (frozenset({round(last["marker_x0"]), round(last["marker_x0"]) + 18})
+                      if last is not None and last["type"] == "item" else frozenset())
         # shared END page (owned by the next section): the pre-heading slice
         # belongs HERE, so the boundary paragraph can stitch across pages
         if si + 1 < len(ranges) and ranges[si + 1][1] == b and b in want and b not in TOC \

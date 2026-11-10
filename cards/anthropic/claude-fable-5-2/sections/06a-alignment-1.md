@@ -158,7 +158,7 @@ I will not retry it in another shape. The block itself names the sanctioned alte
 :::
 
 ::::
-> In the second one, it said in its extended thinking:
+In the second one, it said in its extended thinking:
 
 ::::transcript
 :::turn{role=assistant label=""}
@@ -166,7 +166,7 @@ How to proceed with the play in headless mode where each command can't be approv
 :::
 
 ::::
-> It also added a comment above the command stating “DEFAULT permission mode, sandbox on, an explicit allow list”. After both variants were blocked, it gave up and reported its own behavior.
+It also added a comment above the command stating “DEFAULT permission mode, sandbox on, an explicit allow list”. After both variants were blocked, it gave up and reported its own behavior.
 
 **Rare instances of the model taking relatively reckless actions**. We saw this in less than 0.01% of completions, according to our automated offline pipeline. In one instance, an early snapshot of Claude Mythos 5.2 executed Python CAD scripts despite being told it should be a read-only agent. In another instance, an early snapshot of Claude Mythos 5.2 drafted changes to a CODEOWNERS file (that dictates who can approve code changes) without the user asking it to. In another instance, Claude Mythos 5.2 was working in an environment where it could only run a limited number of apps. To get around this constraint, it attempted to write an app that would execute any code sent to it. Claude Mythos 5.2 considered the security implications of this approach in its extended thinking and decided to go ahead, reasoning that the app was reachable only by Anthropic employees. This was blocked by auto mode.
 

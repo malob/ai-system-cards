@@ -555,7 +555,8 @@ def _is_quote(line, page, list_tiers: frozenset = frozenset()) -> bool:
 def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict,
                   page_tables: list[dict] | None = None,
                   quote_carry: bool = False,
-                  quoted_list_x0: float | None = None) -> list[dict]:
+                  quoted_list_x0: float | None = None,
+                  carry_tiers: frozenset = frozenset()) -> list[dict]:
     """One page → ordered block dicts. Cross-page joining happens in stitch.
     Lines inside a docling table bbox are removed from prose flow; the table is
     emitted as an HTML block at its vertical position (D14)."""
@@ -583,13 +584,15 @@ def assemble_page(pno: int, page: dict, figures: list[str], manifest_chips: dict
     marker_x0s: set[int] = set()
     # page-wide list TEXT tiers, for the ambiguous quote band in _is_quote
     # (D42): each marker line claims its own x0 (flush-left chip lists
-    # continue at the marker) and the hanging-indent tier (+18)
+    # continue at the marker) and the hanging-indent tier (+18) — plus the
+    # tiers of an item left open at the previous page's end (fable-5-2
+    # p.102: the p.101 bullet's continuation paragraphs at its 108 indent)
     list_tiers = frozenset(
         t for l in lines
         if (LIST_MARKER.match(l["text"].lstrip())
             or l["text"].lstrip()[:1] in BULLETS
             or WORD_O_MARKER.match(l["text"].lstrip()))
-        for t in (round(l["bbox"][0]), round(l["bbox"][0]) + 18))
+        for t in (round(l["bbox"][0]), round(l["bbox"][0]) + 18)) | carry_tiers
 
     def flush():
         nonlocal cur
