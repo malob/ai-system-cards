@@ -44,13 +44,8 @@ behaviour is default.
 
 ## Open owner decisions
 
-1. **Four certified hunks** (composites in
-   `docs/experiments/22-gemini-4-carbon-sweep-round1/hunks/`): gemini-4-argon
-   pp.87–88, 88–89, 154–155 — the page-marker label moves to the line where a
-   cut row's page turns (content unchanged; D76); opus-5 p.147 — 'ARGH ARGH
-   ARGH.' ends its line as printed (D77).
-2. **Deploy** the eighth card (push to main triggers Pages). One local commit
-   from the Fable 5.2 deploy (`state.md`) rides along.
+None. Resolved 2026-11-11: the owner approved the four certified hunks
+(gemini-4-argon seam markers ×3, opus-5 p.147) and authorized the deploy.
 
 ## Current card gates
 

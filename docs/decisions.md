@@ -2122,3 +2122,8 @@ both fixed with every card's gate unchanged:
   section page, masking one dropped item per page (ST1 recall 2/8).
 
 All eight mutation suites are re-run on the final verifier.
+
+**D76/D77 owner approval (2026-11-11).** The owner reviewed the four
+certified-hunk composites (experiment 22 `hunks/`) and approved all four —
+gemini-4-argon's three seam-marker moves (D76) and opus-5 p.147's line break
+(D77) — and authorized publishing the eighth card.
